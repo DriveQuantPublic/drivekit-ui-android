@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/no_trips"
+        layout="@layout/view_content_no_trips"
+        android:visibility="gone" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_trips"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ExpandableListView
+            android:id="@+id/trips_list"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:groupIndicator="@null" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+</FrameLayout>

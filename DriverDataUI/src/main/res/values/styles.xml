@@ -1,0 +1,53 @@
+<resources>
+    <style name="TripMainValue">
+        <item name="android:textColor">@color/dkPrimaryColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TripListHour">
+        <item name="android:textColor">@color/dkGrayText</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TripListCity">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GaugeTripDetail" >
+        <item name="strokeSize">9dp</item>
+        <item name="backColor">@color/dkGaugeGray</item>
+        <item name="textSize">20sp</item>
+    </style>
+
+    <style name="GaugeTripList" >
+        <item name="strokeSize">4dp</item>
+        <item name="backColor">@color/dkGaugeGray</item>
+        <item name="textSize">12sp</item>
+    </style>
+
+    <style name="GaugeTitleTripDetail">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TripDetailDescriptionText">
+        <item name="android:textColor">@color/dkDarkGrayText</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="EventNumberText">
+        <item name="android:textColor">@color/dkPrimaryColor</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="UnitText">
+        <item name="android:textColor">@color/dkGrayText</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

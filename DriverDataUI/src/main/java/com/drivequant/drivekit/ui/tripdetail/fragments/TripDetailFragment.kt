@@ -1,0 +1,229 @@
+package com.drivequant.drivekit.ui.tripdetail.fragments
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.app.AlertDialog
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v4.view.ViewPager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.TripDetailViewConfig
+import com.drivequant.drivekit.ui.TripsViewConfig
+import com.drivequant.drivekit.ui.extension.formatHeaderDay
+import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
+import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.fragment_trip_detail.*
+
+class TripDetailFragment : Fragment() {
+
+    private lateinit var viewModel : TripDetailViewModel
+    private lateinit var tripDetailViewConfig: TripDetailViewConfig
+    private lateinit var tripsViewConfig: TripsViewConfig
+
+    private lateinit var itinId: String
+
+    private lateinit var tripMapViewHolder: TripGoogleMapViewHolder
+    private var mapFragment: SupportMapFragment? = null
+
+    private lateinit var viewContentTrip: View
+
+    companion object {
+        fun newInstance(itinId: String, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig): TripDetailFragment {
+            val fragment = TripDetailFragment()
+            fragment.itinId = itinId
+            fragment.tripDetailViewConfig = tripDetailViewConfig
+            fragment.tripsViewConfig = tripsViewConfig
+            return fragment
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
+        viewContentTrip = rootView.findViewById(R.id.container_trip)
+        return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        (savedInstanceState?.getSerializable("config") as TripsViewConfig?)?.let{
+            tripsViewConfig = it
+        }
+        (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
+            tripDetailViewConfig = it
+        }
+        savedInstanceState?.getString("itinId")?.let{
+            itinId = it
+        }
+        progress_circular.visibility = View.VISIBLE
+        viewModel = ViewModelProviders.of(this,
+            TripDetailViewModelFactory(
+                itinId,
+                tripDetailViewConfig.mapItems
+            )
+        ).get(TripDetailViewModel::class.java)
+        activity?.title = tripDetailViewConfig.viewTitleText
+        container_header_trip.setBackgroundColor(tripsViewConfig.primaryColor)
+        mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
+        loadTripData()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("config", tripsViewConfig)
+        outState.putSerializable("detailConfig", tripDetailViewConfig)
+        outState.putString("itinId", itinId)
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun loadTripData(){
+        viewModel.tripEventsObserver.observe(this, Observer {
+            if (viewModel.events.isNotEmpty()) {
+                setMapController()
+                setViewPager()
+                setHeaderSummary()
+                hideProgressCircular()
+            } else {
+                displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
+            }
+        })
+        viewModel.unScoredTrip.observe(this, Observer{ routeAvailable ->
+            routeAvailable?.let {
+                if (it){
+                    setMapController()
+                }else{
+                    displayErrorMessageAndGoBack(R.string.dk_trip_detail_get_road_failed, false)
+                }
+                setUnScoredTripFragment()
+                setHeaderSummary()
+            }
+
+            hideProgressCircular()
+        })
+        viewModel.noRoute.observe(this, Observer{
+            setViewPager()
+            hideProgressCircular()
+            setHeaderSummary()
+            displayErrorMessageAndGoBack(R.string.dk_trip_detail_get_road_failed, false)
+        })
+        viewModel.noData.observe(this, Observer{
+            displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
+        })
+        viewModel.fetchTripData()
+    }
+
+    private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true){
+        AlertDialog.Builder(context)
+            .setTitle(tripDetailViewConfig.viewTitleText)
+            .setMessage(stringResId)
+            .setCancelable(false)
+            .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                dialog.dismiss()
+                if (goBack){
+                    activity?.onBackPressed()
+                }
+            }
+            .show()
+    }
+
+    private fun setMapController(){
+        if (mapFragment != null) {
+            mapFragment!!.getMapAsync {
+                    googleMap -> mapFragment
+                tripMapViewHolder =
+                    TripGoogleMapViewHolder(
+                        this,
+                        viewContentTrip,
+                        viewModel,
+                        tripDetailViewConfig,
+                        googleMap
+                    )
+                tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
+                tripMapViewHolder.updateCamera()
+                hideProgressCircular()
+            }
+        }
+        center_button.setOnClickListener {
+            tripMapViewHolder.updateCamera()
+        }
+    }
+
+    private fun setUnScoredTripFragment(){
+        view_pager.visibility = View.INVISIBLE
+        unscored_fragment.visibility = View.VISIBLE
+        childFragmentManager.beginTransaction()
+            .replace(R.id.unscored_fragment, UnscoredTripFragment.newInstance(
+                viewModel.trip,
+                tripsViewConfig,
+                tripDetailViewConfig
+            ))
+            .commit()
+    }
+
+    private fun setViewPager(){
+        view_pager.adapter =
+            TripDetailFragmentPagerAdapter(
+                childFragmentManager,
+                viewModel,
+                tripDetailViewConfig,
+                tripsViewConfig
+            )
+        tab_layout.setupWithViewPager(view_pager)
+        for ((index, mapItem) in viewModel.configurableMapItems.withIndex()){
+            tab_layout.getTabAt(index)?.let {
+                val icon = ImageView(requireContext())
+                ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
+                    DrawableCompat.setTint(drawable, tripsViewConfig.primaryColor)
+                    icon.setImageDrawable(drawable)
+                }
+                it.customView = icon
+                val sizePx = (it.parent.height * 0.66).toInt()
+                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx,sizePx)
+            }
+        }
+        DrawableCompat.setTint(center_button.drawable, tripsViewConfig.primaryColor)
+        view_pager.addOnPageChangeListener(
+            DetailOnPageChangeListener(
+                viewModel
+            )
+        )
+    }
+
+    private fun setHeaderSummary(){
+        trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
+        trip_distance.text = tripDetailViewConfig.headerSummary.text(requireContext(), viewModel.trip!!)
+    }
+
+    private fun hideProgressCircular() {
+        progress_circular.animate()
+            .alpha(0f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.GONE
+                }
+            })
+    }
+
+    private class DetailOnPageChangeListener(private var tripDetailViewModel: TripDetailViewModel) : ViewPager.SimpleOnPageChangeListener() {
+        override fun onPageSelected(position: Int) {
+            tripDetailViewModel.changeMapItem(position)
+        }
+    }
+}
+
+

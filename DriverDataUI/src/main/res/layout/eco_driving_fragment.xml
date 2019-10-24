@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".tripdetail.activity.TripDetailActivity"
+    android:padding="8dp">
+
+    <com.drivequant.drivekit.ui.commons.views.GaugeIndicator
+        android:id="@+id/score_gauge"
+        android:layout_width="96dp"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        style="@style/GaugeTripDetail"
+        />
+
+    <TextView
+        android:id="@+id/gauge_type_title"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/score_gauge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Eco-driving"
+        style="@style/GaugeTitleTripDetail"/>
+
+    <TextView
+        android:id="@+id/accelAdvice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        style="@style/TripDetailDescriptionText"
+        android:drawableStart="@drawable/dk_eco_accel"
+        android:drawablePadding="8dp"
+        />
+
+    <TextView
+        android:id="@+id/mainAdvice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toBottomOf="@id/accelAdvice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        style="@style/TripDetailDescriptionText"
+        android:drawableStart="@drawable/dk_eco_maintain"
+        android:drawablePadding="8dp"
+        />
+
+    <TextView
+        android:id="@+id/decelAdvice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        app:layout_constraintTop_toBottomOf="@id/mainAdvice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        style="@style/TripDetailDescriptionText"
+        android:drawableStart="@drawable/dk_eco_decel"
+        android:drawablePadding="8dp"
+        />
+
+</android.support.constraint.ConstraintLayout>

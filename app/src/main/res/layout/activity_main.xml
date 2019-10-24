@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.drivekit.demoapp.activity.MainActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/permissions_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        <Button
+            android:id="@+id/button_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="12sp"
+            android:onClick="permissionClicked"/>
+        <Button
+            android:id="@+id/button_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity"
+            android:textSize="12sp"
+            android:onClick="permissionClicked"/>
+        <Button
+            android:id="@+id/button_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Battery"
+            android:textSize="12sp"
+            android:onClick="permissionClicked"/>
+        <Button
+            android:id="@+id/button_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ext. Storage"
+            android:textSize="12sp"
+            android:onClick="permissionClicked"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="8dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/permissions_container"/>
+    <TextView
+        android:id="@+id/driver_data_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:text="DriverData UI"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/separator"/>
+    <TextView
+        android:id="@+id/driver_data_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:padding="8dp"
+        android:text="DriverData handles list of trips and the detail of them"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/driver_data_title"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Display trips"
+        app:layout_constraintTop_toBottomOf="@id/driver_data_description"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="onTripsListButtonClicked"/>
+</android.support.constraint.ConstraintLayout>
