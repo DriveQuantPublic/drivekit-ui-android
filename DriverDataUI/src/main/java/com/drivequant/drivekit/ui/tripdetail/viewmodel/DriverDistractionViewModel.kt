@@ -63,7 +63,16 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
     fun getUnlockDistance(context: Context, tripDetailViewConfig: TripDetailViewConfig) : Spannable {
         return when {
             distraction.distanceUnlock < 1000 -> {
-                getDistance(context, distraction.distanceUnlock, tripDetailViewConfig.distanceMeterUnit)
+                val text = "${distraction.distanceUnlock.toInt()} ${tripDetailViewConfig.distanceMeterUnit}"
+                val spannable = SpannableString(text)
+                val index = text.indexOf(tripDetailViewConfig.distanceMeterUnit)
+                spannable.setSpan(
+                    TextAppearanceSpan(context, R.style.UnitText),
+                    index,
+                    index + tripDetailViewConfig.distanceMeterUnit.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                spannable
             }
             else -> {
                 getDistance(context, distraction.distanceUnlock / 1000.0, tripDetailViewConfig.distanceKmUnit)

@@ -11,7 +11,6 @@ import android.view.View
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

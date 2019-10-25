@@ -2,9 +2,6 @@
     package="com.drivequant.drivekit.ui">
     <application>
         <activity
-            android:name=".trips.activity.TripsListActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".tripdetail.activity.TripDetailActivity"
             android:screenOrientation="portrait" />
     </application>

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.ui.trips.activity
+package com.drivekit.demoapp.activity
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -19,10 +19,10 @@ class TripsListActivity : AppCompatActivity() {
 
         val tripsViewConfig = TripsViewConfig(
             this,
-            TripData.DISTRACTION,
-            TripInfo.ECO_DRIVING,
+            TripData.SAFETY,
+            TripInfo.NONE,
             HeaderDay.DURATION_DISTANCE,
-            false
+            true
         )
 
         val tripDetailViewConfig = TripDetailViewConfig(this)
