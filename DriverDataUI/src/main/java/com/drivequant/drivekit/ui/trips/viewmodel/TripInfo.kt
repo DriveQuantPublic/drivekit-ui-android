@@ -12,8 +12,8 @@ enum class TripInfo {
 
     fun imageResId() : Int? {
         return when (this){
-            ECO_DRIVING -> R.drawable.dk_ecodriving
-            SAFETY -> R.drawable.dk_safety
+            ECO_DRIVING -> R.drawable.dk_eco_advice
+            SAFETY -> R.drawable.dk_safety_advice
             COUNT -> R.drawable.dk_trip_info_count
             else -> null
         }
