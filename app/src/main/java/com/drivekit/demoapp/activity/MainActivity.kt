@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onTripsListButtonClicked(view: View){
-        // TODO
         startActivity(Intent(this, TripsListActivity::class.java))
     }
 
