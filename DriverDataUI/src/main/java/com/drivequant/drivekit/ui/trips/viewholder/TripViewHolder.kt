@@ -12,6 +12,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.commons.views.GaugeIndicator
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
@@ -101,6 +102,12 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
                 textView.text = tripInfo.text(trip)
             } ?: run {
                 textView.visibility = View.GONE
+            }
+            tripInfoItem.setOnClickListener {
+                TripDetailActivity.launchActivity(itemView.context,
+                    trip.itinId,
+                    tripsViewConfig = tripsViewConfig,
+                    openAdvice = true)
             }
             tripInfoContainer.addView(tripInfoItem)
             tripInfoContainer.visibility = View.VISIBLE

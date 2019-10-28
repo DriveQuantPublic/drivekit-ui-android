@@ -9,20 +9,25 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v4.text.HtmlCompat
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.extension.formatHeaderDay
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
@@ -33,6 +38,7 @@ class TripDetailFragment : Fragment() {
     private lateinit var tripsViewConfig: TripsViewConfig
 
     private lateinit var itinId: String
+    private var openAdvice: Boolean = false
 
     private lateinit var tripMapViewHolder: TripGoogleMapViewHolder
     private var mapFragment: SupportMapFragment? = null
@@ -40,9 +46,13 @@ class TripDetailFragment : Fragment() {
     private lateinit var viewContentTrip: View
 
     companion object {
-        fun newInstance(itinId: String, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig): TripDetailFragment {
+        fun newInstance(itinId: String,
+                        tripDetailViewConfig: TripDetailViewConfig,
+                        tripsViewConfig: TripsViewConfig,
+                        openAdvice: Boolean = false): TripDetailFragment {
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
+            fragment.openAdvice = openAdvice
             fragment.tripDetailViewConfig = tripDetailViewConfig
             fragment.tripsViewConfig = tripsViewConfig
             return fragment
@@ -140,6 +150,46 @@ class TripDetailFragment : Fragment() {
             .show()
     }
 
+    private fun displayAdviceFromTripInfo(){
+        if (openAdvice){
+            val index = when (tripsViewConfig.tripInfo) {
+                TripInfo.SAFETY -> {
+                    viewModel.configurableMapItems.indexOf(MapItem.SAFETY)
+                }
+                TripInfo.ECO_DRIVING -> {
+                    viewModel.configurableMapItems.indexOf(MapItem.ECO_DRIVING)
+                }
+                else -> -1
+            }
+            if (index > -1) {
+                view_pager.currentItem = index
+                viewModel.trip?.let {
+                    val tripAdvice = viewModel.configurableMapItems[index].getAdvice(it.tripAdvices)
+                    displayAdvice(tripAdvice)
+                }
+            }
+        }
+    }
+
+    fun displayAdvice(tripAdvice: TripAdvice?){
+        tripAdvice?.let {
+            val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
+            val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
+            headerText.text = tripAdvice.title
+            headerText.setBackgroundColor(tripsViewConfig.primaryColor)
+            tripAdvice.message?.let {
+                adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+
+            AlertDialog.Builder(context)
+                .setView(adviceView)
+                .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+    }
+
     private fun setMapController(){
         if (mapFragment != null) {
             mapFragment!!.getMapAsync {
@@ -154,6 +204,7 @@ class TripDetailFragment : Fragment() {
                     )
                 tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
                 tripMapViewHolder.updateCamera()
+                displayAdviceFromTripInfo()
                 hideProgressCircular()
             }
         }

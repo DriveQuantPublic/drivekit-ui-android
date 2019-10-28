@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@id/container_header_trip"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_trip_hint"
+        android:id="@+id/fab_trip_advice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:src="@drawable/dk_safety_advice"
@@ -96,8 +96,7 @@
         app:layout_constraintTop_toTopOf="@id/google_map"
         app:layout_constraintEnd_toEndOf="@id/google_map"
         android:background="#BFFFFFFF"
-        android:src="@drawable/ic_enable_share_position"
-        />
+        android:src="@drawable/dk_center_map"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
