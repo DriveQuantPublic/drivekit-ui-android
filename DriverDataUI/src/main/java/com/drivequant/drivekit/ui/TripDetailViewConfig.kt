@@ -14,8 +14,11 @@ class TripDetailViewConfig(
     val viewTitleText: String = context.getString(R.string.dk_trip_detail_title),
     val mapTraceMainColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceMainColor),
     val mapTraceWarningColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceWarningColor),
+    val canDeleteTrip: Boolean = true,
+    val deleteText: String = context.getString(R.string.dk_delete_trip),
 
     val okText: String = context.getString(R.string.dk_ok),
+    val cancelText: String = context.getString(R.string.dk_cancel),
     val noScoreText: String = context.getString(R.string.dk_trip_detail_no_score),
     val lowAccelText: String = context.getString(R.string.dk_low_accel),
     val weakAccelText: String = context.getString(R.string.dk_weak_accel),

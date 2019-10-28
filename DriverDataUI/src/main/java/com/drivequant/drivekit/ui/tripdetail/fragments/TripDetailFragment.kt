@@ -11,9 +11,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v4.text.HtmlCompat
 import android.support.v4.view.ViewPager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -67,6 +65,32 @@ class TripDetailFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = rootView.findViewById(R.id.container_trip)
         return rootView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        if (tripDetailViewConfig.canDeleteTrip) {
+            inflater?.inflate(R.menu.trip_menu_bar, menu)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return super.onOptionsItemSelected(item)
+        when (item?.itemId){
+            R.id.trip_delete -> {
+                AlertDialog.Builder(context)
+                    .setTitle(tripDetailViewConfig.viewTitleText)
+                    .setMessage(tripDetailViewConfig.deleteText)
+                    .setCancelable(true)
+                    .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                        // TODO call DriverData service
+                    }
+                    .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
