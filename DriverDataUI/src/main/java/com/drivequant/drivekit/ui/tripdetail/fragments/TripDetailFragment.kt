@@ -22,10 +22,8 @@ import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.extension.formatHeaderDay
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
-import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
@@ -176,15 +174,7 @@ class TripDetailFragment : Fragment() {
 
     private fun displayAdviceFromTripInfo(){
         if (openAdvice){
-            val index = when (tripsViewConfig.tripInfo) {
-                TripInfo.SAFETY -> {
-                    viewModel.configurableMapItems.indexOf(MapItem.SAFETY)
-                }
-                TripInfo.ECO_DRIVING -> {
-                    viewModel.configurableMapItems.indexOf(MapItem.ECO_DRIVING)
-                }
-                else -> -1
-            }
+            val index = viewModel.getAdviceMapItemIndex(tripsViewConfig.tripInfo)
             if (index > -1) {
                 view_pager.currentItem = index
                 viewModel.trip?.let {

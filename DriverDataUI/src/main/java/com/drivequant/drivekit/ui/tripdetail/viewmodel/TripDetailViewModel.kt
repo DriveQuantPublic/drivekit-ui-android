@@ -10,6 +10,7 @@ import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
 import com.drivequant.drivekit.driverdata.trip.RouteStatus
 import com.drivequant.drivekit.driverdata.trip.TripQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import java.io.Serializable
 import java.util.*
 
@@ -82,6 +83,33 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
 
     fun changeMapItem(position: Int) {
         displayMapItem.postValue(configurableMapItems[position])
+    }
+
+    fun getAdviceMapItemIndex(tripInfo: TripInfo): Int {
+        return when (tripInfo){
+            TripInfo.SAFETY -> {
+                configurableMapItems.indexOf(MapItem.SAFETY)
+            }
+            TripInfo.ECO_DRIVING -> {
+                configurableMapItems.indexOf(MapItem.ECO_DRIVING)
+            }
+            TripInfo.COUNT -> {
+                getFirstMapItemIndexWithAdvice()
+            }
+            TripInfo.NONE -> -1
+        }
+    }
+
+    private fun getFirstMapItemIndexWithAdvice(): Int {
+        for ((loopIndex, value) in configurableMapItems.withIndex()){
+            trip?.let {
+                val advice = value.getAdvice(it.tripAdvices)
+                if (advice != null) {
+                    return loopIndex
+                }
+            }
+        }
+        return -1
     }
 
     private fun computeTripEvents(){
