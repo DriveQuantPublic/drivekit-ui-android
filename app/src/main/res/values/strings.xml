@@ -44,4 +44,10 @@
     <string name="action_logging">Logging</string>
     <string name="action_battery">Battery</string>
 
+    <string name="trip_start">Start new trip</string>
+    <string name="trip_in_progress">Trip in progress</string>
+    <string name="trip_stop_confirm">Do you want to stop the current trip?</string>
+
+    <!-- TEMPORARY -->
+    <string name="dk_cancel">Cancel</string>
 </resources>

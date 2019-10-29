@@ -87,4 +87,13 @@
         app:layout_constraintTop_toBottomOf="@id/driver_data_description"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="onTripsListButtonClicked"/>
+
+    <Button
+        android:id="@+id/button_trip"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>
