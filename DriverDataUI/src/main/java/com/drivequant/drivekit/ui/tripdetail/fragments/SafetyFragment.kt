@@ -71,7 +71,7 @@ class SafetyFragment : Fragment() {
         brake_number_event.setTextColor(tripsViewConfig.primaryColor)
         adherence_number_event.setTextColor(tripsViewConfig.primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY)
+        score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY, tripsViewConfig.primaryFont)
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
         adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()

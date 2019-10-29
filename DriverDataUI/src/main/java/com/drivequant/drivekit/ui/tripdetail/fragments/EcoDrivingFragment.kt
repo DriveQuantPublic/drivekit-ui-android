@@ -9,24 +9,28 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
+import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.commons.views.GaugeType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
+import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import kotlinx.android.synthetic.main.eco_driving_fragment.*
 
 class EcoDrivingFragment : Fragment() {
 
     companion object {
-        fun newInstance(ecoDriving: EcoDriving, tripDetailViewConfig: TripDetailViewConfig) : EcoDrivingFragment{
+        fun newInstance(ecoDriving: EcoDriving, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig) : EcoDrivingFragment{
             val fragment = EcoDrivingFragment()
             fragment.viewModel = EcoDrivingViewModel(
                 ecoDriving,
                 tripDetailViewConfig
             )
+            fragment.tripsViewConfig = tripsViewConfig
             return fragment
         }
     }
 
     private lateinit var viewModel: EcoDrivingViewModel
+    private lateinit var tripsViewConfig: TripsViewConfig
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +49,7 @@ class EcoDrivingFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING)
+        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING, tripsViewConfig.primaryFont)
         accelAdvice.text = viewModel.getAccelMessage()
         mainAdvice.text = viewModel.getMaintainMessage()
         decelAdvice.text = viewModel.getDecelMessage()

@@ -66,7 +66,7 @@ class DriverDistractionFragment : Fragment() {
         distanceUnlocked.setTextColor(tripsViewConfig.primaryColor)
         durationUnlocked.setTextColor(tripsViewConfig.primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, tripsViewConfig.primaryFont)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext(), tripDetailViewConfig)
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext(), tripDetailViewConfig)

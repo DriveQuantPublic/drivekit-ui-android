@@ -56,7 +56,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             DisplayType.GAUGE -> {
                 if (tripData.isScored(trip)){
                     showGaugeIndicator()
-                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
+                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType(), tripsViewConfig.primaryFont)
                 } else {
                     showNoScoreIndicator()
                 }

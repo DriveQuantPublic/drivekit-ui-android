@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
+import android.graphics.Typeface
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
@@ -35,8 +36,14 @@ class GaugeIndicator(context: Context, attrs: AttributeSet): ConstraintLayout(co
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: GaugeType){
+    fun configure(score: Double, type: GaugeType, primaryFont: String?){
         textView.text = score.removeZeroDecimal()
+        primaryFont?.let {
+            val typeFace = Typeface.createFromAsset(textView.context.assets, primaryFont)
+            if (typeFace != null){
+                textView.typeface = typeFace
+            }
+        }
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))

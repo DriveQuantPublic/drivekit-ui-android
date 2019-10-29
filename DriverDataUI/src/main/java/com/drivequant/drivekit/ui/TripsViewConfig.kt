@@ -13,6 +13,7 @@ class TripsViewConfig(
     val tripInfo: TripInfo = TripInfo.SAFETY,
     val headerDay: HeaderDay = HeaderDay.DISTANCE_DURATION,
     val dayTripDescendingOrder: Boolean = true,
+    val primaryFont: String? = null,
     val viewTitleText: String =  context.getString(R.string.dk_trips_list_title),
     val noTripsRecordedText: String = context.getString(R.string.dk_no_trips_recorded),
     val noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded,
