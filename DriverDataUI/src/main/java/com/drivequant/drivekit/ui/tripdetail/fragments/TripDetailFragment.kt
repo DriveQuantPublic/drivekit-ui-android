@@ -62,26 +62,28 @@ class TripDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = rootView.findViewById(R.id.container_trip)
+
+        if (tripDetailViewConfig.enableDeleteTrip) {
+            setHasOptionsMenu(true)
+        }
         return rootView
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        if (tripDetailViewConfig.canDeleteTrip) {
-            inflater?.inflate(R.menu.trip_menu_bar, menu)
-        }
+        inflater?.inflate(R.menu.trip_menu_bar, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return super.onOptionsItemSelected(item)
         when (item?.itemId){
             R.id.trip_delete -> {
                 AlertDialog.Builder(context)
-                    .setTitle(tripDetailViewConfig.viewTitleText)
+                    .setTitle(getString(R.string.app_name))
                     .setMessage(tripDetailViewConfig.deleteText)
                     .setCancelable(true)
                     .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
-                        // TODO call DriverData service
+                        showProgressCircular()
+                        deleteTrip()
                     }
                     .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ ->
                         dialog.dismiss()
@@ -89,6 +91,7 @@ class TripDetailFragment : Fragment() {
                     .show()
             }
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -120,6 +123,35 @@ class TripDetailFragment : Fragment() {
         outState.putSerializable("detailConfig", tripDetailViewConfig)
         outState.putString("itinId", itinId)
         super.onSaveInstanceState(outState)
+    }
+
+    private fun deleteTrip(){
+        viewModel.deleteTripObserver.observe(this, Observer {
+            hideProgressCircular()
+            if (it != null){
+                if (it){
+                    AlertDialog.Builder(context)
+                        .setTitle(getString(R.string.app_name))
+                        .setMessage(tripDetailViewConfig.tripDeleted)
+                        .setCancelable(false)
+                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                            dialog.dismiss()
+                            activity?.onBackPressed()
+                        }
+                        .show()
+                } else {
+                    AlertDialog.Builder(context)
+                        .setTitle(getString(R.string.app_name))
+                        .setMessage(tripDetailViewConfig.failedToDeleteTrip)
+                        .setCancelable(true)
+                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+            }
+        })
+        viewModel.deleteTrip()
     }
 
     private fun loadTripData(){
@@ -160,7 +192,7 @@ class TripDetailFragment : Fragment() {
 
     private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true){
         AlertDialog.Builder(context)
-            .setTitle(tripDetailViewConfig.viewTitleText)
+            .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
             .setCancelable(false)
             .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
@@ -271,6 +303,17 @@ class TripDetailFragment : Fragment() {
     private fun setHeaderSummary(){
         trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
         trip_distance.text = tripDetailViewConfig.headerSummary.text(requireContext(), viewModel.trip!!)
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
+                }
+            })
     }
 
     private fun hideProgressCircular() {

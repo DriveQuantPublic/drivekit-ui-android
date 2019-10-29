@@ -14,8 +14,7 @@ class TripDetailViewConfig(
     val viewTitleText: String = context.getString(R.string.dk_trip_detail_title),
     val mapTraceMainColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceMainColor),
     val mapTraceWarningColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceWarningColor),
-    val canDeleteTrip: Boolean = true,
-    val deleteText: String = context.getString(R.string.dk_delete_trip),
+    val enableDeleteTrip: Boolean = true,
 
     val okText: String = context.getString(R.string.dk_ok),
     val cancelText: String = context.getString(R.string.dk_cancel),
@@ -56,4 +55,8 @@ class TripDetailViewConfig(
     val eventAccelCritText: String = context.getString(R.string.dk_safety_list_acceleration_critical),
     val eventAdherenceText: String = context.getString(R.string.dk_safety_list_adherence),
     val eventAdherenceCritText: String = context.getString(R.string.dk_safety_list_adherence_critical),
-    val eventDecelCritText: String = context.getString(R.string.dk_safety_list_brake_critical)) : Serializable
+    val eventDecelCritText: String = context.getString(R.string.dk_safety_list_brake_critical),
+    val deleteText: String = context.getString(R.string.dk_confirm_delete_trip),
+    val failedToDeleteTrip: String = context.getString(R.string.dk_failed_to_delete_trip),
+    val tripDeleted: String = context.getString(R.string.dk_trip_deleted)
+) : Serializable

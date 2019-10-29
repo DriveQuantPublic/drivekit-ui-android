@@ -6,10 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
-import com.drivequant.drivekit.driverdata.trip.RouteStatus
-import com.drivequant.drivekit.driverdata.trip.TripQueryListener
-import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import java.io.Serializable
 import java.util.*
@@ -56,6 +53,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     var unScoredTrip : MutableLiveData<Boolean> = MutableLiveData()
     var noRoute: MutableLiveData<Boolean> = MutableLiveData()
     var noData: MutableLiveData<Boolean> = MutableLiveData()
+    var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
 
     fun fetchTripData(){
         if (DriveKitDriverData.isConfigured()){
@@ -213,6 +211,16 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
 
         events = events.sortedWith(compareBy {it.time}).toMutableList()
+    }
+
+    fun deleteTrip(){
+        if (DriveKitDriverData.isConfigured()){
+            DriveKitDriverData.deleteTrip(itinId, object: TripDeleteQueryListener {
+                override fun onResponse(status: Boolean) {
+                    deleteTripObserver.postValue(status)
+                }
+            })
+        }
     }
 }
 

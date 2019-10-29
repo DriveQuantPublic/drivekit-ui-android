@@ -56,4 +56,9 @@
    <string name="dk_weak_accel">Weak acceleration</string>
    <string name="dk_weak_decel">Weak deceleration</string>
    <string name="dk_weak_maintain">Irregular speed</string>
+
+   <!-- TEMPORARY -->
+   <string name="dk_cancel">Annuler</string>
+   <string name="dk_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
+   <string name="dk_trip_deleted">Votre trajet a été supprimé.</string>
 </resources>
