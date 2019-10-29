@@ -62,10 +62,6 @@ class TripDetailFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = rootView.findViewById(R.id.container_trip)
-
-        if (tripDetailViewConfig.enableDeleteTrip) {
-            setHasOptionsMenu(true)
-        }
         return rootView
     }
 
@@ -115,6 +111,9 @@ class TripDetailFragment : Fragment() {
         activity?.title = tripDetailViewConfig.viewTitleText
         container_header_trip.setBackgroundColor(tripsViewConfig.primaryColor)
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
+        if (tripDetailViewConfig.enableDeleteTrip) {
+            setHasOptionsMenu(true)
+        }
         loadTripData()
     }
 
