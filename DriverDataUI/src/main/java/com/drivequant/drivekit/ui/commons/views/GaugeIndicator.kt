@@ -1,15 +1,18 @@
 package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
-import android.graphics.Typeface
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.driverdata.DriveKitDriverDataConstants
 import com.drivequant.drivekit.ui.extension.removeZeroDecimal
+import android.support.v4.content.res.ResourcesCompat
+import com.drivequant.drivekit.ui.R
+
 
 class GaugeIndicator(context: Context, attrs: AttributeSet): ConstraintLayout(context, attrs){
 
@@ -36,13 +39,12 @@ class GaugeIndicator(context: Context, attrs: AttributeSet): ConstraintLayout(co
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: GaugeType, primaryFont: String?){
+    fun configure(score: Double, type: GaugeType, primaryFont: Int){
         textView.text = score.removeZeroDecimal()
-        primaryFont?.let {
-            val typeFace = Typeface.createFromAsset(textView.context.assets, primaryFont)
-            if (typeFace != null){
-                textView.typeface = typeFace
-            }
+        try {
+            textView.typeface = ResourcesCompat.getFont(context, primaryFont)
+        } catch(e: Exception){
+            DriveKitLog.i(DriveKitDriverDataConstants.TAG, "primaryFont asset not found : $primaryFont")
         }
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
