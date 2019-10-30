@@ -48,7 +48,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
         circleSeparator.setBackgroundColor(tripsViewConfig.secondaryColor)
 
         computeTripData(trip, tripsViewConfig.tripData)
-        computeTripInfo(trip, tripsViewConfig.tripInfo)
+        computeTripInfo(trip)
     }
 
     private fun computeTripData(trip: Trip, tripData: TripData){
@@ -87,14 +87,15 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
         textIndicator.visibility = View.VISIBLE
     }
 
-    private fun computeTripInfo(trip: Trip, tripInfo: TripInfo){
-        if (tripInfo.shouldDisplay(trip)){
+    private fun computeTripInfo(trip: Trip){
+        if (!trip.tripAdvices.isNullOrEmpty()){
+            val tripInfo = TripInfo.COUNT
             val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
             val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
             val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
             DrawableCompat.setTint(tripInfoItem.background, tripsViewConfig.secondaryColor)
 
-            tripInfo.imageResId()?.let {
+            tripInfo.imageResId(trip)?.let {
                 imageView.setImageResource(it)
             }
             tripInfo.text(trip)?.let {

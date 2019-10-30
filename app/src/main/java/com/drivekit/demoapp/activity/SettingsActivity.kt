@@ -8,6 +8,7 @@ import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.driverdata.DriveKitDriverData
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
                 "logging" -> configureLogging(sharedPreferences.getBoolean(key, false))
                 "sandbox_mode" -> DriveKit.enableSandboxMode(sharedPreferences.getBoolean(key, false))
                 "user_id" -> {
-                    DriveKit.setUserId(sharedPreferences.getString(key, "")!!)
+                    reconfigureDriveKit(sharedPreferences.getString(key, "")!!)
                     updateUserIdSummary()
                 }
                 "autostart" -> DriveKitTripAnalysis.activateAutoStart(sharedPreferences.getBoolean(key, false))
@@ -72,6 +73,16 @@ class SettingsActivity : AppCompatActivity() {
                 DriveKit.enableLogging("/DriveKit")
             else
                 DriveKit.disableLogging()
+        }
+
+        private fun reconfigureDriveKit(userId: String){
+            val apiKey = DriveKit.config.apiKey
+            DriveKit.reset()
+            DriveKitDriverData.reset()
+            apiKey?.let {
+                DriveKit.setApiKey(it)
+            }
+            DriveKit.setUserId(userId)
         }
 
         private fun updateUserIdSummary(){

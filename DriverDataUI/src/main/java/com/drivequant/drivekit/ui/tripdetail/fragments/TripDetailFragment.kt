@@ -24,6 +24,7 @@ import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdap
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.drivequant.drivekit.ui.trips.viewmodel.HeaderSummary
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
@@ -205,7 +206,7 @@ class TripDetailFragment : Fragment() {
 
     private fun displayAdviceFromTripInfo(){
         if (openAdvice){
-            val index = viewModel.getAdviceMapItemIndex(tripsViewConfig.tripInfo)
+            val index = viewModel.getFirstMapItemIndexWithAdvice()
             if (index > -1) {
                 view_pager.currentItem = index
                 viewModel.trip?.let {
@@ -301,7 +302,7 @@ class TripDetailFragment : Fragment() {
 
     private fun setHeaderSummary(){
         trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
-        trip_distance.text = tripDetailViewConfig.headerSummary.text(requireContext(), viewModel.trip!!)
+        trip_distance.text = HeaderSummary.DISTANCE_DURATION.text(requireContext(), viewModel.trip!!)
     }
 
     private fun showProgressCircular() {

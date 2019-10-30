@@ -83,22 +83,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         displayMapItem.postValue(configurableMapItems[position])
     }
 
-    fun getAdviceMapItemIndex(tripInfo: TripInfo): Int {
-        return when (tripInfo){
-            TripInfo.SAFETY -> {
-                configurableMapItems.indexOf(MapItem.SAFETY)
-            }
-            TripInfo.ECO_DRIVING -> {
-                configurableMapItems.indexOf(MapItem.ECO_DRIVING)
-            }
-            TripInfo.COUNT -> {
-                getFirstMapItemIndexWithAdvice()
-            }
-            TripInfo.NONE -> -1
-        }
-    }
-
-    private fun getFirstMapItemIndexWithAdvice(): Int {
+    fun getFirstMapItemIndexWithAdvice(): Int {
         for ((loopIndex, value) in configurableMapItems.withIndex()){
             trip?.let {
                 val advice = value.getAdvice(it.tripAdvices)
