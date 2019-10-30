@@ -1,6 +1,5 @@
 package com.drivekit.demoapp.activity
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -29,13 +28,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setSupportActionBar(toolbar)
-        checkTripRunning()
     }
 
     override fun onResume() {
         super.onResume()
         handlePermissionButtonsVisibility()
-        checkTripRunning()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -56,43 +53,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onTripsListButtonClicked(view: View){
+    fun onDriverDataClicked(view: View){
         startActivity(Intent(this, TripsListActivity::class.java))
     }
 
-    private fun checkTripRunning(){
+    fun buttonTripClicked(view: View){
         if (DriveKitTripAnalysis.isConfigured()) {
-            if (DriveKitTripAnalysis.isTripRunning()) {
-                button_trip.text = getString(R.string.trip_in_progress)
-            } else {
-                initTripButton()
-            }
-        } else {
-            button_trip.visibility = View.GONE
-        }
-    }
-
-    private fun initTripButton(){
-        button_trip.text = getString(R.string.trip_start)
-        button_trip.setOnClickListener {
-            if (DriveKitTripAnalysis.isConfigured()) {
-                if (!DriveKitTripAnalysis.isTripRunning()) {
+            when (view.id) {
+                R.id.button_trip_start -> {
                     DriveKitTripAnalysis.startTrip()
-                    button_trip.text = getString(R.string.trip_in_progress)
-                } else {
-                    AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(getString(R.string.trip_stop_confirm))
-                        .setCancelable(true)
-                        .setPositiveButton(R.string.dk_ok) { dialog, _ ->
-                            DriveKitTripAnalysis.stopTrip()
-                            dialog.dismiss()
-                            initTripButton()
-                        }
-                        .setNegativeButton(R.string.dk_cancel) { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        .show()
+                }
+                R.id.button_trip_stop -> {
+                    DriveKitTripAnalysis.stopTrip()
+                }
+                R.id.button_trip_cancel -> {
+                    DriveKitTripAnalysis.cancelTrip()
                 }
             }
         }

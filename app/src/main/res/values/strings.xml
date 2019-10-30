@@ -1,53 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DriveKit Demo App</string>
+   <string name="activity_permission">Motion</string>
+   <string name="add_beacon_off">Beacon is not configured</string>
+   <string name="add_beacon_on">Beacon is configured</string>
+   <string name="add_beacon_title">Beacon configuration</string>
+   <string name="auto_start_off">Activate to automatically detect your trips</string>
+   <string name="autostart_on">Trips will be automatically detected</string>
+   <string name="autostart_title">Auto start</string>
+   <string name="battery_permission">Battery</string>
+   <string name="beacon_required_on">Beacon is required to validate a trip</string>
+   <string name="beacon_required_off">Beacon is not required to validate a trip</string>
+   <string name="beacon_required_title">Beacon required ?</string>
+   <string name="cancel_trip">Cancel the trip</string>
+   <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
+   <string name="enable_logging_pref_off">Enable this setting to write log on the device</string>
+   <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
+   <string name="enable_logging_title">Logging</string>
+   <string name="enable_share_position_off">Enable this setting to share your position during the trip</string>
+   <string name="enable_share_position_on">Disable this setting no to share your position during the trip</string>
+   <string name="enable_share_position_title">Share position ?</string>
+   <string name="external_storage_logging_permission">Logging</string>
+   <string name="global_config_settings">General Settings</string>
+   <string name="location_permission">Allow access to the location.</string>
+   <string name="notification_permission">Notifications</string>
+   <string name="sandbox_mode_off">DriveKit is connected to DriveQuant production environment</string>
+   <string name="sandbox_mode_on">DriveKit is connected to DriveQuant integration environment</string>
+   <string name="sandbox_mode_title">Sandbox mode</string>
+   <string name="start_trip">Start a trip</string>
+   <string name="stop_timeout_title">Stop trip timeout (in minutes)</string>
+   <string name="stop_trip">Stop the trip</string>
+   <string name="train_trip">Your trip was made by train</string>
+   <string name="trip_analysis_settings">Trip Analysis Configuration</string>
+   <string name="trip_cancelled_highspeed">Your trip has been canceled because you are traveling by train or plane</string>
+   <string name="trip_cancelled_no_beacon">Your trip has been canceled because your Bluetooth badge has not been recognized</string>
+   <string name="trip_cancelled_no_gps_data">The trip could not be analyzed because the GPS data could not be retrieved.</string>
+   <string name="trip_cancelled_reset">DriveKit reset during trip</string>
+   <string name="trip_cancelled_user">Trip cancelled by the user</string>
+   <string name="trip_finished">A new trip has just been analyzed</string>
+   <string name="trip_save_for_repost">The trip could not be analyzed because the internet connection is too slow. It will be analyzed later.</string>
+   <string name="trip_started">A trip is recording</string>
+   <string name="user_id_description">Tap to fill your user id</string>
+   <string name="user_id_title">User id</string>
 
-    <!-- Activity titles -->
-    <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_home">DriveKit</string>
 
-    <!-- Preference titles -->
-    <string name="global_config_settings">Global configuration</string>
-    <string name="trip_analysis_settings">Trip analysis</string>
-
-    <!-- Global config preferences-->
-    <string name="user_id_pref">User id</string>
-    <string name="user_id_summary_pref">Tap to fill your user id</string>
-    <string name="enable_logging_pref">Logging</string>
-    <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
-    <string name="enable_logging_pref_off">Enable this setting to write log on devices</string>
-    <string name="sandbox_mode_pref">Sandbox mode</string>
-    <string name="sandbox_mode_pref_on">DriveKit is connected to DriveQuant integration environment</string>
-    <string name="sandbox_mode_pref_off">DriveKit is connected to DriveQuant production environment</string>
-
-    <!-- Trip analysis preferences -->
-    <string name="autostart_pref">Auto-start</string>
-    <string name="autostart_pref_on">Trip will be automatically detected</string>
-    <string name="autostart_pref_off">Activate to automatically detect your trips</string>
-    <string name="stop_timeout_pref">Stop trip timeout in minutes</string>
-    <string name="beacon_required_pref">Beacon required ?</string>
-    <string name="beacon_required_pref_on">Beacon is required to validate the trip</string>
-    <string name="beacon_required_pref_off">Beacon is not required to validate the trip</string>
-    <string name="add_beacon_pref">Beacon configuration</string>
-    <string name="add_beacon_pref_on">Beacon is configured</string>
-    <string name="add_beacon_pref_off">Beacon is not configured</string>
-    <string name="enable_share_position_pref">Share position enabled ?</string>
-    <string name="enable_share_position_pref_on">Disable this settings to don\'t share your position during the trip</string>
-    <string name="enable_share_position_pref_off">Enable this setting to share position during the trip</string>
-
-    <!-- Home activity -->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_tripslist">Trips list</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_location">Location</string>
-    <string name="action_logging">Logging</string>
-    <string name="action_battery">Battery</string>
-
-    <string name="trip_start">Start new trip</string>
-    <string name="trip_in_progress">Trip in progress</string>
-    <string name="trip_stop_confirm">Do you want to stop the current trip?</string>
-
-    <!-- TEMPORARY -->
-    <string name="dk_cancel">Cancel</string>
+   <string name="app_name">DriveKit Demo App</string>
+   <string name="driver_data_button">Lancer DriverData</string>
+   <string name="trip_cancelled_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée</string>
+   <string name="trip_cancelled_beacon_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée en présence du beacon</string>
+   <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
 </resources>

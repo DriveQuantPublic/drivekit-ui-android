@@ -37,11 +37,11 @@ class DriveKitDemoApplication: Application() {
 
     private fun createForegroundNotification(): TripNotification{
         val notification = TripNotification(
-            "Drive Kit SDK",
-            "Start a trip with drive kit SDK",
+            getString(R.string.app_name),
+            getString(R.string.trip_started),
             R.drawable.ic_launcher_background)
         notification.enableCancel = true
-        notification.cancel = "Cancel"
+        notification.cancel = getString(R.string.cancel_trip)
         notification.cancelIconId = R.drawable.ic_launcher_background
         return notification
     }

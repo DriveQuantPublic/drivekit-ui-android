@@ -19,24 +19,33 @@ class TripReceiver : TripAnalysedReceiver() {
             if (comment.errorCode == 0) {
                 status = true
             }
-            Log.i("DriveKit Demo App", comment.comment)
+            Log.i(context.getString(R.string.app_name), comment.comment)
         }
         var message = "Failed to analyzed trip"
         if (status){
-            message = "A new trip has been analyzed"
+            message = context.getString(R.string.trip_finished)
         }
         showNotification(context, message)
     }
 
     override fun onTripCancelled(context: Context, status: CancelTrip) {
-        val message = "Trip cancelled : " + status.name
-        showNotification(context, message)
+        val messageResId = when (status){
+            CancelTrip.USER -> R.string.trip_cancelled_user
+            CancelTrip.HIGHSPEED -> R.string.trip_cancelled_highspeed
+            CancelTrip.NO_SPEED -> R.string.trip_cancelled_no_speed
+            CancelTrip.NO_BEACON -> R.string.trip_cancelled_no_beacon
+            CancelTrip.MISSING_CONFIGURATION -> R.string.trip_cancelled_missing_config
+            CancelTrip.NO_GPS_DATA -> R.string.trip_cancelled_no_gps_data
+            CancelTrip.RESET -> R.string.trip_cancelled_reset
+            CancelTrip.BEACON_NO_SPEED -> R.string.trip_cancelled_beacon_no_speed
+        }
+        showNotification(context, context.getString(messageResId))
     }
 
     private fun showNotification(context: Context, message: String){
         val builder = NotificationCompat.Builder(context, "notif_channel")
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("DriveKit")
+            .setContentTitle(context.getString(R.string.app_name))
             .setContentText(message)
             .setStyle(
                 NotificationCompat.BigTextStyle()

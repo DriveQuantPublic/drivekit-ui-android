@@ -89,7 +89,7 @@ class SettingsActivity : AppCompatActivity() {
             findPreference("user_id")?.let {
                 val userId = preferenceManager.sharedPreferences.getString("user_id", "")!!
                 if (userId.isBlank()) {
-                    it.summary = getString(R.string.user_id_summary_pref)
+                    it.summary = getString(R.string.user_id_description)
                 } else {
                     it.summary = userId
                 }

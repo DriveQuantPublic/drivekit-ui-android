@@ -21,7 +21,7 @@
 
         <EditTextPreference
             app:key="user_id"
-            app:title="@string/user_id_pref"
+            app:title="@string/user_id_title"
             app:icon="@drawable/ic_user"
             app:defaultValue=""
             />
@@ -30,15 +30,15 @@
             app:key="logging"
             app:summaryOff="@string/enable_logging_pref_off"
             app:summaryOn="@string/enable_logging_pref_on"
-            app:title="@string/enable_logging_pref"
+            app:title="@string/enable_logging_title"
             app:icon="@drawable/ic_logging"
             app:defaultValue="false" />
 
         <!-- <SwitchPreferenceCompat
             app:key="sandbox_mode"
-            app:summaryOff="@string/sandbox_mode_pref_off"
-            app:summaryOn="@string/sandbox_mode_pref_on"
-            app:title="@string/sandbox_mode_pref"
+            app:summaryOff="@string/sandbox_mode_off"
+            app:summaryOn="@string/sandbox_mode_on"
+            app:title="@string/sandbox_mode_title"
             app:icon="@drawable/ic_sandbox_mode"
             app:defaultValue="false" /> -->
 
@@ -48,9 +48,9 @@
 
         <SwitchPreferenceCompat
             app:key="autostart"
-            app:summaryOff="@string/autostart_pref_off"
-            app:summaryOn="@string/autostart_pref_on"
-            app:title="@string/autostart_pref"
+            app:summaryOff="@string/auto_start_off"
+            app:summaryOn="@string/autostart_on"
+            app:title="@string/autostart_title"
             app:icon="@drawable/ic_autostart"
             app:defaultValue="false" />
 
@@ -59,33 +59,32 @@
             app:defaultValue="@integer/seek_bar_default"
             android:max="@integer/seek_bar_max"
             app:min="@integer/seek_bar_min"
-            app:title="@string/stop_timeout_pref"
+            app:title="@string/stop_timeout_title"
             app:showSeekBarValue="true"
             app:icon="@drawable/ic_stop_timeout"/>
 
         <SwitchPreferenceCompat
             app:key="beacon_required"
-            app:summaryOff="@string/beacon_required_pref_off"
-            app:summaryOn="@string/beacon_required_pref_on"
-            app:title="@string/beacon_required_pref"
+            app:summaryOff="@string/beacon_required_off"
+            app:summaryOn="@string/beacon_required_on"
+            app:title="@string/beacon_required_title"
             app:icon="@drawable/ic_beacon_required"
             app:defaultValue="false" />
 
         <SwitchPreferenceCompat
             app:key="add_beacon"
-            app:summaryOff="@string/add_beacon_pref_off"
-            app:summaryOn="@string/add_beacon_pref_on"
-            app:title="@string/add_beacon_pref"
+            app:summaryOff="@string/add_beacon_off"
+            app:summaryOn="@string/add_beacon_on"
+            app:title="@string/add_beacon_title"
             app:icon="@drawable/ic_beacon_configured"
             app:defaultValue="false" />
 
         <SwitchPreferenceCompat
             app:key="enable_share_position"
-            app:summaryOff="@string/enable_share_position_pref_off"
-            app:summaryOn="@string/enable_share_position_pref_on"
-            app:title="@string/enable_share_position_pref"
+            app:summaryOff="@string/enable_share_position_off"
+            app:summaryOn="@string/enable_share_position_on"
+            app:title="@string/enable_share_position_title"
             app:icon="@drawable/ic_enable_share_position"
             app:defaultValue="true" />
-
     </PreferenceCategory>
 </PreferenceScreen>
