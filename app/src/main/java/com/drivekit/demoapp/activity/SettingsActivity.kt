@@ -36,6 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         override fun onResume() {
             super.onResume()
             preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+            updateUserIdSummary()
         }
 
         override fun onPause() {
@@ -50,7 +51,10 @@ class SettingsActivity : AppCompatActivity() {
                 "enable_share_position" -> DriveKitTripAnalysis.enableSharePosition(sharedPreferences.getBoolean(key, false))
                 "logging" -> configureLogging(sharedPreferences.getBoolean(key, false))
                 "sandbox_mode" -> DriveKit.enableSandboxMode(sharedPreferences.getBoolean(key, false))
-                "user_id" -> DriveKit.setUserId(sharedPreferences.getString(key, "")!!)
+                "user_id" -> {
+                    DriveKit.setUserId(sharedPreferences.getString(key, "")!!)
+                    updateUserIdSummary()
+                }
                 "autostart" -> DriveKitTripAnalysis.activateAutoStart(sharedPreferences.getBoolean(key, false))
                 "add_beacon" -> manageBeacon(sharedPreferences.getBoolean(key, false))
             }
@@ -68,6 +72,17 @@ class SettingsActivity : AppCompatActivity() {
                 DriveKit.enableLogging("/DriveKit")
             else
                 DriveKit.disableLogging()
+        }
+
+        private fun updateUserIdSummary(){
+            findPreference("user_id")?.let {
+                val userId = preferenceManager.sharedPreferences.getString("user_id", "")!!
+                if (userId.isBlank()) {
+                    it.summary = getString(R.string.user_id_summary_pref)
+                } else {
+                    it.summary = userId
+                }
+            }
         }
     }
 }

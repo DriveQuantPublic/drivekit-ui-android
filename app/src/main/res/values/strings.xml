@@ -11,7 +11,7 @@
 
     <!-- Global config preferences-->
     <string name="user_id_pref">User id</string>
-    <string name="user_id_summary_pref">Tap to see the value </string>
+    <string name="user_id_summary_pref">Tap to fill your user id</string>
     <string name="enable_logging_pref">Logging</string>
     <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
     <string name="enable_logging_pref_off">Enable this setting to write log on devices</string>
