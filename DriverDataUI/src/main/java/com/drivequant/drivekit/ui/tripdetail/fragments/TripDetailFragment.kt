@@ -186,7 +186,7 @@ class TripDetailFragment : Fragment() {
         viewModel.noData.observe(this, Observer{
             displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
         })
-        viewModel.fetchTripData()
+        viewModel.fetchTripData(requireContext())
     }
 
     private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true){

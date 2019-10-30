@@ -3,11 +3,11 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
-import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import java.io.Serializable
 import java.util.*
 
@@ -55,14 +55,14 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     var noData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun fetchTripData(){
+    fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
             DriveKitDriverData.getTrip(itinId, object: TripQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trip: Trip?) {
                     tripSyncStatus = status
                     trip?.let {
                         this@TripDetailViewModel.trip = it
-                        computeTripEvents()
+                        computeTripEvents(context)
                     }
                 }
             })
@@ -73,7 +73,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                     route?.let {
                         this@TripDetailViewModel.route = route
                     }
-                    computeTripEvents()
+                    computeTripEvents(context)
                 }
             })
         }
@@ -110,9 +110,10 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         return -1
     }
 
-    private fun computeTripEvents(){
+    private fun computeTripEvents(context: Context){
         if (routeSyncStatus != null && tripSyncStatus != null){
             if (trip != null && route != null) {
+                DriveKitDriverData.checkReverseGeocode(context, trip, route)
                 computeTripEvent(trip!!, route!!)
                 if (trip!!.unscored){
                     unScoredTrip.postValue(true)
