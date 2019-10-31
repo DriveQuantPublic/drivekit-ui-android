@@ -107,6 +107,10 @@ class MainActivity : AppCompatActivity() {
             REQUEST_LOGGING -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        launchSettingsIntent()
+                    }
                 }
                 return
             }

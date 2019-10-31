@@ -79,15 +79,10 @@ class PermissionUtils {
     fun checkActivityRecognitionPermission(activity: Activity, request: Int): Boolean {
         return if (!isActivityRecognitionAuthorize(activity)
                         && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.ACTIVITY_RECOGNITION)) {
-                false
-            } else {
-                ActivityCompat.requestPermissions(activity,
-                    arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
-                    request)
-                false
-            }
+            ActivityCompat.requestPermissions(activity,
+                arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+                request)
+            false
         } else{
             true
         }
@@ -100,15 +95,10 @@ class PermissionUtils {
 
     fun checkLoggingPermission(activity: Activity, request: Int): Boolean {
         return if (!isLoggingAuthorize(activity)) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                false
-            } else {
-                ActivityCompat.requestPermissions(activity,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    request)
-                false
-            }
+            ActivityCompat.requestPermissions(activity,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                request)
+            false
         } else{
             true
         }
