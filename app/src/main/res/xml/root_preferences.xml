@@ -31,8 +31,7 @@
             app:summaryOff="@string/enable_logging_pref_off"
             app:summaryOn="@string/enable_logging_pref_on"
             app:title="@string/enable_logging_title"
-            app:icon="@drawable/ic_logging"
-            app:defaultValue="false" />
+            app:icon="@drawable/ic_logging" />
 
         <!-- <SwitchPreferenceCompat
             app:key="sandbox_mode"
@@ -51,8 +50,7 @@
             app:summaryOff="@string/auto_start_off"
             app:summaryOn="@string/autostart_on"
             app:title="@string/autostart_title"
-            app:icon="@drawable/ic_autostart"
-            app:defaultValue="false" />
+            app:icon="@drawable/ic_autostart"/>
 
         <SeekBarPreference
             app:key="stop_timeout"

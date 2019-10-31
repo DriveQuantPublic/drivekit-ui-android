@@ -17,10 +17,10 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import java.util.*
 
 class DriveKitDemoApplication: Application() {
-
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -86,6 +86,18 @@ class DriveKitDemoApplication: Application() {
         DriveKitDriverData.initialize()
         // TODO: Push you api key here
         //DriveKit.setApiKey("YOUR_API_KEY")
+
+        initFirstLaunch()
+    }
+
+    private fun initFirstLaunch(){
+        val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
+        if (firstLaunch){
+            DriveKitTripAnalysis.activateAutoStart(true)
+            DriveKit.enableLogging("/DriveKit")
+            DriveKitTripAnalysis.setStopTimeOut(4*60)
+            DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
+        }
     }
 
     private fun registerReceiver(){

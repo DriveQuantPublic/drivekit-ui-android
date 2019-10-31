@@ -1,14 +1,18 @@
 package com.drivekit.demoapp.activity
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceFragmentCompat
+import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitCoreConstants
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
-import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            initPreferences()
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
 
@@ -59,6 +64,14 @@ class SettingsActivity : AppCompatActivity() {
                 "autostart" -> DriveKitTripAnalysis.activateAutoStart(sharedPreferences.getBoolean(key, false))
                 "add_beacon" -> manageBeacon(sharedPreferences.getBoolean(key, false))
             }
+        }
+
+        @SuppressLint("ApplySharedPref")
+        private fun initPreferences(){
+            preferenceManager.sharedPreferences.edit().putBoolean("autostart", DriveKitTripAnalysis.getConfig().autostart).commit()
+            val path = DriveKitSharedPreferencesUtils.getString(DriveKitCoreConstants.logging)
+            preferenceManager.sharedPreferences.edit().putBoolean("logging", path != null).commit()
+            preferenceManager.sharedPreferences.edit().putInt("stop_timeout", DriveKitTripAnalysis.getConfig().stopTimeOut/60).commit()
         }
 
         private fun manageBeacon(addBeacon: Boolean){

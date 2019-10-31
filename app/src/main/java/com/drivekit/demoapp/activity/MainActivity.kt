@@ -12,9 +12,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import kotlinx.android.synthetic.main.activity_main.*
 
