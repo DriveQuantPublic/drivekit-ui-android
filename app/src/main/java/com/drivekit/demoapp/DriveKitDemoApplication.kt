@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
+import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -16,8 +17,27 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
+import java.util.*
 
 class DriveKitDemoApplication: Application() {
+
+    companion object {
+        fun showNotification(context: Context, message: String){
+            val builder = NotificationCompat.Builder(context, "notif_channel")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(message)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(message)
+                )
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.notify(Random().nextInt(Integer.MAX_VALUE), builder.build())
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -57,6 +77,7 @@ class DriveKitDemoApplication: Application() {
             }
 
             override fun tripSavedForRepost() {
+                showNotification(applicationContext, getString(R.string.trip_save_for_repost))
             }
 
             override fun beaconDetected() {
