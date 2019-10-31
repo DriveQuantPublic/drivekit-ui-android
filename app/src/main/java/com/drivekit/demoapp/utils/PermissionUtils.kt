@@ -2,6 +2,7 @@ package com.drivekit.demoapp.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,8 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.getSystemService
+import android.support.v4.content.ContextCompat.startActivity
 
 class PermissionUtils {
 
@@ -36,8 +39,7 @@ class PermissionUtils {
         if (permissionFineLocationApproved) {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val backgroundLocationPermissionApproved = ActivityCompat.checkSelfPermission(
-                    activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+                    activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
                 if (backgroundLocationPermissionApproved) {
                     true
                 } else {
@@ -112,13 +114,20 @@ class PermissionUtils {
         }
     }
 
-    fun isIgnoringBatteryOptimizations(activity: Activity): Boolean{
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val packageName = activity.packageName
-            val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
-            pm.isIgnoringBatteryOptimizations(packageName)
+    fun isIgnoringBatteryOptimizations(activity: Activity): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                activity.applicationContext?.let {
+                    val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
+                    val packageName = activity.packageName
+                    return pm.isIgnoringBatteryOptimizations(packageName)
+                }
+            } catch (e: ActivityNotFoundException){
+                // Catch crashes on some Samsung devices
+            }
+            return true
         } else {
-            true
+            return true
         }
     }
 

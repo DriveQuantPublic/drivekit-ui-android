@@ -3,7 +3,11 @@ package com.drivekit.demoapp.activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -78,12 +82,26 @@ class MainActivity : AppCompatActivity() {
             REQUEST_LOCATION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
+                            launchSettingsIntent()
+                        }
+                    } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        launchSettingsIntent()
+                    }
                 }
                 return
             }
             REQUEST_ACTIVITY -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACTIVITY_RECOGNITION)){
+                            launchSettingsIntent()
+                        }
+                    }
                 }
             }
             REQUEST_LOGGING -> {
@@ -132,5 +150,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             button_storage.visibility = View.GONE
         }
+    }
+
+    private fun launchSettingsIntent(){
+        val intent = Intent()
+        val packageName = packageName
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        intent.data = Uri.parse("package:$packageName")
+        startActivity(intent)
     }
 }
