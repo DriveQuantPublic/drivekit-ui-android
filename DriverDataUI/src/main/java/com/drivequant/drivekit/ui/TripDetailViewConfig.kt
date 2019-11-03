@@ -9,13 +9,14 @@ import java.io.Serializable
 class TripDetailViewConfig(
     context: Context,
     val mapItems: List<MapItem> = listOf(MapItem.SAFETY, MapItem.ECO_DRIVING, MapItem.DISTRACTION, MapItem.INTERACTIVE_MAP),
-    val headerSummary: HeaderSummary = HeaderSummary.DURATION_DISTANCE,
     val displayAdvices: Boolean = true,
     val viewTitleText: String = context.getString(R.string.dk_trip_detail_title),
     val mapTraceMainColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceMainColor),
     val mapTraceWarningColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceWarningColor),
+    val enableDeleteTrip: Boolean = true,
 
     val okText: String = context.getString(R.string.dk_ok),
+    val cancelText: String = context.getString(R.string.dk_cancel),
     val noScoreText: String = context.getString(R.string.dk_trip_detail_no_score),
     val lowAccelText: String = context.getString(R.string.dk_low_accel),
     val weakAccelText: String = context.getString(R.string.dk_weak_accel),
@@ -53,4 +54,8 @@ class TripDetailViewConfig(
     val eventAccelCritText: String = context.getString(R.string.dk_safety_list_acceleration_critical),
     val eventAdherenceText: String = context.getString(R.string.dk_safety_list_adherence),
     val eventAdherenceCritText: String = context.getString(R.string.dk_safety_list_adherence_critical),
-    val eventDecelCritText: String = context.getString(R.string.dk_safety_list_brake_critical)) : Serializable
+    val eventDecelCritText: String = context.getString(R.string.dk_safety_list_brake_critical),
+    val deleteText: String = context.getString(R.string.dk_confirm_delete_trip),
+    val failedToDeleteTrip: String = context.getString(R.string.dk_failed_to_delete_trip),
+    val tripDeleted: String = context.getString(R.string.dk_trip_deleted)
+) : Serializable

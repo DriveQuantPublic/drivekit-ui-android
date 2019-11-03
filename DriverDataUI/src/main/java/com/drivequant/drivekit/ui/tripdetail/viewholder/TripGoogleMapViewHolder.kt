@@ -1,9 +1,12 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.arch.lifecycle.Observer
+import android.support.design.widget.FloatingActionButton
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.databaseutils.entity.Route
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.tripdetail.adapter.CustomInfoWindowAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
@@ -16,7 +19,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
 class TripGoogleMapViewHolder(
-    fragment: TripDetailFragment,
+    var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
     private var tripDetailViewConfig: TripDetailViewConfig,
@@ -32,6 +35,7 @@ class TripGoogleMapViewHolder(
     init {
         viewModel.displayMapItem.observe(fragment, Observer {
             it?.let { mapItem ->
+                configureAdviceButton(mapItem)
                 traceRoute(mapItem)
             }
         })
@@ -50,6 +54,29 @@ class TripGoogleMapViewHolder(
         })
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
+    }
+    
+    private fun configureAdviceButton(mapItem: MapItem){
+        val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
+        var shouldDisplayAdvice = false
+        viewModel.trip?.tripAdvices?.let {
+            val tripAdvice: TripAdvice? = mapItem.getAdvice(it)
+            if (tripAdvice != null) {
+                shouldDisplayAdvice = true
+            }
+            adviceFabButton.hide()
+            if (shouldDisplayAdvice){
+                if (mapItem == MapItem.SAFETY) {
+                    adviceFabButton.setImageResource(R.drawable.dk_safety_advice)
+                } else if (mapItem == MapItem.ECO_DRIVING) {
+                    adviceFabButton.setImageResource(R.drawable.dk_eco_advice)
+                }
+                adviceFabButton.show()
+                adviceFabButton.setOnClickListener {
+                    fragment.displayAdvice(tripAdvice)
+                }
+            }
+        }
     }
 
     fun traceRoute(mapItem: MapItem?){

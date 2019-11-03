@@ -3,13 +3,11 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
-import com.drivequant.drivekit.driverdata.trip.RouteStatus
-import com.drivequant.drivekit.driverdata.trip.TripQueryListener
-import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.driverdata.trip.*
 import java.io.Serializable
 import java.util.*
 
@@ -55,15 +53,16 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     var unScoredTrip : MutableLiveData<Boolean> = MutableLiveData()
     var noRoute: MutableLiveData<Boolean> = MutableLiveData()
     var noData: MutableLiveData<Boolean> = MutableLiveData()
+    var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun fetchTripData(){
+    fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
             DriveKitDriverData.getTrip(itinId, object: TripQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trip: Trip?) {
                     tripSyncStatus = status
                     trip?.let {
                         this@TripDetailViewModel.trip = it
-                        computeTripEvents()
+                        computeTripEvents(context)
                     }
                 }
             })
@@ -74,7 +73,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                     route?.let {
                         this@TripDetailViewModel.route = route
                     }
-                    computeTripEvents()
+                    computeTripEvents(context)
                 }
             })
         }
@@ -84,9 +83,22 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         displayMapItem.postValue(configurableMapItems[position])
     }
 
-    private fun computeTripEvents(){
+    fun getFirstMapItemIndexWithAdvice(): Int {
+        for ((loopIndex, value) in configurableMapItems.withIndex()){
+            trip?.let {
+                val advice = value.getAdvice(it.tripAdvices)
+                if (advice != null) {
+                    return loopIndex
+                }
+            }
+        }
+        return -1
+    }
+
+    private fun computeTripEvents(context: Context){
         if (routeSyncStatus != null && tripSyncStatus != null){
             if (trip != null && route != null) {
+                DriveKitDriverData.checkReverseGeocode(context, trip, route)
                 computeTripEvent(trip!!, route!!)
                 if (trip!!.unscored){
                     unScoredTrip.postValue(true)
@@ -185,6 +197,16 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
 
         events = events.sortedWith(compareBy {it.time}).toMutableList()
+    }
+
+    fun deleteTrip(){
+        if (DriveKitDriverData.isConfigured()){
+            DriveKitDriverData.deleteTrip(itinId, object: TripDeleteQueryListener {
+                override fun onResponse(status: Boolean) {
+                    deleteTripObserver.postValue(status)
+                }
+            })
+        }
     }
 }
 

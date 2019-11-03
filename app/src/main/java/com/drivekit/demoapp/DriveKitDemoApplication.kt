@@ -5,10 +5,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.os.Build
+import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
-import android.widget.Toast
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -18,8 +17,27 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import java.util.*
 
 class DriveKitDemoApplication: Application() {
+    companion object {
+        fun showNotification(context: Context, message: String){
+            val builder = NotificationCompat.Builder(context, "notif_channel")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(message)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(message)
+                )
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.notify(Random().nextInt(Integer.MAX_VALUE), builder.build())
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -39,11 +57,11 @@ class DriveKitDemoApplication: Application() {
 
     private fun createForegroundNotification(): TripNotification{
         val notification = TripNotification(
-            "Drive Kit SDK",
-            "Start a trip with drive kit SDK",
+            getString(R.string.app_name),
+            getString(R.string.trip_started),
             R.drawable.ic_launcher_background)
         notification.enableCancel = true
-        notification.cancel = "Cancel"
+        notification.cancel = getString(R.string.cancel_trip)
         notification.cancelIconId = R.drawable.ic_launcher_background
         return notification
     }
@@ -59,6 +77,7 @@ class DriveKitDemoApplication: Application() {
             }
 
             override fun tripSavedForRepost() {
+                showNotification(applicationContext, getString(R.string.trip_save_for_repost))
             }
 
             override fun beaconDetected() {
@@ -67,6 +86,18 @@ class DriveKitDemoApplication: Application() {
         DriveKitDriverData.initialize()
         // TODO: Push you api key here
         //DriveKit.setApiKey("YOUR_API_KEY")
+
+        initFirstLaunch()
+    }
+
+    private fun initFirstLaunch(){
+        val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
+        if (firstLaunch){
+            DriveKitTripAnalysis.activateAutoStart(true)
+            DriveKit.enableLogging("/DriveKit")
+            DriveKitTripAnalysis.setStopTimeOut(4*60)
+            DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
+        }
     }
 
     private fun registerReceiver(){

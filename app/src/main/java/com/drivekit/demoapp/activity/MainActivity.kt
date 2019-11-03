@@ -3,14 +3,19 @@ package com.drivekit.demoapp.activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -52,8 +57,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onTripsListButtonClicked(view: View){
+    fun onDriverDataClicked(view: View){
         startActivity(Intent(this, TripsListActivity::class.java))
+    }
+
+    fun buttonTripClicked(view: View){
+        if (DriveKitTripAnalysis.isConfigured()) {
+            when (view.id) {
+                R.id.button_trip_start -> {
+                    DriveKitTripAnalysis.startTrip()
+                }
+                R.id.button_trip_stop -> {
+                    DriveKitTripAnalysis.stopTrip()
+                }
+                R.id.button_trip_cancel -> {
+                    DriveKitTripAnalysis.cancelTrip()
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -61,17 +82,35 @@ class MainActivity : AppCompatActivity() {
             REQUEST_LOCATION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
+                            launchSettingsIntent()
+                        }
+                    } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        launchSettingsIntent()
+                    }
                 }
                 return
             }
             REQUEST_ACTIVITY -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACTIVITY_RECOGNITION)){
+                            launchSettingsIntent()
+                        }
+                    }
                 }
             }
             REQUEST_LOGGING -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     handlePermissionButtonsVisibility()
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                        launchSettingsIntent()
+                    }
                 }
                 return
             }
@@ -115,5 +154,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             button_storage.visibility = View.GONE
         }
+    }
+
+    private fun launchSettingsIntent(){
+        val intent = Intent()
+        val packageName = packageName
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        intent.data = Uri.parse("package:$packageName")
+        startActivity(intent)
     }
 }

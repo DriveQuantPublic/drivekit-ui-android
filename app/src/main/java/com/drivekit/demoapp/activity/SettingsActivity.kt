@@ -1,13 +1,16 @@
 package com.drivekit.demoapp.activity
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceFragmentCompat
+import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
-import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.driverdata.DriveKitDriverData
+
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +33,14 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            initPreferences()
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
 
         override fun onResume() {
             super.onResume()
             preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+            updateUserIdSummary()
         }
 
         override fun onPause() {
@@ -50,10 +55,20 @@ class SettingsActivity : AppCompatActivity() {
                 "enable_share_position" -> DriveKitTripAnalysis.enableSharePosition(sharedPreferences.getBoolean(key, false))
                 "logging" -> configureLogging(sharedPreferences.getBoolean(key, false))
                 "sandbox_mode" -> DriveKit.enableSandboxMode(sharedPreferences.getBoolean(key, false))
-                "user_id" -> DriveKit.setUserId(sharedPreferences.getString(key, "")!!)
+                "user_id" -> {
+                    reconfigureDriveKit(sharedPreferences.getString(key, "")!!)
+                    updateUserIdSummary()
+                }
                 "autostart" -> DriveKitTripAnalysis.activateAutoStart(sharedPreferences.getBoolean(key, false))
                 "add_beacon" -> manageBeacon(sharedPreferences.getBoolean(key, false))
             }
+        }
+
+        @SuppressLint("ApplySharedPref")
+        private fun initPreferences(){
+            preferenceManager.sharedPreferences.edit().putBoolean("autostart", DriveKitTripAnalysis.getConfig().autostart).commit()
+            preferenceManager.sharedPreferences.edit().putBoolean("logging", false).commit()
+            preferenceManager.sharedPreferences.edit().putInt("stop_timeout", DriveKitTripAnalysis.getConfig().stopTimeOut/60).commit()
         }
 
         private fun manageBeacon(addBeacon: Boolean){
@@ -68,6 +83,27 @@ class SettingsActivity : AppCompatActivity() {
                 DriveKit.enableLogging("/DriveKit")
             else
                 DriveKit.disableLogging()
+        }
+
+        private fun reconfigureDriveKit(userId: String){
+            val apiKey = DriveKit.config.apiKey
+            DriveKit.reset()
+            DriveKitDriverData.reset()
+            apiKey?.let {
+                DriveKit.setApiKey(it)
+            }
+            DriveKit.setUserId(userId)
+        }
+
+        private fun updateUserIdSummary(){
+            findPreference("user_id")?.let {
+                val userId = preferenceManager.sharedPreferences.getString("user_id", "")!!
+                if (userId.isBlank()) {
+                    it.summary = getString(R.string.user_id_description)
+                } else {
+                    it.summary = userId
+                }
+            }
         }
     }
 }

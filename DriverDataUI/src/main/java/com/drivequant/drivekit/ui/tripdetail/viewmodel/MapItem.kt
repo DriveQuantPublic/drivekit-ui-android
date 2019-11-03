@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
 
 enum class MapItem {
@@ -15,5 +16,16 @@ enum class MapItem {
             INTERACTIVE_MAP -> R.drawable.dk_trip_timeline_tab_icon
             DISTRACTION -> R.drawable.dk_distraction_tab_icon
         }
+    }
+
+    fun getAdvice(advices: List<TripAdvice>): TripAdvice? {
+        for (advice in advices){
+            if (this == SAFETY && advice.theme.equals("SAFETY")) {
+                return advice
+            } else if (this == ECO_DRIVING && advice.theme.equals("ECODRIVING")) {
+                return advice
+            }
+        }
+        return null
     }
 }

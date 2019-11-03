@@ -15,16 +15,20 @@ class TripDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val ITINID_EXTRA = "itinId-extra"
+        private const val OPEN_ADVICE_EXTRA = "openAdvice-extra"
         private lateinit var tripDetailViewConfig: TripDetailViewConfig
         private lateinit var tripsViewConfig: TripsViewConfig
 
-        fun launchActivity(context: Context, itinId : String, tripDetailViewConfig: TripDetailViewConfig = TripDetailViewConfig(
-            context
-        ), tripsViewConfig: TripsViewConfig) {
+        fun launchActivity(context: Context,
+                           itinId : String,
+                           tripDetailViewConfig: TripDetailViewConfig = TripDetailViewConfig(context),
+                           tripsViewConfig: TripsViewConfig,
+                           openAdvice: Boolean = false) {
             TripDetailActivity.tripDetailViewConfig = tripDetailViewConfig
             TripDetailActivity.tripsViewConfig = tripsViewConfig
             val intent = Intent(context, TripDetailActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
+            intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
             context.startActivity(intent)
         }
     }
@@ -38,10 +42,10 @@ class TripDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
-
+        val openAdvice = intent.getBooleanExtra(OPEN_ADVICE_EXTRA, false)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container,
-                TripDetailFragment.newInstance(itinId, tripDetailViewConfig, tripsViewConfig))
+                TripDetailFragment.newInstance(itinId, tripDetailViewConfig, tripsViewConfig, openAdvice))
             .commit()
     }
 

@@ -20,7 +20,7 @@ class TripDetailFragmentPagerAdapter(
         return tripDetailViewModel.trip?.let {
              when(tripDetailViewModel.configurableMapItems[position]){
                 MapItem.SAFETY -> SafetyFragment.newInstance(it.safety!!, tripDetailViewConfig, tripsViewConfig)
-                MapItem.ECO_DRIVING -> EcoDrivingFragment.newInstance(it.ecoDriving!!, tripDetailViewConfig)
+                MapItem.ECO_DRIVING -> EcoDrivingFragment.newInstance(it.ecoDriving!!, tripDetailViewConfig, tripsViewConfig)
                 MapItem.DISTRACTION -> DriverDistractionFragment.newInstance(it.driverDistraction!!, tripDetailViewConfig, tripsViewConfig)
                 MapItem.INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel, tripsViewConfig, tripDetailViewConfig)
             }
