@@ -33,8 +33,8 @@ dependencies {
     implementation 'com.android.support:preference-v14:28.0.0'
     implementation 'com.android.support:design:28.0.0'
 
-    debugImplementation project(':DriverData')
-    releaseImplementation 'com.drivequant.drivekit:drivekit-driver-data:1.1.0-beta2'
+    //debugImplementation project(':DriverData')
+    implementation 'com.drivequant.drivekit:drivekit-driver-data:1.1.1'
 }
 
 uploadArchives {

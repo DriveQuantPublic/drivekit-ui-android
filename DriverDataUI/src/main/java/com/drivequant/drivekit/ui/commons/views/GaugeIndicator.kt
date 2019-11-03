@@ -8,7 +8,6 @@ import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.driverdata.DriveKitDriverDataConstants
 import com.drivequant.drivekit.ui.extension.removeZeroDecimal
 import android.support.v4.content.res.ResourcesCompat
 import com.drivequant.drivekit.ui.R
@@ -44,7 +43,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet): ConstraintLayout(co
         try {
             textView.typeface = ResourcesCompat.getFont(context, primaryFont)
         } catch(e: Exception){
-            DriveKitLog.i(DriveKitDriverDataConstants.TAG, "primaryFont asset not found : $primaryFont")
+            DriveKitLog.i("Driveer Data UI", "primaryFont asset not found : $primaryFont")
         }
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))

@@ -8,8 +8,6 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitCoreConstants
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 
@@ -69,8 +67,7 @@ class SettingsActivity : AppCompatActivity() {
         @SuppressLint("ApplySharedPref")
         private fun initPreferences(){
             preferenceManager.sharedPreferences.edit().putBoolean("autostart", DriveKitTripAnalysis.getConfig().autostart).commit()
-            val path = DriveKitSharedPreferencesUtils.getString(DriveKitCoreConstants.logging)
-            preferenceManager.sharedPreferences.edit().putBoolean("logging", path != null).commit()
+            preferenceManager.sharedPreferences.edit().putBoolean("logging", false).commit()
             preferenceManager.sharedPreferences.edit().putInt("stop_timeout", DriveKitTripAnalysis.getConfig().stopTimeOut/60).commit()
         }
 
