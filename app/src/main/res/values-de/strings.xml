@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="activity_permission">Bewegung</string>
+   <string name="add_beacon_off">Der Beacon ist nicht konfiguriert.</string>
+   <string name="add_beacon_on">Der Beacon ist konfiguriert.</string>
+   <string name="add_beacon_title">Beacon Konfiguration</string>
+   <string name="auto_start_off">Aktivieren Sie diese Option, um Ihre Fahrten automatisch zu erkennen.</string>
+   <string name="autostart_on">Auslösungen werden automatisch erkannt.</string>
+   <string name="autostart_title">Automatisches Start</string>
+   <string name="battery_permission">Batterie</string>
+   <string name="beacon_required_on">Beacon ist erforderlich, um eine Reise zu validieren.</string>
+   <string name="beacon_required_off">Beacon ist nicht verpflichtet, eine Reise zu validieren.</string>
+   <string name="beacon_required_title">beacon benötigt ?</string>
+   <string name="cancel_trip">Stornierung der Reise</string>
+   <string name="driver_data_explanation">Ein Beispiel für die DriveKit DriverData-Implementierung mit seiner Benutzeroberfläche für die Reiseliste und das Reisendetail.</string>
+   <string name="enable_logging_pref_off">Aktivieren Sie diese Einstellung, um das Protokoll auf das Gerät zu schreiben.</string>
+   <string name="enable_logging_pref_on">Die Protokolldateien sind im Ordner \"DriveKit\" des Telefons verfügbar.</string>
+   <string name="enable_logging_title">Logging</string>
+   <string name="enable_share_position_off">Aktivieren Sie diese Einstellung, um Ihre Position während der Fahrt zu teilen.</string>
+   <string name="enable_share_position_on">Deaktivieren Sie diese Einstellung, um Ihre Position während der Fahrt nicht zu teilen.</string>
+   <string name="enable_share_position_title">Positionsteilung aktiviert?</string>
+   <string name="external_storage_logging_permission">Logging</string>
+   <string name="global_config_settings">Allgemeine Einstellungen</string>
+   <string name="location_permission">Zugriff auf den Standort zulassen</string>
+   <string name="notification_permission">Mitteilungen</string>
+   <string name="sandbox_mode_off">DriveKit ist mit der DriveQuant Produktionsumgebung verbunden.</string>
+   <string name="sandbox_mode_on">DriveKit ist mit der DriveQuant Integrationsumgebung verbunden.</string>
+   <string name="sandbox_mode_title">Sandbox-Modus</string>
+   <string name="start_trip">Fahrt beginnen</string>
+   <string name="stop_timeout_title">Timeout für Stopp der Reise (in Minuten)</string>
+   <string name="stop_trip">Fahrt abbrechen</string>
+   <string name="train_trip">Ihre Reise wurde mit dem Zug gemacht</string>
+   <string name="trip_analysis_settings">Konfiguration der Trip-Analyse</string>
+   <string name="trip_cancelled_highspeed">Ihre Fahrt wurde storniert, weil Sie mit dem Zug oder Flugzeug unterwegs sind</string>
+   <string name="trip_cancelled_no_beacon">Ihre Fahrt wurde abgebrochen, da Ihr Bluetooth-Signalgeber nicht erkannt wurde</string>
+   <string name="trip_cancelled_no_gps_data">Die Fahrt konnte nicht analysiert werden, da die GPS-Daten nicht abgerufen werden konnten.</string>
+   <string name="trip_cancelled_reset">DriveKit-Reset während der Fahrt</string>
+   <string name="trip_cancelled_user">Reise storniert durch den Benutzer</string>
+   <string name="trip_finished">Eine neue Fahrt wurde gerade analysiert</string>
+   <string name="trip_save_for_repost">Die Fahrt konnte nicht analysiert werden, da die Internetverbindung zu langsam ist. Diese wird später analysiert werden.</string>
+   <string name="trip_started">Eine Fahrt wird aufgezeichnet</string>
+   <string name="user_id_description">Klicken Sie hier, um Ihre Benutzerkennung einzugeben.</string>
+   <string name="user_id_title">Identificador de usuario</string>
+</resources>

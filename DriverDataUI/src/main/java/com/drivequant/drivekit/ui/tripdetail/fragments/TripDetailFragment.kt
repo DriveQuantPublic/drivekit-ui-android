@@ -9,12 +9,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v4.text.HtmlCompat
 import android.support.v4.view.ViewPager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -23,6 +24,7 @@ import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdap
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.drivequant.drivekit.ui.trips.viewmodel.HeaderSummary
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
@@ -33,6 +35,7 @@ class TripDetailFragment : Fragment() {
     private lateinit var tripsViewConfig: TripsViewConfig
 
     private lateinit var itinId: String
+    private var openAdvice: Boolean = false
 
     private lateinit var tripMapViewHolder: TripGoogleMapViewHolder
     private var mapFragment: SupportMapFragment? = null
@@ -40,9 +43,13 @@ class TripDetailFragment : Fragment() {
     private lateinit var viewContentTrip: View
 
     companion object {
-        fun newInstance(itinId: String, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig): TripDetailFragment {
+        fun newInstance(itinId: String,
+                        tripDetailViewConfig: TripDetailViewConfig,
+                        tripsViewConfig: TripsViewConfig,
+                        openAdvice: Boolean = false): TripDetailFragment {
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
+            fragment.openAdvice = openAdvice
             fragment.tripDetailViewConfig = tripDetailViewConfig
             fragment.tripsViewConfig = tripsViewConfig
             return fragment
@@ -57,6 +64,31 @@ class TripDetailFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = rootView.findViewById(R.id.container_trip)
         return rootView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.trip_menu_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId){
+            R.id.trip_delete -> {
+                AlertDialog.Builder(context)
+                    .setTitle(getString(R.string.app_name))
+                    .setMessage(tripDetailViewConfig.deleteText)
+                    .setCancelable(true)
+                    .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                        showProgressCircular()
+                        deleteTrip()
+                    }
+                    .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,6 +112,9 @@ class TripDetailFragment : Fragment() {
         activity?.title = tripDetailViewConfig.viewTitleText
         container_header_trip.setBackgroundColor(tripsViewConfig.primaryColor)
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
+        if (tripDetailViewConfig.enableDeleteTrip) {
+            setHasOptionsMenu(true)
+        }
         loadTripData()
     }
 
@@ -88,6 +123,35 @@ class TripDetailFragment : Fragment() {
         outState.putSerializable("detailConfig", tripDetailViewConfig)
         outState.putString("itinId", itinId)
         super.onSaveInstanceState(outState)
+    }
+
+    private fun deleteTrip(){
+        viewModel.deleteTripObserver.observe(this, Observer {
+            hideProgressCircular()
+            if (it != null){
+                if (it){
+                    AlertDialog.Builder(context)
+                        .setTitle(getString(R.string.app_name))
+                        .setMessage(tripDetailViewConfig.tripDeleted)
+                        .setCancelable(false)
+                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                            dialog.dismiss()
+                            activity?.onBackPressed()
+                        }
+                        .show()
+                } else {
+                    AlertDialog.Builder(context)
+                        .setTitle(getString(R.string.app_name))
+                        .setMessage(tripDetailViewConfig.failedToDeleteTrip)
+                        .setCancelable(true)
+                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                }
+            }
+        })
+        viewModel.deleteTrip()
     }
 
     private fun loadTripData(){
@@ -123,12 +187,12 @@ class TripDetailFragment : Fragment() {
         viewModel.noData.observe(this, Observer{
             displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
         })
-        viewModel.fetchTripData()
+        viewModel.fetchTripData(requireContext())
     }
 
     private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true){
         AlertDialog.Builder(context)
-            .setTitle(tripDetailViewConfig.viewTitleText)
+            .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
             .setCancelable(false)
             .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
@@ -138,6 +202,38 @@ class TripDetailFragment : Fragment() {
                 }
             }
             .show()
+    }
+
+    private fun displayAdviceFromTripInfo(){
+        if (openAdvice){
+            val index = viewModel.getFirstMapItemIndexWithAdvice()
+            if (index > -1) {
+                view_pager.currentItem = index
+                viewModel.trip?.let {
+                    val tripAdvice = viewModel.configurableMapItems[index].getAdvice(it.tripAdvices)
+                    displayAdvice(tripAdvice)
+                }
+            }
+        }
+    }
+
+    fun displayAdvice(tripAdvice: TripAdvice?){
+        tripAdvice?.let {
+            val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
+            val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
+            headerText.text = tripAdvice.title
+            headerText.setBackgroundColor(tripsViewConfig.primaryColor)
+            tripAdvice.message?.let {
+                adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+
+            AlertDialog.Builder(context)
+                .setView(adviceView)
+                .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     private fun setMapController(){
@@ -154,6 +250,7 @@ class TripDetailFragment : Fragment() {
                     )
                 tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
                 tripMapViewHolder.updateCamera()
+                displayAdviceFromTripInfo()
                 hideProgressCircular()
             }
         }
@@ -205,7 +302,18 @@ class TripDetailFragment : Fragment() {
 
     private fun setHeaderSummary(){
         trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
-        trip_distance.text = tripDetailViewConfig.headerSummary.text(requireContext(), viewModel.trip!!)
+        trip_distance.text = HeaderSummary.DISTANCE_DURATION.text(requireContext(), viewModel.trip!!)
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
+                }
+            })
     }
 
     private fun hideProgressCircular() {

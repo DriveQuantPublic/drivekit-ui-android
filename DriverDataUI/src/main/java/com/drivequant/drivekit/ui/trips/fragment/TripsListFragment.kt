@@ -40,7 +40,6 @@ class TripsListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
-        updateTrips()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +60,11 @@ class TripsListFragment : Fragment() {
             }
             false
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateTrips()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

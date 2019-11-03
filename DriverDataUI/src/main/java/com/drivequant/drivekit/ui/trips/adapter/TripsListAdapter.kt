@@ -9,6 +9,7 @@ import android.widget.ExpandableListView
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripsViewConfig
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
@@ -47,7 +48,7 @@ class TripsListAdapter(
         val stringDate: String = dateFormatDate.format(date)
 
         holder.tvDate.text = stringDate.capitalize()
-        holder.tvInformations.text = tripsViewConfig.headerDay.text(holder.itemView.context, trips?.trips)
+        holder.tvInformations.text = HeaderDay.DISTANCE_DURATION.text(holder.itemView.context, trips?.trips)
 
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
