@@ -1,2 +1,1 @@
 include ':app', ':DriverDataUI'
-rootProject.name='DriveKit Demo App'
