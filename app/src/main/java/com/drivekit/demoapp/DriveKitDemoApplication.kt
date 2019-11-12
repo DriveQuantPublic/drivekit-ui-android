@@ -85,7 +85,7 @@ class DriveKitDemoApplication: Application() {
         })
         DriveKitDriverData.initialize()
         // TODO: Push you api key here
-        //DriveKit.setApiKey("YOUR_API_KEY")
+        DriveKit.setApiKey("qDcgo5W2I1p3u5STEhuQ1AJo")
 
         initFirstLaunch()
     }
