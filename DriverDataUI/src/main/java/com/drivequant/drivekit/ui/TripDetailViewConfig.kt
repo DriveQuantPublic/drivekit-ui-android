@@ -57,5 +57,16 @@ class TripDetailViewConfig(
     val eventDecelCritText: String = context.getString(R.string.dk_safety_list_brake_critical),
     val deleteText: String = context.getString(R.string.dk_confirm_delete_trip),
     val failedToDeleteTrip: String = context.getString(R.string.dk_failed_to_delete_trip),
-    val tripDeleted: String = context.getString(R.string.dk_trip_deleted)
+    val tripDeleted: String = context.getString(R.string.dk_trip_deleted),
+    val adviceDisagreeImage: String = context.getString(R.string.dk_advice_disagree),
+    val adviceDisagreeText: String = context.getString(R.string.dk_advice_disagree),
+    val adviceAgreeText: String = context.getString(R.string.dk_advice_agree),
+    val adviceFeedbackSuccessText: String = context.getString(R.string.dk_advice_feedback_success),
+    val adviceDisagreeTitleText: String = context.getString(R.string.dk_advice_feedback_disagree_title),
+    val adviceDisagreeDescText: String = context.getString(R.string.dk_advice_feedback_disagree_desc),
+    val adviceFeedbackChoice01Text: String = context.getString(R.string.dk_advice_feedback_01),
+    val adviceFeedbackChoice02Text: String = context.getString(R.string.dk_advice_feedback_02),
+    val adviceFeedbackChoice03Text: String = context.getString(R.string.dk_advice_feedback_03),
+    val adviceFeedbackChoice04Text: String = context.getString(R.string.dk_advice_feedback_04),
+    val adviceFeedbackChoice05Text: String = context.getString(R.string.dk_advice_feedback_05)
 ) : Serializable

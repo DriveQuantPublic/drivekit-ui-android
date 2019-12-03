@@ -61,4 +61,16 @@
    <string name="dk_cancel">Annuler</string>
    <string name="dk_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_trip_deleted">Votre trajet a été supprimé.</string>
+
+
+   <string name="dk_advice_disagree">Pas compris</string>
+   <string name="dk_advice_agree">Compris</string>
+   <string name="dk_advice_feedback_success">Votre avis a bien été pris en compte. Merci !</string>
+   <string name="dk_advice_feedback_disagree_title">Votre avis</string>
+   <string name="dk_advice_feedback_disagree_desc">Si vous n\'avez pas compris le conseil ou qu\'il ne vous paraît pas utile, vous pouvez l\'évaluer. Nous vous remercions d\'avance pour votre contribution, votre avis permet d\'améliorer l\'application ainsi que les conseils de conduite et il bénéficiera à toute la communauté d\'utilisateurs.</string>
+   <string name="dk_advice_feedback_01">Le conseil ne correspond pas aux conditions de mon trajet.</string>
+   <string name="dk_advice_feedback_02">Je ne suis pas d\'accord avec le conseil.</string>
+   <string name="dk_advice_feedback_03">Le conseil n\'est pas assez clair.</string>
+   <string name="dk_advice_feedback_04">Je reçois ce conseil trop souvent.</string>
+   <string name="dk_advice_feedback_05">Autre raison. Laisser un commentaire.</string>
 </resources>
