@@ -21,7 +21,7 @@ class TripDetailActivity : AppCompatActivity() {
 
         fun launchActivity(context: Context,
                            itinId : String,
-                           tripDetailViewConfig: TripDetailViewConfig = TripDetailViewConfig(context),
+                           tripDetailViewConfig: TripDetailViewConfig = TripDetailViewConfig(context, enableFeedbackAdvices = true),
                            tripsViewConfig: TripsViewConfig,
                            openAdvice: Boolean = false) {
             TripDetailActivity.tripDetailViewConfig = tripDetailViewConfig

@@ -10,6 +10,7 @@ class TripDetailViewConfig(
     context: Context,
     val mapItems: List<MapItem> = listOf(MapItem.SAFETY, MapItem.ECO_DRIVING, MapItem.DISTRACTION, MapItem.INTERACTIVE_MAP),
     val displayAdvices: Boolean = true,
+    val enableFeedbackAdvices: Boolean = false, // TODO remonter dans la tripslistviewconfig ?
     val viewTitleText: String = context.getString(R.string.dk_trip_detail_title),
     val mapTraceMainColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceMainColor),
     val mapTraceWarningColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceWarningColor),

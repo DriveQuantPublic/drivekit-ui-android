@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import android.widget.Toast
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -54,6 +55,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     var noRoute: MutableLiveData<Boolean> = MutableLiveData()
     var noData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
+    var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
 
     fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
@@ -76,6 +78,20 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                     computeTripEvents(context)
                 }
             })
+        }
+    }
+
+    private fun updateTripAdvice(adviceId: String, evaluation: Int, feedback: Int, comment: String?){
+        if (DriveKitDriverData.isConfigured()){
+            trip?.let {
+                for (tripAdvice in it.tripAdvices){
+                    if (tripAdvice.id == adviceId){
+                        tripAdvice.evaluation = evaluation
+                        tripAdvice.feedback = feedback
+                        tripAdvice.comment = comment
+                    }
+                }
+            }
         }
     }
 
@@ -207,6 +223,18 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                 }
             })
         }
+    }
+
+    fun sendTripAdviceFeedback(itinId: String, adviceId: String, isPositive: Boolean, feedback: Int, comment: String? = null ){
+        val evaluation = if (isPositive) 1 else 2
+        DriveKitDriverData.sendTripAdviceFeedback(itinId, adviceId, evaluation, feedback, comment, listener = object: TripAdviceFeedbackQueryListener {
+            override fun onResponse(status: Boolean) {
+                if (status){
+                    updateTripAdvice(adviceId, evaluation, feedback, comment)
+                }
+                sendAdviceFeedbackObserver.postValue(status)
+            }
+        })
     }
 }
 

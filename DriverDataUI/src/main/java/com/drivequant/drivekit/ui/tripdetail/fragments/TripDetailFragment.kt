@@ -11,14 +11,10 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v4.text.HtmlCompat
 import android.support.v4.view.ViewPager
+import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
-import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.trip.TripAdviceFeedbackQueryListener
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -41,7 +37,7 @@ class TripDetailFragment : Fragment() {
     private var openAdvice: Boolean = false
 
     private var adviceAlertDialog: AlertDialog? = null
-
+    private var feedbackAlertDialog: AlertDialog? = null
 
     private lateinit var tripMapViewHolder: TripGoogleMapViewHolder
     private var mapFragment: SupportMapFragment? = null
@@ -160,6 +156,21 @@ class TripDetailFragment : Fragment() {
         viewModel.deleteTrip()
     }
 
+    private fun sendTripAdviceFeedback(tripAdviceId: String, evaluation: Boolean, feedback: Int, comment: String? = null ){
+        viewModel.sendAdviceFeedbackObserver.observe(this, Observer { status ->
+            hideProgressCircular()
+            if (status != null){
+                adviceAlertDialog?.hide()
+                if (status){
+                    Toast.makeText(context, tripDetailViewConfig.adviceFeedbackSuccessText, Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "HC Error", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+        viewModel.sendTripAdviceFeedback(itinId, tripAdviceId, evaluation, feedback, comment)
+    }
+
     private fun loadTripData(){
         viewModel.tripEventsObserver.observe(this, Observer {
             if (viewModel.events.isNotEmpty()) {
@@ -237,7 +248,7 @@ class TripDetailFragment : Fragment() {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
 
-            if (tripAdvice.evaluation == 0){
+            if (tripAdvice.evaluation == 0 && tripDetailViewConfig.enableFeedbackAdvices){
                 val disagreeButton = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_negative)
                 val disagreeText = adviceView.findViewById<TextView>(R.id.advice_disagree_textview)
                 val disagreeImage = adviceView.findViewById<ImageView>(R.id.advice_disagree_image)
@@ -250,7 +261,9 @@ class TripDetailFragment : Fragment() {
                 disagreeText.setTextColor(tripsViewConfig.primaryColor)
                 DrawableCompat.setTint(disagreeImage.drawable, tripsViewConfig.primaryColor)
                 disagreeButton.setOnClickListener {
-                    // TODO
+                    tripAdvice.id?.let { adviceId ->
+                        displayAdviceFeedback(adviceId)
+                    }
                 }
 
                 agreeText.text = tripDetailViewConfig.adviceAgreeText
@@ -258,17 +271,8 @@ class TripDetailFragment : Fragment() {
                 DrawableCompat.setTint(agreeImage.drawable, tripsViewConfig.primaryColor)
                 agreeButton.setOnClickListener {
                     tripAdvice.id?.let { adviceId ->
-                        // TODO : display a loader
-                        DriveKitDriverData.sendTripAdviceFeedback(itinId, adviceId, 1, listener = object:
-                            TripAdviceFeedbackQueryListener {
-                            override fun onResponse(status: Boolean) {
-                                adviceAlertDialog?.dismiss()
-                                // TODO hide loader
-                                if (status) {
-                                    Toast.makeText(context, tripDetailViewConfig.adviceFeedbackSuccessText, Toast.LENGTH_LONG).show()
-                                }
-                            }
-                        })
+                        showProgressCircular()
+                        sendTripAdviceFeedback(adviceId, true, 0)
                     }
                 }
                 feedbackButtonsLayout.visibility = View.VISIBLE
@@ -277,9 +281,48 @@ class TripDetailFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-
             adviceAlertDialog = builder.show()
         }
+    }
+
+    private fun displayAdviceFeedback(adviceId: String){
+        val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
+        val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
+        header.setBackgroundColor(tripsViewConfig.primaryColor)
+        header.text = tripDetailViewConfig.adviceDisagreeTitleText
+
+        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = tripDetailViewConfig.adviceDisagreeDescText
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = tripDetailViewConfig.adviceFeedbackChoice01Text
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = tripDetailViewConfig.adviceFeedbackChoice02Text
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_03).text = tripDetailViewConfig.adviceFeedbackChoice03Text
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_04).text = tripDetailViewConfig.adviceFeedbackChoice04Text
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = tripDetailViewConfig.adviceFeedbackChoice05Text
+
+        val builder = AlertDialog.Builder(context)
+            .setView(feedbackView)
+            .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(tripDetailViewConfig.okText) { _, _ -> buildFeedback(adviceId, feedbackView) }
+
+        feedbackAlertDialog = builder.show()
+    }
+
+    private fun buildFeedback(adviceId: String, feedbackView: View){
+        val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
+        showProgressCircular()
+        var comment: String? = null
+        val feedback = when (radioGroup.checkedRadioButtonId){ // TODO handle it in ViewModel ?
+            R.id.radio_button_choice_01 -> 1
+            R.id.radio_button_choice_02 -> 2
+            R.id.radio_button_choice_03 -> 3
+            R.id.radio_button_choice_04 -> 4
+            R.id.radio_button_choice_05 -> 5
+            else -> 0
+        }
+        if (feedback == 5){
+            comment = feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.toString()
+        }
+
+        sendTripAdviceFeedback(adviceId, false, feedback, comment)
     }
 
     private fun setMapController(){

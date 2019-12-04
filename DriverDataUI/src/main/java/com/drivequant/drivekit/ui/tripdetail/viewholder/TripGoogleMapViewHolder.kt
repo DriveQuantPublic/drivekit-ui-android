@@ -59,8 +59,8 @@ class TripGoogleMapViewHolder(
     private fun configureAdviceButton(mapItem: MapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
         var shouldDisplayAdvice = false
-        viewModel.trip?.tripAdvices?.let {
-            val tripAdvice: TripAdvice? = mapItem.getAdvice(it)
+        viewModel.trip?.tripAdvices?.let { tripAdvices ->
+            val tripAdvice: TripAdvice? = mapItem.getAdvice(tripAdvices)
             if (tripAdvice != null) {
                 shouldDisplayAdvice = true
             }
@@ -73,7 +73,7 @@ class TripGoogleMapViewHolder(
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
-                    fragment.displayAdvice(tripAdvice)
+                    fragment.displayAdvice(mapItem.getAdvice(tripAdvices))
                 }
             }
         }

@@ -16,7 +16,7 @@ class TripsListActivity : AppCompatActivity() {
 
         val tripsViewConfig = TripsViewConfig(this)
 
-        val tripDetailViewConfig = TripDetailViewConfig(this)
+        val tripDetailViewConfig = TripDetailViewConfig(this, enableFeedbackAdvices = true)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, TripsListFragment.newInstance(
