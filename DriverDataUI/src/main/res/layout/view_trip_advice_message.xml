@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_trip_advice_message"
     android:layout_width="match_parent"
@@ -16,19 +15,12 @@
         android:gravity="center_vertical"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Title header"/>
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/text_view_advice_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_weight="1">
         <TextView
             android:id="@+id/text_view_advice_content"
             android:layout_width="match_parent"
@@ -37,8 +29,5 @@
             tools:text="Trip advice text"/>
     </ScrollView>
     <include
-        layout="@layout/view_trip_advice_feedback_buttons"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        layout="@layout/view_trip_advice_feedback_buttons"/>
 </LinearLayout>

@@ -284,6 +284,8 @@ class TripDetailFragment : Fragment() {
     private fun displayAdviceFeedback(adviceId: String){
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
+        val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
+
         header.setBackgroundColor(tripsViewConfig.primaryColor)
         header.text = tripDetailViewConfig.adviceDisagreeTitleText
 
@@ -294,16 +296,26 @@ class TripDetailFragment : Fragment() {
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_04).text = tripDetailViewConfig.adviceFeedbackChoice04Text
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = tripDetailViewConfig.adviceFeedbackChoice05Text
 
+        radioGroup.setOnCheckedChangeListener { _, checkedId -> handleClassicFeedbackAnswer(checkedId, feedbackView) }
+
         val builder = AlertDialog.Builder(context)
             .setView(feedbackView)
             .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(tripDetailViewConfig.okText) { _, _ -> buildFeedback(adviceId, feedbackView) }
+            .setPositiveButton(tripDetailViewConfig.okText) { _, _ -> buildFeedbackData(adviceId, feedbackView, radioGroup) }
 
         feedbackAlertDialog = builder.show()
     }
 
-    private fun buildFeedback(adviceId: String, feedbackView: View){
-        val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
+    private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View){
+        if (checkedId == R.id.radio_button_choice_05){
+            feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = true
+            feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        } else {
+            feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
+        }
+    }
+
+    private fun buildFeedbackData(adviceId: String, feedbackView: View, radioGroup: RadioGroup){
         showProgressCircular()
         var comment: String? = null
         val feedback = when (radioGroup.checkedRadioButtonId){
