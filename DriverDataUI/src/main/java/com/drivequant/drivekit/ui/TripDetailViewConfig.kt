@@ -3,14 +3,12 @@ package com.drivequant.drivekit.ui
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
-import com.drivequant.drivekit.ui.trips.viewmodel.HeaderSummary
 import java.io.Serializable
 
 class TripDetailViewConfig(
     context: Context,
     val mapItems: List<MapItem> = listOf(MapItem.SAFETY, MapItem.ECO_DRIVING, MapItem.DISTRACTION, MapItem.INTERACTIVE_MAP),
     val displayAdvices: Boolean = true,
-    val enableFeedbackAdvices: Boolean = false, // TODO remonter dans la tripslistviewconfig ?
     val viewTitleText: String = context.getString(R.string.dk_trip_detail_title),
     val mapTraceMainColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceMainColor),
     val mapTraceWarningColor: Int = ContextCompat.getColor(context, R.color.dkMapTraceWarningColor),
@@ -59,7 +57,6 @@ class TripDetailViewConfig(
     val deleteText: String = context.getString(R.string.dk_confirm_delete_trip),
     val failedToDeleteTrip: String = context.getString(R.string.dk_failed_to_delete_trip),
     val tripDeleted: String = context.getString(R.string.dk_trip_deleted),
-    val adviceDisagreeImage: String = context.getString(R.string.dk_advice_disagree),
     val adviceDisagreeText: String = context.getString(R.string.dk_advice_disagree),
     val adviceAgreeText: String = context.getString(R.string.dk_advice_agree),
     val adviceFeedbackSuccessText: String = context.getString(R.string.dk_advice_feedback_success),

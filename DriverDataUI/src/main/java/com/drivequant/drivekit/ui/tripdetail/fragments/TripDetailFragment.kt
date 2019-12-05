@@ -248,7 +248,7 @@ class TripDetailFragment : Fragment() {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
 
-            if (tripAdvice.evaluation == 0 && tripDetailViewConfig.enableFeedbackAdvices){
+            if (tripAdvice.evaluation == 0 && tripsViewConfig.enableAdviceFeedback){
                 val disagreeButton = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_negative)
                 val disagreeText = adviceView.findViewById<TextView>(R.id.advice_disagree_textview)
                 val disagreeImage = adviceView.findViewById<ImageView>(R.id.advice_disagree_image)
