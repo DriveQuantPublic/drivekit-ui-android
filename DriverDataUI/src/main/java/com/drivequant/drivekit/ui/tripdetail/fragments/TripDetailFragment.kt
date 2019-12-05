@@ -161,11 +161,7 @@ class TripDetailFragment : Fragment() {
             hideProgressCircular()
             if (status != null){
                 adviceAlertDialog?.hide()
-                if (status){
-                    Toast.makeText(context, tripDetailViewConfig.adviceFeedbackSuccessText, Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(context, "HC Error", Toast.LENGTH_LONG).show()
-                }
+                Toast.makeText(context, if (status) tripDetailViewConfig.adviceFeedbackSuccessText else tripDetailViewConfig.adviceFeedbackErrorText, Toast.LENGTH_LONG).show()
             }
         })
         viewModel.sendTripAdviceFeedback(itinId, tripAdviceId, evaluation, feedback, comment)

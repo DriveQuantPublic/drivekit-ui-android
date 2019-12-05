@@ -60,6 +60,7 @@ class TripDetailViewConfig(
     val adviceDisagreeText: String = context.getString(R.string.dk_advice_disagree),
     val adviceAgreeText: String = context.getString(R.string.dk_advice_agree),
     val adviceFeedbackSuccessText: String = context.getString(R.string.dk_advice_feedback_success),
+    val adviceFeedbackErrorText: String = context.getString(R.string.dk_advice_feedback_error),
     val adviceDisagreeTitleText: String = context.getString(R.string.dk_advice_feedback_disagree_title),
     val adviceDisagreeDescText: String = context.getString(R.string.dk_advice_feedback_disagree_desc),
     val adviceFeedbackChoice01Text: String = context.getString(R.string.dk_advice_feedback_01),

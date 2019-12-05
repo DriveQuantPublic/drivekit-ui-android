@@ -66,6 +66,7 @@
    <string name="dk_advice_disagree">Pas compris</string>
    <string name="dk_advice_agree">Compris</string>
    <string name="dk_advice_feedback_success">Votre avis a bien été pris en compte. Merci !</string>
+   <string name="dk_advice_feedback_error">Une erreur est survenue, merci de réessayer ultérieurement.</string>
    <string name="dk_advice_feedback_disagree_title">Votre avis</string>
    <string name="dk_advice_feedback_disagree_desc">Si vous n\'avez pas compris le conseil ou qu\'il ne vous paraît pas utile, vous pouvez l\'évaluer. Nous vous remercions d\'avance pour votre contribution, votre avis permet d\'améliorer l\'application ainsi que les conseils de conduite et il bénéficiera à toute la communauté d\'utilisateurs.</string>
    <string name="dk_advice_feedback_01">Le conseil ne correspond pas aux conditions de mon trajet.</string>
