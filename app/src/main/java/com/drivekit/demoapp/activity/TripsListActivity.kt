@@ -14,9 +14,9 @@ class TripsListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trips_list)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val tripsViewConfig = TripsViewConfig(this)
+        val tripsViewConfig = TripsViewConfig(this, enableAdviceFeedback = true)
 
-        val tripDetailViewConfig = TripDetailViewConfig(this, enableFeedbackAdvices = true)
+        val tripDetailViewConfig = TripDetailViewConfig(this)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, TripsListFragment.newInstance(

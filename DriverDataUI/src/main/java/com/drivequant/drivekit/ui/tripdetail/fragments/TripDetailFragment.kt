@@ -306,7 +306,7 @@ class TripDetailFragment : Fragment() {
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
         showProgressCircular()
         var comment: String? = null
-        val feedback = when (radioGroup.checkedRadioButtonId){ // TODO handle it in ViewModel ?
+        val feedback = when (radioGroup.checkedRadioButtonId){
             R.id.radio_button_choice_01 -> 1
             R.id.radio_button_choice_02 -> 2
             R.id.radio_button_choice_03 -> 3
