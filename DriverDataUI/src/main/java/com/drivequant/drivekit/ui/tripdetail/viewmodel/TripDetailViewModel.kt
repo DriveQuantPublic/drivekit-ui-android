@@ -31,6 +31,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                             MapItem.DISTRACTION -> trip.driverDistraction?.let {
                                 if(it.score <= 10) configurableMapItems.add(item)
                             }
+                            MapItem.SYNTHESIS -> configurableMapItems.add(item)
                         }
                     }
                     displayMapItem.value = configurableMapItems[0]
