@@ -3,7 +3,6 @@ package com.drivequant.drivekit.ui
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
-import com.drivequant.drivekit.ui.trips.viewmodel.HeaderSummary
 import java.io.Serializable
 
 class TripDetailViewConfig(
