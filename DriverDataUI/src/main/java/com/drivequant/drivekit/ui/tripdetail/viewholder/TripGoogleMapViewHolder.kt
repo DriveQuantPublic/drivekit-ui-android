@@ -73,7 +73,7 @@ class TripGoogleMapViewHolder(
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
-                    fragment.displayAdvice(mapItem.getAdvice(tripAdvices))
+                    fragment.displayAdvice(mapItem)
                 }
             }
         }

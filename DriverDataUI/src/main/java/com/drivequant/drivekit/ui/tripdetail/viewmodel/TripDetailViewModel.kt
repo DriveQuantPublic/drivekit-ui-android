@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
+import com.drivequant.drivekit.ui.TripsViewConfig
 import java.io.Serializable
 import java.util.*
 
@@ -224,20 +226,49 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
     }
 
-    fun sendTripAdviceFeedback(itinId: String, adviceId: String, isPositive: Boolean, feedback: Int, comment: String? = null ){
+    fun shouldDisplayAdvice(mapItem: MapItem): Boolean {
+        return getAdviceByMapItem(mapItem) != null
+    }
+
+    private fun getAdviceByMapItem(mapItem: MapItem): TripAdvice? {
+        return trip?.let {
+            return mapItem.getAdvice(it.tripAdvices)
+        }?.let {
+            null
+        }
+    }
+
+    fun getAdviceTitle(mapItem: MapItem): String? {
+        return getAdviceByMapItem(mapItem)?.title
+    }
+
+    fun getAdviceMessage(mapItem: MapItem): String? {
+        return getAdviceByMapItem(mapItem)?.message
+    }
+
+    fun shouldDisplayFeedbackButtons(mapItem: MapItem, tripsViewConfig: TripsViewConfig): Boolean {
+        return getAdviceByMapItem(mapItem)?.evaluation == 0 && tripsViewConfig.enableAdviceFeedback
+    }
+
+    fun sendTripAdviceFeedback(mapItem: MapItem, isPositive: Boolean, feedback: Int, comment: String? = null){
         val evaluation = if (isPositive) 1 else 2
-        DriveKitDriverData.sendTripAdviceFeedback(itinId, adviceId, evaluation, feedback, comment, listener = object: TripAdviceFeedbackQueryListener {
-            override fun onResponse(status: Boolean) {
-                if (status){
-                    updateTripAdvice(adviceId, evaluation, feedback, comment)
-                }
-                sendAdviceFeedbackObserver.postValue(status)
+        trip?.let {
+            mapItem.getAdvice(it.tripAdvices)?.id?.let { adviceId ->
+                DriveKitDriverData.sendTripAdviceFeedback(it.itinId, adviceId, evaluation, feedback, comment, listener = object: TripAdviceFeedbackQueryListener {
+                    override fun onResponse(status: Boolean) {
+                        if (status){
+                            updateTripAdvice(adviceId, evaluation, feedback, comment)
+                        }
+                        sendAdviceFeedbackObserver.postValue(status)
+                    }
+                })
             }
-        })
+        }
     }
 }
 
-class TripDetailViewModelFactory(private val itinId: String, private val mapItems: List<MapItem>) : ViewModelProvider.NewInstanceFactory() {
+class TripDetailViewModelFactory(private val itinId: String,
+                                 private val mapItems: List<MapItem>) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TripDetailViewModel(itinId, mapItems) as T
     }
