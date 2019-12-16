@@ -1,61 +1,102 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.computeRoadContext
+import com.drivequant.drivekit.ui.utils.DurationUtils
+import java.io.Serializable
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
-class SynthesisViewModel(private val context: Context, private val trip: Trip) : ViewModel() {
+class SynthesisViewModel(private val trip: Trip) : Serializable {
 
-    private val notAvailable = "-"
+    private val notAvailableText = "-"
 
-    fun getRoadContextValue() = null
+    fun getRoadContextValue(context: Context): String? {
+        return when (trip.computeRoadContext()){
+            1 -> context.getString(R.string.dk_driving_context_city_dense)
+            2 -> context.getString(R.string.dk_driving_context_city)
+            3 -> context.getString(R.string.dk_driving_context_external)
+            4 -> context.getString(R.string.dk_driving_context_fastlane)
+            else -> context.getString(R.string.dk_unknown)
+        }
+    }
 
-    fun getWeaherValue() = null
+    fun getWeaherValue(context: Context): String {
+        return when (trip.tripStatistics?.meteo){
+            1 -> context.getString(R.string.dk_weather_sun)
+            2 -> context.getString(R.string.dk_weather_cloud)
+            3 -> context.getString(R.string.dk_weather_fog)
+            4 -> context.getString(R.string.dk_weather_rain)
+            5 -> context.getString(R.string.dk_weather_snow)
+            6 -> context.getString(R.string.dk_weather_hail)
+            else -> context.getString(R.string.dk_unknown)
+        }
+    }
 
-    fun getCondition() = null
+    fun getCondition(context: Context): String {
+        val isDay = trip.tripStatistics?.day
+        return if (isDay != null){
+            if(isDay){
+                context.getString(R.string.dk_day)
+            } else {
+                context.getString(R.string.dk_night)
+            }
+        } else {
+            context.getString(R.string.dk_unknown)
+        }
+    }
 
-    fun getCO2Mass():String? {
-        return trip.fuelEstimation?.co2Mass?.let {
-            var formattedMass = it
-            var massUnit = "kg"
-            if (it < 1){
-                formattedMass = it*1000
-                massUnit = "g"
+    fun getCO2Mass(context: Context): String? {
+        val co2mass = trip.fuelEstimation?.co2Mass
+        return if (co2mass != null){
+            var formattedMass:Int
+            var massUnit = context.getString(R.string.dk_unit_kg)
+            if (co2mass < 1){
+                formattedMass = (co2mass*1000).toInt()
+                massUnit = context.getString(R.string.dk_unit_g)
+            } else {
+                formattedMass = co2mass.toInt()
             }
             "$formattedMass $massUnit"
-        }?.run {
-            notAvailable
+        } else {
+            notAvailableText
         }
     }
 
-    fun getCo2Emission(): String? {
-        return trip.fuelEstimation?.let {
-            return String.format("%s %s", it.co2Emission.roundToInt(), "g/km")
-        }?.let {
-            notAvailable
+    fun getCo2Emission(context: Context): String? {
+        val co2emission = trip.fuelEstimation?.co2Emission
+        return if (co2emission != null){
+            String.format("%s %s", co2emission.roundToInt(), context.getString(R.string.dk_unit_g_per_km))
+        } else {
+            notAvailableText
         }
     }
 
-    fun getFuelConsumption(): String? {
-        return trip.fuelEstimation?.let {
-            String.format("%s %s", it.fuelConsumption.roundToLong(), "l/100km")
-        }?.let {
-            notAvailable
+    fun getFuelConsumption(context: Context): String? {
+        val fuelConsumption = trip.fuelEstimation?.fuelConsumption
+        return if (fuelConsumption != null){
+            String.format("%s %s", fuelConsumption, context.getString(R.string.dk_unit_liter_per_100km))
+        } else {
+            notAvailableText
         }
-
     }
 
-    fun getIdlingDuration(): String[] {
-
+    fun getIdlingDuration(context: Context): String {
+        return DurationUtils().formatDuration(context, trip.tripStatistics?.duration)
     }
-}
 
-class SynthesisViewModelFactory(private val context: Context, private val trip: Trip) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SynthesisViewModel(context, trip) as T
+    fun getMeanSpeed(context: Context): String? {
+        val speedMean = trip.tripStatistics?.speedMean
+        return if (speedMean != null){
+            String.format("%s %s", speedMean.roundToInt(), context.getString(R.string.dk_unit_km_per_hour))
+        } else {
+            notAvailableText
+        }
+    }
+
+    fun getVehicleDisplayName(): String {
+        return notAvailableText
     }
 }

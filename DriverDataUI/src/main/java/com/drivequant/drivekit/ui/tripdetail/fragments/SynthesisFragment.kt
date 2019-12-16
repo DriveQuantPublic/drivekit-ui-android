@@ -1,36 +1,33 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.tripdetail.adapter.TripTimelineAdapter
-import com.drivequant.drivekit.ui.tripdetail.viewholder.OnItemClickListener
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
-import kotlinx.android.synthetic.main.trip_timeline_fragment.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.*
 
 class SynthesisFragment : Fragment() {
 
     companion object {
-        fun newInstance(viewModel: TripDetailViewModel,
+        fun newInstance(trip: Trip,
                         tripsViewConfig: TripsViewConfig,
                         detailViewConfig: TripDetailViewConfig
         ) : SynthesisFragment {
             val fragment = SynthesisFragment()
-            fragment.viewModel = viewModel
+            fragment.viewModel = SynthesisViewModel(trip)
             fragment.tripsViewConfig = tripsViewConfig
             fragment.detailViewConfig = detailViewConfig
             return fragment
         }
     }
 
-    private lateinit var viewModel: TripDetailViewModel
+    private lateinit var viewModel: SynthesisViewModel
     private lateinit var tripsViewConfig: TripsViewConfig
     private lateinit var detailViewConfig: TripDetailViewConfig
 
@@ -38,7 +35,7 @@ class SynthesisFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.trip_timeline_fragment, container, false)
+        return inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -56,21 +53,20 @@ class SynthesisFragment : Fragment() {
         (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
             detailViewConfig = it
         }
-        (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let{
+        (savedInstanceState?.getSerializable("viewModel") as SynthesisViewModel?)?.let{
             viewModel = it
         }
-        timeline_list.layoutManager = LinearLayoutManager(requireContext())
-        timeline_list.adapter = TripTimelineAdapter(viewModel.events, object : OnItemClickListener {
-            override fun onItemClicked(position: Int) {
-                viewModel.selection.postValue(position)
-            }
-        },tripsViewConfig.secondaryColor, detailViewConfig)
-        viewModel.selection.observe(this, Observer {
-            it?.let {position ->
-                (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
-                timeline_list.smoothScrollToPosition(position)
-            }
-        })
-    }
 
+        item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
+        item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
+        item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
+
+        item_fuel_consumption.setValueItem(viewModel.getFuelConsumption(requireContext()))
+        item_co2_emission.setValueItem(viewModel.getCo2Emission(requireContext()))
+        item_co2_mass.setValueItem(viewModel.getCO2Mass(requireContext()))
+
+        item_condition.setValueItem(viewModel.getCondition(requireContext()))
+        item_weather.setValueItem(viewModel.getWeaherValue(requireContext()))
+        item_road_context.setValueItem(viewModel.getRoadContextValue(requireContext()))
+    }
 }

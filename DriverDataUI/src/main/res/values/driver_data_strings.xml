@@ -61,4 +61,34 @@
    <string name="dk_cancel">Annuler</string>
    <string name="dk_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_trip_deleted">Votre trajet a été supprimé.</string>
+
+   <string name="dk_synthesis_vehicle">Vehicle used</string>
+   <string name="dk_synthesis_mean_speed">Average speed</string>
+   <string name="dk_synthesis_stop_time">Idling duration</string>
+   <string name="dk_synthesis_fuel_consumption">Fuel consumption</string>
+   <string name="dk_synthesis_co2_emissions">CO2 emissions</string>
+   <string name="dk_synthesis_co2_mass">Mass of CO2</string>
+   <string name="dk_synthesis_condition">Condition</string>
+   <string name="dk_synthesis_weather">Weather</string>
+   <string name="dk_synthesis_road_context">Driving context</string>
+   <string name="dk_unit_kg">kg</string>
+   <string name="dk_unit_g">g</string>
+   <string name="dk_unit_g_per_km">g/km</string>
+   <string name="dk_unit_liter_per_100km">l/100km</string>
+   <string name="dk_unit_km_per_hour">km/h</string>
+
+   <string name="dk_unknown">N/A</string>
+   <string name="dk_driving_context_city_dense">urbain dense</string>
+   <string name="dk_driving_context_city">urbain</string>
+   <string name="dk_driving_context_external">extra-urbain</string>
+   <string name="dk_driving_context_fastlane">voies rapides</string>
+   <string name="dk_weather_sun">Temps clair</string>
+   <string name="dk_weather_cloud">Temps nuageux</string>
+   <string name="dk_weather_fog">Temps brumeux</string>
+   <string name="dk_weather_rain">Temps pluvieux</string>
+   <string name="dk_weather_snow">Temps neigeux</string>
+   <string name="dk_weather_hail">Temps de gel</string>
+   <string name="dk_day">Temps de jour</string>
+   <string name="dk_night">Trajet de nuit</string>
+
 </resources>
