@@ -33,8 +33,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation 'com.drivequant.drivekit:drivekit-trip-analysis:1.1.4'
-    implementation 'com.drivequant.drivekit:drivekit-driver-data:1.1.4'
+    implementation 'com.drivequant.drivekit:drivekit-trip-analysis:1.1.6'
+    implementation 'com.drivequant.drivekit:drivekit-driver-data:1.1.6'
 
     implementation project(':DriverDataUI')
     //implementation 'com.drivequant.drivekit:drivekit-driver-data-ui:1.1.0'
