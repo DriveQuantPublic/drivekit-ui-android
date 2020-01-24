@@ -23,6 +23,7 @@ class TripDetailFragmentPagerAdapter(
                 MapItem.ECO_DRIVING -> EcoDrivingFragment.newInstance(it.ecoDriving!!, tripDetailViewConfig, tripsViewConfig)
                 MapItem.DISTRACTION -> DriverDistractionFragment.newInstance(it.driverDistraction!!, tripDetailViewConfig, tripsViewConfig)
                 MapItem.INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel, tripsViewConfig, tripDetailViewConfig)
+                MapItem.SYNTHESIS -> SynthesisFragment.newInstance(it, tripsViewConfig, tripDetailViewConfig)
             }
         } ?: run {
             UnscoredTripFragment.newInstance(tripDetailViewModel.trip, tripsViewConfig, tripDetailViewConfig)

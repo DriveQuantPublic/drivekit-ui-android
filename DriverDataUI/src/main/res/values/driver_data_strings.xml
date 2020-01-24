@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_advice_agree">I understood</string>
+   <string name="dk_advice_disagree">I did not understand</string>
+   <string name="dk_advice_feedback_01">The advice does not match the conditions of my trip</string>
+   <string name="dk_advice_feedback_02">I do not agree with the advice.</string>
+   <string name="dk_advice_feedback_03">The advice is not clear enough.</string>
+   <string name="dk_advice_feedback_04">I receive this advice very often.</string>
+   <string name="dk_advice_feedback_05">Another reason. Leave a comment.</string>
+   <string name="dk_advice_feedback_disagree_desc">If you do not understand the advice or it does not seem useful, you can evaluate it. We thank you in advance for your contribution, your feedback helps improve the application as well as driving tips and it will benefit the entire community of users.</string>
+   <string name="dk_advice_feedback_disagree_title">Your opinion</string>
+   <string name="dk_advice_feedback_error">An error occurred, please retry later.</string>
+   <string name="dk_advice_feedback_success">Your review has been taken into account. Thank you !</string>
    <string name="dk_bad_maintain">Very fluctuating speed</string>
+   <string name="dk_cancel">Cancel</string>
    <string name="dk_confirm_delete_trip">Delete the trip ?</string>
+   <string name="dk_day">Day trip</string>
    <string name="dk_distraction_gauge_title">Distraction</string>
+   <string name="dk_driving_context_city">urban traffic</string>
+   <string name="dk_driving_context_city_dense">dense urban traffic</string>
+   <string name="dk_driving_context_external">Extra-urban environment</string>
+   <string name="dk_driving_context_fastlane">Espressways</string>
    <string name="dk_ecodriving_gauge_title">Eco-driving</string>
    <string name="dk_end_event">End of trip</string>
+   <string name="dk_failed_to_delete_trip">The trip could not be deleted, try again later.</string>
    <string name="dk_failed_to_sync_trips">Failed to synchronize trips, please retry later.</string>
    <string name="dk_good_accel">Good acceleration</string>
    <string name="dk_good_decel">Good deceleration</string>
@@ -14,6 +32,7 @@
    <string name="dk_lock_event">Screen locking</string>
    <string name="dk_low_accel">Acceleration is too low</string>
    <string name="dk_low_decel">Deceleration is too low</string>
+   <string name="dk_night">Night trip</string>
    <string name="dk_no_trips_recorded">No recorded trips</string>
    <string name="dk_ok">OK</string>
    <string name="dk_safety_accel">Harsh accelerations</string>
@@ -37,17 +56,33 @@
    <string name="dk_start_event">Start of trip</string>
    <string name="dk_strong_accel">Strong acceleration</string>
    <string name="dk_strong_decel">Strong deceleration</string>
-   <string name="dk_trip_detail_data_error">The road can\'t be retrieve. Make sure you are connected to the network.</string>
-   <string name="dk_trip_detail_get_road_failed">The trip data could not be retrieved.</string>
+   <string name="dk_synthesis_co2_emissions">CO2 emissions</string>
+   <string name="dk_synthesis_co2_mass">Mass of CO2</string>
+   <string name="dk_synthesis_condition">Condition</string>
+   <string name="dk_synthesis_fuel_consumption">Fuel consumption</string>
+   <string name="dk_synthesis_mean_speed">Average speed</string>
+   <string name="dk_synthesis_road_context">Driving context</string>
+   <string name="dk_synthesis_stop_time">Idling duration</string>
+   <string name="dk_synthesis_vehicle">Vehicle used</string>
+   <string name="dk_synthesis_weather">Weather</string>
+   <string name="dk_trip_deleted">Your trip has been deleted.</string>
+   <string name="dk_trip_detail_data_error">The trip data could not be retrieved.</string>
+   <string name="dk_trip_detail_get_road_failed">The road can\'t be retrieve. Make sure you are connected to the network.</string>
    <string name="dk_trip_detail_no_score">The trip has been recorded but the distance traveled is too small to evaluate your driving.</string>
    <string name="dk_trip_detail_title">Trip detail</string>
    <string name="dk_trips_list_title">My trips</string>
    <string name="dk_unit_accel">m/s²</string>
+   <string name="dk_unit_g">g</string>
+   <string name="dk_unit_g_per_km">g/km</string>
    <string name="dk_unit_hour">h</string>
+   <string name="dk_unit_kg">kg</string>
    <string name="dk_unit_km">km</string>
+   <string name="dk_unit_km_per_hour">km/h</string>
+   <string name="dk_unit_liter_per_100km">l/100km</string>
    <string name="dk_unit_meter">m</string>
    <string name="dk_unit_minute">min</string>
    <string name="dk_unit_second">s</string>
+   <string name="dk_unknown">N/A</string>
    <string name="dk_unlock_distance">Distance with unlocked screen</string>
    <string name="dk_unlock_duration">Duration with unlocked screen</string>
    <string name="dk_unlock_event">Screen unlocking</string>
@@ -56,22 +91,10 @@
    <string name="dk_weak_accel">Weak acceleration</string>
    <string name="dk_weak_decel">Weak deceleration</string>
    <string name="dk_weak_maintain">Irregular speed</string>
-
-   <!-- TEMPORARY -->
-   <string name="dk_cancel">Annuler</string>
-   <string name="dk_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
-   <string name="dk_trip_deleted">Votre trajet a été supprimé.</string>
-
-
-   <string name="dk_advice_disagree">Pas compris</string>
-   <string name="dk_advice_agree">Compris</string>
-   <string name="dk_advice_feedback_success">Votre avis a bien été pris en compte. Merci !</string>
-   <string name="dk_advice_feedback_error">Une erreur est survenue, merci de réessayer ultérieurement.</string>
-   <string name="dk_advice_feedback_disagree_title">Votre avis</string>
-   <string name="dk_advice_feedback_disagree_desc">Si vous n\'avez pas compris le conseil ou qu\'il ne vous paraît pas utile, vous pouvez l\'évaluer. Nous vous remercions d\'avance pour votre contribution, votre avis permet d\'améliorer l\'application ainsi que les conseils de conduite et il bénéficiera à toute la communauté d\'utilisateurs.</string>
-   <string name="dk_advice_feedback_01">Le conseil ne correspond pas aux conditions de mon trajet.</string>
-   <string name="dk_advice_feedback_02">Je ne suis pas d\'accord avec le conseil.</string>
-   <string name="dk_advice_feedback_03">Le conseil n\'est pas assez clair.</string>
-   <string name="dk_advice_feedback_04">Je reçois ce conseil trop souvent.</string>
-   <string name="dk_advice_feedback_05">Autre raison. Laisser un commentaire.</string>
+   <string name="dk_weather_cloud">Cloudy weather</string>
+   <string name="dk_weather_fog">Foggy weather</string>
+   <string name="dk_weather_hail">Freezing weather</string>
+   <string name="dk_weather_rain">Rainy weather</string>
+   <string name="dk_weather_snow">Snowy weather</string>
+   <string name="dk_weather_sun">Clear weather</string>
 </resources>
