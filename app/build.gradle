@@ -37,5 +37,6 @@ dependencies {
     implementation 'com.drivequant.drivekit:drivekit-driver-data:1.1.6'
 
     implementation project(':DriverDataUI')
+    implementation project(':DriverAchievementUI')
     //implementation 'com.drivequant.drivekit:drivekit-driver-data-ui:1.1.0'
 }

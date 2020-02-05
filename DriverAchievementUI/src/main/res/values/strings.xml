@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DriverAchievementUI</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dk_unit_hour">h</string>
+    <string name="dk_unit_km">km</string>
+    <string name="dk_unit_meter">m</string>
+    <string name="dk_unit_minute">min</string>
+    <string name="dk_unit_second">s</string>
+</resources>
