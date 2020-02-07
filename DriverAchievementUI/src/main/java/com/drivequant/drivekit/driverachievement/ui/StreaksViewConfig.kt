@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui
 
 import android.content.Context
-import com.drivequant.drivekit.databaseutils.entity.streak.StreakTheme
+import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 
 class StreaksViewConfig (
     context: Context,
