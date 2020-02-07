@@ -3,41 +3,53 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.databaseutils.entity.streak.Streak
-import com.drivequant.drivekit.databaseutils.entity.streak.StreakTheme
+import com.drivequant.drivekit.databaseutils.entity.Streak
+import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
 import com.drivequant.drivekit.driverachievement.streak.StreaksQueryListener
 
 class StreaksViewModel : ViewModel() {
 
-    var sortedStreaks : List<StreaksData> = listOf()
+    var sortedStreaks: MutableList<StreaksData> = mutableListOf()
     val streaksData: MutableLiveData<List<StreaksData>> = MutableLiveData()
     var syncStatus: AchievementSyncStatus = AchievementSyncStatus.NO_ERROR
 
-    fun fetchStreaks(streaksToDisplay : List<StreakTheme>) {
+    fun fetchStreaks(streaksToDisplay: List<StreakTheme>) {
         if (DriveKit.isConfigured()) {
-
             DriveKitDriverAchievement.getStreaks(object : StreaksQueryListener {
                 override fun onResponse(
                     achievementSyncStatus: AchievementSyncStatus,
                     streaks: List<Streak>
                 ) {
                     syncStatus = achievementSyncStatus
-                    sortedStreaks = getSortedStreaks(streaksToDisplay, streaks)
+                    sortedStreaks = getFilteredStreaks(streaksToDisplay, streaks)
                     streaksData.postValue(sortedStreaks)
                 }
             })
         } else {
-            streaksData.postValue(mutableListOf())
+            streaksData.postValue(listOf())
         }
     }
 
-    fun getSortedStreaks(streaksToDisplay : List<StreakTheme>, fetchedStreaks: List<Streak>): List<StreaksData> {
-        fetchedStreaks.forEach{
-            DriveKitLog.e("THEME_SYNCHRONIZED",it.theme.name)
+    fun getFilteredStreaks(
+        streaksToDisplay: List<StreakTheme>,
+        fetchedStreaks: List<Streak>
+    ): MutableList<StreaksData> {
+        if (fetchedStreaks.isNotEmpty()) {
+            val filteredStreaks =
+                fetchedStreaks.filter { streak -> streak.theme in streaksToDisplay }
+            sortedStreaks.clear()
+            for (streak in filteredStreaks) {
+                sortedStreaks.add(
+                    StreaksData(
+                        streak.theme,
+                        streak.best,
+                        streak.current
+                    )
+                )
+            }
         }
-        return listOf()
+        return sortedStreaks
     }
 }
