@@ -1,9 +1,28 @@
 <resources>
     <string name="app_name">DriverAchievementUI</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="dk_unit_hour">h</string>
     <string name="dk_unit_km">km</string>
     <string name="dk_unit_meter">m</string>
     <string name="dk_unit_minute">min</string>
     <string name="dk_unit_second">s</string>
+    <string name="dk_unit_day">j</string>
+
+    <string name="dk_streaks_phone_distraction_title">Pas d\'utilisation du téléphone</string>
+    <string name="dk_streaks_safety_title">Conduite prudente</string>
+    <string name="dk_streaks_speeding_title">Pas d\'excès de vitesse</string>
+    <string name="dk_streaks_acceleration_title">Aucune accélération brutale</string>
+    <string name="dk_streaks_brake_title">Aucun freinage brusque</string>
+    <string name="dk_streaks_adherence_title">Aucune limite d\'adhérence</string>
+    <string name="dk_streaks_current_title">En cours</string>
+    <string name="dk_streaks_best_title">Meilleure séquence</string>
+    <string name="dk_streaks_empty">Vous n\'avez pas encore réalisé de trajets pour compléter cette séquence</string>
+    <string name="dk_streaks_trip">%d trajet - %s - %s</string>
+    <string name="dk_streaks_since">Depuis le %s</string>
+    <string name="dk_streaks_trips">%d trajets - %s - %s</string>
+    <string name="dk_streaks_congrats">Bravo !</string>
+    <string name="streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
+
+    <string name="dk_streaks_since_to">Depuis %s au %s</string>
+
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="streak_trip_plural">
+        <item quantity="one">@string/dk_streaks_trip</item>
+        <item quantity="other">@string/dk_streaks_trips</item>
+    </plurals>
+</resources>
