@@ -6,18 +6,9 @@ import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.ui.R
 
-class StreaksData {
-
-    private var streakTheme: StreakTheme
-    private var best: StreakResult
-    private var current: StreakResult
-
-    constructor(streakTheme: StreakTheme, best: StreakResult, current: StreakResult) {
-        this.streakTheme = streakTheme
-        this.best = best
-        this.current = current
-    }
-
+class StreaksData (private var streakTheme: StreakTheme, private var best: StreakResult,
+                   private var current: StreakResult
+) {
     fun getTitle(context: Context): String {
         return when (streakTheme) {
             PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_title)
@@ -40,13 +31,22 @@ class StreaksData {
         }
     }
 
+    fun getReset(context: Context) : String {
+        return when (streakTheme) {
+            PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_reset)
+            SAFETY -> context.getString(R.string.dk_streaks_safety_reset)
+            SPEEDING -> context.getString(R.string.dk_streaks_speeding_reset)
+            ACCELERATION -> context.getString(R.string.dk_streaks_acceleration_reset)
+            BRAKE -> context.getString(R.string.dk_streaks_brake_reset)
+            ADHERENCE -> context.getString(R.string.dk_streaks_adherence_reset)
+        }
+    }
+
     fun getStreakStatus(): StreaksStatus {
         return if (best.tripNumber == 0 && current.tripNumber == 0) {
             StreaksStatus.INIT
         } else if (best.tripNumber < current.tripNumber) {
             StreaksStatus.BEST
-        } else if (current.tripNumber == 1) {
-            StreaksStatus.FIRST
         } else {
             StreaksStatus.IN_PROGRESS
         }

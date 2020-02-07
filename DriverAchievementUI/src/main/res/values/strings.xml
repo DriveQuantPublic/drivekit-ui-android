@@ -21,8 +21,14 @@
     <string name="dk_streaks_since">Depuis le %s</string>
     <string name="dk_streaks_trips">%d trajets - %s - %s</string>
     <string name="dk_streaks_congrats">Bravo !</string>
-    <string name="streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
-
+    <string name="dk_streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
     <string name="dk_streaks_since_to">Depuis %s au %s</string>
+
+    <string name="dk_streaks_phone_distraction_reset">Vous avez manipulé votre téléphone lors de votre dernier trajet</string>
+    <string name="dk_streaks_safety_reset">Le score de sécurité de votre dernier trajet est inférieur à 9.8/10</string>
+    <string name="dk_streaks_speeding_reset">Vous avez dépassé la limite de vitesse autorisée lors de votre dernier trajet</string>
+    <string name="dk_streaks_acceleration_reset">Vous avez accéléré brutalement lors de votre dernier trajet</string>
+    <string name="dk_streaks_brake_reset">Vous avez freiné brutalement lors de votre dernier trajet</string>
+    <string name="dk_streaks_adherence_reset">Vous avez franchi une limite d\'adherence lors de votre dernier trajet</string>
 
 </resources>
