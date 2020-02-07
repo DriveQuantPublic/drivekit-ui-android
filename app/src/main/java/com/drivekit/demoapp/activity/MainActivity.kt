@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, TripsListActivity::class.java))
     }
 
+    fun onDriverAchievementClicked(view: View) {
+        startActivity(Intent(this, StreaksListActivity::class.java))
+    }
+
     fun buttonTripClicked(view: View){
         if (DriveKitTripAnalysis.isConfigured()) {
             when (view.id) {
