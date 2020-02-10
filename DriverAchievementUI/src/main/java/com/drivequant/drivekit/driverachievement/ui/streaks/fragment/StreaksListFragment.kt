@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.fragment
 
-
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -20,7 +19,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreakAdapte
 
 
 /**
- * Created by Mohamed.
+ * Created by Mohamed on O5/02/2020.
  */
 
 class StreaksListFragment : Fragment() {
@@ -37,6 +36,11 @@ class StreaksListFragment : Fragment() {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(StreaksViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +53,10 @@ class StreaksListFragment : Fragment() {
         (savedInstanceState?.getSerializable("config") as StreaksViewConfig?)?.let {
             streaksViewConfig = it
         }
-        viewModel = ViewModelProviders.of(this).get(StreaksViewModel::class.java)
+
+        refresh_streaks.setOnRefreshListener {
+            updateStreaks()
+        }
     }
 
     override fun onResume() {
@@ -60,7 +67,8 @@ class StreaksListFragment : Fragment() {
     private fun updateStreaks() {
         viewModel.streaksData.observe(this, Observer {
             if (viewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
-                Toast.makeText(context, "FAILED", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, streaksViewConfig.failedToSyncStreaks, Toast.LENGTH_LONG)
+                    .show()
             }
             val layoutManager = LinearLayoutManager(view?.context)
             recycler_view_streaks.layoutManager = layoutManager
@@ -70,18 +78,20 @@ class StreaksListFragment : Fragment() {
                 adapter = StreakAdapter(view?.context, viewModel, streaksViewConfig)
                 recycler_view_streaks.adapter = adapter
             }
+            updateProgressVisibility(false)
         })
+        updateProgressVisibility(true)
         viewModel.fetchStreaks(streaksViewConfig.streaksTheme)
     }
 
-//    fun updateProgressVisibility(displayProgress: Boolean){
-//        if (displayProgress){
-//            progress_circular.visibility = View.VISIBLE
-//            refresh_trips.isRefreshing = true
-//        } else {
-//            progress_circular.visibility = View.GONE
-//            refresh_trips.visibility = View.VISIBLE
-//            refresh_trips.isRefreshing = false
-//        }
-//    }
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        if (displayProgress) {
+            progress_circular.visibility = View.VISIBLE
+            refresh_streaks.isRefreshing = true
+        } else {
+            progress_circular.visibility = View.GONE
+            refresh_streaks.visibility = View.VISIBLE
+            refresh_streaks.isRefreshing = false
+        }
+    }
 }

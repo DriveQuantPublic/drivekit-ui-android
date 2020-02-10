@@ -23,6 +23,7 @@
     <string name="dk_streaks_congrats">Bravo !</string>
     <string name="dk_streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
     <string name="dk_streaks_since_to">Depuis %s au %s</string>
+    <string name="dk_failed_to_sync_streaks">Failed to synchronize streaks, please retry later.</string>
 
     <string name="dk_streaks_phone_distraction_reset">Vous avez manipulé votre téléphone lors de votre dernier trajet</string>
     <string name="dk_streaks_safety_reset">Le score de sécurité de votre dernier trajet est inférieur à 9.8/10</string>
@@ -30,5 +31,14 @@
     <string name="dk_streaks_acceleration_reset">Vous avez accéléré brutalement lors de votre dernier trajet</string>
     <string name="dk_streaks_brake_reset">Vous avez freiné brutalement lors de votre dernier trajet</string>
     <string name="dk_streaks_adherence_reset">Vous avez franchi une limite d\'adherence lors de votre dernier trajet</string>
+
+
+    <string name="dk_streaks_phone_distraction_text">Essayez d\'enchaîner une série de trajets sans manipuler votre smartphone lorsque vous conduisez. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+    <string name="dk_streaks_safety_text">Essayez d\'enchaîner une série de trajets avec des scores de sécurité supérieurs à 9.8/10. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+    <string name="dk_streaks_speeding_text">Essayez d\'enchaîner une série de trajets en respectant les limitations de vitesse. Le score de limite de vitesse doit être supérieur à 9.8/10. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+    <string name="dk_streaks_acceleration_text">Essayez d\'enchaîner une série de trajets sans aucune accélération brutale. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+    <string name="dk_streaks_brake_text">Essayez d\'enchaîner une série de trajets sans aucun freinage brusque. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+    <string name="dk_streaks_adherence_text">Essayez d\'enchaîner une série de trajets sans aucun franchissement de limite d’adhérence. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+
 
 </resources>
