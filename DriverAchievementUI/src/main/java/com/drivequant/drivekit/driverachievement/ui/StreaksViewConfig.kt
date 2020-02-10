@@ -11,5 +11,7 @@ class StreaksViewConfig (
         StreakTheme.SPEEDING,
         StreakTheme.ACCELERATION,
         StreakTheme.BRAKE,
-        StreakTheme.ADHERENCE)
+        StreakTheme.ADHERENCE),
+    val failedToSyncStreaks: String = context.getString(R.string.dk_failed_to_sync_streaks)
+
     )
