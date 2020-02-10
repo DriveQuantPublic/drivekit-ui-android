@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="thumb_text_size">19dp</dimen>
-    <dimen name="thumb_size">19dp</dimen>
+    <dimen name="margin_double">32dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_half">8dp</dimen>
+    <dimen name="margin_quarter">4dp</dimen>
+    <dimen name="margin_eigth">2dp</dimen>
 </resources>

@@ -1,0 +1,5 @@
+<resources>
+    <style name="ProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/dkPrimaryColor</item>
+    </style>
+</resources>
