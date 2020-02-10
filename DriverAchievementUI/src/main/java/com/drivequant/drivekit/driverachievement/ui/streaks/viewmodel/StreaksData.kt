@@ -67,6 +67,10 @@ class StreaksData (private var streakTheme: StreakTheme, private var best: Strea
         return best
     }
 
+    fun getSteakTheme(): StreakTheme {
+        return streakTheme
+    }
+
     fun getCurrentStreak(): StreakResult {
         return current
     }
