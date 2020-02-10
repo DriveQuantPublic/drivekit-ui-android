@@ -40,5 +40,5 @@
     <string name="dk_streaks_brake_text">Essayez d\'enchaîner une série de trajets sans aucun freinage brusque. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
     <string name="dk_streaks_adherence_text">Essayez d\'enchaîner une série de trajets sans aucun franchissement de limite d’adhérence. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
 
-
+    <string name="dk_ok">OK</string>
 </resources>
