@@ -27,17 +27,24 @@ object AlertDialogUtils {
             alertDialog?.setMessage(message)
         }
 
-        fun positiveButton(positiveText: String, positiveListener: DialogInterface.OnClickListener) = apply {
+        fun positiveButton(
+            positiveText: String,
+            positiveListener: DialogInterface.OnClickListener
+        ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener)
         }
 
-        fun negativeButton(negativeText: String,negativeListener:DialogInterface.OnClickListener) = apply {
+        fun negativeButton(
+            negativeText: String,
+            negativeListener: DialogInterface.OnClickListener
+        ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeListener)
         }
 
-        fun neutralButton(neutralText: String, neutralListener: DialogInterface.OnClickListener) = apply {
-            alertDialog?.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralListener)
-        }
+        fun neutralButton(neutralText: String, neutralListener: DialogInterface.OnClickListener) =
+            apply {
+                alertDialog?.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralListener)
+            }
 
         fun iconResId(iconResId: Int) = apply {
             alertDialog?.setIcon(iconResId)

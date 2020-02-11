@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
+import com.drivequant.drivekit.driverachievement.ui.extension.formatStreaksDate
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksStatus
 import com.drivequant.drivekit.driverachievement.ui.utils.*
@@ -55,10 +56,10 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         val bestDistance = DistanceUtils().formatDistance(context, streaksData.getBestStreak().distance)
         val currentDuration = DurationUtils().formatDuration(context, streaksData.getCurrentStreak().duration)
         val bestDuration = DurationUtils().formatDuration(context, streaksData.getBestStreak().duration)
-        val currentStartDate = DateUtils().formatDate(streaksData.getCurrentStreak().startDate)
-        val currentEndDate = DateUtils().formatDate(streaksData.getCurrentStreak().endDate)
-        val bestStartDate = DateUtils().formatDate(streaksData.getBestStreak().startDate)
-        val bestEndDate = DateUtils().formatDate(streaksData.getBestStreak().endDate)
+        val currentStartDate = streaksData.getCurrentStreak().startDate.formatStreaksDate()
+        val currentEndDate = streaksData.getCurrentStreak().endDate.formatStreaksDate()
+        val bestStartDate = streaksData.getBestStreak().startDate.formatStreaksDate()
+        val bestEndDate = streaksData.getBestStreak().endDate.formatStreaksDate()
         textViewTripsCount.text = "$bestTripsCount"
 
         when (streaksData.getStreakStatus()) {
@@ -72,6 +73,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
                 textViewBestStreakDate.text = context.getString(R.string.dk_streaks_empty)
             }
             StreaksStatus.IN_PROGRESS -> {
+                // Reset text style when passing from BEST to IN_PROGRESS status after a fail
                 resetStyle()
                 // First streak
                 if (currentTripsCount == bestTripsCount) {
@@ -87,7 +89,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
                     )
                     textViewBestStreakDate.text = context.getString(R.string.dk_streaks_congrats_text)
                 } else {
-                    // N - streak
+                    // Reset
                     if (currentTripsCount == 0 && bestTripsCount != 0) {
                         textViewCurrentStreakDate.text = streaksData.getResetText(context)
                     } else {
@@ -97,7 +99,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
                             currentEndDate
                         )
                     }
-
+                    // N - streaks
                     textViewCurrentStreakTrip.text = buildStreakData(currentTripsCount,currentDistance,currentDuration)
                     textViewBestStreakTrip.text = buildStreakData(bestTripsCount, bestDistance, bestDuration)
                     textViewBestStreakDate.text = context.getString(

@@ -4,23 +4,33 @@ import android.content.Context
 import com.drivequant.drivekit.driverachievement.ui.R
 
 class DurationUtils {
-    fun formatDuration(context: Context, duration: Double?) : String {
+    fun formatDuration(context: Context, duration: Double?): String {
         var formattedDuration = ""
         var computedDuration: Double? = duration
 
         if (computedDuration != null) {
             computedDuration = if (computedDuration % 60 > 0) {
-                (((computedDuration / 60) * 60).toInt() + 60).toDouble()
+                (computedDuration.toInt() + 60).toDouble()
             } else {
-                (((computedDuration / 60) * 60).toInt()).toDouble()
+                (computedDuration.toInt()).toDouble()
             }
 
             val durationInt: Int = (computedDuration / 60).toInt()
             formattedDuration = if (durationInt > 60) {
-                val minDuration: String = if (durationInt % 60 < 10) "0" + durationInt % 60 else (durationInt % 60).toString()
-                String.format("%d%s%s", durationInt / 60, context.resources.getString(R.string.dk_unit_hour), minDuration)
+                val minDuration: String =
+                    if (durationInt % 60 < 10) "0" + durationInt % 60 else (durationInt % 60).toString()
+                String.format(
+                    "%d%s%s",
+                    durationInt / 60,
+                    context.resources.getString(R.string.dk_unit_hour),
+                    minDuration
+                )
             } else {
-                String.format("%d %s", durationInt, context.resources.getString(R.string.dk_unit_minute))
+                String.format(
+                    "%d %s",
+                    durationInt,
+                    context.resources.getString(R.string.dk_unit_minute)
+                )
             }
         }
         return formattedDuration

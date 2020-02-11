@@ -24,8 +24,8 @@ class StreakAdapter(
         return streaksViewModel.sortedStreaks.size
     }
 
-    override fun onBindViewHolder(parent: StreakViewHolder, p1: Int) {
-        val streakData = streaksViewModel.sortedStreaks[p1]
+    override fun onBindViewHolder(parent: StreakViewHolder, position: Int) {
+        val streakData = streaksViewModel.sortedStreaks[position]
         parent.bind(streakData)
     }
 }
