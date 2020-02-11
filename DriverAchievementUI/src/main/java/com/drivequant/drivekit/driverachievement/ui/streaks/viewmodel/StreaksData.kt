@@ -6,8 +6,9 @@ import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.ui.R
 
-class StreaksData (private var streakTheme: StreakTheme, private var best: StreakResult,
-                   private var current: StreakResult
+class StreaksData(
+    private var streakTheme: StreakTheme, private var best: StreakResult,
+    private var current: StreakResult
 ) {
     fun getTitle(context: Context): String {
         return when (streakTheme) {
@@ -31,7 +32,7 @@ class StreaksData (private var streakTheme: StreakTheme, private var best: Strea
         }
     }
 
-    fun getResetText(context: Context) : String {
+    fun getResetText(context: Context): String {
         return when (streakTheme) {
             PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_reset)
             SAFETY -> context.getString(R.string.dk_streaks_safety_reset)
@@ -42,7 +43,7 @@ class StreaksData (private var streakTheme: StreakTheme, private var best: Strea
         }
     }
 
-    fun getDescriptionText(context: Context) : String {
+    fun getDescriptionText(context: Context): String {
         return when (streakTheme) {
             PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_text)
             SAFETY -> context.getString(R.string.dk_streaks_safety_text)
@@ -67,19 +68,20 @@ class StreaksData (private var streakTheme: StreakTheme, private var best: Strea
         return best
     }
 
-    fun getSteakTheme(): StreakTheme {
-        return streakTheme
-    }
-
     fun getCurrentStreak(): StreakResult {
         return current
     }
 
     fun computePercentage(): Int {
-        if (best.tripNumber != 0) {
-            val percent = ((current.tripNumber - 0) * 100) / (best.tripNumber - 0)
-            if (percent == 0) return percent + 2
+        return if (best.tripNumber != 0) {
+            val percent = (current.tripNumber * 100) / best.tripNumber
+            if (percent == 0) {
+                percent + 2
+            } else {
+                percent
+            }
+        } else {
+            2
         }
-        return 2
     }
 }
