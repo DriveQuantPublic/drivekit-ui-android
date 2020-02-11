@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dkPrimaryColor">#0B4D6E</color>
-    <color name="separatorColor">#E0E0E0</color>
-    <color name="blackColor">#000000</color>
-    <color name="whiteColor">#FFFFFF</color>
+    <color name="dk_primary_color">#77E2B0</color>
+    <color name="dk_separator_color">#E0E0E0</color>
+    <color name="dk_gray500">#9E9E9E</color>
 </resources>

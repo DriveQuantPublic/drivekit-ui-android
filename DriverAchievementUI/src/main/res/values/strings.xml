@@ -17,9 +17,9 @@
     <string name="dk_streaks_current_title">En cours</string>
     <string name="dk_streaks_best_title">Meilleure séquence</string>
     <string name="dk_streaks_empty">Vous n\'avez pas encore réalisé de trajets pour compléter cette séquence</string>
-    <string name="dk_streaks_trip">%d trajet - %s - %s</string>
+    <string name="dk_streaks_trip">trajet</string>
     <string name="dk_streaks_since">Depuis le %s</string>
-    <string name="dk_streaks_trips">%d trajets - %s - %s</string>
+    <string name="dk_streaks_trips">trajets</string>
     <string name="dk_streaks_congrats">Bravo !</string>
     <string name="dk_streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
     <string name="dk_streaks_since_to">Depuis %s au %s</string>
