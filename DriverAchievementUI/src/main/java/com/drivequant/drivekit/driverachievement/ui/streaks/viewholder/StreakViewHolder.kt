@@ -127,7 +127,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         val streakTrip = context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)
         return Html.fromHtml(
             "${HtmlUtils.getTextHighlight(
-                "$tripsCount $streakTrip",
+                "<big><b>$tripsCount</b></big> $streakTrip",
                 context
             )} - $distance - $duration"
         )

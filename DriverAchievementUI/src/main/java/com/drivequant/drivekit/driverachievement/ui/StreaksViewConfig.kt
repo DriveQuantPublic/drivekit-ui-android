@@ -6,8 +6,8 @@ import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 class StreaksViewConfig(
     context: Context,
     val streaksTheme: List<StreakTheme> = listOf(
-        StreakTheme.SAFETY,
         StreakTheme.PHONE_DISTRACTION,
+        StreakTheme.SAFETY,
         StreakTheme.SPEEDING,
         StreakTheme.ACCELERATION,
         StreakTheme.BRAKE,

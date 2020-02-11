@@ -11,9 +11,9 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 object HtmlUtils {
     fun getTextHighlight(text: String, context: Context): String {
-        return "<big><b><span style=\"color:" + ContextCompat.getColor(
+        return "<span style=\"color:" + ContextCompat.getColor(
             context,
             R.color.dk_primary_color
-        ) + "\">" + text + "</span></b></big>"
+        ) + "\">" + text + "</span>"
     }
 }
