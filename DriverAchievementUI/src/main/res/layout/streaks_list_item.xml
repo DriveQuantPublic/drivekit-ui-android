@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
-            android:text="Le Lorem Ipsum est simplement du faux texte employé dans la composition"
+            android:text="@string/dk_streaks_acceleration_title"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
             app:layout_constraintTop_toTopOf="parent" />
