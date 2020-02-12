@@ -7,7 +7,6 @@
     <dimen name="dk_margin_quarter">4dp</dimen>
     <dimen name="dk_margin_eigth">2dp</dimen>
 
-
     <dimen name="dk_text_xxxsmall">4sp</dimen>
     <dimen name="dk_text_xxsmall">6sp</dimen>
     <dimen name="dk_text_xsmall">10sp</dimen>
@@ -20,4 +19,8 @@
     <dimen name="dk_text_xxbig">34sp</dimen>
     <dimen name="dk_text_xxxbig">48sp</dimen>
 
+    <dimen name="dk_streak_icon_height">30dp</dimen>
+    <dimen name="dk_streak_icon_width">30dp</dimen>
+    <dimen name="dk_streak_info_icon_height">20dp</dimen>
+    <dimen name="dk_streak_info_icon_width">20dp</dimen>
 </resources>

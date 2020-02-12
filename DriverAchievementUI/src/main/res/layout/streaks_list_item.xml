@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dk_margin_half"
-    app:cardCornerRadius="@dimen/dk_margin_half"
     card_view:cardElevation="@dimen/dk_margin_quarter">
 
     <android.support.constraint.ConstraintLayout
@@ -17,7 +16,7 @@
 
         <ImageView
             android:id="@+id/image_view_streak_icon"
-            android:layout_width="30dp"
+            android:layout_width="@dimen/dk_streak_icon_width"
             android:layout_height="30dp"
             android:src="@drawable/dk_distraction_filled"
             app:layout_constraintEnd_toStartOf="@+id/text_view_streak_title"
@@ -31,16 +30,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
-            android:text="@string/dk_streaks_acceleration_title"
+            android:text="Le Lorem Ipsum est simplement du faux texte employé dans la composition"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/image_view_info"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/dk_streak_info_icon_width"
+            android:layout_height="@dimen/dk_streak_info_icon_height"
             android:src="@drawable/dk_streak_info"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="@dimen/dk_margin_quarter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +51,7 @@
             style="@style/Separator"
             android:layout_marginTop="@dimen/dk_margin_half"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_streak_icon" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_streak_title" />
 
         <TextView
             android:id="@+id/current_title"

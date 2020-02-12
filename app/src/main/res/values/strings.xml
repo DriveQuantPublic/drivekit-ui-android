@@ -42,7 +42,6 @@
     <string name="user_id_description">Tap to fill your user id</string>
     <string name="user_id_title">User id</string>
 
-
     <string name="app_name">DriveKit Demo App</string>
     <string name="driver_data_button">Lancer DriverData</string>
     <string name="trip_cancelled_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée</string>

@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
 import android.content.DialogInterface
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.Spanned
@@ -30,6 +31,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
     private val imageViewStreak = itemView.findViewById<ImageView>(R.id.image_view_streak_icon)
     private val seekBar = itemView.findViewById<SeekBar>(R.id.seek_bar)
     private val imageViewInfo = itemView.findViewById<ImageView>(R.id.image_view_info)
+    private val background =  textViewTripsCount.background as GradientDrawable
 
     fun bind(streaksData: StreaksData) {
         textViewStreakTitle.text = streaksData.getTitle(itemView.context)
@@ -144,14 +146,17 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
     }
 
     private fun setStyle() {
+        val primaryColor = ContextCompat.getColor(context, R.color.dk_primary_color)
         textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         textViewBestStreakTrip.setTypeface(textViewBestStreakTrip.typeface, Typeface.BOLD)
-        textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary_color))
+        textViewTripsCount.setTextColor(primaryColor)
+        background.setStroke(2, primaryColor)
     }
 
     private fun resetStyle() {
         textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
         textViewBestStreakTrip.typeface = textViewBestStreakDate.typeface
         textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
+        background.setStroke(2, ContextCompat.getColor(context, R.color.dk_stroke_color))
     }
 }

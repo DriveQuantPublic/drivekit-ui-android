@@ -2,9 +2,9 @@ package com.drivequant.drivekit.ui.trips.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.trip.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.extension.orderByDay
