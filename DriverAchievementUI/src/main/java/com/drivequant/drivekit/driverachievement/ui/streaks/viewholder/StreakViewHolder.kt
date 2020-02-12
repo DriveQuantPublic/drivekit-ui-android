@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
@@ -124,13 +123,13 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
     }
 
     private fun buildStreakData(tripsCount: Int, distance: String?, duration: String): Spanned {
-        val streakTrip = context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)
-        return Html.fromHtml(
-            "${HtmlUtils.getTextHighlight(
-                "<big><b>$tripsCount</b></big> $streakTrip",
-                context
-            )} - $distance - $duration"
-        )
+        val tripsCountText =
+            context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)
+        val source = "${HtmlUtils.getTextHighlight(
+            "${HtmlUtils.getTextBigAndBold("$tripsCount")} $tripsCountText",
+            context
+        )} - $distance - $duration"
+        return HtmlUtils.fromHtml(source)
     }
 
     private fun showDescription(streaksData: StreaksData) {
