@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_failed_to_sync_streaks">Impossible de synchroniser les séquences de succès, veuillez réessayer plus tard.</string>
+   <string name="dk_menu_streaks">Séquences de succès</string>
+   <string name="dk_ok">OK</string>
+   <string name="dk_streaks_acceleration_reset">Vous avez accéléré brutalement lors de votre dernier trajet</string>
+   <string name="dk_streaks_acceleration_text">Essayez d\'enchaîner une série de trajets sans aucune accélération brutale. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+   <string name="dk_streaks_acceleration_title">Aucune accélération brutale</string>
+   <string name="dk_streaks_adherence_reset">Vous avez franchi une limite d\'adherence lors de votre dernier trajet</string>
+   <string name="dk_streaks_adherence_text">Essayez d\'enchaîner une série de trajets sans aucun franchissement de limite d’adhérence. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+   <string name="dk_streaks_adherence_title">Aucune limite d\'adhérence</string>
+   <string name="dk_streaks_best_title">Meilleure séquence</string>
+   <string name="dk_streaks_brake_reset">Vous avez freiné brutalement lors de votre dernier trajet</string>
+   <string name="dk_streaks_brake_text">Essayez d\'enchaîner une série de trajets sans aucun freinage brusque. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+   <string name="dk_streaks_brake_title">Aucun freinage brusque</string>
+   <string name="dk_streaks_congrats">Bravo !</string>
+   <string name="dk_streaks_congrats_text">Vous réalisez actuellement votre meilleure séquence de succès. Continuer à vous dépasser !</string>
+   <string name="dk_streaks_current_title">En cours</string>
+   <string name="dk_streaks_empty">Vous n\'avez pas encore réalisé de trajets pour compléter cette séquence</string>
+   <string name="dk_streaks_phone_distraction_reset">Vous avez manipulé votre téléphone lors de votre dernier trajet</string>
+   <string name="dk_streaks_phone_distraction_text">séquences de succès</string>
+   <string name="dk_streaks_phone_distraction_title">Pas d\'utilisation du téléphone</string>
+   <string name="dk_streaks_safety_reset">Le score de sécurité de votre dernier trajet est inférieur à 9.8/10</string>
+   <string name="dk_streaks_safety_text">Essayez d\'enchaîner une série de trajets avec des scores de sécurité supérieurs à 9.8/10. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+   <string name="dk_streaks_safety_title">Conduite prudente</string>
+   <string name="dk_streaks_since">Depuis le %s</string>
+   <string name="dk_streaks_since_to">Du %s au %s</string>
+   <string name="dk_streaks_speeding_reset">Vous avez dépassé la limite de vitesse autorisée lors de votre dernier trajet</string>
+   <string name="dk_streaks_speeding_text">Essayez d\'enchaîner une série de trajets en respectant les limitations de vitesse. Le score de limite de vitesse doit être supérieur à 9.8/10. \n \n A chaque succès, le compteur du nombre de trajets augmente. \n \n En cas d\'échec, le compteur est réinitialisé et vous devez reprendre à zéro. \n \n Le nombre de trajets de votre meilleure séquence de succès est mémorisé et vous pouvez tenter de le dépasser.</string>
+   <string name="dk_streaks_speeding_title">Pas d\'excès de vitesse</string>
+   <string name="dk_streaks_trip">trajet</string>
+   <string name="dk_streaks_trips">trajets</string>
+   <string name="dk_unit_km">km</string>
+   <string name="dk_unit_hour">h</string>
+   <string name="dk_unit_minute">min</string>
+   <string name="dk_unit_second">s</string>
+</resources>

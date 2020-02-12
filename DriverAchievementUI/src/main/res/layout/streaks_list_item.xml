@@ -40,7 +40,7 @@
             android:layout_width="@dimen/dk_streak_info_icon_width"
             android:layout_height="@dimen/dk_streak_info_icon_height"
             android:src="@drawable/dk_streak_info"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
