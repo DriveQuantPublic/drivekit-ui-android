@@ -11,7 +11,7 @@ import com.drivequant.drivekit.driverachievement.streak.StreaksQueryListener
 
 class StreaksViewModel : ViewModel() {
 
-    var sortedStreaks: MutableList<StreaksData> = mutableListOf()
+    var filteredStreaksData: MutableList<StreaksData> = mutableListOf()
     val streaksData: MutableLiveData<List<StreaksData>> = MutableLiveData()
     var syncStatus: AchievementSyncStatus = AchievementSyncStatus.NO_ERROR
 
@@ -20,11 +20,10 @@ class StreaksViewModel : ViewModel() {
             DriveKitDriverAchievement.getStreaks(object : StreaksQueryListener {
                 override fun onResponse(
                     achievementSyncStatus: AchievementSyncStatus,
-                    streaks: List<Streak>
-                ) {
+                    streaks: List<Streak>) {
                     syncStatus = achievementSyncStatus
-                    sortedStreaks = getFilteredStreaks(streaksToDisplay, streaks)
-                    streaksData.postValue(sortedStreaks)
+                    filteredStreaksData = getFilteredStreaks(streaksToDisplay, streaks)
+                    streaksData.postValue(filteredStreaksData)
                 }
             })
         } else {
@@ -32,16 +31,12 @@ class StreaksViewModel : ViewModel() {
         }
     }
 
-    fun getFilteredStreaks(
-        streaksToDisplay: List<StreakTheme>,
-        fetchedStreaks: List<Streak>
-    ): MutableList<StreaksData> {
+    fun getFilteredStreaks(streaksToDisplay: List<StreakTheme>, fetchedStreaks: List<Streak>): MutableList<StreaksData> {
         if (fetchedStreaks.isNotEmpty()) {
-            val filteredStreaks =
-                fetchedStreaks.filter { streak -> streak.theme in streaksToDisplay }
-            sortedStreaks.clear()
+            val filteredStreaks = fetchedStreaks.filter { streak -> streak.theme in streaksToDisplay }
+            filteredStreaksData.clear()
             for (streak in filteredStreaks) {
-                sortedStreaks.add(
+                filteredStreaksData.add(
                     StreaksData(
                         streak.theme,
                         streak.best,
@@ -50,6 +45,6 @@ class StreaksViewModel : ViewModel() {
                 )
             }
         }
-        return sortedStreaks
+        return filteredStreaksData
     }
 }
