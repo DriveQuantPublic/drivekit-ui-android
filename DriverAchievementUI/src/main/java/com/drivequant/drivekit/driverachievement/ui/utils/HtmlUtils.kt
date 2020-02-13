@@ -8,10 +8,6 @@ import android.text.Spanned
 
 import com.drivequant.drivekit.driverachievement.ui.R
 
-/**
- * Created by Mohamed on 11/02/2020.
- */
-
 object HtmlUtils {
     fun getTextHighlight(text: String, context: Context): String {
         return "<span style=\"color:" + ContextCompat.getColor(

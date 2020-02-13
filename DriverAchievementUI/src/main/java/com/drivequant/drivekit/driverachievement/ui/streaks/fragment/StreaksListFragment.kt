@@ -11,22 +11,18 @@ import android.widget.Toast
 import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
 
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
-import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksViewModel
+import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 import kotlinx.android.synthetic.main.fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreakAdapter
+import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
 
-
-/**
- * Created by Mohamed on O5/02/2020.
- */
 
 class StreaksListFragment : Fragment() {
 
-    private lateinit var viewModel: StreaksViewModel
+    private lateinit var listViewModel: StreaksListViewModel
     private lateinit var streaksViewConfig: StreaksViewConfig
-    private var adapter: StreakAdapter? = null
+    private var listAdapter: StreaksListAdapter? = null
 
     companion object {
         fun newInstance(streaksViewConfig: StreaksViewConfig): StreaksListFragment {
@@ -38,7 +34,7 @@ class StreaksListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(StreaksViewModel::class.java)
+        listViewModel = ViewModelProviders.of(this).get(StreaksListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -68,21 +64,21 @@ class StreaksListFragment : Fragment() {
     }
 
     private fun updateStreaks() {
-        viewModel.streaksData.observe(this, Observer {
-            if (viewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
+        listViewModel.streaksData.observe(this, Observer {
+            if (listViewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
                 Toast.makeText(context, streaksViewConfig.failedToSyncStreaks, Toast.LENGTH_LONG)
                     .show()
             }
-            if (adapter != null) {
-                adapter?.notifyDataSetChanged()
+            if (listAdapter != null) {
+                listAdapter?.notifyDataSetChanged()
             } else {
-                adapter = StreakAdapter(view?.context, viewModel, streaksViewConfig)
-                recycler_view_streaks.adapter = adapter
+                listAdapter = StreaksListAdapter(view?.context, listViewModel, streaksViewConfig)
+                recycler_view_streaks.adapter = listAdapter
             }
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
-        viewModel.fetchStreaks(streaksViewConfig.streaksTheme)
+        listViewModel.fetchStreaks(streaksViewConfig.streaksTheme)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

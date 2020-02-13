@@ -65,19 +65,19 @@ class StreaksData(
         }
     }
 
-    fun getStreakStatus(): StreaksStatus {
-        return if (best.tripNumber == 0 && current.tripNumber == 0) {
-            StreaksStatus.INIT
-        } else if (best.tripNumber <= current.tripNumber && best.tripNumber != 0 && current.tripNumber != 0) {
-            StreaksStatus.BEST
+    fun getStreakStatus(): StreakStatus {
+        return if (currentTripsCount == 0 && bestTripsCount == 0) {
+            StreakStatus.INIT
+        } else if (bestTripsCount <= currentTripsCount && bestTripsCount != 0 && currentTripsCount != 0) {
+            StreakStatus.BEST
         } else {
-            StreaksStatus.IN_PROGRESS
+            StreakStatus.IN_PROGRESS
         }
     }
 
     fun computePercentage(): Int {
-        return if (best.tripNumber != 0) {
-            val percent = (current.tripNumber * 100) / best.tripNumber
+        return if (bestTripsCount != 0) {
+            val percent = (currentTripsCount * 100) / bestTripsCount
             if (percent == 0) {
                 percent + 2
             } else {
@@ -92,15 +92,15 @@ class StreaksData(
         val currentDistance = DistanceUtils().formatDistance(context, current.distance)
         val currentDuration = DurationUtils().formatDuration(context, current.duration)
         return when (getStreakStatus()) {
-            StreaksStatus.INIT -> {
+            StreakStatus.INIT -> {
                 buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
             }
 
-            StreaksStatus.IN_PROGRESS -> {
+            StreakStatus.IN_PROGRESS -> {
                 buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
             }
 
-            StreaksStatus.BEST -> {
+            StreakStatus.BEST -> {
                 buildStreakData(context, currentTripsCount, currentDistance, currentDuration)
 
             }
@@ -109,11 +109,11 @@ class StreaksData(
 
     fun getCurrentStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreaksStatus.INIT -> {
+            StreakStatus.INIT -> {
                 context.getString(R.string.dk_streaks_since, currentStartDate)
             }
 
-            StreaksStatus.IN_PROGRESS -> {
+            StreakStatus.IN_PROGRESS -> {
                 if (currentTripsCount == 0 && bestTripsCount != 0) {
                     getResetText(context)
                 } else {
@@ -121,7 +121,7 @@ class StreaksData(
                 }
             }
 
-            StreaksStatus.BEST -> {
+            StreakStatus.BEST -> {
                 context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
             }
         }
@@ -132,15 +132,15 @@ class StreaksData(
         val bestDuration = DurationUtils().formatDuration(context, best.duration)
 
         return when (getStreakStatus()) {
-            StreaksStatus.INIT -> {
+            StreakStatus.INIT -> {
                 buildStreakData(context, bestTripsCount, bestDistance, bestDuration).toString()
             }
 
-            StreaksStatus.IN_PROGRESS -> {
+            StreakStatus.IN_PROGRESS -> {
                 buildStreakData(context, bestTripsCount, bestDistance, bestDuration).toString()
             }
 
-            StreaksStatus.BEST -> {
+            StreakStatus.BEST -> {
                 context.getString(R.string.dk_streaks_congrats)
             }
         }
@@ -148,11 +148,11 @@ class StreaksData(
 
     fun getBestStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreaksStatus.INIT -> {
+            StreakStatus.INIT -> {
                 context.getString(R.string.dk_streaks_empty)
             }
 
-            StreaksStatus.IN_PROGRESS -> {
+            StreakStatus.IN_PROGRESS -> {
                 if (currentTripsCount == bestTripsCount) {
                     context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
                 } else {
@@ -160,7 +160,7 @@ class StreaksData(
                 }
             }
 
-            StreaksStatus.BEST -> {
+            StreakStatus.BEST -> {
                 context.getString(R.string.dk_streaks_congrats_text)
             }
         }

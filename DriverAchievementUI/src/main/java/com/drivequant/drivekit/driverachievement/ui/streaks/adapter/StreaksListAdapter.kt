@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewholder.StreakViewHolder
-import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksViewModel
+import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 
-class StreakAdapter(
+class StreaksListAdapter(
     var context: Context?,
-    var streaksViewModel: StreaksViewModel,
-    var streaksViewConfig: StreaksViewConfig
-) : RecyclerView.Adapter<StreakViewHolder>() {
+    var streaksListViewModel: StreaksListViewModel,
+    var streaksViewConfig: StreaksViewConfig) : RecyclerView.Adapter<StreakViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): StreakViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.streaks_list_item, parent, false)
@@ -21,11 +20,11 @@ class StreakAdapter(
     }
 
     override fun getItemCount(): Int {
-        return streaksViewModel.sortedStreaks.size
+        return streaksListViewModel.filteredStreaksData.size
     }
 
     override fun onBindViewHolder(parent: StreakViewHolder, position: Int) {
-        val streakData = streaksViewModel.sortedStreaks[position]
+        val streakData = streaksListViewModel.filteredStreaksData[position]
         parent.bind(streakData)
     }
 }

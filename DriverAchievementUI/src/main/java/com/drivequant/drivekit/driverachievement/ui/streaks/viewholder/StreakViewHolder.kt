@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
-import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksStatus
+import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
 import com.drivequant.drivekit.driverachievement.ui.utils.*
 
 
@@ -67,11 +67,11 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         }
 
         when (streaksData.getStreakStatus()) {
-            StreaksStatus.INIT,  StreaksStatus.IN_PROGRESS -> {
+            StreakStatus.INIT,  StreakStatus.IN_PROGRESS -> {
                 setStyle(reset = true)
             }
 
-            StreaksStatus.BEST -> {
+            StreakStatus.BEST -> {
                 setStyle()
             }
         }
