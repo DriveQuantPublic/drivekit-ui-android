@@ -16,7 +16,7 @@
     <string name="dk_streaks_congrats">Well done!</string>
     <string name="dk_streaks_congrats_text">You are currently achieving your best streak of hits. Keep surpassing yourself!</string>
     <string name="dk_streaks_current_title">Current</string>
-    <string name="dk_streaks_empty">You have not yet made any trips to to start this series of success</string>
+    <string name="dk_streaks_empty">You have not yet made any trips to start this series of success</string>
     <string name="dk_streaks_phone_distraction_reset">You used your smartphone during your last trip</string>
     <string name="dk_streaks_phone_distraction_text">Try to make a series of trips without handling your smartphone while driving. \n \n Each time you succeed, the trip counter increases. \n \n If you fail, the counter is reset and you must restart from scratch. \n \n The number of trips in your best sequence of success is memorized and you can try to surpass it.</string>
     <string name="dk_streaks_phone_distraction_title">No phone use</string>
