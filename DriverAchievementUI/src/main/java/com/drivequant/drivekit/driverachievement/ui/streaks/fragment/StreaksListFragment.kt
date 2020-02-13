@@ -54,6 +54,9 @@ class StreaksListFragment : Fragment() {
             streaksViewConfig = it
         }
 
+        val layoutManager = LinearLayoutManager(view.context)
+        recycler_view_streaks.layoutManager = layoutManager
+
         refresh_streaks.setOnRefreshListener {
             updateStreaks()
         }
@@ -70,9 +73,7 @@ class StreaksListFragment : Fragment() {
                 Toast.makeText(context, streaksViewConfig.failedToSyncStreaks, Toast.LENGTH_LONG)
                     .show()
             }
-            val layoutManager = LinearLayoutManager(view?.context)
-            recycler_view_streaks.layoutManager = layoutManager
-            if (adapter != null && viewModel.sortedStreaks.isNotEmpty()) {
+            if (adapter != null) {
                 adapter?.notifyDataSetChanged()
             } else {
                 adapter = StreakAdapter(view?.context, viewModel, streaksViewConfig)
