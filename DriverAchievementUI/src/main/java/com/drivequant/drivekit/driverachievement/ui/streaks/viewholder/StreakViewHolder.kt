@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
-import android.text.Spanned
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -13,7 +12,6 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
-import com.drivequant.drivekit.driverachievement.ui.extension.formatStreaksDate
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksStatus
 import com.drivequant.drivekit.driverachievement.ui.utils.*
@@ -23,8 +21,8 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
     RecyclerView.ViewHolder(itemView) {
     private val context = itemView.context
     private val textViewStreakTitle = itemView.findViewById<TextView>(R.id.text_view_streak_title)
-    private val textViewCurrentStreakTrip = itemView.findViewById<TextView>(R.id.text_view_current_streak_trip)
-    private val textViewBestStreakTrip = itemView.findViewById<TextView>(R.id.text_view_best_streak_trip)
+    private val textViewCurrentStreakData = itemView.findViewById<TextView>(R.id.text_view_current_streak_trip)
+    private val textViewBestStreakData = itemView.findViewById<TextView>(R.id.text_view_best_streak_trip)
     private val textViewCurrentStreakDate = itemView.findViewById<TextView>(R.id.text_view_current_streak_date)
     private val textViewBestStreakDate = itemView.findViewById<TextView>(R.id.text_view_best_streak_date)
     private val textViewTripsCount = itemView.findViewById<TextView>(R.id.text_view_trips_count)
@@ -51,87 +49,32 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
     }
 
     private fun setData(streaksData: StreaksData) {
-        val currentTripsCount = streaksData.getCurrentStreak().tripNumber
-        val bestTripsCount = streaksData.getBestStreak().tripNumber
-        val currentDistance = DistanceUtils().formatDistance(context, streaksData.getCurrentStreak().distance)
-        val bestDistance = DistanceUtils().formatDistance(context, streaksData.getBestStreak().distance)
-        val currentDuration = DurationUtils().formatDuration(context, streaksData.getCurrentStreak().duration)
-        val bestDuration = DurationUtils().formatDuration(context, streaksData.getBestStreak().duration)
-        val currentStartDate = streaksData.getCurrentStreak().startDate.formatStreaksDate()
-        val currentEndDate = streaksData.getCurrentStreak().endDate.formatStreaksDate()
-        val bestStartDate = streaksData.getBestStreak().startDate.formatStreaksDate()
-        val bestEndDate = streaksData.getBestStreak().endDate.formatStreaksDate()
-        textViewTripsCount.text = "$bestTripsCount"
+        textViewTripsCount.text = "${streaksData.bestTripsCount}"
+        textViewCurrentStreakData.text = streaksData.getCurrentStreakData(context)
+        textViewBestStreakData.text = streaksData.getBestStreakData(context)
+        textViewCurrentStreakDate.text = streaksData.getCurrentStreakDate(context)
+
+        if (streaksData.currentTripsCount == streaksData.bestTripsCount) {
+            if (streaksData.currentTripsCount != 0) {
+                textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary_color))
+            }
+            textViewBestStreakDate.text = streaksData.getBestStreakDate(context)
+        } else {
+            textViewBestStreakDate.text = context.getString(
+                R.string.dk_streaks_since_to,
+                streaksData.bestStartDate,
+                streaksData.bestEndDate)
+        }
 
         when (streaksData.getStreakStatus()) {
-            StreaksStatus.INIT -> {
-                textViewCurrentStreakTrip.text = buildStreakData(currentTripsCount,currentDistance,currentDuration)
-                textViewBestStreakTrip.text = buildStreakData(bestTripsCount, bestDistance, bestDuration)
-                textViewCurrentStreakDate.text = context.getString(
-                    R.string.dk_streaks_since,
-                    currentStartDate
-                )
-                textViewBestStreakDate.text = context.getString(R.string.dk_streaks_empty)
-            }
-            StreaksStatus.IN_PROGRESS -> {
-                // Reset text style when passing from BEST to IN_PROGRESS status after a fail
+            StreaksStatus.INIT,  StreaksStatus.IN_PROGRESS -> {
                 setStyle(reset = true)
-                // First streak
-                if (currentTripsCount == bestTripsCount) {
-                    if (currentTripsCount != 0) {
-                        textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary_color))
-                    }
-
-                    textViewCurrentStreakTrip.text = buildStreakData(currentTripsCount,currentDistance,currentDuration)
-                    textViewBestStreakTrip.text = context.getString(R.string.dk_streaks_congrats)
-                    textViewCurrentStreakDate.text = context.getString(
-                        R.string.dk_streaks_since,
-                        currentStartDate
-                    )
-                    textViewBestStreakDate.text = context.getString(R.string.dk_streaks_congrats_text)
-                } else {
-                    // Reset
-                    if (currentTripsCount == 0 && bestTripsCount != 0) {
-                        textViewCurrentStreakDate.text = streaksData.getResetText(context)
-                    } else {
-                        textViewCurrentStreakDate.text = context.getString(
-                            R.string.dk_streaks_since_to,
-                            currentStartDate,
-                            currentEndDate
-                        )
-                    }
-                    // N - streaks
-                    textViewCurrentStreakTrip.text = buildStreakData(currentTripsCount,currentDistance,currentDuration)
-                    textViewBestStreakTrip.text = buildStreakData(bestTripsCount, bestDistance, bestDuration)
-                    textViewBestStreakDate.text = context.getString(
-                        R.string.dk_streaks_since_to,
-                        bestStartDate,
-                        bestEndDate
-                    )
-                }
             }
+
             StreaksStatus.BEST -> {
                 setStyle()
-                textViewBestStreakTrip.text = context.getString(R.string.dk_streaks_congrats)
-                textViewBestStreakDate.text = context.getString(R.string.dk_streaks_congrats_text)
-                textViewCurrentStreakTrip.text = buildStreakData(currentTripsCount,currentDistance,currentDuration)
-                textViewCurrentStreakDate.text = context.getString(
-                        R.string.dk_streaks_since_to,
-                        currentStartDate,
-                        currentEndDate
-                    )
             }
         }
-    }
-
-    private fun buildStreakData(tripsCount: Int, distance: String?, duration: String): Spanned {
-        val tripsCountText =
-            context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)
-        val source = "${HtmlUtils.getTextHighlight(
-            "${HtmlUtils.getTextBigAndBold("$tripsCount")} $tripsCountText",
-            context
-        )} - $distance - $duration"
-        return HtmlUtils.fromHtml(source)
     }
 
     private fun showDescription(streaksData: StreaksData) {
@@ -147,14 +90,14 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
 
     private fun setStyle(reset: Boolean = false) {
         if (reset) {
-            textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-            textViewBestStreakTrip.typeface = textViewBestStreakDate.typeface
+            textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            textViewBestStreakData.typeface = textViewBestStreakDate.typeface
             textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
             background.setStroke(2, ContextCompat.getColor(context, R.color.dk_stroke_color))
         } else {
             val primaryColor = ContextCompat.getColor(context, R.color.dk_primary_color)
-            textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            textViewBestStreakTrip.setTypeface(textViewBestStreakTrip.typeface, Typeface.BOLD)
+            textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            textViewBestStreakData.setTypeface(textViewBestStreakData.typeface, Typeface.BOLD)
             textViewTripsCount.setTextColor(primaryColor)
             background.setStroke(2, primaryColor)
         }
