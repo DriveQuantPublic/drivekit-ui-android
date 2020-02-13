@@ -75,7 +75,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             }
             StreaksStatus.IN_PROGRESS -> {
                 // Reset text style when passing from BEST to IN_PROGRESS status after a fail
-                resetStyle()
+                setStyle(reset = true)
                 // First streak
                 if (currentTripsCount == bestTripsCount) {
                     if (currentTripsCount != 0) {
@@ -145,18 +145,18 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             .show()
     }
 
-    private fun setStyle() {
-        val primaryColor = ContextCompat.getColor(context, R.color.dk_primary_color)
-        textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-        textViewBestStreakTrip.setTypeface(textViewBestStreakTrip.typeface, Typeface.BOLD)
-        textViewTripsCount.setTextColor(primaryColor)
-        background.setStroke(2, primaryColor)
-    }
-
-    private fun resetStyle() {
-        textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-        textViewBestStreakTrip.typeface = textViewBestStreakDate.typeface
-        textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
-        background.setStroke(2, ContextCompat.getColor(context, R.color.dk_stroke_color))
+    private fun setStyle(reset: Boolean = false) {
+        if (reset) {
+            textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            textViewBestStreakTrip.typeface = textViewBestStreakDate.typeface
+            textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
+            background.setStroke(2, ContextCompat.getColor(context, R.color.dk_stroke_color))
+        } else {
+            val primaryColor = ContextCompat.getColor(context, R.color.dk_primary_color)
+            textViewBestStreakTrip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            textViewBestStreakTrip.setTypeface(textViewBestStreakTrip.typeface, Typeface.BOLD)
+            textViewTripsCount.setTextColor(primaryColor)
+            background.setStroke(2, primaryColor)
+        }
     }
 }
