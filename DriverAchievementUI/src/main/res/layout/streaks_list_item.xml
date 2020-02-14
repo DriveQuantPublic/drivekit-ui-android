@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/image_view_streak_icon"
             android:layout_width="@dimen/dk_streak_icon_width"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/dk_streak_icon_height"
             android:src="@drawable/dk_distraction_filled"
             app:layout_constraintEnd_toStartOf="@+id/text_view_streak_title"
             app:layout_constraintHorizontal_bias="0.5"
