@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
 
 enum class VehicleType {
     CAR,
@@ -35,7 +36,16 @@ enum class VehicleType {
         }
     }
 
-    fun getBrands(): List<String> {
-        return listOf()
+    fun getBrands(context: Context): List<VehicleBrandItem> {
+        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_brands, delimiter = ";")
+        val brands = mutableListOf<VehicleBrandItem>()
+        for (i in lines!!.indices) {
+            brands.add(buildFromCSV(lines[i]))
+        }
+        return when (this){
+            CAR -> brands.filter { it.isCar}
+            MOTORBIKE -> brands.filter { it.isMotorbike}
+            TRUCK -> brands.filter { it.isTruck}
+        }
     }
 }
