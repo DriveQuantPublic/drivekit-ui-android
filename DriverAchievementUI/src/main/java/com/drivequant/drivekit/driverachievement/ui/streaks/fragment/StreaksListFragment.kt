@@ -22,7 +22,7 @@ class StreaksListFragment : Fragment() {
 
     private lateinit var listViewModel: StreaksListViewModel
     private lateinit var streaksViewConfig: StreaksViewConfig
-    private var listAdapter: StreaksListAdapter? = null
+    private lateinit var listAdapter: StreaksListAdapter
 
     companion object {
         fun newInstance(streaksViewConfig: StreaksViewConfig): StreaksListFragment {
@@ -34,6 +34,7 @@ class StreaksListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if(!this::listViewModel.isInitialized)
         listViewModel = ViewModelProviders.of(this).get(StreaksListViewModel::class.java)
     }
 
@@ -69,8 +70,8 @@ class StreaksListFragment : Fragment() {
                 Toast.makeText(context, streaksViewConfig.failedToSyncStreaks, Toast.LENGTH_LONG)
                     .show()
             }
-            if (listAdapter != null) {
-                listAdapter?.notifyDataSetChanged()
+            if (this::listAdapter.isInitialized) {
+                listAdapter.notifyDataSetChanged()
             } else {
                 listAdapter = StreaksListAdapter(view?.context, listViewModel, streaksViewConfig)
                 recycler_view_streaks.adapter = listAdapter

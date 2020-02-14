@@ -91,20 +91,7 @@ class StreaksData(
     fun getCurrentStreakData(context: Context) : Spanned {
         val currentDistance = DistanceUtils().formatDistance(context, current.distance)
         val currentDuration = DurationUtils().formatDuration(context, current.duration)
-        return when (getStreakStatus()) {
-            StreakStatus.INIT -> {
-                buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
-            }
-
-            StreakStatus.IN_PROGRESS -> {
-                buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
-            }
-
-            StreakStatus.BEST -> {
-                buildStreakData(context, currentTripsCount, currentDistance, currentDuration)
-
-            }
-        }
+        return buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
     }
 
     fun getCurrentStreakDate(context: Context): String {
@@ -132,11 +119,7 @@ class StreaksData(
         val bestDuration = DurationUtils().formatDuration(context, best.duration)
 
         return when (getStreakStatus()) {
-            StreakStatus.INIT -> {
-                buildStreakData(context, bestTripsCount, bestDistance, bestDuration).toString()
-            }
-
-            StreakStatus.IN_PROGRESS -> {
+            StreakStatus.INIT,StreakStatus.IN_PROGRESS -> {
                 buildStreakData(context, bestTripsCount, bestDistance, bestDuration).toString()
             }
 
