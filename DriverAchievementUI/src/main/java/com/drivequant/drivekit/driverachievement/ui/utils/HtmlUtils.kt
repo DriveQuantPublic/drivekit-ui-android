@@ -12,7 +12,7 @@ object HtmlUtils {
     fun getTextHighlight(text: String, context: Context): String {
         return "<span style=\"color:" + ContextCompat.getColor(
             context,
-            R.color.dk_primary_color
+            R.color.dk_primary
         ) + "\">" + text + "</span>"
     }
 

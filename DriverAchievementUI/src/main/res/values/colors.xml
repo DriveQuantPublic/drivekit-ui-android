@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dk_primary_color">#77E2B0</color>
-    <color name="dk_separator_color">#E0E0E0</color>
+    <color name="dk_primary">#77E2B0</color>
+    <color name="dk_separator">#E0E0E0</color>
     <color name="dk_gray500">#9E9E9E</color>
-    <color name="dk_stroke_color">#ababab</color>
+    <color name="dk_trips_count_stroke">#ababab</color>
 </resources>

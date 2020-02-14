@@ -56,7 +56,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
 
         if (streaksData.currentTripsCount == streaksData.bestTripsCount) {
             if (streaksData.currentTripsCount != 0) {
-                textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary_color))
+                textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary))
             }
             textViewBestStreakDate.text = streaksData.getBestStreakDate(context)
         } else {
@@ -93,9 +93,9 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             textViewBestStreakData.typeface = textViewBestStreakDate.typeface
             textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
-            background.setStroke(2, ContextCompat.getColor(context, R.color.dk_stroke_color))
+            background.setStroke(2, ContextCompat.getColor(context, R.color.dk_trips_count_stroke))
         } else {
-            val primaryColor = ContextCompat.getColor(context, R.color.dk_primary_color)
+            val primaryColor = ContextCompat.getColor(context, R.color.dk_primary)
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             textViewBestStreakData.setTypeface(textViewBestStreakData.typeface, Typeface.BOLD)
             textViewTripsCount.setTextColor(primaryColor)
