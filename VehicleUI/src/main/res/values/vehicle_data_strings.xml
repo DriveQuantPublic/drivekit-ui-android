@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_vehicle_type_car_title">Voiture</string>
+    <string name="dk_vehicle_type_motorbike_title">Motorbike</string>
+    <string name="dk_vehicle_type_truck_title">Camion</string>
+    <string name="dk_vehicle_category_car_micro_title">Petite citadine</string>
+    <string name="dk_vehicle_category_car_compact_title">Citadine</string>
+    <string name="dk_vehicle_category_car_sedan_title">Berline</string>
+    <string name="dk_vehicle_category_car_suv_title">SUV</string>
+    <string name="dk_vehicle_category_car_minivan_title">Monospace</string>
+    <string name="dk_vehicle_category_car_commercial_title">Utilitaires</string>
+    <string name="dk_vehicle_category_car_luxury_title">Grande Berline</string>
+    <string name="dk_vehicle_category_car_sport_title">Coupé</string>
+</resources>
