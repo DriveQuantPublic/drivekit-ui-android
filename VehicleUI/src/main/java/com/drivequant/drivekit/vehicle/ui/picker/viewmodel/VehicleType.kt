@@ -2,14 +2,16 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
 enum class VehicleType {
     CAR,
     MOTORBIKE,
     TRUCK;
 
-    fun getTitle(context: Context): String? {
+    fun getTitle(context: Context): String {
         return when (this){
             CAR -> context.getString(R.string.dk_vehicle_type_car_title)
             MOTORBIKE -> context.getString(R.string.dk_vehicle_type_motorbike_title)
@@ -47,5 +49,14 @@ enum class VehicleType {
             MOTORBIKE -> brands.filter { it.isMotorbike}
             TRUCK -> brands.filter { it.isTruck}
         }
+    }
+
+    fun toVehiclePickerItem(context: Context, viewConfig: VehiclePickerViewConfig): List<VehiclePickerItem> {
+        val items: MutableList<VehiclePickerItem> = mutableListOf()
+        for (i in viewConfig.vehicleTypes.indices){
+            val currentType = viewConfig.vehicleTypes[i]
+            items.add(i, VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
+        }
+        return items
     }
 }

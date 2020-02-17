@@ -43,9 +43,12 @@
    <string name="user_id_title">User id</string>
 
 
+   <!-- TODO translate -->
    <string name="app_name">DriveKit Demo App</string>
    <string name="driver_data_button">Lancer DriverData</string>
    <string name="trip_cancelled_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée</string>
    <string name="trip_cancelled_beacon_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée en présence du beacon</string>
    <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
+   <string name="vehicle_picker_button">Lancer Vehicle Picker</string>
+   <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the Vehicle Picker, Vehicles List and Detail</string>
 </resources>

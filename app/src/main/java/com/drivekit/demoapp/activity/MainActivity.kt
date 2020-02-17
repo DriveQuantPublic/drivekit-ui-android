@@ -16,6 +16,9 @@ import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -73,6 +76,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.button_trip_cancel -> {
                     DriveKitTripAnalysis.cancelTrip()
                 }
+            }
+        }
+    }
+
+    fun onVehiclePickerClicked(view: View){
+        if (DriveKitTripAnalysis.isConfigured()) {
+            when (view.id){
+                R.id.button_vehicle_picker -> {
+                    val vehiclePickerViewConfig = VehiclePickerViewConfig(
+                        this,
+                        listOf(VehicleType.TRUCK, VehicleType.MOTORBIKE, VehicleType.CAR),
+                        VehicleType.CAR.getBrands(this),
+                        CategoryType.BOTH_CONFIG,
+                        true
+                    )
+                    VehiclePickerActivity.launchActivity(this, vehiclePickerViewConfig)
+                }
+
+                // TODO list vehicles
+                // TODO vehicle detail
             }
         }
     }
