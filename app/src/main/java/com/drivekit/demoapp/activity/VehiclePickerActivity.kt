@@ -4,13 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.support.transition.FragmentTransitionSupport
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.transition.Slide
+import android.view.Gravity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
-class VehiclePickerActivity : AppCompatActivity() {
+class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
@@ -31,14 +37,26 @@ class VehiclePickerActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        dispatchToScreen(TYPE)
+    }
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, VehicleItemListFragment.newInstance(VehiclePickerStep.TYPE, viewConfig))
-            .commit()
+    override fun onSelectedItem(vehiclePickerStep: VehiclePickerStep, item: VehiclePickerItem) {
+        when (vehiclePickerStep){
+            TYPE -> dispatchToScreen(CATEGORY)
+            CATEGORY -> TODO()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
+        val fragment = VehicleItemListFragment.newInstance(vehiclePickerStep, viewConfig)
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
     }
 }

@@ -51,12 +51,5 @@ enum class VehicleType {
         }
     }
 
-    fun toVehiclePickerItem(context: Context, viewConfig: VehiclePickerViewConfig): List<VehiclePickerItem> {
-        val items: MutableList<VehiclePickerItem> = mutableListOf()
-        for (i in viewConfig.vehicleTypes.indices){
-            val currentType = viewConfig.vehicleTypes[i]
-            items.add(i, VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
-        }
-        return items
-    }
+
 }

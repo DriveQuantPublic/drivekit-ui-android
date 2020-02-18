@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
-class ItemRecyclerViewAdapter(val items: List<VehiclePickerItem>):
+class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, private val items: List<VehiclePickerItem>, private val listener: VehicleItemListFragment.OnListFragmentInteractionListener?):
     RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -20,6 +22,11 @@ class ItemRecyclerViewAdapter(val items: List<VehiclePickerItem>):
         val item: VehiclePickerItem = items[position]
         holder.item = items[position]
         holder.textView.text = item.text
+        holder.textView.setOnClickListener {
+            holder.item?.let {
+                listener?.onSelectedItem(vehiclePickerStep, it)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

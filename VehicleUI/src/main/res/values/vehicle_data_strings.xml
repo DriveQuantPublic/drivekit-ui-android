@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_vehicle_type_car_title">Voiture</string>
-    <string name="dk_vehicle_type_motorbike_title">Motorbike</string>
+    <string name="dk_vehicle_type_motorbike_title">Moto</string>
     <string name="dk_vehicle_type_truck_title">Camion</string>
     <string name="dk_vehicle_category_car_micro_title">Petite citadine</string>
     <string name="dk_vehicle_category_car_compact_title">Citadine</string>
