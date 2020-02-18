@@ -89,7 +89,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
             .addToBackStack(vehiclePickerStep.name)
-            .add(R.id.container, fragment)
+            .replace(R.id.container, fragment)
             .commit()
     }
 

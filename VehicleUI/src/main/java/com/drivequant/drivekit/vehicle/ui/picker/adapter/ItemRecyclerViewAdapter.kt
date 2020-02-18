@@ -14,7 +14,12 @@ class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, 
     RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_simple_item, parent, false)
+        val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
+        val view = if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM){
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text_image, parent, false)
+        } else {
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text, parent, false)
+        }
         return ViewHolder(view)
     }
 
@@ -22,7 +27,7 @@ class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, 
         val item: VehiclePickerItem = items[position]
         holder.item = items[position]
         holder.textView.text = item.text
-        holder.textView.setOnClickListener {
+        holder.view.setOnClickListener {
             holder.item?.let {
                 listener?.onSelectedItem(vehiclePickerStep, it)
             }
@@ -34,6 +39,7 @@ class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, 
     }
 
     class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
+        val view = mView
         val textView: TextView = mView.findViewById<View>(R.id.text_view) as TextView
         var item: VehiclePickerItem? = null
     }

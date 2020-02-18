@@ -19,7 +19,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModelFactory
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
 
 class VehicleItemListFragment : Fragment() {
 
@@ -34,6 +33,24 @@ class VehicleItemListFragment : Fragment() {
                 }
                 return TEXT_ITEM
             }
+
+            fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
+                return when (vehiclePickerStep) {
+                    CATEGORY,
+                    BRANDS_ICONS -> TEXT_IMAGE_ITEM
+
+                    TYPE,
+                    ENGINE,
+                    YEARS,
+                    MODELS,
+                    VERSIONS,
+                    BRANDS_FULL,
+                    CATEGORY_DESCRIPTION,
+                    NAME -> {
+                        TEXT_ITEM
+                    }
+                }
+            }
         }
     }
 
@@ -46,7 +63,6 @@ class VehicleItemListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var adapter: Any? = null
     private var items: List<VehiclePickerItem> = listOf()
-
 
     companion object {
         fun newInstance(vehiclePickerStep: VehiclePickerStep,
@@ -66,6 +82,7 @@ class VehicleItemListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container,false)
         recyclerView = view?.findViewById(R.id.list) as RecyclerView
+        adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep).value
         if (adapterType == AdapterType.TEXT_ITEM.value){
             recyclerView.layoutManager = LinearLayoutManager(context)
         } else {
