@@ -1,22 +1,24 @@
-package com.drivekit.demoapp.activity
+package com.drivequant.drivekit.vehicle.ui.picker.activity
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.transition.FragmentTransitionSupport
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import android.transition.Slide
-import android.view.Gravity
-import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CarCategory
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType.*
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
+
+    lateinit var vehicleType: VehicleType
+    lateinit var vehicleCategory: CarCategory
 
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
@@ -37,19 +39,49 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        dispatchToScreen(TYPE)
+        computeFirstScreen()
+        currentStep?.let {
+            dispatchToScreen(it)
+        }
     }
 
     override fun onSelectedItem(vehiclePickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         when (vehiclePickerStep){
-            TYPE -> dispatchToScreen(CATEGORY)
-            CATEGORY -> TODO()
+            TYPE -> {
+                vehicleType = VehicleType.valueOf(item.value)
+                if (shouldDisplayCategoryScreen()){
+                    dispatchToScreen(CATEGORY)
+                } else {
+                    if (viewConfig.displayBrandsWithIcons) {
+                        dispatchToScreen(BRANDS_ICONS)
+                    } else {
+                        dispatchToScreen(BRANDS_FULL)
+                    }
+                }
+            }
+            CATEGORY -> {
+                vehicleCategory = CarCategory.valueOf(item.value)
+                dispatchToScreen(BRANDS_FULL)
+            }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun computeFirstScreen(){
+        when (viewConfig.vehicleTypes.size) {
+            0 -> throw IllegalArgumentException("VehicleType in VehiclePickerViewConfig must have at least 1 item")
+            1 -> {
+                vehicleType = viewConfig.vehicleTypes.first()
+                currentStep = CATEGORY
+            }
+            !in 0..1 -> {
+                currentStep = TYPE
+            }
+        }
     }
 
     private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
@@ -59,5 +91,13 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             .addToBackStack(vehiclePickerStep.name)
             .add(R.id.container, fragment)
             .commit()
+    }
+
+    private fun shouldDisplayCategoryScreen(): Boolean {
+        return when (viewConfig.categoryTypes) {
+            LITE_CONFIG_ONLY,
+            BOTH_CONFIG -> true
+            BRANDS_CONFIG_ONLY -> false
+        }
     }
 }

@@ -17,6 +17,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
 import kotlinx.android.synthetic.main.activity_main.*

@@ -33,8 +33,8 @@ enum class VehicleType {
                         CarCategory.LUXURY,
                         CarCategory.SPORT)
             }
-            MOTORBIKE -> listOf()
-            TRUCK -> listOf()
+            MOTORBIKE -> listOf(CarCategory.SPORT)
+            TRUCK -> listOf(CarCategory.MINIVAN)
         }
     }
 

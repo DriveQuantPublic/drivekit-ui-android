@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -86,11 +87,17 @@ class VehicleItemListFragment : Fragment() {
 
     private fun fetchItems(): List<VehiclePickerItem> { // TODO move in VM
         return when (vehiclePickerStep){
-            TYPE -> viewModel.fetchVehicleTypes(requireContext(), vehiclePickerViewConfig)
-            CATEGORY -> viewModel.fetchVehicleCategories(requireContext(), vehicleType = VehicleType.CAR)
+            TYPE -> {
+                viewModel.fetchVehicleTypes(requireContext(), vehiclePickerViewConfig)
+            }
+            CATEGORY -> {
+                viewModel.fetchVehicleCategories(requireContext(), (activity as VehiclePickerActivity).vehicleType)
+            }
             CATEGORY_DESCRIPTION -> listOf()
             BRANDS_ICONS -> listOf()
-            BRANDS_FULL -> listOf()
+            BRANDS_FULL -> {
+                viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType)
+            }
             ENGINE -> listOf()
             MODELS -> listOf()
             YEARS -> listOf()
