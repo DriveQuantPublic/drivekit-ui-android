@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
@@ -28,19 +29,29 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawCategories = vehicleType.getCategories()
         for (i in rawCategories.indices){
-            items.add(i, VehiclePickerItem(i, rawCategories[i].getTitle(context), rawCategories[i].name, rawCategories[i].getImageResource()))
+            items.add(i, VehiclePickerItem(i, rawCategories[i].getTitle(context), rawCategories[i].name, rawCategories[i].getIcon1(context), rawCategories[i].getIcon2(context)))
         }
         return items
     }
 
     fun fetchVehicleBrands(
         context: Context,
-        vehicleType: VehicleType
+        vehicleType: VehicleType,
+        withIcons: Boolean = false
     ) : List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawBrands = vehicleType.getBrands(context)
+        val rawBrands = vehicleType.getBrands(context, withIcons)
         for (i in rawBrands.indices){
             items.add(i, VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
+        }
+        return items
+    }
+
+    fun fetchVehicleEngines(context: Context) : List<VehiclePickerItem> {
+        val items: MutableList<VehiclePickerItem> = mutableListOf()
+        val rawEngines = VehicleEngineIndex.values()
+        for (i in rawEngines.indices){
+            items.add(i, VehiclePickerItem(i, rawEngines[i].name, rawEngines[i].value.toString()))
         }
         return items
     }

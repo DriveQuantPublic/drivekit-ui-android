@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -27,6 +28,11 @@ class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, 
         val item: VehiclePickerItem = items[position]
         holder.item = items[position]
         holder.textView.text = item.text
+        holder.imageView?.let {
+            if (item.icon1 != null) {
+                it.setImageDrawable(item.icon1)
+            }
+        }
         holder.view.setOnClickListener {
             holder.item?.let {
                 listener?.onSelectedItem(vehiclePickerStep, it)
@@ -41,6 +47,7 @@ class ItemRecyclerViewAdapter(private val vehiclePickerStep: VehiclePickerStep, 
     class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val view = mView
         val textView: TextView = mView.findViewById<View>(R.id.text_view) as TextView
+        val imageView: ImageView? = mView.findViewById<View>(R.id.image_view) as ImageView?
         var item: VehiclePickerItem? = null
     }
 }

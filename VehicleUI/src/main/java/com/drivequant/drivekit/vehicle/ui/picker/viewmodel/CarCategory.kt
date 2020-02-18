@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
 import com.drivequant.drivekit.vehicle.ui.R
 
 enum class CarCategory {
@@ -26,17 +28,32 @@ enum class CarCategory {
         }
     }
 
-    fun getImageResource() : Int {
-        return when (this){
-            MICRO -> R.string.dk_vehicle_category_car_micro_title
-            COMPACT -> R.string.dk_vehicle_category_car_compact_title
-            SEDAN -> R.string.dk_vehicle_category_car_sedan_title
-            SUV -> R.string.dk_vehicle_category_car_suv_title
-            MINIVAN -> R.string.dk_vehicle_category_car_minivan_title
-            COMMERCIAL -> R.string.dk_vehicle_category_car_commercial_title
-            LUXURY -> R.string.dk_vehicle_category_car_luxury_title
-            SPORT -> R.string.dk_vehicle_category_car_sport_title
+    fun getIcon1(context: Context) : Drawable? {
+        val resId = when (this){
+            MICRO -> R.drawable.icon_berline
+            COMPACT -> R.drawable.icon_berline
+            SEDAN -> R.drawable.icon_berline
+            SUV -> R.drawable.icon_berline
+            MINIVAN -> R.drawable.icon_berline
+            COMMERCIAL -> R.drawable.icon_berline
+            LUXURY -> R.drawable.icon_berline
+            SPORT -> R.drawable.icon_berline
         }
+        return ContextCompat.getDrawable(context, resId)
+    }
+
+    fun getIcon2(context: Context) : Drawable? {
+        val resId = when (this){
+            MICRO -> R.drawable.image_berline
+            COMPACT -> R.drawable.image_berline
+            SEDAN -> R.drawable.image_berline
+            SUV -> R.drawable.image_berline
+            MINIVAN -> R.drawable.image_berline
+            COMMERCIAL -> R.drawable.image_berline
+            LUXURY -> R.drawable.image_berline
+            SPORT -> R.drawable.image_berline
+        }
+        return ContextCompat.getDrawable(context, resId)
     }
 
     fun getLiteConfigDqIndex(): String {

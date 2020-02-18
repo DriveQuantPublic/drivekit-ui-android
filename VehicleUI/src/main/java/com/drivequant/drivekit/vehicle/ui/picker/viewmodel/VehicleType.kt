@@ -38,11 +38,14 @@ enum class VehicleType {
         }
     }
 
-    fun getBrands(context: Context): List<VehicleBrandItem> {
+    fun getBrands(context: Context, withIcons: Boolean = false): List<VehicleBrandItem> {
         val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_brands, delimiter = ";")
         val brands = mutableListOf<VehicleBrandItem>()
         for (i in lines!!.indices) {
-            brands.add(buildFromCSV(lines[i]))
+            val vehicleBrandItem = buildFromCSV(context, lines[i])
+            if (!withIcons || (withIcons && vehicleBrandItem.icon != null)){
+                brands.add(vehicleBrandItem)
+            }
         }
         return when (this){
             CAR -> brands.filter { it.isCar}

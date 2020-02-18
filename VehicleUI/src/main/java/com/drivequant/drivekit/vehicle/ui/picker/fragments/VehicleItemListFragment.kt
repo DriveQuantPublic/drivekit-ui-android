@@ -111,11 +111,15 @@ class VehicleItemListFragment : Fragment() {
                 viewModel.fetchVehicleCategories(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
             CATEGORY_DESCRIPTION -> listOf()
-            BRANDS_ICONS -> listOf()
+            BRANDS_ICONS -> {
+                viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType, withIcons = true)
+            }
             BRANDS_FULL -> {
                 viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
-            ENGINE -> listOf()
+            ENGINE -> {
+                viewModel.fetchVehicleEngines(requireContext())
+            }
             MODELS -> listOf()
             YEARS -> listOf()
             VERSIONS -> listOf()

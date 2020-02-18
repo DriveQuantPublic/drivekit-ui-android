@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -19,6 +20,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     lateinit var vehicleType: VehicleType
     lateinit var vehicleCategory: CarCategory
+    lateinit var vehicleBrand: VehicleBrand
 
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
@@ -61,7 +63,19 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
             CATEGORY -> {
                 vehicleCategory = CarCategory.valueOf(item.value)
-                dispatchToScreen(BRANDS_FULL)
+                if (viewConfig.displayBrandsWithIcons){
+                    dispatchToScreen(BRANDS_ICONS)
+                } else {
+                    dispatchToScreen(BRANDS_FULL)
+                }
+            }
+            BRANDS_ICONS -> {
+                vehicleBrand = VehicleBrand.valueOf(item.value)
+                dispatchToScreen(ENGINE) // TODO
+            }
+            BRANDS_FULL -> {
+                vehicleBrand = VehicleBrand.valueOf(item.value)
+                dispatchToScreen(ENGINE)
             }
         }
     }
