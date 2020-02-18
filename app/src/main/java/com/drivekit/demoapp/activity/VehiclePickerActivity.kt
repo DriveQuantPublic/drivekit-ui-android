@@ -55,8 +55,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
         val fragment = VehicleItemListFragment.newInstance(vehiclePickerStep, viewConfig)
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
+            .addToBackStack(vehiclePickerStep.name)
             .add(R.id.container, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 }
