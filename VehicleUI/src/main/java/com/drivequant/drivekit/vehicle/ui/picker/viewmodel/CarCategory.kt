@@ -30,28 +30,28 @@ enum class CarCategory {
 
     fun getIcon1(context: Context) : Drawable? {
         val resId = when (this){
-            MICRO -> R.drawable.icon_berline
-            COMPACT -> R.drawable.icon_berline
-            SEDAN -> R.drawable.icon_berline
-            SUV -> R.drawable.icon_berline
-            MINIVAN -> R.drawable.icon_berline
-            COMMERCIAL -> R.drawable.icon_berline
-            LUXURY -> R.drawable.icon_berline
-            SPORT -> R.drawable.icon_berline
+            MICRO -> R.drawable.dk_icon_micro_compact
+            COMPACT -> R.drawable.dk_icon_compact
+            SEDAN -> R.drawable.dk_icon_sedan
+            SUV -> R.drawable.dk_icon_suv
+            MINIVAN -> R.drawable.dk_icon_minivan
+            COMMERCIAL -> R.drawable.dk_icon_commercial
+            LUXURY -> R.drawable.dk_icon_luxury
+            SPORT -> R.drawable.dk_icon_sport
         }
         return ContextCompat.getDrawable(context, resId)
     }
 
     fun getIcon2(context: Context) : Drawable? {
         val resId = when (this){
-            MICRO -> R.drawable.image_berline
-            COMPACT -> R.drawable.image_berline
-            SEDAN -> R.drawable.image_berline
-            SUV -> R.drawable.image_berline
-            MINIVAN -> R.drawable.image_berline
-            COMMERCIAL -> R.drawable.image_berline
-            LUXURY -> R.drawable.image_berline
-            SPORT -> R.drawable.image_berline
+            MICRO -> R.drawable.dk_image_micro_compact
+            COMPACT -> R.drawable.dk_image_compact
+            SEDAN -> R.drawable.dk_image_sedan
+            SUV -> R.drawable.dk_image_suv
+            MINIVAN -> R.drawable.dk_image_minivan
+            COMMERCIAL -> R.drawable.dk_image_commercial
+            LUXURY -> R.drawable.dk_image_luxury
+            SPORT -> R.drawable.dk_image_sport
         }
         return ContextCompat.getDrawable(context, resId)
     }
