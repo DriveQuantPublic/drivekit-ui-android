@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.Keep
 import android.support.v4.content.ContextCompat
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
+import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
 
 @Keep
@@ -15,18 +16,12 @@ data class VehicleBrandItem(
     val isTruck: Boolean,
     val icon: Drawable?)
 
-fun buildFromCSV(context: Context, source: Array<String>): VehicleBrandItem {
+fun buildVehicleBrandItem(context: Context, source: Array<String>): VehicleBrandItem {
     return VehicleBrandItem(
         VehicleBrand.getEnumByValue(source[0]),
         source[1].toBoolean(),
         source[2].toBoolean(),
         source[3].toBoolean(),
-        convertToDrawable(context, source[4])
+        ResourceUtils.convertToDrawable(context, source[4])
     )
-}
-
-fun convertToDrawable(context: Context, identifier: String): Drawable? {
-    val id = context.resources.getIdentifier(identifier, "drawable", context.packageName)
-    val drawable = ContextCompat.getDrawable(context, id)
-    return drawable
 }

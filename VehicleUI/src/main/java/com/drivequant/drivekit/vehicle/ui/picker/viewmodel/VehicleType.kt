@@ -2,9 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
-import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
 enum class VehicleType {
     CAR,
@@ -19,30 +17,25 @@ enum class VehicleType {
         }
     }
 
-    fun getImageResource(): Int? {
-        return null
-    }
-
-    fun getCategories(): List<CarCategory> {
+    fun getCategories(context: Context): List<VehicleCategoryItem> {
+        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_categories)
+        val categories = mutableListOf<VehicleCategoryItem>()
+        for (i in lines!!.indices) {
+            val vehicleCategoryItem = buildVehicleCategoryItem(context, lines[i])
+            categories.add(vehicleCategoryItem)
+        }
         return when (this){
-            CAR -> { listOf(CarCategory.MICRO,
-                        CarCategory.COMPACT,
-                        CarCategory.SEDAN,
-                        CarCategory.SUV,
-                        CarCategory.MINIVAN,
-                        CarCategory.LUXURY,
-                        CarCategory.SPORT)
-            }
-            MOTORBIKE -> listOf(CarCategory.SPORT)
-            TRUCK -> listOf(CarCategory.MINIVAN)
+            CAR -> categories.filter { it.isCar}
+            MOTORBIKE -> categories.filter { it.isMotorbike}
+            TRUCK -> categories.filter { it.isTruck}
         }
     }
 
     fun getBrands(context: Context, withIcons: Boolean = false): List<VehicleBrandItem> {
-        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_brands, delimiter = ";")
+        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_brands)
         val brands = mutableListOf<VehicleBrandItem>()
         for (i in lines!!.indices) {
-            val vehicleBrandItem = buildFromCSV(context, lines[i])
+            val vehicleBrandItem = buildVehicleBrandItem(context, lines[i])
             if (!withIcons || (withIcons && vehicleBrandItem.icon != null)){
                 brands.add(vehicleBrandItem)
             }
@@ -54,5 +47,17 @@ enum class VehicleType {
         }
     }
 
-
+    fun getEngines(context: Context): List<VehicleEngineItem> {
+        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_engines)
+        val engines = mutableListOf<VehicleEngineItem>()
+        for (i in lines!!.indices) {
+            val vehicleEngineItem = buildVehicleEngineItem(context, lines[i])
+            engines.add(vehicleEngineItem)
+        }
+        return when (this){
+            CAR -> engines.filter { it.isCar}
+            MOTORBIKE -> engines.filter { it.isMotorbike}
+            TRUCK -> engines.filter { it.isTruck}
+        }
+    }
 }

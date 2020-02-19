@@ -27,9 +27,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         vehicleType: VehicleType
     ) : List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawCategories = vehicleType.getCategories()
+        val rawCategories = vehicleType.getCategories(context)
         for (i in rawCategories.indices){
-            items.add(i, VehiclePickerItem(i, rawCategories[i].getTitle(context), rawCategories[i].name, rawCategories[i].getIcon1(context), rawCategories[i].getIcon2(context)))
+            items.add(i, VehiclePickerItem(i, rawCategories[i].title, rawCategories[i].category, rawCategories[i].icon1, rawCategories[i].icon2))
         }
         return items
     }
@@ -47,11 +47,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return items
     }
 
-    fun fetchVehicleEngines(context: Context) : List<VehiclePickerItem> {
+    fun fetchVehicleEngines(
+        context: Context,
+        vehicleType: VehicleType) : List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawEngines = VehicleEngineIndex.values()
-        for (i in rawEngines.indices){
-            items.add(i, VehiclePickerItem(i, rawEngines[i].name, rawEngines[i].value.toString()))
+        val rawBrands = vehicleType.getEngines(context)
+        for (i in rawBrands.indices){
+            items.add(i, VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
         }
         return items
     }

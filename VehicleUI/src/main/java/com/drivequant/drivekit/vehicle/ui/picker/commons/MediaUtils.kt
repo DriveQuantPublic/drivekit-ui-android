@@ -7,13 +7,13 @@ import java.io.InputStreamReader
 import java.util.*
 
 object MediaUtils {
-    fun readCSVFile(context: Context, resourceMedia: Int, delimiter: String = ","): List<Array<String>>? {
+    fun readCSVFile(context: Context, resourceMedia: Int): List<Array<String>>? {
         val inputStream = context.resources.openRawResource(resourceMedia)
         val resultList: MutableList<Array<String>> = ArrayList()
         val reader = BufferedReader(InputStreamReader(inputStream))
         try {
             while (reader.readLine()?.let {
-                    val row = it.split(delimiter).toTypedArray()
+                    val row = it.split(",").toTypedArray()
                     resultList.add(StringUtils.trimStringArray(row))
             } != null);
         } catch (ex: IOException) {

@@ -11,4 +11,10 @@
     <string name="dk_vehicle_category_car_commercial_title">Utilitaires</string>
     <string name="dk_vehicle_category_car_luxury_title">Grande Berline</string>
     <string name="dk_vehicle_category_car_sport_title">Coupé</string>
-</resources>
+
+    <string name="dk_vehicle_engine_gasoline">Gasoline</string>
+    <string name="dk_vehicle_engine_diesel">Diesel</string>
+    <string name="dk_vehicle_engine_electric">Electric</string>
+    <string name="dk_vehicle_engine_gasoline_hybrid">Gasoline hybrid</string>
+    <string name="dk_vehicle_engine_diesel_hybrid">Gasoline Diesel</string>
+-</resources>

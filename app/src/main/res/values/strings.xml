@@ -51,4 +51,19 @@
    <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
    <string name="vehicle_picker_button">Lancer Vehicle Picker</string>
    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the Vehicle Picker, Vehicles List and Detail</string>
+
+   <string name="category_car_commercial_description">This category corresponds to vehicles for professional use generally intended for the transport of goods. These vehicles have a large storage capacity and the total permissible laden weight is between 1.5 tonnes and 3.5 tonnes.</string>
+   <string name="category_car_compact_description">This category corresponds to vehicles belonging to segment B2. These are compact vehicles that are suitable for both urban and road use and are between 3.70 and 4.10 m long.</string>
+   <string name="category_car_luxury_description">This category corresponds to sedans with luxurious styling and powerful engines.</string>
+   <string name="category_car_micro_compact_description">This category corresponds to vehicles belonging to segments B0 and B1. These are very compact vehicles for urban use with a length of less than 3.70 m.</string>
+   <string name="category_car_minivan_description">This category corresponds to vehicles whose interior volume is optimized for families with several children. They generally offer five to seven places. Their size varies on average from 4.80 to 5.00 m.</string>
+   <string name="category_car_sedan_description">This category corresponds to vehicles belonging to segment D. They are larger than compact vehicles, equipped with powerful engines and whose length varies between 4.50 and 4.90 m.</string>
+   <string name="category_car_sport_description">This category includes vehicles with performance-oriented engines, chassis and braking systems.</string>
+   <string name="category_car_suv_description">This category corresponds to crossover vehicles or off-road vehicles with all-wheel drive (4x4) and whose length varies on average from 4.10 to 5.20 m.</string>
+
+   <string name="engine_type_diesel">Diesel</string>
+   <string name="engine_type_diesel_hybrid">Diesel-electric hybrid</string>
+   <string name="engine_type_electric">Electric</string>
+   <string name="engine_type_gasoline">Gasoline</string>
+   <string name="engine_type_gasoline_hybrid">Gasoline-electric hybrid</string>
 </resources>

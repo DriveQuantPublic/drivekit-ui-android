@@ -118,7 +118,7 @@ class VehicleItemListFragment : Fragment() {
                 viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
             ENGINE -> {
-                viewModel.fetchVehicleEngines(requireContext())
+                viewModel.fetchVehicleEngines(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
             MODELS -> listOf()
             YEARS -> listOf()
