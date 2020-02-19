@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -61,7 +62,7 @@ class VehicleItemListFragment : Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
     private var adapterType = 0
     private lateinit var recyclerView: RecyclerView
-    private var adapter: Any? = null
+    private var adapter: ItemRecyclerViewAdapter? = null
     private var items: List<VehiclePickerItem> = listOf()
 
     companion object {
@@ -97,20 +98,33 @@ class VehicleItemListFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this,
             VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
-        if (listener != null) {
-            recyclerView.adapter = ItemRecyclerViewAdapter(vehiclePickerStep, fetchItems(), listener)
-        }
     }
 
-    private fun fetchItems(): List<VehiclePickerItem> { // TODO move in VM
-        return when (vehiclePickerStep){
+    override fun onResume() {
+        super.onResume()
+        fetchItems()
+    }
+
+    private fun fetchItems() {
+        viewModel.itemsData.observe(this, Observer {
+            if (listener != null) {
+                if (adapter != null){
+                    adapter?.notifyDataSetChanged()
+                } else {
+                    adapter = ItemRecyclerViewAdapter(vehiclePickerStep, viewModel, listener)
+                    recyclerView.adapter = adapter
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+        })
+        when (vehiclePickerStep){
             TYPE -> {
                 viewModel.fetchVehicleTypes(requireContext(), vehiclePickerViewConfig)
             }
             CATEGORY -> {
                 viewModel.fetchVehicleCategories(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
-            CATEGORY_DESCRIPTION -> listOf()
+            CATEGORY_DESCRIPTION -> {}
             BRANDS_ICONS -> {
                 viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType, withIcons = true)
             }
@@ -120,10 +134,16 @@ class VehicleItemListFragment : Fragment() {
             ENGINE -> {
                 viewModel.fetchVehicleEngines(requireContext(), (activity as VehiclePickerActivity).vehicleType)
             }
-            MODELS -> listOf()
-            YEARS -> listOf()
-            VERSIONS -> listOf()
-            NAME -> listOf()
+            MODELS -> {
+                viewModel.fetchVehicleModels(
+                    (activity as VehiclePickerActivity).vehicleType,
+                    (activity as VehiclePickerActivity).vehicleBrand,
+                    (activity as VehiclePickerActivity).vehicleEngineIndex
+                )
+            }
+            YEARS -> {}
+            VERSIONS -> {}
+            NAME -> {}
         }
     }
 
