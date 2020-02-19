@@ -67,7 +67,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         }
 
         when (streaksData.getStreakStatus()) {
-            StreakStatus.INIT,  StreakStatus.IN_PROGRESS -> {
+            StreakStatus.INIT,  StreakStatus.IN_PROGRESS, StreakStatus.RESET -> {
                 setStyle(reset = true)
             }
 

@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 
 import android.content.Context
+import android.graphics.Typeface
+import android.support.v4.content.ContextCompat
 import android.text.Spanned
 import com.drivequant.drivekit.databaseutils.entity.StreakResult
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
@@ -10,12 +12,17 @@ import com.drivequant.drivekit.driverachievement.ui.extension.formatStreaksDate
 import com.drivequant.drivekit.driverachievement.ui.utils.DistanceUtils
 import com.drivequant.drivekit.driverachievement.ui.utils.DurationUtils
 import com.drivequant.drivekit.driverachievement.ui.utils.HtmlUtils
+import android.text.SpannableString
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
+
 
 class StreaksData(
     private var streakTheme: StreakTheme, private var best: StreakResult,
     private var current: StreakResult) {
     private val currentStartDate = current.startDate.formatStreaksDate()
-    private val currentEndDate = current.endDate.formatStreaksDate()
     val currentTripsCount = current.tripNumber
     val bestTripsCount = best.tripNumber
     val bestStartDate = best.startDate.formatStreaksDate()
@@ -68,8 +75,10 @@ class StreaksData(
     fun getStreakStatus(): StreakStatus {
         return if (currentTripsCount == 0 && bestTripsCount == 0) {
             StreakStatus.INIT
-        } else if (bestTripsCount <= currentTripsCount && bestTripsCount != 0 && currentTripsCount != 0) {
+        } else if (bestTripsCount == currentTripsCount && bestTripsCount != 0 && currentTripsCount != 0) {
             StreakStatus.BEST
+        } else if (currentTripsCount == 0 && bestTripsCount != 0) {
+            StreakStatus.RESET
         } else {
             StreakStatus.IN_PROGRESS
         }
@@ -88,29 +97,16 @@ class StreaksData(
         }
     }
 
-    fun getCurrentStreakData(context: Context) : Spanned {
+    fun getCurrentStreakData(context: Context) : SpannableString {
         val currentDistance = DistanceUtils().formatDistance(context, current.distance)
         val currentDuration = DurationUtils().formatDuration(context, current.duration)
-        return buildStreakData(context,currentTripsCount, currentDistance, currentDuration)
+        return buildStreaksDataWithSpannable(context,currentTripsCount, currentDistance, currentDuration)
     }
 
     fun getCurrentStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreakStatus.INIT -> {
-                context.getString(R.string.dk_streaks_since, currentStartDate)
-            }
-
-            StreakStatus.IN_PROGRESS -> {
-                if (currentTripsCount == 0 && bestTripsCount != 0) {
-                    getResetText(context)
-                } else {
-                    context.getString(R.string.dk_streaks_since_to, currentStartDate,currentEndDate)
-                }
-            }
-
-            StreakStatus.BEST -> {
-                context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
-            }
+            StreakStatus.INIT, StreakStatus.IN_PROGRESS, StreakStatus.BEST -> context.getString(R.string.dk_streaks_since, currentStartDate)
+            StreakStatus.RESET -> getResetText(context)
         }
     }
 
@@ -119,34 +115,30 @@ class StreaksData(
         val bestDuration = DurationUtils().formatDuration(context, best.duration)
 
         return when (getStreakStatus()) {
-            StreakStatus.INIT,StreakStatus.IN_PROGRESS -> {
-                buildStreakData(context, bestTripsCount, bestDistance, bestDuration).toString()
-            }
-
-            StreakStatus.BEST -> {
-                context.getString(R.string.dk_streaks_congrats)
-            }
+            StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksDataWithSpannable(context, bestTripsCount, bestDistance, bestDuration).toString()
+            StreakStatus.BEST -> context.getString(R.string.dk_streaks_congrats)
         }
     }
 
     fun getBestStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreakStatus.INIT -> {
-                context.getString(R.string.dk_streaks_empty)
-            }
-
-            StreakStatus.IN_PROGRESS -> {
-                if (currentTripsCount == bestTripsCount) {
-                    context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
-                } else {
-                    context.getString(R.string.dk_streaks_congrats_text)
-                }
-            }
-
-            StreakStatus.BEST -> {
-                context.getString(R.string.dk_streaks_congrats_text)
-            }
+            StreakStatus.INIT -> context.getString(R.string.dk_streaks_empty)
+            StreakStatus.IN_PROGRESS -> context.getString(R.string.dk_streaks_congrats_text)
+            StreakStatus.RESET -> context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
+            StreakStatus.BEST -> context.getString(R.string.dk_streaks_congrats_text)
         }
+    }
+
+    private fun buildStreaksDataWithSpannable (context: Context,
+                                                  tripsCount: Int,
+                                                  distance: String,
+                                                  duration: String) : SpannableString {
+
+        val tripsCountText = "$tripsCount ${context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)}"
+        val sb = SpannableString("$tripsCountText - $distance - $duration")
+        sb.setSpan(StyleSpan(Typeface.BOLD),0,"$tripsCount".length,0)
+        sb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.dk_primary)), 0, tripsCountText.length, 0)
+        return sb
     }
 
     private fun buildStreakData(
