@@ -35,4 +35,5 @@
    <string name="dk_unit_km">km</string>
    <string name="dk_unit_hour">s</string>
 
+   <string name="dk_unit_day">t</string>
 </resources>
