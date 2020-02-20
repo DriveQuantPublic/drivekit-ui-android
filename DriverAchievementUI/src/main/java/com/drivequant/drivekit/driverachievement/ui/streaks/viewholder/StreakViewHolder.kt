@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
@@ -53,18 +54,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         textViewCurrentStreakData.text = streaksData.getCurrentStreakData(context)
         textViewBestStreakData.text = streaksData.getBestStreakData(context)
         textViewCurrentStreakDate.text = streaksData.getCurrentStreakDate(context)
-
-        if (streaksData.currentTripsCount == streaksData.bestTripsCount) {
-            if (streaksData.currentTripsCount != 0) {
-                textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_primary))
-            }
-            textViewBestStreakDate.text = streaksData.getBestStreakDate(context)
-        } else {
-            textViewBestStreakDate.text = context.getString(
-                R.string.dk_streaks_since_to,
-                streaksData.bestStartDate,
-                streaksData.bestEndDate)
-        }
+        textViewBestStreakDate.text = streaksData.getBestStreakDate(context)
 
         when (streaksData.getStreakStatus()) {
             StreakStatus.INIT,  StreakStatus.IN_PROGRESS, StreakStatus.RESET -> {
@@ -93,13 +83,15 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             textViewBestStreakData.typeface = textViewBestStreakDate.typeface
             textViewTripsCount.setTextColor(ContextCompat.getColor(context, R.color.dk_gray500))
-            background.setStroke(2, ContextCompat.getColor(context, R.color.dk_trips_count_stroke))
+            background.setStroke(5, ContextCompat.getColor(context, R.color.dk_trips_count_stroke))
+            seekBar.thumb.mutate().alpha = 255
         } else {
             val primaryColor = ContextCompat.getColor(context, R.color.dk_primary)
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             textViewBestStreakData.setTypeface(textViewBestStreakData.typeface, Typeface.BOLD)
             textViewTripsCount.setTextColor(primaryColor)
-            background.setStroke(2, primaryColor)
+            background.setStroke(5, primaryColor)
+            seekBar.thumb.mutate().alpha = 0
         }
     }
 }

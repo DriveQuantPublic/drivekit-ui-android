@@ -3,7 +3,6 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat
-import android.text.Spanned
 import com.drivequant.drivekit.databaseutils.entity.StreakResult
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
@@ -11,22 +10,20 @@ import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.extension.formatStreaksDate
 import com.drivequant.drivekit.driverachievement.ui.utils.DistanceUtils
 import com.drivequant.drivekit.driverachievement.ui.utils.DurationUtils
-import com.drivequant.drivekit.driverachievement.ui.utils.HtmlUtils
 import android.text.SpannableString
-import android.text.Spannable
-import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.text.style.RelativeSizeSpan
 
 
 class StreaksData(
     private var streakTheme: StreakTheme, private var best: StreakResult,
     private var current: StreakResult) {
     private val currentStartDate = current.startDate.formatStreaksDate()
-    val currentTripsCount = current.tripNumber
+    private val currentTripsCount = current.tripNumber
+    private val bestStartDate = best.startDate.formatStreaksDate()
+    private val bestEndDate = best.endDate.formatStreaksDate()
     val bestTripsCount = best.tripNumber
-    val bestStartDate = best.startDate.formatStreaksDate()
-    val bestEndDate = best.endDate.formatStreaksDate()
 
     fun getTitle(context: Context): String {
         return when (streakTheme) {
@@ -86,12 +83,7 @@ class StreaksData(
 
     fun computePercentage(): Int {
         return if (bestTripsCount != 0) {
-            val percent = (currentTripsCount * 100) / bestTripsCount
-            if (percent == 0) {
-                percent + 2
-            } else {
-                percent
-            }
+            ((currentTripsCount * 100) / bestTripsCount) + 2
         } else {
             2
         }
@@ -100,23 +92,23 @@ class StreaksData(
     fun getCurrentStreakData(context: Context) : SpannableString {
         val currentDistance = DistanceUtils().formatDistance(context, current.distance)
         val currentDuration = DurationUtils().formatDuration(context, current.duration)
-        return buildStreaksDataWithSpannable(context,currentTripsCount, currentDistance, currentDuration)
+        return buildStreaksData(context,currentTripsCount, currentDistance, currentDuration)
+    }
+
+    fun getBestStreakData(context: Context): SpannableString {
+        val bestDistance = DistanceUtils().formatDistance(context, best.distance)
+        val bestDuration = DurationUtils().formatDuration(context, best.duration)
+
+        return when (getStreakStatus()) {
+            StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksData(context, bestTripsCount, bestDistance, bestDuration)
+            StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_streaks_congrats))
+        }
     }
 
     fun getCurrentStreakDate(context: Context): String {
         return when (getStreakStatus()) {
             StreakStatus.INIT, StreakStatus.IN_PROGRESS, StreakStatus.BEST -> context.getString(R.string.dk_streaks_since, currentStartDate)
             StreakStatus.RESET -> getResetText(context)
-        }
-    }
-
-    fun getBestStreakData(context: Context): String {
-        val bestDistance = DistanceUtils().formatDistance(context, best.distance)
-        val bestDuration = DurationUtils().formatDuration(context, best.duration)
-
-        return when (getStreakStatus()) {
-            StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksDataWithSpannable(context, bestTripsCount, bestDistance, bestDuration).toString()
-            StreakStatus.BEST -> context.getString(R.string.dk_streaks_congrats)
         }
     }
 
@@ -129,30 +121,22 @@ class StreaksData(
         }
     }
 
-    private fun buildStreaksDataWithSpannable (context: Context,
-                                                  tripsCount: Int,
-                                                  distance: String,
-                                                  duration: String) : SpannableString {
-
-        val tripsCountText = "$tripsCount ${context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)}"
-        val sb = SpannableString("$tripsCountText - $distance - $duration")
-        sb.setSpan(StyleSpan(Typeface.BOLD),0,"$tripsCount".length,0)
-        sb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.dk_primary)), 0, tripsCountText.length, 0)
-        return sb
-    }
-
-    private fun buildStreakData(
+    private fun buildStreaksData(
         context: Context,
         tripsCount: Int,
         distance: String,
-        duration: String
-    ): Spanned {
+        duration: String): SpannableString {
 
-        val tripsCountText = context.resources.getQuantityString(R.plurals.streak_trip_plural, tripsCount)
-        val source = "${HtmlUtils.getTextHighlight(
-            "${HtmlUtils.getTextBigAndBold("$tripsCount")} $tripsCountText",
-            context
-        )} - $distance - $duration"
-        return HtmlUtils.fromHtml(source)
+        val tripsCountText = "$tripsCount ${context.resources.getQuantityString(
+            R.plurals.streak_trip_plural,
+            tripsCount
+        )}"
+        val sb = SpannableString("$tripsCountText - $distance - $duration")
+        val mediumSizeText = RelativeSizeSpan(2.0f)
+
+        sb.setSpan(StyleSpan(Typeface.BOLD), 0, "$tripsCount".length, 0)
+        sb.setSpan(mediumSizeText, 0, "$tripsCount".length, 0)
+        sb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.dk_primary)), 0, tripsCountText.length, 0)
+        return sb
     }
 }

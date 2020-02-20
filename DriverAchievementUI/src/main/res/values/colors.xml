@@ -3,5 +3,5 @@
     <color name="dk_primary">#77E2B0</color>
     <color name="dk_separator">#E0E0E0</color>
     <color name="dk_gray500">#9E9E9E</color>
-    <color name="dk_trips_count_stroke">#ababab</color>
+    <color name="dk_trips_count_stroke">#CCCCCC</color>
 </resources>
