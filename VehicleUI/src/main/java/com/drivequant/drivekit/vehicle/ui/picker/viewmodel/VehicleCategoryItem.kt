@@ -21,7 +21,7 @@ fun buildVehicleCategoryItem(context: Context, source: Array<String>): VehicleCa
         ResourceUtils.convertToString(context, source[1]),
         ResourceUtils.convertToDrawable(context, source[2]),
         ResourceUtils.convertToDrawable(context, source[3]),
-        source[4],
+        ResourceUtils.convertToString(context, source[4]),
         source[5],
         source[6].toBoolean(),
         source[7].toBoolean(),

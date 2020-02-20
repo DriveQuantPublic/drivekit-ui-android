@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -13,22 +14,26 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleCategoryDescriptionFragment
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CarCategory
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType.*
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
+    private lateinit var viewModel : VehiclePickerViewModel
+
     lateinit var vehicleType: VehicleType
-    lateinit var vehicleCategory: CarCategory
+    lateinit var vehicleCategory: VehicleCategoryItem
     lateinit var vehicleBrand: VehicleBrand
     lateinit var vehicleEngineIndex: VehicleEngineIndex
     lateinit var vehicleModel: String
     lateinit var vehicleYear: String
     lateinit var vehicleVersion: VehicleVersion
     lateinit var vehicleCharacteristics: VehicleCharacteristics
+    lateinit var vehicleName: String
 
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
@@ -49,11 +54,15 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+
+        viewModel = ViewModelProviders.of(this, VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
+
         computeFirstScreen()
         currentStep?.let {
             dispatchToScreen(it)
         }
     }
+
 
     override fun onSelectedItem(vehiclePickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         when (vehiclePickerStep){
@@ -70,12 +79,17 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 }
             }
             CATEGORY -> {
-                vehicleCategory = CarCategory.valueOf(item.value)
+                vehicleCategory = vehicleType.getCategories(this).find { it.category == item.value }!!
+                //dispatchToScreen(CATEGORY_DESCRIPTION)
                 if (viewConfig.displayBrandsWithIcons){
                     dispatchToScreen(BRANDS_ICONS)
                 } else {
                     dispatchToScreen(BRANDS_FULL)
                 }
+            }
+            CATEGORY_DESCRIPTION -> {
+                val itemTest = 12
+
             }
             BRANDS_ICONS -> {
                 vehicleBrand = VehicleBrand.valueOf(item.value)
@@ -103,6 +117,10 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 }
                 dispatchToScreen(NAME)
             }
+            NAME -> {
+
+            }
+            // TODO Odometer
         }
     }
 
@@ -124,8 +142,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         }
     }
 
-    private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
-        val fragment = VehicleItemListFragment.newInstance(vehiclePickerStep, viewConfig)
+    fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
+        val fragment = when (vehiclePickerStep){
+            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(vehicleCategory, viewConfig)
+            NAME -> VehicleNameChooserFragment.newInstance(viewModel, vehicleVersion, viewConfig)
+            else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewConfig)
+        }
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
             .addToBackStack(vehiclePickerStep.name)

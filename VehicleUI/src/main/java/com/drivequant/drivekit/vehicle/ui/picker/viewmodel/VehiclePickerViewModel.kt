@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
@@ -16,9 +17,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
-    var retItems: MutableList<VehiclePickerItem> = mutableListOf()
     val itemsData: MutableLiveData<List<VehiclePickerItem>> = MutableLiveData()
-    var status: VehicleManagerStatus = VehicleManagerStatus.SUCCESS
+    val vehicleCharacteristicsData: MutableLiveData<VehicleCharacteristics> = MutableLiveData()
 
     fun fetchVehicleTypes(context: Context, viewConfig: VehiclePickerViewConfig) {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
@@ -97,6 +97,15 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     NO_RESULT -> mutableListOf()
                 }
                 itemsData.postValue(items)
+            }
+        })
+    }
+
+    fun fetchVehicleCharacteristics(vehicleVersion: VehicleVersion){
+        DriveKitVehiclePicker.getVehicle(vehicleVersion, object : VehicleDqVehicleQueryListener {
+            override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
+                // TODO check VehiclePickerStatus
+                vehicleCharacteristicsData.postValue(vehicleCharacteristics)
             }
         })
     }

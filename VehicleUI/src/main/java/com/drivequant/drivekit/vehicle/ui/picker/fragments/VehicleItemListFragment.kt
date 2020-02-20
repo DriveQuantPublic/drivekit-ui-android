@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -19,7 +18,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModelFactory
 
 class VehicleItemListFragment : Fragment() {
 
@@ -55,7 +53,7 @@ class VehicleItemListFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel : VehiclePickerViewModel
+    private lateinit var viewModel: VehiclePickerViewModel
     private lateinit var vehiclePickerViewConfig: VehiclePickerViewConfig
     private lateinit var vehiclePickerStep: VehiclePickerStep
 
@@ -66,10 +64,13 @@ class VehicleItemListFragment : Fragment() {
     private var items: List<VehiclePickerItem> = listOf()
 
     companion object {
-        fun newInstance(vehiclePickerStep: VehiclePickerStep,
-                        vehiclePickerViewConfig: VehiclePickerViewConfig)
+        fun newInstance(
+            viewModel: VehiclePickerViewModel,
+            vehiclePickerStep: VehiclePickerStep,
+            vehiclePickerViewConfig: VehiclePickerViewConfig)
                 : VehicleItemListFragment {
             val fragment = VehicleItemListFragment()
+            fragment.viewModel = viewModel
             fragment.vehiclePickerStep = vehiclePickerStep
             fragment.vehiclePickerViewConfig = vehiclePickerViewConfig
             return fragment
@@ -90,14 +91,6 @@ class VehicleItemListFragment : Fragment() {
             recyclerView.layoutManager = GridLayoutManager(context, 2)
         }
         return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO handle lifecycle
-
-        viewModel = ViewModelProviders.of(this,
-            VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
     }
 
     override fun onResume() {
@@ -158,7 +151,9 @@ class VehicleItemListFragment : Fragment() {
                     (activity as VehiclePickerActivity).vehicleYear
                 )
             }
-            NAME -> {}
+            NAME -> {
+                viewModel.fetchVehicleCharacteristics((activity as VehiclePickerActivity).vehicleVersion)
+            }
         }
     }
 
@@ -169,6 +164,11 @@ class VehicleItemListFragment : Fragment() {
         } else {
             // TODO
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        listener = null
     }
 
     override fun onDetach() {
