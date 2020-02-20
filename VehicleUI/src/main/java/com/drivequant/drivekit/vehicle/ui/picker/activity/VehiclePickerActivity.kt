@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.picker.VehicleCharacteristics
+import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -22,8 +24,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     lateinit var vehicleType: VehicleType
     lateinit var vehicleCategory: CarCategory
     lateinit var vehicleBrand: VehicleBrand
-    lateinit var vehicleModel: String
     lateinit var vehicleEngineIndex: VehicleEngineIndex
+    lateinit var vehicleModel: String
+    lateinit var vehicleYear: String
+    lateinit var vehicleVersion: VehicleVersion
+    lateinit var vehicleCharacteristics: VehicleCharacteristics
 
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
@@ -83,6 +88,20 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             ENGINE -> {
                 vehicleEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
                 dispatchToScreen(MODELS)
+            }
+            MODELS -> {
+                vehicleModel = item.value
+                dispatchToScreen(YEARS)
+            }
+            YEARS -> {
+                vehicleYear = item.value
+                dispatchToScreen(VERSIONS)
+            }
+            VERSIONS -> {
+                item.text?.let {
+                    vehicleVersion = VehicleVersion(it, item.value)
+                }
+                dispatchToScreen(NAME)
             }
         }
     }

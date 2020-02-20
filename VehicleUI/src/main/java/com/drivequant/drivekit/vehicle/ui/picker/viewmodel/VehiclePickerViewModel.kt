@@ -9,8 +9,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
-import com.drivequant.drivekit.vehicle.picker.VehicleModelsQueryListener
-import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
+import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
@@ -60,9 +59,39 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     fun fetchVehicleModels(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex) {
         DriveKitVehiclePicker.getModels(vehicleBrand, vehicleEngineIndex, object : VehicleModelsQueryListener{
             override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
-                var items = when (status){
+                val items = when (status){
                     SUCCESS -> {
                         buildItemsFromStrings(models)
+                    }
+                    FAILED_TO_RETRIEVED_DATA -> mutableListOf()
+                    NO_RESULT -> mutableListOf()
+                }
+                itemsData.postValue(items)
+            }
+        })
+    }
+
+    fun fetchVehicleYears(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String) {
+        DriveKitVehiclePicker.getYears(vehicleBrand, vehicleEngineIndex, vehicleModel, object : VehicleYearsQueryListener {
+            override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
+                val items = when (status){
+                    SUCCESS -> {
+                        buildItemsFromStrings(years)
+                    }
+                    FAILED_TO_RETRIEVED_DATA -> mutableListOf()
+                    NO_RESULT -> mutableListOf()
+                }
+                itemsData.postValue(items)
+            }
+        })
+    }
+
+    fun fetchVehicleVersions(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String, vehicleYear: String) {
+        DriveKitVehiclePicker.getVersions(vehicleBrand, vehicleEngineIndex, vehicleModel, vehicleYear, object : VehicleVersionsQueryListener {
+            override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
+                val items = when (status){
+                    SUCCESS -> {
+                        buildItemsFromVersions(versions)
                     }
                     FAILED_TO_RETRIEVED_DATA -> mutableListOf()
                     NO_RESULT -> mutableListOf()
@@ -77,6 +106,14 @@ private fun buildItemsFromStrings(source: List<String>) : MutableList<VehiclePic
     val list: MutableList<VehiclePickerItem> = mutableListOf()
     for (i in source.indices){
         list.add(VehiclePickerItem(i, source[i], source[i]))
+    }
+    return list
+}
+
+private fun buildItemsFromVersions(source: List<VehicleVersion>) : MutableList<VehiclePickerItem> {
+    val list: MutableList<VehiclePickerItem> = mutableListOf()
+    for (i in source.indices){
+        list.add(VehiclePickerItem(i, source[i].version, source[i].dqIndex))
     }
     return list
 }

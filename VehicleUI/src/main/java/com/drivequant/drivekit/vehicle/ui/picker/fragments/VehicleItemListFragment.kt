@@ -141,8 +141,23 @@ class VehicleItemListFragment : Fragment() {
                     (activity as VehiclePickerActivity).vehicleEngineIndex
                 )
             }
-            YEARS -> {}
-            VERSIONS -> {}
+            YEARS -> {
+                viewModel.fetchVehicleYears(
+                    (activity as VehiclePickerActivity).vehicleType,
+                    (activity as VehiclePickerActivity).vehicleBrand,
+                    (activity as VehiclePickerActivity).vehicleEngineIndex,
+                    (activity as VehiclePickerActivity).vehicleModel
+                )
+            }
+            VERSIONS -> {
+                viewModel.fetchVehicleVersions(
+                    (activity as VehiclePickerActivity).vehicleType,
+                    (activity as VehiclePickerActivity).vehicleBrand,
+                    (activity as VehiclePickerActivity).vehicleEngineIndex,
+                    (activity as VehiclePickerActivity).vehicleModel,
+                    (activity as VehiclePickerActivity).vehicleYear
+                )
+            }
             NAME -> {}
         }
     }
