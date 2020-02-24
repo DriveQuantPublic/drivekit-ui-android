@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 //TODO ADD UNIT KEYS
-//TODO HANDLE MISSING DURATION FORMAT
+//TODO HANDLE MISSING DURATIO FORMAT
 object DKUtils {
 
     fun formatDate(date: Date, pattern: String): String {
