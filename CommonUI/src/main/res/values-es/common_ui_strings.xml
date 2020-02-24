@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_common_ok">OK</string>
+   <string name="dk_common_unit_accel">m/s²</string>
+   <string name="dk_common_unit_hour">h</string>
+   <string name="dk_common_unit_km">km</string>
+   <string name="dk_common_unit_meter">m</string>
+   <string name="dk_common_unit_minute">min</string>
+   <string name="dk_common_unit_second">s</string>
+</resources>
