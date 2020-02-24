@@ -1,0 +1,96 @@
+<resources>
+    <style name="Headline1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Headline2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BigText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="NormalText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SmallText">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BigHighlight">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/dkPrimaryColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NormalHighlight">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">@color/dkPrimaryColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SmallHighlight">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/dkPrimaryColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Separator">
+        <item name="android:background">@color/dkComplementaryFontColor</item>
+    </style>
+
+    <style name="Separator.Horizontal" parent="Separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dk_separator_stroke</item>
+    </style>
+
+    <style name="Separator.Vertical" parent="Separator">
+        <item name="android:layout_width">@dimen/dk_separator_stroke</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:textSize">@dimen/dk_text_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dkSecondaryColor</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/dkFontColorOnSecondaryColor</item>
+    </style>
+
+    <style name="ButtonText">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/dk_text_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DKCard">
+        <item name="android:layout_margin">@dimen/dk_margin_half</item>
+        <item name="android:padding">@dimen/dk_margin_half</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="elevation">@dimen/dk_margin_quarter</item>
+    </style>
+
+    <style name="MW">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MM">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WW">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog"/>
+</resources>

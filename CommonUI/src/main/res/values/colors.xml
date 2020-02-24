@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dkPrimaryColor">#0B4D6E</color>
+    <color name="dkSecondaryColor">#77E2B2</color>
+    <color name="dkMainFontColor">#616161</color>
+    <color name="dkComplementaryFontColor">#9E9E9E</color>
+    <color name="dkFontColorOnPrimaryColor">@android:color/white</color>
+    <color name="dkFontColorOnSecondaryColor">@color/dkFontColorOnPrimaryColor</color>
+    <color name="dkWarningColor">#FF6E57</color>
+    <color name="dkCriticalColor">#E52027</color>
+</resources>
