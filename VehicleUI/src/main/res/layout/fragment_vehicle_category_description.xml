@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF">
 
     <ImageView
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/dk_image_luxury"/>
+        tools:src="@drawable/dk_image_luxury"/>
 
     <TextView
         android:id="@+id/text_view_description"
@@ -24,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/image_view_icon2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Ceci est une description"/>
+        tools:text="Ceci est une description"/>
 
     <Button
         android:id="@+id/button_validate"
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:background="#00EBB8"
         android:textColor="#FFFFFF"
-        android:text="VALIDER"
+        android:text="@string/dk_vehicle_validate"
         android:textStyle="bold"
         android:layout_margin="8dp"
         android:padding="8dp"
@@ -53,6 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="#00EBB8"
         android:textStyle="bold"
-        android:text="Continuer pour sélectionner la marque et le modèle de votre véhicule" />
+        android:text="@string/dk_vehicle_category_display_brands" />
 
 </android.support.constraint.ConstraintLayout>

@@ -10,11 +10,10 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 
 class ItemRecyclerViewAdapter(
     private val vehiclePickerStep: VehiclePickerStep,
-    private val viewModel: VehiclePickerViewModel,
+    private val data: List<VehiclePickerItem>,
     private val listener: VehicleItemListFragment.OnListFragmentInteractionListener?
 ): RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -29,7 +28,7 @@ class ItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: VehiclePickerItem = viewModel.itemsData.value!![position]
+        val item: VehiclePickerItem = data[position]
         holder.item = item
         holder.textView.text = item.text
         holder.imageView?.let {
@@ -45,11 +44,7 @@ class ItemRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        viewModel.itemsData.value?.let {
-            return it.size
-        }?:run {
-            return 0
-        }
+        return data.size
     }
 
     class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {

@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
-import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -61,7 +60,6 @@ class VehicleItemListFragment : Fragment() {
     private var adapterType = 0
     private lateinit var recyclerView: RecyclerView
     private var adapter: ItemRecyclerViewAdapter? = null
-    private var items: List<VehiclePickerItem> = listOf()
 
     companion object {
         fun newInstance(
@@ -99,61 +97,21 @@ class VehicleItemListFragment : Fragment() {
     }
 
     private fun fetchItems() {
-        viewModel.itemsData.observe(this, Observer {
-            if (listener != null) {
-                if (adapter != null){
-                    adapter?.notifyDataSetChanged()
-                } else {
-                    adapter = ItemRecyclerViewAdapter(vehiclePickerStep, viewModel, listener)
-                    recyclerView.adapter = adapter
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-            }
-        })
-        when (vehiclePickerStep){
-            TYPE -> {
-                viewModel.fetchVehicleTypes(requireContext(), vehiclePickerViewConfig)
-            }
-            CATEGORY -> {
-                viewModel.fetchVehicleCategories(requireContext(), (activity as VehiclePickerActivity).vehicleType)
-            }
-            CATEGORY_DESCRIPTION -> {}
-            BRANDS_ICONS -> {
-                viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType, withIcons = true)
-            }
-            BRANDS_FULL -> {
-                viewModel.fetchVehicleBrands(requireContext(), (activity as VehiclePickerActivity).vehicleType)
-            }
-            ENGINE -> {
-                viewModel.fetchVehicleEngines(requireContext(), (activity as VehiclePickerActivity).vehicleType)
-            }
-            MODELS -> {
-                viewModel.fetchVehicleModels(
-                    (activity as VehiclePickerActivity).vehicleType,
-                    (activity as VehiclePickerActivity).vehicleBrand,
-                    (activity as VehiclePickerActivity).vehicleEngineIndex
-                )
-            }
-            YEARS -> {
-                viewModel.fetchVehicleYears(
-                    (activity as VehiclePickerActivity).vehicleType,
-                    (activity as VehiclePickerActivity).vehicleBrand,
-                    (activity as VehiclePickerActivity).vehicleEngineIndex,
-                    (activity as VehiclePickerActivity).vehicleModel
-                )
-            }
-            VERSIONS -> {
-                viewModel.fetchVehicleVersions(
-                    (activity as VehiclePickerActivity).vehicleType,
-                    (activity as VehiclePickerActivity).vehicleBrand,
-                    (activity as VehiclePickerActivity).vehicleEngineIndex,
-                    (activity as VehiclePickerActivity).vehicleModel,
-                    (activity as VehiclePickerActivity).vehicleYear
-                )
-            }
-            NAME -> {
-                viewModel.fetchVehicleCharacteristics((activity as VehiclePickerActivity).vehicleVersion)
-            }
+        val items = when (vehiclePickerStep){
+            TYPE -> viewModel.itemTypes
+            CATEGORY -> viewModel.itemCategories
+            BRANDS_FULL -> viewModel.itemBrands
+            BRANDS_ICONS -> viewModel.itemBrands
+            ENGINE -> viewModel.itemEngines
+            else -> listOf()
+        }
+
+        if (adapter != null){
+            adapter?.notifyDataSetChanged()
+        } else {
+            adapter = ItemRecyclerViewAdapter(vehiclePickerStep, items, listener)
+            recyclerView.adapter = adapter
+            recyclerView.adapter?.notifyDataSetChanged()
         }
     }
 

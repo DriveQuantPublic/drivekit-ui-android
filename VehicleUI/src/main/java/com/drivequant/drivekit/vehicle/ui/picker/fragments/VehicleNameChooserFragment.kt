@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
 
@@ -45,7 +46,7 @@ class VehicleNameChooserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = "HC Nom du véhicule"
+        (activity as VehiclePickerActivity).updateTitle(context?.getString(R.string.dk_vehicle_my_vehicle))
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText("HC - Marque Modèle Version")

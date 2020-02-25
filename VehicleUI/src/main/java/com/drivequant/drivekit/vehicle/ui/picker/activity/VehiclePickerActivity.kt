@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -19,14 +20,11 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType.*
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
     private lateinit var viewModel : VehiclePickerViewModel
 
-    lateinit var vehicleType: VehicleType
-    lateinit var vehicleCategory: VehicleCategoryItem
     lateinit var vehicleBrand: VehicleBrand
     lateinit var vehicleEngineIndex: VehicleEngineIndex
     lateinit var vehicleModel: String
@@ -56,48 +54,32 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
-
-        computeFirstScreen()
-        currentStep?.let {
-            dispatchToScreen(it)
-        }
+        viewModel.itemMapNewData.observe(this, Observer {
+            viewModel.itemMapNewData.value?.let {
+                dispatchToScreen(it.keys.first())
+            }
+        })
+        viewModel.computeNextScreen(this, null, viewConfig)
     }
 
 
-    override fun onSelectedItem(vehiclePickerStep: VehiclePickerStep, item: VehiclePickerItem) {
-        when (vehiclePickerStep){
+    override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
+        when (currentPickerStep){
             TYPE -> {
-                vehicleType = VehicleType.valueOf(item.value)
-                if (shouldDisplayCategoryScreen()){
-                    dispatchToScreen(CATEGORY)
-                } else {
-                    if (viewConfig.displayBrandsWithIcons) {
-                        dispatchToScreen(BRANDS_ICONS)
-                    } else {
-                        dispatchToScreen(BRANDS_FULL)
-                    }
-                }
+                viewModel.selectedVehicleType = VehicleType.valueOf(item.value)
             }
             CATEGORY -> {
-                vehicleCategory = vehicleType.getCategories(this).find { it.category == item.value }!!
-                //dispatchToScreen(CATEGORY_DESCRIPTION)
-                if (viewConfig.displayBrandsWithIcons){
-                    dispatchToScreen(BRANDS_ICONS)
-                } else {
-                    dispatchToScreen(BRANDS_FULL)
-                }
+                viewModel.selectedCategory = viewModel.selectedVehicleType.getCategories(this).find { it.category == item.value }!!
             }
             CATEGORY_DESCRIPTION -> {
                 val itemTest = 12
 
             }
             BRANDS_ICONS -> {
-                vehicleBrand = VehicleBrand.valueOf(item.value)
-                dispatchToScreen(ENGINE) // TODO
+                viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
             BRANDS_FULL -> {
-                vehicleBrand = VehicleBrand.valueOf(item.value)
-                dispatchToScreen(ENGINE)
+                viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
             ENGINE -> {
                 vehicleEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
@@ -120,8 +102,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             NAME -> {
 
             }
-            // TODO Odometer
         }
+        viewModel.computeNextScreen(this, currentPickerStep, viewConfig)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -129,22 +111,15 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         return true
     }
 
-    private fun computeFirstScreen(){
-        when (viewConfig.vehicleTypes.size) {
-            0 -> throw IllegalArgumentException("VehicleType in VehiclePickerViewConfig must have at least 1 item")
-            1 -> {
-                vehicleType = viewConfig.vehicleTypes.first()
-                currentStep = CATEGORY
-            }
-            !in 0..1 -> {
-                currentStep = TYPE
-            }
+    fun updateTitle(title: String?) {
+        title?.let {
+            setTitle(it)
         }
     }
 
     fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
         val fragment = when (vehiclePickerStep){
-            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(vehicleCategory, viewConfig)
+            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel.selectedCategory, viewConfig)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel, vehicleVersion, viewConfig)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewConfig)
         }
@@ -153,13 +128,5 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             .addToBackStack(vehiclePickerStep.name)
             .add(R.id.container, fragment)
             .commit()
-    }
-
-    private fun shouldDisplayCategoryScreen(): Boolean {
-        return when (viewConfig.categoryTypes) {
-            LITE_CONFIG_ONLY,
-            BOTH_CONFIG -> true
-            BRANDS_CONFIG_ONLY -> false
-        }
     }
 }

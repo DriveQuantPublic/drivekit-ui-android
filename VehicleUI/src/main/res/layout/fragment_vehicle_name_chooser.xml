@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/dk_image_luxury"/>
+        android:src="@drawable/dk_vehicle_name_chooser"/>
 
     <TextView
         android:id="@+id/text_view_description"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/image_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="HC Vous pouvez personnaliser le nom de votre véhicule. Si vous ne choississez pas de nom, l'application attribuera un nom par défaut"/>
+        android:text="@string/dk_vehicle_name_chooser_description"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_layout"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:background="#00EBB8"
         android:textColor="#FFFFFF"
-        android:text="VALIDER"
+        android:text="@string/dk_vehicle_validate"
         android:textStyle="bold"
         android:layout_margin="8dp"
         android:padding="8dp"

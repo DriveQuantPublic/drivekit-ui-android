@@ -17,4 +17,9 @@
     <string name="dk_vehicle_engine_electric">Electric</string>
     <string name="dk_vehicle_engine_gasoline_hybrid">Gasoline hybrid</string>
     <string name="dk_vehicle_engine_diesel_hybrid">Gasoline Diesel</string>
+
+    <string name="dk_vehicle_validate">Valider</string>
+    <string name="dk_vehicle_category_display_brands">Continuer pour sélectionner la marque et le modèle de votre véhicule</string>
+    <string name="dk_vehicle_my_vehicle">Mon véhicule</string>
+    <string name="dk_vehicle_name_chooser_description">Vous pouvez personnaliser le nom de votre véhicule. Si vous ne choississez pas de nom, l\'application attribuera un nom par défaut</string>
 </resources>
