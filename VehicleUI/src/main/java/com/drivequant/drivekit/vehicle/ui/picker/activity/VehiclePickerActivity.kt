@@ -25,17 +25,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     private lateinit var viewModel : VehiclePickerViewModel
 
-    lateinit var vehicleBrand: VehicleBrand
-    lateinit var vehicleEngineIndex: VehicleEngineIndex
-    lateinit var vehicleModel: String
-    lateinit var vehicleYear: String
-    lateinit var vehicleVersion: VehicleVersion
-    lateinit var vehicleCharacteristics: VehicleCharacteristics
-    lateinit var vehicleName: String
-
     companion object {
         private lateinit var viewConfig: VehiclePickerViewConfig
-        private var currentStep: VehiclePickerStep? = null
         fun launchActivity(context: Context,
                            vehiclePickerViewConfig: VehiclePickerViewConfig = VehiclePickerViewConfig(context)) {
             viewConfig = vehiclePickerViewConfig
@@ -52,11 +43,16 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
-        viewModel = ViewModelProviders.of(this, VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
         viewModel.itemDataList.observe(this, Observer {
             viewModel.itemDataList.value?.let {
                 dispatchToScreen(it.keys.first())
+            }
+        })
+
+        viewModel.itemCharacteristics.observe(this, Observer {
+            viewModel.itemCharacteristics.value?.let {
+                dispatchToScreen(NAME)
             }
         })
         viewModel.computeNextScreen(this, null, viewConfig)
@@ -116,7 +112,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
         val fragment = when (vehiclePickerStep){
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel.selectedCategory, viewConfig)
-            NAME -> VehicleNameChooserFragment.newInstance(viewModel, vehicleVersion, viewConfig)
+            NAME -> VehicleNameChooserFragment.newInstance(viewModel, viewModel.selectedVersion, viewConfig)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep), viewConfig)
         }
         supportFragmentManager.beginTransaction()

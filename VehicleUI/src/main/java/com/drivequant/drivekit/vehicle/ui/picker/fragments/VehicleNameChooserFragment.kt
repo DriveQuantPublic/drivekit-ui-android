@@ -1,13 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
@@ -49,14 +47,9 @@ class VehicleNameChooserFragment : Fragment() {
         (activity as VehiclePickerActivity).updateTitle(context?.getString(R.string.dk_vehicle_my_vehicle))
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
-        editTextWrapper.editText?.setText("HC - Marque Modèle Version")
+        editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
 
         button_validate.setOnClickListener {
-            viewModel.vehicleCharacteristicsData.observe(this, Observer {
-                if (activity != null && viewModel.vehicleCharacteristicsData.value != null) {
-                    Toast.makeText(activity?.baseContext, "Characteristics fully retrieved", Toast.LENGTH_SHORT).show()
-                }
-            })
 
             viewModel.fetchVehicleCharacteristics(vehicleVersion) // TODO call the service before launching that fragment
         }

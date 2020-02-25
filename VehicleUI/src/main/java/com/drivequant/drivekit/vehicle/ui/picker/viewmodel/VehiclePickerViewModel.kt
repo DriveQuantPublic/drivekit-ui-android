@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
@@ -17,7 +18,7 @@ import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
     val itemDataList: MutableLiveData<Map<VehiclePickerStep, List<VehiclePickerItem>>> = MutableLiveData()
-    val vehicleCharacteristicsData: MutableLiveData<VehicleCharacteristics> = MutableLiveData()
+    val itemCharacteristics: MutableLiveData<Map<VehiclePickerStep, VehicleCharacteristics>> = MutableLiveData()
 
     var itemTypes: List<VehiclePickerItem> = listOf()
     var itemCategories: List<VehiclePickerItem> = listOf()
@@ -34,6 +35,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var selectedModel: String
     lateinit var selectedYear: String
     lateinit var selectedVersion: VehicleVersion
+    lateinit var characteristics: VehicleCharacteristics
 
     fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig){
         when (currentStep){
@@ -175,38 +177,45 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         DriveKitVehiclePicker.getVehicle(vehicleVersion, object : VehicleDqVehicleQueryListener {
             override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
                 // TODO check VehiclePickerStatus
-                vehicleCharacteristicsData.postValue(vehicleCharacteristics)
+                characteristics = vehicleCharacteristics
+                val map = HashMap<VehiclePickerStep, VehicleCharacteristics>()
+                map[NAME] = vehicleCharacteristics
+                itemCharacteristics.postValue(map)
             }
         })
     }
-}
 
-private fun shouldDisplayCategoryScreen(viewConfig: VehiclePickerViewConfig): Boolean {
-    return when (viewConfig.categoryTypes) {
-        CategoryType.LITE_CONFIG_ONLY,
-        CategoryType.BOTH_CONFIG -> true
-        CategoryType.BRANDS_CONFIG_ONLY -> false
+    fun getDefaultVehicleName(): String {
+        return "$selectedBrand $selectedModel ${selectedVersion.version}"
     }
-}
 
-private fun buildItemsFromStrings(source: List<String>) : MutableList<VehiclePickerItem> {
-    val list: MutableList<VehiclePickerItem> = mutableListOf()
-    for (i in source.indices){
-        list.add(VehiclePickerItem(i, source[i], source[i]))
+    private fun shouldDisplayCategoryScreen(viewConfig: VehiclePickerViewConfig): Boolean {
+        return when (viewConfig.categoryTypes) {
+            CategoryType.LITE_CONFIG_ONLY,
+            CategoryType.BOTH_CONFIG -> true
+            CategoryType.BRANDS_CONFIG_ONLY -> false
+        }
     }
-    return list
-}
 
-private fun buildItemsFromVersions(source: List<VehicleVersion>) : MutableList<VehiclePickerItem> {
-    val list: MutableList<VehiclePickerItem> = mutableListOf()
-    for (i in source.indices){
-        list.add(VehiclePickerItem(i, source[i].version, source[i].dqIndex))
+    private fun buildItemsFromStrings(source: List<String>) : MutableList<VehiclePickerItem> {
+        val list: MutableList<VehiclePickerItem> = mutableListOf()
+        for (i in source.indices){
+            list.add(VehiclePickerItem(i, source[i], source[i]))
+        }
+        return list
     }
-    return list
-}
 
-class VehiclePickerViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return VehiclePickerViewModel() as T
+    private fun buildItemsFromVersions(source: List<VehicleVersion>) : MutableList<VehiclePickerItem> {
+        val list: MutableList<VehiclePickerItem> = mutableListOf()
+        for (i in source.indices){
+            list.add(VehiclePickerItem(i, source[i].version, source[i].dqIndex))
+        }
+        return list
+    }
+
+    class VehiclePickerViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return VehiclePickerViewModel() as T
+        }
     }
 }
