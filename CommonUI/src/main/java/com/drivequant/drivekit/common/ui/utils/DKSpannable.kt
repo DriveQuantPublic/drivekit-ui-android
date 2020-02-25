@@ -1,74 +1,72 @@
 package com.drivequant.drivekit.common.ui.utils
 
-import android.text.SpannableStringBuilder
+import android.content.Context
+import android.support.annotation.ColorRes
+import android.support.annotation.DimenRes
+import android.support.annotation.DrawableRes
+import android.support.annotation.StyleRes
+import android.support.v4.content.ContextCompat
+import android.support.v7.content.res.AppCompatResources
+import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
+import android.text.TextUtils.concat
+import android.text.style.*
+import android.view.View
 
 object DKSpannable {
 
-    enum class SizeSpan {
-        MEDIUM, LARGE, SMALL
+    private var length = 0
+    private var elements  = ArrayList<CharSequence>()
+    private val values: MutableMap<IntRange, Iterable<Any>> = HashMap()
+
+    fun append(text: CharSequence, spans: Iterable<Any>) = apply {
+        val end = text.length
+        elements.add(text)
+        values[(length..length + end)] = spans
+        length += end
     }
 
-    private lateinit var builder: SpannableStringBuilder
-    private var elements: MutableList<String> = mutableListOf()
-    private var styles: MutableList<Int> = mutableListOf()
-    private var colors: MutableList<Int> = mutableListOf()
-    private var sizes: MutableList<RelativeSizeSpan> = mutableListOf()
-
-    private var textWithValues:MutableMap<String,MutableList<Any>?> = mutableMapOf()
-
-    fun init(text: String) = apply {
-        builder = SpannableStringBuilder()
-        textWithValues[text] = null
+    private fun append(newText: CharSequence) = apply {
+        elements.add(newText)
+        length += newText.length
     }
 
-    fun append(text: String): DKSpannable = apply {
-        textWithValues[text] = null
-    }
+    fun appendSpace(newText: CharSequence) = append(" ").append(newText)
 
-    fun setSize(sizeSpan: SizeSpan): DKSpannable = apply {
-        val size = when (sizeSpan) {
-            SizeSpan.SMALL -> RelativeSizeSpan(5.0f)
-            SizeSpan.MEDIUM -> RelativeSizeSpan(2.0f)
-            SizeSpan.LARGE -> RelativeSizeSpan(5.0f)
-        }
-        //textWithValues.get()
-    }
-
-    fun setStyle(style: Int): DKSpannable = apply {
-        styles.add(style)
-    }
-
-    fun setColor(color: Int): DKSpannable = apply {
-        colors.add(color)
-    }
-
-    fun build(): SpannableStringBuilder {
-
-        for (text in elements) {
-            for (style in styles) {
-                builder.setSpan(StyleSpan(style), 0, text.length, SPAN_EXCLUSIVE_EXCLUSIVE)
-            }
-
-            for (size in sizes) {
-                builder.setSpan(size, 0, text.length, SPAN_EXCLUSIVE_EXCLUSIVE)
-
-            }
-
-            for (color in colors) {
-                builder.setSpan(
-                    ForegroundColorSpan(color),
-                    0,
-                    text.length,
-                    SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
+    fun toSpannableString() = SpannableString(concat(*elements.toTypedArray())).apply {
+        values.forEach {
+            val range = it.key
+            it.value.forEach {
+                setSpan(it, range.first, range.last, SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
-
-        return builder
     }
+}
+
+class ResSpans(private val context: Context) : Iterable<Any> {
+    private val spans = ArrayList<Any>()
+
+    override fun iterator() = spans.iterator()
+
+    fun appearance(@StyleRes id: Int) = spans.add(TextAppearanceSpan(context, id))
+
+    fun size(@DimenRes id: Int) = spans.add(AbsoluteSizeSpan(context.resources.getDimension(id).toInt()))
+
+    fun color(@ColorRes id: Int) = spans.add(ForegroundColorSpan(ContextCompat.getColor(context, id)))
+
+    fun icon(@DrawableRes id: Int, size: Int) = spans.add(ImageSpan(AppCompatResources.getDrawable(context, id)!!.apply {
+        setBounds(0, 0, size, size)
+    }))
+
+    fun typeface(family: String) = spans.add(TypefaceSpan(family))
+
+    fun typeface(style: Int) = spans.add(StyleSpan(style))
+
+    fun click(action: () -> Unit) = spans.add(clickableSpan(action))
+
+    fun custom(span: Any) = spans.add(span)
+}
+
+fun clickableSpan(action: () -> Unit) = object : ClickableSpan() {
+    override fun onClick(view: View) = action()
 }
