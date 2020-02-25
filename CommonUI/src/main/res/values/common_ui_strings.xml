@@ -6,4 +6,11 @@
     <string name="dk_common_unit_meter">m</string>
     <string name="dk_common_unit_minute">min</string>
     <string name="dk_common_unit_second">s</string>
+
+    <string name="dk_common_unit_mass">kg</string>
+    <string name="dk_common_unit_mass_g">g</string>
+    <string name="dk_common_unit_consumption">l/100km</string>
+    <string name="dk_common_unit_speed">km/h</string>
+    <string name="dk_common_unit_co2_emissions">g/km</string>
+    <string name="dk_common_unit_mile">miles</string>
 </resources>
