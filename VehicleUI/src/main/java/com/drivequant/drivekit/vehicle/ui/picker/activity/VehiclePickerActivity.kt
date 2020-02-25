@@ -54,8 +54,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
-        viewModel.itemMapNewData.observe(this, Observer {
-            viewModel.itemMapNewData.value?.let {
+        viewModel.itemDataList.observe(this, Observer {
+            viewModel.itemDataList.value?.let {
                 dispatchToScreen(it.keys.first())
             }
         })
@@ -82,22 +82,18 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
             ENGINE -> {
-                vehicleEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
-                dispatchToScreen(MODELS)
+                viewModel.selectedEngine = VehicleEngineIndex.getEnumByValue(item.value)
             }
             MODELS -> {
-                vehicleModel = item.value
-                dispatchToScreen(YEARS)
+                viewModel.selectedModel = item.value
             }
             YEARS -> {
-                vehicleYear = item.value
-                dispatchToScreen(VERSIONS)
+                viewModel.selectedYear = item.value
             }
             VERSIONS -> {
                 item.text?.let {
-                    vehicleVersion = VehicleVersion(it, item.value)
+                    viewModel.selectedVersion = VehicleVersion(it, item.value)
                 }
-                dispatchToScreen(NAME)
             }
             NAME -> {
 
@@ -121,7 +117,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         val fragment = when (vehiclePickerStep){
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel.selectedCategory, viewConfig)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel, vehicleVersion, viewConfig)
-            else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewConfig)
+            else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep), viewConfig)
         }
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)

@@ -16,19 +16,24 @@ import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
-    val itemListData: MutableLiveData<List<VehiclePickerItem>> = MutableLiveData()
-    val itemMapNewData: MutableLiveData<Map<VehiclePickerStep, List<VehiclePickerItem>>> = MutableLiveData()
+    val itemDataList: MutableLiveData<Map<VehiclePickerStep, List<VehiclePickerItem>>> = MutableLiveData()
     val vehicleCharacteristicsData: MutableLiveData<VehicleCharacteristics> = MutableLiveData()
 
     var itemTypes: List<VehiclePickerItem> = listOf()
     var itemCategories: List<VehiclePickerItem> = listOf()
     var itemBrands: List<VehiclePickerItem> = listOf()
     var itemEngines: List<VehiclePickerItem> = listOf()
+    var itemModels: List<VehiclePickerItem> = listOf()
+    var itemYears: List<VehiclePickerItem> = listOf()
+    var itemVersions: List<VehiclePickerItem> = listOf()
 
     lateinit var selectedVehicleType: VehicleType
     lateinit var selectedCategory: VehicleCategoryItem
     lateinit var selectedBrand: VehicleBrand
-    lateinit var selectedEngine: VehicleEngineItem
+    lateinit var selectedEngine: VehicleEngineIndex
+    lateinit var selectedModel: String
+    lateinit var selectedYear: String
+    lateinit var selectedVersion: VehicleVersion
 
     fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig){
         when (currentStep){
@@ -36,32 +41,46 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 itemCategories = fetchVehicleCategories(context, selectedVehicleType)
                 val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
                 map[CATEGORY] = itemCategories
-                itemMapNewData.postValue(map)
+                itemDataList.postValue(map)
             }
             CATEGORY -> {
                 itemBrands = fetchVehicleBrands(context, selectedVehicleType, withIcons = false)
                 val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
                 map[BRANDS_FULL] = itemBrands
-                itemMapNewData.postValue(map)
+                itemDataList.postValue(map)
             }
             CATEGORY_DESCRIPTION -> TODO()
             BRANDS_ICONS, BRANDS_FULL -> {
                 itemEngines = fetchVehicleEngines(context, selectedVehicleType)
                 val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
                 map[ENGINE] = itemEngines
-                itemMapNewData.postValue(map)
+                itemDataList.postValue(map)
             }
-            ENGINE -> TODO()
-            MODELS -> TODO()
-            YEARS -> TODO()
-            VERSIONS -> TODO()
+            ENGINE -> fetchVehicleModels(selectedBrand, selectedEngine)
+            MODELS -> fetchVehicleYears(selectedVehicleType, selectedBrand, selectedEngine, selectedModel)
+            YEARS -> fetchVehicleVersions(selectedVehicleType, selectedBrand, selectedEngine, selectedModel, selectedYear)
+            VERSIONS -> fetchVehicleCharacteristics(selectedVersion)
             NAME -> TODO()
             null -> {
                 itemTypes = fetchVehicleTypes(context, viewConfig)
                 val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
                 map[TYPE] = itemTypes
-                itemMapNewData.postValue(map)
+                itemDataList.postValue(map)
             }
+        }
+    }
+
+    fun getItemsByStep(vehiclePickerStep: VehiclePickerStep): List<VehiclePickerItem> {
+        return when (vehiclePickerStep){
+            TYPE -> itemTypes
+            CATEGORY -> itemCategories
+            BRANDS_ICONS -> itemBrands
+            BRANDS_FULL -> itemBrands
+            ENGINE -> itemEngines
+            MODELS -> itemModels
+            YEARS -> itemYears
+            VERSIONS -> itemVersions
+            CATEGORY_DESCRIPTION, NAME -> listOf()
         }
     }
 
@@ -101,47 +120,53 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return items
     }
 
-    fun fetchVehicleModels(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex) {
+    private fun fetchVehicleModels(vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex) {
         DriveKitVehiclePicker.getModels(vehicleBrand, vehicleEngineIndex, object : VehicleModelsQueryListener{
             override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
-                val items = when (status){
+                when (status){
                     SUCCESS -> {
-                        buildItemsFromStrings(models)
+                        itemModels = buildItemsFromStrings(models)
+                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
+                        map[MODELS] = itemTypes
+                        itemDataList.postValue(map)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> mutableListOf()
-                    NO_RESULT -> mutableListOf()
+                    //FAILED_TO_RETRIEVED_DATA ->
+                    //NO_RESULT ->
                 }
-                itemListData.postValue(items)
             }
         })
     }
 
-    fun fetchVehicleYears(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String) {
+    private fun fetchVehicleYears(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String) {
         DriveKitVehiclePicker.getYears(vehicleBrand, vehicleEngineIndex, vehicleModel, object : VehicleYearsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
-                val items = when (status){
+                when (status){
                     SUCCESS -> {
-                        buildItemsFromStrings(years)
+                        itemYears = buildItemsFromStrings(years)
+                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
+                        map[YEARS] = itemYears
+                        itemDataList.postValue(map)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> mutableListOf()
-                    NO_RESULT -> mutableListOf()
+                    //FAILED_TO_RETRIEVED_DATA ->
+                    //NO_RESULT ->
                 }
-                itemListData.postValue(items)
             }
         })
     }
 
-    fun fetchVehicleVersions(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String, vehicleYear: String) {
+    private fun fetchVehicleVersions(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String, vehicleYear: String) {
         DriveKitVehiclePicker.getVersions(vehicleBrand, vehicleEngineIndex, vehicleModel, vehicleYear, object : VehicleVersionsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
-                val items = when (status){
+                when (status){
                     SUCCESS -> {
-                        buildItemsFromVersions(versions)
+                        itemVersions = buildItemsFromVersions(versions)
+                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
+                        map[VERSIONS] = itemVersions
+                        itemDataList.postValue(map)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> mutableListOf()
-                    NO_RESULT -> mutableListOf()
+                    //FAILED_TO_RETRIEVED_DATA ->
+                    //_RESULT ->
                 }
-                itemListData.postValue(items)
             }
         })
     }

@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -55,6 +54,7 @@ class VehicleItemListFragment : Fragment() {
     private lateinit var viewModel: VehiclePickerViewModel
     private lateinit var vehiclePickerViewConfig: VehiclePickerViewConfig
     private lateinit var vehiclePickerStep: VehiclePickerStep
+    private lateinit var items: List<VehiclePickerItem>
 
     private var listener: OnListFragmentInteractionListener? = null
     private var adapterType = 0
@@ -65,11 +65,13 @@ class VehicleItemListFragment : Fragment() {
         fun newInstance(
             viewModel: VehiclePickerViewModel,
             vehiclePickerStep: VehiclePickerStep,
+            items: List<VehiclePickerItem>,
             vehiclePickerViewConfig: VehiclePickerViewConfig)
                 : VehicleItemListFragment {
             val fragment = VehicleItemListFragment()
             fragment.viewModel = viewModel
             fragment.vehiclePickerStep = vehiclePickerStep
+            fragment.items = items
             fragment.vehiclePickerViewConfig = vehiclePickerViewConfig
             return fragment
         }
@@ -97,15 +99,6 @@ class VehicleItemListFragment : Fragment() {
     }
 
     private fun fetchItems() {
-        val items = when (vehiclePickerStep){
-            TYPE -> viewModel.itemTypes
-            CATEGORY -> viewModel.itemCategories
-            BRANDS_FULL -> viewModel.itemBrands
-            BRANDS_ICONS -> viewModel.itemBrands
-            ENGINE -> viewModel.itemEngines
-            else -> listOf()
-        }
-
         if (adapter != null){
             adapter?.notifyDataSetChanged()
         } else {
