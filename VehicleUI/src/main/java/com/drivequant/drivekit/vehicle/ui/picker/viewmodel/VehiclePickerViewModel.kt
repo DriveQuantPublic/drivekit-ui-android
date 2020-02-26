@@ -56,7 +56,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     itemCategories = fetchVehicleCategories(context)
                     stepDispatcher.postValue(CATEGORY)
                 } else {
-                    manageBrands(context, viewConfig)
+                    manageBrands(context, currentStep, viewConfig)
                 }
             }
             CATEGORY -> {
@@ -69,10 +69,18 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     fetchVehicleCharacteristics()
                 } else {
                     isLiteConfig = false
-                    manageBrands(context, viewConfig)
+                    manageBrands(context, currentStep, viewConfig)
                 }
             }
-            BRANDS_ICONS,
+            BRANDS_ICONS -> {
+                if (!otherAction) {
+                    itemEngines = fetchVehicleEngines(context)
+                    stepDispatcher.postValue(ENGINE)
+                } else {
+                    itemBrands = fetchVehicleBrands(context)
+                    stepDispatcher.postValue(BRANDS_FULL)
+                }
+            }
             BRANDS_FULL -> {
                 itemEngines = fetchVehicleEngines(context)
                 stepDispatcher.postValue(ENGINE)
@@ -103,7 +111,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         for (i in viewConfig.vehicleTypes.indices){
             val currentType = viewConfig.vehicleTypes[i]
-            items.add(i, VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
+            items.add(VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
         }
         return items
     }
@@ -112,7 +120,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawCategories = selectedVehicleType.getCategories(context)
         for (i in rawCategories.indices){
-            items.add(i, VehiclePickerItem(i, rawCategories[i].title, rawCategories[i].category, rawCategories[i].icon1, rawCategories[i].icon2))
+            items.add(VehiclePickerItem(i, rawCategories[i].title, rawCategories[i].category, rawCategories[i].icon1, rawCategories[i].icon2))
         }
         return items
     }
@@ -121,7 +129,12 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawBrands = selectedVehicleType.getBrands(context, withIcons)
         for (i in rawBrands.indices){
-            items.add(i, VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
+            items.add(VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
+        }
+        if (withIcons){
+            if (selectedVehicleType.getBrands(context).isNotEmpty()){
+                items.add(VehiclePickerItem(items.size, context.getString(R.string.dk_vehicle_other_brands), "OTHER_BRANDS"))
+            }
         }
         return items
     }
@@ -130,7 +143,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawBrands = selectedVehicleType.getEngines(context)
         for (i in rawBrands.indices){
-            items.add(i, VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
+            items.add(VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
         }
         return items
     }
@@ -202,8 +215,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         computeNextScreen(context, CATEGORY_DESCRIPTION, viewConfig)
     }
 
-    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
-        if (viewConfig.displayBrandsWithIcons){
+    private fun manageBrands(context: Context, currentStep: VehiclePickerStep, viewConfig: VehiclePickerViewConfig){ if (viewConfig.displayBrandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByValue(itemBrands.first().value)
@@ -226,6 +238,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep): String? {
         return when (vehiclePickerStep){
+            BRANDS_FULL -> context.getString(R.string.dk_vehicle_brand_description)
             ENGINE -> context.getString(R.string.dk_vehicle_engine_description)
             MODELS -> context.getString(R.string.dk_vehicle_model_description)
             YEARS -> context.getString(R.string.dk_vehicle_year_description)

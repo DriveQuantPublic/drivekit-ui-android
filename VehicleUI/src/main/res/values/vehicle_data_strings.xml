@@ -24,6 +24,7 @@
     <string name="dk_vehicle_name_chooser_description">Vous pouvez personnaliser le nom de votre véhicule. Si vous ne choississez pas de nom, l\'application attribuera un nom par défaut</string>
 
 
+    <string name="dk_vehicle_brand_description">Marque du véhicule ?</string>
     <string name="dk_vehicle_engine_description">Motorisation ?</string>
     <string name="dk_vehicle_model_description">Modèle du véhicule ?</string>
     <string name="dk_vehicle_year_description">Année de mise en circulation ?</string>

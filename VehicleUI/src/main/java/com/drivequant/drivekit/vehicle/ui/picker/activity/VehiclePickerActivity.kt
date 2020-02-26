@@ -83,6 +83,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
+        var otherAction = false
         when (currentPickerStep){
             TYPE -> {
                 viewModel.selectedVehicleType = VehicleType.valueOf(item.value)
@@ -91,7 +92,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 viewModel.selectedCategory = viewModel.selectedVehicleType.getCategories(this).find { it.category == item.value }!!
             }
             BRANDS_ICONS -> {
-                viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
+                if (item.value != "OTHER_BRANDS"){
+                    viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
+                } else {
+                    otherAction = true
+                }
             }
             BRANDS_FULL -> {
                 viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
@@ -113,7 +118,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
             else -> {}
         }
-        viewModel.computeNextScreen(this, currentPickerStep, viewConfig)
+        viewModel.computeNextScreen(this, currentPickerStep, viewConfig, otherAction)
     }
 
     private fun showProgressCircular() {
