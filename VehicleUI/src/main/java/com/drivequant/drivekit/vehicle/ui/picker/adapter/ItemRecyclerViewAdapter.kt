@@ -12,13 +12,13 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
 class ItemRecyclerViewAdapter(
-    private val vehiclePickerStep: VehiclePickerStep,
+    private val currentPickerStep: VehiclePickerStep,
     private val data: List<VehiclePickerItem>,
     private val listener: VehicleItemListFragment.OnListFragmentInteractionListener?
 ): RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
+        val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(currentPickerStep)
         val view = if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM){
             LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text_image, parent, false)
         } else {
@@ -38,7 +38,7 @@ class ItemRecyclerViewAdapter(
         }
         holder.view.setOnClickListener {
             holder.item?.let {
-                listener?.onSelectedItem(vehiclePickerStep, it)
+                listener?.onSelectedItem(currentPickerStep, it)
             }
         }
     }

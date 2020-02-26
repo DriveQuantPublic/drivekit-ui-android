@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
@@ -17,8 +16,7 @@ import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
-    val itemDataList: MutableLiveData<Map<VehiclePickerStep, List<VehiclePickerItem>>> = MutableLiveData()
-    val itemCharacteristics: MutableLiveData<Map<VehiclePickerStep, VehicleCharacteristics>> = MutableLiveData()
+    val stepDispatcher : MutableLiveData<VehiclePickerStep> = MutableLiveData()
 
     var itemTypes: List<VehiclePickerItem> = listOf()
     var itemCategories: List<VehiclePickerItem> = listOf()
@@ -28,47 +26,71 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     var itemYears: List<VehiclePickerItem> = listOf()
     var itemVersions: List<VehiclePickerItem> = listOf()
 
+    var isLiteConfig = false
+
     lateinit var selectedVehicleType: VehicleType
     lateinit var selectedCategory: VehicleCategoryItem
     lateinit var selectedBrand: VehicleBrand
-    lateinit var selectedEngine: VehicleEngineIndex
+    lateinit var selectedEngineIndex: VehicleEngineIndex
     lateinit var selectedModel: String
     lateinit var selectedYear: String
     lateinit var selectedVersion: VehicleVersion
     lateinit var characteristics: VehicleCharacteristics
 
-    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig){
+    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig, otherAction: Boolean = false){
         when (currentStep){
-            TYPE -> {
-                itemCategories = fetchVehicleCategories(context, selectedVehicleType)
-                val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                map[CATEGORY] = itemCategories
-                itemDataList.postValue(map)
-            }
-            CATEGORY -> {
-                itemBrands = fetchVehicleBrands(context, selectedVehicleType, withIcons = false)
-                val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                map[BRANDS_FULL] = itemBrands
-                itemDataList.postValue(map)
-            }
-            CATEGORY_DESCRIPTION -> TODO()
-            BRANDS_ICONS, BRANDS_FULL -> {
-                itemEngines = fetchVehicleEngines(context, selectedVehicleType)
-                val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                map[ENGINE] = itemEngines
-                itemDataList.postValue(map)
-            }
-            ENGINE -> fetchVehicleModels(selectedBrand, selectedEngine)
-            MODELS -> fetchVehicleYears(selectedVehicleType, selectedBrand, selectedEngine, selectedModel)
-            YEARS -> fetchVehicleVersions(selectedVehicleType, selectedBrand, selectedEngine, selectedModel, selectedYear)
-            VERSIONS -> fetchVehicleCharacteristics(selectedVersion)
-            NAME -> TODO()
             null -> {
                 itemTypes = fetchVehicleTypes(context, viewConfig)
-                val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                map[TYPE] = itemTypes
-                itemDataList.postValue(map)
+                if (itemTypes.size == 1){
+                    selectedVehicleType = VehicleType.valueOf(itemTypes.first().value)
+                    computeNextScreen(context, TYPE, viewConfig)
+                } else {
+                    stepDispatcher.postValue(TYPE)
+                }
             }
+            TYPE -> {
+                if (viewConfig.categoryTypes != CategoryType.BRANDS_CONFIG_ONLY) {
+                    itemCategories = fetchVehicleCategories(context)
+                    stepDispatcher.postValue(CATEGORY)
+                } else {
+                    if (viewConfig.displayBrandsWithIcons){
+                        itemBrands = fetchVehicleBrands(context, withIcons = true)
+                        stepDispatcher.postValue(BRANDS_ICONS)
+                    } else {
+                        itemBrands = fetchVehicleBrands(context)
+                        stepDispatcher.postValue(BRANDS_FULL)
+                    }
+                }
+            }
+            CATEGORY -> {
+                stepDispatcher.postValue(CATEGORY_DESCRIPTION)
+            }
+            CATEGORY_DESCRIPTION -> {
+                if (!otherAction) {
+                    isLiteConfig = true
+                    selectedVersion = VehicleVersion("", selectedCategory.liteConfigDqIndex)
+                    fetchVehicleCharacteristics()
+                } else {
+                    isLiteConfig = false
+                    if (viewConfig.displayBrandsWithIcons){
+                        itemBrands = fetchVehicleBrands(context, withIcons = true)
+                        stepDispatcher.postValue(BRANDS_ICONS)
+                    } else {
+                        itemBrands = fetchVehicleBrands(context)
+                        stepDispatcher.postValue(BRANDS_FULL)
+                    }
+                }
+            }
+            BRANDS_ICONS,
+            BRANDS_FULL -> {
+                itemEngines = fetchVehicleEngines(context)
+                stepDispatcher.postValue(ENGINE)
+            }
+            ENGINE -> fetchVehicleModels()
+            MODELS -> fetchVehicleYears()
+            YEARS -> fetchVehicleVersions()
+            VERSIONS -> fetchVehicleCharacteristics()
+            NAME -> TODO()
         }
     }
 
@@ -82,7 +104,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             MODELS -> itemModels
             YEARS -> itemYears
             VERSIONS -> itemVersions
-            CATEGORY_DESCRIPTION, NAME -> listOf()
+            else -> listOf()
         }
     }
 
@@ -95,42 +117,40 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return items
     }
 
-    private fun fetchVehicleCategories(context: Context, vehicleType: VehicleType): List<VehiclePickerItem> {
+    private fun fetchVehicleCategories(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawCategories = vehicleType.getCategories(context)
+        val rawCategories = selectedVehicleType.getCategories(context)
         for (i in rawCategories.indices){
             items.add(i, VehiclePickerItem(i, rawCategories[i].title, rawCategories[i].category, rawCategories[i].icon1, rawCategories[i].icon2))
         }
         return items
     }
 
-    private fun fetchVehicleBrands(context: Context, vehicleType: VehicleType, withIcons: Boolean = false): List<VehiclePickerItem> {
+    private fun fetchVehicleBrands(context: Context, withIcons: Boolean = false): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawBrands = vehicleType.getBrands(context, withIcons)
+        val rawBrands = selectedVehicleType.getBrands(context, withIcons)
         for (i in rawBrands.indices){
             items.add(i, VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
         }
         return items
     }
 
-    private fun fetchVehicleEngines(context: Context, vehicleType: VehicleType): List<VehiclePickerItem> {
+    private fun fetchVehicleEngines(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawBrands = vehicleType.getEngines(context)
+        val rawBrands = selectedVehicleType.getEngines(context)
         for (i in rawBrands.indices){
             items.add(i, VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
         }
         return items
     }
 
-    private fun fetchVehicleModels(vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex) {
-        DriveKitVehiclePicker.getModels(vehicleBrand, vehicleEngineIndex, object : VehicleModelsQueryListener{
+    private fun fetchVehicleModels() {
+        DriveKitVehiclePicker.getModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
             override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
                 when (status){
                     SUCCESS -> {
                         itemModels = buildItemsFromStrings(models)
-                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                        map[MODELS] = itemTypes
-                        itemDataList.postValue(map)
+                        stepDispatcher.postValue(MODELS)
                     }
                     //FAILED_TO_RETRIEVED_DATA ->
                     //NO_RESULT ->
@@ -139,15 +159,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         })
     }
 
-    private fun fetchVehicleYears(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String) {
-        DriveKitVehiclePicker.getYears(vehicleBrand, vehicleEngineIndex, vehicleModel, object : VehicleYearsQueryListener {
+    private fun fetchVehicleYears() {
+        DriveKitVehiclePicker.getYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
                 when (status){
                     SUCCESS -> {
                         itemYears = buildItemsFromStrings(years)
-                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                        map[YEARS] = itemYears
-                        itemDataList.postValue(map)
+                        stepDispatcher.postValue(YEARS)
                     }
                     //FAILED_TO_RETRIEVED_DATA ->
                     //NO_RESULT ->
@@ -156,15 +174,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         })
     }
 
-    private fun fetchVehicleVersions(vehicleType: VehicleType, vehicleBrand: VehicleBrand, vehicleEngineIndex: VehicleEngineIndex, vehicleModel: String, vehicleYear: String) {
-        DriveKitVehiclePicker.getVersions(vehicleBrand, vehicleEngineIndex, vehicleModel, vehicleYear, object : VehicleVersionsQueryListener {
+    private fun fetchVehicleVersions() {
+        DriveKitVehiclePicker.getVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
                 when (status){
                     SUCCESS -> {
                         itemVersions = buildItemsFromVersions(versions)
-                        val map = HashMap<VehiclePickerStep, List<VehiclePickerItem>>()
-                        map[VERSIONS] = itemVersions
-                        itemDataList.postValue(map)
+                        stepDispatcher.postValue(VERSIONS)
                     }
                     //FAILED_TO_RETRIEVED_DATA ->
                     //_RESULT ->
@@ -173,27 +189,25 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         })
     }
 
-    fun fetchVehicleCharacteristics(vehicleVersion: VehicleVersion){
-        DriveKitVehiclePicker.getVehicle(vehicleVersion, object : VehicleDqVehicleQueryListener {
+    private fun fetchVehicleCharacteristics(){
+        DriveKitVehiclePicker.getVehicle(selectedVersion, object : VehicleDqVehicleQueryListener {
             override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
                 // TODO check VehiclePickerStatus
                 characteristics = vehicleCharacteristics
-                val map = HashMap<VehiclePickerStep, VehicleCharacteristics>()
-                map[NAME] = vehicleCharacteristics
-                itemCharacteristics.postValue(map)
+                stepDispatcher.postValue(NAME)
             }
         })
     }
 
-    fun getDefaultVehicleName(): String {
-        return "$selectedBrand $selectedModel ${selectedVersion.version}"
+    fun validateCategory(context: Context, viewConfig: VehiclePickerViewConfig){
+        computeNextScreen(context, CATEGORY_DESCRIPTION, viewConfig)
     }
 
-    private fun shouldDisplayCategoryScreen(viewConfig: VehiclePickerViewConfig): Boolean {
-        return when (viewConfig.categoryTypes) {
-            CategoryType.LITE_CONFIG_ONLY,
-            CategoryType.BOTH_CONFIG -> true
-            CategoryType.BRANDS_CONFIG_ONLY -> false
+    fun getDefaultVehicleName(): String? {
+        return if (isLiteConfig){
+            selectedCategory.title
+        } else {
+            "$selectedBrand $selectedModel ${selectedVersion.version}"
         }
     }
 
@@ -214,6 +228,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     class VehiclePickerViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+        @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return VehiclePickerViewModel() as T
         }

@@ -22,12 +22,11 @@ class VehicleNameChooserFragment : Fragment() {
     companion object {
         fun newInstance(
             viewModel: VehiclePickerViewModel,
-            vehicleVersion: VehicleVersion,
             vehiclePickerViewConfig: VehiclePickerViewConfig)
                 : VehicleNameChooserFragment {
             val fragment = VehicleNameChooserFragment()
             fragment.viewModel = viewModel
-            fragment.vehicleVersion = vehicleVersion
+            fragment.vehicleVersion = viewModel.selectedVersion
             fragment.viewConfig = vehiclePickerViewConfig
             return fragment
         }
@@ -50,8 +49,7 @@ class VehicleNameChooserFragment : Fragment() {
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
 
         button_validate.setOnClickListener {
-
-            viewModel.fetchVehicleCharacteristics(vehicleVersion) // TODO call the service before launching that fragment
+            // TODO createVehicle in VehiclePickerViewModel
         }
     }
 }

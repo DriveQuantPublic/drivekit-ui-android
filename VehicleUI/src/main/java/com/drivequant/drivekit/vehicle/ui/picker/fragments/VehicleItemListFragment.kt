@@ -133,6 +133,6 @@ class VehicleItemListFragment : Fragment() {
     }
 
     interface OnListFragmentInteractionListener {
-        fun onSelectedItem(vehiclePickerStep: VehiclePickerStep, item: VehiclePickerItem )
+        fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem)
     }
 }

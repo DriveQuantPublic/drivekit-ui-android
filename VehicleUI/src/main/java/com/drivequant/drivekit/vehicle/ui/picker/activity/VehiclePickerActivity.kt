@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.picker.VehicleCharacteristics
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
@@ -44,15 +43,10 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
-        viewModel.itemDataList.observe(this, Observer {
-            viewModel.itemDataList.value?.let {
-                dispatchToScreen(it.keys.first())
-            }
-        })
 
-        viewModel.itemCharacteristics.observe(this, Observer {
-            viewModel.itemCharacteristics.value?.let {
-                dispatchToScreen(NAME)
+        viewModel.stepDispatcher.observe(this, Observer {
+            viewModel.stepDispatcher.value?.let {
+                dispatchToScreen(it)
             }
         })
         viewModel.computeNextScreen(this, null, viewConfig)
@@ -67,10 +61,6 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             CATEGORY -> {
                 viewModel.selectedCategory = viewModel.selectedVehicleType.getCategories(this).find { it.category == item.value }!!
             }
-            CATEGORY_DESCRIPTION -> {
-                val itemTest = 12
-
-            }
             BRANDS_ICONS -> {
                 viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
@@ -78,7 +68,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
             ENGINE -> {
-                viewModel.selectedEngine = VehicleEngineIndex.getEnumByValue(item.value)
+                viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
             }
             MODELS -> {
                 viewModel.selectedModel = item.value
@@ -91,9 +81,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                     viewModel.selectedVersion = VehicleVersion(it, item.value)
                 }
             }
-            NAME -> {
-
-            }
+            else -> {}
         }
         viewModel.computeNextScreen(this, currentPickerStep, viewConfig)
     }
@@ -105,14 +93,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     fun updateTitle(title: String?) {
         title?.let {
-            setTitle(it)
+            // setTitle(it) // TODO implement getTitle in VM
         }
     }
 
-    fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
+    private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
         val fragment = when (vehiclePickerStep){
-            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel.selectedCategory, viewConfig)
-            NAME -> VehicleNameChooserFragment.newInstance(viewModel, viewModel.selectedVersion, viewConfig)
+            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel, viewConfig)
+            NAME -> VehicleNameChooserFragment.newInstance(viewModel, viewConfig)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep), viewConfig)
         }
         supportFragmentManager.beginTransaction()

@@ -42,7 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-
     <TextView
         android:id="@+id/text_view_brands"
         android:layout_width="match_parent"
@@ -55,5 +54,4 @@
         android:textColor="#00EBB8"
         android:textStyle="bold"
         android:text="@string/dk_vehicle_category_display_brands" />
-
 </android.support.constraint.ConstraintLayout>
