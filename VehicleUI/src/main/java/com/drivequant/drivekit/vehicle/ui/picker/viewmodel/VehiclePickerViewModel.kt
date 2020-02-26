@@ -16,17 +16,17 @@ import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
-    val stepDispatcher : MutableLiveData<VehiclePickerStep> = MutableLiveData()
+    val stepDispatcher = MutableLiveData<VehiclePickerStep>()
 
-    var itemTypes: List<VehiclePickerItem> = listOf()
-    var itemCategories: List<VehiclePickerItem> = listOf()
-    var itemBrands: List<VehiclePickerItem> = listOf()
-    var itemEngines: List<VehiclePickerItem> = listOf()
-    var itemModels: List<VehiclePickerItem> = listOf()
-    var itemYears: List<VehiclePickerItem> = listOf()
-    var itemVersions: List<VehiclePickerItem> = listOf()
+    private var itemTypes = listOf<VehiclePickerItem>()
+    private var itemCategories = listOf<VehiclePickerItem>()
+    private var itemBrands = listOf<VehiclePickerItem>()
+    private var itemEngines = listOf<VehiclePickerItem>()
+    var itemModels = listOf<VehiclePickerItem>()
+    var itemYears = listOf<VehiclePickerItem>()
+    var itemVersions = listOf<VehiclePickerItem>()
 
-    var isLiteConfig = false
+    private var isLiteConfig = false
 
     lateinit var selectedVehicleType: VehicleType
     lateinit var selectedCategory: VehicleCategoryItem
@@ -53,13 +53,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     itemCategories = fetchVehicleCategories(context)
                     stepDispatcher.postValue(CATEGORY)
                 } else {
-                    if (viewConfig.displayBrandsWithIcons){
-                        itemBrands = fetchVehicleBrands(context, withIcons = true)
-                        stepDispatcher.postValue(BRANDS_ICONS)
-                    } else {
-                        itemBrands = fetchVehicleBrands(context)
-                        stepDispatcher.postValue(BRANDS_FULL)
-                    }
+                    manageBrands(context, viewConfig)
                 }
             }
             CATEGORY -> {
@@ -72,13 +66,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     fetchVehicleCharacteristics()
                 } else {
                     isLiteConfig = false
-                    if (viewConfig.displayBrandsWithIcons){
-                        itemBrands = fetchVehicleBrands(context, withIcons = true)
-                        stepDispatcher.postValue(BRANDS_ICONS)
-                    } else {
-                        itemBrands = fetchVehicleBrands(context)
-                        stepDispatcher.postValue(BRANDS_FULL)
-                    }
+                    manageBrands(context, viewConfig)
                 }
             }
             BRANDS_ICONS,
@@ -201,6 +189,28 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     fun validateCategory(context: Context, viewConfig: VehiclePickerViewConfig){
         computeNextScreen(context, CATEGORY_DESCRIPTION, viewConfig)
+    }
+
+    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
+        if (viewConfig.displayBrandsWithIcons){
+            itemBrands = fetchVehicleBrands(context, withIcons = true)
+            if (itemBrands.size == 1){
+                selectedBrand = VehicleBrand.getEnumByValue(itemBrands.first().value)
+                itemEngines = fetchVehicleEngines(context)
+                stepDispatcher.postValue(ENGINE)
+            } else {
+                stepDispatcher.postValue(BRANDS_ICONS)
+            }
+        } else {
+            itemBrands = fetchVehicleBrands(context)
+            if (itemBrands.size == 1){
+                selectedBrand = VehicleBrand.getEnumByValue(itemBrands.first().value)
+                itemEngines = fetchVehicleEngines(context)
+                stepDispatcher.postValue(ENGINE)
+            } else {
+                stepDispatcher.postValue(BRANDS_FULL)
+            }
+        }
     }
 
     fun getDefaultVehicleName(): String? {
