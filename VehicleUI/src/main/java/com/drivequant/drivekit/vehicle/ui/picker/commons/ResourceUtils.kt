@@ -7,7 +7,11 @@ import android.support.v4.content.ContextCompat
 object ResourceUtils {
     fun convertToDrawable(context: Context, identifier: String): Drawable? {
         val id = context.resources.getIdentifier(identifier, "drawable", context.packageName)
-        return ContextCompat.getDrawable(context, id)
+        return if (id > 0){
+            ContextCompat.getDrawable(context, id)
+        } else {
+            null
+        }
     }
 
     fun convertToString(context: Context, identifier: String): String? {
