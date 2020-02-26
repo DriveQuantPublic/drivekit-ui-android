@@ -19,4 +19,6 @@
     <dimen name="dk_ic_big">48dp</dimen>
 
     <dimen name="dk_separator_stroke">1dp</dimen>
+    <dimen name="dk_default_gauge_stroke">5dp</dimen>
+
 </resources>

@@ -93,4 +93,18 @@
     </style>
 
     <style name="ProgressDialogStyle" parent="Theme.AppCompat.Light.Dialog"/>
+
+    <style name="GaugeTripDetail" >
+        <item name="strokeSize">9dp</item>
+        <item name="backColor">@color/dkMainFontColor</item>
+        <item name="textSize">20sp</item>
+    </style>
+
+    <style name="GaugeTripList">
+        <item name="android:layout_height">@dimen/dk_ic_big</item>
+        <item name="android:layout_width">@dimen/dk_ic_big</item>
+        <item name="strokeSize">4dp</item>
+        <item name="backColor">@color/dkMainFontColor</item>
+        <item name="textSize">12sp</item>
+    </style>
 </resources>
