@@ -23,7 +23,7 @@
             android:padding="4dp"
             android:src="@drawable/dk_no_score"
             android:visibility="gone"/>
-        <com.drivequant.drivekit.ui.commons.views.GaugeIndicator
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/gauge_indicator_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -47,7 +47,7 @@
         tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/dkGaugeGray"
+        android:background="@color/neutralColor"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintTop_toBottomOf="@id/view_group_trip_data"

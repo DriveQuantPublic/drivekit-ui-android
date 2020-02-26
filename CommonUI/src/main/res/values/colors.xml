@@ -8,6 +8,8 @@
     <color name="dkFontColorOnSecondaryColor">@color/dkFontColorOnPrimaryColor</color>
     <color name="dkWarningColor">#FF6E57</color>
     <color name="dkCriticalColor">#E52027</color>
+    <color name="backgroundViewColor">#FAFAFA</color>
+    <color name="neutralColor">#F0F0F0</color>
 
     <color name="dkVeryBad">#FF6E57</color>
     <color name="dkBad">#FFA057</color>

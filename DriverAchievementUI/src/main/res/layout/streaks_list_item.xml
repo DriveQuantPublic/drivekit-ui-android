@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/text_view_streak_title"
-            style="@style/StreakTitle"
+            style="@style/Headline1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
@@ -47,14 +47,15 @@
 
         <TextView
             android:id="@+id/line_separator"
-            style="@style/Separator"
+            style="@style/Separator.Horizontal"
             android:layout_marginTop="@dimen/dk_margin_half"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_streak_title" />
 
         <TextView
             android:id="@+id/best_title"
-            style="@style/StreakSubTitle"
+            style="@style/Headline2"
+            android:textColor="@color/dkMainFontColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -64,7 +65,7 @@
 
         <TextView
             android:id="@+id/text_view_best_streak_trip"
-            style="@style/StreakDataStyle"
+            style="@style/SmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -74,7 +75,7 @@
 
         <TextView
             android:id="@+id/text_view_best_streak_date"
-            style="@style/StreakDataStyle"
+            style="@style/SmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"
@@ -84,7 +85,8 @@
 
         <TextView
             android:id="@+id/current_title"
-            style="@style/StreakSubTitle"
+            style="@style/Headline2"
+            android:textColor="@color/dkMainFontColor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dk_margin"
@@ -94,7 +96,7 @@
 
         <TextView
             android:id="@+id/text_view_current_streak_trip"
-            style="@style/StreakDataStyle"
+            style="@style/SmallText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -104,7 +106,7 @@
 
         <TextView
             android:id="@+id/text_view_current_streak_date"
-            style="@style/StreakDataStyle"
+            style="@style/SmallText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"

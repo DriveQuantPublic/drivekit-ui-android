@@ -17,6 +17,7 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import java.util.*
 
@@ -44,6 +45,7 @@ class DriveKitDemoApplication: Application() {
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
+        DriveKitUI.initialize()
     }
 
     private fun createNotificationChannel() {

@@ -8,12 +8,15 @@ import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.extension.formatStreaksDate
-import com.drivequant.drivekit.driverachievement.ui.utils.DistanceUtils
-import com.drivequant.drivekit.driverachievement.ui.utils.DurationUtils
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.RelativeSizeSpan
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DKUtils
+import com.drivequant.drivekit.common.ui.utils.ResSpans
 
 
 class StreaksData(
@@ -90,14 +93,14 @@ class StreaksData(
     }
 
     fun getCurrentStreakData(context: Context) : SpannableString {
-        val currentDistance = DistanceUtils().formatDistance(context, current.distance)
-        val currentDuration = DurationUtils().formatDuration(context, current.duration)
+        val currentDistance = DKUtils.formatDistance(context, current.distance)
+        val currentDuration = DKUtils.formatDuration(context, current.duration)
         return buildStreaksData(context,currentTripsCount, currentDistance, currentDuration)
     }
 
     fun getBestStreakData(context: Context): SpannableString {
-        val bestDistance = DistanceUtils().formatDistance(context, best.distance)
-        val bestDuration = DurationUtils().formatDuration(context, best.duration)
+        val bestDistance = DKUtils.formatDistance(context, best.distance)
+        val bestDuration = DKUtils.formatDuration(context, best.duration)
 
         return when (getStreakStatus()) {
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksData(context, bestTripsCount, bestDistance, bestDuration)
@@ -134,9 +137,19 @@ class StreaksData(
         val sb = SpannableString("$tripsCountText - $distance - $duration")
         val mediumSizeText = RelativeSizeSpan(2.0f)
 
+//        val final = DKSpannable
+//            .append("$tripsCount", context.resSpans {
+//                expressColor(DriveKitUI.colors.secondaryColor)
+//                typeface(Typeface.BOLD)
+//                size(R.dimen.dk_text_xbig)
+//            }).append(tripsCountText, context.resSpans {
+//                expressColor(DriveKitUI.colors.secondaryColor)
+//            }).appendSpace("- $distance - $duration")
+//        return final.toSpannableString()
+
         sb.setSpan(StyleSpan(Typeface.BOLD), 0, "$tripsCount".length, 0)
         sb.setSpan(mediumSizeText, 0, "$tripsCount".length, 0)
-        sb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.dk_primary)), 0, tripsCountText.length, 0)
+        sb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.dkSecondaryColor)), 0, tripsCountText.length, 0)
         return sb
     }
 }

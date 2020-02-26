@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.commons.views.GaugeType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
@@ -66,7 +66,7 @@ class DriverDistractionFragment : Fragment() {
         distanceUnlocked.setTextColor(tripsViewConfig.primaryColor)
         durationUnlocked.setTextColor(tripsViewConfig.primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, tripsViewConfig.primaryFont)
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext(), tripDetailViewConfig)
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext(), tripDetailViewConfig)

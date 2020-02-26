@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dkPrimaryColor">#0B4D6E</color>
-    <color name="dkSecondaryColor">#00EBB8</color>
-    <color name="dkHeaderTripListBackground">#F0F0F0</color>
-    <color name="dkGaugeGray">#E0E0E0</color>
-    <color name="dkGrayText">#9E9E9E</color>
-    <color name="dkDarkGrayText">#616161</color>
     <color name="dkMapTraceMainColor">#116EA9</color>
     <color name="dkMapTraceWarningColor">#ED4F3B</color>
-    <color name="dkWarning">#FF6E57</color>
-
-    <color name="dkVeryBad">#ff6e57</color>
-    <color name="dkBad">#ffa057</color>
-    <color name="dkBadMean">#ffd357</color>
-    <color name="dkMean">#f9ff57</color>
-    <color name="dkGoodMean">#c6ff57</color>
-    <color name="dkGood">#94ff57</color>
-    <color name="dkExcellent">#30c8fc</color>
 </resources>

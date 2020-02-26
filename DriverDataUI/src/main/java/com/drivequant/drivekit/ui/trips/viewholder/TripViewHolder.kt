@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.commons.views.GaugeIndicator
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
@@ -56,7 +56,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             DisplayType.GAUGE -> {
                 if (tripData.isScored(trip)){
                     showGaugeIndicator()
-                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType(), tripsViewConfig.primaryFont)
+                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
                 } else {
                     showNoScoreIndicator()
                 }

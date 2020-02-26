@@ -42,17 +42,17 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/dk_info"
-            android:tint="@color/dkWarning"
+            android:tint="@color/dkWarningColor"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"/>
         <TextView
             android:id="@+id/trip_message"
+            style="@style/NormalText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="14sp"
             android:textColor="@android:color/white"
-            android:background="@color/dkWarning"
+            android:background="@color/dkWarningColor"
             android:padding="8dp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

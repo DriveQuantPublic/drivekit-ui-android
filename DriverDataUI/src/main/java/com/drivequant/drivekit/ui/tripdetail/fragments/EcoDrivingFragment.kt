@@ -5,14 +5,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.component.GaugeType
 
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.commons.views.GaugeType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
-import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import kotlinx.android.synthetic.main.eco_driving_fragment.*
 
 class EcoDrivingFragment : Fragment() {
@@ -49,7 +48,7 @@ class EcoDrivingFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING, tripsViewConfig.primaryFont)
+        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING)
         accelAdvice.text = viewModel.getAccelMessage()
         mainAdvice.text = viewModel.getMaintainMessage()
         decelAdvice.text = viewModel.getDecelMessage()

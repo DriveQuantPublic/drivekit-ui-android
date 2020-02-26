@@ -4,10 +4,10 @@ import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.extension.removeZeroDecimal
 import java.io.Serializable
 
 class DriverDistractionViewModel(private val distraction: DriverDistraction) : Serializable {
