@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.picker.activity
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -7,6 +9,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
@@ -19,6 +22,7 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
+import kotlinx.android.synthetic.main.activity_vehicle_picker.*
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
@@ -46,7 +50,18 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
         viewModel.stepDispatcher.observe(this, Observer {
             viewModel.stepDispatcher.value?.let {
+                hideProgressCircular()
                 dispatchToScreen(it)
+            }
+        })
+
+        viewModel.progressBarObserver.observe(this, Observer {
+            it?.let {
+                if (it){
+                    showProgressCircular()
+                } else {
+                    hideProgressCircular()
+                }
             }
         })
         viewModel.computeNextScreen(this, null, viewConfig)
@@ -68,6 +83,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
             }
             ENGINE -> {
+
                 viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
             }
             MODELS -> {
@@ -84,6 +100,28 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             else -> {}
         }
         viewModel.computeNextScreen(this, currentPickerStep, viewConfig)
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
+                }
+            })
+    }
+
+    private fun hideProgressCircular() {
+        progress_circular.animate()
+            .alpha(0f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.GONE
+                }
+            })
     }
 
     override fun onSupportNavigateUp(): Boolean {

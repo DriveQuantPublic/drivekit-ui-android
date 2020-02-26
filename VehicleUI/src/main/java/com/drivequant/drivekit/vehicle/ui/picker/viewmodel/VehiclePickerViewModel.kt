@@ -18,6 +18,7 @@ import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
     val stepDispatcher = MutableLiveData<VehiclePickerStep>()
+    val progressBarObserver = MutableLiveData<Boolean>()
 
     private var itemTypes = listOf<VehiclePickerItem>()
     private var itemCategories = listOf<VehiclePickerItem>()
@@ -134,6 +135,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     private fun fetchVehicleModels() {
+        progressBarObserver.postValue(true)
         DriveKitVehiclePicker.getModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
             override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
                 when (status){
@@ -144,11 +146,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     //FAILED_TO_RETRIEVED_DATA ->
                     //NO_RESULT ->
                 }
+                progressBarObserver.postValue(false)
             }
         })
     }
 
     private fun fetchVehicleYears() {
+        progressBarObserver.postValue(true)
         DriveKitVehiclePicker.getYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
                 when (status){
@@ -159,11 +163,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     //FAILED_TO_RETRIEVED_DATA ->
                     //NO_RESULT ->
                 }
+                progressBarObserver.postValue(false)
             }
         })
     }
 
     private fun fetchVehicleVersions() {
+        progressBarObserver.postValue(true)
         DriveKitVehiclePicker.getVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
                 when (status){
@@ -174,16 +180,19 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     //FAILED_TO_RETRIEVED_DATA ->
                     //_RESULT ->
                 }
+                progressBarObserver.postValue(false)
             }
         })
     }
 
     private fun fetchVehicleCharacteristics(){
+        progressBarObserver.postValue(true)
         DriveKitVehiclePicker.getVehicle(selectedVersion, object : VehicleDqVehicleQueryListener {
             override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
                 // TODO check VehiclePickerStatus
                 characteristics = vehicleCharacteristics
                 stepDispatcher.postValue(NAME)
+                progressBarObserver.postValue(false)
             }
         })
     }
