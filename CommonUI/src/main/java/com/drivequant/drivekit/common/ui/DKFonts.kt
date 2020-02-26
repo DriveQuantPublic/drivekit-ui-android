@@ -1,6 +1,11 @@
 package com.drivequant.drivekit.common.ui
 
-object DKFonts {
-    val primaryFont: Int = R.font.roboto_regular
-    val secondaryFont: Int = R.font.roboto_regular
+interface DKFonts {
+    var primaryFont: Int
+    var secondaryFont: Int
+}
+
+class DKDefaultFont :DKFonts {
+    override var primaryFont: Int = R.font.roboto_regular
+    override var secondaryFont: Int = R.font.roboto_regular
 }
