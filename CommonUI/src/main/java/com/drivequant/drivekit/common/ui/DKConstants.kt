@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui
 
 object DKConstants {
+    //TODO Review nomenclature
     const val FORMAT_WEEK_LETTER = "EEEE d MMMM"
     const val FORMAT_STANDARD_DATE = "dd/MM/yyyy"
     const val FORMAT_HOUR_MINUT = "HH'h'mm"
