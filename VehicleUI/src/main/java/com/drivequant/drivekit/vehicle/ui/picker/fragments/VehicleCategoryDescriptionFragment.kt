@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
-import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
@@ -45,8 +44,6 @@ class VehicleCategoryDescriptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = vehiclePickerCategoryItem.title // TODO refacto in Activity
 
         val imageViewCategory = view.findViewById(R.id.image_view_icon2) as ImageView
         val textViewDescription = view.findViewById(R.id.text_view_description) as TextView

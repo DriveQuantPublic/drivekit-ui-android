@@ -10,8 +10,10 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
@@ -45,6 +47,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         // TODO supportActionBar?.setBackgroundDrawable(ColorDrawable(.tripsViewConfig.primaryColor))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        setTitle(R.string.dk_vehicle_my_vehicle)
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
 
@@ -64,6 +67,17 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 }
             }
         })
+
+        viewModel.fetchServiceErrorObserver.observe(this, Observer {
+            it?.let {
+                if (it == VehiclePickerStatus.NO_RESULT){
+                    Toast.makeText(this, R.string.dk_vehicle_no_data, Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "HC Failed to retrieve data", Toast.LENGTH_LONG).show() // TODO waiting common string key
+                }
+            }
+        })
+
         viewModel.computeNextScreen(this, null, viewConfig)
     }
 
@@ -127,12 +141,6 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    fun updateTitle(title: String?) {
-        title?.let {
-            // setTitle(it) // TODO implement getTitle in VM
-        }
     }
 
     private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){

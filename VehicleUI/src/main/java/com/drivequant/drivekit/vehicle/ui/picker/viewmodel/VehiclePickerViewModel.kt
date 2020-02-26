@@ -19,6 +19,7 @@ import java.io.Serializable
 class VehiclePickerViewModel: ViewModel(), Serializable {
     val stepDispatcher = MutableLiveData<VehiclePickerStep>()
     val progressBarObserver = MutableLiveData<Boolean>()
+    val fetchServiceErrorObserver = MutableLiveData<VehiclePickerStatus>()
 
     private var itemTypes = listOf<VehiclePickerItem>()
     private var itemCategories = listOf<VehiclePickerItem>()
@@ -143,8 +144,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                         itemModels = buildItemsFromStrings(models)
                         stepDispatcher.postValue(MODELS)
                     }
-                    //FAILED_TO_RETRIEVED_DATA ->
-                    //NO_RESULT ->
+                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
                 }
                 progressBarObserver.postValue(false)
             }
@@ -160,8 +161,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                         itemYears = buildItemsFromStrings(years)
                         stepDispatcher.postValue(YEARS)
                     }
-                    //FAILED_TO_RETRIEVED_DATA ->
-                    //NO_RESULT ->
+                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
                 }
                 progressBarObserver.postValue(false)
             }
@@ -177,8 +178,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                         itemVersions = buildItemsFromVersions(versions)
                         stepDispatcher.postValue(VERSIONS)
                     }
-                    //FAILED_TO_RETRIEVED_DATA ->
-                    //_RESULT ->
+                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
                 }
                 progressBarObserver.postValue(false)
             }
