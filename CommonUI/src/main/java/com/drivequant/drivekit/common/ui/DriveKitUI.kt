@@ -3,6 +3,10 @@ package com.drivequant.drivekit.common.ui
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v4.content.res.ResourcesCompat
+import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.graphical.DKDefaultColors
+import com.drivequant.drivekit.common.ui.graphical.DKDefaultFont
+import com.drivequant.drivekit.common.ui.graphical.DKFonts
 
 object DriveKitUI {
 

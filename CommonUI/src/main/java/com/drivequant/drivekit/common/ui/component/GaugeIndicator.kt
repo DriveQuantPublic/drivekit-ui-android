@@ -3,18 +3,14 @@ package com.drivequant.drivekit.common.ui.component
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
-import android.util.Log
-import com.drivequant.drivekit.common.ui.DKFonts
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
-import java.text.DecimalFormat
 
 class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
