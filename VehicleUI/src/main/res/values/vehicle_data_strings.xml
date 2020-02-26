@@ -22,4 +22,12 @@
     <string name="dk_vehicle_category_display_brands">Continuer pour sélectionner la marque et le modèle de votre véhicule</string>
     <string name="dk_vehicle_my_vehicle">Mon véhicule</string>
     <string name="dk_vehicle_name_chooser_description">Vous pouvez personnaliser le nom de votre véhicule. Si vous ne choississez pas de nom, l\'application attribuera un nom par défaut</string>
+
+
+    <string name="dk_vehicle_engine_description">Motorisation ?</string>
+    <string name="dk_vehicle_model_description">Modèle du véhicule ?</string>
+    <string name="dk_vehicle_year_description">Année de mise en circulation ?</string>
+    <string name="dk_vehicle_version_description">Version du véhicule ?</string>
+    <string name="dk_vehicle_no_data">Aucun modèle trouvé pour ce type de moteur.</string>
+    <string name="dk_vehicle_other_brands">Autres marques</string>
 </resources>

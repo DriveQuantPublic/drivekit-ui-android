@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
@@ -58,6 +59,7 @@ class VehicleItemListFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
     private var adapterType = 0
+    private lateinit var textViewDescription: TextView
     private lateinit var recyclerView: RecyclerView
     private var adapter: ItemRecyclerViewAdapter? = null
 
@@ -83,7 +85,8 @@ class VehicleItemListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container,false)
-        recyclerView = view?.findViewById(R.id.list) as RecyclerView
+        textViewDescription = view.findViewById(R.id.text_view_description) as TextView
+        recyclerView = view.findViewById(R.id.list) as RecyclerView
         adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep).value
         if (adapterType == AdapterType.TEXT_ITEM.value){
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -91,6 +94,17 @@ class VehicleItemListFragment : Fragment() {
             recyclerView.layoutManager = GridLayoutManager(context, 2)
         }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val descriptionText = viewModel.getDescription(view.context, vehiclePickerStep)
+        descriptionText?.let {
+            textViewDescription.text = it
+            textViewDescription.visibility = View.VISIBLE
+        }?:run {
+            textViewDescription.visibility = View.GONE
+        }
     }
 
     override fun onResume() {

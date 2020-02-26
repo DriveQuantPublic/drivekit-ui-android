@@ -9,6 +9,7 @@ import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -210,6 +211,16 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             } else {
                 stepDispatcher.postValue(BRANDS_FULL)
             }
+        }
+    }
+
+    fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep): String? {
+        return when (vehiclePickerStep){
+            ENGINE -> context.getString(R.string.dk_vehicle_engine_description)
+            MODELS -> context.getString(R.string.dk_vehicle_model_description)
+            YEARS -> context.getString(R.string.dk_vehicle_year_description)
+            VERSIONS -> context.getString(R.string.dk_vehicle_version_description)
+            else -> null
         }
     }
 
