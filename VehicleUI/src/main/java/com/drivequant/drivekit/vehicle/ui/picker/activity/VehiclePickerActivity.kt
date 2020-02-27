@@ -44,7 +44,6 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_picker)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        // TODO supportActionBar?.setBackgroundDrawable(ColorDrawable(.tripsViewConfig.primaryColor))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         setTitle(R.string.dk_vehicle_my_vehicle)

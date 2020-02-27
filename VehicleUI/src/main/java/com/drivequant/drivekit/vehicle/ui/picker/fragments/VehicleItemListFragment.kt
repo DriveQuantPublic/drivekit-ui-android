@@ -25,13 +25,6 @@ class VehicleItemListFragment : Fragment() {
         TEXT_IMAGE_ITEM(1);
 
         companion object {
-            fun getEnum(value: Int): AdapterType {
-                for (x in values()) {
-                    if (x.value == value) return x
-                }
-                return TEXT_ITEM
-            }
-
             fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
                 return when (vehiclePickerStep) {
                     CATEGORY,
@@ -126,8 +119,6 @@ class VehicleItemListFragment : Fragment() {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
             listener = context
-        } else {
-            // TODO
         }
     }
 
@@ -139,11 +130,6 @@ class VehicleItemListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // TODO handle lifecycle
     }
 
     interface OnListFragmentInteractionListener {

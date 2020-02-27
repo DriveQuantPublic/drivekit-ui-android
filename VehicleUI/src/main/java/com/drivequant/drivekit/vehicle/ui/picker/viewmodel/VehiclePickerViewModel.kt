@@ -56,7 +56,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     itemCategories = fetchVehicleCategories(context)
                     stepDispatcher.postValue(CATEGORY)
                 } else {
-                    manageBrands(context, currentStep, viewConfig)
+                    manageBrands(context, viewConfig)
                 }
             }
             CATEGORY -> {
@@ -69,7 +69,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     fetchVehicleCharacteristics()
                 } else {
                     isLiteConfig = false
-                    manageBrands(context, currentStep, viewConfig)
+                    manageBrands(context, viewConfig)
                 }
             }
             BRANDS_ICONS -> {
@@ -89,7 +89,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             MODELS -> fetchVehicleYears()
             YEARS -> fetchVehicleVersions()
             VERSIONS -> fetchVehicleCharacteristics()
-            NAME -> TODO()
+            NAME -> { } // TODO create vehicle when web service has been updated with detection mode
         }
     }
 
@@ -203,9 +203,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         progressBarObserver.postValue(true)
         DriveKitVehiclePicker.getVehicle(selectedVersion, object : VehicleDqVehicleQueryListener {
             override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
-                // TODO check VehiclePickerStatus
-                characteristics = vehicleCharacteristics
-                stepDispatcher.postValue(NAME)
+                when (status){
+                    SUCCESS -> {
+                        characteristics = vehicleCharacteristics
+                        stepDispatcher.postValue(NAME)
+                    }
+                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+                }
                 progressBarObserver.postValue(false)
             }
         })
@@ -215,7 +220,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         computeNextScreen(context, CATEGORY_DESCRIPTION, viewConfig)
     }
 
-    private fun manageBrands(context: Context, currentStep: VehiclePickerStep, viewConfig: VehiclePickerViewConfig){ if (viewConfig.displayBrandsWithIcons){
+    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){ if (viewConfig.displayBrandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByValue(itemBrands.first().value)

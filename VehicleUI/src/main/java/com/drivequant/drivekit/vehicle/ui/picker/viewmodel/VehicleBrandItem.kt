@@ -3,10 +3,8 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.annotation.Keep
-import android.support.v4.content.ContextCompat
 import com.drivequant.drivekit.vehicle.enum.VehicleBrand
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
-
 
 @Keep
 data class VehicleBrandItem(
