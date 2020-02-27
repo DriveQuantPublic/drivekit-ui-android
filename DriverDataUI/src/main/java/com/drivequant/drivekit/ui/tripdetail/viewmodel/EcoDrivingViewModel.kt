@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import java.io.Serializable
 
@@ -8,35 +9,35 @@ class EcoDrivingViewModel(private val ecoDriving: EcoDriving, private val tripDe
 
     fun getScore() = ecoDriving.score
 
-    fun getAccelMessage() : String {
+    fun getAccelMessage() : Int {
         return when {
-            ecoDriving.scoreAccel < -4 -> tripDetailViewConfig.lowAccelText
-            ecoDriving.scoreAccel < -2 -> tripDetailViewConfig.weakAccelText
-            ecoDriving.scoreAccel < 1 -> tripDetailViewConfig.goodAccelText
-            ecoDriving.scoreAccel < 3 -> tripDetailViewConfig.strongAccelText
-            else -> tripDetailViewConfig.highAccelText
+            ecoDriving.scoreAccel < -4 -> R.string.dk_driverdata_low_accel
+            ecoDriving.scoreAccel < -2 -> R.string.dk_driverdata_weak_accel
+            ecoDriving.scoreAccel < 1 ->  R.string.dk_driverdata_good_accel
+            ecoDriving.scoreAccel < 3 ->  R.string.dk_driverdata_strong_accel
+            else ->  R.string.dk_driverdata_high_accel
         }
     }
 
-    fun getMaintainMessage() : String{
+    fun getMaintainMessage() : Int {
         return when {
-            ecoDriving.scoreMain < 1.5 -> tripDetailViewConfig.goodMaintainText
-            ecoDriving.scoreMain < 3.5 -> tripDetailViewConfig.weakMaintainText
-            else -> tripDetailViewConfig.badMaintainText
+            ecoDriving.scoreMain < 1.5 -> R.string.dk_driverdata_good_maintain
+            ecoDriving.scoreMain < 3.5 -> R.string.dk_driverdata_weak_maintain
+            else -> R.string.dk_driverdata_bad_maintain
         }
     }
 
-    fun getDecelMessage() : String{
+    fun getDecelMessage() : Int {
         return when {
-            ecoDriving.scoreDecel < -4 -> tripDetailViewConfig.lowDecelText
-            ecoDriving.scoreDecel < -2 -> tripDetailViewConfig.weakDecelText
-            ecoDriving.scoreDecel < 1 -> tripDetailViewConfig.goodDecelText
-            ecoDriving.scoreDecel < 3 -> tripDetailViewConfig.strongDecelText
-            else -> tripDetailViewConfig.highDecelText
+            ecoDriving.scoreDecel < -4 -> R.string.dk_driverdata_low_decel
+            ecoDriving.scoreDecel < -2 -> R.string.dk_driverdata_weak_decel
+            ecoDriving.scoreDecel < 1 -> R.string.dk_driverdata_good_decel
+            ecoDriving.scoreDecel < 3 -> R.string.dk_driverdata_strong_decel
+            else -> R.string.dk_driverdata_high_decel
         }
     }
 
-    fun getGaugeTitle() : String {
-        return tripDetailViewConfig.ecodrivingGaugeTitle
+    fun getGaugeTitle() : Int {
+        return R.string.dk_common_ecodriving
     }
 }

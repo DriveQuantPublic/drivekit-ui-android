@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="dk_streak_icon_height">30dp</dimen>
-    <dimen name="dk_streak_icon_width">30dp</dimen>
-    <dimen name="dk_streak_info_icon_height">20dp</dimen>
-    <dimen name="dk_streak_info_icon_width">20dp</dimen>
-</resources>

@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/image_view_streak_icon"
-            android:layout_width="@dimen/dk_streak_icon_width"
-            android:layout_height="@dimen/dk_streak_icon_height"
+            android:layout_width="@dimen/dk_ic_medium"
+            android:layout_height="@dimen/dk_ic_medium"
             android:src="@drawable/dk_distraction_filled"
             app:layout_constraintEnd_toStartOf="@+id/text_view_streak_title"
             app:layout_constraintHorizontal_bias="0.5"
@@ -29,15 +29,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
-            android:text="@string/dk_streaks_acceleration_title"
+            android:text="@string/dk_achievements_streaks_acceleration_title"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/image_view_info"
-            android:layout_width="@dimen/dk_streak_info_icon_width"
-            android:layout_height="@dimen/dk_streak_info_icon_height"
+            android:layout_width="@dimen/dk_ic_small"
+            android:layout_height="@dimen/dk_ic_small"
             android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:src="@drawable/dk_streak_info"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
-            android:text="@string/dk_streaks_best_title"
+            android:text="@string/dk_achievements_streaks_best_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line_separator" />
 
@@ -90,7 +90,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dk_margin"
-            android:text="@string/dk_streaks_current_title"
+            android:text="@string/dk_achievements_streaks_current_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_best_streak_date" />
 

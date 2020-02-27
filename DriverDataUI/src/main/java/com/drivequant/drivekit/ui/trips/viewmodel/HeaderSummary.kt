@@ -1,26 +1,25 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
-import com.drivequant.drivekit.ui.utils.DistanceUtils
-import com.drivequant.drivekit.ui.utils.DurationUtils
 
 enum class HeaderSummary{
     NONE, DISTANCE, DURATION, DURATION_DISTANCE, DISTANCE_DURATION;
-
+    //TODO Verify
     fun text(context: Context, trips: List<Trip>?) : String? {
         val separator = " | "
         return when (this) {
-            DISTANCE -> DistanceUtils().formatDistance(context, trips?.computeTotalDistance())
-            DURATION -> DurationUtils().formatDuration(context, trips?.computeTotalDuration())
-            DURATION_DISTANCE -> DurationUtils().formatDuration(context, trips?.computeTotalDuration())
+            DISTANCE -> DKDataFormatter.formatDistance(context, trips?.computeTotalDistance())
+            DURATION -> DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!)
+            DURATION_DISTANCE -> DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!)
                 .plus(separator)
-                .plus(DistanceUtils().formatDistance(context, trips?.computeTotalDistance()))
-            DISTANCE_DURATION -> DistanceUtils().formatDistance(context, trips?.computeTotalDistance())
+                .plus(DKDataFormatter.formatDistance(context, trips?.computeTotalDistance()))
+            DISTANCE_DURATION -> DKDataFormatter.formatDistance(context, trips?.computeTotalDistance())
                 .plus(separator)
-                .plus(DurationUtils().formatDuration(context, trips?.computeTotalDuration()))
+                .plus(DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!))
             NONE -> null
         }
     }

@@ -49,9 +49,9 @@ class EcoDrivingFragment : Fragment() {
             viewModel = it
         }
         score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING)
-        accelAdvice.text = viewModel.getAccelMessage()
-        mainAdvice.text = viewModel.getMaintainMessage()
-        decelAdvice.text = viewModel.getDecelMessage()
-        gauge_type_title.text = viewModel.getGaugeTitle()
+        accelAdvice.text = context?.getString(viewModel.getAccelMessage())
+        mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
+        decelAdvice.text = context?.getString(viewModel.getDecelMessage())
+        gauge_type_title.text = context?.getString(viewModel.getGaugeTitle())
     }
 }

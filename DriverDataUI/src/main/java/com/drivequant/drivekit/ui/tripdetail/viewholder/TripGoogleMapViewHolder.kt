@@ -145,7 +145,7 @@ class TripGoogleMapViewHolder(
                 MarkerOptions().position(location)
                     .icon(BitmapDescriptorFactory.fromResource(event.getMapImageResource()))
                     .anchor(event.getXAnchor(), event.getYAnchor())
-                    .title(event.getTitle(tripDetailViewConfig))
+                    .title(event.getTitle(itemView.context))
 
             )
             marker.tag = i

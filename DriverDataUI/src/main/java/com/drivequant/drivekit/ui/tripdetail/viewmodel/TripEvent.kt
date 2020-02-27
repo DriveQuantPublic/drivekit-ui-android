@@ -36,28 +36,28 @@ class TripEvent(val type: TripEventType,
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_map_unlock
         }
     }
-
-    fun getTitle(detailViewConfig: TripDetailViewConfig) : String{
-        return when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) detailViewConfig.eventDecelCritText else detailViewConfig.eventDecelText
-            TripEventType.START -> detailViewConfig.startText
-            TripEventType.FINISH -> detailViewConfig.endText
-            TripEventType.SAFETY_ADHERENCE -> if (isHigh) detailViewConfig.eventAdherenceCritText else detailViewConfig.eventAdherenceText
-            TripEventType.SAFETY_ACCEL -> if (isHigh) detailViewConfig.eventAccelCritText else detailViewConfig.eventAccelText
-            TripEventType.PHONE_DISTRACTION_LOCK -> detailViewConfig.lockText
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> detailViewConfig.unlockText
-        }
+    //TODO Verify
+    fun getTitle(context: Context) : String {
+        return context.getString(when(type){
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_safety_list_brake_critical
+            TripEventType.START -> R.string.dk_driverdata_start_event
+            TripEventType.FINISH -> R.string.dk_driverdata_end_event
+            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
+            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_safety_list_acceleration_critical
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
+        })
     }
 
     fun getExplanation(context: Context) : String{
         return context.getString(when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_safety_explain_brake_critical else R.string.dk_safety_explain_brake
-            TripEventType.START -> R.string.dk_ok
-            TripEventType.FINISH -> R.string.dk_ok
-            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_safety_explain_adherence_critical else R.string.dk_safety_explain_adherence
-            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_safety_explain_acceleration_critical else R.string.dk_safety_explain_acceleration
-            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_screen_lock_text
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_screen_unlock_text
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_explain_brake_critical else R.string.dk_driverdata_safety_explain_brake
+            TripEventType.START -> R.string.dk_common_ok
+            TripEventType.FINISH -> R.string.dk_common_ok
+            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_explain_adherence_critical else R.string.dk_driverdata_safety_explain_adherence
+            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_explain_acceleration_critical else R.string.dk_driverdata_safety_explain_acceleration
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
         })
     }
 
@@ -87,11 +87,11 @@ class TripEvent(val type: TripEventType,
 
     fun getDescription(context: Context, trip: Trip) : String? {
         return when(type){
-            TripEventType.SAFETY_BRAKE -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
+            TripEventType.SAFETY_BRAKE -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
             TripEventType.START -> if (trip.departureAddress.isNullOrEmpty()) trip.departureCity else trip.departureAddress
             TripEventType.FINISH ->if (trip.arrivalAddress.isNullOrEmpty()) trip.arrivalCity else trip.arrivalAddress
-            TripEventType.SAFETY_ADHERENCE -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
-            TripEventType.SAFETY_ACCEL -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
+            TripEventType.SAFETY_ADHERENCE -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
+            TripEventType.SAFETY_ACCEL -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
             TripEventType.PHONE_DISTRACTION_LOCK -> null
             TripEventType.PHONE_DISTRACTION_UNLOCK -> null
         }

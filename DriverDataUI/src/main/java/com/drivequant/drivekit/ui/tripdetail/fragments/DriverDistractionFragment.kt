@@ -59,17 +59,17 @@ class DriverDistractionFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as DriverDistractionViewModel?)?.let{
             viewModel = it
         }
-        gauge_type_title.text = tripDetailViewConfig.distractionGaugeTitle
-        unlockNumberDescription.text = tripDetailViewConfig.nbUnlockText
-        unlockDistanceDescription.text = tripDetailViewConfig.distanceUnlockText
-        unlockDurationDescription.text = tripDetailViewConfig.durationUnlockText
+        gauge_type_title.text = context?.getString(R.string.dk_common_distraction)// tripDetailViewConfig.distractionGaugeTitle
+        unlockNumberDescription.text = context?.getString(R.string.dk_driverdata_unlock_number) //tripDetailViewConfig.nbUnlockText
+        unlockDistanceDescription.text = context?.getString(R.string.dk_driverdata_unlock_distance) //tripDetailViewConfig.distanceUnlockText
+        unlockDurationDescription.text = context?.getString(R.string.dk_driverdata_unlock_duration) //tripDetailViewConfig.durationUnlockText
         unlockNumberEvent.setTextColor(DriveKitUI.colors.primaryColor())
         distanceUnlocked.setTextColor(DriveKitUI.colors.primaryColor())
         durationUnlocked.setTextColor(DriveKitUI.colors.primaryColor())
 
         score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
-        distanceUnlocked.text = viewModel.getUnlockDistance(requireContext(), tripDetailViewConfig)
-        durationUnlocked.text = viewModel.getUnlockDuration(requireContext(), tripDetailViewConfig)
+        distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
+        durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
     }
 }

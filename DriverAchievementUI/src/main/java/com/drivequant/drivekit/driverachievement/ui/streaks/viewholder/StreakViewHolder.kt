@@ -89,7 +89,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             textViewBestStreakData.setTypeface(textViewBestStreakData.typeface, Typeface.BOLD)
             textViewTripsCount.setTextColor(DriveKitUI.colors.secondaryColor())
-            background.setStroke(5, DriveKitUI.colors.neutralColor())
+            background.setStroke(5, DriveKitUI.colors.secondaryColor())
             seekBar.thumb.mutate().alpha = 0
         }
     }

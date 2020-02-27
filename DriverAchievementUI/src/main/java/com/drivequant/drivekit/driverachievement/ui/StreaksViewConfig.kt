@@ -13,6 +13,6 @@ class StreaksViewConfig(
         StreakTheme.BRAKE,
         StreakTheme.ADHERENCE
     ),
-    val failedToSyncStreaks: String = context.getString(R.string.dk_failed_to_sync_streaks),
-    val okText: String = context.getString(R.string.dk_ok)
+    val failedToSyncStreaks: String = context.getString(R.string.dk_achievements_failed_to_sync_streaks),
+    val okText: String = context.getString(R.string.dk_common_ok)
 )

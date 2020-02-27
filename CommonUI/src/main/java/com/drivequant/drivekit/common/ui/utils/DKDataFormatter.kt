@@ -29,33 +29,33 @@ object DKDataFormatter {
         }
     }
 
-    fun formatDistance(context: Context, distance: Double): String {
-        val distanceInKm = distance / 1000
-        val distanceInMile = distanceInKm.convertKmsToMiles()
+    fun formatDistance(context: Context, distance: Double?): String {
+        val distanceInKm = distance?.div(1000)
+        val distanceInMile = distanceInKm?.convertKmsToMiles()
 
         return when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE ->
-                "${distanceInMile.removeZeroDecimal()} ${context.resources.getString(R.string.dk_common_unit_mile)}"
+                "${distanceInMile?.removeZeroDecimal()} ${context.resources.getString(R.string.dk_common_unit_mile)}"
 
             DistanceUnit.KM ->
-                "${distanceInKm.removeZeroDecimal()} ${context.resources.getString(R.string.dk_common_unit_km)}"
+                "${distanceInKm?.removeZeroDecimal()} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
         }
     }
 
-    fun formatCO2Emission(context: Context, emission: Double) :String = "${emission.roundToInt()} ${context.getString(
-        R.string.dk_common_unit_co2_emissions)}"
+    fun formatCO2Emission(context: Context, emission: Double?) :String = "${emission?.roundToInt()} ${context.getString(
+        R.string.dk_common_unit_g_per_km)}"
 
     fun formatCO2Mass(context: Context, co2mass: Double): String {
         return if (co2mass < 1) {
-            "${co2mass * 100} ${context.getString(R.string.dk_common_unit_mass)}"
+            "${co2mass * 100} ${context.getString(R.string.dk_common_unit_g)}"
         } else {
-            "$co2mass ${context.getString(R.string.dk_common_unit_mass_g)}"
+            "$co2mass ${context.getString(R.string.dk_common_unit_g)}"
         }
     }
 
-    fun formatSpeedMean(context: Context, speed: Double) : String = "${speed.roundToInt()} ${context.getString(
-        R.string.dk_common_unit_speed)}"
+    fun formatSpeedMean(context: Context, speed: Double?) : String = "${speed?.roundToInt()} ${context.getString(
+        R.string.dk_common_unit_km_per_hour)}"
 
     fun formatConsumption(context: Context, consumption: Double) :String =
-        String.format(Locale.getDefault(), "%.1f", consumption, context.getString(R.string.dk_common_unit_consumption))
+        String.format(Locale.getDefault(), "%.1f", consumption, context.getString(R.string.dk_common_unit_l_per_100km))
 }

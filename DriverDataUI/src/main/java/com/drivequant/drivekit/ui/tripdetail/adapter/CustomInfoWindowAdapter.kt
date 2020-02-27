@@ -28,7 +28,7 @@ class CustomInfoWindowAdapter(
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
             view.findViewById<TextView>(R.id.text_view_time).text = event.time.formatHour()
-            view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(tripDetailViewConfig)
+            view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(context)
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
                 descriptionTextView.visibility  = View.VISIBLE

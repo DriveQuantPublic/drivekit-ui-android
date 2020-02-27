@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="trip_plural">
+        <item quantity="one">@string/dk_common_trip_singular</item>
+        <item quantity="other">@string/dk_common_trip_plural</item>
+    </plurals>
+</resources>

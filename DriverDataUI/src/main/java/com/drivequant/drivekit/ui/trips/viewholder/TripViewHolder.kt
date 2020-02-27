@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -17,8 +18,6 @@ import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
-import com.drivequant.drivekit.ui.utils.DistanceUtils
-import com.drivequant.drivekit.ui.utils.DurationUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,7 +64,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             DisplayType.TEXT -> {
                 showTextIndicator()
                 textIndicator.setTextColor(DriveKitUI.colors.primaryColor())
-                textIndicator.text = if (tripData == TripData.DURATION) (DurationUtils().formatDuration(itemView.context, tripData.rawValue(trip))) else (DistanceUtils().formatDistance(itemView.context, tripData.rawValue(trip)))
+                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip)!!)) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
             }
         }
     }

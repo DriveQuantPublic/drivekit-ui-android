@@ -19,7 +19,7 @@ class TripTimelineItemViewHolder(itemView: View, private val detailViewConfig: T
 
     fun bind(tripEvent : TripEvent, isFirst: Boolean, isLast: Boolean, listener :OnItemClickListener){
         eventHour.text = tripEvent.time.formatHour()
-        eventDescription.text = tripEvent.getTitle(detailViewConfig)
+        eventDescription.text = tripEvent.getTitle(itemView.context)
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE
         if (isLast) lineBottom.visibility = View.INVISIBLE else lineBottom.visibility = View.VISIBLE

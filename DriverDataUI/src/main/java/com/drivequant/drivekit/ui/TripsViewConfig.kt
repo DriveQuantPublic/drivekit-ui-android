@@ -9,9 +9,9 @@ class TripsViewConfig(
     context: Context,
     val tripData: TripData = TripData.SAFETY,
     val dayTripDescendingOrder: Boolean = true,
-    val viewTitleText: String =  context.getString(R.string.dk_trips_list_title),
-    val noTripsRecordedText: String = context.getString(R.string.dk_no_trips_recorded),
+    val viewTitleText: String =  context.getString(R.string.dk_driverdata_trips_list_title),
+    val noTripsRecordedText: String = context.getString(R.string.dk_driverdata_no_trips_recorded),
     val noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded,
-    val failedToSyncTrips: String = context.getString(R.string.dk_failed_to_sync_trips),
+    val failedToSyncTrips: String = context.getString(R.string.dk_driverdata_failed_to_sync_trips),
     val enableAdviceFeedback: Boolean = false
     ): Serializable

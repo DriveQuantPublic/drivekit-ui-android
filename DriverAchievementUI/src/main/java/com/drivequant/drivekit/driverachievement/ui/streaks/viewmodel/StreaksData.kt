@@ -26,45 +26,45 @@ class StreaksData(
 
     fun getTitle(context: Context): String {
         return when (streakTheme) {
-            PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_title)
-            SAFETY -> context.getString(R.string.dk_streaks_safety_title)
-            SPEEDING -> context.getString(R.string.dk_streaks_speeding_title)
-            ACCELERATION -> context.getString(R.string.dk_streaks_acceleration_title)
-            BRAKE -> context.getString(R.string.dk_streaks_brake_title)
-            ADHERENCE -> context.getString(R.string.dk_streaks_adherence_title)
+            PHONE_DISTRACTION -> context.getString(R.string.dk_achievements_streaks_phone_distraction_title)
+            SAFETY -> context.getString(R.string.dk_achievements_streaks_safety_title)
+            SPEEDING -> context.getString(R.string.dk_achievements_streaks_speeding_title)
+            ACCELERATION -> context.getString(R.string.dk_achievements_streaks_acceleration_title)
+            BRAKE -> context.getString(R.string.dk_achievements_streaks_brake_title)
+            ADHERENCE -> context.getString(R.string.dk_achievements_streaks_adherence_title)
         }
     }
 
     fun getIcon(): Int {
         return when (streakTheme) {
-            PHONE_DISTRACTION -> R.drawable.dk_distraction_filled
-            SAFETY -> R.drawable.dk_safety
-            SPEEDING -> R.drawable.dk_speed_limit
-            ACCELERATION -> R.drawable.dk_safety_accel
-            BRAKE -> R.drawable.dk_safety_decel
-            ADHERENCE -> R.drawable.dk_safety_adherence
+            PHONE_DISTRACTION -> R.drawable.dk_common_distraction
+            SAFETY -> R.drawable.dk_common_safety
+            SPEEDING -> R.drawable.dk_common_safety
+            ACCELERATION -> R.drawable.dk_common_safety
+            BRAKE -> R.drawable.dk_common_safety
+            ADHERENCE -> R.drawable.dk_common_safety
         }
     }
 
     private fun getResetText(context: Context): String {
         return when (streakTheme) {
-            PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_reset)
-            SAFETY -> context.getString(R.string.dk_streaks_safety_reset)
-            SPEEDING -> context.getString(R.string.dk_streaks_speeding_reset)
-            ACCELERATION -> context.getString(R.string.dk_streaks_acceleration_reset)
-            BRAKE -> context.getString(R.string.dk_streaks_brake_reset)
-            ADHERENCE -> context.getString(R.string.dk_streaks_adherence_reset)
+            PHONE_DISTRACTION -> context.getString(R.string.dk_achievements_streaks_phone_distraction_reset)
+            SAFETY -> context.getString(R.string.dk_achievements_streaks_safety_reset)
+            SPEEDING -> context.getString(R.string.dk_achievements_streaks_speeding_reset)
+            ACCELERATION -> context.getString(R.string.dk_achievements_streaks_acceleration_reset)
+            BRAKE -> context.getString(R.string.dk_achievements_streaks_brake_reset)
+            ADHERENCE -> context.getString(R.string.dk_achievements_streaks_adherence_reset)
         }
     }
 
     fun getDescriptionText(context: Context): String {
         return when (streakTheme) {
-            PHONE_DISTRACTION -> context.getString(R.string.dk_streaks_phone_distraction_text)
-            SAFETY -> context.getString(R.string.dk_streaks_safety_text)
-            SPEEDING -> context.getString(R.string.dk_streaks_speeding_text)
-            ACCELERATION -> context.getString(R.string.dk_streaks_acceleration_text)
-            BRAKE -> context.getString(R.string.dk_streaks_brake_text)
-            ADHERENCE -> context.getString(R.string.dk_streaks_adherence_text)
+            PHONE_DISTRACTION -> context.getString(R.string.dk_achievements_streaks_phone_distraction_text)
+            SAFETY -> context.getString(R.string.dk_achievements_streaks_safety_text)
+            SPEEDING -> context.getString(R.string.dk_achievements_streaks_speeding_text)
+            ACCELERATION -> context.getString(R.string.dk_achievements_streaks_acceleration_text)
+            BRAKE -> context.getString(R.string.dk_achievements_streaks_brake_text)
+            ADHERENCE -> context.getString(R.string.dk_achievements_streaks_adherence_text)
         }
     }
 
@@ -100,23 +100,23 @@ class StreaksData(
 
         return when (getStreakStatus()) {
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksData(context, bestTripsCount, bestDistance, bestDuration)
-            StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_streaks_congrats))
+            StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_achievements_streaks_congrats))
         }
     }
 
     fun getCurrentStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreakStatus.INIT, StreakStatus.IN_PROGRESS, StreakStatus.BEST -> context.getString(R.string.dk_streaks_since, currentStartDate)
+            StreakStatus.INIT, StreakStatus.IN_PROGRESS, StreakStatus.BEST -> context.getString(R.string.dk_achievements_streaks_since, currentStartDate)
             StreakStatus.RESET -> getResetText(context)
         }
     }
 
     fun getBestStreakDate(context: Context): String {
         return when (getStreakStatus()) {
-            StreakStatus.INIT -> context.getString(R.string.dk_streaks_empty)
-            StreakStatus.IN_PROGRESS -> context.getString(R.string.dk_streaks_congrats_text)
-            StreakStatus.RESET -> context.getString(R.string.dk_streaks_since_to, bestStartDate, bestEndDate)
-            StreakStatus.BEST -> context.getString(R.string.dk_streaks_congrats_text)
+            StreakStatus.INIT -> context.getString(R.string.dk_achievements_streaks_empty)
+            StreakStatus.IN_PROGRESS -> context.getString(R.string.dk_achievements_streaks_congrats_text)
+            StreakStatus.RESET -> context.getString(R.string.dk_achievements_streaks_since_to, bestStartDate, bestEndDate)
+            StreakStatus.BEST -> context.getString(R.string.dk_achievements_streaks_congrats_text)
         }
     }
 
@@ -127,17 +127,17 @@ class StreaksData(
         duration: String): SpannableString {
 
         val tripsCountText = "$tripsCount ${context.resources.getQuantityString(
-            R.plurals.streak_trip_plural,
+            R.plurals.trip_plural,
             tripsCount
         )}"
         val sb = SpannableString("$tripsCountText - $distance - $duration")
         val mediumSizeText = RelativeSizeSpan(2.0f)
-
+        //TODO DKSpannable
 //        val final = DKSpannable
 //            .append("$tripsCount", context.resSpans {
 //                expressColor(DriveKitUI.colors.secondaryColor)
 //                typeface(Typeface.BOLD)
-//                size(R.dimen.dk_text_xbig)
+//                size(R.dimen.dk_achievements_text_xbig)
 //            }).append(tripsCountText, context.resSpans {
 //                expressColor(DriveKitUI.colors.secondaryColor)
 //            }).appendSpace("- $distance - $duration")

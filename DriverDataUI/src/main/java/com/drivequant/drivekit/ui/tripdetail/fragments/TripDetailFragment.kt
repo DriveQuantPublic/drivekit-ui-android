@@ -79,13 +79,13 @@ class TripDetailFragment : Fragment() {
             R.id.trip_delete -> {
                 AlertDialog.Builder(context)
                     .setTitle(getString(R.string.app_name))
-                    .setMessage(tripDetailViewConfig.deleteText)
+                    .setMessage(context?.getString(R.string.dk_common_delete))
                     .setCancelable(true)
-                    .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                    .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                         showProgressCircular()
                         deleteTrip()
                     }
-                    .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ ->
+                    .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()
@@ -109,7 +109,7 @@ class TripDetailFragment : Fragment() {
         viewModel = ViewModelProviders.of(this,
             TripDetailViewModelFactory(itinId, tripDetailViewConfig.mapItems)
         ).get(TripDetailViewModel::class.java)
-        activity?.title = tripDetailViewConfig.viewTitleText
+        activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
         container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (tripDetailViewConfig.enableDeleteTrip) {
@@ -132,9 +132,9 @@ class TripDetailFragment : Fragment() {
                 if (it){
                     AlertDialog.Builder(context)
                         .setTitle(getString(R.string.app_name))
-                        .setMessage(tripDetailViewConfig.tripDeleted)
+                        .setMessage(context?.getString(R.string.dk_driverdata_trip_deleted))
                         .setCancelable(false)
-                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                        .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                             dialog.dismiss()
                             activity?.onBackPressed()
                         }
@@ -142,9 +142,9 @@ class TripDetailFragment : Fragment() {
                 } else {
                     AlertDialog.Builder(context)
                         .setTitle(getString(R.string.app_name))
-                        .setMessage(tripDetailViewConfig.failedToDeleteTrip)
+                        .setMessage(context?.getString(R.string.dk_driverdata_failed_to_delete_trip))
                         .setCancelable(true)
-                        .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                        .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                             dialog.dismiss()
                         }
                         .show()
@@ -159,7 +159,7 @@ class TripDetailFragment : Fragment() {
             hideProgressCircular()
             if (status != null){
                 adviceAlertDialog?.hide()
-                Toast.makeText(context, if (status) tripDetailViewConfig.adviceFeedbackSuccessText else tripDetailViewConfig.adviceFeedbackErrorText, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, if (status) context?.getString(R.string.dk_driverdata_advice_feedback_success) else context?.getString(R.string.dk_driverdata_advice_feedback_error), Toast.LENGTH_LONG).show()
             }
         })
         viewModel.sendTripAdviceFeedback(mapItem, evaluation, feedback, comment)
@@ -173,7 +173,7 @@ class TripDetailFragment : Fragment() {
                 setHeaderSummary()
                 hideProgressCircular()
             } else {
-                displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
+                displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
         })
         viewModel.unScoredTrip.observe(this, Observer{ routeAvailable ->
@@ -181,7 +181,7 @@ class TripDetailFragment : Fragment() {
                 if (it){
                     setMapController()
                 }else{
-                    displayErrorMessageAndGoBack(R.string.dk_trip_detail_get_road_failed, false)
+                    displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
                 }
                 setUnScoredTripFragment()
                 setHeaderSummary()
@@ -193,10 +193,10 @@ class TripDetailFragment : Fragment() {
             setViewPager()
             hideProgressCircular()
             setHeaderSummary()
-            displayErrorMessageAndGoBack(R.string.dk_trip_detail_get_road_failed, false)
+            displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
         })
         viewModel.noData.observe(this, Observer{
-            displayErrorMessageAndGoBack(R.string.dk_trip_detail_data_error)
+            displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
         })
         viewModel.fetchTripData(requireContext())
     }
@@ -206,7 +206,7 @@ class TripDetailFragment : Fragment() {
             .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
             .setCancelable(false)
-            .setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                 dialog.dismiss()
                 if (goBack){
                     activity?.onBackPressed()
@@ -250,14 +250,14 @@ class TripDetailFragment : Fragment() {
                 val agreeText = adviceView.findViewById<TextView>(R.id.advice_agree_textview)
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
-                disagreeText.text = tripDetailViewConfig.adviceDisagreeText
+                disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
                 disagreeText.setTextColor(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
 
-                agreeText.text = tripDetailViewConfig.adviceAgreeText
+                agreeText.text = context?.getString(R.string.dk_driverdata_advice_agree)
                 agreeText.setTextColor(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
                 agreeButton.setOnClickListener {
@@ -266,7 +266,7 @@ class TripDetailFragment : Fragment() {
                 }
                 feedbackButtonsLayout.visibility = View.VISIBLE
             } else {
-                builder.setPositiveButton(tripDetailViewConfig.okText) { dialog, _ ->
+                builder.setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                     dialog.dismiss()
                 }
             }
@@ -280,21 +280,21 @@ class TripDetailFragment : Fragment() {
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        header.text = tripDetailViewConfig.adviceDisagreeTitleText
+        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
 
-        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = tripDetailViewConfig.adviceDisagreeDescText
-        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = tripDetailViewConfig.adviceFeedbackChoice01Text
-        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = tripDetailViewConfig.adviceFeedbackChoice02Text
-        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_03).text = tripDetailViewConfig.adviceFeedbackChoice03Text
-        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_04).text = tripDetailViewConfig.adviceFeedbackChoice04Text
-        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = tripDetailViewConfig.adviceFeedbackChoice05Text
+        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_03).text = context?.getString(R.string.dk_driverdata_advice_feedback_03)
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_04).text = context?.getString(R.string.dk_driverdata_advice_feedback_04)
+        feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = context?.getString(R.string.dk_driverdata_advice_feedback_05)
 
         radioGroup.setOnCheckedChangeListener { _, checkedId -> handleClassicFeedbackAnswer(checkedId, feedbackView) }
 
         val builder = AlertDialog.Builder(context)
             .setView(feedbackView)
-            .setNegativeButton(tripDetailViewConfig.cancelText) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(tripDetailViewConfig.okText) { _, _ -> buildFeedbackData(mapItem, feedbackView, radioGroup) }
+            .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ -> buildFeedbackData(mapItem, feedbackView, radioGroup) }
 
         feedbackAlertDialog = builder.show()
     }
