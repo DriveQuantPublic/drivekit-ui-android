@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Distraction"
-        style="@style/GaugeTitleTripDetail"
+        style="@style/BigText"
         />
 
     <TextView

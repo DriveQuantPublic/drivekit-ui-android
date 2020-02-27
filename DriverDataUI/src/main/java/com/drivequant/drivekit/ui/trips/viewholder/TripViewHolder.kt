@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -43,9 +44,9 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
         textViewArrivalCity.text = trip.arrivalCity
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
 
-        DrawableCompat.setTint(circleBottom.background, tripsViewConfig.secondaryColor)
-        DrawableCompat.setTint(circleTop.background, tripsViewConfig.secondaryColor)
-        circleSeparator.setBackgroundColor(tripsViewConfig.secondaryColor)
+        DrawableCompat.setTint(circleBottom.background, DriveKitUI.colors.secondaryColor())
+        DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())
+        circleSeparator.setBackgroundColor(DriveKitUI.colors.secondaryColor())
 
         computeTripData(trip, tripsViewConfig.tripData)
         computeTripInfo(trip)
@@ -63,7 +64,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
-                textIndicator.setTextColor(tripsViewConfig.primaryColor)
+                textIndicator.setTextColor(DriveKitUI.colors.primaryColor())
                 textIndicator.text = if (tripData == TripData.DURATION) (DurationUtils().formatDuration(itemView.context, tripData.rawValue(trip))) else (DistanceUtils().formatDistance(itemView.context, tripData.rawValue(trip)))
             }
         }
@@ -93,7 +94,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
             val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
             val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-            DrawableCompat.setTint(tripInfoItem.background, tripsViewConfig.secondaryColor)
+            DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
 
             tripInfo.imageResId(trip)?.let {
                 imageView.setImageResource(it)

@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
@@ -99,7 +101,7 @@ class TripsListFragment : Fragment() {
         no_trips.visibility = View.VISIBLE
         trips_list.emptyView = no_trips
         no_trips_recorded_text.text = tripsViewConfig.noTripsRecordedText
-        no_trips_recorded_text.setTextColor(tripsViewConfig.primaryColor)
+        no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
         image_view_no_trips.setImageDrawable(ContextCompat.getDrawable(requireContext(), tripsViewConfig.noTripsRecordedDrawable))
         hideProgressCircular()
     }

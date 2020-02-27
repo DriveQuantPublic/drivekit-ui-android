@@ -39,12 +39,12 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         gaugeView.setBackGaugeColor(
             attributes.getColor(
                 R.styleable.GaugeIndicator_backColor,
-                ContextCompat.getColor(context, R.color.dkMainFontColor)
+                DriveKitUI.colors.neutralColor()
             )
         )
 
         textView.setTextSize(
-            TypedValue.COMPLEX_UNIT_SP,
+            TypedValue.COMPLEX_UNIT_PX,
             attributes.getDimensionPixelSize(
                 R.styleable.GaugeIndicator_textSize,
                 resources.getDimensionPixelSize(R.dimen.dk_text_normal)

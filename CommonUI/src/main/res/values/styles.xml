@@ -96,7 +96,7 @@
 
     <style name="GaugeTripDetail" >
         <item name="strokeSize">9dp</item>
-        <item name="backColor">@color/dkMainFontColor</item>
+        <item name="backColor">@color/dkNeutralColor</item>
         <item name="textSize">20sp</item>
     </style>
 
@@ -104,7 +104,7 @@
         <item name="android:layout_height">@dimen/dk_ic_big</item>
         <item name="android:layout_width">@dimen/dk_ic_big</item>
         <item name="strokeSize">4dp</item>
-        <item name="backColor">@color/dkMainFontColor</item>
+        <item name="backColor">@color/dkNeutralColor</item>
         <item name="textSize">12sp</item>
     </style>
 </resources>

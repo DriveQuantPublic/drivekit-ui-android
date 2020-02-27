@@ -1,19 +1,14 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.DKUIConfig
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-object DKUtils {
-
-    fun formatDate(date: Date, pattern: String): String {
-        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-        return dateFormat.format(date)
-    }
+object DKDataFormatter {
     //TODO Duration
     fun formatDuration(context: Context, durationInSeconds: Double): String {
         var computedDuration: Double =  durationInSeconds
@@ -36,9 +31,9 @@ object DKUtils {
 
     fun formatDistance(context: Context, distance: Double): String {
         val distanceInKm = distance / 1000
-        val distanceInMile = convertKmsToMiles(distanceInKm)
+        val distanceInMile = distanceInKm.convertKmsToMiles()
 
-        return when (DKUIConfig.distanceUnit) {
+        return when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE ->
                 "${distanceInMile.removeZeroDecimal()} ${context.resources.getString(R.string.dk_common_unit_mile)}"
 
@@ -63,6 +58,4 @@ object DKUtils {
 
     fun formatConsumption(context: Context, consumption: Double) :String =
         String.format(Locale.getDefault(), "%.1f", consumption, context.getString(R.string.dk_common_unit_consumption))
-
-    private fun convertKmsToMiles(kms: Double): Double = 0.621371 * kms
 }

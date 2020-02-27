@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
@@ -51,11 +52,11 @@ class UnscoredTripFragment : Fragment() {
 
         trip_duration.text = DurationUtils()
             .formatDuration(requireContext(), viewModel.getDuration())
-        trip_duration.setTextColor(tripsViewConfig.primaryColor)
+        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
         trip_start_end.text = dateFormatHour.format(viewModel.getStartDate())
             .plus(" - ")
             .plus(dateFormatHour.format(viewModel.getEndDate()))
-        trip_start_end.setTextColor(tripsViewConfig.primaryColor)
+        trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
         trip_message.text = viewModel.getNoScoreTripMessage()
     }
 }

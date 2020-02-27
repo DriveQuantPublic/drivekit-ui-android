@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
@@ -67,9 +68,9 @@ class SafetyFragment : Fragment() {
         accel_description.text = tripDetailViewConfig.accelerationText
         brake_description.text = tripDetailViewConfig.decelText
         adherence_description.text = tripDetailViewConfig.adherenceText
-        accel_number_event.setTextColor(tripsViewConfig.primaryColor)
-        brake_number_event.setTextColor(tripsViewConfig.primaryColor)
-        adherence_number_event.setTextColor(tripsViewConfig.primaryColor)
+        accel_number_event.setTextColor(DriveKitUI.colors.primaryColor())
+        brake_number_event.setTextColor(DriveKitUI.colors.primaryColor())
+        adherence_number_event.setTextColor(DriveKitUI.colors.primaryColor())
 
         score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY)
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()

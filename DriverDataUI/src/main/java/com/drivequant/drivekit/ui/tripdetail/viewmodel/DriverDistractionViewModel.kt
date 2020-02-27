@@ -20,6 +20,7 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
         return when {
             distraction.durationUnlock < 60 -> {
                 val text = "${distraction.durationUnlock.removeZeroDecimal()} ${tripDetailViewConfig.durationSecondUnit}"
+                //TODO DKSpannable
                 val spannable = SpannableString(text)
                 spannable.setSpan(
                     TextAppearanceSpan(context, R.style.UnitText),
@@ -33,6 +34,7 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
                 val minutes = (distraction.durationUnlock / 60).toInt()
                 val seconds = (distraction.durationUnlock - (minutes * 60)).toInt()
                 val text = "$minutes ${tripDetailViewConfig.durationMinUnit} $seconds"
+                //TODO DKSpannable
                 val spannable = SpannableString(text)
                 val index = text.indexOf(tripDetailViewConfig.durationMinUnit)
                 spannable.setSpan(
@@ -49,6 +51,7 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
                 val text = "$hours ${tripDetailViewConfig.durationHourUnit} $minutes"
                 val spannable = SpannableString(text)
                 val index = text.indexOf(tripDetailViewConfig.durationHourUnit)
+                //TODO DKSpannable
                 spannable.setSpan(
                     TextAppearanceSpan(context, R.style.UnitText),
                     index,
@@ -66,6 +69,7 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
                 val text = "${distraction.distanceUnlock.toInt()} ${tripDetailViewConfig.distanceMeterUnit}"
                 val spannable = SpannableString(text)
                 val index = text.indexOf(tripDetailViewConfig.distanceMeterUnit)
+                //TODO DKSpannable
                 spannable.setSpan(
                     TextAppearanceSpan(context, R.style.UnitText),
                     index,
@@ -84,6 +88,7 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
         val text = "${distanceUnlock.removeZeroDecimal()} $unitString"
         val spannable = SpannableString(text)
         val index = text.indexOf(unitString)
+        //TODO DKSpannable
         spannable.setSpan(
             TextAppearanceSpan(context, R.style.UnitText),
             index,

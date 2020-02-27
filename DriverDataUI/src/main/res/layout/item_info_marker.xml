@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/text_view_time"
-        android:textSize="12sp"
+        style="@style/SmallText"
         android:textAlignment="center"
         android:padding="4dp"
         android:gravity="center"

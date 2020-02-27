@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Safety"
-        style="@style/GaugeTitleTripDetail"/>
+        style="@style/BigText"/>
 
     <TextView
         android:id="@+id/accel_number_event"

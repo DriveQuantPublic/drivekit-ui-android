@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -109,7 +110,7 @@ class TripDetailFragment : Fragment() {
             TripDetailViewModelFactory(itinId, tripDetailViewConfig.mapItems)
         ).get(TripDetailViewModel::class.java)
         activity?.title = tripDetailViewConfig.viewTitleText
-        container_header_trip.setBackgroundColor(tripsViewConfig.primaryColor)
+        container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (tripDetailViewConfig.enableDeleteTrip) {
             setHasOptionsMenu(true)
@@ -234,7 +235,7 @@ class TripDetailFragment : Fragment() {
             val builder = AlertDialog.Builder(context).setView(adviceView)
 
             headerText.text = viewModel.getAdviceTitle(mapItem)
-            headerText.setBackgroundColor(tripsViewConfig.primaryColor)
+            headerText.setBackgroundColor(DriveKitUI.colors.primaryColor())
 
             viewModel.getAdviceMessage(mapItem)?.let {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -250,15 +251,15 @@ class TripDetailFragment : Fragment() {
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
                 disagreeText.text = tripDetailViewConfig.adviceDisagreeText
-                disagreeText.setTextColor(tripsViewConfig.primaryColor)
-                DrawableCompat.setTint(disagreeImage.drawable, tripsViewConfig.primaryColor)
+                disagreeText.setTextColor(DriveKitUI.colors.primaryColor())
+                DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
 
                 agreeText.text = tripDetailViewConfig.adviceAgreeText
-                agreeText.setTextColor(tripsViewConfig.primaryColor)
-                DrawableCompat.setTint(agreeImage.drawable, tripsViewConfig.primaryColor)
+                agreeText.setTextColor(DriveKitUI.colors.primaryColor())
+                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
                 agreeButton.setOnClickListener {
                     showProgressCircular()
                     sendTripAdviceFeedback(mapItem, true, 0)
@@ -278,7 +279,7 @@ class TripDetailFragment : Fragment() {
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
-        header.setBackgroundColor(tripsViewConfig.primaryColor)
+        header.setBackgroundColor(DriveKitUI.colors.primaryColor())
         header.text = tripDetailViewConfig.adviceDisagreeTitleText
 
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = tripDetailViewConfig.adviceDisagreeDescText
@@ -373,7 +374,7 @@ class TripDetailFragment : Fragment() {
             tab_layout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
                 ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
-                    DrawableCompat.setTint(drawable, tripsViewConfig.primaryColor)
+                    DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
                 it.customView = icon
@@ -381,7 +382,7 @@ class TripDetailFragment : Fragment() {
                 it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx,sizePx)
             }
         }
-        DrawableCompat.setTint(center_button.drawable, tripsViewConfig.primaryColor)
+        DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())
         view_pager.addOnPageChangeListener(
             DetailOnPageChangeListener(
                 viewModel
@@ -391,7 +392,9 @@ class TripDetailFragment : Fragment() {
 
     private fun setHeaderSummary(){
         trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
+        trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         trip_distance.text = HeaderSummary.DISTANCE_DURATION.text(requireContext(), viewModel.trip!!)
+        trip_distance.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     private fun showProgressCircular() {
@@ -422,5 +425,3 @@ class TripDetailFragment : Fragment() {
         }
     }
 }
-
-

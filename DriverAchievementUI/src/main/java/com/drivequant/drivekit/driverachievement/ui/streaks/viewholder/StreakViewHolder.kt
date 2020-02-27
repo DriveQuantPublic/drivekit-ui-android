@@ -12,7 +12,6 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
@@ -83,15 +82,14 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
         if (reset) {
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             textViewBestStreakData.typeface = textViewBestStreakDate.typeface
-            textViewTripsCount.setTextColor(DriveKitUI.colors.mainFontColor)
+            textViewTripsCount.setTextColor(DriveKitUI.colors.mainFontColor())
             background.setStroke(5, ContextCompat.getColor(context, R.color.dk_trips_count_stroke))
             seekBar.thumb.mutate().alpha = 255
         } else {
-            val primaryColor = ContextCompat.getColor(context, R.color.dkSecondaryColor)
             textViewBestStreakData.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             textViewBestStreakData.setTypeface(textViewBestStreakData.typeface, Typeface.BOLD)
-            textViewTripsCount.setTextColor(DriveKitUI.colors.secondaryColor)
-            background.setStroke(5, primaryColor)
+            textViewTripsCount.setTextColor(DriveKitUI.colors.secondaryColor())
+            background.setStroke(5, DriveKitUI.colors.neutralColor())
             seekBar.thumb.mutate().alpha = 0
         }
     }

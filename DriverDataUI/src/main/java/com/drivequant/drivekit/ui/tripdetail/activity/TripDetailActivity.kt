@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -37,7 +38,7 @@ class TripDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(tripsViewConfig.primaryColor))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 

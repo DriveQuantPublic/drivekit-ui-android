@@ -12,11 +12,7 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.RelativeSizeSpan
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.utils.DKUtils
-import com.drivequant.drivekit.common.ui.utils.ResSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 
 
 class StreaksData(
@@ -93,14 +89,14 @@ class StreaksData(
     }
 
     fun getCurrentStreakData(context: Context) : SpannableString {
-        val currentDistance = DKUtils.formatDistance(context, current.distance)
-        val currentDuration = DKUtils.formatDuration(context, current.duration)
+        val currentDistance = DKDataFormatter.formatDistance(context, current.distance)
+        val currentDuration = DKDataFormatter.formatDuration(context, current.duration)
         return buildStreaksData(context,currentTripsCount, currentDistance, currentDuration)
     }
 
     fun getBestStreakData(context: Context): SpannableString {
-        val bestDistance = DKUtils.formatDistance(context, best.distance)
-        val bestDuration = DKUtils.formatDuration(context, best.duration)
+        val bestDistance = DKDataFormatter.formatDistance(context, best.distance)
+        val bestDuration = DKDataFormatter.formatDuration(context, best.duration)
 
         return when (getStreakStatus()) {
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET -> buildStreaksData(context, bestTripsCount, bestDistance, bestDuration)

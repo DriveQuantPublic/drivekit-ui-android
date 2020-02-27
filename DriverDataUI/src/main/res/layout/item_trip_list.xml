@@ -47,7 +47,7 @@
         tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/neutralColor"
+        android:background="@color/dkNeutralColor"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         app:layout_constraintTop_toBottomOf="@id/view_group_trip_data"

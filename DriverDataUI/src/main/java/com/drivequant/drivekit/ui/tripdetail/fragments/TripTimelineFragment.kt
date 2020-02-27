@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
@@ -64,7 +65,7 @@ class TripTimelineFragment : Fragment() {
             override fun onItemClicked(position: Int) {
                 viewModel.selection.postValue(position)
             }
-        },tripsViewConfig.secondaryColor, detailViewConfig)
+        }, DriveKitUI.colors.secondaryColor(), detailViewConfig)
         viewModel.selection.observe(this, Observer {
             it?.let {position ->
                 (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
