@@ -8,15 +8,15 @@ import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 enum class HeaderDay {
     DISTANCE, DURATION, DURATION_DISTANCE, DISTANCE_DURATION;
-    //TODO Verify
+
     fun text(context: Context, trips: List<Trip>?) : String? {
         val separator = " | "
         return when (this) {
-            DISTANCE -> DKDataFormatter.formatDistance(context, trips?.computeTotalDistance()!!)
-            DURATION -> DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!)
+            DISTANCE -> DKDataFormatter.formatDistance(context, trips?.computeTotalDistance())
+            DURATION -> DKDataFormatter.formatDuration(context, trips?.computeTotalDuration())
             DURATION_DISTANCE -> DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!)
                                     .plus(separator)
-                                    .plus(DKDataFormatter.formatDistance(context, trips?.computeTotalDistance()))
+                                    .plus(DKDataFormatter.formatDistance(context, trips.computeTotalDistance()))
             DISTANCE_DURATION -> DKDataFormatter.formatDistance(context, trips?.computeTotalDistance())
                                     .plus(separator)
                                     .plus(DKDataFormatter.formatDuration(context, trips?.computeTotalDuration()!!))

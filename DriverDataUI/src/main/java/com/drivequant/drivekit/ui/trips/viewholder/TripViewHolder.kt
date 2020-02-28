@@ -64,7 +64,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             DisplayType.TEXT -> {
                 showTextIndicator()
                 textIndicator.setTextColor(DriveKitUI.colors.primaryColor())
-                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip)!!)) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
+                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip))) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
             }
         }
     }
