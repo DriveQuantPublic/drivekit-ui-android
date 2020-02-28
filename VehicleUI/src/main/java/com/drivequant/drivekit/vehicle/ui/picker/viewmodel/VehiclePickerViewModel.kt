@@ -25,9 +25,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private var itemCategories = listOf<VehiclePickerItem>()
     private var itemBrands = listOf<VehiclePickerItem>()
     private var itemEngines = listOf<VehiclePickerItem>()
-    var itemModels = listOf<VehiclePickerItem>()
-    var itemYears = listOf<VehiclePickerItem>()
-    var itemVersions = listOf<VehiclePickerItem>()
+    private var itemModels = listOf<VehiclePickerItem>()
+    private var itemYears = listOf<VehiclePickerItem>()
+    private var itemVersions = listOf<VehiclePickerItem>()
 
     private var isLiteConfig = false
 
@@ -216,11 +216,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         })
     }
 
-    fun validateCategory(context: Context, viewConfig: VehiclePickerViewConfig){
-        computeNextScreen(context, CATEGORY_DESCRIPTION, viewConfig)
-    }
-
-    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){ if (viewConfig.displayBrandsWithIcons){
+    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
+        if (viewConfig.displayBrandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByValue(itemBrands.first().value)

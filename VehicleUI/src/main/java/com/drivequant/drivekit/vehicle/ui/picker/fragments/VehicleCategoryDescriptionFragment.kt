@@ -54,7 +54,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         textViewDescription.text = vehiclePickerCategoryItem.description
 
         buttonValidate.setOnClickListener {
-            viewModel.validateCategory(requireContext(), viewConfig)
+            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, viewConfig)
         }
 
         if (viewConfig.categoryTypes != CategoryType.LITE_CONFIG_ONLY) {
