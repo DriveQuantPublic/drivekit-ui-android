@@ -11,29 +11,21 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
 import kotlinx.android.synthetic.main.unscored_trip_fragment.*
 
 class UnscoredTripFragment : Fragment() {
     companion object {
         fun newInstance(
-            trip: Trip?,
-            tripsViewConfig: TripsViewConfig,
-            tripDetailViewConfig: TripDetailViewConfig
+            trip: Trip?
         ): UnscoredTripFragment {
             val fragment = UnscoredTripFragment()
             fragment.viewModel = UnscoredTripViewModel(trip)
-            fragment.tripsViewConfig = tripsViewConfig
-            fragment.tripDetailViewConfig = tripDetailViewConfig
             return fragment
         }
     }
 
     private lateinit var viewModel: UnscoredTripViewModel
-    private lateinit var tripsViewConfig: TripsViewConfig
-    private lateinit var tripDetailViewConfig: TripDetailViewConfig
 
     override fun onCreateView(
         inflater: LayoutInflater,

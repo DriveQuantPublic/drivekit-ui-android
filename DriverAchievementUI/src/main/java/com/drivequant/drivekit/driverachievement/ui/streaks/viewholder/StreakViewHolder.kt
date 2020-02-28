@@ -13,12 +13,11 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
 
 
-class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksViewConfig) :
+class StreakViewHolder(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
     private val context = itemView.context
     private val textViewStreakTitle = itemView.findViewById<TextView>(R.id.text_view_streak_title)
@@ -73,7 +72,7 @@ class StreakViewHolder(itemView: View, private val streaksViewConfig: StreaksVie
             .iconResId(streaksData.getIcon())
             .title(streaksData.getTitle(context))
             .message(streaksData.getDescriptionText(context))
-            .positiveButton(streaksViewConfig.okText,
+            .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
             .show()
     }

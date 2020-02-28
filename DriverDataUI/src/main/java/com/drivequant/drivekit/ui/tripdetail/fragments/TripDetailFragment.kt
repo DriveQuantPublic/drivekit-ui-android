@@ -17,9 +17,8 @@ import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
@@ -32,8 +31,6 @@ import kotlinx.android.synthetic.main.fragment_trip_detail.*
 class TripDetailFragment : Fragment() {
 
     private lateinit var viewModel : TripDetailViewModel
-    private lateinit var tripDetailViewConfig: TripDetailViewConfig
-    private lateinit var tripsViewConfig: TripsViewConfig
 
     private lateinit var itinId: String
     private var openAdvice: Boolean = false
@@ -48,14 +45,10 @@ class TripDetailFragment : Fragment() {
 
     companion object {
         fun newInstance(itinId: String,
-                        tripDetailViewConfig: TripDetailViewConfig,
-                        tripsViewConfig: TripsViewConfig,
                         openAdvice: Boolean = false): TripDetailFragment {
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
             fragment.openAdvice = openAdvice
-            fragment.tripDetailViewConfig = tripDetailViewConfig
-            fragment.tripsViewConfig = tripsViewConfig
             return fragment
         }
     }
@@ -97,31 +90,23 @@ class TripDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("config") as TripsViewConfig?)?.let{
-            tripsViewConfig = it
-        }
-        (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
-            tripDetailViewConfig = it
-        }
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this,
-            TripDetailViewModelFactory(itinId, tripDetailViewConfig.mapItems)
+            TripDetailViewModelFactory(itinId, DriverDataUI.mapItems)
         ).get(TripDetailViewModel::class.java)
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
         container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
-        if (tripDetailViewConfig.enableDeleteTrip) {
+        if (DriverDataUI.enableDeleteTrip) {
             setHasOptionsMenu(true)
         }
         loadTripData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("config", tripsViewConfig)
-        outState.putSerializable("detailConfig", tripDetailViewConfig)
         outState.putString("itinId", itinId)
         super.onSaveInstanceState(outState)
     }
@@ -242,7 +227,7 @@ class TripDetailFragment : Fragment() {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
 
-            if (viewModel.shouldDisplayFeedbackButtons(mapItem, tripsViewConfig)){
+            if (viewModel.shouldDisplayFeedbackButtons(mapItem)){
                 val disagreeButton = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_negative)
                 val disagreeText = adviceView.findViewById<TextView>(R.id.advice_disagree_textview)
                 val disagreeImage = adviceView.findViewById<ImageView>(R.id.advice_disagree_image)
@@ -336,7 +321,6 @@ class TripDetailFragment : Fragment() {
                         this,
                         viewContentTrip,
                         viewModel,
-                        tripDetailViewConfig,
                         googleMap
                     )
                 tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
@@ -355,9 +339,7 @@ class TripDetailFragment : Fragment() {
         unscored_fragment.visibility = View.VISIBLE
         childFragmentManager.beginTransaction()
             .replace(R.id.unscored_fragment, UnscoredTripFragment.newInstance(
-                viewModel.trip,
-                tripsViewConfig,
-                tripDetailViewConfig
+                viewModel.trip
             ))
             .commit()
     }
@@ -366,10 +348,7 @@ class TripDetailFragment : Fragment() {
         view_pager.adapter =
             TripDetailFragmentPagerAdapter(
                 childFragmentManager,
-                viewModel,
-                tripDetailViewConfig,
-                tripsViewConfig
-            )
+                viewModel)
         tab_layout.setupWithViewPager(view_pager)
         for ((index, mapItem) in viewModel.configurableMapItems.withIndex()){
             tab_layout.getTabAt(index)?.let {

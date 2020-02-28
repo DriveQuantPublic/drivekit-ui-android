@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v4.app.Fragment
 
 interface DriverDataUIEntryPoint {
-    fun startTripListActiviyt(context: Context)
+    fun startTripListActivity(context: Context)
     fun startTripDetailActivity(context: Context, tripId: String)
     fun createTripListFragment(): Fragment
     fun createTripDetailFragment(tripId: String): Fragment

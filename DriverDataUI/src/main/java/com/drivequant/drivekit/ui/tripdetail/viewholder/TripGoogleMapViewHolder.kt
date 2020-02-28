@@ -6,8 +6,8 @@ import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.tripdetail.adapter.CustomInfoWindowAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
@@ -22,7 +22,6 @@ class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
-    private var tripDetailViewConfig: TripDetailViewConfig,
     var googleMap: GoogleMap)
     : GoogleMap.OnInfoWindowClickListener,
     GoogleMap.OnMarkerClickListener{
@@ -85,8 +84,8 @@ class TripGoogleMapViewHolder(
             if (mapItem != null && (mapItem == MapItem.DISTRACTION || (mapItem == MapItem.INTERACTIVE_MAP && viewModel.configurableMapItems.contains(
                     MapItem.INTERACTIVE_MAP)))){
                 var unlock: Boolean
-                val unlockColor = tripDetailViewConfig.mapTraceWarningColor
-                val lockColor = tripDetailViewConfig.mapTraceMainColor
+                val unlockColor = DriverDataUI.mapTraceWarningColor
+                val lockColor = DriverDataUI.mapTraceMainColor
                 route.screenLockedIndex?.let { screenLockedIndex ->
                     for(i in 1 until screenLockedIndex.size){
                         unlock = route.screenStatus!![i -1] == 1
@@ -101,7 +100,7 @@ class TripGoogleMapViewHolder(
                     route,
                     0,
                     route.latitude.size - 1,
-                    tripDetailViewConfig.mapTraceMainColor)
+                    DriverDataUI.mapTraceMainColor)
             }
             drawMarker(mapItem)
         }

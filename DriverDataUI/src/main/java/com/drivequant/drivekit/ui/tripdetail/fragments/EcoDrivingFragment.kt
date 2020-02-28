@@ -9,27 +9,20 @@ import com.drivequant.drivekit.common.ui.component.GaugeType
 
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
 import kotlinx.android.synthetic.main.eco_driving_fragment.*
 
 class EcoDrivingFragment : Fragment() {
 
     companion object {
-        fun newInstance(ecoDriving: EcoDriving, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig) : EcoDrivingFragment{
+        fun newInstance(ecoDriving: EcoDriving) : EcoDrivingFragment{
             val fragment = EcoDrivingFragment()
-            fragment.viewModel = EcoDrivingViewModel(
-                ecoDriving,
-                tripDetailViewConfig
-            )
-            fragment.tripsViewConfig = tripsViewConfig
+            fragment.viewModel = EcoDrivingViewModel(ecoDriving)
             return fragment
         }
     }
 
     private lateinit var viewModel: EcoDrivingViewModel
-    private lateinit var tripsViewConfig: TripsViewConfig
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

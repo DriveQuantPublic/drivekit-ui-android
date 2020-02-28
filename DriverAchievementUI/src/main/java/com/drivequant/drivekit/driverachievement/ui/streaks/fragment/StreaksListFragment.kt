@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
 
-import com.drivequant.drivekit.driverachievement.ui.StreaksViewConfig
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 import kotlinx.android.synthetic.main.fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
+import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
 
@@ -21,16 +21,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListA
 class StreaksListFragment : Fragment() {
 
     private lateinit var listViewModel: StreaksListViewModel
-    private lateinit var streaksViewConfig: StreaksViewConfig
     private lateinit var listAdapter: StreaksListAdapter
-
-    companion object {
-        fun newInstance(streaksViewConfig: StreaksViewConfig): StreaksListFragment {
-            val fragment = StreaksListFragment()
-            fragment.streaksViewConfig = streaksViewConfig
-            return fragment
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -47,10 +38,6 @@ class StreaksListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (savedInstanceState?.getSerializable("config") as StreaksViewConfig?)?.let {
-            streaksViewConfig = it
-        }
-
         val layoutManager = LinearLayoutManager(view.context)
         recycler_view_streaks.layoutManager = layoutManager
 
@@ -67,19 +54,19 @@ class StreaksListFragment : Fragment() {
     private fun updateStreaks() {
         listViewModel.streaksData.observe(this, Observer {
             if (listViewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
-                Toast.makeText(context, streaksViewConfig.failedToSyncStreaks, Toast.LENGTH_LONG)
+                Toast.makeText(context, context?.getString(R.string.dk_achievements_failed_to_sync_streaks), Toast.LENGTH_LONG)
                     .show()
             }
             if (this::listAdapter.isInitialized) {
                 listAdapter.notifyDataSetChanged()
             } else {
-                listAdapter = StreaksListAdapter(view?.context, listViewModel, streaksViewConfig)
+                listAdapter = StreaksListAdapter(view?.context, listViewModel)
                 recycler_view_streaks.adapter = listAdapter
             }
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
-        listViewModel.fetchStreaks(streaksViewConfig.streaksTheme)
+        listViewModel.fetchStreaks(DriverAchievementUI.streaksTheme)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

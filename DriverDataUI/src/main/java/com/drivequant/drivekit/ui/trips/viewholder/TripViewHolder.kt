@@ -11,8 +11,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
@@ -21,7 +21,7 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfig) : RecyclerView.ViewHolder(itemView) {
+class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val dateFormatHour = SimpleDateFormat("HH'h'mm", Locale.getDefault())
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
     private val textViewDepartureCity = itemView.findViewById<TextView>(R.id.text_view_departure_city)
@@ -47,7 +47,7 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
         DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())
         circleSeparator.setBackgroundColor(DriveKitUI.colors.secondaryColor())
 
-        computeTripData(trip, tripsViewConfig.tripData)
+        computeTripData(trip, DriverDataUI.tripData)
         computeTripInfo(trip)
     }
 
@@ -107,7 +107,6 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             tripInfoItem.setOnClickListener {
                 TripDetailActivity.launchActivity(itemView.context,
                     trip.itinId,
-                    tripsViewConfig = tripsViewConfig,
                     openAdvice = true)
             }
             tripInfoContainer.addView(tripInfoItem)

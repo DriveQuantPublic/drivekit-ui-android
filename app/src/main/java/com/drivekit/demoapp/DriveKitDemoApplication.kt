@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
@@ -18,7 +19,10 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.ui.DriverDataUI
 import java.util.*
 
 class DriveKitDemoApplication: Application() {
@@ -45,7 +49,13 @@ class DriveKitDemoApplication: Application() {
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
-        DriveKitUI.initialize()
+        val color =  object : DKColors {
+            override fun primaryColor(): Int = Color.RED
+        }
+
+        DriveKitUI.initialize(colors = color)
+        DriverDataUI.initialize()
+        DriverAchievementUI.initialize()
     }
 
     private fun createNotificationChannel() {

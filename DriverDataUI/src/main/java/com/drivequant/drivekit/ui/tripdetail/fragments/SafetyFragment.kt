@@ -10,8 +10,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModelFactory
 import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
@@ -21,18 +19,14 @@ import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
 class SafetyFragment : Fragment() {
 
     companion object {
-        fun newInstance(safety : Safety, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig) : SafetyFragment {
+        fun newInstance(safety : Safety) : SafetyFragment {
             val fragment = SafetyFragment()
             fragment.safety = safety
-            fragment.tripDetailViewConfig = tripDetailViewConfig
-            fragment.tripsViewConfig = tripsViewConfig
             return fragment
         }
     }
 
     private lateinit var safety: Safety
-    private lateinit var tripDetailViewConfig: TripDetailViewConfig
-    private lateinit var tripsViewConfig: TripsViewConfig
     private lateinit var viewModel : SafetyViewModel
 
     override fun onCreateView(
@@ -43,20 +37,12 @@ class SafetyFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("config", tripsViewConfig)
-        outState.putSerializable("detailConfig", tripDetailViewConfig)
         outState.putSerializable("safety", safety)
         super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("config") as TripsViewConfig?)?.let{
-            tripsViewConfig = it
-        }
-        (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
-            tripDetailViewConfig = it
-        }
         (savedInstanceState?.getSerializable("safety") as Safety?)?.let{
             safety = it
         }

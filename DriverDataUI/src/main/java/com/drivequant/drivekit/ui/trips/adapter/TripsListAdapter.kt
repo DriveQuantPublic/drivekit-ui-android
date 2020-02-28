@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
@@ -19,9 +18,7 @@ import java.util.*
 
 class TripsListAdapter(
     var context: Context?,
-    var tripsListViewModel: TripsListViewModel,
-    var tripsViewConfig: TripsViewConfig
-)
+    var tripsListViewModel: TripsListViewModel)
     : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): TripsByDate {
@@ -77,7 +74,7 @@ class TripsListAdapter(
 
         if (convertView == null){
             view = View.inflate(context, R.layout.item_trip_list, null)
-            holder = TripViewHolder(view, tripsViewConfig)
+            holder = TripViewHolder(view)
             view.tag = holder
         } else {
             holder = convertView.tag as TripViewHolder

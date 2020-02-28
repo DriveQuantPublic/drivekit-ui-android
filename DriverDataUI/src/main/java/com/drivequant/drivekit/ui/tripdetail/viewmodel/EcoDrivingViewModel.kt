@@ -2,10 +2,9 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import java.io.Serializable
 
-class EcoDrivingViewModel(private val ecoDriving: EcoDriving, private val tripDetailViewConfig: TripDetailViewConfig) : Serializable{
+class EcoDrivingViewModel(private val ecoDriving: EcoDriving) : Serializable{
 
     fun getScore() = ecoDriving.score
 

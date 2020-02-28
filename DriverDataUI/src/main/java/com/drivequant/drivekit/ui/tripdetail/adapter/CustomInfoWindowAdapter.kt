@@ -14,8 +14,7 @@ import com.google.android.gms.maps.model.Marker
 
 class CustomInfoWindowAdapter(
     var context: Context,
-    private val tripDetailViewModel: TripDetailViewModel
-) : GoogleMap.InfoWindowAdapter {
+    private val tripDetailViewModel: TripDetailViewModel) : GoogleMap.InfoWindowAdapter {
 
     var view: View = View.inflate(context, R.layout.item_info_marker, null)
 
