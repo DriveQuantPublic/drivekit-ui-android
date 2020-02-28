@@ -28,7 +28,7 @@ class TripGoogleMapViewHolder(
     GoogleMap.OnMarkerClickListener{
 
     private val googleMarkerList : MutableList<Marker> = mutableListOf()
-    private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel, tripDetailViewConfig)
+    private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
 

@@ -15,10 +15,11 @@ import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.extension.formatHeaderDay
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
@@ -79,7 +80,7 @@ class TripDetailFragment : Fragment() {
             R.id.trip_delete -> {
                 AlertDialog.Builder(context)
                     .setTitle(getString(R.string.app_name))
-                    .setMessage(context?.getString(R.string.dk_common_delete))
+                    .setMessage(context?.getString(R.string.dk_driverdata_confirm_delete_trip))
                     .setCancelable(true)
                     .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
                         showProgressCircular()
@@ -391,7 +392,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary(){
-        trip_date.text = viewModel.trip?.endDate?.formatHeaderDay()?.capitalize()
+        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.FORMAT_WEEK_LETTER)?.capitalize()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         trip_distance.text = HeaderSummary.DISTANCE_DURATION.text(requireContext(), viewModel.trip!!)
         trip_distance.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())

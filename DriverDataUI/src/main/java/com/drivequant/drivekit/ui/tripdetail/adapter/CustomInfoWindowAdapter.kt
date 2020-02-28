@@ -5,17 +5,16 @@ import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.extension.formatHour
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
 class CustomInfoWindowAdapter(
     var context: Context,
-    private val tripDetailViewModel: TripDetailViewModel,
-    private val tripDetailViewConfig: TripDetailViewConfig
+    private val tripDetailViewModel: TripDetailViewModel
 ) : GoogleMap.InfoWindowAdapter {
 
     var view: View = View.inflate(context, R.layout.item_info_marker, null)
@@ -27,7 +26,7 @@ class CustomInfoWindowAdapter(
     override fun getInfoWindow(marker: Marker?): View {
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
-            view.findViewById<TextView>(R.id.text_view_time).text = event.time.formatHour()
+            view.findViewById<TextView>(R.id.text_view_time).text = event.time.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE)
             view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(context)
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->

@@ -13,7 +13,7 @@ import android.text.TextUtils.concat
 import android.text.style.*
 import android.view.View
 
-object DKSpannable {
+class DKSpannable {
 
     private var length = 0
     private var elements  = ArrayList<CharSequence>()
@@ -26,14 +26,14 @@ object DKSpannable {
         length += end
     }
 
-    private fun append(newText: CharSequence) = apply {
+    fun append(newText: CharSequence) = apply {
         elements.add(newText)
         length += newText.length
     }
 
-    fun appendSpace(newText: CharSequence) = append(" ").append(newText)
+    fun appendSpace(newText: CharSequence, before:Boolean) = if (before) append(" ").append(newText) else append(newText).append(" ")
 
-    fun toSpannableString() = SpannableString(concat(*elements.toTypedArray())).apply {
+    fun toSpannable() = SpannableString(concat(*elements.toTypedArray())).apply {
         values.forEach {
             val range = it.key
             it.value.forEach {

@@ -64,11 +64,11 @@ class SafetyFragment : Fragment() {
             SafetyViewModelFactory(safety)
         ).get(
             SafetyViewModel::class.java)
-        //TODO
-        gauge_type_title.text = context?.getString(R.string.dk_common_safety)//tripDetailViewConfig.safetyGaugeTitle
-        accel_description.text = context?.getString(R.string.dk_driverdata_safety_accel)//tripDetailViewConfig.accelerationText
-        brake_description.text = context?.getString(R.string.dk_driverdata_safety_explain_brake)//tripDetailViewConfig.decelText
-        adherence_description.text = context?.getString(R.string.dk_driverdata_advice_feedback_01)//tripDetailViewConfig.adherenceText
+
+        gauge_type_title.text = context?.getString(R.string.dk_common_safety)
+        accel_description.text = context?.getString(R.string.dk_driverdata_safety_accel)
+        brake_description.text = context?.getString(R.string.dk_driverdata_safety_decel)
+        adherence_description.text = context?.getString(R.string.dk_driverdata_safety_adherence)
         accel_number_event.setTextColor(DriveKitUI.colors.primaryColor())
         brake_number_event.setTextColor(DriveKitUI.colors.primaryColor())
         adherence_number_event.setTextColor(DriveKitUI.colors.primaryColor())
@@ -77,7 +77,5 @@ class SafetyFragment : Fragment() {
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
         adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()
-
     }
-
 }

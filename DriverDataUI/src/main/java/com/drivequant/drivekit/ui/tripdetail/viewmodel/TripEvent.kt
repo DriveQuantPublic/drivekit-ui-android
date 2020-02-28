@@ -3,7 +3,6 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import java.util.*
 
 class TripEvent(val type: TripEventType,

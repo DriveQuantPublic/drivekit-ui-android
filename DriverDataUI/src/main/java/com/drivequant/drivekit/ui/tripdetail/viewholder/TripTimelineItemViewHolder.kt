@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.extension.formatHour
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
 
 class TripTimelineItemViewHolder(itemView: View, private val detailViewConfig: TripDetailViewConfig) : RecyclerView.ViewHolder(itemView)  {
@@ -18,7 +19,7 @@ class TripTimelineItemViewHolder(itemView: View, private val detailViewConfig: T
     private val lineBottom: View = itemView.findViewById(R.id.line_bottom)
 
     fun bind(tripEvent : TripEvent, isFirst: Boolean, isLast: Boolean, listener :OnItemClickListener){
-        eventHour.text = tripEvent.time.formatHour()
+        eventHour.text = tripEvent.time.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE)
         eventDescription.text = tripEvent.getTitle(itemView.context)
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE

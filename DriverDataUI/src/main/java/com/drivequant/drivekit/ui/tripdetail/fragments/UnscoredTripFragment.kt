@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
 import kotlinx.android.synthetic.main.unscored_trip_fragment.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UnscoredTripFragment : Fragment() {
     companion object {
@@ -31,7 +31,6 @@ class UnscoredTripFragment : Fragment() {
         }
     }
 
-    private val dateFormatHour = SimpleDateFormat("HH'h'mm", Locale.getDefault())
     private lateinit var viewModel: UnscoredTripViewModel
     private lateinit var tripsViewConfig: TripsViewConfig
     private lateinit var tripDetailViewConfig: TripDetailViewConfig
@@ -49,9 +48,9 @@ class UnscoredTripFragment : Fragment() {
 
         trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
         trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
-        trip_start_end.text = dateFormatHour.format(viewModel.getStartDate())
+        trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
             .plus(" - ")
-            .plus(dateFormatHour.format(viewModel.getEndDate()))
+            .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER))
         trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
         trip_message.text = context?.getString(viewModel.getNoScoreTripMessage())
     }

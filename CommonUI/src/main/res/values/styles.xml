@@ -40,7 +40,7 @@
     </style>
 
     <style name="Separator">
-        <item name="android:background">@color/dkComplementaryFontColor</item>
+        <item name="android:background">@color/dkNeutralColor</item>
     </style>
 
     <style name="Separator.Horizontal" parent="Separator">

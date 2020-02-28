@@ -66,7 +66,7 @@ class SynthesisFragment : Fragment() {
         item_co2_mass.setValueItem(viewModel.getCO2Mass(requireContext()))
 
         item_condition.setValueItem(viewModel.getCondition(requireContext()))
-        item_weather.setValueItem(viewModel.getWeaherValue(requireContext()))
+        item_weather.setValueItem(viewModel.getWeatherValue(requireContext()))
         item_road_context.setValueItem(viewModel.getRoadContextValue(requireContext()))
     }
 }
