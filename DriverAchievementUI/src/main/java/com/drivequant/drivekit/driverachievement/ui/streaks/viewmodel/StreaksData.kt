@@ -39,10 +39,10 @@ class StreaksData(
         return when (streakTheme) {
             PHONE_DISTRACTION -> R.drawable.dk_common_distraction
             SAFETY -> R.drawable.dk_common_safety
-            SPEEDING -> R.drawable.dk_common_safety
-            ACCELERATION -> R.drawable.dk_common_safety
-            BRAKE -> R.drawable.dk_common_safety
-            ADHERENCE -> R.drawable.dk_common_safety
+            SPEEDING -> R.drawable.dk_common_eco_decel
+            ACCELERATION -> R.drawable.dk_common_eco_accel
+            BRAKE -> R.drawable.dk_common_safety_decel
+            ADHERENCE -> R.drawable.dk_common_safety_adherence
         }
     }
 

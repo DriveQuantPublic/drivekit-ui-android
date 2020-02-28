@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toStartOf="@id/accel_number_event"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableEnd="@drawable/dk_safety_accel"
+        android:drawableEnd="@drawable/dk_common_safety_accel"
         android:drawablePadding="8dp"
         />
 
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toStartOf="@id/brake_number_event"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableEnd="@drawable/dk_safety_decel"
+        android:drawableEnd="@drawable/dk_common_safety_decel"
         android:drawablePadding="8dp"
         />
 
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toStartOf="@id/adherence_number_event"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableEnd="@drawable/dk_safety_adherence"
+        android:drawableEnd="@drawable/dk_common_safety_adherence"
         android:drawablePadding="8dp"
         />
 

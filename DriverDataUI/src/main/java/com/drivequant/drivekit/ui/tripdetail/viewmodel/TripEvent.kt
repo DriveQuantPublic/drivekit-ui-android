@@ -14,11 +14,11 @@ class TripEvent(val type: TripEventType,
 
     fun getEventImageResource() : Int {
         return when(type){
-            TripEventType.SAFETY_BRAKE -> R.drawable.dk_safety_decel
+            TripEventType.SAFETY_BRAKE -> R.drawable.dk_common_safety_decel
             TripEventType.START -> R.drawable.dk_start_event_black
             TripEventType.FINISH -> R.drawable.dk_end_event_black
-            TripEventType.SAFETY_ADHERENCE -> R.drawable.dk_safety_adherence
-            TripEventType.SAFETY_ACCEL -> R.drawable.dk_safety_accel
+            TripEventType.SAFETY_ADHERENCE -> R.drawable.dk_common_safety_adherence
+            TripEventType.SAFETY_ACCEL -> R.drawable.dk_common_eco_accel
             TripEventType.PHONE_DISTRACTION_LOCK -> R.drawable.dk_lock_event
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_unlock_event
         }

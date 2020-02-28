@@ -41,7 +41,7 @@
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/dk_info"
+            android:src="@drawable/dk_common_info"
             android:tint="@color/dkWarningColor"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"/>

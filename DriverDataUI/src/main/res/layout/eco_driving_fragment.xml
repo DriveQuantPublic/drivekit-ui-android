@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_eco_accel"
+        android:drawableStart="@drawable/dk_common_eco_accel"
         android:drawablePadding="8dp"
         />
 
@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_eco_maintain"
+        android:drawableStart="@drawable/dk_common_eco_maintain"
         android:drawablePadding="8dp"
         />
 
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
         style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_eco_decel"
+        android:drawableStart="@drawable/dk_common_eco_decel"
         android:drawablePadding="8dp"
         />
 
