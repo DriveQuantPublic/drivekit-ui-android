@@ -4,74 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".tripdetail.activity.TripDetailActivity"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".tripdetail.activity.TripDetailActivity">
 
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
+        style="@style/GaugeTripDetail"
         android:layout_width="96dp"
         android:layout_height="120dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        style="@style/GaugeTripDetail"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gauge_type_title"
+        style="@style/BigText"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/score_gauge"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Eco-driving"
-        style="@style/BigText"/>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Eco-driving" />
 
     <TextView
         android:id="@+id/accelAdvice"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Loream Loream Loream"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
         android:id="@+id/image_accel_advice"
-        android:layout_width="0dp"
+        android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_accel"/>
+        android:src="@drawable/dk_common_eco_accel"
+        app:layout_constraintEnd_toStartOf="@id/accelAdvice"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/image_main_advice"
-        android:layout_width="0dp"
+        android:layout_width="56dp"
         android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_maintain"/>
-
-    <ImageView
-        android:id="@+id/image_decel_advice"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_decel"/>
+        android:src="@drawable/dk_common_eco_maintain"
+        app:layout_constraintEnd_toStartOf="@id/mainAdvice"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        app:layout_constraintTop_toBottomOf="@id/image_accel_advice" />
 
     <TextView
         android:id="@+id/mainAdvice"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        app:layout_constraintTop_toBottomOf="@id/accelAdvice"
+        android:text="Loream Loream Loream"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accelAdvice" />
+
+    <ImageView
+        android:id="@+id/image_decel_advice"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_decel"
+        app:layout_constraintEnd_toStartOf="@id/decelAdvice"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText" />
+        app:layout_constraintTop_toBottomOf="@id/image_main_advice" />
 
     <TextView
         android:id="@+id/decelAdvice"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        app:layout_constraintTop_toBottomOf="@id/mainAdvice"
+        android:text="Loream Loream Loream"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText" />
+        app:layout_constraintTop_toBottomOf="@id/mainAdvice" />
 
 </android.support.constraint.ConstraintLayout>
