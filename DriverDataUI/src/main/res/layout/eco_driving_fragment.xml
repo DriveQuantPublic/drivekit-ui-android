@@ -36,10 +36,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_common_eco_accel"
-        android:drawablePadding="8dp"
-        />
+        style="@style/TripDetailDescriptionText" />
+
+    <ImageView
+        android:id="@+id/image_accel_advice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_accel"/>
+
+    <ImageView
+        android:id="@+id/image_main_advice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_maintain"/>
+
+    <ImageView
+        android:id="@+id/image_decel_advice"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_decel"/>
 
     <TextView
         android:id="@+id/mainAdvice"
@@ -48,10 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/accelAdvice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_common_eco_maintain"
-        android:drawablePadding="8dp"
-        />
+        style="@style/TripDetailDescriptionText" />
 
     <TextView
         android:id="@+id/decelAdvice"
@@ -60,9 +72,6 @@
         app:layout_constraintTop_toBottomOf="@id/mainAdvice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
-        style="@style/TripDetailDescriptionText"
-        android:drawableStart="@drawable/dk_common_eco_decel"
-        android:drawablePadding="8dp"
-        />
+        style="@style/TripDetailDescriptionText" />
 
 </android.support.constraint.ConstraintLayout>
