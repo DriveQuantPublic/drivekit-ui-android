@@ -23,25 +23,25 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
                 val text = distraction.durationUnlock.removeZeroDecimal()
 
                 DKSpannable().appendSpace(text,before = false).append(context.getString(R.string.dk_common_unit_second), context.resSpans {
-                    custom(TextAppearanceSpan(context, R.style.UnitText))
-                }).toSpannable()
+                    appearance(R.style.UnitText)
+                }).appendSpace("Text to append",before = false).toSpannable()
             }
             distraction.durationUnlock < 3600 -> {
                 val minutes = (distraction.durationUnlock / 60).toInt()
                 val seconds = (distraction.durationUnlock - (minutes * 60)).toInt()
-                val text = "$minutes ${context.getString(R.string.dk_common_unit_minute)} $seconds"
+                val text = "$minutes ${context.getString(R.string.dk_common_unit_minute)} $seconds ${context.getString(R.string.dk_common_unit_second)}"
 
                 DKSpannable().append(text, context.resSpans {
-                    custom(TextAppearanceSpan(context, R.style.UnitText))
+                    appearance(R.style.UnitText)
                 }).toSpannable()
             }
             else -> {
                 val hours = (distraction.durationUnlock / 3600).toInt()
                 val minutes = ((distraction.durationUnlock - (hours * 3600)) / 60).toInt()
-                val text = "$hours ${context.getString(R.string.dk_common_unit_meter)} $minutes"
+                val text = "$hours ${context.getString(R.string.dk_common_unit_hour)} $minutes"
 
                 DKSpannable().append(text, context.resSpans {
-                    custom(TextAppearanceSpan(context, R.style.UnitText))
+                    appearance(R.style.UnitText)
                 }).toSpannable()
             }
         }

@@ -9,7 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
+import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -18,11 +20,8 @@ import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val dateFormatHour = SimpleDateFormat("HH'h'mm", Locale.getDefault())
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
     private val textViewDepartureCity = itemView.findViewById<TextView>(R.id.text_view_departure_city)
     private val textViewArrivalTime = itemView.findViewById<TextView>(R.id.text_view_arrival_time)
@@ -37,9 +36,9 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
 
     fun bind(trip: Trip, isLastChild: Boolean){
-        textViewDepartureTime.text = dateFormatHour.format(trip.getOrComputeStartDate())
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
         textViewDepartureCity.text = trip.departureCity
-        textViewArrivalTime.text = dateFormatHour.format(trip.endDate)
+        textViewArrivalTime.text = trip.endDate.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.arrivalCity
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
 
