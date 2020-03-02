@@ -18,6 +18,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.reflect.KClass
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,13 +60,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onDriverDataClicked(view: View){
-        //DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(applicationContext)
-        startActivity(Intent(this, TripsListActivity::class.java))
+        DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(applicationContext)
     }
 
     fun onDriverAchievementClicked(view: View) {
-        //DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakActivity(applicationContext,StreaksListActivity::class.java)
-        startActivity(Intent(this, StreaksListActivity::class.java))
+        DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakListActivity(applicationContext)
     }
 
     fun buttonTripClicked(view: View){

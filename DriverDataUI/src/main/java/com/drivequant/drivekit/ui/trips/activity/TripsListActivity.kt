@@ -1,4 +1,4 @@
-package com.drivekit.demoapp.activity
+package com.drivequant.drivekit.ui.trips.activity
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle

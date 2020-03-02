@@ -1,9 +1,9 @@
-package com.drivekit.demoapp.activity
+package com.drivequant.drivekit.driverachievement.ui.streaks.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.driverachievement.ui.R
 
 class StreaksListActivity : AppCompatActivity() {
 
@@ -13,7 +13,7 @@ class StreaksListActivity : AppCompatActivity() {
         DriveKitNavigationController.driverAchievementUIEntryPoint?.let {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, it.createStreakFragment())
+                .replace(R.id.container, it.createStreakListFragment())
                 .commit()
         }
     }
