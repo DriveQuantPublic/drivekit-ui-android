@@ -27,33 +27,41 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Eco-driving" />
 
+
+    <ImageView
+        android:id="@+id/image_accel_advice"
+        android:layout_width="48dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_accel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.819"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_main_advice"
+        android:layout_width="48dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_maintain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_accel_advice" />
+
+    <ImageView
+        android:id="@+id/image_decel_advice"
+        android:layout_width="48dp"
+        android:layout_height="56dp"
+        android:src="@drawable/dk_common_eco_decel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_main_advice" />
+
     <TextView
         android:id="@+id/accelAdvice"
         style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:text="Loream Loream Loream"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/image_accel_advice"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_accel"
-        app:layout_constraintEnd_toStartOf="@id/accelAdvice"
         app:layout_constraintStart_toEndOf="@id/score_gauge"
+        app:layout_constraintEnd_toStartOf="@id/image_accel_advice"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/image_main_advice"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_maintain"
-        app:layout_constraintEnd_toStartOf="@id/mainAdvice"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/image_accel_advice" />
 
     <TextView
         android:id="@+id/mainAdvice"
@@ -61,17 +69,10 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:text="Loream Loream Loream"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        app:layout_constraintEnd_toStartOf="@id/image_main_advice"
         app:layout_constraintTop_toBottomOf="@id/accelAdvice" />
 
-    <ImageView
-        android:id="@+id/image_decel_advice"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_decel"
-        app:layout_constraintEnd_toStartOf="@id/decelAdvice"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/image_main_advice" />
 
     <TextView
         android:id="@+id/decelAdvice"
@@ -79,7 +80,8 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:text="Loream Loream Loream"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/score_gauge"
+        app:layout_constraintEnd_toStartOf="@id/image_decel_advice"
         app:layout_constraintTop_toBottomOf="@id/mainAdvice" />
 
 </android.support.constraint.ConstraintLayout>
