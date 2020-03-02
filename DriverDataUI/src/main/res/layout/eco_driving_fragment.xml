@@ -30,7 +30,7 @@
 
     <ImageView
         android:id="@+id/image_accel_advice"
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:src="@drawable/dk_common_eco_accel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
 
     <ImageView
         android:id="@+id/image_main_advice"
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:src="@drawable/dk_common_eco_maintain"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
 
     <ImageView
         android:id="@+id/image_decel_advice"
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:src="@drawable/dk_common_eco_decel"
         app:layout_constraintEnd_toEndOf="parent"
