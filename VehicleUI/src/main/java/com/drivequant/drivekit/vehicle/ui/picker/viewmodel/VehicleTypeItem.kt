@@ -1,20 +1,20 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.vehicle.enum.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
 
-enum class VehicleType {
-    CAR,
-    MOTORBIKE,
-    TRUCK;
+enum class VehicleTypeItem(
+    val vehicleType: VehicleType,
+    private val titleStringResId: Int
+) {
+    CAR(VehicleType.CAR, R.string.dk_vehicle_type_car_title),
+    MOTORBIKE(VehicleType.MOTORBIKE, R.string.dk_vehicle_type_motorbike_title),
+    TRUCK(VehicleType.TRUCK, R.string.dk_vehicle_type_truck_title);
 
     fun getTitle(context: Context): String {
-        return when (this){
-            CAR -> context.getString(R.string.dk_vehicle_type_car_title)
-            MOTORBIKE -> context.getString(R.string.dk_vehicle_type_motorbike_title)
-            TRUCK -> context.getString(R.string.dk_vehicle_type_truck_title)
-        }
+        return context.getString(this.titleStringResId)
     }
 
     fun getCategories(context: Context): List<VehicleCategoryItem> {

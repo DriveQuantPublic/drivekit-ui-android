@@ -18,8 +18,8 @@ import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleType
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -87,9 +87,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.button_vehicle_picker -> {
                     val vehiclePickerViewConfig = VehiclePickerViewConfig(
                         this,
-                        listOf(VehicleType.TRUCK, VehicleType.MOTORBIKE, VehicleType.CAR),
-                        VehicleType.CAR.getBrands(this),
-                        CategoryType.BOTH_CONFIG,
+                        listOf(VehicleTypeItem.TRUCK, VehicleTypeItem.MOTORBIKE, VehicleTypeItem.CAR),
+                        VehicleTypeItem.CAR.getBrands(this),
+                        CategoryConfigType.BOTH_CONFIG,
                         true
                     )
                     VehiclePickerActivity.launchActivity(this, vehiclePickerViewConfig)

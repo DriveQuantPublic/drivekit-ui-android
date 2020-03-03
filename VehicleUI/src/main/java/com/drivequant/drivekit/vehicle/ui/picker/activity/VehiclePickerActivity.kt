@@ -85,10 +85,10 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         var otherAction = false
         when (currentPickerStep){
             TYPE -> {
-                viewModel.selectedVehicleType = VehicleType.valueOf(item.value)
+                viewModel.selectedVehicleTypeItem = VehicleTypeItem.valueOf(item.value)
             }
             CATEGORY -> {
-                viewModel.selectedCategory = viewModel.selectedVehicleType.getCategories(this).find { it.category == item.value }!!
+                viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!
             }
             BRANDS_ICONS -> {
                 if (item.value != "OTHER_BRANDS"){

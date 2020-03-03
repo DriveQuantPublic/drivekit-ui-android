@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryType
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 
@@ -57,7 +57,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, viewConfig)
         }
 
-        if (viewConfig.categoryTypes != CategoryType.LITE_CONFIG_ONLY) {
+        if (viewConfig.categoryConfigTypes != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE
             textViewBrands.setOnClickListener {
                 viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, viewConfig, otherAction = true)

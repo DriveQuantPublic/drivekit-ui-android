@@ -16,7 +16,7 @@ data class VehicleBrandItem(
 
 fun buildVehicleBrandItem(context: Context, source: Array<String>): VehicleBrandItem {
     return VehicleBrandItem(
-        VehicleBrand.getEnumByValue(source[0]),
+        VehicleBrand.getEnumByName(source[0]),
         source[1].toBoolean(),
         source[2].toBoolean(),
         source[3].toBoolean(),

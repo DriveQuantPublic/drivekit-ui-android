@@ -38,6 +38,7 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
 
     implementation project(':DriverDataUI')
-    implementation project(':VehicleUI')
     //implementation 'com.drivequant.drivekit:drivekit-driver-data-ui:1.1.0'
+
+    implementation project(':VehicleUI')
 }
