@@ -8,7 +8,7 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import java.io.Serializable
 
-class VehicleListViewModel : ViewModel(), Serializable {
+class VehiclesListViewModel : ViewModel(), Serializable {
     val vehiclesData = MutableLiveData<Boolean>()
     val vehicles: MutableList<Vehicle> = mutableListOf()
 
@@ -34,7 +34,7 @@ class VehicleListViewModel : ViewModel(), Serializable {
     class VehicleListViewModelFactory : ViewModelProvider.NewInstanceFactory(){
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return VehicleListViewModel() as T
+            return VehiclesListViewModel() as T
         }
     }
 }

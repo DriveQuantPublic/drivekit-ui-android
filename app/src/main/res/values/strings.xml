@@ -49,8 +49,9 @@
    <string name="trip_cancelled_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée</string>
    <string name="trip_cancelled_beacon_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée en présence du beacon</string>
    <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
-   <string name="vehicle_picker_button">Lancer Vehicle Picker</string>
    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the Vehicle Picker, Vehicles List and Detail</string>
+   <string name="vehicle_picker_button">Sélection d\'un véhicule</string>
+   <string name="vehicle_list_button">Liste des véhicules</string>
 
    <string name="category_car_commercial_description">This category corresponds to vehicles for professional use generally intended for the transport of goods. These vehicles have a large storage capacity and the total permissible laden weight is between 1.5 tonnes and 3.5 tonnes.</string>
    <string name="category_car_compact_description">This category corresponds to vehicles belonging to segment B2. These are compact vehicles that are suitable for both urban and road use and are between 3.70 and 4.10 m long.</string>

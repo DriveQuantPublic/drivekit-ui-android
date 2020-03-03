@@ -204,4 +204,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:onClick="onVehiclePickerClicked"/>
+    <Button
+        android:id="@+id/button_vehicle_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vehicle_list_button"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@id/button_vehicle_picker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="onVehiclePickerClicked"/>
 </android.support.constraint.ConstraintLayout>

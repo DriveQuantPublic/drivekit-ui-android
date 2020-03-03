@@ -95,8 +95,16 @@ class MainActivity : AppCompatActivity() {
                     VehiclePickerActivity.launchActivity(this, vehiclePickerViewConfig)
                 }
 
-                // TODO list vehicles
-                // TODO vehicle detail
+                R.id.button_vehicle_list -> {
+                    val vehiclePickerViewConfig = VehiclePickerViewConfig(
+                        this,
+                        listOf(VehicleTypeItem.TRUCK, VehicleTypeItem.MOTORBIKE, VehicleTypeItem.CAR),
+                        VehicleTypeItem.CAR.getBrands(this),
+                        CategoryConfigType.BOTH_CONFIG,
+                        true
+                    )
+                    VehiclePickerActivity.launchActivity(this, vehiclePickerViewConfig)
+                }                // TODO vehicle detail
             }
         }
     }
