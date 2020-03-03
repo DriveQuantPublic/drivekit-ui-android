@@ -15,8 +15,8 @@
         android:textAlignment="center"
         android:padding="4dp"
         android:gravity="center"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginEnd="@dimen/dk_margin_half"
         tools:text="9h42" />
 
     <LinearLayout
@@ -29,7 +29,7 @@
         <TextView android:id="@+id/bubble_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            style="@style/Headline2"
             android:textColor="@color/dkPrimaryColor"
             android:ellipsize="end"
             android:maxLines="1"
@@ -39,8 +39,8 @@
             android:layout_width="wrap_content"
             android:maxWidth="200dp"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="10sp"
+            android:textColor="@android:color/black"
+            style="@style/SmallText"
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="Description" />

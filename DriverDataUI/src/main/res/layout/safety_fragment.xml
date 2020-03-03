@@ -4,65 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".driverdata.ui.tripdetail.fragments.SafetyFragment"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".driverdata.ui.tripdetail.fragments.SafetyFragment">
 
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
+        style="@style/GaugeTripDetail"
         android:layout_width="96dp"
         android:layout_height="120dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        style="@style/GaugeTripDetail" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gauge_type_title"
+        style="@style/BigText"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/score_gauge"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:text="Safety"
-        style="@style/BigText"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_gauge"
+        tools:text="Safety" />
 
     <TextView
         android:id="@+id/accel_number_event"
+        style="@style/EventNumberText"
         android:layout_width="48dp"
         android:layout_height="56dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/EventNumberText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/brake_number_event"
+        style="@style/EventNumberText"
         android:layout_width="48dp"
         android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accel_number_event"
-        style="@style/EventNumberText" />
+        app:layout_constraintTop_toBottomOf="@id/accel_number_event" />
 
     <TextView
         android:id="@+id/adherence_number_event"
+        style="@style/EventNumberText"
         android:layout_width="48dp"
         android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/brake_number_event"
-        style="@style/EventNumberText" />
+        app:layout_constraintTop_toBottomOf="@id/brake_number_event" />
 
     <TextView
         android:id="@+id/accel_description"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/accel_image"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-
-        style="@style/TripDetailDescriptionText"
-        android:text="Loream Loream Loream"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/accel_image"
@@ -70,20 +67,16 @@
         android:layout_height="56dp"
         android:src="@drawable/dk_common_safety_accel"
         app:layout_constraintEnd_toStartOf="@id/accel_number_event"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/brake_description"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-
-        app:layout_constraintTop_toBottomOf="@id/accel_description"
         app:layout_constraintEnd_toStartOf="@id/decel_image"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-
-
-        style="@style/TripDetailDescriptionText"
-        android:text="Loream Loream Loream"/>
+        app:layout_constraintTop_toBottomOf="@id/accel_description" />
 
 
     <ImageView
@@ -96,16 +89,12 @@
 
     <TextView
         android:id="@+id/adherence_description"
+        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
         android:layout_height="56dp"
-
-        app:layout_constraintTop_toBottomOf="@id/brake_description"
         app:layout_constraintEnd_toStartOf="@id/adherence_image"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-
-
-        style="@style/TripDetailDescriptionText"
-        android:text="Loream Loream Loream"/>
+        app:layout_constraintTop_toBottomOf="@id/brake_description" />
 
     <ImageView
         android:id="@+id/adherence_image"
@@ -115,5 +104,4 @@
         android:src="@drawable/dk_common_safety_adherence"
         app:layout_constraintEnd_toStartOf="@id/adherence_number_event"
         app:layout_constraintTop_toBottomOf="@id/decel_image" />
-
 </android.support.constraint.ConstraintLayout>

@@ -18,9 +18,9 @@
         <ImageView
             android:id="@+id/advice_disagree_image"
             android:src="@drawable/dk_advice_disagree"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="4dp"/>
+            android:layout_width="@dimen/dk_text_xxbig"
+            android:layout_height="@dimen/dk_text_xxbig"
+            android:layout_margin="@dimen/dk_margin_quarter"/>
         <TextView
             android:id="@+id/advice_disagree_textview"
             android:layout_width="match_parent"

@@ -11,7 +11,7 @@
         android:id="@+id/text_view_advice_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:padding="8dp"
+        android:padding="@dimen/dk_margin_half"
         android:gravity="center_vertical"
         android:textAlignment="center"
         android:textColor="@android:color/white"
@@ -22,10 +22,11 @@
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
+            style="@style/NormalText"
             android:id="@+id/text_view_advice_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="@dimen/dk_margin_half"
             tools:text="Trip advice text"/>
     </ScrollView>
     <include
