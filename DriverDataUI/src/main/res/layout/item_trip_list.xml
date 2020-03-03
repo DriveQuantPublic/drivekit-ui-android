@@ -101,7 +101,6 @@
 
     <TextView
         android:id="@+id/text_view_departure_time"
-        style="@style/TripListHour"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -113,7 +112,6 @@
         tools:text="10h11"/>
     <TextView
         android:id="@+id/text_view_departure_city"
-        style="@style/TripListCity"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -128,7 +126,6 @@
 
     <TextView
         android:id="@+id/text_view_arrival_time"
-        style="@style/TripListHour"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -140,7 +137,6 @@
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"/>
     <TextView
         android:id="@+id/text_view_arrival_city"
-        style="@style/TripListCity"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -151,5 +147,4 @@
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintStart_toEndOf="@id/text_view_arrival_time"
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"/>
-
 </android.support.constraint.ConstraintLayout>

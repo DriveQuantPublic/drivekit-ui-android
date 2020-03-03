@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -14,8 +17,6 @@ import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TripsListAdapter(
     var context: Context?,
@@ -37,21 +38,20 @@ class TripsListAdapter(
             view = layoutInflater.inflate(R.layout.group_item_trip_list, null)
             holder = HeaderDayViewHolder(view)
             view.tag = holder
-            FontUtils.overrideFonts(context,view)
         } else {
             holder = convertView.tag as HeaderDayViewHolder
             view = convertView
         }
 
-        val dateFormatDate = SimpleDateFormat("EEEE d MMMM", Locale.getDefault())
-        val stringDate: String = dateFormatDate.format(date)
-
-        holder.tvDate.text = stringDate.capitalize()
+        holder.tvDate.text = date.formatDate(DKDatePattern.FORMAT_WEEK_LETTER).capitalize()
         holder.tvInformations.text = HeaderDay.DISTANCE_DURATION.text(holder.itemView.context, trips?.trips)
+
+        holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
+        holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
 
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
-
+        FontUtils.overrideFonts(context,view)
         return view
     }
 
@@ -78,7 +78,6 @@ class TripsListAdapter(
             view = View.inflate(context, R.layout.item_trip_list, null)
             holder = TripViewHolder(view)
             view.tag = holder
-            FontUtils.overrideFonts(context,view)
         } else {
             holder = convertView.tag as TripViewHolder
             view = convertView
@@ -87,6 +86,7 @@ class TripsListAdapter(
         trip?.let {
             holder.bind(trip, isLastChild)
         }
+        FontUtils.overrideFonts(context,view)
         return view
     }
 

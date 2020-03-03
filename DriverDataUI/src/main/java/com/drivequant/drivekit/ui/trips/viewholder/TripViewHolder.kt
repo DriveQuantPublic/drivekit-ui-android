@@ -12,6 +12,8 @@ import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -45,6 +47,11 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         DrawableCompat.setTint(circleBottom.background, DriveKitUI.colors.secondaryColor())
         DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())
         circleSeparator.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+
+        textViewDepartureCity.setTextColor(DriveKitUI.colors.mainFontColor())
+        textViewArrivalCity.setTextColor(DriveKitUI.colors.mainFontColor())
+        textViewDepartureTime.setTextColor(DriveKitUI.colors.complementaryFontColor())
+        textViewArrivalTime.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
         computeTripData(trip, DriverDataUI.tripData)
         computeTripInfo(trip)
@@ -92,7 +99,9 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
             val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
             val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
+            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
             DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
+            FontUtils.overrideFonts(tripInfoItem.context, tripInfoItem)
 
             tripInfo.imageResId(trip)?.let {
                 imageView.setImageResource(it)

@@ -63,7 +63,7 @@ object DKDataFormatter {
         return if (co2mass < 1) {
             "${(co2mass * 1000).toInt()} ${context.getString(R.string.dk_common_unit_g)}"
         } else {
-            "${co2mass.toInt()} ${context.getString(R.string.dk_common_unit_kg)}"
+            "$co2mass ${context.getString(R.string.dk_common_unit_kg)}"
         }
     }
 

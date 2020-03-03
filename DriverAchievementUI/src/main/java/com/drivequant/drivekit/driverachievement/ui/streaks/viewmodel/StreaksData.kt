@@ -95,11 +95,11 @@ class StreaksData(
 
         return DKSpannable()
             .append("$currentTripsCount ", context.resSpans {
-                expressColor(DriveKitUI.colors.secondaryColor())
+                color(DriveKitUI.colors.secondaryColor())
                 typeface(Typeface.BOLD)
                 size(R.dimen.dk_text_big)
             }).append(trip, context.resSpans {
-                expressColor(DriveKitUI.colors.secondaryColor())
+                color(DriveKitUI.colors.secondaryColor())
             }).appendSpace(" - $currentDistance - $currentDuration", before = false).toSpannable()
     }
 

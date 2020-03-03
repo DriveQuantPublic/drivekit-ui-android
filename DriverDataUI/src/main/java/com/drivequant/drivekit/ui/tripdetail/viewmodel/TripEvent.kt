@@ -1,6 +1,11 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import java.util.*
@@ -84,13 +89,32 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getDescription(context: Context, trip: Trip) : String? {
+    fun getDescription(context: Context, trip: Trip) : Spannable? {
         return when(type){
-            TripEventType.SAFETY_BRAKE -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
-            TripEventType.START -> if (trip.departureAddress.isNullOrEmpty()) trip.departureCity else trip.departureAddress
-            TripEventType.FINISH ->if (trip.arrivalAddress.isNullOrEmpty()) trip.arrivalCity else trip.arrivalAddress
-            TripEventType.SAFETY_ADHERENCE -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
-            TripEventType.SAFETY_ACCEL -> "${context.getString(R.string.dk_driverdata_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}"
+            TripEventType.SAFETY_BRAKE, TripEventType.SAFETY_ADHERENCE,TripEventType. SAFETY_ACCEL -> {
+
+                DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
+                    color(DriveKitUI.colors.warningColor())
+                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                }).toSpannable()
+
+            }
+
+            TripEventType.START -> {
+
+                if (trip.departureAddress.isNullOrEmpty())
+                 SpannableString.valueOf(trip.departureCity)
+                else
+                    SpannableString.valueOf(trip.departureAddress)
+
+            }
+            TripEventType.FINISH ->
+                if (trip.arrivalAddress.isNullOrEmpty())
+                    SpannableString.valueOf(trip.arrivalCity)
+                else
+                    SpannableString.valueOf(trip.arrivalAddress)
+
             TripEventType.PHONE_DISTRACTION_LOCK -> null
             TripEventType.PHONE_DISTRACTION_UNLOCK -> null
         }

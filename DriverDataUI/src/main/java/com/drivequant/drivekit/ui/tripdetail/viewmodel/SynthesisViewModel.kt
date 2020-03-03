@@ -75,7 +75,7 @@ class SynthesisViewModel(private val trip: Trip) : Serializable {
 
     fun getIdlingDuration(context: Context): String {
         return trip.tripStatistics?.let {
-            DKDataFormatter.formatDuration(context, it.duration)
+            DKDataFormatter.formatDuration(context, it.idlingDuration)
         } ?: run {
             notAvailableText
         }

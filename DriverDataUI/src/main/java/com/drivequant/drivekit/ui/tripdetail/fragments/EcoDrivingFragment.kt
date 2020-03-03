@@ -51,5 +51,10 @@ class EcoDrivingFragment : Fragment() {
         mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
         decelAdvice.text = context?.getString(viewModel.getDecelMessage())
         gauge_type_title.text = context?.getString(viewModel.getGaugeTitle())
+
+        accelAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
+        mainAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
+        decelAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
+        gauge_type_title.setTextColor(DriveKitUI.colors.mainFontColor())
     }
 }

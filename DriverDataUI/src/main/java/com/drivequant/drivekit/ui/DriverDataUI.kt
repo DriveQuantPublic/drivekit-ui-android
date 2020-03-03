@@ -19,7 +19,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     var enableDeleteTrip: Boolean = false
     var dayTripDescendingOrder: Boolean = false
     var displayAdvices: Boolean = false
-    var enableAdviceFeedback: Boolean = false
+    var enableAdviceFeedback: Boolean = true
     var mapItems: List<MapItem> = listOf()
 
     fun initialize(
@@ -27,7 +27,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
          enableDeleteTrip: Boolean = true,
          dayTripDescendingOrder: Boolean = true,
          displayAdvices: Boolean = true,
-         enableAdviceFeedback: Boolean = false,
+         enableAdviceFeedback: Boolean = true,
          mapItems :List<MapItem> = listOf(
              MapItem.SAFETY,
              MapItem.ECO_DRIVING,

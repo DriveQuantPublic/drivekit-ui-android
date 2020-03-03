@@ -52,9 +52,7 @@ class ResSpans(private val context: Context) : Iterable<Any> {
 
     fun size(@DimenRes id: Int) = spans.add(AbsoluteSizeSpan(context.resources.getDimension(id).toInt()))
 
-    fun color(@ColorRes id: Int) = spans.add(ForegroundColorSpan(ContextCompat.getColor(context, id)))
-
-    fun expressColor(color:Int) = spans.add(ForegroundColorSpan(color))
+    fun color(color:Int) = spans.add(ForegroundColorSpan(color))
 
     fun icon(@DrawableRes id: Int, size: Int) = spans.add(ImageSpan(AppCompatResources.getDrawable(context, id)!!.apply {
         setBounds(0, 0, size, size)

@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -26,7 +27,10 @@ class CustomInfoWindowAdapter(
     override fun getInfoWindow(marker: Marker?): View {
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
-            view.findViewById<TextView>(R.id.text_view_time).text = event.time.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE)
+            val eventHour = view.findViewById<TextView>(R.id.text_view_time)
+            eventHour.text = event.time.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE)
+            eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
+
             view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(context)
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->

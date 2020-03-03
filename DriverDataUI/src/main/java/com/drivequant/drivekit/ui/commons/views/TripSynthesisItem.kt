@@ -27,6 +27,10 @@ class TripSynthesisItem: LinearLayout {
         val view = View.inflate(context, R.layout.trip_synthesis_item, null)
         textViewTitle = view.findViewById(R.id.text_view_trip_synthesis_title)
         textViewValue = view.findViewById(R.id.text_view_trip_synthesis_value)
+
+        textViewValue?.setTextColor(DriveKitUI.colors.primaryColor())
+        textViewTitle?.setTextColor(DriveKitUI.colors.complementaryFontColor())
+
         if (attrs != null) {
             val a: TypedArray = context.theme.obtainStyledAttributes(
                 attrs,
