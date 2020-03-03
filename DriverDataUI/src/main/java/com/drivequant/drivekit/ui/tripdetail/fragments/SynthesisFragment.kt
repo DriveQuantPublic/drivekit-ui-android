@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
@@ -26,7 +27,9 @@ class SynthesisFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
+        val view = inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

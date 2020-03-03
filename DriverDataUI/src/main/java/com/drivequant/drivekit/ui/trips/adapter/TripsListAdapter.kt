@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
@@ -36,6 +37,7 @@ class TripsListAdapter(
             view = layoutInflater.inflate(R.layout.group_item_trip_list, null)
             holder = HeaderDayViewHolder(view)
             view.tag = holder
+            FontUtils.overrideFonts(context,view)
         } else {
             holder = convertView.tag as HeaderDayViewHolder
             view = convertView
@@ -76,6 +78,7 @@ class TripsListAdapter(
             view = View.inflate(context, R.layout.item_trip_list, null)
             holder = TripViewHolder(view)
             view.tag = holder
+            FontUtils.overrideFonts(context,view)
         } else {
             holder = convertView.tag as TripViewHolder
             view = convertView

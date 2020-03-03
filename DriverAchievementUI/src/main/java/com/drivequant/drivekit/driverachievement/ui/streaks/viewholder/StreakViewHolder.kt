@@ -37,7 +37,6 @@ class StreakViewHolder(itemView: View) :
         imageViewInfo.setOnClickListener {
             showDescription(streaksData)
         }
-
         setupSeekBar(streaksData)
         setData(streaksData)
     }

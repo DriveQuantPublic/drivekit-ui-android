@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel
@@ -31,7 +32,9 @@ class DriverDistractionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.driver_distraction_fragment, container, false)
+        val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

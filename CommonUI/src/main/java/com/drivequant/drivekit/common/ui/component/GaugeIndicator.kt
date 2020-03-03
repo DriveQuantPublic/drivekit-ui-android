@@ -55,7 +55,6 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
 
     fun configure(score: Double, type: GaugeType) {
         textView.text = score.removeZeroDecimal()
-        textView.typeface = DriveKitUI.primaryFont(context)
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))

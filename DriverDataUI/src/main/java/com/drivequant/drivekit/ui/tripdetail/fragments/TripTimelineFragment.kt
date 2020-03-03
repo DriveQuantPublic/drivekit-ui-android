@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripTimelineAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.OnItemClickListener
@@ -30,7 +31,9 @@ class TripTimelineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.trip_timeline_fragment, container, false)
+        val view = inflater.inflate(R.layout.trip_timeline_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

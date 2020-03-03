@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
@@ -18,6 +19,8 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKColors
+import com.drivequant.drivekit.common.ui.graphical.DKFonts
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -48,7 +51,16 @@ class DriveKitDemoApplication: Application() {
         configureDriveKit()
         registerReceiver()
 
-        DriveKitUI.initialize()
+
+        val font = object : DKFonts {
+            override fun primaryFont(): Int = R.font.sketchy
+        }
+
+        val color = object : DKColors {
+            override fun backgroundViewColor(): Int = Color.GREEN
+        }
+
+        DriveKitUI.initialize(colors = color, fonts = font)
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
     }

@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
@@ -32,7 +33,9 @@ class UnscoredTripFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.unscored_trip_fragment, container, false)
+        val view = inflater.inflate(R.layout.unscored_trip_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -17,6 +17,7 @@ import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
@@ -58,9 +59,10 @@ class TripDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_trip_detail, container, false)
-        viewContentTrip = rootView.findViewById(R.id.container_trip)
-        return rootView
+        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
+        viewContentTrip = view.findViewById(R.id.container_trip)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

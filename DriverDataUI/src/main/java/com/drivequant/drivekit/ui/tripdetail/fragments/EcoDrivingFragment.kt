@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
@@ -28,7 +29,9 @@ class EcoDrivingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.eco_driving_fragment, container, false)
+        val view = inflater.inflate(R.layout.eco_driving_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

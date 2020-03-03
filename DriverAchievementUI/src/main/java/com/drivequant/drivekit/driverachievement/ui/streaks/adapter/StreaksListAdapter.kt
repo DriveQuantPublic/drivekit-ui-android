@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewholder.StreakViewHolder
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
@@ -14,6 +15,7 @@ class StreaksListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): StreakViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.streaks_list_item, parent, false)
+        FontUtils.overrideFonts(parent.context,view)
         return StreakViewHolder(view)
     }
 

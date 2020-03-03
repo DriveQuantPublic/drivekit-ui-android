@@ -7,6 +7,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts
 import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 
+
 object DriveKitUI {
 
     var distanceUnit: DistanceUnit = DistanceUnit.KM

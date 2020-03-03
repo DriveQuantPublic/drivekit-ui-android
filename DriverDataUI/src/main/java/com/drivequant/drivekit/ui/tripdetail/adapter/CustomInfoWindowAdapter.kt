@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.google.android.gms.maps.GoogleMap
@@ -40,6 +41,7 @@ class CustomInfoWindowAdapter(
                 view.findViewById<AppCompatButton>(R.id.bubble_more_info).visibility = View.INVISIBLE
             }
         }
+        FontUtils.overrideFonts(context, view)
         return view
     }
 
