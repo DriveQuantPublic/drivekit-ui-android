@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.reflect.KClass
 
 class MainActivity : AppCompatActivity() {
 

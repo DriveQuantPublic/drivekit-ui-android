@@ -9,28 +9,39 @@ import java.util.*
 import kotlin.math.roundToInt
 
 object DKDataFormatter {
-    //TODO Duration
+
     fun formatDuration(context: Context, durationInSeconds: Double?): String {
-            var formattedDuration = ""
-            var computedDuration: Double? = durationInSeconds
 
-            if (computedDuration != null) {
-                computedDuration = if (computedDuration % 60 > 0) {
-                    (((computedDuration / 60) * 60).toInt() + 60).toDouble()
-                } else {
-                    (((computedDuration / 60) * 60).toInt()).toDouble()
-                }
+        var nbMinute: Int
+        var nbHour: Int
+        val nbDay: Int
 
-                val durationInt: Int = (computedDuration / 60).toInt()
-                formattedDuration = if (durationInt > 60) {
-                    val minDuration: String = if (durationInt % 60 < 10) "0" + durationInt % 60 else (durationInt % 60).toString()
-                    String.format("%d%s%s", durationInt / 60, context.resources.getString(R.string.dk_common_unit_hour), minDuration)
-                } else {
-                    String.format("%d %s", durationInt, context.resources.getString(R.string.dk_common_unit_minute))
-                }
+        if (durationInSeconds != null) {
+            if (durationInSeconds > 60) {
+                nbMinute = (durationInSeconds / 60).roundToInt()
+            } else {
+                return "${durationInSeconds.toInt()} ${context.getString(R.string.dk_common_unit_second)}"
             }
-            return formattedDuration
+
+            return if (nbMinute > 59) {
+                nbHour = nbMinute / 60
+                nbMinute -= (nbHour * 60)
+
+                if (nbHour > 23) {
+                    nbDay = nbHour / 24
+                    nbHour -= nbHour - (24 * nbDay)
+                    "$nbDay ${context.getString(R.string.dk_common_unit_day)} $nbHour ${context.getString(
+                        R.string.dk_common_unit_hour
+                    )}"
+                } else {
+                    "$nbHour ${context.getString(R.string.dk_common_unit_hour)} $nbMinute"
+                }
+            } else {
+                "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
+            }
         }
+        return "-"
+    }
 
     fun formatDistance(context: Context, distance: Double?): String {
         val distanceInKm = distance?.div(1000)
