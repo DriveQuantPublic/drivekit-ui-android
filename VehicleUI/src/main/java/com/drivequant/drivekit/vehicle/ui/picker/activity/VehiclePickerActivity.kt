@@ -159,4 +159,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             .add(R.id.container, fragment)
             .commit()
     }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1){
+            finish()
+        } else {
+            supportFragmentManager.popBackStack()
+        }
+    }
 }
