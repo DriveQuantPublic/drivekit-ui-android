@@ -18,6 +18,7 @@
             android:layout_width="@dimen/dk_ic_medium"
             android:layout_height="@dimen/dk_ic_medium"
             android:src="@drawable/dk_common_distraction_filled"
+            android:layout_marginEnd="@dimen/dk_margin_half"
             app:layout_constraintEnd_toStartOf="@+id/text_view_streak_title"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,7 @@
             android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:src="@drawable/dk_common_info"
-            android:backgroundTint="@color/dkSecondaryColor"
+            android:tint="@color/dkSecondaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
             app:layout_constraintTop_toTopOf="parent" />

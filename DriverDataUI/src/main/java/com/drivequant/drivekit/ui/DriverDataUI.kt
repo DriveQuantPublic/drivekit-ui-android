@@ -60,7 +60,6 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun createTripDetailFragment(tripId: String): Fragment = TripDetailFragment.newInstance(tripId)
 
-    //TODO Verify with Jeremy (include these fields in the initialize method)
     var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
     var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     var noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded

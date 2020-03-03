@@ -112,7 +112,7 @@ class StreaksData(
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET ->
 
                 DKSpannable()
-                .append("$currentTripsCount", context.resSpans {
+                .append("$bestTripsCount", context.resSpans {
                     typeface(Typeface.BOLD)
                     size(R.dimen.dk_text_big)
                 }).appendSpace("$trip - $bestDistance - $bestDuration", before = true).toSpannable()
