@@ -34,6 +34,7 @@ class DriverDistractionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
         FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 

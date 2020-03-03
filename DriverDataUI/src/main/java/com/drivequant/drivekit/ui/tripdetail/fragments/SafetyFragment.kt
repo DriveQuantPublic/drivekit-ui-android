@@ -36,6 +36,7 @@ class SafetyFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.safety_fragment, container, false)
         FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 

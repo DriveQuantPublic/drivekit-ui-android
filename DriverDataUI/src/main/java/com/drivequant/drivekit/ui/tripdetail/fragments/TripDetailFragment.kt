@@ -62,6 +62,7 @@ class TripDetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
         FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 

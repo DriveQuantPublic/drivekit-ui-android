@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -29,6 +30,7 @@ class SynthesisFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
         FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 

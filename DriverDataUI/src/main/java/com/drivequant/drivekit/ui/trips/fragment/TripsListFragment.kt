@@ -104,7 +104,9 @@ class TripsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_trips_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean){

@@ -13,6 +13,7 @@ import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 import kotlinx.android.synthetic.main.fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
@@ -33,7 +34,9 @@ class StreaksListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_streaks_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_streaks_list, container, false)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
