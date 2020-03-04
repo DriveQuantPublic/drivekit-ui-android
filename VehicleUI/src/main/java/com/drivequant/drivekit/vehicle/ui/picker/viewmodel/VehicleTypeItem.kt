@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
-import com.drivequant.drivekit.vehicle.enum.VehicleType
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
 

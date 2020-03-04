@@ -15,12 +15,12 @@
         android:visibility="gone">
         <ListView
             android:id="@+id/vehicles_list"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="8dp"
+            android:layout_margin="8dp"
             android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:groupIndicator="@null" />
+            android:dividerHeight="0dp"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar

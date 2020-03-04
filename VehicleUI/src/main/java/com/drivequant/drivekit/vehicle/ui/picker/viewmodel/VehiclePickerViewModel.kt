@@ -5,8 +5,8 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
-import com.drivequant.drivekit.vehicle.enum.VehicleBrand
-import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleBrand
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
@@ -201,7 +201,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleCharacteristics(){
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getVehicle(selectedVersion, object : VehicleDqVehicleQueryListener {
+        DriveKitVehiclePicker.getCharacteristics(selectedVersion, object : VehicleCharacteristicsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
                 when (status){
                     SUCCESS -> {

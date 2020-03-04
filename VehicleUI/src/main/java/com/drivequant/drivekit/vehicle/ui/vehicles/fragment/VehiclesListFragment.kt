@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.vehicle.ui.manager.viewmodel.fragment
+package com.drivequant.drivekit.vehicle.ui.vehicles.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -6,17 +6,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.drivequant.drivekit.vehicle.ui.manager.viewmodel.VehiclesListViewModel
-import com.drivequant.drivekit.vehicle.ui.manager.viewmodel.adapter.VehiclesListAdapter
-import kotlinx.android.synthetic.main.activity_vehicle_picker.*
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
+import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
+import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
+import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
+    private lateinit var status: VehicleSyncStatus
     private var adapter: VehiclesListAdapter? = null
 
     companion object {
@@ -34,7 +37,7 @@ class VehiclesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = "HC mes véhicules"
-        refresh_trips.setOnRefreshListener {
+        refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
     }
@@ -46,38 +49,35 @@ class VehiclesListFragment : Fragment() {
 
     private fun updateVehicles(){
         viewModel.vehiclesData.observe(this, Observer {
-            if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR){
-                Toast.makeText(context, tripsViewConfig.failedToSyncTrips, Toast.LENGTH_LONG).show()
+            if (viewModel.syncStatus != VehicleSyncStatus.NO_ERROR){
+                Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO hc string key
             }
-            if (viewModel.tripsByDate.isNullOrEmpty()){
-                displayNoTrips()
+            if (it.isNullOrEmpty()){
+                displayNoVehicle()
             } else {
-                displayTripsList()
+                displayVehiclesList()
                 if (adapter != null) {
                     adapter?.notifyDataSetChanged()
                 } else {
-                    adapter = TripsListAdapter(view?.context, viewModel, tripsViewConfig)
-                    trips_list.setAdapter(adapter)
+                    adapter = VehiclesListAdapter(view?.context, viewModel, it)
+                    vehicles_list.adapter = adapter
                 }
             }
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
-        viewModel.fetchTrips(tripsViewConfig.dayTripDescendingOrder)
+        viewModel.fetchVehicles()
     }
 
-    private fun displayNoTrips(){
-        no_trips.visibility = View.VISIBLE
-        trips_list.emptyView = no_trips
-        no_trips_recorded_text.text = tripsViewConfig.noTripsRecordedText
-        no_trips_recorded_text.setTextColor(tripsViewConfig.primaryColor)
-        image_view_no_trips.setImageDrawable(ContextCompat.getDrawable(requireContext(), tripsViewConfig.noTripsRecordedDrawable))
+    private fun displayNoVehicle(){
+        no_vehicles.visibility = View.VISIBLE
+        vehicles_list.emptyView = no_vehicles
         hideProgressCircular()
     }
 
-    private fun displayTripsList(){
-        no_trips.visibility = View.GONE
-        trips_list.visibility = View.VISIBLE
+    private fun displayVehiclesList(){
+        no_vehicles.visibility = View.GONE
+        vehicles_list.visibility = View.VISIBLE
         hideProgressCircular()
     }
 
@@ -95,7 +95,7 @@ class VehiclesListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundlefragment_vehicles_list?
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_vehicles_list, container, false)
     }
@@ -103,11 +103,11 @@ class VehiclesListFragment : Fragment() {
     fun updateProgressVisibility(displayProgress: Boolean){
         if (displayProgress){
             progress_circular.visibility = View.VISIBLE
-            refresh_trips.isRefreshing = true
+            refresh_vehicles.isRefreshing = true
         } else {
             progress_circular.visibility = View.GONE
-            refresh_trips.visibility = View.VISIBLE
-            refresh_trips.isRefreshing = false
+            refresh_vehicles.visibility = View.VISIBLE
+            refresh_vehicles.isRefreshing = false
         }
     }
 }

@@ -17,6 +17,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
@@ -96,15 +97,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.button_vehicle_list -> {
-                    val vehiclePickerViewConfig = VehiclePickerViewConfig(
-                        this,
-                        listOf(VehicleTypeItem.TRUCK, VehicleTypeItem.MOTORBIKE, VehicleTypeItem.CAR),
-                        VehicleTypeItem.CAR.getBrands(this),
-                        CategoryConfigType.BOTH_CONFIG,
-                        true
-                    )
-                    VehiclePickerActivity.launchActivity(this, vehiclePickerViewConfig)
-                }                // TODO vehicle detail
+                    startActivity(Intent(this, VehiclesListActivity::class.java))
+                }
             }
         }
     }

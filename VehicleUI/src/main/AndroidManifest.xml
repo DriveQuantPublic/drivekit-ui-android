@@ -3,5 +3,7 @@
     <application>
         <activity android:name=".picker.activity.VehiclePickerActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".vehicles.activity.VehiclesListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

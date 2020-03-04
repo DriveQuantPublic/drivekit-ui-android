@@ -31,4 +31,7 @@
     <string name="dk_vehicle_version_description">Version du véhicule ?</string>
     <string name="dk_vehicle_no_data">Aucun modèle trouvé pour ce type de moteur.</string>
     <string name="dk_vehicle_other_brands">Autres marques</string>
+
+
+    <string name="dk_vehicle_detection_mode_title">Démarrage auto :</string>
 </resources>

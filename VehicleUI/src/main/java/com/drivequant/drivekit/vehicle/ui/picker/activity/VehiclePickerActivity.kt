@@ -11,8 +11,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import com.drivequant.drivekit.vehicle.enum.VehicleBrand
-import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleBrand
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R

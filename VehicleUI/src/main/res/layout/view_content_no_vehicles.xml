@@ -6,22 +6,22 @@
     android:layout_gravity="center_vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
-        android:id="@+id/image_view_no_trips"
+        android:id="@+id/image_view_no_vehicles"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:src="@drawable/dk_no_trips_recorded"
+        android:src="@drawable/bmw"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
-        android:id="@+id/no_trips_recorded_text"
+        android:id="@+id/no_vehicles_text"
         android:textSize="18sp"
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/image_view_no_trips"
+        app:layout_constraintTop_toBottomOf="@id/image_view_no_vehicles"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>

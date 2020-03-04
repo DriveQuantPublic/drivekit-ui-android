@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
-import com.drivequant.drivekit.vehicle.enum.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
 data class VehicleEngineItem(
