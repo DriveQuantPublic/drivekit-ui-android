@@ -23,7 +23,7 @@ class VehiclesListAdapter(
         if (convertView == null){
             val layoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             view = layoutInflater.inflate(R.layout.view_vehicle_item_list, null)
-            holder = VehicleViewHolder(view)
+            holder = VehicleViewHolder(view, viewModel)
             view.tag = holder
         } else {
             holder = convertView.tag as VehicleViewHolder

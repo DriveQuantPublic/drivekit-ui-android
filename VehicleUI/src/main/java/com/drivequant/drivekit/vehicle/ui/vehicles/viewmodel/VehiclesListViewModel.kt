@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
@@ -46,8 +48,33 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String {
-        // Todo if liteconfig, display category by carTypeIndex ?
         return vehicle.computeTitle(context)
+    }
+
+    fun getDetectionModeDescription(context: Context, vehicle: Vehicle): String {
+        // TODO when not configured, display imageview & text is in bold & red
+        return when (vehicle.detectionMode) {
+            DISABLED -> {
+                context.getString(R.string.dk_detection_mode_disabled_desc)
+            }
+            GPS -> {
+                context.getString(R.string.dk_detection_mode_gps_desc)
+            }
+            BEACON -> {
+                vehicle.beacon?.let {
+                    context.getString(R.string.dk_detection_mode_beacon_desc_configured, it.code)
+                } ?: run {
+                    context.getString(R.string.dk_detection_mode_beacon_desc_not_configured)
+                }
+            }
+            BLUETOOTH -> {
+                vehicle.bluetooth?.let {
+                    context.getString(R.string.dk_detection_mode_bluetooth_desc_configured, it.name)
+                } ?: run {
+                    context.getString(R.string.dk_detection_mode_bluetooth_desc_not_configured)
+                }
+            }
+        }
     }
 
     class VehicleListViewModelFactory : ViewModelProvider.NewInstanceFactory(){
