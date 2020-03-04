@@ -43,11 +43,14 @@ class UnscoredTripFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
-        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
         trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
             .plus(" - ")
             .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER))
-        trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
         trip_message.text = context?.getString(viewModel.getNoScoreTripMessage())
+
+        trip_message.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+        trip_message.setBackgroundColor(DriveKitUI.colors.warningColor())
+        trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
+        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
     }
 }

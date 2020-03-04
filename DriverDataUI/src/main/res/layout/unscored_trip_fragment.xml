@@ -50,12 +50,9 @@
 
         <TextView
             android:id="@+id/trip_message"
-            style="@style/NormalText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/dkWarningColor"
-            android:padding="@dimen/dk_margin_half"
-            android:textColor="@android:color/white" />
+            android:padding="@dimen/dk_margin_half"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

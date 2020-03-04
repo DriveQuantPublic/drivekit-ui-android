@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:text="@string/dk_achievements_streaks_acceleration_title"
+            android:textSize="@dimen/dk_text_medium"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +57,6 @@
 
         <TextView
             android:id="@+id/best_title"
-            style="@style/Headline2"
-            android:textColor="@color/dkMainFontColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -87,8 +86,6 @@
 
         <TextView
             android:id="@+id/current_title"
-            style="@style/Headline2"
-            android:textColor="@color/dkMainFontColor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dk_margin"

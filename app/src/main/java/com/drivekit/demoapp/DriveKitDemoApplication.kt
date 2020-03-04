@@ -57,10 +57,12 @@ class DriveKitDemoApplication: Application() {
         }
 
         val color = object : DKColors {
-            override fun backgroundViewColor(): Int = Color.GREEN
+            override fun backgroundViewColor(): Int = Color.RED
+            override fun warningColor(): Int = Color.YELLOW
+            override fun mainFontColor(): Int = Color.BLUE
         }
 
-        DriveKitUI.initialize(colors = color, fonts = font)
+        DriveKitUI.initialize()
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
     }
@@ -104,7 +106,7 @@ class DriveKitDemoApplication: Application() {
         })
         DriveKitDriverData.initialize()
         // TODO: Push you api key here
-        DriveKit.setApiKey("Your API key here")
+        DriveKit.setApiKey("qDcgo5W2I1p3u5STEhuQ1AJo")
 
         initFirstLaunch()
     }

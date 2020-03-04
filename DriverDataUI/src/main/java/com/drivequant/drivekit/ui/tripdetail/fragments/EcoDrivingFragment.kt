@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
@@ -52,9 +52,11 @@ class EcoDrivingFragment : Fragment() {
         decelAdvice.text = context?.getString(viewModel.getDecelMessage())
         gauge_type_title.text = context?.getString(viewModel.getGaugeTitle())
 
-        accelAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
-        mainAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
-        decelAdvice.setTextColor(DriveKitUI.colors.mainFontColor())
-        gauge_type_title.setTextColor(DriveKitUI.colors.mainFontColor())
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
+
+        accelAdvice.bigText(mainFontColor)
+        mainAdvice.bigText(mainFontColor)
+        decelAdvice.bigText(mainFontColor)
+        gauge_type_title.bigText(mainFontColor)
     }
 }

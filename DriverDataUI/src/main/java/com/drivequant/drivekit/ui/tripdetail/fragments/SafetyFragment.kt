@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
@@ -61,17 +62,17 @@ class SafetyFragment : Fragment() {
         brake_description.text = context?.getString(R.string.dk_driverdata_safety_decel)
         adherence_description.text = context?.getString(R.string.dk_driverdata_safety_adherence)
 
-        gauge_type_title.setTextColor(DriveKitUI.colors.mainFontColor())
-        accel_description.setTextColor(DriveKitUI.colors.mainFontColor())
-        brake_description.setTextColor(DriveKitUI.colors.mainFontColor())
-        adherence_description.setTextColor(DriveKitUI.colors.mainFontColor())
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val primaryColor = DriveKitUI.colors.primaryColor()
 
-        accel_number_event.setTextColor(DriveKitUI.colors.primaryColor())
-        accel_number_event.typeface = Typeface.DEFAULT_BOLD
-        brake_number_event.setTextColor(DriveKitUI.colors.primaryColor())
-        brake_number_event.typeface = Typeface.DEFAULT_BOLD
-        adherence_number_event.setTextColor(DriveKitUI.colors.primaryColor())
-        adherence_number_event.typeface = Typeface.DEFAULT_BOLD
+        gauge_type_title.bigText(mainFontColor)
+        accel_description.bigText(mainFontColor)
+        brake_description.bigText(mainFontColor)
+        adherence_description.bigText(mainFontColor)
+
+        accel_number_event.headLine1(primaryColor)
+        brake_number_event.headLine1(primaryColor)
+        adherence_number_event.headLine1(primaryColor)
 
         score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY)
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()

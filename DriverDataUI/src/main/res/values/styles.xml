@@ -4,16 +4,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TripDetailDescriptionText" parent="BigText">
-        <item name="android:textColor">@color/dkMainFontColor</item>
+    <style name="TripDetailDescriptionText">
         <item name="android:layout_marginStart">@dimen/dk_margin_half</item>
         <item name="android:layout_marginEnd">@dimen/dk_margin_half</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="EventNumberText">
-        <item name="android:textSize">@dimen/dk_text_big</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
 </resources>
