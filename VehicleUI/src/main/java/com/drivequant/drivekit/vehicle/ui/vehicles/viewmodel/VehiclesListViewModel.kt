@@ -33,6 +33,14 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         }
     }
 
+    fun getScreenTitle(context: Context?): String? {
+        return if (vehiclesList.size > 1){
+            context?.getString(R.string.dk_vehicle_my_vehicles)
+        } else {
+            context?.getString(R.string.dk_vehicle_my_vehicle)
+        }
+    }
+
     fun getTitle(context: Context, vehicle: Vehicle): String {
         return vehicle.computeTitle(context)
     }

@@ -12,6 +12,9 @@ class VehiclesListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicles_list)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         supportFragmentManager.beginTransaction()
             .add(R.id.container, VehiclesListFragment.newInstance())
             .commit()

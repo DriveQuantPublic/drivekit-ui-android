@@ -36,7 +36,7 @@ class VehiclesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = "HC mes véhicules"
+        activity?.title = "HC Chargement…" // TODO
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
@@ -50,7 +50,7 @@ class VehiclesListFragment : Fragment() {
     private fun updateVehicles(){
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus != VehicleSyncStatus.NO_ERROR){
-                Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO hc string key
+                Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO
             }
             if (it.isNullOrEmpty()){
                 displayNoVehicle()
@@ -59,16 +59,16 @@ class VehiclesListFragment : Fragment() {
                 if (adapter != null) {
                     adapter?.notifyDataSetChanged()
                 } else {
-                    adapter = VehiclesListAdapter(view?.context, viewModel, it)
+                    adapter = VehiclesListAdapter(context, viewModel, it)
                     vehicles_list.adapter = adapter
                 }
             }
+            activity?.title = viewModel.getScreenTitle(context)
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
         viewModel.fetchVehicles()
     }
-
     private fun displayNoVehicle(){
         no_vehicles.visibility = View.VISIBLE
         vehicles_list.emptyView = no_vehicles
