@@ -71,5 +71,5 @@ object DKDataFormatter {
         R.string.dk_common_unit_km_per_hour)}"
 
     fun formatConsumption(context: Context, consumption: Double) :String =
-        String.format(Locale.getDefault(), "%.1f %s", consumption, context.getString(R.string.dk_common_unit_l_per_100km))
+        String.format(Locale.getDefault(), "%.1f %s", consumption.removeZeroDecimal(), context.getString(R.string.dk_common_unit_l_per_100km))
 }
