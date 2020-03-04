@@ -64,6 +64,7 @@
         android:layout_height="56dp"
         android:maxLines="1"
         android:gravity="start|center_vertical"
+        app:layout_constraintWidth_percent="0.4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,6 +75,7 @@
         android:layout_height="56dp"
         android:maxLines="1"
         android:gravity="start|center_vertical"
+        app:layout_constraintWidth_percent="0.4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accelAdvice" />
 
@@ -84,6 +86,7 @@
         android:layout_height="56dp"
         android:maxLines="1"
         android:gravity="start|center_vertical"
+        app:layout_constraintWidth_percent="0.4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mainAdvice" />
 
