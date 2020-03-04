@@ -11,6 +11,9 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
@@ -26,6 +29,8 @@ class StreakViewHolder(itemView: View) :
     private val textViewCurrentStreakDate = itemView.findViewById<TextView>(R.id.text_view_current_streak_date)
     private val textViewBestStreakDate = itemView.findViewById<TextView>(R.id.text_view_best_streak_date)
     private val textViewTripsCount = itemView.findViewById<TextView>(R.id.text_view_trips_count)
+    private val textViewBestTitle = itemView.findViewById<TextView>(R.id.best_title)
+    private val textViewCurrentTitle = itemView.findViewById<TextView>(R.id.current_title)
     private val imageViewStreak = itemView.findViewById<ImageView>(R.id.image_view_streak_icon)
     private val seekBar = itemView.findViewById<SeekBar>(R.id.seek_bar)
     private val imageViewInfo = itemView.findViewById<ImageView>(R.id.image_view_info)
@@ -37,6 +42,11 @@ class StreakViewHolder(itemView: View) :
         imageViewInfo.setOnClickListener {
             showDescription(streaksData)
         }
+
+        textViewStreakTitle.headLine1()
+        textViewBestTitle.headLine2()
+        textViewCurrentTitle.headLine2()
+
         setupSeekBar(streaksData)
         setData(streaksData)
     }
@@ -66,14 +76,25 @@ class StreakViewHolder(itemView: View) :
     }
 
     private fun showDescription(streaksData: StreaksData) {
-        DKAlertDialog.AlertBuilder()
-            .init(context)
-            .iconResId(streaksData.getIcon())
-            .title(streaksData.getTitle(context))
-            .message(streaksData.getDescriptionText(context))
-            .positiveButton(context.getString(R.string.dk_common_ok),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
-            .show()
+
+       val alert = DKAlertDialog.LayoutBuilder()
+           .init(context)
+           .layout(R.layout.template_alert_dialog_layout)
+           .cancelable(true)
+           .positiveButton(context.getString(R.string.dk_common_ok),DialogInterface.OnClickListener
+           { dialog, _ ->  dialog.dismiss() })
+           .show()
+
+        val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+        val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+
+        title?.text = streaksData.getTitle(context)
+        description?.text = streaksData.getDescriptionText(context)
+        icon?.setImageResource(streaksData.getIcon())
+
+        title?.headLine1()
+        description?.normalText()
     }
 
     private fun setStyle(reset: Boolean = false) {

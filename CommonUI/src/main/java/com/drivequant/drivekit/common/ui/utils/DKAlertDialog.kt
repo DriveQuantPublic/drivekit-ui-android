@@ -24,7 +24,7 @@ object DKAlertDialog {
         fun init(context: Context) = apply {
             this.context = context
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.layout_alert_dialog,null)
+            val view = inflater.inflate(R.layout.empty_alert_dialog_layout,null)
             builder = AlertDialog.Builder(context)
             layout = view.findViewById(R.id.items_wrapper)
             builder?.setView(view)
@@ -91,9 +91,11 @@ object DKAlertDialog {
         private var title: String? = null,
         private var message: String? = null,
         private var positiveText: String? = null,
-        private var negativeText: String? = null) {
+        private var negativeText: String? = null ,
+        private var context: Context? = null) {
 
         fun init(context: Context) = apply {
+            this.context = context
             alertDialog = AlertDialog.Builder(context, R.style.ProgressDialogStyle).create()
         }
 

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -16,6 +17,9 @@ import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -74,18 +78,26 @@ class TripDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId){
             R.id.trip_delete -> {
-                AlertDialog.Builder(context)
-                    .setTitle(getString(R.string.app_name))
-                    .setMessage(context?.getString(R.string.dk_driverdata_confirm_delete_trip))
-                    .setCancelable(true)
-                    .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
-                        showProgressCircular()
-                        deleteTrip()
-                    }
-                    .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+                context?.let {
+                 val alert = DKAlertDialog.LayoutBuilder().init(it)
+                        .layout(R.layout.template_alert_dialog_layout)
+                        .cancelable(true)
+                        .positiveButton(getString(R.string.dk_common_ok),
+                            DialogInterface.OnClickListener { dialog, _ ->
+                                showProgressCircular()
+                                deleteTrip() })
+                        .negativeButton(getString(R.string.dk_common_cancel),
+                            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                        .show()
+
+                    val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                    val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+
+                    title?.text = getString(R.string.app_name)
+                    description?.text = getString(R.string.dk_driverdata_confirm_delete_trip)
+                    title?.headLine1()
+                    description?.normalText()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -118,25 +130,30 @@ class TripDetailFragment : Fragment() {
         viewModel.deleteTripObserver.observe(this, Observer {
             hideProgressCircular()
             if (it != null){
-                if (it){
-                    AlertDialog.Builder(context)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(context?.getString(R.string.dk_driverdata_trip_deleted))
-                        .setCancelable(false)
-                        .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
+                val alert = DKAlertDialog.LayoutBuilder()
+                    .init(context!!)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(
+                        getString(R.string.dk_common_ok),
+                        DialogInterface.OnClickListener { dialog, _ ->
                             dialog.dismiss()
                             activity?.onBackPressed()
-                        }
-                        .show()
+                        })
+                    .cancelable(false)
+                    .show()
+
+                val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                title?.text = getString(R.string.app_name)
+
+                if (it){
+                    description?.text = getString(R.string.dk_driverdata_trip_deleted)
+                    title?.headLine1()
+                    description?.normalText()
                 } else {
-                    AlertDialog.Builder(context)
-                        .setTitle(getString(R.string.app_name))
-                        .setMessage(context?.getString(R.string.dk_driverdata_failed_to_delete_trip))
-                        .setCancelable(true)
-                        .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
-                            dialog.dismiss()
-                        }
-                        .show()
+                    description?.text = getString(R.string.dk_driverdata_failed_to_delete_trip)
+                    title?.headLine1()
+                    description?.normalText()
                 }
             }
         })
@@ -270,7 +287,7 @@ class TripDetailFragment : Fragment() {
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
         header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
-
+        FontUtils.overrideFonts(context,feedbackView)
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
