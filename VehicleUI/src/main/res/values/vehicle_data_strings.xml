@@ -36,6 +36,11 @@
     <string name="dk_vehicle_detection_mode_title">Démarrage auto :</string>
     <string name="dk_vehicle_my_vehicles">Mes véhicules</string>
 
+    <string name="dk_detection_mode_disabled_title">Désactivé</string>
+    <string name="dk_detection_mode_gps_title">GPS</string>
+    <string name="dk_detection_mode_beacon_title">Beacon</string>
+    <string name="dk_detection_mode_bluetooth_title">Bluetooth</string>
+
     <string name="dk_detection_mode_disabled_desc">Avec ce réglage, le démarrage automatique est désactivé pour ce véhicule.</string>
     <string name="dk_detection_mode_gps_desc">L\'application utilise les capteurs du téléphone pour détecter vos trajets automatiquement. Ce mode a été optimisé pour limiter la consommation de la batterie.</string>
     <string name="dk_detection_mode_beacon_desc_configured">Le beacon %s a été associé à ce véhicule. L\'application enregistre automatiquement votre trajet lorsque le beacon est a proximité de votre smartphone.</string>

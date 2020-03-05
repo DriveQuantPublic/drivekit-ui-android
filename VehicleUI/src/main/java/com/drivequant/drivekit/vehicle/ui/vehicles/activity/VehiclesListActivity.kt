@@ -19,4 +19,9 @@ class VehiclesListActivity : AppCompatActivity() {
             .add(R.id.container, VehiclesListFragment.newInstance())
             .commit()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

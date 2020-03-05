@@ -36,6 +36,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
+                android:src="@drawable/dk_overflow_popup_color"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?actionBarItemBackground"
