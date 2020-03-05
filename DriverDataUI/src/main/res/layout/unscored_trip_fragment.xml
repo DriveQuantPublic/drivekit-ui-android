@@ -41,12 +41,12 @@
         app:layout_constraintTop_toBottomOf="@id/trip_start_end">
 
         <ImageView
+            android:id="@+id/image_view_unscored_trip_info"
             android:layout_width="@dimen/dk_ic_big"
             android:layout_height="@dimen/dk_ic_big"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/dk_margin_half"
-            android:src="@drawable/dk_common_info"
-            android:tint="@color/dkWarningColor" />
+            android:background="@drawable/dk_common_info"/>
 
         <TextView
             android:id="@+id/trip_message"

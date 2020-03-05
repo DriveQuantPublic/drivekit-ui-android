@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -32,7 +33,10 @@ class CustomInfoWindowAdapter(
             eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE)
             eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
-            view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(context)
+            val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
+            bubbleTitle.text = event.getTitle(context)
+            bubbleTitle.normalText(DriveKitUI.colors.primaryColor())
+
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
                 descriptionTextView.visibility  = View.VISIBLE
@@ -40,12 +44,14 @@ class CustomInfoWindowAdapter(
             } ?: kotlin.run {
                 descriptionTextView.visibility  = View.GONE
             }
+
+            val bubbleInfo = view.findViewById<ImageView>(R.id.bubble_more_info)
+            bubbleInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
             if (event.showInfoIcon()){
-                view.findViewById<ImageView>(R.id.bubble_more_info).visibility = View.VISIBLE
+                bubbleInfo.visibility = View.VISIBLE
             }else{
-                view.findViewById<ImageView>(R.id.bubble_more_info).visibility = View.INVISIBLE
+                bubbleInfo.visibility = View.INVISIBLE
             }
-            view.findViewById<ImageView>(R.id.bubble_more_info).setColorFilter(DriveKitUI.colors.secondaryColor())
         }
         FontUtils.overrideFonts(context, view)
         return view

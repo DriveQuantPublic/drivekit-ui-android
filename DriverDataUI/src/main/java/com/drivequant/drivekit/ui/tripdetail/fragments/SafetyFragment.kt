@@ -70,6 +70,10 @@ class SafetyFragment : Fragment() {
         brake_description.bigText(mainFontColor)
         adherence_description.bigText(mainFontColor)
 
+        accel_image.setColorFilter(mainFontColor)
+        decel_image.setColorFilter(mainFontColor)
+        adherence_image.setColorFilter(mainFontColor)
+
         accel_number_event.headLine1(primaryColor)
         brake_number_event.headLine1(primaryColor)
         adherence_number_event.headLine1(primaryColor)

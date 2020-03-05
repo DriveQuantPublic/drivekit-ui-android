@@ -41,14 +41,12 @@
             />
     </FrameLayout>
 
-    <View android:id="@+id/view_separator"
-        android:visibility="gone"
+    <View
+        android:id="@+id/view_separator"
         tools:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dkNeutralColor"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        style="@style/Separator.Horizontal"
+        android:layout_marginTop="@dimen/dk_margin_quarter"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintTop_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,31 +56,31 @@
         android:id="@+id/container_trip_info"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="@dimen/dk_margin_quarter"
+        android:layout_marginEnd="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/image_circle_top"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="@dimen/dk_margin_half"
+        android:layout_height="@dimen/dk_margin_half"
         android:background="@drawable/dk_secondary_color_circle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/view_group_trip_data"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginTop="@dimen/dk_margin_half"/>
 
     <ImageView
         android:id="@+id/image_circle_bottom"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="@dimen/dk_margin_half"
+        android:layout_height="@dimen/dk_margin_half"
         android:background="@drawable/dk_secondary_color_circle"
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintStart_toEndOf="@id/view_group_trip_data"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_half"/>
 
     <View
         android:id="@+id/view_circle_separator"

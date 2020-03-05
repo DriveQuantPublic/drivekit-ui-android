@@ -33,7 +33,6 @@
         android:id="@+id/container_header_trip"
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="@color/dkPrimaryColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/pager_container"
         />

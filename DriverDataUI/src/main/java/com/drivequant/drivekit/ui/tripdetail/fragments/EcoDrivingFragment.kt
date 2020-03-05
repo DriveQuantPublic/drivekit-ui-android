@@ -54,6 +54,10 @@ class EcoDrivingFragment : Fragment() {
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
 
+        image_accel_advice.setColorFilter(mainFontColor)
+        image_decel_advice.setColorFilter(mainFontColor)
+        image_main_advice.setColorFilter(mainFontColor)
+
         accelAdvice.bigText(mainFontColor)
         mainAdvice.bigText(mainFontColor)
         decelAdvice.bigText(mainFontColor)

@@ -13,7 +13,6 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-
     <style name="ButtonText">
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/dk_text_medium</item>
