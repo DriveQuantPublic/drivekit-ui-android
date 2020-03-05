@@ -18,6 +18,7 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import java.util.*
 
 class DriveKitDemoApplication: Application() {
@@ -84,6 +85,7 @@ class DriveKitDemoApplication: Application() {
             }
         })
         DriveKitDriverData.initialize()
+        DriveKitVehicle.initialize()
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
 

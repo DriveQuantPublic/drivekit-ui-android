@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.extension
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 
 fun Vehicle.computeTitle(context: Context): String {
     val defaultName = getDefaultTitle(this)
@@ -19,8 +20,12 @@ fun Vehicle.computeTitle(context: Context): String {
 
 fun Vehicle.computeSubtitle(context: Context): String {
     val defaultName = getDefaultTitle(this)
-    return if (this.liteConfig){ // TODO verify why liteConfig is always false
-        " véhicule simplifié "
+    return if (this.liteConfig){
+        VehicleTypeItem.CAR.getCategories(context).first { it.liteConfigDqIndex == this.dqIndex}.title?.let {
+            it
+        }?: run {
+            defaultName
+        }
     } else {
         defaultName
     }

@@ -13,6 +13,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import java.io.Serializable
 
@@ -48,7 +49,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.computeTitle(context)
+        return vehicle.computeSubtitle(context)
     }
 
     fun getDetectionModeDescription(context: Context, vehicle: Vehicle): String {

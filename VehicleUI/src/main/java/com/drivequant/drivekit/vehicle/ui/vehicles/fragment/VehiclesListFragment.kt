@@ -100,7 +100,7 @@ class VehiclesListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_vehicles_list, container, false)
     }
 
-    fun updateProgressVisibility(displayProgress: Boolean){
+    private fun updateProgressVisibility(displayProgress: Boolean){
         if (displayProgress){
             progress_circular.visibility = View.VISIBLE
             refresh_vehicles.isRefreshing = true
