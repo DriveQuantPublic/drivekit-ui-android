@@ -34,6 +34,7 @@
         android:layout_gravity="bottom"
         android:textSize="18sp"
         android:gravity="center"
+        android:foreground="?attr/selectableItemBackground"
         android:textStyle="bold"/>
 
     <ProgressBar
