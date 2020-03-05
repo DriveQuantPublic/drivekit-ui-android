@@ -12,6 +12,7 @@
         android:id="@+id/refresh_vehicles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:visibility="gone">
         <ListView
             android:id="@+id/vehicles_list"
@@ -22,6 +23,18 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/add_vehicle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00EBB8"
+        android:textColor="@android:color/white"
+        android:text="@string/dk_vehicle_add"
+        android:layout_gravity="bottom"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"/>
 
     <ProgressBar
         android:id="@+id/progress_circular"

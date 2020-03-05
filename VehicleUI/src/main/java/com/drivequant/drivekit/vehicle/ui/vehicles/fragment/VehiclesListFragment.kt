@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
@@ -39,6 +41,11 @@ class VehiclesListFragment : Fragment() {
         activity?.title = "HC Chargement…" // TODO
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
+        }
+
+        // TODO if can add vehicle
+        add_vehicle.setOnClickListener {
+            VehiclePickerActivity.launchActivity(requireContext())
         }
     }
 

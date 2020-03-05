@@ -56,4 +56,6 @@
     <string name="dk_vehicle_replace">Remplacer</string>
     <string name="dk_vehicle_delete">Supprimer</string>
 
+    <string name="dk_vehicle_add">Ajouter un véhicule</string>
+
 </resources>
