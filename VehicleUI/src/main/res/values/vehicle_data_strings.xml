@@ -51,4 +51,9 @@
     <string name="dk_vehicle_configure_beacon">Configurer le Beacon</string>
     <string name="dk_vehicle_configure_bluetooth">Configurer le Bluetooth</string>
 
+    <string name="dk_vehicle_show">Afficher</string>
+    <string name="dk_vehicle_rename">Renommer</string>
+    <string name="dk_vehicle_replace">Remplacer</string>
+    <string name="dk_vehicle_delete">Supprimer</string>
+
 </resources>

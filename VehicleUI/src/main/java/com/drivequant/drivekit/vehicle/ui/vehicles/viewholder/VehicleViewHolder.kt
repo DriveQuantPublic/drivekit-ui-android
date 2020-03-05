@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewholder
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
 import android.view.View
 import android.widget.*
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
@@ -13,8 +14,9 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewMod
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
     private val textViewSubtitle: TextView = itemView.findViewById(R.id.text_view_subtitle)
+    private val popup: ImageView = itemView.findViewById(R.id.image_view_popup)
     private val linearLayoutDetectionMode: LinearLayout = itemView.findViewById(R.id.detection_mode_container)
-    private val spinerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
+    private val spinnerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
@@ -23,8 +25,21 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         val context = itemView.context
         textViewTitle.text = viewModel.getTitle(context, vehicle)
         textViewSubtitle.text = viewModel.getSubtitle(context, vehicle)
+        setupPopup(context, vehicle)
         setupDetectionModeContainer(context, vehicle)
         setupConfigureButton(context, vehicle)
+    }
+
+    private fun setupPopup(context: Context, vehicle: Vehicle){
+        // TODO via singleton, determinate if VM build items
+        popup.setOnClickListener {
+            val popupMenu = PopupMenu(context, it)
+            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_show)
+            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_rename)
+            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_replace)
+            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_delete)
+            popupMenu.show()
+        }
     }
 
     private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
@@ -42,7 +57,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         detectionModes.add(buildItem(context, DetectionModeType.BLUETOOTH))
 
         val adapter: ArrayAdapter<DetectionModeSpinnerItem> = ArrayAdapter(context, R.layout.simple_list_item_spinner, detectionModes)
-        spinerDetectionMode.adapter = adapter
+        spinnerDetectionMode.adapter = adapter
     }
 
     private fun setupConfigureButton(context: Context, vehicle: Vehicle){
