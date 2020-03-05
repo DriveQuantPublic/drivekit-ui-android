@@ -19,7 +19,6 @@
 
     <TextView
         android:id="@+id/gauge_type_title"
-        style="@style/BigText"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:gravity="center"

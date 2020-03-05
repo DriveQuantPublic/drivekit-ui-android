@@ -10,10 +10,10 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -37,10 +37,12 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
 
+
+
     fun bind(trip: Trip, isLastChild: Boolean){
-        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewDepartureCity.text = trip.departureCity
-        textViewArrivalTime.text = trip.endDate.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE_LETTER)
+        textViewArrivalTime.text = trip.endDate.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.arrivalCity
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
 
@@ -69,7 +71,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
-                textIndicator.setTextColor(DriveKitUI.colors.primaryColor())
+                textIndicator.headLine2(DriveKitUI.colors.primaryColor())
                 textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip))) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
             }
         }

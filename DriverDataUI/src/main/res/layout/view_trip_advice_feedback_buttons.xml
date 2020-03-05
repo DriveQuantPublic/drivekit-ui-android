@@ -50,7 +50,6 @@
             android:layout_margin="4dp"/>
         <TextView
             android:id="@+id/advice_agree_textview"
-            style="@style/Headline2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

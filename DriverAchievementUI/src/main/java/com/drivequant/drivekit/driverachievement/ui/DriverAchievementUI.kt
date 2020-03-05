@@ -11,18 +11,19 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksList
 
 object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
-    lateinit var streakThemes:List<StreakTheme>
-
-    fun initialize(streakThemes:  List<StreakTheme> = listOf(
+    internal var streakThemes:List<StreakTheme> = listOf(
         StreakTheme.PHONE_DISTRACTION,
         StreakTheme.SAFETY,
-        StreakTheme.SPEEDING,
         StreakTheme.ACCELERATION,
         StreakTheme.BRAKE,
-        StreakTheme.ADHERENCE)) {
+        StreakTheme.ADHERENCE)
 
-        this.streakThemes = streakThemes
+    fun initialize() {
         DriveKitNavigationController.driverAchievementUIEntryPoint = this
+    }
+
+    fun configureStreakThemes(streakThemes: List<StreakTheme>) {
+        this.streakThemes = streakThemes
     }
 
     override fun startStreakListActivity(context: Context) {

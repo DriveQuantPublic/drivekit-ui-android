@@ -18,10 +18,10 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 class StreaksData(
     private var streakTheme: StreakTheme, private var best: StreakResult,
     private var current: StreakResult) {
-    private val currentStartDate = current.startDate.formatDate(DKDatePattern.FORMAT_STANDARD_DATE)
+    private val currentStartDate = current.startDate.formatDate(DKDatePattern.STANDARD_DATE)
     private val currentTripsCount = current.tripNumber
-    private val bestStartDate = best.startDate.formatDate(DKDatePattern.FORMAT_STANDARD_DATE)
-    private val bestEndDate = best.endDate.formatDate(DKDatePattern.FORMAT_STANDARD_DATE)
+    private val bestStartDate = best.startDate.formatDate(DKDatePattern.STANDARD_DATE)
+    private val bestEndDate = best.endDate.formatDate(DKDatePattern.STANDARD_DATE)
     val bestTripsCount = best.tripNumber
 
     fun getTitle(context: Context): String {

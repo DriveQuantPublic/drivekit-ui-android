@@ -37,7 +37,6 @@
             android:gravity="center"
             android:singleLine="true"
             android:visibility="gone"
-            style="@style/TripMainValue"
             tools:text="45km"
             />
     </FrameLayout>
@@ -92,7 +91,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@color/dkSecondaryColor"
         app:layout_constraintTop_toBottomOf="@id/image_circle_top"
         app:layout_constraintBottom_toTopOf="@id/image_circle_bottom"
         app:layout_constraintStart_toStartOf="@id/image_circle_top"

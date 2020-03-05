@@ -1,9 +1,4 @@
 <resources>
-    <style name="TripMainValue">
-        <item name="android:textColor">@color/dkPrimaryColor</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="TripDetailDescriptionText">
         <item name="android:layout_marginStart">@dimen/dk_margin_half</item>
         <item name="android:layout_marginEnd">@dimen/dk_margin_half</item>

@@ -15,7 +15,6 @@
 
     <TextView
         android:id="@+id/text_view_trip_synthesis_title"
-        style="@style/SmallText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
@@ -24,7 +23,6 @@
 
     <TextView
         android:id="@+id/text_view_trip_synthesis_value"
-        style="@style/Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"

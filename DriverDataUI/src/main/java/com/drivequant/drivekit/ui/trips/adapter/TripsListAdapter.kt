@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
@@ -43,8 +44,8 @@ class TripsListAdapter(
             view = convertView
         }
 
-        holder.tvDate.text = date.formatDate(DKDatePattern.FORMAT_WEEK_LETTER).capitalize()
-        holder.tvInformations.text = HeaderDay.DISTANCE_DURATION.text(holder.itemView.context, trips?.trips)
+        holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
+        holder.tvInformations.text = DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)
 
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())

@@ -29,7 +29,6 @@ import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
-import com.drivequant.drivekit.ui.trips.viewmodel.HeaderSummary
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
@@ -391,9 +390,9 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary(){
-        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.FORMAT_WEEK_LETTER)?.capitalize()
+        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalize()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-        trip_distance.text = HeaderSummary.DISTANCE_DURATION.text(requireContext(), viewModel.trip!!)
+        trip_distance.text = DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
         trip_distance.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 

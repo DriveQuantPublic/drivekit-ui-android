@@ -2,12 +2,14 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Streak
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
 import com.drivequant.drivekit.driverachievement.streak.StreaksQueryListener
+import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
 class StreaksListViewModel : ViewModel() {
 
@@ -15,14 +17,14 @@ class StreaksListViewModel : ViewModel() {
     val streaksData: MutableLiveData<List<StreaksData>> = MutableLiveData()
     var syncStatus: AchievementSyncStatus = AchievementSyncStatus.NO_ERROR
 
-    fun fetchStreaks(streaksToDisplay: List<StreakTheme>) {
+    fun fetchStreaks() {
         if (DriveKit.isConfigured()) {
             DriveKitDriverAchievement.getStreaks(object : StreaksQueryListener {
                 override fun onResponse(
                     achievementSyncStatus: AchievementSyncStatus,
                     streaks: List<Streak>) {
                     syncStatus = achievementSyncStatus
-                    filteredStreaksData = getFilteredStreaks(streaksToDisplay, streaks)
+                    filteredStreaksData = getFilteredStreaks(streaks)
                     streaksData.postValue(filteredStreaksData)
                 }
             })
@@ -31,9 +33,9 @@ class StreaksListViewModel : ViewModel() {
         }
     }
 
-    fun getFilteredStreaks(streaksToDisplay: List<StreakTheme>, fetchedStreaks: List<Streak>): MutableList<StreaksData> {
+    fun getFilteredStreaks(fetchedStreaks: List<Streak>): MutableList<StreaksData> {
         if (fetchedStreaks.isNotEmpty()) {
-            val filteredStreaks = fetchedStreaks.filter { streak -> streak.theme in streaksToDisplay }
+            val filteredStreaks = fetchedStreaks.filter { streak -> streak.theme in DriverAchievementUI.streakThemes }
             filteredStreaksData.clear()
             for (streak in filteredStreaks) {
                 filteredStreaksData.add(

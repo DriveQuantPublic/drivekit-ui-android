@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
@@ -28,7 +29,7 @@ class CustomInfoWindowAdapter(
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
             val eventHour = view.findViewById<TextView>(R.id.text_view_time)
-            eventHour.text = event.time.formatDate(DKDatePattern.FORMAT_HOUR_MINUTE)
+            eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE)
             eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
             view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(context)
@@ -40,10 +41,11 @@ class CustomInfoWindowAdapter(
                 descriptionTextView.visibility  = View.GONE
             }
             if (event.showInfoIcon()){
-                view.findViewById<AppCompatButton>(R.id.bubble_more_info).visibility = View.VISIBLE
+                view.findViewById<ImageView>(R.id.bubble_more_info).visibility = View.VISIBLE
             }else{
-                view.findViewById<AppCompatButton>(R.id.bubble_more_info).visibility = View.INVISIBLE
+                view.findViewById<ImageView>(R.id.bubble_more_info).visibility = View.INVISIBLE
             }
+            view.findViewById<ImageView>(R.id.bubble_more_info).setColorFilter(DriveKitUI.colors.secondaryColor())
         }
         FontUtils.overrideFonts(context, view)
         return view

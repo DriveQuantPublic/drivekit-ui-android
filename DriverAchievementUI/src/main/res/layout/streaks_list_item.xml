@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    style="@style/DKCard"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dk_margin_half"
-    card_view:cardElevation="@dimen/dk_margin_quarter">
+    android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +25,6 @@
 
         <TextView
             android:id="@+id/text_view_streak_title"
-            style="@style/Headline1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dk_margin_quarter"
@@ -43,7 +41,6 @@
             android:layout_marginTop="@dimen/dk_margin_quarter"
             android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:src="@drawable/dk_common_info"
-            android:tint="@color/dkSecondaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
             app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +63,6 @@
 
         <TextView
             android:id="@+id/text_view_best_streak_trip"
-            style="@style/SmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -76,7 +72,6 @@
 
         <TextView
             android:id="@+id/text_view_best_streak_date"
-            style="@style/SmallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"
@@ -95,7 +90,6 @@
 
         <TextView
             android:id="@+id/text_view_current_streak_trip"
-            style="@style/SmallText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
@@ -105,7 +99,6 @@
 
         <TextView
             android:id="@+id/text_view_current_streak_date"
-            style="@style/SmallText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_quarter"

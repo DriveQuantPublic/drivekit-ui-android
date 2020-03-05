@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel

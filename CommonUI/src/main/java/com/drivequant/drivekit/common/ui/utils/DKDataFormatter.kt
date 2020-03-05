@@ -5,7 +5,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
-import java.util.*
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 object DKDataFormatter {
@@ -18,17 +18,17 @@ object DKDataFormatter {
 
         if (durationInSeconds != null) {
             if (durationInSeconds > 60) {
-                nbMinute = (durationInSeconds / 60).roundToInt()
+                nbMinute = ceil(durationInSeconds.div(60)).toInt()
             } else {
                 return "${durationInSeconds.toInt()} ${context.getString(R.string.dk_common_unit_second)}"
             }
 
             return if (nbMinute > 59) {
-                nbHour = nbMinute / 60
+                nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
 
                 if (nbHour > 23) {
-                    nbDay = nbHour / 24
+                    nbDay = nbHour.div(24)
                     nbHour -= nbHour - (24 * nbDay)
                     "$nbDay ${context.getString(R.string.dk_common_unit_day)} $nbHour ${context.getString(
                         R.string.dk_common_unit_hour
@@ -71,5 +71,5 @@ object DKDataFormatter {
         R.string.dk_common_unit_km_per_hour)}"
 
     fun formatConsumption(context: Context, consumption: Double) :String =
-        String.format(Locale.getDefault(), "%.1f %s", consumption.removeZeroDecimal(), context.getString(R.string.dk_common_unit_l_per_100km))
+        "${consumption.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_l_per_100km)}"
 }

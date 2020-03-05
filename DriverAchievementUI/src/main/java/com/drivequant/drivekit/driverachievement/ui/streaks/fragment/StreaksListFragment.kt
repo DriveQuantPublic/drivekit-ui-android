@@ -69,7 +69,7 @@ class StreaksListFragment : Fragment() {
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
-        listViewModel.fetchStreaks(DriverAchievementUI.streakThemes)
+        listViewModel.fetchStreaks()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
