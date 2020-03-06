@@ -7,22 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.GaugeIndicator
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.commons.views.GaugeIndicator
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
-import com.drivequant.drivekit.ui.utils.DistanceUtils
-import com.drivequant.drivekit.ui.utils.DurationUtils
-import java.text.SimpleDateFormat
-import java.util.*
 
-class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfig) : RecyclerView.ViewHolder(itemView) {
-    private val dateFormatHour = SimpleDateFormat("HH'h'mm", Locale.getDefault())
+class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
     private val textViewDepartureCity = itemView.findViewById<TextView>(R.id.text_view_departure_city)
     private val textViewArrivalTime = itemView.findViewById<TextView>(R.id.text_view_arrival_time)
@@ -36,18 +37,26 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
 
+
+
     fun bind(trip: Trip, isLastChild: Boolean){
-        textViewDepartureTime.text = dateFormatHour.format(trip.getOrComputeStartDate())
+        textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewDepartureCity.text = trip.departureCity
-        textViewArrivalTime.text = dateFormatHour.format(trip.endDate)
+        textViewArrivalTime.text = trip.endDate.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.arrivalCity
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
+        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
-        DrawableCompat.setTint(circleBottom.background, tripsViewConfig.secondaryColor)
-        DrawableCompat.setTint(circleTop.background, tripsViewConfig.secondaryColor)
-        circleSeparator.setBackgroundColor(tripsViewConfig.secondaryColor)
+        DrawableCompat.setTint(circleBottom.background, DriveKitUI.colors.secondaryColor())
+        DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())
+        circleSeparator.setBackgroundColor(DriveKitUI.colors.secondaryColor())
 
-        computeTripData(trip, tripsViewConfig.tripData)
+        textViewDepartureCity.setTextColor(DriveKitUI.colors.mainFontColor())
+        textViewArrivalCity.setTextColor(DriveKitUI.colors.mainFontColor())
+        textViewDepartureTime.setTextColor(DriveKitUI.colors.complementaryFontColor())
+        textViewArrivalTime.setTextColor(DriveKitUI.colors.complementaryFontColor())
+
+        computeTripData(trip, DriverDataUI.tripData)
         computeTripInfo(trip)
     }
 
@@ -56,15 +65,15 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             DisplayType.GAUGE -> {
                 if (tripData.isScored(trip)){
                     showGaugeIndicator()
-                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType(), tripsViewConfig.primaryFont)
+                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
                 } else {
                     showNoScoreIndicator()
                 }
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
-                textIndicator.setTextColor(tripsViewConfig.primaryColor)
-                textIndicator.text = if (tripData == TripData.DURATION) (DurationUtils().formatDuration(itemView.context, tripData.rawValue(trip))) else (DistanceUtils().formatDistance(itemView.context, tripData.rawValue(trip)))
+                textIndicator.headLine2(DriveKitUI.colors.primaryColor())
+                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip))) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
             }
         }
     }
@@ -93,7 +102,9 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
             val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
             val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-            DrawableCompat.setTint(tripInfoItem.background, tripsViewConfig.secondaryColor)
+            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+            DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
+            FontUtils.overrideFonts(tripInfoItem.context, tripInfoItem)
 
             tripInfo.imageResId(trip)?.let {
                 imageView.setImageResource(it)
@@ -107,7 +118,6 @@ class TripViewHolder(itemView: View, private val tripsViewConfig: TripsViewConfi
             tripInfoItem.setOnClickListener {
                 TripDetailActivity.launchActivity(itemView.context,
                     trip.itinId,
-                    tripsViewConfig = tripsViewConfig,
                     openAdvice = true)
             }
             tripInfoContainer.addView(tripInfoItem)

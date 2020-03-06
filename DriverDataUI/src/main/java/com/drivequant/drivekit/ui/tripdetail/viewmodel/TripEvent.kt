@@ -1,9 +1,13 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import java.util.*
 
 class TripEvent(val type: TripEventType,
@@ -15,11 +19,11 @@ class TripEvent(val type: TripEventType,
 
     fun getEventImageResource() : Int {
         return when(type){
-            TripEventType.SAFETY_BRAKE -> R.drawable.dk_safety_decel
+            TripEventType.SAFETY_BRAKE -> R.drawable.dk_common_safety_decel
             TripEventType.START -> R.drawable.dk_start_event_black
             TripEventType.FINISH -> R.drawable.dk_end_event_black
-            TripEventType.SAFETY_ADHERENCE -> R.drawable.dk_safety_adherence
-            TripEventType.SAFETY_ACCEL -> R.drawable.dk_safety_accel
+            TripEventType.SAFETY_ADHERENCE -> R.drawable.dk_common_safety_adherence
+            TripEventType.SAFETY_ACCEL -> R.drawable.dk_common_eco_accel
             TripEventType.PHONE_DISTRACTION_LOCK -> R.drawable.dk_lock_event
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_unlock_event
         }
@@ -36,28 +40,28 @@ class TripEvent(val type: TripEventType,
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_map_unlock
         }
     }
-
-    fun getTitle(detailViewConfig: TripDetailViewConfig) : String{
-        return when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) detailViewConfig.eventDecelCritText else detailViewConfig.eventDecelText
-            TripEventType.START -> detailViewConfig.startText
-            TripEventType.FINISH -> detailViewConfig.endText
-            TripEventType.SAFETY_ADHERENCE -> if (isHigh) detailViewConfig.eventAdherenceCritText else detailViewConfig.eventAdherenceText
-            TripEventType.SAFETY_ACCEL -> if (isHigh) detailViewConfig.eventAccelCritText else detailViewConfig.eventAccelText
-            TripEventType.PHONE_DISTRACTION_LOCK -> detailViewConfig.lockText
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> detailViewConfig.unlockText
-        }
+    //TODO Verify
+    fun getTitle(context: Context) : String {
+        return context.getString(when(type){
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_safety_list_brake_critical
+            TripEventType.START -> R.string.dk_driverdata_start_event
+            TripEventType.FINISH -> R.string.dk_driverdata_end_event
+            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
+            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_safety_list_acceleration_critical
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
+        })
     }
 
     fun getExplanation(context: Context) : String{
         return context.getString(when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_safety_explain_brake_critical else R.string.dk_safety_explain_brake
-            TripEventType.START -> R.string.dk_ok
-            TripEventType.FINISH -> R.string.dk_ok
-            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_safety_explain_adherence_critical else R.string.dk_safety_explain_adherence
-            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_safety_explain_acceleration_critical else R.string.dk_safety_explain_acceleration
-            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_screen_lock_text
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_screen_unlock_text
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_explain_brake_critical else R.string.dk_driverdata_safety_explain_brake
+            TripEventType.START -> R.string.dk_common_ok
+            TripEventType.FINISH -> R.string.dk_common_ok
+            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_explain_adherence_critical else R.string.dk_driverdata_safety_explain_adherence
+            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_explain_acceleration_critical else R.string.dk_driverdata_safety_explain_acceleration
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
         })
     }
 
@@ -85,13 +89,32 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getDescription(context: Context, trip: Trip) : String? {
+    fun getDescription(context: Context, trip: Trip) : Spannable? {
         return when(type){
-            TripEventType.SAFETY_BRAKE -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
-            TripEventType.START -> if (trip.departureAddress.isNullOrEmpty()) trip.departureCity else trip.departureAddress
-            TripEventType.FINISH ->if (trip.arrivalAddress.isNullOrEmpty()) trip.arrivalCity else trip.arrivalAddress
-            TripEventType.SAFETY_ADHERENCE -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
-            TripEventType.SAFETY_ACCEL -> "${context.getString(R.string.dk_value)} ${String.format("%.2f", value)} ${context.getString(R.string.dk_unit_accel)}"
+            TripEventType.SAFETY_BRAKE, TripEventType.SAFETY_ADHERENCE,TripEventType. SAFETY_ACCEL -> {
+
+                DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
+                    color(DriveKitUI.colors.warningColor())
+                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                }).toSpannable()
+
+            }
+
+            TripEventType.START -> {
+
+                if (trip.departureAddress.isNullOrEmpty())
+                 SpannableString.valueOf(trip.departureCity)
+                else
+                    SpannableString.valueOf(trip.departureAddress)
+
+            }
+            TripEventType.FINISH ->
+                if (trip.arrivalAddress.isNullOrEmpty())
+                    SpannableString.valueOf(trip.arrivalCity)
+                else
+                    SpannableString.valueOf(trip.arrivalAddress)
+
             TripEventType.PHONE_DISTRACTION_LOCK -> null
             TripEventType.PHONE_DISTRACTION_UNLOCK -> null
         }

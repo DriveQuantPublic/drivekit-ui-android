@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_achievements_failed_to_sync_streaks">Erfolgssequenzen können nicht synchronisiert werden, bitte versuchen Sie es später noch einmal.</string>
+   <string name="dk_achievements_menu_streaks">Streifen von Treffern</string>
+   <string name="dk_achievements_streaks_acceleration_reset">Sie haben auf Ihrer letzten Reise stark beschleunigt</string>
+   <string name="dk_achievements_streaks_acceleration_text">Versuchen Sie, eine Reihe von Fahrten ohne harte Beschleunigung durchzuführen. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_acceleration_title">Keine harte Beschleunigung</string>
+   <string name="dk_achievements_streaks_adherence_reset">Sie haben auf Ihrer letzten Reise ein Tempolimit überschritten</string>
+   <string name="dk_achievements_streaks_adherence_text">Versuchen Sie, eine Reihe von Fahrten zu machen, ohne irgendeine Haftgrenze zu überschreiten. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_adherence_title">Keine Haftgrenze</string>
+   <string name="dk_achievements_streaks_best_title">Beste Sequenz</string>
+   <string name="dk_achievements_streaks_brake_reset">Sie haben auf Ihrer letzten Reise gebremst</string>
+   <string name="dk_achievements_streaks_brake_text">Versuchen Sie, eine Reihe von Fahrten ohne starkes Bremsen zu machen. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_brake_title">Kein hartes Bremsen</string>
+   <string name="dk_achievements_streaks_congrats">Bravo!</string>
+   <string name="dk_achievements_streaks_congrats_text">Sie machen derzeit Ihre beste Erfolgsserie. Übertreffen Sie sich selbst immer wieder!</string>
+   <string name="dk_achievements_streaks_current_title">Aktuell</string>
+   <string name="dk_achievements_streaks_empty">Sie haben noch keine Reisen unternommen, um diese Sequenz zu vervollständigen</string>
+   <string name="dk_achievements_streaks_phone_distraction_reset">Sie haben Ihr Telefon auf Ihrer letzten Reise benutzt</string>
+   <string name="dk_achievements_streaks_phone_distraction_text">Versuchen Sie, eine Reihe von Fahrten zu machen, ohne Ihr Smartphone während der Fahrt zu manipulieren. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_phone_distraction_title">Keine Nutzung des Telefons</string>
+   <string name="dk_achievements_streaks_safety_reset">Der Sicherheitswert Ihrer letzten Reise liegt unter 9,8/10</string>
+   <string name="dk_achievements_streaks_safety_text">Versuchen Sie, eine Reihe von Fahrten mit Sicherheitswerten von über 9,8/10 zu verketten. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_safety_title">Sicheres Fahren</string>
+   <string name="dk_achievements_streaks_since">Seit der %s</string>
+   <string name="dk_achievements_streaks_since_to">Vom %s bis zum %s</string>
+   <string name="dk_achievements_streaks_speeding_reset">Sie haben auf Ihrer letzten Reise die Geschwindigkeitsbegrenzung überschritten</string>
+   <string name="dk_achievements_streaks_speeding_text">Versuchen Sie, eine Reihe von Fahrten innerhalb der Geschwindigkeitsbegrenzung zu machen. Das Tempolimit muss höher als 9,8/10 sein. \n \n Mit jedem Erfolg steigt der Zähler der Anzahl der Fahrten. \n \n Wenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen. \n \n Die Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
+   <string name="dk_achievements_streaks_speeding_title">Keine Geschwindigkeitsübertretung</string>
+</resources>

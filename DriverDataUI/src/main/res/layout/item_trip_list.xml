@@ -23,7 +23,7 @@
             android:padding="4dp"
             android:src="@drawable/dk_no_score"
             android:visibility="gone"/>
-        <com.drivequant.drivekit.ui.commons.views.GaugeIndicator
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/gauge_indicator_view"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -37,19 +37,16 @@
             android:gravity="center"
             android:singleLine="true"
             android:visibility="gone"
-            style="@style/TripMainValue"
             tools:text="45km"
             />
     </FrameLayout>
 
-    <View android:id="@+id/view_separator"
-        android:visibility="gone"
+    <View
+        android:id="@+id/view_separator"
         tools:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dkGaugeGray"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        style="@style/Separator.Horizontal"
+        android:layout_marginTop="@dimen/dk_margin_quarter"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintTop_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,31 +56,31 @@
         android:id="@+id/container_trip_info"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="@dimen/dk_margin_quarter"
+        android:layout_marginEnd="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/image_circle_top"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="@dimen/dk_margin_half"
+        android:layout_height="@dimen/dk_margin_half"
         android:background="@drawable/dk_secondary_color_circle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/view_group_trip_data"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginTop="@dimen/dk_margin_half"/>
 
     <ImageView
         android:id="@+id/image_circle_bottom"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="@dimen/dk_margin_half"
+        android:layout_height="@dimen/dk_margin_half"
         android:background="@drawable/dk_secondary_color_circle"
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintStart_toEndOf="@id/view_group_trip_data"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_half"/>
 
     <View
         android:id="@+id/view_circle_separator"
@@ -92,7 +89,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@color/dkSecondaryColor"
         app:layout_constraintTop_toBottomOf="@id/image_circle_top"
         app:layout_constraintBottom_toTopOf="@id/image_circle_bottom"
         app:layout_constraintStart_toStartOf="@id/image_circle_top"
@@ -101,7 +97,6 @@
 
     <TextView
         android:id="@+id/text_view_departure_time"
-        style="@style/TripListHour"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -113,7 +108,6 @@
         tools:text="10h11"/>
     <TextView
         android:id="@+id/text_view_departure_city"
-        style="@style/TripListCity"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -128,7 +122,6 @@
 
     <TextView
         android:id="@+id/text_view_arrival_time"
-        style="@style/TripListHour"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -140,7 +133,6 @@
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"/>
     <TextView
         android:id="@+id/text_view_arrival_city"
-        style="@style/TripListCity"
         android:layout_width="0dp"
         android:layout_height="24dp"
         android:gravity="center_vertical"
@@ -151,5 +143,4 @@
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintStart_toEndOf="@id/text_view_arrival_time"
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"/>
-
 </android.support.constraint.ConstraintLayout>

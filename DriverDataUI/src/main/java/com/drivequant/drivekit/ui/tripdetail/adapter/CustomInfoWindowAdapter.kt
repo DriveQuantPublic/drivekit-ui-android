@@ -4,19 +4,21 @@ import android.app.AlertDialog
 import android.content.Context
 import android.support.v7.widget.AppCompatButton
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.extension.formatHour
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
 class CustomInfoWindowAdapter(
     var context: Context,
-    private val tripDetailViewModel: TripDetailViewModel,
-    private val tripDetailViewConfig: TripDetailViewConfig
-) : GoogleMap.InfoWindowAdapter {
+    private val tripDetailViewModel: TripDetailViewModel) : GoogleMap.InfoWindowAdapter {
 
     var view: View = View.inflate(context, R.layout.item_info_marker, null)
 
@@ -27,8 +29,14 @@ class CustomInfoWindowAdapter(
     override fun getInfoWindow(marker: Marker?): View {
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
-            view.findViewById<TextView>(R.id.text_view_time).text = event.time.formatHour()
-            view.findViewById<TextView>(R.id.bubble_title).text = event.getTitle(tripDetailViewConfig)
+            val eventHour = view.findViewById<TextView>(R.id.text_view_time)
+            eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE)
+            eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
+
+            val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
+            bubbleTitle.text = event.getTitle(context)
+            bubbleTitle.normalText(DriveKitUI.colors.primaryColor())
+
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
                 descriptionTextView.visibility  = View.VISIBLE
@@ -36,12 +44,16 @@ class CustomInfoWindowAdapter(
             } ?: kotlin.run {
                 descriptionTextView.visibility  = View.GONE
             }
+
+            val bubbleInfo = view.findViewById<ImageView>(R.id.bubble_more_info)
+            bubbleInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
             if (event.showInfoIcon()){
-                view.findViewById<AppCompatButton>(R.id.bubble_more_info).visibility = View.VISIBLE
+                bubbleInfo.visibility = View.VISIBLE
             }else{
-                view.findViewById<AppCompatButton>(R.id.bubble_more_info).visibility = View.INVISIBLE
+                bubbleInfo.visibility = View.INVISIBLE
             }
         }
+        FontUtils.overrideFonts(context, view)
         return view
     }
 

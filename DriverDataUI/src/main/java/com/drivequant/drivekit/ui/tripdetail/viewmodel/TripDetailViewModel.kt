@@ -9,7 +9,7 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
-import com.drivequant.drivekit.ui.TripsViewConfig
+import com.drivequant.drivekit.ui.DriverDataUI
 import java.io.Serializable
 import java.util.*
 
@@ -247,8 +247,8 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         return getAdviceByMapItem(mapItem)?.message
     }
 
-    fun shouldDisplayFeedbackButtons(mapItem: MapItem, tripsViewConfig: TripsViewConfig): Boolean {
-        return getAdviceByMapItem(mapItem)?.evaluation == 0 && tripsViewConfig.enableAdviceFeedback
+    fun shouldDisplayFeedbackButtons(mapItem: MapItem): Boolean {
+        return getAdviceByMapItem(mapItem)?.evaluation == 0 && DriverDataUI.enableAdviceFeedback
     }
 
     fun sendTripAdviceFeedback(mapItem: MapItem, isPositive: Boolean, feedback: Int, comment: String? = null){

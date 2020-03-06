@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dkGaugeBackColor">#E0E0E0</color>
+    <color name="dkVeryBad">#FF6E57</color>
+    <color name="dkBad">#FFA057</color>
+    <color name="dkBadMean">#FFD357</color>
+    <color name="dkMean">#F9FF57</color>
+    <color name="dkGoodMean">#C6FF57</color>
+    <color name="dkGood">#94FF57</color>
+    <color name="dkExcellent">#30C8FC</color>
+</resources>

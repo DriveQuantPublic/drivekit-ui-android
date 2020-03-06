@@ -5,57 +5,52 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
-import com.drivequant.drivekit.ui.utils.DurationUtils
 import kotlinx.android.synthetic.main.unscored_trip_fragment.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class UnscoredTripFragment : Fragment() {
     companion object {
         fun newInstance(
-            trip: Trip?,
-            tripsViewConfig: TripsViewConfig,
-            tripDetailViewConfig: TripDetailViewConfig
+            trip: Trip?
         ): UnscoredTripFragment {
             val fragment = UnscoredTripFragment()
-            fragment.viewModel = UnscoredTripViewModel(
-                trip,
-                tripDetailViewConfig
-            )
-            fragment.tripsViewConfig = tripsViewConfig
-            fragment.tripDetailViewConfig = tripDetailViewConfig
+            fragment.viewModel = UnscoredTripViewModel(trip)
             return fragment
         }
     }
 
-    private val dateFormatHour = SimpleDateFormat("HH'h'mm", Locale.getDefault())
     private lateinit var viewModel: UnscoredTripViewModel
-    private lateinit var tripsViewConfig: TripsViewConfig
-    private lateinit var tripDetailViewConfig: TripDetailViewConfig
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.unscored_trip_fragment, container, false)
+        val view = inflater.inflate(R.layout.unscored_trip_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        trip_duration.text = DurationUtils()
-            .formatDuration(requireContext(), viewModel.getDuration())
-        trip_duration.setTextColor(tripsViewConfig.primaryColor)
-        trip_start_end.text = dateFormatHour.format(viewModel.getStartDate())
+        trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
+        trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")
-            .plus(dateFormatHour.format(viewModel.getEndDate()))
-        trip_start_end.setTextColor(tripsViewConfig.primaryColor)
-        trip_message.text = viewModel.getNoScoreTripMessage()
+            .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))
+        trip_message.text = context?.getString(viewModel.getNoScoreTripMessage())
+
+        trip_message.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+        trip_message.setBackgroundColor(DriveKitUI.colors.warningColor())
+        trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
+        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
     }
 }

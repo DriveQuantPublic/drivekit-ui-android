@@ -1,9 +1,8 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
+import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.extension.lessOrEqualsThan
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.commons.views.GaugeType
-import com.drivequant.drivekit.ui.extension.lessOrEqualsThan
-import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 
 enum class TripData {
     ECO_DRIVING, SAFETY, DISTRACTION, DURATION, DISTANCE;

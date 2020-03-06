@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.ui.extension
 
+import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
-import com.drivequant.drivekit.ui.utils.DateUtils
 import java.util.*
 
 fun List<Trip>.computeTotalDistance() : Double {
@@ -50,7 +50,7 @@ fun List<Trip>.orderByDay(orderDesc: Boolean) : MutableList<TripsByDate> {
 
         if (this.size > 1){
             for (i in this.indices){
-                if (DateUtils().isSameDay(this[i], currentDay)){
+                if (this[i].endDate.isSameDay(currentDay)){
                     dayTrips.add(this[i])
                     if (i == this.size -1) {
                         val tripsByDate = TripsByDate(currentDay, dayTrips)
