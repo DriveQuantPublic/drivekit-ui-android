@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/line_separator"
+            android:id="@+id/view_separator"
             style="@style/Separator.Horizontal"
             android:layout_marginTop="@dimen/dk_margin_half"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
             android:layout_marginTop="@dimen/dk_margin_half"
             android:text="@string/dk_achievements_streaks_best_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line_separator" />
+            app:layout_constraintTop_toBottomOf="@+id/view_separator" />
 
         <TextView
             android:id="@+id/text_view_best_streak_trip"

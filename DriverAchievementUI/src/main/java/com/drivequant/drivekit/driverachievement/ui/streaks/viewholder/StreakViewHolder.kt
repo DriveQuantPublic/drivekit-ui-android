@@ -33,6 +33,7 @@ class StreakViewHolder(itemView: View) :
     private val imageViewStreak = itemView.findViewById<ImageView>(R.id.image_view_streak_icon)
     private val seekBar = itemView.findViewById<SeekBar>(R.id.seek_bar)
     private val imageViewInfo = itemView.findViewById<ImageView>(R.id.image_view_info)
+    private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
     private val background =  textViewTripsCount.background as GradientDrawable
 
     fun bind(streaksData: StreaksData) {
@@ -47,6 +48,7 @@ class StreakViewHolder(itemView: View) :
         textViewCurrentTitle.headLine2()
         textViewTripsCount.headLine2()
         imageViewInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
+        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         setupSeekBar(streaksData)
         setData(streaksData)
     }
@@ -76,7 +78,6 @@ class StreakViewHolder(itemView: View) :
     }
 
     private fun showDescription(streaksData: StreaksData) {
-
        val alert = DKAlertDialog.LayoutBuilder()
            .init(context)
            .layout(R.layout.template_alert_dialog_layout)

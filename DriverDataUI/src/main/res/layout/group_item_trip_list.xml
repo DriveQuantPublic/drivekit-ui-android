@@ -5,6 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
+        android:id="@+id/trip_list_header"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@drawable/dk_background_header_trip_list"

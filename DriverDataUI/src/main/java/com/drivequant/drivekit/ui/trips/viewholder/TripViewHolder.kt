@@ -45,6 +45,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textViewArrivalTime.text = trip.endDate.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         textViewArrivalCity.text = trip.arrivalCity
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
+        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
         DrawableCompat.setTint(circleBottom.background, DriveKitUI.colors.secondaryColor())
         DrawableCompat.setTint(circleTop.background, DriveKitUI.colors.secondaryColor())

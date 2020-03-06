@@ -49,6 +49,7 @@ class TripsListAdapter(
 
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
+        holder.background.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
