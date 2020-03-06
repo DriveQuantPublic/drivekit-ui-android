@@ -8,13 +8,13 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 fun TextView.headLine1(textColor: Int = DriveKitUI.colors.mainFontColor()) {
     this.textSize = 16f
     this.setTextColor(textColor)
-    this.setTypeface(DriveKitUI.primaryFont(context),Typeface.BOLD)
+    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
 }
 
 @JvmOverloads
 fun TextView.headLine2(textColor: Int = DriveKitUI.colors.mainFontColor()) {
     this.textSize = 14f
-    this.setTypeface(DriveKitUI.primaryFont(context),Typeface.BOLD)
+    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
     this.setTextColor(textColor)
 }
 

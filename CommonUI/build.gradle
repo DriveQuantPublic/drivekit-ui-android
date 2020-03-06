@@ -36,14 +36,14 @@ dependencies {
 uploadArchives {
     repositories {
         mavenDeployer {
-            if (System.env.REPO_PATH){
+            if (System.env.REPO_PATH) {
                 repository(url: "$System.env.REPO_PATH") {
                     authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
                     pom.groupId = "com.drivequant.drivekit"
                     pom.artifactId = "drivekit-common-ui"
                     pom.version = android.defaultConfig.versionName
                 }
-            }else{
+            } else {
                 repository(url: mavenLocal().url) {
                     pom.groupId = "com.drivequant.drivekit"
                     pom.artifactId = "drivekit-common-ui"

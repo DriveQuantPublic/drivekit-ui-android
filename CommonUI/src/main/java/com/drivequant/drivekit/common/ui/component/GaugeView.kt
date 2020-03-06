@@ -8,18 +8,18 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 
-class GaugeView(context: Context,attrs: AttributeSet) : View(context, attrs) {
+class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var drawingArea : RectF = RectF()
-    private var score : Double = 0.0
+    private var drawingArea: RectF = RectF()
+    private var score: Double = 0.0
     private var strokeSize = 0F
-    private var gaugeColor =  Color.argb(0,0,0,0)
-    private var backGaugeColor =  Color.argb(0,0,0,0)
+    private var gaugeColor = Color.argb(0, 0, 0, 0)
+    private var backGaugeColor = Color.argb(0, 0, 0, 0)
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         calculateDrawableArea()
-        canvas?.drawArc(drawingArea, 270F, 128F, false, createPaint(Color.argb(0,0,0,0)))
+        canvas?.drawArc(drawingArea, 270F, 128F, false, createPaint(Color.argb(0, 0, 0, 0)))
         canvas?.drawArc(drawingArea, 38F, 232F, false, createPaint(backGaugeColor))
         canvas?.drawArc(drawingArea, 38F, computePercent(), false, createPaint(gaugeColor))
     }
@@ -29,22 +29,22 @@ class GaugeView(context: Context,attrs: AttributeSet) : View(context, attrs) {
         calculateDrawableArea()
     }
 
-    fun configureScore(score: Double){
+    fun configureScore(score: Double) {
         this.score = score
         invalidate()
     }
 
-    fun setGaugeColor(color: Int){
+    fun setGaugeColor(color: Int) {
         this.gaugeColor = color
         invalidate()
     }
 
-    fun setBackGaugeColor(color: Int){
+    fun setBackGaugeColor(color: Int) {
         this.backGaugeColor = color
         invalidate()
     }
 
-    fun updateStrokeSize(strokeSize: Float){
+    fun updateStrokeSize(strokeSize: Float) {
         this.strokeSize = strokeSize
         calculateDrawableArea()
     }
@@ -59,11 +59,11 @@ class GaugeView(context: Context,attrs: AttributeSet) : View(context, attrs) {
     }
 
 
-    private fun computePercent() : Float{
+    private fun computePercent(): Float {
         return (232F * score / 10F).toFloat()
     }
 
-    private fun createPaint(color : Int) : Paint{
+    private fun createPaint(color: Int): Paint {
         val paint = Paint()
         paint.isAntiAlias = true
         paint.color = color

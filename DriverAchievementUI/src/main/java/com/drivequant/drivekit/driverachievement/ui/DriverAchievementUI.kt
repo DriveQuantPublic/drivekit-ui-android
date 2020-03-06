@@ -11,7 +11,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksList
 
 object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
-    internal var streakThemes:List<StreakTheme> = listOf(
+    internal var streakThemes: List<StreakTheme> = listOf(
         StreakTheme.PHONE_DISTRACTION,
         StreakTheme.SAFETY,
         StreakTheme.ACCELERATION,

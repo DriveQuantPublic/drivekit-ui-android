@@ -16,7 +16,7 @@ import android.view.View
 class DKSpannable {
 
     private var length = 0
-    private var elements  = ArrayList<CharSequence>()
+    private var elements = ArrayList<CharSequence>()
     private val values: MutableMap<IntRange, Iterable<Any>> = HashMap()
 
     fun append(text: CharSequence, spans: Iterable<Any>) = apply {
@@ -31,7 +31,8 @@ class DKSpannable {
         length += newText.length
     }
 
-    fun appendSpace(newText: CharSequence, before:Boolean = true) = if (before) append(" ").append(newText) else append(newText).append(" ")
+    fun appendSpace(newText: CharSequence, before: Boolean = true) =
+        if (before) append(" ").append(newText) else append(newText).append(" ")
 
     fun toSpannable() = SpannableString(concat(*elements.toTypedArray())).apply {
         values.forEach {
@@ -50,13 +51,15 @@ class ResSpans(private val context: Context) : Iterable<Any> {
 
     fun appearance(@StyleRes id: Int) = spans.add(TextAppearanceSpan(context, id))
 
-    fun size(@DimenRes id: Int) = spans.add(AbsoluteSizeSpan(context.resources.getDimension(id).toInt()))
+    fun size(@DimenRes id: Int) =
+        spans.add(AbsoluteSizeSpan(context.resources.getDimension(id).toInt()))
 
-    fun color(color:Int) = spans.add(ForegroundColorSpan(color))
+    fun color(color: Int) = spans.add(ForegroundColorSpan(color))
 
-    fun icon(@DrawableRes id: Int, size: Int) = spans.add(ImageSpan(AppCompatResources.getDrawable(context, id)!!.apply {
-        setBounds(0, 0, size, size)
-    }))
+    fun icon(@DrawableRes id: Int, size: Int) =
+        spans.add(ImageSpan(AppCompatResources.getDrawable(context, id)!!.apply {
+            setBounds(0, 0, size, size)
+        }))
 
     fun typeface(family: String) = spans.add(TypefaceSpan(family))
 

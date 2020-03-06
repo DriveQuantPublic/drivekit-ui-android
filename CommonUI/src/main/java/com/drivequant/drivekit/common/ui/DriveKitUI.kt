@@ -19,7 +19,9 @@ object DriveKitUI {
         this.fonts = fonts
     }
 
-    fun primaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.primaryFont())
+    fun primaryFont(context: Context): Typeface? =
+        ResourcesCompat.getFont(context, fonts.primaryFont())
 
-    fun secondaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.secondaryFont())
+    fun secondaryFont(context: Context): Typeface? =
+        ResourcesCompat.getFont(context, fonts.secondaryFont())
 }
