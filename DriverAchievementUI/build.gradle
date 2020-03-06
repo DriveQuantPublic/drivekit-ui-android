@@ -36,3 +36,24 @@ dependencies {
     debugApi project(':CommonUI')
     implementation 'com.drivequant.drivekit:drivekit-driver-achievement:1.3.0'
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            if (System.env.REPO_PATH){
+                repository(url: "$System.env.REPO_PATH") {
+                    authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
+                    pom.groupId = "com.drivequant.drivekit"
+                    pom.artifactId = "drivekit-driver-achievement-ui"
+                    pom.version = android.defaultConfig.versionName
+                }
+            }else{
+                repository(url: mavenLocal().url) {
+                    pom.groupId = "com.drivequant.drivekit"
+                    pom.artifactId = "drivekit-driver-achievement-ui"
+                    pom.version = android.defaultConfig.versionName
+                }
+            }
+        }
+    }
+}
