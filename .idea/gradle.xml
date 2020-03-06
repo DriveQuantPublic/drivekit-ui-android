@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CommonUI" />
+            <option value="$PROJECT_DIR$/DriverAchievementUI" />
             <option value="$PROJECT_DIR$/DriverDataUI" />
             <option value="$PROJECT_DIR$/app" />
           </set>

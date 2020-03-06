@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dk_margin_eigth">2dp</dimen>
+    <dimen name="dk_margin_quarter">4dp</dimen>
+    <dimen name="dk_margin_half">8dp</dimen>
+    <dimen name="dk_margin_medium">12dp</dimen>
+    <dimen name="dk_margin">16dp</dimen>
+
+    <dimen name="dk_text_small">12sp</dimen>
+    <dimen name="dk_text_normal">14sp</dimen>
+    <dimen name="dk_text_medium">16sp</dimen>
+    <dimen name="dk_text_big">20sp</dimen>
+    <dimen name="dk_text_xbig">26sp</dimen>
+    <dimen name="dk_text_xxbig">34sp</dimen>
+    <dimen name="dk_text_xxxbig">48sp</dimen>
+
+    <dimen name="dk_ic_small">18dp</dimen>
+    <dimen name="dk_ic_medium">26dp</dimen>
+    <dimen name="dk_ic_big">34dp</dimen>
+
+    <dimen name="dk_separator_stroke">1dp</dimen>
+    <dimen name="dk_default_gauge_stroke">5dp</dimen>
+</resources>

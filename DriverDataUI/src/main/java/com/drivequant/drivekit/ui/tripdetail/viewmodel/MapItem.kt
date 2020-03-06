@@ -7,7 +7,8 @@ enum class MapItem {
     ECO_DRIVING,
     SAFETY,
     INTERACTIVE_MAP,
-    DISTRACTION;
+    DISTRACTION,
+    SYNTHESIS;
 
     fun getImageResource() : Int {
         return when (this) {
@@ -15,6 +16,7 @@ enum class MapItem {
             SAFETY -> R.drawable.dk_shield_tab_icon
             INTERACTIVE_MAP -> R.drawable.dk_trip_timeline_tab_icon
             DISTRACTION -> R.drawable.dk_distraction_tab_icon
+            SYNTHESIS -> R.drawable.dk_synthesis_tab_icon
         }
     }
 

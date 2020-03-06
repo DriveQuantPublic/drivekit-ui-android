@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
+import com.drivequant.drivekit.ui.DriverDataUI
 import java.io.Serializable
 import java.util.*
 
@@ -31,6 +33,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                             MapItem.DISTRACTION -> trip.driverDistraction?.let {
                                 if(it.score <= 10) configurableMapItems.add(item)
                             }
+                            MapItem.SYNTHESIS -> configurableMapItems.add(item)
                         }
                     }
                     displayMapItem.value = configurableMapItems[0]
@@ -54,6 +57,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     var noRoute: MutableLiveData<Boolean> = MutableLiveData()
     var noData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
+    var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
 
     fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
@@ -76,6 +80,20 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                     computeTripEvents(context)
                 }
             })
+        }
+    }
+
+    private fun updateTripAdvice(adviceId: String, evaluation: Int, feedback: Int, comment: String?){
+        if (DriveKitDriverData.isConfigured()){
+            trip?.let {
+                for (tripAdvice in it.tripAdvices){
+                    if (tripAdvice.id == adviceId){
+                        tripAdvice.evaluation = evaluation
+                        tripAdvice.feedback = feedback
+                        tripAdvice.comment = comment
+                    }
+                }
+            }
         }
     }
 
@@ -208,9 +226,50 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
             })
         }
     }
+
+    fun shouldDisplayAdvice(mapItem: MapItem): Boolean {
+        return getAdviceByMapItem(mapItem) != null
+    }
+
+    private fun getAdviceByMapItem(mapItem: MapItem): TripAdvice? {
+        return trip?.let {
+            return mapItem.getAdvice(it.tripAdvices)
+        }?.let {
+            null
+        }
+    }
+
+    fun getAdviceTitle(mapItem: MapItem): String? {
+        return getAdviceByMapItem(mapItem)?.title
+    }
+
+    fun getAdviceMessage(mapItem: MapItem): String? {
+        return getAdviceByMapItem(mapItem)?.message
+    }
+
+    fun shouldDisplayFeedbackButtons(mapItem: MapItem): Boolean {
+        return getAdviceByMapItem(mapItem)?.evaluation == 0 && DriverDataUI.enableAdviceFeedback
+    }
+
+    fun sendTripAdviceFeedback(mapItem: MapItem, isPositive: Boolean, feedback: Int, comment: String? = null){
+        val evaluation = if (isPositive) 1 else 2
+        trip?.let {
+            mapItem.getAdvice(it.tripAdvices)?.id?.let { adviceId ->
+                DriveKitDriverData.sendTripAdviceFeedback(it.itinId, adviceId, evaluation, feedback, comment, listener = object: TripAdviceFeedbackQueryListener {
+                    override fun onResponse(status: Boolean) {
+                        if (status){
+                            updateTripAdvice(adviceId, evaluation, feedback, comment)
+                        }
+                        sendAdviceFeedbackObserver.postValue(status)
+                    }
+                })
+            }
+        }
+    }
 }
 
-class TripDetailViewModelFactory(private val itinId: String, private val mapItems: List<MapItem>) : ViewModelProvider.NewInstanceFactory() {
+class TripDetailViewModelFactory(private val itinId: String,
+                                 private val mapItems: List<MapItem>) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TripDetailViewModel(itinId, mapItems) as T
     }

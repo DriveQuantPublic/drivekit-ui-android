@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_trip_advice_message"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="32dp">
+    android:layout_margin="32dp"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/text_view_advice_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:padding="8dp"
+        android:padding="@dimen/dk_margin_half"
         android:gravity="center_vertical"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Title header"/>
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintTop_toBottomOf="@id/text_view_advice_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_weight="1">
         <TextView
             android:id="@+id/text_view_advice_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dk_margin_half"
             tools:text="Trip advice text"/>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+    <include
+        layout="@layout/view_trip_advice_feedback_buttons"/>
+</LinearLayout>

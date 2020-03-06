@@ -5,8 +5,8 @@ import android.support.v4.graphics.ColorUtils
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.tripdetail.viewholder.OnItemClickListener
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripTimelineItemViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
@@ -14,9 +14,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
 class TripTimelineAdapter(
     private val items: List<TripEvent>,
     private val listener : OnItemClickListener,
-    private val selectedBackgroundColor: Int,
-    private val detailViewConfig: TripDetailViewConfig
-) : RecyclerView.Adapter<TripTimelineItemViewHolder>() {
+    private val selectedBackgroundColor: Int) : RecyclerView.Adapter<TripTimelineItemViewHolder>() {
 
     var selectedPosition = -1
         set(value) {
@@ -27,7 +25,8 @@ class TripTimelineAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): TripTimelineItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.trip_timeline_item, parent, false)
-        return TripTimelineItemViewHolder(view, detailViewConfig)
+        FontUtils.overrideFonts(parent.context, view)
+        return TripTimelineItemViewHolder(view)
     }
 
     override fun getItemCount(): Int {

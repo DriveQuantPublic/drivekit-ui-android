@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_common_cancel">Annullierer</string>
+   <string name="dk_common_close">schließen</string>
+   <string name="dk_common_confirm">Bestätigen</string>
+   <string name="dk_common_consumption">Verbrauch</string>
+   <string name="dk_common_delete">Löschen</string>
+   <string name="dk_common_distance">Entfernung</string>
+   <string name="dk_common_distraction">Ablenkung</string>
+   <string name="dk_common_driving_context_city">Stadtverkehr</string>
+   <string name="dk_common_driving_context_city_dense">dichtem Stadtverkehr</string>
+   <string name="dk_common_driving_context_external">außerstädtischer Umgebung</string>
+   <string name="dk_common_driving_context_fastlane">Autobahnen</string>
+   <string name="dk_common_duration">Dauer</string>
+   <string name="dk_common_ecodriving">Eco-Driving</string>
+   <string name="dk_common_edit">Editieren</string>
+   <string name="dk_common_finish">Ende</string>
+   <string name="dk_common_loading">Lädt. Bitte warten…</string>
+   <string name="dk_common_mass">Gewicht</string>
+   <string name="dk_common_mean_speed">Mittlere Velocity</string>
+   <string name="dk_common_ok">OK</string>
+   <string name="dk_common_safety">Sicherheit</string>
+   <string name="dk_common_save">Speichern</string>
+   <string name="dk_common_speed">Geschwindigkeit</string>
+   <string name="dk_common_trip_plural">fahrten</string>
+   <string name="dk_common_trip_singular">fahrt</string>
+   <string name="dk_common_unit_T">T</string>
+   <string name="dk_common_unit_accel_meter_per_second_square">m/s²</string>
+   <string name="dk_common_unit_day">t</string>
+   <string name="dk_common_unit_g">g</string>
+   <string name="dk_common_unit_g_per_km">g/km</string>
+   <string name="dk_common_unit_gallon">gal</string>
+   <string name="dk_common_unit_hour">s</string>
+   <string name="dk_common_unit_kg">kg</string>
+   <string name="dk_common_unit_kilometer">km</string>
+   <string name="dk_common_unit_km_per_hour">km/h</string>
+   <string name="dk_common_unit_l_per_100km">l/100 km</string>
+   <string name="dk_common_unit_liter">l</string>
+   <string name="dk_common_unit_meter">m</string>
+   <string name="dk_common_unit_mile">mi</string>
+   <string name="dk_common_unit_minute">min</string>
+   <string name="dk_common_unit_mpg">mpg</string>
+   <string name="dk_common_unit_mph">mph</string>
+   <string name="dk_common_unit_second">s</string>
+   <string name="dk_common_validate">Gultig</string>
+</resources>

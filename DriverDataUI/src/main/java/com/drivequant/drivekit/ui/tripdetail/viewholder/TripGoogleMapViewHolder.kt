@@ -6,8 +6,8 @@ import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
 import com.drivequant.drivekit.ui.tripdetail.adapter.CustomInfoWindowAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
@@ -22,13 +22,12 @@ class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
-    private var tripDetailViewConfig: TripDetailViewConfig,
     var googleMap: GoogleMap)
     : GoogleMap.OnInfoWindowClickListener,
     GoogleMap.OnMarkerClickListener{
 
     private val googleMarkerList : MutableList<Marker> = mutableListOf()
-    private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel, tripDetailViewConfig)
+    private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
 
@@ -59,8 +58,8 @@ class TripGoogleMapViewHolder(
     private fun configureAdviceButton(mapItem: MapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
         var shouldDisplayAdvice = false
-        viewModel.trip?.tripAdvices?.let {
-            val tripAdvice: TripAdvice? = mapItem.getAdvice(it)
+        viewModel.trip?.tripAdvices?.let { tripAdvices ->
+            val tripAdvice: TripAdvice? = mapItem.getAdvice(tripAdvices)
             if (tripAdvice != null) {
                 shouldDisplayAdvice = true
             }
@@ -73,7 +72,7 @@ class TripGoogleMapViewHolder(
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
-                    fragment.displayAdvice(tripAdvice)
+                    fragment.displayAdvice(mapItem)
                 }
             }
         }
@@ -85,8 +84,8 @@ class TripGoogleMapViewHolder(
             if (mapItem != null && (mapItem == MapItem.DISTRACTION || (mapItem == MapItem.INTERACTIVE_MAP && viewModel.configurableMapItems.contains(
                     MapItem.INTERACTIVE_MAP)))){
                 var unlock: Boolean
-                val unlockColor = tripDetailViewConfig.mapTraceWarningColor
-                val lockColor = tripDetailViewConfig.mapTraceMainColor
+                val unlockColor = DriverDataUI.mapTraceWarningColor
+                val lockColor = DriverDataUI.mapTraceMainColor
                 route.screenLockedIndex?.let { screenLockedIndex ->
                     for(i in 1 until screenLockedIndex.size){
                         unlock = route.screenStatus!![i -1] == 1
@@ -101,7 +100,7 @@ class TripGoogleMapViewHolder(
                     route,
                     0,
                     route.latitude.size - 1,
-                    tripDetailViewConfig.mapTraceMainColor)
+                    DriverDataUI.mapTraceMainColor)
             }
             drawMarker(mapItem)
         }
@@ -145,7 +144,7 @@ class TripGoogleMapViewHolder(
                 MarkerOptions().position(location)
                     .icon(BitmapDescriptorFactory.fromResource(event.getMapImageResource()))
                     .anchor(event.getXAnchor(), event.getYAnchor())
-                    .title(event.getTitle(tripDetailViewConfig))
+                    .title(event.getTitle(itemView.context))
 
             )
             marker.tag = i
