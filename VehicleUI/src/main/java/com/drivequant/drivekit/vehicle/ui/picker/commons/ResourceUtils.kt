@@ -16,6 +16,10 @@ object ResourceUtils {
 
     fun convertToString(context: Context, identifier: String): String? {
         val id = context.resources.getIdentifier(identifier, "string", context.packageName)
-        return context.getString(id)
+        return if (id > 0) {
+            context.getString(id)
+        } else {
+            null
+        }
     }
 }

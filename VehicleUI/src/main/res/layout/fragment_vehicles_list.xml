@@ -4,24 +4,24 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
-        android:id="@+id/no_vehicles"
-        layout="@layout/view_content_no_vehicles"
-        android:visibility="gone" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_vehicles"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         android:visibility="gone">
-        <ListView
-            android:id="@+id/vehicles_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:layout_margin="8dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/header_vehicle_list"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vehicles_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_margin="8dp"/>
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView

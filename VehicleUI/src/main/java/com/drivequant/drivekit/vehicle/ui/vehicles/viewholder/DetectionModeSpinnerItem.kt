@@ -4,15 +4,10 @@ import android.content.Context
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
 data class DetectionModeSpinnerItem(
-    private var title: String,
-    private var detectionModeType: DetectionModeType
+    private var context: Context,
+    var detectionModeType: DetectionModeType
 ){
     override fun toString(): String {
-        return title
+        return detectionModeType.getTitle(context)
     }
-}
-
-
-fun buildItem(context: Context, detectionModeType: DetectionModeType): DetectionModeSpinnerItem {
-    return DetectionModeSpinnerItem(context.getString(detectionModeType.title), detectionModeType)
 }

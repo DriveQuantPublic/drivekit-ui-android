@@ -52,32 +52,6 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         return vehicle.computeSubtitle(context)
     }
 
-    fun getDetectionModeDescription(context: Context, vehicle: Vehicle): String {
-        // TODO when not configured, display imageview & text is in bold & red
-        return when (vehicle.detectionMode) {
-            DISABLED -> {
-                context.getString(R.string.dk_detection_mode_disabled_desc)
-            }
-            GPS -> {
-                context.getString(R.string.dk_detection_mode_gps_desc)
-            }
-            BEACON -> {
-                vehicle.beacon?.let {
-                    context.getString(R.string.dk_detection_mode_beacon_desc_configured, it.code)
-                } ?: run {
-                    context.getString(R.string.dk_detection_mode_beacon_desc_not_configured)
-                }
-            }
-            BLUETOOTH -> {
-                vehicle.bluetooth?.let {
-                    context.getString(R.string.dk_detection_mode_bluetooth_desc_configured, it.name)
-                } ?: run {
-                    context.getString(R.string.dk_detection_mode_bluetooth_desc_not_configured)
-                }
-            }
-        }
-    }
-
     class VehicleListViewModelFactory : ViewModelProvider.NewInstanceFactory(){
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

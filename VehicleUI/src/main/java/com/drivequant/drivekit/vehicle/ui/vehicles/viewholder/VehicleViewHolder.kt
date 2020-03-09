@@ -16,7 +16,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val textViewSubtitle: TextView = itemView.findViewById(R.id.text_view_subtitle)
     private val popup: ImageView = itemView.findViewById(R.id.image_view_popup)
     private val linearLayoutDetectionMode: LinearLayout = itemView.findViewById(R.id.detection_mode_container)
-    private val spinnerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
+    val spinnerDetectionMode: Spinner = itemView.findViewById(R.id.spinner_vehicle_detection_mode)
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
@@ -47,32 +47,44 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         linearLayoutDetectionMode.visibility = View.VISIBLE
 
         textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
-        textViewDetectionModeDescription.text = viewModel.getDetectionModeDescription(context, vehicle)
+        textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)
 
         // TODO retrieve listOf from Singleton
         val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
-        detectionModes.add(buildItem(context, DetectionModeType.DISABLED))
-        detectionModes.add(buildItem(context, DetectionModeType.GPS))
-        detectionModes.add(buildItem(context, DetectionModeType.BEACON))
-        detectionModes.add(buildItem(context, DetectionModeType.BLUETOOTH))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.DISABLED))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.GPS))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BEACON))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BLUETOOTH))
 
         val adapter: ArrayAdapter<DetectionModeSpinnerItem> = ArrayAdapter(context, R.layout.simple_list_item_spinner, detectionModes)
         spinnerDetectionMode.adapter = adapter
     }
 
+    fun selectDetectionMode(context: Context?, vehicle: Vehicle){
+        // TODO retrieve listOf from Singleton
+        val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
+        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.DISABLED))
+        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.GPS))
+        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.BEACON))
+        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.BLUETOOTH))
+
+        for (i in detectionModes.indices){
+            val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
+            if (detectionMode == vehicle.detectionMode){
+                spinnerDetectionMode.setSelection(i, false)
+            }
+        }
+    }
+
     private fun setupConfigureButton(context: Context, vehicle: Vehicle){
-         when (vehicle.detectionMode){
-             DetectionMode.DISABLED, DetectionMode.GPS -> {
-                 buttonSetup.visibility = View.GONE
-             }
-             DetectionMode.BEACON -> {
-                 buttonSetup.visibility = View.VISIBLE
-                 buttonSetup.text = context.getString(R.string.dk_vehicle_configure_beacon)
-             }
-             DetectionMode.BLUETOOTH -> {
-                 buttonSetup.visibility = View.VISIBLE
-                 buttonSetup.text = context.getString(R.string.dk_vehicle_configure_bluetooth)
-             }
-         }
+        buttonSetup.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
+        buttonSetup.setOnClickListener {
+            DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, vehicle)
+        }
+        if (buttonSetup.text.isNullOrEmpty()){
+            buttonSetup.visibility = View.GONE
+        } else {
+            buttonSetup.visibility = View.VISIBLE
+        }
     }
 }

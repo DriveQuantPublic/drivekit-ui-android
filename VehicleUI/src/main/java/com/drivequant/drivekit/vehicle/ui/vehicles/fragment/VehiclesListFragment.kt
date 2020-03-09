@@ -4,9 +4,9 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +14,11 @@ import android.widget.Toast
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
+import kotlinx.android.synthetic.main.header_vehicle_list.*
 
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
@@ -29,6 +30,11 @@ class VehiclesListFragment : Fragment() {
             return VehiclesListFragment()
         }
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_vehicles_list, container, false)
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -42,6 +48,9 @@ class VehiclesListFragment : Fragment() {
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        vehicles_list.layoutManager = linearLayoutManager
 
         // TODO if can add vehicle
         add_vehicle.setOnClickListener {
@@ -60,13 +69,13 @@ class VehiclesListFragment : Fragment() {
                 Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO
             }
             if (it.isNullOrEmpty()){
-                displayNoVehicle()
+                linear_layout_header_vehicle_list.visibility = View.VISIBLE
             } else {
                 displayVehiclesList()
                 if (adapter != null) {
                     adapter?.notifyDataSetChanged()
                 } else {
-                    adapter = VehiclesListAdapter(context, viewModel, it)
+                    adapter = VehiclesListAdapter(context, viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter
                 }
             }
@@ -76,14 +85,8 @@ class VehiclesListFragment : Fragment() {
         updateProgressVisibility(true)
         viewModel.fetchVehicles()
     }
-    private fun displayNoVehicle(){
-        no_vehicles.visibility = View.VISIBLE
-        vehicles_list.emptyView = no_vehicles
-        hideProgressCircular()
-    }
 
     private fun displayVehiclesList(){
-        no_vehicles.visibility = View.GONE
         vehicles_list.visibility = View.VISIBLE
         hideProgressCircular()
     }
@@ -97,14 +100,6 @@ class VehiclesListFragment : Fragment() {
                     progress_circular?.visibility = View.GONE
                 }
             })
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_vehicles_list, container, false)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean){

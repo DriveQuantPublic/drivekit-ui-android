@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:layout_margin="8dp"
@@ -45,7 +46,7 @@
 
         <TextView
             android:id="@+id/text_view_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:maxLines="2"
@@ -105,19 +106,20 @@
                 android:textColor="#9E9E9E"
                 android:drawablePadding="4dp"
                 android:text="This text describes state of the selected detection mode"/>
-        </LinearLayout>
 
-        <Button
-            android:id="@+id/text_view_setup_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textColor="#00EBB8"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="#00ffffff"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:visibility="gone"
-            tools:text="Configure beacon"/>
+            <Button
+                android:id="@+id/text_view_setup_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textColor="#00EBB8"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="#00ffffff"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="Configure beacon"/>
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
