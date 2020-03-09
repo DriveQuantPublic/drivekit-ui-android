@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
@@ -63,7 +64,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onDriverDataClicked(view: View){
-        startActivity(Intent(this, TripsListActivity::class.java))
+        DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(applicationContext)
+    }
+
+    fun onDriverAchievementClicked(view: View) {
+        DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakListActivity(applicationContext)
     }
 
     fun buttonTripClicked(view: View){

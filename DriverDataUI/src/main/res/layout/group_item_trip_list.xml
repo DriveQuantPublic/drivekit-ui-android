@@ -5,29 +5,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
+        android:id="@+id/trip_list_header"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@drawable/dk_background_header_trip_list"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:layout_marginBottom="@dimen/dk_margin_half"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin">
         <TextView
             android:id="@+id/text_view_date"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:maxLines="1"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:paddingTop="@dimen/dk_margin_quarter"
+            android:paddingBottom="@dimen/dk_margin_quarter"
             android:textColor="@android:color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_view_informations"
             android:gravity="end"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
+            android:paddingTop="@dimen/dk_margin_quarter"
+            android:paddingBottom="@dimen/dk_margin_quarter"
             android:textColor="@android:color/black"
             tools:text="14km"/>
     </LinearLayout>

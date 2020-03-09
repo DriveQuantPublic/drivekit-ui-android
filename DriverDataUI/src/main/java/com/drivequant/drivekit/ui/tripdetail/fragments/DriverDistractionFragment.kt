@@ -5,71 +5,68 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
-import com.drivequant.drivekit.ui.commons.views.GaugeType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
 class DriverDistractionFragment : Fragment() {
 
     companion object {
-        fun newInstance(driverDistraction: DriverDistraction, tripDetailViewConfig: TripDetailViewConfig, tripsViewConfig: TripsViewConfig) : DriverDistractionFragment {
+        fun newInstance(driverDistraction: DriverDistraction) : DriverDistractionFragment {
             val fragment = DriverDistractionFragment()
             fragment.viewModel =
                 DriverDistractionViewModel(
                     driverDistraction
                 )
-            fragment.tripDetailViewConfig = tripDetailViewConfig
-            fragment.tripsViewConfig = tripsViewConfig
             return fragment
         }
     }
 
     private lateinit var viewModel: DriverDistractionViewModel
-    private lateinit var tripDetailViewConfig: TripDetailViewConfig
-    private lateinit var tripsViewConfig: TripsViewConfig
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.driver_distraction_fragment, container, false)
+        val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
+        FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("config", tripsViewConfig)
-        outState.putSerializable("detailConfig", tripDetailViewConfig)
         outState.putSerializable("viewModel", viewModel)
         super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("config") as TripsViewConfig?)?.let{
-            tripsViewConfig = it
-        }
-        (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
-            tripDetailViewConfig = it
-        }
         (savedInstanceState?.getSerializable("viewModel") as DriverDistractionViewModel?)?.let{
             viewModel = it
         }
-        gauge_type_title.text = tripDetailViewConfig.distractionGaugeTitle
-        unlockNumberDescription.text = tripDetailViewConfig.nbUnlockText
-        unlockDistanceDescription.text = tripDetailViewConfig.distanceUnlockText
-        unlockDurationDescription.text = tripDetailViewConfig.durationUnlockText
-        unlockNumberEvent.setTextColor(tripsViewConfig.primaryColor)
-        distanceUnlocked.setTextColor(tripsViewConfig.primaryColor)
-        durationUnlocked.setTextColor(tripsViewConfig.primaryColor)
+        gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
+        unlockNumberDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_number)
+        unlockDistanceDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_distance)
+        unlockDurationDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_duration)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, tripsViewConfig.primaryFont)
+        gauge_type_title.bigText()
+        unlockNumberDescription.bigText()
+        unlockDistanceDescription.bigText()
+        unlockDurationDescription.bigText()
+
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
-        distanceUnlocked.text = viewModel.getUnlockDistance(requireContext(), tripDetailViewConfig)
-        durationUnlocked.text = viewModel.getUnlockDuration(requireContext(), tripDetailViewConfig)
-    }
+        distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
+        durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
 
+        unlockNumberEvent.headLine1(DriveKitUI.colors.primaryColor())
+        distanceUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+        durationUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+    }
 }

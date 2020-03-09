@@ -11,10 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.TripDetailViewConfig
-import com.drivequant.drivekit.ui.TripsViewConfig
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.adapter.TripsListAdapter
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
@@ -23,18 +23,7 @@ import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 class TripsListFragment : Fragment() {
     private lateinit var viewModel : TripsListViewModel
-    private lateinit var tripsViewConfig : TripsViewConfig
-    private lateinit var tripDetailViewConfig : TripDetailViewConfig
     private var adapter: TripsListAdapter? = null
-
-    companion object {
-        fun newInstance(tripsViewConfig: TripsViewConfig, tripDetailViewConfig: TripDetailViewConfig) : TripsListFragment {
-            val fragment = TripsListFragment()
-            fragment.tripsViewConfig = tripsViewConfig
-            fragment.tripDetailViewConfig = tripDetailViewConfig
-            return fragment
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -44,19 +33,14 @@ class TripsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (savedInstanceState?.getSerializable("config") as TripsViewConfig?)?.let{
-            tripsViewConfig = it
-        }
-        (savedInstanceState?.getSerializable("detailConfig") as TripDetailViewConfig?)?.let{
-            tripDetailViewConfig = it
-        }
-        activity?.title = tripsViewConfig.viewTitleText
+
+        activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
         refresh_trips.setOnRefreshListener {
             updateTrips()
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let{
-                TripDetailActivity.launchActivity(requireContext(), it.itinId, tripsViewConfig = tripsViewConfig)
+                TripDetailActivity.launchActivity(requireContext(), it.itinId)
             }
             false
         }
@@ -67,16 +51,10 @@ class TripsListFragment : Fragment() {
         updateTrips()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("config", tripsViewConfig)
-        outState.putSerializable("detailConfig", tripDetailViewConfig)
-        super.onSaveInstanceState(outState)
-    }
-
     private fun updateTrips(){
         viewModel.tripsData.observe(this, Observer {
             if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR){
-                Toast.makeText(context, tripsViewConfig.failedToSyncTrips, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context?.getString(R.string.dk_driverdata_failed_to_sync_trips), Toast.LENGTH_LONG).show()
             }
             if (viewModel.tripsByDate.isNullOrEmpty()){
                 displayNoTrips()
@@ -85,22 +63,22 @@ class TripsListFragment : Fragment() {
                 if (adapter != null) {
                     adapter?.notifyDataSetChanged()
                 } else {
-                    adapter = TripsListAdapter(view?.context, viewModel, tripsViewConfig)
+                    adapter = TripsListAdapter(view?.context, viewModel)
                     trips_list.setAdapter(adapter)
                 }
             }
             updateProgressVisibility(false)
         })
         updateProgressVisibility(true)
-        viewModel.fetchTrips(tripsViewConfig.dayTripDescendingOrder)
+        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
     }
 
     private fun displayNoTrips(){
         no_trips.visibility = View.VISIBLE
         trips_list.emptyView = no_trips
-        no_trips_recorded_text.text = tripsViewConfig.noTripsRecordedText
-        no_trips_recorded_text.setTextColor(tripsViewConfig.primaryColor)
-        image_view_no_trips.setImageDrawable(ContextCompat.getDrawable(requireContext(), tripsViewConfig.noTripsRecordedDrawable))
+        no_trips_recorded_text.text = context?.getString(R.string.dk_driverdata_no_trips_recorded)
+        no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
+        image_view_no_trips.setImageDrawable(ContextCompat.getDrawable(requireContext(), DriverDataUI.noTripsRecordedDrawable))
         hideProgressCircular()
     }
 
@@ -126,10 +104,12 @@ class TripsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_trips_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
-    fun updateProgressVisibility(displayProgress: Boolean){
+    private fun updateProgressVisibility(displayProgress: Boolean){
         if (displayProgress){
             progress_circular.visibility = View.VISIBLE
             refresh_trips.isRefreshing = true

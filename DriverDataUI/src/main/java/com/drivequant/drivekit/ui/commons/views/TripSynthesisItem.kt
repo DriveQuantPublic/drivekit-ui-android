@@ -2,12 +2,14 @@ package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
 
 class TripSynthesisItem: LinearLayout {
@@ -16,19 +18,23 @@ class TripSynthesisItem: LinearLayout {
     private var textViewValue:TextView? = null
 
     constructor(context: Context): super(context){
-        init(context, null)
+        init(null)
     }
 
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
-        init(context, attrs)
+        init(attrs)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?) {
-        val view = View.inflate(getContext(), R.layout.trip_synthesis_item, null)
+    private fun init(attrs: AttributeSet?) {
+        val view = View.inflate(context, R.layout.trip_synthesis_item, null)
         textViewTitle = view.findViewById(R.id.text_view_trip_synthesis_title)
         textViewValue = view.findViewById(R.id.text_view_trip_synthesis_value)
+
+        textViewValue?.headLine2(DriveKitUI.colors.primaryColor())
+        textViewTitle?.smallText(DriveKitUI.colors.complementaryFontColor())
+
         if (attrs != null) {
-            val a: TypedArray = getContext().theme.obtainStyledAttributes(
+            val a: TypedArray = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.TripSynthesisItem,
                 0, 0
@@ -56,8 +62,8 @@ class TripSynthesisItem: LinearLayout {
         textViewValue?.text = value
     }
 
-    fun setValueColor(color: Int) {
-        textViewValue?.setTextColor(ContextCompat.getColor(context, color))
+    fun setValueColor() {
+        textViewValue?.setTextColor(DriveKitUI.colors.secondaryColor())
     }
 
     fun onTripItemSynthesisClick(vehicleId: Int) {

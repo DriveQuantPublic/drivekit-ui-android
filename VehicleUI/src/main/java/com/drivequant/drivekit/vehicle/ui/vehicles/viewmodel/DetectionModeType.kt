@@ -1,22 +1,20 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
+import android.graphics.Typeface
+import android.text.Spannable
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
-import android.view.View
-import android.widget.AdapterView
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
-import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 
 enum class DetectionModeType(
     private val title: String,
@@ -78,7 +76,7 @@ enum class DetectionModeType(
         return ResourceUtils.convertToString(context, stringRes)?.let { it } ?: run { "" }
     }
 
-    fun getDescriptionSpannable(context: Context, vehicle: Vehicle): SpannableString {
+    fun getDescriptionSpannable(context: Context, vehicle: Vehicle): Spannable? {
         var param = ""
         val stringRes = when (this){
             DISABLED, GPS -> {
@@ -106,8 +104,15 @@ enum class DetectionModeType(
         }
         val spannableString = SpannableString(ResourceUtils.convertToString(context, stringRes)?.let { it } ?: run { "" })
         val quantityStartIndex = stringRes.indexOf("%s")
-        //val quantityEndIndex = stringRes.indexOf("%s")
-        return spannableString
+        val quantityEndIndex = quantityStartIndex + param.length
+
+
+        val spannableParam = DKSpannable().append("Text to style", context.resSpans {
+            typeface(Typeface.BOLD)
+        }).toSpannable()
+
+
+        return spannableParam
     }
 
     fun getConfigureButtonText(context: Context): String {
