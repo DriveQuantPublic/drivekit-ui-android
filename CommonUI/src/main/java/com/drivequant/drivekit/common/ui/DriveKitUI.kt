@@ -7,21 +7,20 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts
 import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 
-
 object DriveKitUI {
 
     var distanceUnit: DistanceUnit = DistanceUnit.KM
     lateinit var colors: DKColors
     private lateinit var fonts: DKFonts
 
-    fun initialize(colors: DKColors = object : DKColors {}, fonts: DKFonts = object : DKFonts {}) {
+    @JvmOverloads
+    fun initialize(colors: DKColors = DKColors(), fonts: DKFonts = DKFonts()) {
         this.colors = colors
         this.fonts = fonts
     }
 
-    fun primaryFont(context: Context): Typeface? =
-        ResourcesCompat.getFont(context, fonts.primaryFont())
+    fun primaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.primaryFont())
 
-    fun secondaryFont(context: Context): Typeface? =
-        ResourcesCompat.getFont(context, fonts.secondaryFont())
+    fun secondaryFont(context: Context): Typeface? = ResourcesCompat.getFont(context, fonts.secondaryFont())
+
 }
