@@ -21,6 +21,10 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
 
+    companion object {
+
+    }
+
     fun bind(vehicle: Vehicle){
         val context = itemView.context
         textViewTitle.text = viewModel.getTitle(context, vehicle)
@@ -64,9 +68,9 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         // TODO retrieve listOf from Singleton
         val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
         detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.DISABLED))
-        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.GPS))
-        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.BEACON))
-        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.BLUETOOTH))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.GPS))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BEACON))
+        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BLUETOOTH))
 
         for (i in detectionModes.indices){
             val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)

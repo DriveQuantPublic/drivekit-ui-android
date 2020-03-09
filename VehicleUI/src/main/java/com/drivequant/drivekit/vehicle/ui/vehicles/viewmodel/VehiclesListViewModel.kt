@@ -22,7 +22,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     private var vehiclesList: List<Vehicle> = listOf()
     var syncStatus: VehicleSyncStatus = VehicleSyncStatus.NO_ERROR
 
-    fun fetchVehicles(){
+    fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT){
         if (DriveKit.isConfigured()) { // TODO if DriveKitVehicle.isConfigured() ?
             DriveKitVehicleManager.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
@@ -30,7 +30,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
                     vehiclesList = vehicles
                     vehiclesData.postValue(vehiclesList)
                 }
-            }, SynchronizationType.DEFAULT)
+            }, synchronizationType)
         } else {
             vehiclesData.postValue(listOf())
         }

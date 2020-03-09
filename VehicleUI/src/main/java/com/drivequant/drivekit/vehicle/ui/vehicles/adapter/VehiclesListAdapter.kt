@@ -46,9 +46,6 @@ class VehiclesListAdapter(
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
                 if (touched) {
-                    val vehicle = vehicles[position]
-                    val newDetectionMode = DetectionMode.DISABLED
-
                     // TODO retrieve listOf from Singleton
                     val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
                     detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.DISABLED))
@@ -57,7 +54,7 @@ class VehiclesListAdapter(
                     detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.BLUETOOTH))
 
                     val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
-                    DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, vehicle)
+                    DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, viewModel, vehicles[position])
 
                     touched = false
                 }
@@ -67,11 +64,6 @@ class VehiclesListAdapter(
 
         holder.bind(vehicles[position])
         holder.selectDetectionMode(context, vehicles[position])
-    }
-
-    fun setVehicles(vehicles: List<Vehicle>){
-        this.vehicles.clear()
-        this.vehicles.addAll(vehicles.toMutableList())
     }
 
     override fun getItemId(position: Int): Long {

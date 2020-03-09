@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.header_vehicle_list.*
 
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
-    private lateinit var status: VehicleSyncStatus
     private var adapter: VehiclesListAdapter? = null
 
     companion object {
@@ -65,7 +64,7 @@ class VehiclesListFragment : Fragment() {
 
     private fun updateVehicles(){
         viewModel.vehiclesData.observe(this, Observer {
-            if (viewModel.syncStatus != VehicleSyncStatus.NO_ERROR){
+            if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
                 Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO
             }
             if (it.isNullOrEmpty()){
@@ -87,6 +86,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun displayVehiclesList(){
+        linear_layout_header_vehicle_list.visibility = View.GONE
         vehicles_list.visibility = View.VISIBLE
         hideProgressCircular()
     }
