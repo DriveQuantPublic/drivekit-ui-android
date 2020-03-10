@@ -60,7 +60,7 @@ class StreakViewHolder(itemView: View) :
     }
 
     private fun setupSeekBar(streaksData: StreaksData) {
-        seekBar.setPadding(0, 0, 0, 0)
+        seekBar.setPadding(1, 0, 0, 0)
         seekBar.progress = streaksData.computePercentage()
         seekBar.setOnTouchListener { _, _ -> true }
         seekBar.progressDrawable.colorFilter = LightingColorFilter(-0x1000000, DriveKitUI.colors.secondaryColor())
