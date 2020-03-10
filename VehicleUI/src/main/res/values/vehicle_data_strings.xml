@@ -62,4 +62,6 @@
     <string name="dk_vehicle_add">Ajouter un véhicule</string>
 
     <string name="dk_vehicle_delete_confirm">Confirmez-vous la suppression du véhicule %s ? Les données de suivi kilométrique et de maintenance seront définitivement perdues.</string>
+    <string name="dk_vehicle_rename_title">Renommer ce véhicule</string>
+    <string name="dk_vehicle_rename_description">Choisissez un nom pour identifier votre véhicule</string>
 </resources>

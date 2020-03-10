@@ -47,11 +47,14 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             // TODO via singleton, determinate if VM build items
             val mockList : MutableList<MenuItem> = mutableListOf()
             mockList.add(PopupMenuItem.SHOW)
+            mockList.add(PopupMenuItem.RENAME)
             mockList.add(PopupMenuItem.REPLACE)
             mockList.add(PopupMenuItem.DELETE)
 
             for (i in mockList.indices){
-                popupMenu.menu.add(Menu.NONE, i, i, mockList[i].getTitle(context))
+                if (mockList[i].isDisplayable(vehicle)) {
+                    popupMenu.menu.add(Menu.NONE, i, i, mockList[i].getTitle(context))
+                }
             }
 
             popupMenu.show()
