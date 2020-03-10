@@ -1,15 +1,22 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewholder
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
 import android.widget.*
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
+
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
@@ -48,6 +55,17 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
 
         textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
         textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)
+        if (vehicle.isConfigured()){
+            textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
+        } else {
+            DKResource.convertToDrawable(context, "dk_common_info_filled")?.let { infoDrawable ->
+                val bitmap = (infoDrawable as BitmapDrawable).bitmap
+                val size = context.resources.getDimension(R.dimen.dk_ic_medium).toInt()
+                val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))
+                resizedDrawable.setTint(DriveKitUI.colors.criticalColor())
+                textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(resizedDrawable, null, null, null)
+            }
+        }
 
         // TODO retrieve listOf from Singleton
         val detectionModes = mutableListOf<DetectionModeSpinnerItem>()

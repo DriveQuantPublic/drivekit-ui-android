@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
@@ -28,6 +30,14 @@ fun Vehicle.computeSubtitle(context: Context): String {
         }
     } else {
         defaultName
+    }
+}
+
+fun Vehicle.isConfigured(): Boolean {
+    return when (this.detectionMode){
+        DISABLED, GPS -> true
+        BEACON -> this.beacon != null
+        BLUETOOTH -> this.bluetooth != null
     }
 }
 

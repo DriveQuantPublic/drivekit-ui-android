@@ -1,10 +1,16 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
+import android.graphics.Typeface
+import android.graphics.Typeface.BOLD
+import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -17,6 +23,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
 enum class DetectionModeType(
@@ -61,27 +68,36 @@ enum class DetectionModeType(
        return ResourceUtils.convertToString(context, this.title)?.let { it } ?: run { "" }
     }
 
-    fun getDescription(context: Context, vehicle: Vehicle): String {
-        val stringRes = when (this){
+    fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
+        var configured = true
+        val stringIdentifier = when (this){
             DISABLED, GPS -> {
                 descriptionConfigured
             }
-            BEACON -> {
-                vehicle.beacon?.let {
-                    descriptionConfigured // TODO it.code
-                } ?: run {
-                    descriptionNotConfigured
-                }
-            }
-            BLUETOOTH -> {
-                vehicle.bluetooth?.let {
-                    descriptionConfigured // TODO it.name
-                } ?: run {
+            BEACON, BLUETOOTH -> {
+                if (vehicle.isConfigured()){
+                    descriptionConfigured // TODO it.code or it.name
+                } else {
+                    configured = false
                     descriptionNotConfigured
                 }
             }
         }
-        return ResourceUtils.convertToString(context, stringRes)?.let { it } ?: run { "" }
+        val stringValue = ResourceUtils.convertToString(context, stringIdentifier)?.let { it } ?: run { "" }
+
+        return if (configured){
+            DKSpannable().append(stringValue, context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                typeface(Typeface.NORMAL)
+                size(R.dimen.dk_text_normal)
+            }).toSpannable()
+        } else {
+            DKSpannable().append(stringValue, context.resSpans {
+                color(DriveKitUI.colors.criticalColor())
+                typeface(BOLD)
+                size(R.dimen.dk_text_normal)
+            }).toSpannable()
+        }
     }
 
     fun getConfigureButtonText(context: Context): String {
@@ -92,6 +108,8 @@ enum class DetectionModeType(
     }
 
     fun onConfigureButtonClicked(context: Context, viewModel : VehiclesListViewModel, vehicle: Vehicle){
+
+        // TODO check if beacon/bluetooth configured (launch this AD) or not (launch beacon/BT add screen)
         val alert = DKAlertDialog.LayoutBuilder()
             .init(context)
             .layout(R.layout.alert_dialog_beacon_bluetooth_chooser)

@@ -40,7 +40,6 @@ dependencies {
 
     debugApi project(':CommonUI')
     releaseApi 'com.drivequant.drivekit:drivekit-common-ui:1.3.0'
-    implementation 'com.drivequant.drivekit:drivekit-driver-data:1.3.0'
 }
 
 uploadArchives {

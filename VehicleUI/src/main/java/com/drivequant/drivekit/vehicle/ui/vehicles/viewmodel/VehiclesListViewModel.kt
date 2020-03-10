@@ -6,8 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
