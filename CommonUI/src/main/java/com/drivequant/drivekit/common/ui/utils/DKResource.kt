@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
-import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -55,13 +54,5 @@ object DKResource {
             }
         }
         return dkSpannable.toSpannable()
-    }
-
-    fun buildParamSpannable(context: Context, dkSpannable: DKSpannable, param: String): DKSpannable {
-        return dkSpannable.append(param, context.resSpans {
-            color(DriveKitUI.colors.mainFontColor())
-            typeface(Typeface.BOLD)
-            size(R.dimen.dk_text_normal)
-        })
     }
 }

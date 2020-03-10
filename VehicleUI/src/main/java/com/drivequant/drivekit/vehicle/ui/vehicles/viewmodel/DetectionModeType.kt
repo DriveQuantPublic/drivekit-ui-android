@@ -1,12 +1,16 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Typeface
 import android.graphics.Typeface.BOLD
 import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -119,21 +123,52 @@ enum class DetectionModeType(
     }
 
     fun detectionModeSelected(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
-        // TODO check connectivity
-        // check if GPS already set
-        // check if beacon configured to another
-        // check if bluetooth configured to another
-
         val detectionMode = DetectionMode.getEnumByName(this.name)
+        updateDetectionMode(context, detectionMode, viewModel, vehicle)
+    }
+
+    private fun updateDetectionMode(context: Context, detectionMode: DetectionMode, viewModel: VehiclesListViewModel, vehicle: Vehicle, forceGPSVehicleUpdate: Boolean = false){
         DriveKitVehicleManager.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
             override fun onResponse(status: DetectionModeStatus) {
                 when (status){
                     SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
-                    ERROR -> { }
-                    GPS_MODE_ALREADY_EXISTS -> {}
+                    ERROR -> manageError(context, viewModel)
+                    GPS_MODE_ALREADY_EXISTS -> manageGPSModeAlreadyExists(context, viewModel, detectionMode, vehicle)
                 }
             }
-        })
+        }, forceGPSVehicleUpdate)
+    }
+
+    private fun manageError(context: Context, viewModel: VehiclesListViewModel){
+        Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
+        viewModel.fetchVehicles(SynchronizationType.CACHE)
+    }
+
+    private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
+        val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
+        val message = DKResource.convertToString(context, "dk_vehicle_gps_already_exists_confirm")?.let { it }?: run { "" }
+
+        val alert = DKAlertDialog.LayoutBuilder().init(context)
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(context.getString(R.string.dk_common_confirm),
+                DialogInterface.OnClickListener { _, _ ->
+                    updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
+                })
+            .negativeButton(context.getString(R.string.dk_common_cancel),
+                DialogInterface.OnClickListener { dialog, _ ->
+                    viewModel.fetchVehicles(SynchronizationType.CACHE)
+                    dialog.dismiss()
+                })
+            .show()
+
+        val titleTextView = alert.findViewById<TextView>(R.id.text_view__alert_title)
+        val descriptionTextView = alert.findViewById<TextView>(R.id.text_view_alert_description)
+
+        titleTextView?.text = title
+        descriptionTextView?.text = message
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 
     private fun displayConfigAlertDialog(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){

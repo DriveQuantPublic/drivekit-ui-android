@@ -65,4 +65,8 @@
     <string name="dk_vehicle_delete_confirm">Confirmez-vous la suppression du véhicule %s ? Les données de suivi kilométrique et de maintenance seront définitivement perdues.</string>
     <string name="dk_vehicle_rename_title">Renommer ce véhicule</string>
     <string name="dk_vehicle_rename_description">Choisissez un nom pour identifier votre véhicule</string>
+
+    <string name="dk_vehicle_failed_to_sync">Impossible de synchroniser les véhicules, veuillez réessayer ultérieurement.</string>
+    <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %s pour le véhicule %s ? \n\nLe mode de détection du véhicule %s sera basculé à %s.</string>
+    <string name="dk_vehicle_error_message">Une erreur est survenue, veuillez réessayer ultérieurement</string>
 </resources>
