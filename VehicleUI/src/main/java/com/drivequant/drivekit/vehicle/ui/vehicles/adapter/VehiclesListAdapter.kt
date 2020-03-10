@@ -73,4 +73,8 @@ class VehiclesListAdapter(
     override fun getItemCount(): Int {
         return vehicles.size
     }
+
+    fun setTouched(touched: Boolean){
+        this.touched = touched
+    }
 }

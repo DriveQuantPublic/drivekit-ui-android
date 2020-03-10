@@ -21,10 +21,6 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
 
-    companion object {
-
-    }
-
     fun bind(vehicle: Vehicle){
         val context = itemView.context
         textViewTitle.text = viewModel.getTitle(context, vehicle)
@@ -83,7 +79,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private fun setupConfigureButton(context: Context, vehicle: Vehicle){
         buttonSetup.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
         buttonSetup.setOnClickListener {
-            DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, vehicle)
+            DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
         }
         if (buttonSetup.text.isNullOrEmpty()){
             buttonSetup.visibility = View.GONE

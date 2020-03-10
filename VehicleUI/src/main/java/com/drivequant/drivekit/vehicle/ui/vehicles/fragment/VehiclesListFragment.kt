@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -43,7 +44,7 @@ class VehiclesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = "HC Chargement…" // TODO
+        activity?.title = DKResource.convertToString(requireContext(), "dk_common_loading")
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
@@ -63,6 +64,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun updateVehicles(){
+        adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
                 Toast.makeText(context, "HC failed to sync vehicles", Toast.LENGTH_LONG).show() // TODO

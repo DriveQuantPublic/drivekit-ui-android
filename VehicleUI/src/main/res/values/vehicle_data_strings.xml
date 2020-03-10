@@ -48,8 +48,11 @@
     <string name="dk_detection_mode_bluetooth_desc_configured">L\'appareil Bluetooth %s a été associé à ce véhicule. L\'application enregistre automatiquement votre trajet lorsque votre téléphone est connecté à cet appareil.</string>
     <string name="dk_detection_mode_bluetooth_desc_not_configured">Sélectionnez un système Bluetooth pour ce véhicule</string>
 
-    <string name="dk_vehicle_configure_beacon">Configurer le Beacon</string>
-    <string name="dk_vehicle_configure_bluetooth">Configurer le Bluetooth</string>
+    <string name="dk_vehicle_configure_beacon_title">Configurer le Beacon</string>
+    <string name="dk_vehicle_configure_bluetooth_title">Configurer le Bluetooth</string>
+
+    <string name="dk_vehicle_configure_beacon_desc">Un beacon est déjà associé au véhicule %s</string>
+    <string name="dk_vehicle_configure_bluetooth_desc">L\'appareil Bluetooth est déjà associé au véhicule %s</string>
 
     <string name="dk_vehicle_show">Afficher</string>
     <string name="dk_vehicle_rename">Renommer</string>
