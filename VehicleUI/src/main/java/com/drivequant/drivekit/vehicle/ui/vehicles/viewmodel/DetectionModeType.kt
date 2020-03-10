@@ -25,6 +25,7 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQ
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
+import kotlinx.android.synthetic.main.simple_list_item_spinner.view.*
 
 enum class DetectionModeType(
     private val title: String,
@@ -109,7 +110,32 @@ enum class DetectionModeType(
 
     fun onConfigureButtonClicked(context: Context, viewModel : VehiclesListViewModel, vehicle: Vehicle){
 
-        // TODO check if beacon/bluetooth configured (launch this AD) or not (launch beacon/BT add screen)
+        if (vehicle.isConfigured()){
+            displayConfigAlertDialog(context, viewModel, vehicle)
+        } else {
+            // launch BT or Beacon setup
+        }
+    }
+
+    fun detectionModeSelected(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
+        // TODO check connectivity
+        // check if GPS already set
+        // check if beacon configured to another
+        // check if bluetooth configured to another
+
+        val detectionMode = DetectionMode.getEnumByName(this.name)
+        DriveKitVehicleManager.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
+            override fun onResponse(status: DetectionModeStatus) {
+                when (status){
+                    SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
+                    ERROR -> { }
+                    GPS_MODE_ALREADY_EXISTS -> {}
+                }
+            }
+        })
+    }
+
+    private fun displayConfigAlertDialog(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val alert = DKAlertDialog.LayoutBuilder()
             .init(context)
             .layout(R.layout.alert_dialog_beacon_bluetooth_chooser)
@@ -130,32 +156,36 @@ enum class DetectionModeType(
                 // TODO check from Singleton if these actions are displayable
                 verify?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_config_verify")
                     it.setOnClickListener {
                         // TODO launch beacon screen
                     }
                 }
-                replace?.setOnClickListener {
+                replace?.let {
                     it.visibility = View.VISIBLE
+                    it.text = DKResource.convertToString(context, "dk_vehicle_config_replace")
                     it.setOnClickListener {
                         // TODO launch beacon screen
                     }
                 }
 
-                delete?.setOnClickListener {
+                delete?.let {
                     it.visibility = View.VISIBLE
-                    DriveKitVehicleManager.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
-                        override fun onResponse(status: VehicleBeaconStatus) {
-                            alert.dismiss()
-                            viewModel.fetchVehicles(SynchronizationType.CACHE)
-                        }
-                    })
+                    it.text = DKResource.convertToString(context, "dk_vehicle_config_delete")
+                    it.setOnClickListener {
+                        DriveKitVehicleManager.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
+                            override fun onResponse(status: VehicleBeaconStatus) {
+                                alert.dismiss()
+                                viewModel.fetchVehicles(SynchronizationType.CACHE)
+                            }
+                        })
+                    }
                 }
             }
             BLUETOOTH -> {
                 delete?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_config_delete")
                     it.setOnClickListener {
                         DriveKitVehicleManager.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
                             override fun onResponse(status: VehicleBluetoothStatus) {
@@ -168,24 +198,6 @@ enum class DetectionModeType(
             }
             else -> {}
         }
-    }
-
-    fun detectionModeSelected(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
-        // TODO check connectivity
-        // check if GPS already set
-        // check if beacon configured to another
-        // check if bluetooth configured to another
-
-        val detectionMode = DetectionMode.getEnumByName(this.name)
-        DriveKitVehicleManager.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
-            override fun onResponse(status: DetectionModeStatus) {
-                when (status){
-                    SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
-                    ERROR -> { }
-                    GPS_MODE_ALREADY_EXISTS -> {}
-                }
-            }
-        })
     }
 }
 
