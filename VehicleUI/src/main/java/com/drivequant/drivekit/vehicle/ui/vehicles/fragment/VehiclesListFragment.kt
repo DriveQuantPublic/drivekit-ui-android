@@ -74,7 +74,8 @@ class VehiclesListFragment : Fragment() {
             } else {
                 displayVehiclesList()
                 if (adapter != null) {
-                    adapter?.notifyDataSetChanged()
+                    adapter?.setVehicles(it)
+                    vehicles_list.adapter?.notifyDataSetChanged()
                 } else {
                     adapter = VehiclesListAdapter(context, viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter

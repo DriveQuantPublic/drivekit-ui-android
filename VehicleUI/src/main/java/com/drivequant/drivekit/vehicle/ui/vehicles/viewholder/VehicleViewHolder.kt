@@ -16,6 +16,8 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.MenuItem
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.PopupMenuItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
 
@@ -33,20 +35,31 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         val context = itemView.context
         textViewTitle.text = viewModel.getTitle(context, vehicle)
         textViewSubtitle.text = viewModel.getSubtitle(context, vehicle)
-        setupPopup(context, vehicle)
+        setupPopup(context, viewModel, vehicle)
         setupDetectionModeContainer(context, vehicle)
         setupConfigureButton(context, vehicle)
     }
 
-    private fun setupPopup(context: Context, vehicle: Vehicle){
-        // TODO via singleton, determinate if VM build items
+    private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         popup.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
-            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_show)
-            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_rename)
-            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_replace)
-            popupMenu.menu.add(Menu.NONE, 1, 1, R.string.dk_vehicle_delete)
+
+            // TODO via singleton, determinate if VM build items
+            val mockList : MutableList<MenuItem> = mutableListOf()
+            mockList.add(PopupMenuItem.SHOW)
+            mockList.add(PopupMenuItem.REPLACE)
+            mockList.add(PopupMenuItem.DELETE)
+
+            for (i in mockList.indices){
+                popupMenu.menu.add(Menu.NONE, i, i, mockList[i].getTitle(context))
+            }
+
             popupMenu.show()
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                mockList[menuItem.itemId].onItemClicked(context, viewModel, vehicle)
+                return@setOnMenuItemClickListener false
+            }
         }
     }
 

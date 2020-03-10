@@ -77,4 +77,8 @@ class VehiclesListAdapter(
     fun setTouched(touched: Boolean){
         this.touched = touched
     }
+
+    fun setVehicles(vehicles: List<Vehicle>){
+        this.vehicles = vehicles.toMutableList()
+    }
 }

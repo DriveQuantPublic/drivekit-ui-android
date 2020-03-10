@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
@@ -48,12 +47,5 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String {
         return vehicle.computeSubtitle(context)
-    }
-
-    class VehicleListViewModelFactory : ViewModelProvider.NewInstanceFactory(){
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return VehiclesListViewModel() as T
-        }
     }
 }
