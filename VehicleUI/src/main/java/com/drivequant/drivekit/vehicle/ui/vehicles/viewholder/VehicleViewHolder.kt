@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
@@ -62,7 +63,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
                 val bitmap = (infoDrawable as BitmapDrawable).bitmap
                 val size = context.resources.getDimension(R.dimen.dk_ic_medium).toInt()
                 val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))
-                resizedDrawable.setTint(DriveKitUI.colors.criticalColor())
+                DrawableCompat.setTint(resizedDrawable, DriveKitUI.colors.criticalColor())
                 textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(resizedDrawable, null, null, null)
             }
         }
@@ -95,14 +96,15 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupConfigureButton(context: Context, vehicle: Vehicle){
-        buttonSetup.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
-        buttonSetup.setOnClickListener {
-            DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
-        }
-        if (buttonSetup.text.isNullOrEmpty()){
+        val configureText = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getConfigureButtonText(context)
+        if (configureText.isEmpty()){
             buttonSetup.visibility = View.GONE
         } else {
+            buttonSetup.text = configureText
             buttonSetup.visibility = View.VISIBLE
+            buttonSetup.setOnClickListener {
+                DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).onConfigureButtonClicked(context, viewModel, vehicle)
+            }
         }
     }
 }

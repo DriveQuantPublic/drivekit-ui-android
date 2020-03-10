@@ -60,8 +60,4 @@
     <string name="dk_vehicle_delete">Supprimer</string>
 
     <string name="dk_vehicle_add">Ajouter un véhicule</string>
-
-    <string name="dk_vehicle_config_verify">Vérifier</string>
-    <string name="dk_vehicle_config_replace">Remplacer</string>
-    <string name="dk_vehicle_config_delete">Supprimer</string>
 </resources>

@@ -25,7 +25,6 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQ
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
-import kotlinx.android.synthetic.main.simple_list_item_spinner.view.*
 
 enum class DetectionModeType(
     private val title: String,
@@ -156,14 +155,14 @@ enum class DetectionModeType(
                 // TODO check from Singleton if these actions are displayable
                 verify?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_config_verify")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_verify")
                     it.setOnClickListener {
                         // TODO launch beacon screen
                     }
                 }
                 replace?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_config_replace")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_replace")
                     it.setOnClickListener {
                         // TODO launch beacon screen
                     }
@@ -171,7 +170,7 @@ enum class DetectionModeType(
 
                 delete?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_config_delete")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
                         DriveKitVehicleManager.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
                             override fun onResponse(status: VehicleBeaconStatus) {
@@ -185,7 +184,7 @@ enum class DetectionModeType(
             BLUETOOTH -> {
                 delete?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_config_delete")
+                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
                         DriveKitVehicleManager.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
                             override fun onResponse(status: VehicleBluetoothStatus) {
