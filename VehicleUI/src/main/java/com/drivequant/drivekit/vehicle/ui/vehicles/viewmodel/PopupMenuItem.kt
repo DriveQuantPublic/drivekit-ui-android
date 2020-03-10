@@ -49,8 +49,8 @@ enum class PopupMenuItem(
 
     private fun manageRenameVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         var vehicleFieldInputEditText: TextInputEditText? = null
-        val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
-        val message = DKResource.convertToString(context, "dk_vehicle_rename_title")?.let { it }?: run { ""}
+        val title = DKResource.convertToString(context, "dk_vehicle_rename_title")?.let { it }?: run { "" }
+        val message = DKResource.convertToString(context, "dk_vehicle_rename_description")?.let { it }?: run { "" }
         val vehicleName = viewModel.getTitle(context, vehicle)
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
