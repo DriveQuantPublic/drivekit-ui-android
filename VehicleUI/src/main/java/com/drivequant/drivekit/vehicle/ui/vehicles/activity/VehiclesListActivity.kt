@@ -16,7 +16,7 @@ class VehiclesListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, VehiclesListFragment.newInstance())
+            .replace(R.id.container, VehiclesListFragment.newInstance())
             .commit()
     }
 

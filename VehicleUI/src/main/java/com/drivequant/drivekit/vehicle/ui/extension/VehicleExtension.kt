@@ -41,6 +41,14 @@ fun Vehicle.isConfigured(): Boolean {
     }
 }
 
+fun Vehicle.getDeviceDisplayIdentifier(): String {
+    return when (this.detectionMode){
+        DISABLED, GPS -> ""
+        BEACON -> this.beacon?.code ?: run { "" }
+        BLUETOOTH -> this.bluetooth?.name ?: run { "" }
+    }
+}
+
 private fun getDefaultTitle(vehicle: Vehicle): String {
     return "${vehicle.brand} ${vehicle.model} ${vehicle.version}"
 }

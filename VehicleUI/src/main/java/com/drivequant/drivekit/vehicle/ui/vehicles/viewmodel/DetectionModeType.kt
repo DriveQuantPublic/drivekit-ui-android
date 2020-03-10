@@ -23,6 +23,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
@@ -70,29 +71,30 @@ enum class DetectionModeType(
 
     fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
         var configured = true
+        val parameter = vehicle.getDeviceDisplayIdentifier()
         val stringIdentifier = when (this){
             DISABLED, GPS -> {
                 descriptionConfigured
             }
             BEACON, BLUETOOTH -> {
                 if (vehicle.isConfigured()){
-                    descriptionConfigured // TODO it.code or it.name
+                    descriptionConfigured
                 } else {
                     configured = false
                     descriptionNotConfigured
                 }
             }
         }
-        val stringValue = ResourceUtils.convertToString(context, stringIdentifier)?.let { it } ?: run { "" }
+        val parameteredString = DKResource.buildString(context, stringIdentifier, parameter)
 
         return if (configured){
-            DKSpannable().append(stringValue, context.resSpans {
+            DKSpannable().append(parameteredString, context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
             }).toSpannable()
         } else {
-            DKSpannable().append(stringValue, context.resSpans {
+            DKSpannable().append(parameteredString, context.resSpans {
                 color(DriveKitUI.colors.criticalColor())
                 typeface(BOLD)
                 size(R.dimen.dk_text_normal)
@@ -152,6 +154,8 @@ enum class DetectionModeType(
 
         when (this){
             BEACON -> {
+                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier())
+
                 // TODO check from Singleton if these actions are displayable
                 verify?.let {
                     it.visibility = View.VISIBLE
@@ -182,6 +186,8 @@ enum class DetectionModeType(
                 }
             }
             BLUETOOTH -> {
+                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier())
+
                 delete?.let {
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_delete")
@@ -195,7 +201,7 @@ enum class DetectionModeType(
                     }
                 }
             }
-            else -> {}
+            else -> { }
         }
     }
 }

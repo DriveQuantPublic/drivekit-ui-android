@@ -49,7 +49,7 @@ class VehiclesListFragment : Fragment() {
             updateVehicles()
         }
 
-        val linearLayoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(view.context)
         vehicles_list.layoutManager = linearLayoutManager
 
         // TODO if can add vehicle

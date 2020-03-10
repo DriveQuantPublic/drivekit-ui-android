@@ -54,6 +54,7 @@
     <string name="dk_vehicle_configure_beacon_desc">Un beacon est déjà associé au véhicule %s</string>
     <string name="dk_vehicle_configure_bluetooth_desc">L\'appareil Bluetooth est déjà associé au véhicule %s</string>
 
+    <string name="dk_vehicle_verify">Vérifier</string>
     <string name="dk_vehicle_show">Afficher</string>
     <string name="dk_vehicle_rename">Renommer</string>
     <string name="dk_vehicle_replace">Remplacer</string>
