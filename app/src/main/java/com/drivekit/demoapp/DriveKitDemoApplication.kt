@@ -23,6 +23,8 @@ import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.facebook.stetho.Stetho
 import java.util.*
 
 class DriveKitDemoApplication: Application() {
@@ -46,10 +48,17 @@ class DriveKitDemoApplication: Application() {
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
+
+        Stetho.initializeWithDefaults(this)
+
+
+        DriveKitUI.initialize()
         val config = DriveKitConfig()
-        DriveKitUI.initialize(fonts = config,colors = config)
+        DriveKitUI.initialize(fonts = config, colors = config)
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
+
+        DriverVehicleUI.initialize()
     }
 
     private fun createNotificationChannel() {

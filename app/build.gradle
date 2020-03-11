@@ -37,6 +37,8 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
 
+    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
+
     implementation project(':CommonUI')
     implementation project(':DriverDataUI')
     implementation project(':VehicleUI')
