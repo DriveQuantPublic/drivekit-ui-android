@@ -294,6 +294,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
+    // TODO retrieve detection modes from singleton
     private fun computeCreateVehicleDetectionMode(detectionModes: List<DetectionMode>): DetectionMode {
         return if (detectionModes.isEmpty()){
             DetectionMode.DISABLED
@@ -301,10 +302,10 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             if (DbVehicleAccess.findVehiclesByDetectionMode(DetectionMode.GPS).execute().isEmpty()){
                 DetectionMode.GPS
             } else {
-                detectionModes[0]
+                detectionModes.first()
             }
         } else {
-            detectionModes[0]
+            detectionModes.first()
         }
     }
 

@@ -27,6 +27,8 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
+import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
@@ -145,8 +147,16 @@ enum class DetectionModeType(
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
+        val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
+
         val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
-        val message = DKResource.convertToString(context, "dk_vehicle_gps_already_exists_confirm")?.let { it }?: run { "" }
+        val message = DKResource.buildString(context,
+            "dk_vehicle_gps_already_exists_confirm",
+            getEnumByDetectionMode(detectionMode).getTitle(context),
+            vehicle.computeTitle(context, viewModel.vehiclesList),
+            gpsVehicle.computeTitle(context, viewModel.vehiclesList),
+            gpsVehicle.getDetectionModeName(context)
+        )
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)

@@ -33,8 +33,16 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
 
     fun bind(vehicle: Vehicle){
         val context = itemView.context
+        val subTitle = viewModel.getSubtitle(context, vehicle)
         textViewTitle.text = viewModel.getTitle(context, vehicle)
-        textViewSubtitle.text = viewModel.getSubtitle(context, vehicle)
+
+        subTitle?.let {
+            textViewSubtitle.visibility = View.VISIBLE
+            textViewSubtitle.text = subTitle
+        }?: run {
+            textViewSubtitle.visibility = View.GONE
+        }
+
         setupPopup(context, viewModel, vehicle)
         setupDetectionModeContainer(context, vehicle)
         setupConfigureButton(context, vehicle)
