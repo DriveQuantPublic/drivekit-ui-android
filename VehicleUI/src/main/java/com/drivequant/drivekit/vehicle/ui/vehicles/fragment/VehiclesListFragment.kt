@@ -67,7 +67,7 @@ class VehiclesListFragment : Fragment() {
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
-                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_sync"), Toast.LENGTH_LONG).show() // TODO
+                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_error_message"), Toast.LENGTH_LONG).show()
             }
             if (it.isNullOrEmpty()){
                 linear_layout_header_vehicle_list.visibility = View.VISIBLE

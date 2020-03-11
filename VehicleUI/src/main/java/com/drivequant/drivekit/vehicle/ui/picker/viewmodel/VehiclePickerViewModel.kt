@@ -232,20 +232,22 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         val detectionMode = computeCreateVehicleDetectionMode(listOf())
         DriveKitVehicleManager.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                progressBarObserver.postValue(false)
                 if (status == VehicleManagerStatus.SUCCESS){
-                    if (vehicleToDelete != null) {
-                        DriveKitVehicleManager.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                    vehicleToDelete?.let {
+                        DriveKitVehicleManager.deleteVehicle(it, object: VehicleDeleteQueryListener {
                             override fun onResponse(status: VehicleManagerStatus) {
                                 vehicleToDelete = null
                                 endObserver.postValue(null)
+                                progressBarObserver.postValue(false)
                             }
                         })
-                    } else {
+                    }?: run {
                         endObserver.postValue(null)
+                        progressBarObserver.postValue(false)
                     }
                 } else {
                     fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                    progressBarObserver.postValue(false)
                 }
             }
         })

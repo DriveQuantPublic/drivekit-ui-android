@@ -6,10 +6,10 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 
-fun Vehicle.computeTitle(context: Context): String {
+fun Vehicle.computeTitle(context: Context, vehicles: List<Vehicle>): String {
     val defaultName = getDefaultTitle(this)
-    return if (this.name == defaultName){
-        context.getString(R.string.dk_vehicle_my_vehicle) + " - position" // TODO compute position in list
+    return if (this.name.equals(defaultName, true)){
+        "${context.getString(R.string.dk_vehicle_my_vehicle)} - ${getVehiclePositionInList(vehicles)}"
     } else {
         this.name?.let {
             it
@@ -46,6 +46,10 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
         BEACON -> this.beacon?.code ?: run { "" }
         BLUETOOTH -> this.bluetooth?.name ?: run { "" }
     }
+}
+
+private fun Vehicle.getVehiclePositionInList(vehicles: List<Vehicle>): Int{
+    return vehicles.indexOf(this) + 1
 }
 
 private fun getDefaultTitle(vehicle: Vehicle): String {

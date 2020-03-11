@@ -42,7 +42,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.computeTitle(context)
+        return vehicle.computeTitle(context, vehiclesList)
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String {
