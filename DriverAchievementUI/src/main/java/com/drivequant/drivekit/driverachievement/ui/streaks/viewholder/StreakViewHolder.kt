@@ -17,6 +17,8 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
+import android.graphics.LightingColorFilter
+
 
 
 class StreakViewHolder(itemView: View) :
@@ -43,20 +45,25 @@ class StreakViewHolder(itemView: View) :
             showDescription(streaksData)
         }
 
+        setupUIConfig()
+        setupSeekBar(streaksData)
+        setData(streaksData)
+    }
+
+    private fun setupUIConfig() {
         textViewStreakTitle.headLine1()
         textViewBestTitle.headLine2()
         textViewCurrentTitle.headLine2()
         textViewTripsCount.headLine2()
         imageViewInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        setupSeekBar(streaksData)
-        setData(streaksData)
     }
 
     private fun setupSeekBar(streaksData: StreaksData) {
-        seekBar.setPadding(0, 0, 0, 0)
+        seekBar.setPadding(1, 0, 0, 0)
         seekBar.progress = streaksData.computePercentage()
         seekBar.setOnTouchListener { _, _ -> true }
+        seekBar.progressDrawable.colorFilter = LightingColorFilter(-0x1000000, DriveKitUI.colors.secondaryColor())
     }
 
     private fun setData(streaksData: StreaksData) {

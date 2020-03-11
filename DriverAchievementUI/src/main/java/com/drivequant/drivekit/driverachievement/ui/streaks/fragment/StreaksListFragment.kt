@@ -14,7 +14,6 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksLis
 import kotlinx.android.synthetic.main.fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
 
