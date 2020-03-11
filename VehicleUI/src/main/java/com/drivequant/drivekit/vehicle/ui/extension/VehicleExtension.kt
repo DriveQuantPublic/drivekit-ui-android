@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R

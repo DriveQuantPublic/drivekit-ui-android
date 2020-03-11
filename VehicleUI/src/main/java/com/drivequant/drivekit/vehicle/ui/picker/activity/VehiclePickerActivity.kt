@@ -77,6 +77,10 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
         })
 
+        viewModel.endObserver.observe(this, Observer {
+            finish()
+        })
+
         viewModel.computeNextScreen(this, null, viewConfig)
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
 
@@ -46,7 +47,8 @@ class VehicleNameChooserFragment : Fragment() {
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
 
         button_validate.setOnClickListener {
-            // TODO createVehicle in VehiclePickerViewModel
+            viewModel.name = editTextWrapper.editText?.editableText.toString()
+            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME, viewConfig)
         }
     }
 }

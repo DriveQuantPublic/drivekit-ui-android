@@ -4,9 +4,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
+import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.manager.VehicleCreateQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
@@ -18,6 +25,7 @@ import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
     val stepDispatcher = MutableLiveData<VehiclePickerStep>()
+    val endObserver = MutableLiveData<Any>()
     val progressBarObserver = MutableLiveData<Boolean>()
     val fetchServiceErrorObserver = MutableLiveData<VehiclePickerStatus>()
 
@@ -31,6 +39,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private var isLiteConfig = false
 
+    var vehicleToDelete: Vehicle? = null
+
     lateinit var selectedVehicleTypeItem: VehicleTypeItem
     lateinit var selectedCategory: VehicleCategoryItem
     lateinit var selectedBrand: VehicleBrand
@@ -38,6 +48,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var selectedModel: String
     lateinit var selectedYear: String
     lateinit var selectedVersion: VehicleVersion
+    lateinit var name: String
     lateinit var characteristics: VehicleCharacteristics
 
     fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig, otherAction: Boolean = false){
@@ -89,7 +100,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             MODELS -> fetchVehicleYears()
             YEARS -> fetchVehicleVersions()
             VERSIONS -> fetchVehicleCharacteristics()
-            NAME -> { } // TODO create vehicle when web service has been updated with detection mode
+            NAME -> createVehicle()
         }
     }
 
@@ -216,6 +227,30 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         })
     }
 
+    private fun createVehicle(){
+        progressBarObserver.postValue(true)
+        val detectionMode = computeCreateVehicleDetectionMode(listOf())
+        DriveKitVehicleManager.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
+            override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
+                progressBarObserver.postValue(false)
+                if (status == VehicleManagerStatus.SUCCESS){
+                    if (vehicleToDelete != null) {
+                        DriveKitVehicleManager.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                            override fun onResponse(status: VehicleManagerStatus) {
+                                vehicleToDelete = null
+                                endObserver.postValue(null)
+                            }
+                        })
+                    } else {
+                        endObserver.postValue(null)
+                    }
+                } else {
+                    fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                }
+            }
+        })
+    }
+
     private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
         if (viewConfig.displayBrandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
@@ -254,6 +289,20 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             selectedCategory.title
         } else {
             "$selectedBrand $selectedModel ${selectedVersion.version}"
+        }
+    }
+
+    private fun computeCreateVehicleDetectionMode(detectionModes: List<DetectionMode>): DetectionMode {
+        return if (detectionModes.isEmpty()){
+            DetectionMode.DISABLED
+        } else if (detectionModes.contains(DetectionMode.GPS)){
+            if (DbVehicleAccess.findVehiclesByDetectionMode(DetectionMode.GPS).execute().isEmpty()){
+                DetectionMode.GPS
+            } else {
+                detectionModes[0]
+            }
+        } else {
+            detectionModes[0]
         }
     }
 
