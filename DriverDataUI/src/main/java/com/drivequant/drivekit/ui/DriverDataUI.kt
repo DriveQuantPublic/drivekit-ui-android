@@ -16,7 +16,7 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 object DriverDataUI : DriverDataUIEntryPoint {
 
-    internal lateinit var tripData: TripData
+    internal var tripData: TripData = TripData.SAFETY
     internal var mapItems: List<MapItem> = listOf(
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
@@ -34,6 +34,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     internal var noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded
 
+    @JvmOverloads
     fun initialize(tripData: TripData = TripData.SAFETY, mapItems: List<MapItem> = listOf(
             MapItem.SAFETY,
             MapItem.ECO_DRIVING,
