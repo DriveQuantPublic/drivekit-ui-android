@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -22,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
 
 class VehiclesListFragment : Fragment() {
+    private var firstLaunch = true
     private lateinit var viewModel : VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
 
@@ -60,14 +62,19 @@ class VehiclesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateVehicles()
+        if (firstLaunch) {
+            updateVehicles()
+            firstLaunch = false
+        } else {
+            viewModel.fetchVehicles(SynchronizationType.CACHE)
+        }
     }
 
     private fun updateVehicles(){
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
-                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_sync"), Toast.LENGTH_LONG).show() // TODO
+                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_error_message"), Toast.LENGTH_LONG).show()
             }
             if (it.isNullOrEmpty()){
                 linear_layout_header_vehicle_list.visibility = View.VISIBLE

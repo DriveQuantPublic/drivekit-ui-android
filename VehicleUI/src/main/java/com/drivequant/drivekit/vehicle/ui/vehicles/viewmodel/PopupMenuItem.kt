@@ -16,6 +16,7 @@ import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 
 enum class PopupMenuItem(
     private val descriptionIdentifier: String
@@ -42,9 +43,13 @@ enum class PopupMenuItem(
         when (this) {
             SHOW -> { } // TODO launch vehicle detail screen
             RENAME -> manageRenameVehicle(context, viewModel, vehicle)
-            REPLACE -> { } // TODO launch vehicle picker in replace mode
+            REPLACE -> manageReplaceVehicle(context, vehicle)
             DELETE -> manageDeleteVehicle(context, viewModel, vehicle)
         }
+    }
+
+    private fun manageReplaceVehicle(context: Context, vehicle: Vehicle){
+        VehiclePickerActivity.launchActivity(context, vehicleToDelete = vehicle)
     }
 
     private fun manageRenameVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
@@ -89,7 +94,7 @@ enum class PopupMenuItem(
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
-        val message = DKResource.convertToString(context, "dk_vehicle_delete_confirm")?.let { it }?: run { ""}
+        val message = DKResource.convertToString(context, "dk_vehicle_delete_confirm")?.let { it }?: run { "" }
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)

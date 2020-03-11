@@ -16,11 +16,11 @@ import java.io.Serializable
 
 class VehiclesListViewModel : ViewModel(), Serializable {
     val vehiclesData = MutableLiveData<List<Vehicle>>()
-    private var vehiclesList: List<Vehicle> = listOf()
+    var vehiclesList: List<Vehicle> = listOf()
     var syncStatus: VehicleSyncStatus = VehicleSyncStatus.NO_ERROR
 
     fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT){
-        if (DriveKit.isConfigured()) { // TODO if DriveKitVehicle.isConfigured() ?
+        if (DriveKit.isConfigured()) {
             DriveKitVehicleManager.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     syncStatus = status
@@ -42,10 +42,10 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.computeTitle(context)
+        return vehicle.computeTitle(context, vehiclesList)
     }
 
-    fun getSubtitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.computeSubtitle(context)
+    fun getSubtitle(context: Context, vehicle: Vehicle): String? {
+        return vehicle.computeSubtitle(context, vehiclesList)
     }
 }
