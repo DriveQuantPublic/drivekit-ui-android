@@ -16,6 +16,7 @@ import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 
 enum class PopupMenuItem(
@@ -94,7 +95,7 @@ enum class PopupMenuItem(
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
-        val message = DKResource.convertToString(context, "dk_vehicle_delete_confirm")?.let { it }?: run { "" }
+        val message = DKResource.buildString(context, "dk_vehicle_delete_confirm", vehicle.computeTitle(context, viewModel.vehiclesList))
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
