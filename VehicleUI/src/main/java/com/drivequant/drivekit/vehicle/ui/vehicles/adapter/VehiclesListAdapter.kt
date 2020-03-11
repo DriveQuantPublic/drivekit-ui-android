@@ -11,20 +11,19 @@ import android.widget.AdapterView
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinnerItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.VehicleViewHolder
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 
 class VehiclesListAdapter(
-    var context: Context?,
+    var context: Context,
     private val viewModel: VehiclesListViewModel,
     private var vehicles: MutableList<Vehicle>,
     private var touched: Boolean = false
 ) : RecyclerView.Adapter<VehicleViewHolder>() {
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): VehicleViewHolder {
-        val layoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = layoutInflater.inflate(R.layout.view_vehicle_item_list, null)
         return VehicleViewHolder(view, viewModel)
     }
@@ -46,16 +45,9 @@ class VehiclesListAdapter(
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
                 if (touched) {
-                    // TODO retrieve listOf from Singleton
-                    val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
-                    detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.DISABLED))
-                    detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.GPS))
-                    detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.BEACON))
-                    detectionModes.add(DetectionModeSpinnerItem(view.context, DetectionModeType.BLUETOOTH))
-
+                    val detectionModes = viewModel.buildDetectionModeSpinnerItems(view.context)
                     val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
                     DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, viewModel, vehicles[position])
-
                     touched = false
                 }
             }

@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
@@ -53,11 +54,6 @@ class VehiclesListFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicles_list.layoutManager = linearLayoutManager
-
-        // TODO if can add vehicle
-        add_vehicle.setOnClickListener {
-            VehiclePickerActivity.launchActivity(requireContext())
-        }
     }
 
     override fun onResume() {
@@ -68,6 +64,7 @@ class VehiclesListFragment : Fragment() {
         } else {
             viewModel.fetchVehicles(SynchronizationType.CACHE)
         }
+        setupAddVehicleButton()
     }
 
     private fun updateVehicles(){
@@ -84,7 +81,7 @@ class VehiclesListFragment : Fragment() {
                     adapter?.setVehicles(it)
                     adapter?.notifyDataSetChanged()
                 } else {
-                    adapter = VehiclesListAdapter(context, viewModel, it.toMutableList())
+                    adapter = VehiclesListAdapter(requireContext(), viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter
                 }
             }
@@ -93,6 +90,17 @@ class VehiclesListFragment : Fragment() {
         })
         updateProgressVisibility(true)
         viewModel.fetchVehicles()
+    }
+
+    private fun setupAddVehicleButton(){
+        if (viewModel.canAddVehicle()){
+            add_vehicle.visibility = View.VISIBLE
+            add_vehicle.setOnClickListener {
+                VehiclePickerActivity.launchActivity(requireContext())
+            }
+        } else {
+            add_vehicle.visibility = View.GONE
+        }
     }
 
     private fun displayVehiclesList(){

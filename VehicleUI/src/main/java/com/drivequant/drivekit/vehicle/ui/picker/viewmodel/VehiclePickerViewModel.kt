@@ -16,6 +16,7 @@ import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -229,7 +230,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun createVehicle(){
         progressBarObserver.postValue(true)
-        val detectionMode = computeCreateVehicleDetectionMode(listOf())
+        val detectionMode = computeCreateVehicleDetectionMode()
         DriveKitVehicleManager.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                 if (status == VehicleManagerStatus.SUCCESS){
@@ -294,8 +295,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    // TODO retrieve detection modes from singleton
-    private fun computeCreateVehicleDetectionMode(detectionModes: List<DetectionMode>): DetectionMode {
+    private fun computeCreateVehicleDetectionMode(): DetectionMode {
+        val detectionModes = DriverVehicleUI.detectionModes
         return if (detectionModes.isEmpty()){
             DetectionMode.DISABLED
         } else if (detectionModes.contains(DetectionMode.GPS)){

@@ -15,6 +15,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -32,11 +33,12 @@ enum class PopupMenuItem(
         return stringValue?.let { it }?: run { "" }
     }
 
-    override fun isDisplayable(vehicle: Vehicle): Boolean {
-        // TODO handle other cases with singleton
-        when (this){
-            SHOW -> return !vehicle.liteConfig
-            else -> return true
+    override fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean {
+        return when (this){
+            SHOW -> !vehicle.liteConfig && DriverVehicleUI.displayVehicleDetail
+            RENAME -> DriverVehicleUI.renameVehicle
+            REPLACE -> DriverVehicleUI.replaceVehicle
+            DELETE -> vehicles.size > 1 && DriverVehicleUI.deleteVehicle
         }
     }
 

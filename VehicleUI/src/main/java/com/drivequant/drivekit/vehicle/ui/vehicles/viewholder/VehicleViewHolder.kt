@@ -13,13 +13,13 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.MenuItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.PopupMenuItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
@@ -51,34 +51,29 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         popup.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
-
-            // TODO via singleton, determinate if VM build items
-            val mockList : MutableList<MenuItem> = mutableListOf()
-            mockList.add(PopupMenuItem.SHOW)
-            mockList.add(PopupMenuItem.RENAME)
-            mockList.add(PopupMenuItem.REPLACE)
-            mockList.add(PopupMenuItem.DELETE)
-
-            for (i in mockList.indices){
-                if (mockList[i].isDisplayable(vehicle)) {
-                    popupMenu.menu.add(Menu.NONE, i, i, mockList[i].getTitle(context))
+            val itemsList : List<MenuItem> = PopupMenuItem.values().toList()
+            for (i in itemsList.indices){
+                if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
+                    popupMenu.menu.add(Menu.NONE, i, i, itemsList[i].getTitle(context))
                 }
             }
-
             popupMenu.show()
-
             popupMenu.setOnMenuItemClickListener { menuItem ->
-                mockList[menuItem.itemId].onItemClicked(context, viewModel, vehicle)
+                itemsList[menuItem.itemId].onItemClicked(context, viewModel, vehicle)
                 return@setOnMenuItemClickListener false
             }
         }
     }
 
-    private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
-        // TODO via singleton, if detection mode size == 1 then View.GONE else View.VISIBLE
-        linearLayoutDetectionMode.visibility = View.VISIBLE
 
-        textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
+    private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
+        if (DriverVehicleUI.detectionModes.size == 1){
+            linearLayoutDetectionMode.visibility = View.GONE
+        } else {
+            linearLayoutDetectionMode.visibility = View.VISIBLE
+            textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
+        }
+
         textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)
         if (vehicle.isConfigured()){
             textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
@@ -92,25 +87,13 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             }
         }
 
-        // TODO retrieve listOf from Singleton
-        val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.DISABLED))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.GPS))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BEACON))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BLUETOOTH))
-
+        val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
         val adapter: ArrayAdapter<DetectionModeSpinnerItem> = ArrayAdapter(context, R.layout.simple_list_item_spinner, detectionModes)
         spinnerDetectionMode.adapter = adapter
     }
 
-    fun selectDetectionMode(context: Context?, vehicle: Vehicle){
-        // TODO retrieve listOf from Singleton
-        val detectionModes = mutableListOf<DetectionModeSpinnerItem>()
-        detectionModes.add(DetectionModeSpinnerItem(context!!, DetectionModeType.DISABLED))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.GPS))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BEACON))
-        detectionModes.add(DetectionModeSpinnerItem(context, DetectionModeType.BLUETOOTH))
-
+    fun selectDetectionMode(context: Context, vehicle: Vehicle){
+        val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
         for (i in detectionModes.indices){
             val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
             if (detectionMode == vehicle.detectionMode){

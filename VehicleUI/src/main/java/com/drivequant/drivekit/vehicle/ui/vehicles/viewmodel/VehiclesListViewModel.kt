@@ -9,9 +9,11 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinnerItem
 import java.io.Serializable
 
 class VehiclesListViewModel : ViewModel(), Serializable {
@@ -47,5 +49,18 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String? {
         return vehicle.computeSubtitle(context, vehiclesList)
+    }
+
+    fun buildDetectionModeSpinnerItems(context: Context) : List<DetectionModeSpinnerItem> {
+        val detectionModeSpinnerItems = mutableListOf<DetectionModeSpinnerItem>()
+        for (detectionMode in DriverVehicleUI.detectionModes){
+            detectionModeSpinnerItems.add(DetectionModeSpinnerItem(context, DetectionModeType.getEnumByDetectionMode(detectionMode)))
+        }
+        return detectionModeSpinnerItems
+    }
+
+    fun canAddVehicle(): Boolean{
+        return DriverVehicleUI.addVehicle &&
+                (vehiclesList.size < DriverVehicleUI.maxVehicles || DriverVehicleUI.maxVehicles == -1)
     }
 }
