@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKMedia
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.picker.commons.MediaUtils
 
 enum class VehicleTypeItem(
     val vehicleType: VehicleType,
@@ -18,7 +18,7 @@ enum class VehicleTypeItem(
     }
 
     fun getCategories(context: Context): List<VehicleCategoryItem> {
-        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_categories)
+        val lines = DKMedia.readCSVFile(context, R.raw.vehicle_categories)
         val categories = mutableListOf<VehicleCategoryItem>()
         for (i in lines!!.indices) {
             val vehicleCategoryItem = buildVehicleCategoryItem(context, lines[i])
@@ -32,7 +32,7 @@ enum class VehicleTypeItem(
     }
 
     fun getBrands(context: Context, withIcons: Boolean = false): List<VehicleBrandItem> {
-        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_brands)
+        val lines = DKMedia.readCSVFile(context, R.raw.vehicle_brands)
         val brands = mutableListOf<VehicleBrandItem>()
         for (i in lines!!.indices) {
             val vehicleBrandItem = buildVehicleBrandItem(context, lines[i])
@@ -48,7 +48,7 @@ enum class VehicleTypeItem(
     }
 
     fun getEngines(context: Context): List<VehicleEngineItem> {
-        val lines = MediaUtils.readCSVFile(context, R.raw.vehicle_engines)
+        val lines = DKMedia.readCSVFile(context, R.raw.vehicle_engines)
         val engines = mutableListOf<VehicleEngineItem>()
         for (i in lines!!.indices) {
             val vehicleEngineItem = buildVehicleEngineItem(context, lines[i])

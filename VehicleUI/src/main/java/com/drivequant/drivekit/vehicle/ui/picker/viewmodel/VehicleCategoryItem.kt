@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
+import com.drivequant.drivekit.common.ui.utils.DKResource
 
 data class VehicleCategoryItem(
     val category: String,
@@ -18,10 +18,10 @@ data class VehicleCategoryItem(
 fun buildVehicleCategoryItem(context: Context, source: Array<String>): VehicleCategoryItem {
     return VehicleCategoryItem(
         source[0],
-        ResourceUtils.convertToString(context, source[1]),
-        ResourceUtils.convertToDrawable(context, source[2]),
-        ResourceUtils.convertToDrawable(context, source[3]),
-        ResourceUtils.convertToString(context, source[4]),
+        DKResource.convertToString(context, source[1]),
+        DKResource.convertToDrawable(context, source[2]),
+        DKResource.convertToDrawable(context, source[3]),
+        DKResource.convertToString(context, source[4]),
         source[5],
         source[6].toBoolean(),
         source[7].toBoolean(),

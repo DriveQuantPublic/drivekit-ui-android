@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
@@ -86,6 +88,8 @@ class VehicleItemListFragment : Fragment() {
         } else {
             recyclerView.layoutManager = GridLayoutManager(context, 2)
         }
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        FontUtils.overrideFonts(context, view)
         return view
     }
 

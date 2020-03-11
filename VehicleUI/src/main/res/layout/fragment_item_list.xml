@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical">
     <TextView
         android:id="@+id/text_view_description"
@@ -10,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/dk_margin"
         android:visibility="gone"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"

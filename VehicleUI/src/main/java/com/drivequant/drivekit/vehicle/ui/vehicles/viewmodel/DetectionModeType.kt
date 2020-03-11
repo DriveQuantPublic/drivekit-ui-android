@@ -29,7 +29,6 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQ
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
-import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
 enum class DetectionModeType(
     private val title: String,
@@ -70,7 +69,7 @@ enum class DetectionModeType(
     }
 
     fun getTitle(context: Context): String {
-       return ResourceUtils.convertToString(context, this.title)?.let { it } ?: run { "" }
+       return DKResource.convertToString(context, this.title)?.let { it } ?: run { "" }
     }
 
     fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
@@ -108,7 +107,7 @@ enum class DetectionModeType(
 
     fun getConfigureButtonText(context: Context): String {
         return when (this){
-            BEACON, BLUETOOTH -> ResourceUtils.convertToString(context, configureButtonText)?.let { it } ?: run { "" }
+            BEACON, BLUETOOTH -> DKResource.convertToString(context, configureButtonText)?.let { it } ?: run { "" }
             else -> ""
         }
     }
