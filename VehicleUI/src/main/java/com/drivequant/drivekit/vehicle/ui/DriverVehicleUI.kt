@@ -31,6 +31,7 @@ object DriverVehicleUI { // TODO add VehicleUIEntryPoint interface
     internal var vehicleBrands: List<VehicleBrand> = VehicleBrand.getBrands(null)
 
     internal var categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG
+    internal var displayBrandsWithIcons: Boolean = true
 
     internal var detectionModes: List<DetectionMode> = listOf(
         DetectionMode.DISABLED,
@@ -61,7 +62,7 @@ object DriverVehicleUI { // TODO add VehicleUIEntryPoint interface
         this.detectionModes = detectionModes
     }
 
-    fun configurMaxVehicles(maxVehicles: Int){
+    fun configureMaxVehicles(maxVehicles: Int){
         this.maxVehicles = maxVehicles
     }
 
@@ -79,6 +80,10 @@ object DriverVehicleUI { // TODO add VehicleUIEntryPoint interface
 
     fun configureVehicleBrands(vehicleBrands: List<VehicleBrand>){
         this.vehicleBrands = vehicleBrands
+    }
+
+    fun configureDisplayBrandsWithIcons(displayBrandsWithIcons: Boolean){
+        this.displayBrandsWithIcons = displayBrandsWithIcons
     }
 
     fun configureCategoryConfigType(categoryConfigType: CategoryConfigType){

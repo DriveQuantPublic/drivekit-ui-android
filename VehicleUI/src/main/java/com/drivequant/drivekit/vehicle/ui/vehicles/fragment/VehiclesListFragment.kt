@@ -14,7 +14,6 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter

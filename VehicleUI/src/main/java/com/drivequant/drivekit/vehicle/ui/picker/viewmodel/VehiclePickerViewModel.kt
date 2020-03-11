@@ -18,7 +18,6 @@ import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
@@ -52,23 +51,23 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var name: String
     lateinit var characteristics: VehicleCharacteristics
 
-    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, viewConfig: VehiclePickerViewConfig, otherAction: Boolean = false){
+    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, otherAction: Boolean = false){
         when (currentStep){
             null -> {
-                itemTypes = fetchVehicleTypes(context, viewConfig)
+                itemTypes = fetchVehicleTypes(context)
                 if (itemTypes.size == 1){
                     selectedVehicleTypeItem = VehicleTypeItem.valueOf(itemTypes.first().value)
-                    computeNextScreen(context, TYPE, viewConfig)
+                    computeNextScreen(context, TYPE)
                 } else {
                     stepDispatcher.postValue(TYPE)
                 }
             }
             TYPE -> {
-                if (viewConfig.categoryConfigTypes != CategoryConfigType.BRANDS_CONFIG_ONLY) {
+                if (DriverVehicleUI.categoryConfigType != CategoryConfigType.BRANDS_CONFIG_ONLY) {
                     itemCategories = fetchVehicleCategories(context)
                     stepDispatcher.postValue(CATEGORY)
                 } else {
-                    manageBrands(context, viewConfig)
+                    manageBrands(context)
                 }
             }
             CATEGORY -> {
@@ -81,7 +80,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     fetchVehicleCharacteristics()
                 } else {
                     isLiteConfig = false
-                    manageBrands(context, viewConfig)
+                    manageBrands(context)
                 }
             }
             BRANDS_ICONS -> {
@@ -119,10 +118,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun fetchVehicleTypes(context: Context, viewConfig: VehiclePickerViewConfig): List<VehiclePickerItem> {
+    private fun fetchVehicleTypes(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        for (i in viewConfig.vehicleTypeItems.indices){
-            val currentType = viewConfig.vehicleTypeItems[i]
+        val vehicleTypesItems = buildVehicleTypesItems()
+        for (i in vehicleTypesItems.indices){
+            val currentType = vehicleTypesItems[i]
             items.add(VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
         }
         return items
@@ -254,8 +254,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }, isLiteConfig)
     }
 
-    private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
-        if (viewConfig.displayBrandsWithIcons){
+    private fun manageBrands(context: Context){
+        if (DriverVehicleUI.displayBrandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByName(itemBrands.first().value)
@@ -293,6 +293,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         } else {
             "$selectedBrand $selectedModel ${selectedVersion.version}"
         }
+    }
+
+    private fun buildVehicleTypesItems(): List<VehicleTypeItem> {
+        val typesItem = mutableListOf<VehicleTypeItem>()
+        for (type in DriverVehicleUI.vehicleTypes){
+            typesItem.add(VehicleTypeItem.getEnumByVehicleType(type))
+        }
+        return typesItem
     }
 
     private fun computeCreateVehicleDetectionMode(): DetectionMode {

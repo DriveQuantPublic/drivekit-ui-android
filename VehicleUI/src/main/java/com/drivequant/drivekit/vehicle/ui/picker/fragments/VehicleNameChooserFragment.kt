@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
@@ -19,18 +18,15 @@ import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
 class VehicleNameChooserFragment : Fragment() {
 
     private lateinit var viewModel: VehiclePickerViewModel
-    private lateinit var viewConfig: VehiclePickerViewConfig
     private lateinit var vehicleVersion: VehicleVersion
 
     companion object {
         fun newInstance(
-            viewModel: VehiclePickerViewModel,
-            vehiclePickerViewConfig: VehiclePickerViewConfig)
+            viewModel: VehiclePickerViewModel)
                 : VehicleNameChooserFragment {
             val fragment = VehicleNameChooserFragment()
             fragment.viewModel = viewModel
             fragment.vehicleVersion = viewModel.selectedVersion
-            fragment.viewConfig = vehiclePickerViewConfig
             return fragment
         }
     }
@@ -54,7 +50,7 @@ class VehicleNameChooserFragment : Fragment() {
         button_validate.button()
         button_validate.setOnClickListener {
             viewModel.name = editTextWrapper.editText?.editableText.toString()
-            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME, viewConfig)
+            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME)
         }
     }
 }

@@ -13,8 +13,8 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
@@ -23,18 +23,14 @@ import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewMode
 class VehicleCategoryDescriptionFragment : Fragment() {
 
     private lateinit var viewModel: VehiclePickerViewModel
-    private lateinit var viewConfig: VehiclePickerViewConfig
     private lateinit var vehiclePickerCategoryItem: VehicleCategoryItem
 
     companion object {
-        fun newInstance(
-            viewModel: VehiclePickerViewModel,
-            vehiclePickerViewConfig: VehiclePickerViewConfig)
+        fun newInstance(viewModel: VehiclePickerViewModel)
                 : VehicleCategoryDescriptionFragment {
             val fragment = VehicleCategoryDescriptionFragment()
             fragment.viewModel = viewModel
             fragment.vehiclePickerCategoryItem = viewModel.selectedCategory
-            fragment.viewConfig = vehiclePickerViewConfig
             return fragment
         }
     }
@@ -66,13 +62,13 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         textViewDescription.text = vehiclePickerCategoryItem.description
 
         buttonValidate.setOnClickListener {
-            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, viewConfig)
+            viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
         }
 
-        if (viewConfig.categoryConfigTypes != CategoryConfigType.LITE_CONFIG_ONLY) {
+        if (DriverVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE
             textViewBrands.setOnClickListener {
-                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, viewConfig, otherAction = true)
+                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, otherAction = true)
             }
         } else {
             textViewBrands.visibility = View.GONE

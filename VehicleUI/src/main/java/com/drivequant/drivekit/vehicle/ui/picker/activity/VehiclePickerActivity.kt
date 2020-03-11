@@ -18,7 +18,6 @@ import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleCategoryDescriptionFragment
@@ -34,11 +33,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     companion object {
         private var vehicleToDelete: Vehicle? = null
-        private lateinit var viewConfig: VehiclePickerViewConfig
-        fun launchActivity(context: Context,
-                           vehiclePickerViewConfig: VehiclePickerViewConfig = VehiclePickerViewConfig(context),
-                           vehicleToDelete: Vehicle? = null) {
-            viewConfig = vehiclePickerViewConfig
+        fun launchActivity(context: Context, vehicleToDelete: Vehicle? = null) {
             this.vehicleToDelete = vehicleToDelete
             val intent = Intent(context, VehiclePickerActivity::class.java)
             context.startActivity(intent)
@@ -90,7 +85,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             finish()
         })
 
-        viewModel.computeNextScreen(this, null, viewConfig)
+        viewModel.computeNextScreen(this, null)
     }
 
 
@@ -130,7 +125,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
             else -> {}
         }
-        viewModel.computeNextScreen(this, currentPickerStep, viewConfig, otherAction)
+        viewModel.computeNextScreen(this, currentPickerStep, otherAction)
     }
 
     private fun showProgressCircular() {
@@ -162,9 +157,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
         val fragment = when (vehiclePickerStep){
-            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel, viewConfig)
-            NAME -> VehicleNameChooserFragment.newInstance(viewModel, viewConfig)
-            else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep), viewConfig)
+            CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel)
+            NAME -> VehicleNameChooserFragment.newInstance(viewModel)
+            else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
         }
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)

@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -48,7 +47,6 @@ class VehicleItemListFragment : Fragment() {
     }
 
     private lateinit var viewModel: VehiclePickerViewModel
-    private lateinit var vehiclePickerViewConfig: VehiclePickerViewConfig
     private lateinit var vehiclePickerStep: VehiclePickerStep
     private lateinit var items: List<VehiclePickerItem>
 
@@ -62,14 +60,12 @@ class VehicleItemListFragment : Fragment() {
         fun newInstance(
             viewModel: VehiclePickerViewModel,
             vehiclePickerStep: VehiclePickerStep,
-            items: List<VehiclePickerItem>,
-            vehiclePickerViewConfig: VehiclePickerViewConfig)
+            items: List<VehiclePickerItem>)
                 : VehicleItemListFragment {
             val fragment = VehicleItemListFragment()
             fragment.viewModel = viewModel
             fragment.vehiclePickerStep = vehiclePickerStep
             fragment.items = items
-            fragment.vehiclePickerViewConfig = vehiclePickerViewConfig
             return fragment
         }
     }

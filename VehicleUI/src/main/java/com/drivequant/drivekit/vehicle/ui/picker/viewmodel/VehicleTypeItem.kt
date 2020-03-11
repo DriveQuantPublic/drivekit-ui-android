@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKMedia
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
+import java.lang.IllegalArgumentException
 
 enum class VehicleTypeItem(
     val vehicleType: VehicleType,
@@ -12,6 +13,17 @@ enum class VehicleTypeItem(
     CAR(VehicleType.CAR, R.string.dk_vehicle_type_car_title),
     MOTORBIKE(VehicleType.MOTORBIKE, R.string.dk_vehicle_type_motorbike_title),
     TRUCK(VehicleType.TRUCK, R.string.dk_vehicle_type_truck_title);
+
+    companion object {
+        fun getEnumByVehicleType(vehicleType: VehicleType): VehicleTypeItem{
+            for (x in values()){
+                if (x.vehicleType == vehicleType){
+                    return x
+                }
+            }
+            throw IllegalArgumentException("Value $vehicleType not found in VehicleTypeItem@ list")
+        }
+    }
 
     fun getTitle(context: Context): String {
         return context.getString(this.titleStringResId)
