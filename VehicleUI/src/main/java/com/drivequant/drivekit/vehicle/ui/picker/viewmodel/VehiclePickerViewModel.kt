@@ -250,7 +250,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     progressBarObserver.postValue(false)
                 }
             }
-        })
+        }, isLiteConfig)
     }
 
     private fun manageBrands(context: Context, viewConfig: VehiclePickerViewConfig){
