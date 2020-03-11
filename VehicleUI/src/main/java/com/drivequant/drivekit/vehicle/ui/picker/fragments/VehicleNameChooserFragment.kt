@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
@@ -37,7 +40,10 @@ class VehicleNameChooserFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_vehicle_name_chooser, container,false)
+        val view = inflater.inflate(R.layout.fragment_vehicle_name_chooser, container, false)
+        FontUtils.overrideFonts(context, view)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +51,7 @@ class VehicleNameChooserFragment : Fragment() {
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
-
+        button_validate.button()
         button_validate.setOnClickListener {
             viewModel.name = editTextWrapper.editText?.editableText.toString()
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME, viewConfig)

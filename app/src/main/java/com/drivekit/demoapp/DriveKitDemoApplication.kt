@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -45,8 +46,8 @@ class DriveKitDemoApplication: Application() {
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
-
-        DriveKitUI.initialize()
+        val config = DriveKitConfig()
+        DriveKitUI.initialize(fonts = config,colors = config)
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
     }
@@ -91,7 +92,7 @@ class DriveKitDemoApplication: Application() {
         DriveKitDriverData.initialize()
         DriveKitVehicle.initialize()
         // TODO: Push you api key here
-        DriveKit.setApiKey("Your API key here")
+        DriveKit.setApiKey("qDcgo5W2I1p3u5STEhuQ1AJo")
 
         initFirstLaunch()
     }

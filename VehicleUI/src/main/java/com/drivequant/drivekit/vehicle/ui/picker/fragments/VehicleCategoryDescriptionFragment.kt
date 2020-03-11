@@ -8,6 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.VehiclePickerViewConfig
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -39,7 +44,10 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_vehicle_category_description, container,false)
+        val view = inflater.inflate(R.layout.fragment_vehicle_category_description, container,false)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        FontUtils.overrideFonts(context, view)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +57,10 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         val textViewDescription = view.findViewById(R.id.text_view_description) as TextView
         val buttonValidate = view.findViewById(R.id.button_validate) as Button
         val textViewBrands = view.findViewById(R.id.text_view_brands) as TextView
+
+        buttonValidate.button()
+        textViewBrands.headLine2(DriveKitUI.colors.secondaryColor())
+        textViewDescription.normalText()
 
         imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
         textViewDescription.text = vehiclePickerCategoryItem.description

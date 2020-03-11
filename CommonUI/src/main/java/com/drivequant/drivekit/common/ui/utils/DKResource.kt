@@ -13,12 +13,20 @@ object DKResource {
 
     fun convertToDrawable(context: Context, identifier: String): Drawable? {
         val id = context.resources.getIdentifier(identifier, "drawable", context.packageName)
-        return ContextCompat.getDrawable(context, id)
+        return if (id > 0){
+            ContextCompat.getDrawable(context, id)
+        } else {
+            null
+        }
     }
 
     fun convertToString(context: Context, identifier: String): String? {
         val id = context.resources.getIdentifier(identifier, "string", context.packageName)
-        return context.getString(id)
+        return if (id > 0) {
+            context.getString(id)
+        } else {
+            null
+        }
     }
 
     fun buildString(context: Context, identifier: String, vararg args: String): Spannable {

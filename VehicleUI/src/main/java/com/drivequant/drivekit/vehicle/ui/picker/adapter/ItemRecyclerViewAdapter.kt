@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
@@ -17,13 +20,15 @@ class ItemRecyclerViewAdapter(
     private val listener: VehicleItemListFragment.OnListFragmentInteractionListener?
 ): RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
+    private val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(currentPickerStep)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(currentPickerStep)
         val view = if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM){
             LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text_image, parent, false)
         } else {
             LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text, parent, false)
         }
+        FontUtils.overrideFonts(parent.context, view)
         return ViewHolder(view)
     }
 
@@ -43,6 +48,11 @@ class ItemRecyclerViewAdapter(
             holder.item?.let {
                 listener?.onSelectedItem(currentPickerStep, it)
             }
+        }
+        if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM) {
+            holder.textView.normalText()
+        } else {
+            holder.textView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
     }
 

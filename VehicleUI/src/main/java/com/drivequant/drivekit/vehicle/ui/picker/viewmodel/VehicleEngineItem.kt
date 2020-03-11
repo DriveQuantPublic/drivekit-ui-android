@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.ui.picker.commons.ResourceUtils
 
 data class VehicleEngineItem(
     val engine: VehicleEngineIndex,
@@ -14,7 +14,7 @@ data class VehicleEngineItem(
 fun buildVehicleEngineItem(context: Context, source: Array<String>): VehicleEngineItem {
     return VehicleEngineItem(
         VehicleEngineIndex.getEnumByValue(source[0]),
-        ResourceUtils.convertToString(context, source[1]),
+        DKResource.convertToString(context, source[1]),
         source[2].toBoolean(),
         source[3].toBoolean(),
         source[4].toBoolean()
