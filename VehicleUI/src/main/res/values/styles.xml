@@ -1,12 +1,5 @@
 <resources>
     <style name="VehiclePickerTextItem">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:background">#00EBB8</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:layout_margin">8dp</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 </resources>

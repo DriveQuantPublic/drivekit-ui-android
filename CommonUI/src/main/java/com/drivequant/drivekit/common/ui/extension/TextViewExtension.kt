@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.extension
 
 import android.graphics.Typeface
+import android.view.Gravity
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
@@ -38,3 +39,12 @@ fun TextView.smallText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
     this.setTextColor(textColor)
     this.typeface = DriveKitUI.primaryFont(context)
 }
+
+fun TextView.buttonText(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryColor()) {
+    this.bigText(textColor)
+    this.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+    this.isClickable = true
+    this.isFocusable = true
+    this.gravity = Gravity.CENTER
+}
+
