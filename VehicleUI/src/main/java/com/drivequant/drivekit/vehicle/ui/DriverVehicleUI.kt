@@ -1,14 +1,25 @@
 package com.drivequant.drivekit.vehicle.ui
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
+import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
+import java.io.Serializable
 
 
-object DriverVehicleUI { // TODO add VehicleUIEntryPoint interface
+object DriverVehicleUI : VehicleUIEntryPoint {
 
     internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
     internal var vehicleCategories: List<VehicleCategory> = listOf(
@@ -113,4 +124,36 @@ object DriverVehicleUI { // TODO add VehicleUIEntryPoint interface
     fun displayVehicleDetail(displayVehicleDetail: Boolean){
         this.displayVehicleDetail = displayVehicleDetail
     }
+
+    override fun startVehicleListActivity(context: Context) {
+        val intent = Intent(context, VehiclesListActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    override fun createVehicleListFragment(): Fragment = VehiclesListFragment()
+
+    override fun startVehicleDetailActivity(context: Context) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun createVehicleDetailFragment(): Fragment {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun createVehiclePickerActivity(context: Context) {
+
+    }
+
+    override fun createVehiclePickerFragment(
+        description: String,
+        vehiclePickerStep: Int,
+        items: Serializable): Fragment {
+       val fragment = VehicleItemListFragment.newInstance(description, vehiclePickerStep)
+        val bundle = Bundle()
+        bundle.putSerializable("ITEM_LIST",items)
+        fragment.arguments = bundle
+        return fragment
+    }
+
 }
