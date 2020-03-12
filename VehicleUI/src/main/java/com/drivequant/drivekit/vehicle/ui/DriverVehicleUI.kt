@@ -142,18 +142,15 @@ object DriverVehicleUI : VehicleUIEntryPoint {
     }
 
     override fun createVehiclePickerActivity(context: Context) {
-
+        val intent = Intent(context, VehiclePickerActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
     }
 
     override fun createVehiclePickerFragment(
         description: String,
         vehiclePickerStep: Int,
         items: Serializable): Fragment {
-       val fragment = VehicleItemListFragment.newInstance(description, vehiclePickerStep)
-        val bundle = Bundle()
-        bundle.putSerializable("ITEM_LIST",items)
-        fragment.arguments = bundle
-        return fragment
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }
