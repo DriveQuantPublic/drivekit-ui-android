@@ -27,14 +27,10 @@
         android:id="@+id/add_vehicle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#00EBB8"
-        android:textColor="@android:color/white"
         android:text="@string/dk_vehicle_add"
         android:layout_gravity="bottom"
-        android:textSize="18sp"
         android:gravity="center"
-        android:foreground="?attr/selectableItemBackground"
-        android:textStyle="bold"/>
+        android:foreground="?attr/selectableItemBackground"/>
 
     <ProgressBar
         android:id="@+id/progress_circular"

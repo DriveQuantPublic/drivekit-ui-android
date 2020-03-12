@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:id="@+id/text_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text_view"
     style="@style/VehiclePickerTextItem"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:layout_margin="@dimen/dk_margin_half"
+    android:padding="@dimen/dk_margin_half"
     tools:text="Button simple" />

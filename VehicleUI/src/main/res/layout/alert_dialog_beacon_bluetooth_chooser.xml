@@ -2,85 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/alert_dialog_container"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/alert_dialog_header"
-        android:background="#0B4D6E"
-        android:textColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dk_margin"
+        android:paddingRight="@dimen/dk_margin"
         android:text="HC Title"
-        android:textAlignment="center"/>
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/alert_dialog_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="@dimen/dk_margin_quarter"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:padding="@dimen/dk_margin"
         android:textAlignment="center"
-        tools:text="HC description"/>
+        tools:text="HC description" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_gravity="center">
+        android:orientation="vertical">
 
-        <View style="@style/Separator.Horizontal" />
+        <View
+            android:id="@+id/view_separator_description"
+            style="@style/Separator.Horizontal" />
+
         <TextView
             android:id="@+id/text_view_verify"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_margin="4dp"
-            android:textColor="#0B4D6E"
-            android:textStyle="bold"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_margin="@dimen/dk_margin_quarter"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:textAlignment="center"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="HC Verify"/>
-        <View style="@style/Separator.Horizontal" />
+            tools:text="HC Verify"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/view_separator_verify"
+            style="@style/Separator.Horizontal" />
+
         <TextView
             android:id="@+id/text_view_replace"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_margin="4dp"
-            android:textColor="#0B4D6E"
-            android:textStyle="bold"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_margin="@dimen/dk_margin_quarter"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:textAlignment="center"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="HC replace"/>
-        <View style="@style/Separator.Horizontal" />
+            tools:text="HC replace"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/view_separator_replace"
+            style="@style/Separator.Horizontal" />
+
         <TextView
             android:id="@+id/text_view_delete"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:layout_margin="4dp"
-            android:textColor="#0B4D6E"
-            android:textStyle="bold"
-            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_margin="@dimen/dk_margin_quarter"
             android:clickable="true"
             android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:textAlignment="center"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="HC delete"/>
+            tools:text="HC delete"
+            tools:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

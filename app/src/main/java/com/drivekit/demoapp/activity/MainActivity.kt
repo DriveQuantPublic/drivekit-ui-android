@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.button_vehicle_list -> {
-                    startActivity(Intent(this, VehiclesListActivity::class.java))
+                    DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleListActivity(this)
                 }
             }
         }

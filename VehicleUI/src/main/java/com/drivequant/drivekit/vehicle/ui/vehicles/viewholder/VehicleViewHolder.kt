@@ -10,6 +10,10 @@ import android.view.Menu
 import android.view.View
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -30,6 +34,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val textViewDetectionModeTitle: TextView = itemView.findViewById(R.id.text_view_detection_mode_title)
     private val textViewDetectionModeDescription: TextView = itemView.findViewById(R.id.text_view_detection_mode_description)
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
+    private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
 
     fun bind(vehicle: Vehicle){
         val context = itemView.context
@@ -46,6 +51,15 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         setupPopup(context, viewModel, vehicle)
         setupDetectionModeContainer(context, vehicle)
         setupConfigureButton(context, vehicle)
+        setupUI()
+    }
+
+    private fun setupUI() {
+        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        textViewTitle.headLine1()
+        textViewSubtitle.smallText()
+        textViewDetectionModeTitle.smallText()
+        textViewDetectionModeDescription.normalText()
     }
 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
@@ -64,7 +78,6 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             }
         }
     }
-
 
     private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
         if (DriverVehicleUI.detectionModes.size == 1){
