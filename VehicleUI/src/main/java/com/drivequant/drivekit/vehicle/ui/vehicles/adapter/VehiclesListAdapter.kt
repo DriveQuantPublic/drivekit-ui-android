@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.AdapterView
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -25,6 +26,7 @@ class VehiclesListAdapter(
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): VehicleViewHolder {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = layoutInflater.inflate(R.layout.view_vehicle_item_list, null)
+        FontUtils.overrideFonts(context, view)
         return VehicleViewHolder(view, viewModel)
     }
 

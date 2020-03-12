@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -192,9 +193,27 @@ enum class DetectionModeType(
         val verify = alert.findViewById<TextView>(R.id.text_view_verify)
         val replace = alert.findViewById<TextView>(R.id.text_view_replace)
         val delete= alert.findViewById<TextView>(R.id.text_view_delete)
+        val separatorDescription = alert.findViewById<View>(R.id.view_separator_description)
+        val separatorVerify = alert.findViewById<View>(R.id.view_separator_verify)
+        val separatorReplace = alert.findViewById<View>(R.id.view_separator_replace)
 
+
+        val primaryColor = DriveKitUI.colors.primaryColor()
+        val neutralColor = DriveKitUI.colors.neutralColor()
         title?.text = DKResource.convertToString(context, configureButtonText)
+        title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
+        title?.setBackgroundColor(primaryColor)
+
         description?.text = DKResource.convertToString(context, configureDescText)
+        description?.normalText()
+
+        verify?.headLine2(primaryColor)
+        replace?.headLine2(primaryColor)
+        delete?.headLine2(primaryColor)
+
+        separatorDescription?.setBackgroundColor(neutralColor)
+        separatorVerify?.setBackgroundColor(neutralColor)
+        separatorReplace?.setBackgroundColor(neutralColor)
 
         when (this){
             BEACON -> {

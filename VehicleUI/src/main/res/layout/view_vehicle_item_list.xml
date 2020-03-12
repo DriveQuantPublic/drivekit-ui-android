@@ -24,16 +24,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Véhicule 1"
-                android:gravity="center_vertical"
-                android:textColor="#616161"/>
+                tools:text="Véhicule 1"/>
             <ImageView
                 android:id="@+id/image_view_popup"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
                 android:src="@drawable/dk_overflow_popup_color"
                 android:clickable="true"
                 android:focusable="true"
@@ -45,17 +40,15 @@
             android:id="@+id/text_view_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
             android:maxLines="2"
             android:ellipsize="end"
-            tools:text="Brand model version of the vehicle, or category name if liteConfig"
-            android:textColor="#616161"/>
+            tools:text="Brand model version of the vehicle, or category name if liteConfig" />
 
-        <View android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="#E0E0E0"/>
+        <View
+            android:id="@+id/view_separator"
+            style="@style/Separator.Horizontal"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,16 +59,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="@dimen/dk_margin_half">
                 <TextView
                     android:id="@+id/text_view_detection_mode_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
-                    android:textStyle="bold"
-                    android:textColor="#616161"
                     tools:text="HC detection mode"/>
 
                 <LinearLayout
@@ -94,14 +84,13 @@
                 android:id="@+id/text_view_detection_mode_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
                 android:maxLines="5"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:textColor="#9E9E9E"
-                android:drawablePadding="4dp"
+                android:drawablePadding="@dimen/dk_margin_quarter"
                 android:text="This text describes state of the selected detection mode"/>
 
             <Button
