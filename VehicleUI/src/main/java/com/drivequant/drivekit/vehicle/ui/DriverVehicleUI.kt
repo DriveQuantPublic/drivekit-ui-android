@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -71,6 +72,7 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         this.maxVehicles = maxVehicles
         this.categoryConfigType = categoryConfigType
         this.detectionModes = detectionModes
+        DriveKitNavigationController.vehicleUIEntryPoint = this
     }
 
     fun configureMaxVehicles(maxVehicles: Int){
