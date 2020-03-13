@@ -23,7 +23,6 @@
             app:expandedTitleMarginEnd="@dimen/dk_ic_big">
             <ImageView
                 android:id="@+id/image_view_vehicle"
-                android:src="@drawable/dk_vehicle_default"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:minHeight="150dp"
