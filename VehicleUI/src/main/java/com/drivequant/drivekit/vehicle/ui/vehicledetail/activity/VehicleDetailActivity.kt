@@ -3,10 +3,8 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 
@@ -26,9 +24,6 @@ class VehicleDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val vehicleId = intent.getStringExtra(VEHICLEID_EXTRA) as String
         supportFragmentManager.beginTransaction()

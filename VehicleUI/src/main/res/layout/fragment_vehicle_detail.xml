@@ -19,8 +19,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="32dp"
-            app:expandedTitleMarginEnd="32dp">
+            app:expandedTitleMarginStart="@dimen/dk_ic_big"
+            app:expandedTitleMarginEnd="@dimen/dk_ic_big">
             <ImageView
                 android:id="@+id/image_view_vehicle"
                 android:src="@drawable/dk_vehicle_default"
@@ -45,9 +45,9 @@
         android:src="@drawable/dk_gallery_image"
         android:tint="#FFFFFF"
         android:scaleType="center"
-        app:maxImageSize="36dp"
+        app:maxImageSize="@dimen/dk_ic_big"
         app:layout_anchor="@id/app_bar_layout"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/dk_margin"
         app:layout_anchorGravity="bottom|right|end"
         android:clickable="true"
         android:focusable="true"/>
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/dk_margin"
             android:id="@+id/layoutContainer">
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
