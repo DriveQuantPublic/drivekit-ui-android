@@ -19,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 
 enum class PopupMenuItem(
     private val descriptionIdentifier: String
@@ -44,11 +45,15 @@ enum class PopupMenuItem(
 
     override fun onItemClicked(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         when (this) {
-            SHOW -> { } // TODO launch vehicle detail screen
+            SHOW -> manageShowVehicleDetail(context, vehicle)
             RENAME -> manageRenameVehicle(context, viewModel, vehicle)
             REPLACE -> manageReplaceVehicle(context, vehicle)
             DELETE -> manageDeleteVehicle(context, viewModel, vehicle)
         }
+    }
+
+    private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle){
+        VehicleDetailActivity.launchActivity(context, vehicle.vehicleId)
     }
 
     private fun manageReplaceVehicle(context: Context, vehicle: Vehicle){

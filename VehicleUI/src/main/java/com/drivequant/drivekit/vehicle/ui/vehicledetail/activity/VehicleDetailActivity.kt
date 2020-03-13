@@ -15,7 +15,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     companion object {
         private const val VEHICLEID_EXTRA = "vehicleId-extra"
 
-        fun launchAcrtivity(context: Context, vehicleId: String) {
+        fun launchActivity(context: Context, vehicleId: String) {
             val intent = Intent(context, VehicleDetailActivity::class.java)
             intent.putExtra(VEHICLEID_EXTRA, vehicleId)
             context.startActivity(intent)

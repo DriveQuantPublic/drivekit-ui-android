@@ -5,5 +5,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".vehicles.activity.VehiclesListActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".vehicledetail.activity.VehicleDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>
