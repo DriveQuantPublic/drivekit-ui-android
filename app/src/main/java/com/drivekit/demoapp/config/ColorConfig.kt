@@ -1,6 +1,8 @@
 package com.drivekit.demoapp.config
 
+import android.app.Application
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts
@@ -10,11 +12,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKFonts
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class DriveKitConfig : DKColors, DKFonts {
+class ColorConfig(private val application: Application) : DKColors() {
 
-    override fun secondaryColor(): Int = Color.GREEN
+    override fun secondaryColor(): Int = ContextCompat.getColor(application, R.color.colorPrimaryDark)
 
-    override fun primaryFont(): Int = R.font.sketchy
-
-    //override fun backgroundViewColor(): Int = Color.RED
+    override fun backgroundViewColor(): Int = Color.RED
 }

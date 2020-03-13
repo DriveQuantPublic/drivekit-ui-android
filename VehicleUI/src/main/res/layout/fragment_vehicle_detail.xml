@@ -19,8 +19,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="@dimen/margin_double"
-            app:expandedTitleMarginEnd="@dimen/margin_double">
+            app:expandedTitleMarginStart="32dp"
+            app:expandedTitleMarginEnd="32dp">
             <ImageView
                 android:id="@+id/image_view_vehicle"
                 android:src="@drawable/ic_vehicle_default"
@@ -47,7 +47,7 @@
         android:scaleType="center"
         app:maxImageSize="36dp"
         app:layout_anchor="@id/app_bar_layout"
-        android:layout_margin="16d"
+        android:layout_margin="16dp"
         app:layout_anchorGravity="bottom|right|end"
         android:clickable="true"
         android:focusable="true"/>

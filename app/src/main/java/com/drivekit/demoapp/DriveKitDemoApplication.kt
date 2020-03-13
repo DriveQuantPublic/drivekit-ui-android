@@ -8,7 +8,8 @@ import android.content.IntentFilter
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
-import com.drivekit.demoapp.config.DriveKitConfig
+import com.drivekit.demoapp.config.ColorConfig
+import com.drivekit.demoapp.config.FontConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -53,8 +54,8 @@ class DriveKitDemoApplication: Application() {
 
 
         DriveKitUI.initialize()
-        val config = DriveKitConfig()
-        DriveKitUI.initialize(fonts = config, colors = config)
+
+        DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
 
