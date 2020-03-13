@@ -1,23 +1,15 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 
-import android.content.Context
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 
 class VehicleDetailActivity : AppCompatActivity() {
 
     companion object {
-        private const val VEHICLEID_EXTRA = "vehicleId-extra"
-
-        fun launchActivity(context: Context, vehicleId: String) {
-            val intent = Intent(context, VehicleDetailActivity::class.java)
-            intent.putExtra(VEHICLEID_EXTRA, vehicleId)
-            context.startActivity(intent)
-        }
+        private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +17,13 @@ class VehicleDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicle_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val vehicleId = intent.getStringExtra(VEHICLEID_EXTRA) as String
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container,
-                VehicleDetailFragment.newInstance(vehicleId))
-            .commit()
+        DriveKitNavigationController.vehicleUIEntryPoint?.let {
+            val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container,
+                    it.createVehicleDetailFragment(vehicleId))
+                .commit()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

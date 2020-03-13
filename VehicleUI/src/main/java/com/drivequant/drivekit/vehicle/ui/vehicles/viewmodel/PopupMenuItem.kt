@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -19,7 +20,6 @@ import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 
 enum class PopupMenuItem(
     private val descriptionIdentifier: String
@@ -53,7 +53,7 @@ enum class PopupMenuItem(
     }
 
     private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle){
-        VehicleDetailActivity.launchActivity(context, vehicle.vehicleId)
+        DriveKitNavigationController.vehicleUIEntryPoint?.createVehicleDetailActivity(context, vehicle.vehicleId)
     }
 
     private fun manageReplaceVehicle(context: Context, vehicle: Vehicle){
