@@ -1,11 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.drivequant.drivekit.vehicle.ui">
     <application>
-        <activity android:name=".picker.activity.VehiclePickerActivity"
+        <activity
+            android:name=".picker.activity.VehiclePickerActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".vehicles.activity.VehiclesListActivity"
+        <activity
+            android:name=".vehicles.activity.VehiclesListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".vehicledetail.activity.VehicleDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".vehicledetail.activity.VehicleDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

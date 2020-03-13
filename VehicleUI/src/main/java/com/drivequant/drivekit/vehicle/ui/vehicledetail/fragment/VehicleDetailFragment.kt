@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +9,9 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
 
@@ -48,7 +49,16 @@ class VehicleDetailFragment : Fragment() {
         }
         viewModel = ViewModelProviders.of(this,
             VehicleDetailViewModel.VehicleDetailViewModelFactory(vehicleId)
-        ).get(
-            VehicleDetailViewModel::class.java)
+        ).get(VehicleDetailViewModel::class.java)
+
+
+        collapsing_toolbar.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
+        collapsing_toolbar.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+
+        fab.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        fab.setOnClickListener {
+
+        }
+
     }
 }
