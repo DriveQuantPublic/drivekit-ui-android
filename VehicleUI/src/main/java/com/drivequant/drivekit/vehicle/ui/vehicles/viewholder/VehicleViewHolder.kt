@@ -11,19 +11,22 @@ import android.view.View
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.MenuItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.PopupMenuItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
+import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.DetectionModeSpinnerAdapter
+
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
@@ -68,7 +71,10 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             val itemsList : List<MenuItem> = PopupMenuItem.values().toList()
             for (i in itemsList.indices){
                 if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
-                    popupMenu.menu.add(Menu.NONE, i, i, itemsList[i].getTitle(context))
+                    popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
+                        //TODO WIP : SET FONT
+                        color(DriveKitUI.colors.mainFontColor())
+                    }).toSpannable())
                 }
             }
             popupMenu.show()
@@ -101,7 +107,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         }
 
         val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
-        val adapter: ArrayAdapter<DetectionModeSpinnerItem> = ArrayAdapter(context, R.layout.simple_list_item_spinner, detectionModes)
+        val adapter = DetectionModeSpinnerAdapter(context, R.id.text_view, detectionModes)
         spinnerDetectionMode.adapter = adapter
     }
 
