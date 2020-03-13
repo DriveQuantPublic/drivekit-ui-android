@@ -8,6 +8,7 @@ import java.io.Serializable
 
 class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serializable {
 
+    var imageFilePath: String? = null
     var vehicle: Vehicle?
 
     init {
