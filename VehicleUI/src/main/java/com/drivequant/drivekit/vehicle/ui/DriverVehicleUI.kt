@@ -15,6 +15,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import java.io.Serializable
@@ -58,6 +60,8 @@ object DriverVehicleUI : VehicleUIEntryPoint {
     internal var deleteVehicle: Boolean = true
     internal var renameVehicle: Boolean = true
     internal var displayVehicleDetail: Boolean = true
+
+    private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
     fun initialize(vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
                    maxVehicles: Int = -1,
@@ -135,14 +139,6 @@ object DriverVehicleUI : VehicleUIEntryPoint {
 
     override fun createVehicleListFragment(): Fragment = VehiclesListFragment()
 
-    override fun startVehicleDetailActivity(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun createVehicleDetailFragment(): Fragment {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun createVehiclePickerActivity(context: Context) {
         val intent = Intent(context, VehiclePickerActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -154,5 +150,14 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         vehiclePickerStep: Int,
         items: Serializable): Fragment {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun createVehicleDetailFragment(vehicleId: String): Fragment = VehicleDetailFragment.newInstance(vehicleId)
+
+    override fun createVehicleDetailActivity(context: Context, vehicleId: String) {
+        val intent = Intent(context, VehicleDetailActivity::class.java)
+        intent.putExtra(VEHICLE_ID_EXTRA,vehicleId)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
     }
 }
