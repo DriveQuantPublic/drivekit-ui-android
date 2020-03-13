@@ -12,8 +12,10 @@ import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
@@ -69,7 +71,10 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             val itemsList : List<MenuItem> = PopupMenuItem.values().toList()
             for (i in itemsList.indices){
                 if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
-                    popupMenu.menu.add(Menu.NONE, i, i, itemsList[i].getTitle(context))
+                    popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
+                        //TODO WIP : SET FONT
+                        color(DriveKitUI.colors.mainFontColor())
+                    }).toSpannable())
                 }
             }
             popupMenu.show()
