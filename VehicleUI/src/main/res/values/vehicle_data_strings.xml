@@ -69,4 +69,8 @@
     <string name="dk_vehicle_failed_to_sync">Impossible de synchroniser les véhicules, veuillez réessayer ultérieurement.</string>
     <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %s pour le véhicule %s ? \n\nLe mode de détection du véhicule %s sera basculé à %s.</string>
     <string name="dk_vehicle_error_message">Une erreur est survenue, veuillez réessayer ultérieurement</string>
+
+    <string name="dk_update_photo_title">Changer l\'image</string>
+    <string name="dk_take_picture">Prendre une photo</string>
+    <string name="dk_select_image_gallery">Sélectionner une photo existante</string>
 </resources>
