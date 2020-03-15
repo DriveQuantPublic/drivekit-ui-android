@@ -10,15 +10,20 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
 
     var imageFilePath: String? = null
     var vehicle: Vehicle?
+    lateinit var groupFields: List<GroupField>
 
     init {
         vehicle = fetchVehicle()
+        createGroupFields()
     }
 
     private fun fetchVehicle(): Vehicle? {
         return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
 
+    private fun createGroupFields() {
+        groupFields = listOf(GroupField.GENERAL, GroupField.BEACON) // TODO mock
+    }
 
     class VehicleDetailViewModelFactory(private val vehicleId: String)
         : ViewModelProvider.NewInstanceFactory() {

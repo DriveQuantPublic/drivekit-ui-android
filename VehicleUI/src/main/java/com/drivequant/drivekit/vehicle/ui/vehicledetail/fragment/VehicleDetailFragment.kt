@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +27,11 @@ import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
+import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 
 class VehicleDetailFragment : Fragment() {
 
@@ -42,6 +45,8 @@ class VehicleDetailFragment : Fragment() {
 
     private lateinit var viewModel : VehicleDetailViewModel
     private lateinit var vehicleId : String
+    private var fieldsAdapter : VehicleFieldsListAdapter? = null
+
     private var cameraFilePath : String? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
@@ -84,6 +89,24 @@ class VehicleDetailFragment : Fragment() {
         fab.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         fab.setOnClickListener {
             manageFabAlertDialog()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val linearLayoutManager = LinearLayoutManager(view.context)
+        vehicle_fields.layoutManager = linearLayoutManager
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (fieldsAdapter != null){
+            fieldsAdapter?.setGroupFields(viewModel.groupFields)
+            fieldsAdapter?.notifyDataSetChanged()
+        } else {
+            fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel, viewModel.groupFields)
+            vehicle_fields.adapter = fieldsAdapter
         }
     }
 

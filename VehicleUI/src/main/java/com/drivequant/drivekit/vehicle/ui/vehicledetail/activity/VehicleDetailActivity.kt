@@ -1,11 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 
 class VehicleDetailActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicle_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val vehicleId = intent.getStringExtra(VEHICLEID_EXTRA) as String
+        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
         val fragment = VehicleDetailFragment.newInstance(vehicleId)
 
         supportFragmentManager.beginTransaction()

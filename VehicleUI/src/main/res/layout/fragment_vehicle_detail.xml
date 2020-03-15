@@ -51,16 +51,17 @@
         android:clickable="true"
         android:focusable="true"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         style="@style/MM"
-        android:clipToPadding="false"
+        android:clipToPadding="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vehicle_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/dk_margin"
-            android:id="@+id/layoutContainer">
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            android:background="#FE09DE"
+            android:layout_marginTop="@dimen/dk_margin">
+        </android.support.v7.widget.RecyclerView>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
