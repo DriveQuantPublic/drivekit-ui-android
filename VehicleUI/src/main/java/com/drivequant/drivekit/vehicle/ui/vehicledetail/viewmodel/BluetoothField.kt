@@ -5,30 +5,27 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 
-enum class BeaconField : Field {
-    UNIQUE_CODE,
-    MAJOR,
-    MINOR;
+enum class BluetoothField : Field {
+    NAME,
+    MAC_ADDRESS;
 
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
-        val identifier = when (this) {
-            UNIQUE_CODE -> "dk_beacon_code"
-            MAJOR -> "dk_beacon_major"
-            MINOR -> "dk_beacon_minor"
+        val identifier = when (this){
+            NAME -> "dk_bluetooth_name"
+            MAC_ADDRESS -> "dk_bluetooth_address"
         }
         return DKResource.convertToString(context, identifier)
     }
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this) {
-            UNIQUE_CODE -> vehicle.beacon?.code
-            MAJOR -> vehicle.beacon?.major.toString()
-            MINOR -> vehicle.beacon?.minor.toString()
+            NAME -> vehicle.bluetooth?.name
+            MAC_ADDRESS -> vehicle.bluetooth?.macAddress
         }
     }
 
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
-        return vehicle.detectionMode == DetectionMode.BEACON
-                && vehicle.beacon != null
+        return vehicle.detectionMode == DetectionMode.BLUETOOTH
+                && vehicle.bluetooth != null
     }
 }

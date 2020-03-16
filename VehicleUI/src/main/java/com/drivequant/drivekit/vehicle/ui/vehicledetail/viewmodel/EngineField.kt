@@ -21,7 +21,7 @@ enum class EngineField : Field {
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this){
             MOTOR -> vehicle.getEngineTypeName(context)
-            CONSUMPTION -> " ${String.format("%.1f", vehicle.consumption)} ${context.getString(R.string.dk_common_unit_l_per_100km)}"
+            CONSUMPTION -> "${String.format("%.1f", vehicle.consumption)} ${context.getString(R.string.dk_common_unit_l_per_100km)}"
         }
     }
 

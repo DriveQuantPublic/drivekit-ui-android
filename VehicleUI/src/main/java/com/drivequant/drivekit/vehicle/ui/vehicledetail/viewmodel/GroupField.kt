@@ -20,6 +20,14 @@ enum class GroupField{
                 }
             }
 
+            ENGINE -> {
+                fields.addAll(EngineField.values().toList())
+            }
+
+            CHARACTERISTICS -> {
+                fields.addAll(CharacteristicField.values().toList())
+            }
+
             BEACON -> {
                 for (item in BeaconField.values()){
                     if (item.alwaysDisplayable(vehicle)){
@@ -28,11 +36,13 @@ enum class GroupField{
                 }
             }
 
-            ENGINE -> {
-                fields.addAll(EngineField.values().toList())
+            BLUETOOTH -> {
+                for (item in BluetoothField.values()){
+                    if (item.alwaysDisplayable(vehicle)){
+                        fields.add((item))
+                    }
+                }
             }
-
-            else -> { }
         }
         return fields
     }
