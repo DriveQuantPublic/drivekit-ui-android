@@ -60,7 +60,14 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun canAddVehicle(): Boolean{
-        return DriverVehicleUI.addVehicle &&
-                (vehiclesList.size < DriverVehicleUI.maxVehicles || DriverVehicleUI.maxVehicles == -1)
+        return if(!DriverVehicleUI.canAddVehicle){
+            false
+        } else {
+            DriverVehicleUI.maxVehicles?.let {
+                vehiclesList.size < it
+            }?: run {
+                true
+            }
+        }
     }
 }

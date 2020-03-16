@@ -153,7 +153,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleEngines(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawBrands = selectedVehicleTypeItem.getEngines(context)
+        val rawBrands = selectedVehicleTypeItem.getEngineIndexes(context)
         for (i in rawBrands.indices){
             items.add(VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
         }
@@ -255,7 +255,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     private fun manageBrands(context: Context){
-        if (DriverVehicleUI.displayBrandsWithIcons){
+        if (DriverVehicleUI.brandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByName(itemBrands.first().value)

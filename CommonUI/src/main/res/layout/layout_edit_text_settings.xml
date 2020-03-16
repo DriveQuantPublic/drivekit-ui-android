@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dk_margin_quarter"
+    android:paddingEnd="@dimen/dk_margin_quarter"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/text_view_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dk_margin_quarter"
+        android:paddingEnd="@dimen/dk_margin_quarter"
+        tools:text="Label"/>
+    <android.support.design.widget.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:padding="0dp"
+        tools:text="Click !"
+        app:hintEnabled="false">
+        <EditText android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            tools:hint="This is hint"
+            tools:text="This is a text" />
+        <!-- style="@style/TextView.Settings" -->
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>

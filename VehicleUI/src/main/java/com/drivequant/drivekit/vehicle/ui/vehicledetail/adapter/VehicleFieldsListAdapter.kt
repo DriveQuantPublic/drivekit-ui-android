@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
@@ -24,7 +25,13 @@ class VehicleFieldsListAdapter(
     }
 
     override fun onBindViewHolder(holder: VehicleFieldViewHolder, position: Int) {
-        holder.bind(groupFields[position])
+        viewModel.vehicle?.let {
+            if (groupFields[position].isDisplayable(it)){
+                holder.bind(groupFields[position])
+            } else {
+                holder.itemView.visibility = View.GONE
+            }
+        }
     }
 
     override fun getItemCount(): Int {

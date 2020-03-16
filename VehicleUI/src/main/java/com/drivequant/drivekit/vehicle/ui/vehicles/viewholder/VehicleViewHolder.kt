@@ -21,8 +21,8 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.MenuItem
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.PopupMenuItem
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.DetectionModeSpinnerAdapter
@@ -68,7 +68,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         popup.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
-            val itemsList : List<MenuItem> = PopupMenuItem.values().toList()
+            val itemsList : List<VehicleActionItem> = VehicleAction.values().toList()
             for (i in itemsList.indices){
                 if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {

@@ -21,4 +21,15 @@ enum class GeneralField : Field {
             CATEGORY -> "HC Category"// TODO mock
         }
     }
+
+    override fun isEditable(): Boolean {
+        return when (this){
+            NAME -> true
+            else -> false
+        }
+    }
+
+    override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
+        return true
+    }
 }

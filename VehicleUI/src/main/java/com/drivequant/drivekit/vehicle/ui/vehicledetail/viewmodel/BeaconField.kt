@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 
 enum class BeaconField : Field {
@@ -9,7 +10,7 @@ enum class BeaconField : Field {
     MINOR;
 
     override fun getTitle(context: Context, vehicle: Vehicle): String {
-        return when (this){
+        return when (this) {
             UNIQUE_CODE -> "Identifiant du beacon"
             MAJOR -> "Major"
             MINOR -> "Minor"
@@ -17,10 +18,14 @@ enum class BeaconField : Field {
     }
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
-        return when (this){
+        return when (this) {
             UNIQUE_CODE -> vehicle.beacon?.code
             MAJOR -> vehicle.beacon?.major.toString()
             MINOR -> vehicle.beacon?.minor.toString()
         }
+    }
+
+    override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
+        return vehicle.detectionMode == DetectionMode.BEACON && vehicle.beacon != null
     }
 }

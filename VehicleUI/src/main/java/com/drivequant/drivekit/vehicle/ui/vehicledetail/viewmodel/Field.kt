@@ -9,6 +9,6 @@ interface Field {
     fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String?
     fun isEditable(): Boolean = false
     fun getKeyboardType(): Int = InputType.TYPE_CLASS_TEXT
-    fun alwaysDisplayable(): Boolean = false
+    fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
     fun isValid(): Boolean = true
 }
