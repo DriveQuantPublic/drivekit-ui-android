@@ -19,7 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewMod
 class VehiclesListAdapter(
     var context: Context,
     private val viewModel: VehiclesListViewModel,
-    private var vehicles: MutableList<Vehicle>,
+    private var vehicles: List<Vehicle>,
     private var touched: Boolean = false
 ) : RecyclerView.Adapter<VehicleViewHolder>() {
 

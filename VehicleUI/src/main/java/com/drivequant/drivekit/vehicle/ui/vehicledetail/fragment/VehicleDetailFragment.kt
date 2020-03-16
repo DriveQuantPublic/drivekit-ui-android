@@ -1,33 +1,37 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
-import java.util.prefs.PreferenceChangeEvent
+import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 
 class VehicleDetailFragment : Fragment() {
 
@@ -41,6 +45,8 @@ class VehicleDetailFragment : Fragment() {
 
     private lateinit var viewModel : VehicleDetailViewModel
     private lateinit var vehicleId : String
+    private var fieldsAdapter : VehicleFieldsListAdapter? = null
+
     private var cameraFilePath : String? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
@@ -72,12 +78,35 @@ class VehicleDetailFragment : Fragment() {
             }
         }
 
+        Glide.with(this)
+            .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else R.drawable.dk_vehicle_default)
+            .placeholder(R.drawable.dk_vehicle_default)
+            .into(image_view_vehicle)
+
         collapsing_toolbar.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
         collapsing_toolbar.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         fab.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         fab.setOnClickListener {
             manageFabAlertDialog()
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val linearLayoutManager = LinearLayoutManager(view.context)
+        vehicle_fields.layoutManager = linearLayoutManager
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (fieldsAdapter != null){
+            fieldsAdapter?.setGroupFields(viewModel.groupFields)
+            fieldsAdapter?.notifyDataSetChanged()
+        } else {
+            fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel, viewModel.groupFields)
+            vehicle_fields.adapter = fieldsAdapter
         }
     }
 
@@ -110,28 +139,14 @@ class VehicleDetailFragment : Fragment() {
         cameraTextView?.let {
             it.text = DKResource.convertToString(requireActivity(), "dk_take_picture")
             it.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(requireContext(),
-                        Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-                    // Permission is not granted
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
-                            Manifest.permission.CAMERA)) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
+                        // TODO: rationale alert dialog
                     } else {
-                        // No explanation needed, we can request the permission.
                         ActivityCompat.requestPermissions(requireActivity(),
                             arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 12)
-
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
                     }
                 } else {
-                    // Permission has already been granted
                     launchCameraIntent()
                 }
             }
@@ -139,7 +154,17 @@ class VehicleDetailFragment : Fragment() {
         galleryTextView?.let {
             it.text = DKResource.convertToString(requireContext(), "dk_select_image_gallery")
             it.setOnClickListener {
-                // TODO launch gallery
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        // TODO: rationale alert dialog
+                    } else {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 13)
+                    }
+                } else {
+                    launchGalleryIntent()
+                }
             }
         }
     }
@@ -150,9 +175,41 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
+    private fun launchGalleryIntent(){
+        viewModel.vehicle?.let {
+            CameraGalleryPickerHelper.openGallery(requireActivity())
+        }
+    }
+
+    private fun updatePicture(uri: Uri) {
+        Glide.with(this).load(uri).placeholder(R.drawable.dk_vehicle_default).into(image_view_vehicle)
+    }
+
+    private fun saveVehiclePictureLocalPath(path: String?){
+        path?.let {
+            DriveKitSharedPreferencesUtils.setString("VEHICLE_PICTURE_PREF_%s", path)
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                CameraGalleryPickerHelper.REQUEST_GALLERY -> {
+                    CameraGalleryPickerHelper.buildUriFromIntentData(data)?.let {
+                        updatePicture(it)
+                        val path = CameraGalleryPickerHelper.retrieveAbsolutePathFromUri(requireContext(), it)
+                        saveVehiclePictureLocalPath(path)
+                    }
+                }
+                CameraGalleryPickerHelper.REQUEST_CAMERA -> {
+                    updatePicture(Uri.parse(cameraFilePath))
+                    saveVehiclePictureLocalPath(cameraFilePath)
+                }
+                //REQUEST_PERMISSIONS_OPEN_SETTINGS -> checkRequiredPermissions()
+            }
+        } else {
+            cameraFilePath = null
+        }
     }
 }
