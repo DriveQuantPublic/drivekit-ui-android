@@ -145,13 +145,6 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun createVehiclePickerFragment(
-        description: String,
-        vehiclePickerStep: Int,
-        items: Serializable): Fragment {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun createVehicleDetailFragment(vehicleId: String): Fragment = VehicleDetailFragment.newInstance(vehicleId)
 
     override fun createVehicleDetailActivity(context: Context, vehicleId: String) {
