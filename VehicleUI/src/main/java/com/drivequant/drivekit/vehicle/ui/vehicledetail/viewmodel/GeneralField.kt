@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
+import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 
 enum class GeneralField : Field {
     NAME,
@@ -17,7 +17,7 @@ enum class GeneralField : Field {
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this){
-            NAME -> vehicle.computeSubtitle(context, allVehicles)
+            NAME -> vehicle.computeTitle(context, allVehicles)
             CATEGORY -> "HC Category"// TODO mock
         }
     }

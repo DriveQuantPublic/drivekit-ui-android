@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 
 /**
  * Created by gabrielmorin on 05/04/2017.
@@ -35,11 +36,11 @@ class EditableText(context: Context) : LinearLayout(context) {
     }
 
     fun init() {
-        val view =
-            View.inflate(context, R.layout.layout_edit_text_settings, null)
+        val view = View.inflate(context, R.layout.layout_edit_text_settings, null)
         textInputLayout = view.findViewById(R.id.text_view)
         textViewLabel = view.findViewById(R.id.text_view_label)
         editText = view.findViewById(R.id.edit_text)
+        editText?.setTextColor(DKColors().mainFontColor())
         editText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
