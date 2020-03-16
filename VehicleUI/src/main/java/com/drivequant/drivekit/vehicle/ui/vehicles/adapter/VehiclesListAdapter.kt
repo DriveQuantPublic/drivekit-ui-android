@@ -24,8 +24,7 @@ class VehiclesListAdapter(
 ) : RecyclerView.Adapter<VehicleViewHolder>() {
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): VehicleViewHolder {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = layoutInflater.inflate(R.layout.view_vehicle_item_list, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.view_vehicle_item_list, viewgroup, false)
         FontUtils.overrideFonts(context, view)
         return VehicleViewHolder(view, viewModel)
     }
