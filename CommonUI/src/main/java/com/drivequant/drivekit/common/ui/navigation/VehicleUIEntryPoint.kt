@@ -9,7 +9,6 @@ interface VehicleUIEntryPoint {
     fun createVehicleListFragment(): Fragment
 
     fun createVehiclePickerActivity(context: Context)
-    fun createVehiclePickerFragment(description: String, vehiclePickerStep: Int, items: Serializable): Fragment
 
     fun createVehicleDetailFragment(vehicleId: String): Fragment
     fun createVehicleDetailActivity(context: Context, vehicleId: String)

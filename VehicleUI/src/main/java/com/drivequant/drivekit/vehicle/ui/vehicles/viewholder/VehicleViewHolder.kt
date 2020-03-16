@@ -63,6 +63,9 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         textViewSubtitle.smallText()
         textViewDetectionModeTitle.smallText()
         textViewDetectionModeDescription.normalText()
+
+        popup.setColorFilter(DriveKitUI.colors.secondaryColor())
+        buttonSetup.setTextColor(DriveKitUI.colors.secondaryColor())
     }
 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
