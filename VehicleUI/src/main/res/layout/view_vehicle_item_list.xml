@@ -29,6 +29,7 @@
                 android:id="@+id/image_view_popup"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:src="@drawable/dk_vehicle_overflow_popup"
                 android:background="?actionBarItemBackground"
                 android:clickable="true"
                 android:focusable="true" />
