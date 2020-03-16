@@ -28,6 +28,5 @@
             android:paddingTop="0dp"
             tools:hint="This is hint"
             tools:text="This is a text" />
-        <!-- style="@style/TextView.Settings" -->
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>
