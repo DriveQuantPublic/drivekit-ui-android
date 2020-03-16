@@ -13,7 +13,7 @@ data class VehicleEngineItem(
 
 fun buildVehicleEngineItem(context: Context, source: Array<String>): VehicleEngineItem {
     return VehicleEngineItem(
-        VehicleEngineIndex.getEnumByValue(source[0]),
+        VehicleEngineIndex.getEnumByName(source[0]),
         DKResource.convertToString(context, source[1]),
         source[2].toBoolean(),
         source[3].toBoolean(),

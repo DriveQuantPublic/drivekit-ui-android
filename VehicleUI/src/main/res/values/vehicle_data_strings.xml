@@ -73,4 +73,21 @@
     <string name="dk_update_photo_title">Changer l\'image</string>
     <string name="dk_take_picture">Prendre une photo</string>
     <string name="dk_select_image_gallery">Sélectionner une photo existante</string>
+
+
+    <string name="dk_name">Nom</string>
+    <string name="dk_category">Catégorie</string>
+    <string name="dk_brand">Marque</string>
+    <string name="dk_model">Modèle</string>
+    <string name="dk_version">Version</string>
+    <string name="dk_motor">Motorisation</string>
+    <string name="dk_consumption">Consommation</string>
+    <string name="dk_power">Puissance</string>
+    <string name="dk_gearbox">Boîte de vitesses</string>
+    <string name="dk_mass">Masse</string>
+    <string name="dk_beacon_code">Identifiant du beacon</string>
+    <string name="dk_beacon_major">Major</string>
+    <string name="dk_beacon_minor">Minor</string>
+    <string name="dk_bluetooth_name">Nom de l\'appareil Bluetooth</string>
+    <string name="dk_bluetooth_address">Adresse MAC de l\'appareil Bluetooth </string>
 </resources>

@@ -28,6 +28,10 @@ enum class GroupField{
                 }
             }
 
+            ENGINE -> {
+                fields.addAll(EngineField.values().toList())
+            }
+
             else -> { }
         }
         return fields

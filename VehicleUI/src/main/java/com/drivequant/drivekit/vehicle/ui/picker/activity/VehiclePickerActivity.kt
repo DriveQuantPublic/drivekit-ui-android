@@ -110,7 +110,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
             ENGINE -> {
 
-                viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByValue(item.value)
+                viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByValue(item.value.toInt())
             }
             MODELS -> {
                 viewModel.selectedModel = item.value

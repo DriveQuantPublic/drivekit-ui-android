@@ -3,7 +3,11 @@ package com.drivequant.drivekit.vehicle.ui.extension
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
@@ -53,6 +57,22 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
 
 fun Vehicle.getDetectionModeName(context: Context): String {
     return DetectionModeType.getEnumByDetectionMode(this.detectionMode).getTitle(context)
+}
+
+fun Vehicle.getCategoryName(context: Context): String? {
+    val categories = VehicleTypeItem.CAR.getCategories(context)
+    val matchedCategory = categories.first {
+        VehicleCategory.getEnumByTypeIndex(this.typeIndex).name == it.category
+    }
+    return matchedCategory.title
+}
+
+fun Vehicle.getEngineTypeName(context: Context): String? {
+    val engineIndexes = VehicleTypeItem.CAR.getEngineIndexes(context)
+    val matchedEngineIndex = engineIndexes.first {
+        VehicleEngineIndex.getEnumByValue(this.engineIndex) == it.engine
+    }
+    return matchedEngineIndex.title
 }
 
 private fun Vehicle.getVehiclePositionInList(vehicles: List<Vehicle>): Int{

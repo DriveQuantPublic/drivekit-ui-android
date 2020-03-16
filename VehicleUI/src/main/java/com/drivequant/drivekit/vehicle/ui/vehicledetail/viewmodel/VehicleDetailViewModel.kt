@@ -22,7 +22,11 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     }
 
     private fun createGroupFields() {
-        groupFields = listOf(GroupField.GENERAL, GroupField.BEACON) // TODO mock
+        groupFields = listOf(
+            GroupField.GENERAL,
+            GroupField.BEACON,
+            GroupField.ENGINE
+        ) // TODO mock
     }
 
     class VehicleDetailViewModelFactory(private val vehicleId: String)

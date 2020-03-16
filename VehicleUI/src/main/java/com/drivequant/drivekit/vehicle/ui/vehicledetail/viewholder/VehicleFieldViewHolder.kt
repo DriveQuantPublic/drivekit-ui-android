@@ -33,11 +33,13 @@ class VehicleFieldViewHolder(
         val editTextSettings = EditableText(context)
         viewModel.vehicle?.let {
             editTextSettings.setLabel(field.getTitle(context, it))
-            editTextSettings.setHint(field.getValue(context, it, listOf()))
-            editTextSettings.setSettingsText(field.getValue(context, it, listOf()))
+            editTextSettings.setHint(field.getValue(context, it, listOf())) // TODO listOf
+            editTextSettings.setSettingsText(field.getValue(context, it, listOf())) // TODO listOf
             editTextSettings.tag = field.getTitle(context, it) // TODO add interface method to retrieve keyValue ?
         }
-        editTextSettings.setInputType(field.getKeyboardType())
+        field.getKeyboardType()?.let {
+            editTextSettings.setInputType(it)
+        }
         editTextSettings.setIsEditable(field.isEditable())
         editTextSettings.setDKStyle()
         return editTextSettings
