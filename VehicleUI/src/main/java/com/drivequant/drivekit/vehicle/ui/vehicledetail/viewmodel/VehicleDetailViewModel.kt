@@ -10,7 +10,7 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
 
     var imageFilePath: String? = null
     var vehicle: Vehicle?
-    lateinit var groupFields: List<GroupField>
+    var groupFields: MutableList<GroupField> = mutableListOf()
 
     init {
         vehicle = fetchVehicle()
@@ -22,13 +22,14 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     }
 
     private fun createGroupFields() {
-        groupFields = listOf(
-            GroupField.GENERAL,
-            GroupField.ENGINE,
-            GroupField.CHARACTERISTICS,
-            GroupField.BEACON,
-            GroupField.BLUETOOTH
-            ) // TODO mock
+        vehicle?.let {
+            groupFields.clear()
+            for (groupField in GroupField.values()){
+                if (groupField.isDisplayable(it)){
+                    groupFields.add(groupField)
+                }
+            }
+        }
     }
 
     class VehicleDetailViewModelFactory(private val vehicleId: String)

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.component.EditableText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
@@ -21,7 +20,6 @@ class VehicleFieldViewHolder(
 
     fun bind(groupField: GroupField){
         context = itemView.context
-        container.setDKStyle()
         viewModel.vehicle?.let {
             for (field in groupField.getFields(it)){
                 container.addView(buildField(field))
@@ -41,7 +39,6 @@ class VehicleFieldViewHolder(
             editTextSettings.setInputType(it)
         }
         editTextSettings.setIsEditable(field.isEditable())
-        editTextSettings.setDKStyle()
         return editTextSettings
     }
 }
