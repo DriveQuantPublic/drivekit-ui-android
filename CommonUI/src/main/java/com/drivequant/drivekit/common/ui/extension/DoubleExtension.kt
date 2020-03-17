@@ -1,3 +1,4 @@
+@file:JvmName("DKDoubleUtils")
 package com.drivequant.drivekit.common.ui.extension
 
 import java.text.DecimalFormat

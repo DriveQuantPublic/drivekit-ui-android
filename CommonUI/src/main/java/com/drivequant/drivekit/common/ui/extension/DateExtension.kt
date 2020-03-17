@@ -1,3 +1,4 @@
+@file:JvmName("DKDateUtils")
 package com.drivequant.drivekit.common.ui.extension
 
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern

@@ -1,3 +1,4 @@
+@file:JvmName("DKButtonUtils")
 package com.drivequant.drivekit.common.ui.extension
 
 import android.graphics.Typeface
