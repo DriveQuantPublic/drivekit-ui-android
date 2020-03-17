@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
@@ -21,9 +21,9 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 
-enum class PopupMenuItem(
+enum class VehicleAction(
     private val descriptionIdentifier: String
-) : MenuItem {
+) : VehicleActionItem {
     SHOW("dk_vehicle_show"),
     RENAME("dk_vehicle_rename"),
     REPLACE("dk_vehicle_replace"),
@@ -36,10 +36,10 @@ enum class PopupMenuItem(
 
     override fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean {
         return when (this){
-            SHOW -> !vehicle.liteConfig && DriverVehicleUI.displayVehicleDetail
-            RENAME -> DriverVehicleUI.renameVehicle
-            REPLACE -> DriverVehicleUI.replaceVehicle
-            DELETE -> vehicles.size > 1 && DriverVehicleUI.deleteVehicle
+            SHOW -> !vehicle.liteConfig && DriverVehicleUI.vehicleActions.contains(SHOW)
+            RENAME -> DriverVehicleUI.vehicleActions.contains(RENAME)
+            REPLACE -> DriverVehicleUI.vehicleActions.contains(REPLACE)
+            DELETE -> vehicles.size > 1 && DriverVehicleUI.vehicleActions.contains(DELETE)
         }
     }
 
@@ -72,7 +72,7 @@ enum class PopupMenuItem(
             .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { _, _ ->
                     vehicleFieldInputEditText?.let {
-                        DriveKitVehicleManager.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
+                        DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
                             override fun onResponse(status: VehicleManagerStatus) {
                                 if (status == VehicleManagerStatus.SUCCESS){
                                     viewModel.fetchVehicles(SynchronizationType.CACHE)
@@ -103,13 +103,12 @@ enum class PopupMenuItem(
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
         val message = DKResource.buildString(context, "dk_vehicle_delete_confirm", vehicle.computeTitle(context, viewModel.vehiclesList))
-
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { _, _ ->
-                    DriveKitVehicleManager.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                    DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
                         override fun onResponse(status: VehicleManagerStatus) {
                             if (status == VehicleManagerStatus.SUCCESS){
                                 viewModel.fetchVehicles(SynchronizationType.CACHE)

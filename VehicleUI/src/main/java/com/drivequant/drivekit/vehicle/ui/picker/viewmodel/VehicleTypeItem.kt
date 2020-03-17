@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKMedia
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import java.lang.IllegalArgumentException
 
@@ -49,7 +50,9 @@ enum class VehicleTypeItem(
         for (i in lines!!.indices) {
             val vehicleBrandItem = buildVehicleBrandItem(context, lines[i])
             if (!withIcons || (withIcons && vehicleBrandItem.icon != null)){
-                brands.add(vehicleBrandItem)
+                if (DriverVehicleUI.brands.contains(vehicleBrandItem.brand)) {
+                    brands.add(vehicleBrandItem)
+                }
             }
         }
         return when (this){
@@ -59,12 +62,14 @@ enum class VehicleTypeItem(
         }
     }
 
-    fun getEngines(context: Context): List<VehicleEngineItem> {
+    fun getEngineIndexes(context: Context): List<VehicleEngineItem> {
         val lines = DKMedia.readCSVFile(context, R.raw.vehicle_engines)
         val engines = mutableListOf<VehicleEngineItem>()
         for (i in lines!!.indices) {
             val vehicleEngineItem = buildVehicleEngineItem(context, lines[i])
-            engines.add(vehicleEngineItem)
+            if (DriverVehicleUI.vehicleEngineIndexes.contains(vehicleEngineItem.engine)) {
+                engines.add(vehicleEngineItem)
+            }
         }
         return when (this){
             CAR -> engines.filter { it.isCar}

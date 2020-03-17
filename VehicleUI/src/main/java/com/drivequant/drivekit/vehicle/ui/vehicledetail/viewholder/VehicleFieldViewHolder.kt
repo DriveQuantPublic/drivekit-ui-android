@@ -1,11 +1,10 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewholder
 
 import android.content.Context
-import android.support.design.widget.TextInputLayout
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import com.drivequant.drivekit.common.ui.component.EditableText
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
@@ -29,14 +28,17 @@ class VehicleFieldViewHolder(
     }
 
     private fun buildField(field: Field) : View {
-        val textInputLayout: TextInputLayout = LayoutInflater.from(itemView.context).inflate(R.layout.vehicle_field_item, null) as TextInputLayout
-        textInputLayout.hint = "hint"
-
+        val editTextSettings = EditableText(context)
         viewModel.vehicle?.let {
-            textInputLayout.helperText = field.getTitle(context, it)
+            editTextSettings.setLabel(field.getTitle(context, it))
+            editTextSettings.setHint(field.getValue(context, it, listOf())) // TODO listOf
+            editTextSettings.setSettingsText(field.getValue(context, it, listOf())) // TODO listOf
+            editTextSettings.tag = field.getTitle(context, it) // TODO add interface method to retrieve keyValue ?
         }
-        textInputLayout.editText?.isEnabled = true
-
-        return textInputLayout
+        field.getKeyboardType()?.let {
+            editTextSettings.setInputType(it)
+        }
+        editTextSettings.setIsEditable(field.isEditable())
+        return editTextSettings
     }
 }

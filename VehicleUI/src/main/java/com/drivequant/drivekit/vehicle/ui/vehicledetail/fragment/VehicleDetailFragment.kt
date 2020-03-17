@@ -31,7 +31,6 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsLis
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
-import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 
 class VehicleDetailFragment : Fragment() {
 
@@ -90,17 +89,7 @@ class VehicleDetailFragment : Fragment() {
         fab.setOnClickListener {
             manageFabAlertDialog()
         }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val linearLayoutManager = LinearLayoutManager(view.context)
-        vehicle_fields.layoutManager = linearLayoutManager
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         if (fieldsAdapter != null){
             fieldsAdapter?.setGroupFields(viewModel.groupFields)
             fieldsAdapter?.notifyDataSetChanged()
@@ -108,6 +97,12 @@ class VehicleDetailFragment : Fragment() {
             fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel, viewModel.groupFields)
             vehicle_fields.adapter = fieldsAdapter
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val linearLayoutManager = LinearLayoutManager(view.context)
+        vehicle_fields.layoutManager = linearLayoutManager
     }
 
     private fun manageFabAlertDialog(){

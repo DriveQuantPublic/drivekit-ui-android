@@ -1,9 +1,14 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
@@ -53,6 +58,39 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
 
 fun Vehicle.getDetectionModeName(context: Context): String {
     return DetectionModeType.getEnumByDetectionMode(this.detectionMode).getTitle(context)
+}
+
+fun Vehicle.getCategoryName(context: Context): String? {
+    val categories = VehicleTypeItem.CAR.getCategories(context)
+    val matchedCategory = categories.first {
+        VehicleCategory.getEnumByTypeIndex(this.typeIndex).name == it.category
+    }
+    return matchedCategory.title
+}
+
+fun Vehicle.getEngineTypeName(context: Context): String? {
+    val engineIndexes = VehicleTypeItem.CAR.getEngineIndexes(context)
+    val matchedEngineIndex = engineIndexes.first {
+        VehicleEngineIndex.getEnumByValue(this.engineIndex) == it.engine
+    }
+    return matchedEngineIndex.title
+}
+
+// TODO: verify values
+fun Vehicle.getGearBoxName(context: Context): String? {
+    val identifier = when (this.gearboxIndex){
+        1 -> "dk_gearbox_automatic"
+        2 -> "dk_gearbox_manual_5"
+        3 -> "dk_gearbox_manual_6"
+        4 -> "dk_gearbox_manual_7"
+        5 -> "dk_gearbox_manual_8"
+        else -> null
+    }
+    return if (identifier == null){
+        "N/A"
+    } else {
+        DKResource.convertToString(context, identifier)
+    }
 }
 
 private fun Vehicle.getVehiclePositionInList(vehicles: List<Vehicle>): Int{

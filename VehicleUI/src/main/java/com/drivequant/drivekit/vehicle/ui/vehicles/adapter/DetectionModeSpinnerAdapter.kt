@@ -34,7 +34,7 @@ open class DetectionModeSpinnerAdapter(
             .inflate(R.layout.simple_list_item_spinner, parent, false)
         val detectionMode = detectionModes[position]
         val textViewDetectionMode = view.findViewById<TextView>(R.id.text_view)
-        textViewDetectionMode.text = detectionMode.detectionModeType.name
+        textViewDetectionMode.text = detectionMode.detectionModeType.getTitle(context)
         FontUtils.overrideFonts(context, view)
         return view
     }

@@ -9,29 +9,45 @@ enum class GroupField{
     BEACON,
     BLUETOOTH;
 
-    fun isDisplayable(): Boolean {
-        return true
-    }
-
     fun getFields(vehicle: Vehicle): List<Field> {
-        // TODO: verify if isDisplayable before
-        return when (this){
+        val fields = mutableListOf<Field>()
+        when (this){
             GENERAL -> {
-                listOf(
-                    GeneralField.NAME,
-                    GeneralField.CATEGORY
-                )
+                for (item in GeneralField.values()){
+                    if (item.alwaysDisplayable(vehicle)){
+                        fields.add((item))
+                    }
+                }
+            }
+
+            ENGINE -> {
+                fields.addAll(EngineField.values().toList())
+            }
+
+            CHARACTERISTICS -> {
+                fields.addAll(CharacteristicField.values().toList())
             }
 
             BEACON -> {
-                listOf(
-                    BeaconField.UNIQUE_CODE,
-                    BeaconField.MAJOR,
-                    BeaconField.MINOR
-                )
+                for (item in BeaconField.values()){
+                    if (item.alwaysDisplayable(vehicle)){
+                        fields.add((item))
+                    }
+                }
             }
 
-            else -> { listOf() }
+            BLUETOOTH -> {
+                for (item in BluetoothField.values()){
+                    if (item.alwaysDisplayable(vehicle)){
+                        fields.add((item))
+                    }
+                }
+            }
         }
+        return fields
+    }
+
+    fun isDisplayable(vehicle: Vehicle): Boolean {
+        return getFields(vehicle).isNotEmpty()
     }
 }
