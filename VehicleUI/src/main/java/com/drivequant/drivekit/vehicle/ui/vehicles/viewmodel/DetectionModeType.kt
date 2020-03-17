@@ -19,7 +19,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
@@ -130,7 +130,7 @@ enum class DetectionModeType(
     }
 
     private fun updateDetectionMode(context: Context, detectionMode: DetectionMode, viewModel: VehiclesListViewModel, vehicle: Vehicle, forceGPSVehicleUpdate: Boolean = false){
-        DriveKitVehicleManager.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
+        DriveKitVehicle.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
             override fun onResponse(status: DetectionModeStatus) {
                 when (status){
                     SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
@@ -239,7 +239,7 @@ enum class DetectionModeType(
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
-                        DriveKitVehicleManager.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
+                        DriveKitVehicle.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
                             override fun onResponse(status: VehicleBeaconStatus) {
                                 alert.dismiss()
                                 viewModel.fetchVehicles(SynchronizationType.CACHE)
@@ -255,7 +255,7 @@ enum class DetectionModeType(
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
-                        DriveKitVehicleManager.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
+                        DriveKitVehicle.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
                             override fun onResponse(status: VehicleBluetoothStatus) {
                                 alert.dismiss()
                                 viewModel.fetchVehicles(SynchronizationType.CACHE)

@@ -6,7 +6,7 @@ import android.content.Context
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
@@ -23,7 +23,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT){
         if (DriveKit.isConfigured()) {
-            DriveKitVehicleManager.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
+            DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     syncStatus = status
                     vehiclesList = vehicles

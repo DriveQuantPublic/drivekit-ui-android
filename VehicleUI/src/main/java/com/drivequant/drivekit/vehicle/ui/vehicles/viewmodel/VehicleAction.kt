@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
@@ -72,7 +72,7 @@ enum class VehicleAction(
             .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { _, _ ->
                     vehicleFieldInputEditText?.let {
-                        DriveKitVehicleManager.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
+                        DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
                             override fun onResponse(status: VehicleManagerStatus) {
                                 if (status == VehicleManagerStatus.SUCCESS){
                                     viewModel.fetchVehicles(SynchronizationType.CACHE)
@@ -108,7 +108,7 @@ enum class VehicleAction(
             .cancelable(true)
             .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { _, _ ->
-                    DriveKitVehicleManager.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                    DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
                         override fun onResponse(status: VehicleManagerStatus) {
                             if (status == VehicleManagerStatus.SUCCESS){
                                 viewModel.fetchVehicles(SynchronizationType.CACHE)

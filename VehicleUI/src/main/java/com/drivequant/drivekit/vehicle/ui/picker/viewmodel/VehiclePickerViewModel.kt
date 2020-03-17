@@ -7,7 +7,7 @@ import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
-import com.drivequant.drivekit.vehicle.DriveKitVehicleManager
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
@@ -231,11 +231,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun createVehicle(){
         progressBarObserver.postValue(true)
         val detectionMode = computeCreateVehicleDetectionMode()
-        DriveKitVehicleManager.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
+        DriveKitVehicle.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                 if (status == VehicleManagerStatus.SUCCESS){
                     vehicleToDelete?.let {
-                        DriveKitVehicleManager.deleteVehicle(it, object: VehicleDeleteQueryListener {
+                        DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
                             override fun onResponse(status: VehicleManagerStatus) {
                                 vehicleToDelete = null
                                 endObserver.postValue(null)
