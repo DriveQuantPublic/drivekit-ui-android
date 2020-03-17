@@ -5,6 +5,8 @@ import android.app.Activity.RESULT_OK
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -84,8 +86,10 @@ class VehicleDetailFragment : Fragment() {
 
         collapsing_toolbar.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
         collapsing_toolbar.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        collapsing_toolbar.setExpandedTitleTypeface(DriveKitUI.primaryFont(context!!))
 
-        fab.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+
+        fab.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         fab.setOnClickListener {
             manageFabAlertDialog()
         }

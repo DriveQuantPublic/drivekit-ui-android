@@ -14,5 +14,6 @@ fun Button.button() {
     this.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
     this.setBackgroundColor(DriveKitUI.colors.secondaryColor())
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    this.isAllCaps = true
     this.textSize = 14f
 }
