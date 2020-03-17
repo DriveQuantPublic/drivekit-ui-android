@@ -7,14 +7,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -46,6 +48,8 @@ class VehicleDetailFragment : Fragment() {
     private lateinit var vehicleId : String
     private var fieldsAdapter : VehicleFieldsListAdapter? = null
 
+    private var imageView: ImageView? = null
+
     private var cameraFilePath : String? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
@@ -54,7 +58,7 @@ class VehicleDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?  = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
+    ): View? = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -62,8 +66,16 @@ class VehicleDetailFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val menuInflater = activity?.menuInflater
+        menuInflater?.inflate(R.menu.vehicle_menu_bar, menu)
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         (savedInstanceState?.getSerializable("vehicleDetail") as String?)?.let{
             vehicleId = it
         }
@@ -77,17 +89,22 @@ class VehicleDetailFragment : Fragment() {
             }
         }
 
-        Glide.with(this)
-            .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else R.drawable.dk_vehicle_default)
-            .placeholder(R.drawable.dk_vehicle_default)
-            .into(image_view_vehicle)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        collapsing_toolbar.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
-        collapsing_toolbar.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
+        collapsingToolbar?.let {
+            it.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
+            it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        }
 
-        fab.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-        fab.setOnClickListener {
-            manageFabAlertDialog()
+
+        val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
+        fab?.let {
+            it.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            it.setOnClickListener {
+                manageFabAlertDialog()
+            }
         }
 
         if (fieldsAdapter != null){
@@ -101,6 +118,15 @@ class VehicleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        imageView = activity?.findViewById(R.id.image_view_vehicle)
+        imageView?.let {
+            Glide.with(this)
+                .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else R.drawable.dk_vehicle_default)
+                .placeholder(R.drawable.dk_vehicle_default)
+                .into(it)
+        }
+
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicle_fields.layoutManager = linearLayoutManager
     }
@@ -177,7 +203,9 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updatePicture(uri: Uri) {
-        Glide.with(this).load(uri).placeholder(R.drawable.dk_vehicle_default).into(image_view_vehicle)
+        imageView?.let {
+            Glide.with(this).load(uri).placeholder(R.drawable.dk_vehicle_default).into(it)
+        }
     }
 
     private fun saveVehiclePictureLocalPath(path: String?){

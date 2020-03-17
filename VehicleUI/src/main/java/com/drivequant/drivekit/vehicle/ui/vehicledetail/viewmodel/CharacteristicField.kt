@@ -21,7 +21,7 @@ enum class CharacteristicField : Field {
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this) {
-            POWER -> String.format("%.0f ", vehicle.power) + DKResource.buildString(context, "dk_common_power_unit")
+            POWER -> String.format("%.0f ", vehicle.power) + DKResource.buildString(context, "dk_common_unit_power")
             GEARBOX -> vehicle.getGearBoxName(context)
             MASS -> String.format("%.0f ", vehicle.mass) + DKResource.buildString(context, "dk_common_unit_kg")
         }
@@ -29,5 +29,9 @@ enum class CharacteristicField : Field {
 
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
         return true
+    }
+
+    override fun onFieldUpdated(vehicle: Vehicle) {
+        // do nothing
     }
 }

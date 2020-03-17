@@ -31,4 +31,8 @@ enum class BeaconField : Field {
         return vehicle.detectionMode == DetectionMode.BEACON
                 && vehicle.beacon != null
     }
+
+    override fun onFieldUpdated(vehicle: Vehicle) {
+        // do nothing
+    }
 }

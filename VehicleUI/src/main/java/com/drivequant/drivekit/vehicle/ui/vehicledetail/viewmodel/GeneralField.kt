@@ -52,4 +52,8 @@ enum class GeneralField : Field {
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
         return true
     }
+
+    override fun onFieldUpdated(vehicle: Vehicle) {
+        // TODO : if field name then call service
+    }
 }

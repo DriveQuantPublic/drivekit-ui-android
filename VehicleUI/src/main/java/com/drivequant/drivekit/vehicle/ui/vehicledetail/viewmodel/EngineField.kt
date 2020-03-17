@@ -28,4 +28,8 @@ enum class EngineField : Field {
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
         return true
     }
+
+    override fun onFieldUpdated(vehicle: Vehicle) {
+        // do nothing
+    }
 }
