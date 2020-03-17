@@ -13,6 +13,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
@@ -37,6 +39,8 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         DetectionMode.BEACON,
         DetectionMode.BLUETOOTH
     )
+
+    internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -75,7 +79,6 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         this.vehicleEngineIndexes = vehicleEnginesIndex
     }
 
-
     fun showBrandsWithIcons(displayBrandsWithIcons: Boolean){
         this.brandsWithIcons = displayBrandsWithIcons
     }
@@ -96,6 +99,10 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         if (detectionModes.isNotEmpty()) {
             this.detectionModes = detectionModes
         }
+    }
+
+    fun addCustomFieldsToGroup(groupField: GroupField, fieldsToAdd: List<Field>){
+        this.customFields[groupField] = fieldsToAdd
     }
 
     override fun startVehicleListActivity(context: Context) {
