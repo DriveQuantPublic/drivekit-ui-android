@@ -43,4 +43,7 @@
     <string name="dk_common_unit_mph">mph</string>
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_validate">Valid</string>
+
+    <!-- TODO : Translate -->
+    <string name="dk_common_unit_power">hp</string>
 </resources>

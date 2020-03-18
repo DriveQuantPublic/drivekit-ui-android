@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.support.design.widget.TextInputEditText
 import android.widget.TextView
+import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -76,6 +77,8 @@ enum class VehicleAction(
                             override fun onResponse(status: VehicleManagerStatus) {
                                 if (status == VehicleManagerStatus.SUCCESS){
                                     viewModel.fetchVehicles(SynchronizationType.CACHE)
+                                } else {
+                                    displayError(context)
                                 }
                             }
                         })
@@ -112,6 +115,8 @@ enum class VehicleAction(
                         override fun onResponse(status: VehicleManagerStatus) {
                             if (status == VehicleManagerStatus.SUCCESS){
                                 viewModel.fetchVehicles(SynchronizationType.CACHE)
+                            } else {
+                                displayError(context)
                             }
                         }
                     })
@@ -127,5 +132,9 @@ enum class VehicleAction(
         descriptionTextView?.text = message
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
+    }
+
+    private fun displayError(context: Context){
+        Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
     }
 }

@@ -28,4 +28,8 @@ enum class BluetoothField : Field {
         return vehicle.detectionMode == DetectionMode.BLUETOOTH
                 && vehicle.bluetooth != null
     }
+
+    override fun onFieldUpdated(vehicle: Vehicle) {
+        // do nothing
+    }
 }

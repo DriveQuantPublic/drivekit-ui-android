@@ -90,4 +90,10 @@
     <string name="dk_beacon_minor">Minor</string>
     <string name="dk_bluetooth_name">Nom de l\'appareil Bluetooth</string>
     <string name="dk_bluetooth_address">Adresse MAC de l\'appareil Bluetooth </string>
+
+    <string name="dk_gearbox_automatic">Automatique</string>
+    <string name="dk_gearbox_manual_5">Manuelle-5</string>
+    <string name="dk_gearbox_manual_6">Manuelle-6</string>
+    <string name="dk_gearbox_manual_7">Manuelle-7</string>
+    <string name="dk_gearbox_manual_8">Manuelle-8</string>
 </resources>

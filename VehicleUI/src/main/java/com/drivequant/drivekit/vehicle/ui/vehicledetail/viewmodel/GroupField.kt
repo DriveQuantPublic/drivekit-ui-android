@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import java.sql.Driver
 
 enum class GroupField{
     GENERAL,
@@ -44,7 +46,18 @@ enum class GroupField{
                 }
             }
         }
+        getCustomFields()?.let {
+            fields.addAll(it)
+        }
         return fields
+    }
+
+    private fun getCustomFields(): List<Field>?{
+        return DriverVehicleUI.customFields[this]?.let {
+            it
+        }?: run {
+            null
+        }
     }
 
     fun isDisplayable(vehicle: Vehicle): Boolean {
