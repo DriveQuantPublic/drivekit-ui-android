@@ -97,7 +97,7 @@ class VehicleDetailFragment : Fragment() {
         collapsingToolbar?.let {
             it.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
             it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-            it.setExpandedTitleTypeface(DriveKitUI.primaryFont(context!!))
+            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
         }
 
 

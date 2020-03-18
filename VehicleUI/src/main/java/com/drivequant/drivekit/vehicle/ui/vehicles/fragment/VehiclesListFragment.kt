@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -98,7 +99,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun setupUI() {
-        add_vehicle.buttonText()
+        add_vehicle.button()
     }
 
     private fun displayVehiclesList(){

@@ -23,7 +23,7 @@
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
+    <Button
         android:id="@+id/add_vehicle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
