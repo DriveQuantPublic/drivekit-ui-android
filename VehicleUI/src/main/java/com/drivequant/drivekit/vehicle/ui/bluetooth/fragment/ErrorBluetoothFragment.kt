@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -14,7 +13,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import kotlinx.android.synthetic.main.fragment_bluetooth_error.*
 
 class ErrorBluetoothFragment: Fragment() {
@@ -27,7 +25,6 @@ class ErrorBluetoothFragment: Fragment() {
         }
     }
 
-    private lateinit var viewModel : BluetoothViewModel
     private lateinit var vehicleId : String
 
 
@@ -37,7 +34,6 @@ class ErrorBluetoothFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId)).get(BluetoothViewModel::class.java)
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val secondaryColor = DriveKitUI.colors.secondaryColor()

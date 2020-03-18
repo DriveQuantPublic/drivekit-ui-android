@@ -22,16 +22,14 @@
                 android:scrollbars="vertical" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-
     <Button
         android:id="@+id/add_vehicle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:text="@string/dk_vehicle_add"
         android:layout_gravity="bottom"
         android:gravity="center"
         android:foreground="?attr/selectableItemBackground"/>
-
     <ProgressBar
         android:id="@+id/progress_circular"
         style="@style/Widget.AppCompat.ProgressBar"

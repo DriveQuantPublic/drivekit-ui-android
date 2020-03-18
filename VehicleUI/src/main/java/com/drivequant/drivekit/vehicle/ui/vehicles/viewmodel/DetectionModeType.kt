@@ -222,7 +222,7 @@ enum class DetectionModeType(
 
         when (this){
             BEACON -> {
-                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier())
+                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier()) // TODO: display vehicle name
 
                 // TODO check from Singleton if these actions are displayable
                 verify?.let {
@@ -254,7 +254,7 @@ enum class DetectionModeType(
                 }
             }
             BLUETOOTH -> {
-                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier())
+                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier()) // TODO: display vehicle name
 
                 delete?.let {
                     it.visibility = View.VISIBLE

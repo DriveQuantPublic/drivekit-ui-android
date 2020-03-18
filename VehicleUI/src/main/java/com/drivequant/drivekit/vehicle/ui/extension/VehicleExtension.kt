@@ -1,13 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
-import android.util.Log
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem

@@ -132,4 +132,8 @@ object DriverVehicleUI : VehicleUIEntryPoint {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
+
+    override fun createBluetoothActivity(context: Context, vehicleId: String) {
+        TODO("Not yet implemented")
+    }
 }

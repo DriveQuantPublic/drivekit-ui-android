@@ -100,9 +100,9 @@
     
     <string name="dk_vehicle_bluetooth_combination_view_title">Associer un appareil Bluetooth</string>
     <string name="dk_vehicle_bluetooth_guide_header">Avant de commencer</string>
-    <string name="dk_vehicle_bluetooth_guide_desc1">Vérifier que l’appareil Bluetooth a déjà été jumelé avec votre iPhone. Cette information est disponible dans le menu Bluetooth des paramètres du téléphone.</string>
-    <string name="dk_vehicle_bluetooth_guide_desc2">Installez-vous dans votre véhicule.</string>
-    <string name="dk_vehicle_bluetooth_guide_desc3">Allumer le contact. Le téléphone doit être connecté au véhicule pour réaliser l\'association.</string>
+    <string name="dk_vehicle_bluetooth_guide_desc1_android">Assurez-vous que le système Bluetooth de votre véhicule est déjà jumelé avec votre téléphone avant de commencer.</string>
+    <string name="dk_vehicle_bluetooth_guide_desc2_android">L\'application va rechercher tous les appareils qui ont déjà été connectés à votre téléphone.</string>
+    <string name="dk_vehicle_bluetooth_guide_desc3_android">Vous devrez sélectionner celui qui correspond au système Bluetooth de votre véhicule.</string>
     <string name="dk_vehicle_begin">Commencer</string>
     <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté. \n \n Pour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth. \n \n Pouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
     <string name="dk_vehicle_open_bluetooth_settings">Ouvrir les réglages Bluetooth</string>
