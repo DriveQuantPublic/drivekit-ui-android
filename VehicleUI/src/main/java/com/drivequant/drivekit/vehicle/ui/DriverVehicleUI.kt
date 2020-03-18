@@ -30,6 +30,7 @@ object DriverVehicleUI : VehicleUIEntryPoint {
     internal var brandsWithIcons: Boolean = true
 
     internal var canAddVehicle: Boolean = true
+    internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
     internal var vehicleActions: List<VehicleAction> = VehicleAction.values().toList()
 
@@ -85,6 +86,10 @@ object DriverVehicleUI : VehicleUIEntryPoint {
 
     fun enableAddVehicle(canAddVehicle: Boolean){
         this.canAddVehicle = canAddVehicle
+    }
+
+    fun enableRemoveBeacon(canRemoveBeacon: Boolean){
+        this.canRemoveBeacon = canRemoveBeacon
     }
 
     fun configureMaxVehicles(maxVehicles: Int?){

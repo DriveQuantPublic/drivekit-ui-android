@@ -10,6 +10,6 @@ interface Field {
     fun isEditable(): Boolean = false
     fun getKeyboardType(): Int? = InputType.TYPE_CLASS_TEXT
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
-    fun isValid(): Boolean = true
+    fun isValid(value: String): Boolean = true
     fun onFieldUpdated(vehicle: Vehicle)
 }

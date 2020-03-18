@@ -49,6 +49,14 @@ enum class GeneralField : Field {
         }
     }
 
+    override fun isValid(value: String): Boolean {
+        var isValid = false
+        if (this == NAME && value.length <= 50){
+            isValid = true
+        }
+        return isValid
+    }
+
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
         return true
     }
