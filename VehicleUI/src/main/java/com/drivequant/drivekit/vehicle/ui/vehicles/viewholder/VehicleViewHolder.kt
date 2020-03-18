@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewholder
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -10,10 +11,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
@@ -65,7 +63,10 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         textViewDetectionModeDescription.normalText()
 
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
-        buttonSetup.setTextColor(DriveKitUI.colors.secondaryColor())
+        buttonSetup.button(
+            textColor = DriveKitUI.colors.secondaryColor(),
+            backgroundColor = Color.parseColor("#00ffffff")
+        )
     }
 
     private fun setupPopup(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){

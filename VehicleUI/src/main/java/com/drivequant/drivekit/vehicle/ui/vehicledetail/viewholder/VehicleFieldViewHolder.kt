@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.component.EditableText
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
@@ -29,6 +30,7 @@ class VehicleFieldViewHolder(
 
     private fun buildField(field: Field) : View {
         val editTextSettings = EditableText(context)
+        FontUtils.overrideFonts(context, editTextSettings)
         viewModel.vehicle?.let {
             editTextSettings.setLabel(field.getTitle(context, it))
             editTextSettings.setHint(field.getValue(context, it, listOf())) // TODO listOf

@@ -1,5 +1,7 @@
+@file:JvmName("DKTextViewUtils")
 package com.drivequant.drivekit.common.ui.extension
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.Gravity
@@ -45,9 +47,11 @@ fun TextView.smallText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
 }
 
 @JvmOverloads
-fun TextView.buttonText(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryColor()) {
-    this.bigText(textColor)
-    this.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+fun TextView.buttonText(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryColor(), backgroundColor: Int = DriveKitUI.colors.secondaryColor()) {
+    this.normalText(textColor)
+    this.typeface = Typeface.DEFAULT_BOLD
+    this.isAllCaps = true
+    this.setBackgroundColor(backgroundColor)
     this.isClickable = true
     this.isFocusable = true
     this.gravity = Gravity.CENTER

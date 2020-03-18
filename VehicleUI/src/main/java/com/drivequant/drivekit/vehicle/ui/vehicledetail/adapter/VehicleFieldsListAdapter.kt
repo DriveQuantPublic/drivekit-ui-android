@@ -18,7 +18,6 @@ class VehicleFieldsListAdapter(
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): VehicleFieldViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.view_vehicle_field_item_list, viewgroup, false)
-        FontUtils.overrideFonts(context, view)
         return VehicleFieldViewHolder(view, viewModel)
     }
 

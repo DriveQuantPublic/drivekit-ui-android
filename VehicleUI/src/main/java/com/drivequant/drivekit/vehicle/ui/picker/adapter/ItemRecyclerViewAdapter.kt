@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -52,7 +53,7 @@ class ItemRecyclerViewAdapter(
         if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM) {
             holder.textView.normalText()
         } else {
-            holder.textView.buttonText()
+            holder.textView.buttonText(backgroundColor = DriveKitUI.colors.secondaryColor())
         }
     }
 
