@@ -96,4 +96,21 @@
     <string name="dk_gearbox_manual_6">Manuelle-6</string>
     <string name="dk_gearbox_manual_7">Manuelle-7</string>
     <string name="dk_gearbox_manual_8">Manuelle-8</string>
+    
+    
+    <string name="dk_vehicle_bluetooth_combination_view_title">Associer un appareil Bluetooth</string>
+    <string name="dk_vehicle_bluetooth_guide_header">Avant de commencer</string>
+    <string name="dk_vehicle_bluetooth_guide_desc1">Vérifier que l’appareil Bluetooth a déjà été jumelé avec votre iPhone. Cette information est disponible dans le menu Bluetooth des paramètres du téléphone.</string>
+    <string name="dk_vehicle_bluetooth_guide_desc2">Installez-vous dans votre véhicule.</string>
+    <string name="dk_vehicle_bluetooth_guide_desc3">Allumer le contact. Le téléphone doit être connecté au véhicule pour réaliser l\'association.</string>
+    <string name="dk_vehicle_begin">Commencer</string>
+    <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté. \n \n Pour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth. \n \n Pouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
+    <string name="dk_vehicle_open_bluetooth_settings">Ouvrir les réglages Bluetooth</string>
+    <string name="dk_vehicle_select_bluetooth_description">Sélectionner un appareil Bluetooth pour déclencher l’enregistrement de vos trajets. \n \n Dès que le téléphone se connecte à cet appareil, l\'application démarre l\'analyse de votre trajet. \n \n Vous ne pouvez sélectionner qu\'un seul appareil pour ce véhicule.</string>
+    <string name="dk_vehicle_bluetooth_already_paired">L\'appareil Bluetooth %s est déjà connecté à un autre véhicule. Vous devez d\'abord libérer cet appareil avant de l\'associer à %s</string>
+    <string name="dk_vehicle_unknown">Le véhicule n\'existe pas.</string>
+    <string name="dk_vehicle_failed_to_paired_bluetooth">L\association du bluetooth au véhicule a échoué, veuillez réessayer ultérieurement.</string>
+    <string name="dk_vehicle_bluetooth_congrats_title">Félicitations !</string>
+    <string name="dk_vehicle_bluetooth_congrats_desc">L\'appareil Bluetooth %s est désormais associé au véhicule %s</string>
+    <string name="dk_vehicle_bluetooth_congrats_notice">Désormais l\'enregistrement de vos trajets démarrera automatiquement dès que votre téléphone se connecte à l\'appareil Bluetooth %s</string>
 </resources>

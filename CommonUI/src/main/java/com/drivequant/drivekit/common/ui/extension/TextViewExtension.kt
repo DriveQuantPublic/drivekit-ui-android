@@ -1,7 +1,6 @@
 @file:JvmName("DKTextViewUtils")
 package com.drivequant.drivekit.common.ui.extension
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.Gravity

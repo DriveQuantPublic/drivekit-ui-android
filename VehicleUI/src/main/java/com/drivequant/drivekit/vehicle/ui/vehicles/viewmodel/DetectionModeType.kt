@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.Typeface.BOLD
 import android.text.SpannableString
@@ -28,6 +29,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
@@ -116,11 +118,14 @@ enum class DetectionModeType(
     }
 
     fun onConfigureButtonClicked(context: Context, viewModel : VehiclesListViewModel, vehicle: Vehicle){
-
         if (vehicle.isConfigured()){
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
-            // launch BT or Beacon setup
+            when (this){
+                BEACON -> TODO()
+                BLUETOOTH ->  BluetoothActivity.launchActivity(context, vehicle.vehicleId)
+                else -> { } // do nothing
+            }
         }
     }
 

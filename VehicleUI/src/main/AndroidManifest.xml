@@ -15,6 +15,9 @@
             android:name=".vehicledetail.activity.VehicleDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bluetooth.activity.BluetoothActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
