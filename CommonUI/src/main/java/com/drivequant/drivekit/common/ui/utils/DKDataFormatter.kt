@@ -10,8 +10,7 @@ import kotlin.math.roundToInt
 
 object DKDataFormatter {
 
-    fun formatDuration(context: Context, durationInSeconds: Double?): String {
-
+    fun formatDuration(context: Context, durationInSeconds: Double?) : String {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
@@ -43,7 +42,7 @@ object DKDataFormatter {
         return "-"
     }
 
-    fun formatDistance(context: Context, distance: Double?): String {
+    fun formatDistance(context: Context, distance: Double?) : String {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
@@ -56,7 +55,7 @@ object DKDataFormatter {
         }
     }
 
-    fun formatCO2Emission(context: Context, emission: Double) :String = "${emission.roundToInt()} ${context.getString(
+    fun formatCO2Emission(context: Context, emission: Double) : String = "${emission.roundToInt()} ${context.getString(
         R.string.dk_common_unit_g_per_km)}"
 
     fun formatCO2Mass(context: Context, co2mass: Double): String {
@@ -70,6 +69,12 @@ object DKDataFormatter {
     fun formatSpeedMean(context: Context, speed: Double) : String = "${speed.roundToInt()} ${context.getString(
         R.string.dk_common_unit_km_per_hour)}"
 
-    fun formatConsumption(context: Context, consumption: Double) :String =
+    fun formatConsumption(context: Context, consumption: Double) : String =
         "${consumption.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_l_per_100km)}"
+
+    fun formatMass(context: Context, mass: Double) : String =
+        "${mass.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_kg)}"
+
+    fun formatVehiclePower(context: Context, power: Double) : String =
+        "${power.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_power)}"
 }

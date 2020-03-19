@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.extension.getGearBoxName
@@ -21,9 +22,9 @@ enum class CharacteristicField : Field {
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this) {
-            POWER -> String.format("%.0f ", vehicle.power) + DKResource.buildString(context, "dk_common_unit_power")
+            POWER -> DKDataFormatter.formatVehiclePower(context, vehicle.power)
             GEARBOX -> vehicle.getGearBoxName(context)
-            MASS -> String.format("%.0f ", vehicle.mass) + DKResource.buildString(context, "dk_common_unit_kg")
+            MASS -> DKDataFormatter.formatMass(context, vehicle.mass)
         }
     }
 
