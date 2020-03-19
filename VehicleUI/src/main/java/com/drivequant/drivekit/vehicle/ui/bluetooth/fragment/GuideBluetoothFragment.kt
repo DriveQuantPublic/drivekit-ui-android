@@ -53,7 +53,7 @@ class GuideBluetoothFragment: Fragment() {
         button_start.button()
         button_start.text = DKResource.convertToString(requireContext(), "dk_vehicle_begin")
         button_start.setOnClickListener {
-            viewModel.onGuideButtonClicked()
+            viewModel.onStartButtonClicked()
         }
     }
 }

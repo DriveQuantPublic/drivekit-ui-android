@@ -62,4 +62,9 @@
         <item name="backColor">@color/dkGaugeBackColor</item>
         <item name="textSize">12sp</item>
     </style>
+
+    <style name="Error_Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/dkVeryBad</item>
+        <item name="android:textSize">@dimen/dk_text_small</item>
+    </style>
 </resources>

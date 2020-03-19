@@ -34,7 +34,7 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
         fragmentDispatcher.postValue(GuideBluetoothFragment.newInstance(this, vehicleId))
     }
 
-    fun onGuideButtonClicked(){
+    fun onStartButtonClicked(){
         if (bluetoothDevices.isEmpty()){
             fragmentDispatcher.postValue(ErrorBluetoothFragment.newInstance(vehicleId))
         } else {

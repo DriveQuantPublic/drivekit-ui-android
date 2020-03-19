@@ -24,6 +24,8 @@ import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
@@ -117,8 +119,8 @@ enum class DetectionModeType(
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
             when (this){
-                BEACON -> TODO()
-                BLUETOOTH ->  BluetoothActivity.launchActivity(context, vehicle.vehicleId)
+                BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
+                BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId)
                 else -> { } // do nothing
             }
         }

@@ -76,7 +76,6 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             for (i in itemsList.indices){
                 if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
-                        //TODO WIP : SET FONT
                         color(DriveKitUI.colors.mainFontColor())
                     }).toSpannable())
                 }

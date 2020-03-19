@@ -18,6 +18,8 @@
     <dimen name="dk_ic_small">18dp</dimen>
     <dimen name="dk_ic_medium">26dp</dimen>
     <dimen name="dk_ic_big">34dp</dimen>
+    <dimen name="dk_ic_xbig">48dp</dimen> <!-- TODO : Add in doc -->
+    <dimen name="dk_ic_xxbig">56dp</dimen> <!-- TODO : Add in doc -->
 
     <dimen name="dk_separator_stroke">1dp</dimen>
     <dimen name="dk_default_gauge_stroke">5dp</dimen>

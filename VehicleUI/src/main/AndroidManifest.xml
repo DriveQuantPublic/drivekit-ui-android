@@ -18,6 +18,9 @@
         <activity
             android:name=".bluetooth.activity.BluetoothActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".beacon.activity.BeaconActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

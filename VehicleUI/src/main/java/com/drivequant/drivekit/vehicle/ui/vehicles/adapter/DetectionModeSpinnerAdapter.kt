@@ -19,10 +19,10 @@ open class DetectionModeSpinnerAdapter(
     context: Context,
     resource: Int,
     list: List<DetectionModeSpinnerItem>
-) :
-    ArrayAdapter<DetectionModeSpinnerItem>(context, resource, list) {
+) : ArrayAdapter<DetectionModeSpinnerItem>(context, resource, list) {
 
     var detectionModes: List<DetectionModeSpinnerItem> = list
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
         getCustomView(position, parent)
 

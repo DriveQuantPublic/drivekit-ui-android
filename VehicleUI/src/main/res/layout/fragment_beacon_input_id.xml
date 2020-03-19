@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".beacon.activity.BeaconActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <TextView
+        android:id="@+id/text_view_beacon_code_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:gravity="center"
+        android:layout_margin="@dimen/dk_margin" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/code_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin"
+        app:errorTextAppearance="@style/Error_Appearance">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/code_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/button_validate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin" />
+</LinearLayout>

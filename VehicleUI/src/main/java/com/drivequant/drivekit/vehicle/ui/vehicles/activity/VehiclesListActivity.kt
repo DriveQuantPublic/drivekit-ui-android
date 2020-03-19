@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 
 class VehiclesListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
