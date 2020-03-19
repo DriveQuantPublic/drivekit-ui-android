@@ -21,7 +21,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     var vehiclesList: List<Vehicle> = listOf()
     var syncStatus: VehicleSyncStatus = VehicleSyncStatus.NO_ERROR
 
-    fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT){
+    fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKit.isConfigured()) {
             DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
@@ -36,7 +36,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getScreenTitle(context: Context?): String? {
-        return if (vehiclesList.size > 1){
+        return if (vehiclesList.size > 1) {
             context?.getString(R.string.dk_vehicle_my_vehicles)
         } else {
             context?.getString(R.string.dk_vehicle_my_vehicle)
@@ -51,23 +51,24 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         return vehicle.computeSubtitle(context, vehiclesList)
     }
 
-    fun buildDetectionModeSpinnerItems(context: Context) : List<DetectionModeSpinnerItem> {
+    fun buildDetectionModeSpinnerItems(context: Context): List<DetectionModeSpinnerItem> {
         val detectionModeSpinnerItems = mutableListOf<DetectionModeSpinnerItem>()
-        for (detectionMode in DriverVehicleUI.detectionModes){
-            detectionModeSpinnerItems.add(DetectionModeSpinnerItem(context, DetectionModeType.getEnumByDetectionMode(detectionMode)))
+        for (detectionMode in DriverVehicleUI.detectionModes) {
+            detectionModeSpinnerItems.add(
+                DetectionModeSpinnerItem(
+                    context,
+                    DetectionModeType.getEnumByDetectionMode(detectionMode)
+                )
+            )
         }
         return detectionModeSpinnerItems
     }
 
-    fun canAddVehicle(): Boolean{
-        return if(!DriverVehicleUI.canAddVehicle){
+    fun maxVehiclesReached(): Boolean {
+        return DriverVehicleUI.maxVehicles?.let {
+            vehiclesList.size < it
+        } ?: run {
             false
-        } else {
-            DriverVehicleUI.maxVehicles?.let {
-                vehiclesList.size < it
-            }?: run {
-                true
-            }
         }
     }
 }

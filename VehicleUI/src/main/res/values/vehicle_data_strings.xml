@@ -98,6 +98,8 @@
     <string name="dk_gearbox_manual_8">Manuelle-8</string>
     
     
+    <string name="dk_too_many_vehicles_alert">Vous avez dépassé la limite autorisée du nombre de véhicules, veuillez en supprimer un avant d\'en créer un nouveau.</string>
+
     <string name="dk_vehicle_bluetooth_combination_view_title">Associer un appareil Bluetooth</string>
     <string name="dk_vehicle_bluetooth_guide_header">Avant de commencer</string>
     <string name="dk_vehicle_bluetooth_guide_desc1_android">Assurez-vous que le système Bluetooth de votre véhicule est déjà jumelé avec votre téléphone avant de commencer.</string>

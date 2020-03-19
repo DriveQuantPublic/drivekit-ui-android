@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
@@ -87,10 +88,16 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun setupAddVehicleButton(){
-        if (viewModel.canAddVehicle()){
+        if (DriverVehicleUI.canAddVehicle){
             add_vehicle.visibility = View.VISIBLE
             add_vehicle.setOnClickListener {
-                VehiclePickerActivity.launchActivity(requireContext())
+                if (viewModel.maxVehiclesReached()) {
+                    DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert")?.let {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    VehiclePickerActivity.launchActivity(requireContext())
+                }
             }
         } else {
             add_vehicle.visibility = View.GONE
