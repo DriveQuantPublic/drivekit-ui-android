@@ -22,14 +22,14 @@ import java.io.Serializable
 class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
 
     var vehicle: Vehicle?
-    lateinit var bluetoothDevices: List<BluetoothData>
+    var bluetoothDevices: List<BluetoothData>
 
     var fragmentDispatcher = MutableLiveData<Fragment>()
     var addBluetoothObserver = MutableLiveData<String>()
 
     init {
         vehicle = fetchVehicle()
-        fetchBluetoothDevices()
+        bluetoothDevices = DriveKitTripAnalysis.getBluetoothPairedDevices()
         fragmentDispatcher.postValue(GuideBluetoothFragment.newInstance(this, vehicleId))
     }
 
@@ -61,10 +61,6 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
         }
     }
 
-    private fun fetchBluetoothDevices() {
-        bluetoothDevices = DriveKitTripAnalysis.getBluetoothPairedDevices()
-    }
-
     fun isBluetoothAlreadyPaired(macAddress: String): Boolean {
         return !DbVehicleAccess.findVehicles().execute().filter {
             it.bluetooth?.macAddress == macAddress
@@ -75,6 +71,7 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
         return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
 
+    @Suppress("UNCHECKED_CAST")
     class BluetoothViewModelFactory(private val vehicleId: String) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return BluetoothViewModel(vehicleId) as T
