@@ -35,20 +35,34 @@ class VehiclesListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
+
+        viewModel.progressBarObserver.observe(this, Observer {
+            it?.let { displayProgressCircular ->
+                if (displayProgressCircular){
+                    progress_circular.visibility = View.VISIBLE
+                } else {
+                    hideProgressCircular()
+                }
+            }
+        })
+
+        viewModel.removeBeaconOrBluetoothObserver.observe(this, Observer {
+            viewModel.fetchVehicles(SynchronizationType.CACHE)
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = DKResource.convertToString(requireContext(), "dk_common_loading")
+
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicles_list.layoutManager = linearLayoutManager
-        setupUI()
+        add_vehicle.button()
     }
 
     override fun onResume() {
@@ -81,9 +95,10 @@ class VehiclesListFragment : Fragment() {
                 }
             }
             activity?.title = viewModel.getScreenTitle(context)
-            updateProgressVisibility(false)
+            refresh_vehicles.visibility = View.VISIBLE
+            refresh_vehicles.isRefreshing = false
         })
-        updateProgressVisibility(true)
+        refresh_vehicles.isRefreshing = true
         viewModel.fetchVehicles()
     }
 
@@ -104,10 +119,6 @@ class VehiclesListFragment : Fragment() {
         }
     }
 
-    private fun setupUI() {
-        add_vehicle.button()
-    }
-
     private fun displayVehiclesList(){
         linear_layout_header_vehicle_list.visibility = View.GONE
         vehicles_list.visibility = View.VISIBLE
@@ -123,16 +134,5 @@ class VehiclesListFragment : Fragment() {
                     progress_circular?.visibility = View.GONE
                 }
             })
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean){
-        if (displayProgress){
-            progress_circular.visibility = View.VISIBLE
-            refresh_vehicles.isRefreshing = true
-        } else {
-            progress_circular.visibility = View.GONE
-            refresh_vehicles.visibility = View.VISIBLE
-            refresh_vehicles.isRefreshing = false
-        }
     }
 }

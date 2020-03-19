@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.Typeface.BOLD
 import android.text.SpannableString
@@ -24,10 +23,6 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
-import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
@@ -135,8 +130,10 @@ enum class DetectionModeType(
     }
 
     private fun updateDetectionMode(context: Context, detectionMode: DetectionMode, viewModel: VehiclesListViewModel, vehicle: Vehicle, forceGPSVehicleUpdate: Boolean = false){
+        viewModel.progressBarObserver.postValue(true)
         DriveKitVehicle.updateDetectionMode(vehicle, detectionMode, object: VehicleUpdateDetectionModeQueryListener {
             override fun onResponse(status: DetectionModeStatus) {
+                viewModel.progressBarObserver.postValue(false)
                 when (status){
                     SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
                     ERROR -> manageError(context, viewModel)
@@ -202,7 +199,6 @@ enum class DetectionModeType(
         val separatorVerify = alert.findViewById<View>(R.id.view_separator_verify)
         val separatorReplace = alert.findViewById<View>(R.id.view_separator_replace)
 
-
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
         title?.text = DKResource.convertToString(context, configureButtonText)
@@ -244,12 +240,8 @@ enum class DetectionModeType(
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
-                        DriveKitVehicle.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
-                            override fun onResponse(status: VehicleBeaconStatus) {
-                                alert.dismiss()
-                                viewModel.fetchVehicles(SynchronizationType.CACHE)
-                            }
-                        })
+                        alert.dismiss()
+                        viewModel.removeBeaconToVehicle(vehicle)
                     }
                 }
             }
@@ -260,12 +252,8 @@ enum class DetectionModeType(
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_delete")
                     it.setOnClickListener {
-                        DriveKitVehicle.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
-                            override fun onResponse(status: VehicleBluetoothStatus) {
-                                alert.dismiss()
-                                viewModel.fetchVehicles(SynchronizationType.CACHE)
-                            }
-                        })
+                        alert.dismiss()
+                        viewModel.removeBluetoothToVehicle(vehicle)
                     }
                 }
             }

@@ -73,8 +73,10 @@ enum class VehicleAction(
             .positiveButton(context.getString(R.string.dk_common_ok),
                 DialogInterface.OnClickListener { _, _ ->
                     vehicleFieldInputEditText?.let {
+                        viewModel.progressBarObserver.postValue(true)
                         DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
                             override fun onResponse(status: VehicleManagerStatus) {
+                                viewModel.progressBarObserver.postValue(false)
                                 if (status == VehicleManagerStatus.SUCCESS){
                                     viewModel.fetchVehicles(SynchronizationType.CACHE)
                                 } else {
