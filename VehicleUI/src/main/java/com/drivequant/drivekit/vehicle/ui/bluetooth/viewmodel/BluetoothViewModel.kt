@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.support.v4.app.Fragment
 import com.drivequant.drivekit.databaseutils.entity.Bluetooth
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -26,7 +25,7 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
     lateinit var bluetoothDevices: List<BluetoothData>
 
     var fragmentDispatcher = MutableLiveData<Fragment>()
-    var addBluetoothObserver = MutableLiveData<Any>()
+    var addBluetoothObserver = MutableLiveData<String>()
 
     init {
         vehicle = fetchVehicle()
@@ -52,10 +51,10 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
                 override fun onResponse(status: VehicleBluetoothStatus) {
                     when (status){
                         SUCCESS -> fragmentDispatcher.postValue(SuccessBluetoothFragment.newInstance(this@BluetoothViewModel, it))
-                        ERROR -> addBluetoothObserver.postValue(null)
-                        INVALID_BLUETOOTH -> addBluetoothObserver.postValue(null)
-                        UNKNOWN_VEHICLE -> addBluetoothObserver.postValue(null)
-                        UNAVAILABLE_BLUETOOTH -> addBluetoothObserver.postValue(null)
+                        ERROR -> addBluetoothObserver.postValue("dk_vehicle_failed_to_paired_bluetooth")
+                        INVALID_BLUETOOTH -> addBluetoothObserver.postValue("dk_vehicle_failed_to_paired_bluetooth")
+                        UNKNOWN_VEHICLE -> addBluetoothObserver.postValue("dk_vehicle_unknown")
+                        UNAVAILABLE_BLUETOOTH -> addBluetoothObserver.postValue("dk_vehicle_unknown")
                     }
                 }
             })

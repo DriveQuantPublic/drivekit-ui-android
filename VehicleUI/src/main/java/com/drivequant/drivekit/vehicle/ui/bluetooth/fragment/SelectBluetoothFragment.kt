@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -16,7 +18,6 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.adapter.BluetoothItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import kotlinx.android.synthetic.main.fragment_bluetooth_select.*
-
 
 class SelectBluetoothFragment: Fragment() {
 
@@ -42,18 +43,21 @@ class SelectBluetoothFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-
-        text_view_select_description.normalText(mainFontColor)
+        text_view_select_description.normalText(DriveKitUI.colors.mainFontColor())
         text_view_select_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_select_bluetooth_description")
 
-        text_view_select_list_title.headLine1(mainFontColor)
-        // TODO determinate right key with iOS
-        //text_view_select_list_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_select_bluetooth_description")
+        text_view_select_list_title.headLine1(DriveKitUI.colors.primaryColor())
+        text_view_select_list_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_devices_list_title")
 
         setupRecyclerView()
-    }
 
+        viewModel.addBluetoothObserver.observe(this, Observer {identifier ->
+            identifier?.let {
+                val message = DKResource.convertToString(requireContext(), it)
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
 
     private fun setupRecyclerView() {
         val recyclerView: RecyclerView? = globalView.findViewById(R.id.recycler_view)

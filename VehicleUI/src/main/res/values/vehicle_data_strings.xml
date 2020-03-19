@@ -113,4 +113,5 @@
     <string name="dk_vehicle_bluetooth_congrats_title">Félicitations !</string>
     <string name="dk_vehicle_bluetooth_congrats_desc">L\'appareil Bluetooth %s est désormais associé au véhicule %s</string>
     <string name="dk_vehicle_bluetooth_congrats_notice">Désormais l\'enregistrement de vos trajets démarrera automatiquement dès que votre téléphone se connecte à l\'appareil Bluetooth %s</string>
+    <string name="dk_vehicle_bluetooth_devices_list_title">Appareils Bluetooth :</string>
 </resources>

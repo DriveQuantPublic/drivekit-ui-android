@@ -47,7 +47,7 @@ class SuccessBluetoothFragment: Fragment() {
         text_view_congrats_description.text = DKResource.buildString(view.context, "dk_vehicle_bluetooth_congrats_desc", btDeviceName, vehicleName!!) // TODO: remove !!
 
         text_view_congrats_notice.normalText(mainFontColor)
-        text_view_congrats_notice.text = DKResource.convertToString(view.context, "dk_vehicle_bluetooth_congrats_notice")
+        text_view_congrats_notice.text = DKResource.buildString(view.context, "dk_vehicle_bluetooth_congrats_notice", btDeviceName)
 
         button_finish.text = DKResource.convertToString(view.context, "dk_common_finish")
         button_finish.button()
