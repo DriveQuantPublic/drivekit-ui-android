@@ -7,7 +7,6 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
@@ -60,17 +59,19 @@ fun Vehicle.getDetectionModeName(context: Context): String {
 }
 
 fun Vehicle.getCategoryName(context: Context): String? {
-    val categories = VehicleTypeItem.CAR.getCategories(context)
-    val matchedCategory = categories.first {
-        VehicleCategory.getEnumByTypeIndex(typeIndex).name == it.category
-    }
-    return matchedCategory.title
+    return VehicleCategory.getEnumByTypeIndex(typeIndex)?.let { vehicleCategory ->
+        val categories = VehicleTypeItem.CAR.getCategories(context)
+        val matchedCategory = categories.first {
+            vehicleCategory .name == it.category
+        }
+        matchedCategory.title
+    } ?: run { "-" }
 }
 
 fun Vehicle.getEngineTypeName(context: Context): String? {
     val engineIndexes = VehicleTypeItem.CAR.getEngineIndexes(context)
     val matchedEngineIndex = engineIndexes.first {
-        VehicleEngineIndex.getEnumByValue(typeIndex) == it.engine
+        VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
     }
     return matchedEngineIndex.title
 }
@@ -85,7 +86,7 @@ fun Vehicle.getGearBoxName(context: Context): String? {
         else -> null
     }
     return if (identifier == null){
-        "N/A"
+        "-"
     } else {
         DKResource.convertToString(context, identifier)
     }
