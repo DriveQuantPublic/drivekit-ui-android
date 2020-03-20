@@ -131,8 +131,7 @@ class StreaksData(
     fun getBestStreakDate(context: Context): String {
         return when (getStreakStatus()) {
             StreakStatus.INIT -> context.getString(R.string.dk_achievements_streaks_empty)
-            StreakStatus.IN_PROGRESS -> context.getString(R.string.dk_achievements_streaks_congrats_text)
-            StreakStatus.RESET -> context.getString(R.string.dk_achievements_streaks_since_to, bestStartDate, bestEndDate)
+            StreakStatus.IN_PROGRESS, StreakStatus.RESET -> context.getString(R.string.dk_achievements_streaks_since_to, bestStartDate, bestEndDate)
             StreakStatus.BEST -> context.getString(R.string.dk_achievements_streaks_congrats_text)
         }
     }
