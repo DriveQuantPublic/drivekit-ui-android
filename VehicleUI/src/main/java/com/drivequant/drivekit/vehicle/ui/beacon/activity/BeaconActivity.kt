@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.activity
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -8,9 +9,8 @@ import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -19,7 +19,7 @@ class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
     private lateinit var scanType : BeaconScanType
     private lateinit var vehicleId : String
-    private var beacon : BeaconData? = null
+    private var beacon : Beacon? = null
 
     companion object {
         private const val SCAN_TYPE_EXTRA = "scan-type-extra"
@@ -29,7 +29,7 @@ class BeaconActivity : AppCompatActivity() {
         fun launchActivity(context: Context,
                            scanType: BeaconScanType,
                            vehicleId: String,
-                           beacon: BeaconData? = null
+                           beacon: Beacon? = null
         ) {
             val intent = Intent(context, BeaconActivity::class.java)
             intent.putExtra(SCAN_TYPE_EXTRA, scanType)
@@ -39,6 +39,7 @@ class BeaconActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beacon)
@@ -49,7 +50,7 @@ class BeaconActivity : AppCompatActivity() {
 
         scanType = intent.getSerializableExtra(SCAN_TYPE_EXTRA) as BeaconScanType
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
-        beacon = intent.getSerializableExtra(BEACON_EXTRA) as BeaconData?
+        beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
         viewModel = ViewModelProviders.of(this,
             BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
@@ -63,14 +64,11 @@ class BeaconActivity : AppCompatActivity() {
                     .commit()
             }
         })
-
-        // TODO en fonction du mode (verify, pair, diag
-        this.title = DKResource.convertToString(this, "dk_beacon_paired_title")
     }
 
-    override fun onNavigateUp(): Boolean {
+    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        return super.onNavigateUp()
+        return super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {

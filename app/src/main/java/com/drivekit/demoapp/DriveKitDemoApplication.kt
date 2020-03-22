@@ -24,6 +24,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
@@ -100,11 +101,29 @@ class DriveKitDemoApplication: Application() {
 
             override fun beaconDetected() {
             }
+
+            override fun sdkStateChanged(state: State) { }
         })
         DriveKitDriverData.initialize()
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
-        DriverVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+        Stetho.initializeWithDefaults(this);
+        DriveKit.setApiKey("qDcgo5W2I1p3u5STEhuQ1AJo")
+
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        DriveKitVehicleUI.configureDetectionModes(
+            listOf(DetectionMode.DISABLED, DetectionMode.GPS, DetectionMode.BEACON, DetectionMode.BLUETOOTH)
+        )
+        val maxVehicles = 1
+        DriveKitVehicleUI.configureMaxVehicles(maxVehicles)
 
         initFirstLaunch()
     }
