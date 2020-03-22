@@ -11,9 +11,7 @@ enum class VehicleTypeItem(
     val vehicleType: VehicleType,
     private val titleStringResId: Int
 ) {
-    CAR(VehicleType.CAR, R.string.dk_vehicle_type_car_title),
-    MOTORBIKE(VehicleType.MOTORBIKE, R.string.dk_vehicle_type_motorbike_title),
-    TRUCK(VehicleType.TRUCK, R.string.dk_vehicle_type_truck_title);
+    CAR(VehicleType.CAR, R.string.dk_vehicle_type_car_title);
 
     companion object {
         fun getEnumByVehicleType(vehicleType: VehicleType): VehicleTypeItem{
@@ -39,8 +37,6 @@ enum class VehicleTypeItem(
         }
         return when (this){
             CAR -> categories.filter { it.isCar}
-            MOTORBIKE -> categories.filter { it.isMotorbike}
-            TRUCK -> categories.filter { it.isTruck}
         }
     }
 
@@ -57,8 +53,6 @@ enum class VehicleTypeItem(
         }
         return when (this){
             CAR -> brands.filter { it.isCar}
-            MOTORBIKE -> brands.filter { it.isMotorbike}
-            TRUCK -> brands.filter { it.isTruck}
         }
     }
 
@@ -73,8 +67,6 @@ enum class VehicleTypeItem(
         }
         return when (this){
             CAR -> engines.filter { it.isCar}
-            MOTORBIKE -> engines.filter { it.isMotorbike}
-            TRUCK -> engines.filter { it.isTruck}
         }
     }
 }
