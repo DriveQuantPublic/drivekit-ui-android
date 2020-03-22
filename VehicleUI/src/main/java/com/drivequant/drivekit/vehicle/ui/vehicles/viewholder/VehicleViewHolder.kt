@@ -16,7 +16,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
@@ -59,7 +59,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         textViewTitle.headLine1()
         textViewSubtitle.smallText()
-        textViewDetectionModeTitle.smallText()
+        textViewDetectionModeTitle.smallText() // TODO: normaltext & bold
         textViewDetectionModeDescription.normalText()
 
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
@@ -89,7 +89,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
-        if (DriverVehicleUI.detectionModes.size == 1){
+        if (DriveKitVehicleUI.detectionModes.size == 1){
             linearLayoutDetectionMode.visibility = View.GONE
         } else {
             linearLayoutDetectionMode.visibility = View.VISIBLE

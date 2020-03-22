@@ -22,9 +22,10 @@ import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.ui.DriverDataUI
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
@@ -60,7 +61,7 @@ class DriveKitDemoApplication: Application() {
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
 
-        DriverVehicleUI.initialize()
+        DriveKitVehicleUI.initialize()
     }
 
     private fun createNotificationChannel() {

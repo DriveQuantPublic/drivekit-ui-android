@@ -3,7 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKMedia
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import java.lang.IllegalArgumentException
 
@@ -50,7 +50,7 @@ enum class VehicleTypeItem(
         for (i in lines!!.indices) {
             val vehicleBrandItem = buildVehicleBrandItem(context, lines[i])
             if (!withIcons || (withIcons && vehicleBrandItem.icon != null)){
-                if (DriverVehicleUI.brands.contains(vehicleBrandItem.brand)) {
+                if (DriveKitVehicleUI.brands.contains(vehicleBrandItem.brand)) {
                     brands.add(vehicleBrandItem)
                 }
             }
@@ -67,7 +67,7 @@ enum class VehicleTypeItem(
         val engines = mutableListOf<VehicleEngineItem>()
         for (i in lines!!.indices) {
             val vehicleEngineItem = buildVehicleEngineItem(context, lines[i])
-            if (DriverVehicleUI.vehicleEngineIndexes.contains(vehicleEngineItem.engine)) {
+            if (DriveKitVehicleUI.vehicleEngineIndexes.contains(vehicleEngineItem.engine)) {
                 engines.add(vehicleEngineItem)
             }
         }

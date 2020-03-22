@@ -17,7 +17,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -37,10 +37,10 @@ enum class VehicleAction(
 
     override fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean {
         return when (this){
-            SHOW -> !vehicle.liteConfig && DriverVehicleUI.vehicleActions.contains(SHOW)
-            RENAME -> DriverVehicleUI.vehicleActions.contains(RENAME)
-            REPLACE -> DriverVehicleUI.vehicleActions.contains(REPLACE)
-            DELETE -> vehicles.size > 1 && DriverVehicleUI.vehicleActions.contains(DELETE)
+            SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
+            RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
+            REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
+            DELETE -> vehicles.size > 1 && DriveKitVehicleUI.vehicleActions.contains(DELETE)
         }
     }
 

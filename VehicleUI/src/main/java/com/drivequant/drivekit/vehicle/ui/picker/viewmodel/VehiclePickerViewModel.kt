@@ -16,7 +16,7 @@ import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -63,7 +63,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 }
             }
             TYPE -> {
-                if (DriverVehicleUI.categoryConfigType != CategoryConfigType.BRANDS_CONFIG_ONLY) {
+                if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.BRANDS_CONFIG_ONLY) {
                     itemCategories = fetchVehicleCategories(context)
                     stepDispatcher.postValue(CATEGORY)
                 } else {
@@ -255,7 +255,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     private fun manageBrands(context: Context){
-        if (DriverVehicleUI.brandsWithIcons){
+        if (DriveKitVehicleUI.brandsWithIcons){
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByName(itemBrands.first().value)
@@ -297,14 +297,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun buildVehicleTypesItems(): List<VehicleTypeItem> {
         val typesItem = mutableListOf<VehicleTypeItem>()
-        for (type in DriverVehicleUI.vehicleTypes){
+        for (type in DriveKitVehicleUI.vehicleTypes){
             typesItem.add(VehicleTypeItem.getEnumByVehicleType(type))
         }
         return typesItem
     }
 
     private fun computeCreateVehicleDetectionMode(): DetectionMode {
-        val detectionModes = DriverVehicleUI.detectionModes
+        val detectionModes = DriveKitVehicleUI.detectionModes
         return if (detectionModes.isEmpty()){
             DetectionMode.DISABLED
         } else if (detectionModes.contains(DetectionMode.GPS)){

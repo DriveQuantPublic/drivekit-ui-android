@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -9,13 +10,13 @@ import android.view.MenuItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
 
-
 class VehicleDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_detail)
@@ -30,7 +31,7 @@ class VehicleDetailActivity : AppCompatActivity() {
             val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container,
-                    it.createVehicleDetailFragment(vehicleId))
+                    it.createVehicleDetailFragment(vehicleId), "vehicleDetail")
                 .commit()
         }
     }
@@ -55,6 +56,6 @@ class VehicleDetailActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetail")
-        fragment?.onActivityResult(requestCode, resultCode, intent)
+        fragment?.onActivityResult(requestCode, resultCode, data)
     }
 }

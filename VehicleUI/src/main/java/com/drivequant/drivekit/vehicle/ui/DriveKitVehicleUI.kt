@@ -20,8 +20,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import java.io.Serializable
 
-
-object DriverVehicleUI : VehicleUIEntryPoint {
+object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
     internal var brands: List<VehicleBrand> = VehicleBrand.getBrands(null)

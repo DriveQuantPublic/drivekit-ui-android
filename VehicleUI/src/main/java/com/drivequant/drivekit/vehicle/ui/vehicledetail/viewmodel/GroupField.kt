@@ -1,8 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
-import java.sql.Driver
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 
 enum class GroupField{
     GENERAL,
@@ -53,7 +52,7 @@ enum class GroupField{
     }
 
     private fun getCustomFields(): List<Field>?{
-        return DriverVehicleUI.customFields[this]?.let {
+        return DriveKitVehicleUI.customFields[this]?.let {
             it
         }?: run {
             null

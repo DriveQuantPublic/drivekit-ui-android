@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
@@ -60,7 +60,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
         }
 
-        if (DriverVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
+        if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE
             textViewBrands.setOnClickListener {
                 viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION, otherAction = true)

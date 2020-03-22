@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
@@ -83,12 +84,6 @@ class VehicleDetailFragment : Fragment() {
         viewModel = ViewModelProviders.of(this,
             VehicleDetailViewModel.VehicleDetailViewModelFactory(vehicleId)
         ).get(VehicleDetailViewModel::class.java)
-        cameraFilePath = DriveKitSharedPreferencesUtils.getString("VEHICLE_PICTURE_PREF_%s") // TODO: %s = vehicleId
-        onCameraCallback = object : OnCameraPictureTakenCallback {
-            override fun pictureTaken(filePath: String) {
-                cameraFilePath = filePath
-            }
-        }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -98,6 +93,7 @@ class VehicleDetailFragment : Fragment() {
             it.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
             it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
             it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
+            it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
         }
 
 
@@ -120,7 +116,12 @@ class VehicleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onCameraCallback = object : OnCameraPictureTakenCallback {
+            override fun pictureTaken(filePath: String) {
+                cameraFilePath = filePath
+            }
+        }
+        cameraFilePath = DriveKitSharedPreferencesUtils.getString("VEHICLE_PICTURE_PREF_%s") // TODO: %s = vehicleId
         imageView = activity?.findViewById(R.id.image_view_vehicle)
         imageView?.let {
             Glide.with(this)
@@ -128,7 +129,6 @@ class VehicleDetailFragment : Fragment() {
                 .placeholder(R.drawable.dk_vehicle_default)
                 .into(it)
         }
-
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicle_fields.layoutManager = linearLayoutManager
     }
@@ -167,9 +167,12 @@ class VehicleDetailFragment : Fragment() {
                         // TODO: rationale alert dialog
                     } else {
                         ActivityCompat.requestPermissions(requireActivity(),
-                            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 12)
+                            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), CameraGalleryPickerHelper.REQUEST_CAMERA)
                     }
                 } else {
+                    if (alert.isShowing){
+                        alert.dismiss()
+                    }
                     launchCameraIntent()
                 }
             }
@@ -183,9 +186,12 @@ class VehicleDetailFragment : Fragment() {
                             Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         // TODO: rationale alert dialog
                     } else {
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 13)
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), CameraGalleryPickerHelper.REQUEST_GALLERY)
                     }
                 } else {
+                    if (alert.isShowing){
+                        alert.dismiss()
+                    }
                     launchGalleryIntent()
                 }
             }
@@ -204,7 +210,7 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun updatePicture(uri: Uri) {
+    private fun updatePicture(uri: Uri?) {
         imageView?.let {
             Glide.with(this).load(uri).placeholder(R.drawable.dk_vehicle_default).into(it)
         }

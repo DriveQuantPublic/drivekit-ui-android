@@ -13,7 +13,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryListener
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
-import com.drivequant.drivekit.vehicle.ui.DriverVehicleUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
@@ -83,7 +83,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun buildDetectionModeSpinnerItems(context: Context): List<DetectionModeSpinnerItem> {
         val detectionModeSpinnerItems = mutableListOf<DetectionModeSpinnerItem>()
-        for (detectionMode in DriverVehicleUI.detectionModes) {
+        for (detectionMode in DriveKitVehicleUI.detectionModes) {
             detectionModeSpinnerItems.add(
                 DetectionModeSpinnerItem(
                     context,
@@ -95,7 +95,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun maxVehiclesReached(): Boolean {
-        return DriverVehicleUI.maxVehicles?.let {
+        return DriveKitVehicleUI.maxVehicles?.let {
             vehiclesList.size < it
         } ?: run {
             false
