@@ -20,12 +20,12 @@ object DKResource {
         }
     }
 
-    fun convertToString(context: Context, identifier: String): String? {
+    fun convertToString(context: Context, identifier: String): String {
         val id = context.resources.getIdentifier(identifier, "string", context.packageName)
         return if (id > 0) {
             context.getString(id)
         } else {
-            null
+            identifier
         }
     }
 

@@ -17,7 +17,7 @@
             android:layout_marginEnd="@dimen/dk_margin"
             android:visibility="gone"/>
         <TextView
-            android:id="@+id/text_view__alert_title"
+            android:id="@+id/text_view_alert_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|start" />

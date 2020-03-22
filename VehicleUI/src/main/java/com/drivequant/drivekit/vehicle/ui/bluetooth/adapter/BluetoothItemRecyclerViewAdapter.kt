@@ -75,7 +75,7 @@ class BluetoothItemRecyclerViewAdapter(
                 })
             .show()
 
-        val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
         val btDeviceName = bluetoothDevice.name?.let { it } ?:run { bluetoothDevice.macAddress }

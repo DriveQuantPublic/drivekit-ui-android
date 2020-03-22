@@ -176,7 +176,7 @@ enum class DetectionModeType(
                 })
             .show()
 
-        val titleTextView = alert.findViewById<TextView>(R.id.text_view__alert_title)
+        val titleTextView = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val descriptionTextView = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
         titleTextView?.text = title

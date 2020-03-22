@@ -89,7 +89,7 @@ class TripDetailFragment : Fragment() {
                             DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                         .show()
 
-                    val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                     val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
                     title?.text = getString(R.string.app_name)
@@ -141,7 +141,7 @@ class TripDetailFragment : Fragment() {
                     .cancelable(false)
                     .show()
 
-                val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                 val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
                 title?.text = getString(R.string.app_name)
 
