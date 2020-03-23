@@ -2,7 +2,6 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
 import android.content.DialogInterface
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
@@ -12,12 +11,12 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
-import android.graphics.LightingColorFilter
+import android.graphics.drawable.LayerDrawable
+import android.support.v4.graphics.drawable.DrawableCompat
 
 
 
@@ -63,7 +62,11 @@ class StreakViewHolder(itemView: View) :
         seekBar.setPadding(1, 0, 0, 0)
         seekBar.progress = streaksData.computePercentage()
         seekBar.setOnTouchListener { _, _ -> true }
-        seekBar.progressDrawable.colorFilter = LightingColorFilter(-0x1000000, DriveKitUI.colors.secondaryColor())
+        val progressBarDrawable = seekBar.progressDrawable as LayerDrawable
+        val foregroundDrawable = progressBarDrawable.getDrawable(1)
+        val backgroundDrawable = progressBarDrawable.getDrawable(0)
+        DrawableCompat.setTint(backgroundDrawable, DriveKitUI.colors.complementaryFontColor())
+        DrawableCompat.setTint(foregroundDrawable, DriveKitUI.colors.secondaryColor())
     }
 
     private fun setData(streaksData: StreaksData) {
@@ -108,8 +111,8 @@ class StreakViewHolder(itemView: View) :
     private fun setStyle(reset: Boolean = false) {
         if (reset) {
             textViewBestStreakData.normalText()
-            textViewTripsCount.setTextColor(DriveKitUI.colors.mainFontColor())
-            background.setStroke(5, ContextCompat.getColor(context, R.color.dk_trips_count_stroke))
+            textViewTripsCount.setTextColor(DriveKitUI.colors.complementaryFontColor())
+            background.setStroke(5, DriveKitUI.colors.complementaryFontColor())
             seekBar.thumb.mutate().alpha = 255
         } else {
             textViewBestStreakData.headLine1()
