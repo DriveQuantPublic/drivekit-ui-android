@@ -52,6 +52,9 @@ class BeaconScannerFragment : Fragment(), ScanState {
         text_view_title.text = beaconStep.getTitle(requireContext(), viewModel)
         text_view_title.normalText(DriveKitUI.colors.mainFontColor())
         image_view.setImageDrawable(beaconStep.getImage(requireContext()))
+        image_view.setOnClickListener {
+            beaconStep.onImageClicked(viewModel)
+        }
     }
 
     private fun updateChildFragment(){

@@ -11,7 +11,6 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.*
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment

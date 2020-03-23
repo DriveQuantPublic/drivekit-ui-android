@@ -54,19 +54,19 @@ enum class BeaconStep {
         return when (this){
             INITIAL -> null
             SCAN -> BeaconScannerProgressFragment.newInstance(viewModel)
-            BEACON_NOT_FOUND -> BeaconScannerNotFoundFragment.newInstance(viewModel)
             SUCCESS -> BeaconScannerSuccessFragment.newInstance(viewModel)
-            CONGRATS -> BeaconScannerCongratsFragment.newInstance(viewModel)
+            BEACON_NOT_FOUND -> BeaconScannerNotFoundFragment.newInstance(viewModel)
             BEACON_ALREADY_PAIRED -> BeaconScannerAlreadyPairedFragment.newInstance(viewModel)
-            // TODO: others steps...
-
-            else -> null
+            CONGRATS -> BeaconScannerCongratsFragment.newInstance(viewModel)
+            BEACON_UNAVAILABLE -> BeaconScannerBeaconUnavailableFragment.newInstance(viewModel)
+            // TODO: VERIFIED, WRONG_BEACON, BEACON_NOT_CONFIGURED
+            else -> null // TODO remove when all cases are handled
         }
     }
 
     fun onImageClicked(viewModel: BeaconViewModel){
         when (this){
-            INITIAL, BEACON_NOT_FOUND -> viewModel.updateScanState(this)
+            INITIAL, BEACON_NOT_FOUND -> viewModel.updateScanState(SCAN)
             else -> { }
         }
     }

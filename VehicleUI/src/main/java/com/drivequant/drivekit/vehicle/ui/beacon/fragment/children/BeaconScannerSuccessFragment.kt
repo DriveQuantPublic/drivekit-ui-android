@@ -56,19 +56,19 @@ class BeaconScannerSuccessFragment : Fragment() {
             it?.let { vehicleBeaconStatus ->
                 when (vehicleBeaconStatus){
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
-                    ERROR -> TODO()
-                    UNKNOWN_VEHICLE -> displayUnknownVehicleAlert()
+                    ERROR -> displayErrorAlert("dk_vehicle_error_message")
+                    UNKNOWN_VEHICLE -> displayErrorAlert("dk_vehicle_unknown")
                     UNAVAILABLE_BEACON -> viewModel.updateScanState(BeaconStep.BEACON_UNAVAILABLE)
                 }
             }
         })
     }
 
-    private fun displayUnknownVehicleAlert(){
+    private fun displayErrorAlert(identifier: String){
          DKAlertDialog.LayoutBuilder().init(requireContext())
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(DKResource.convertToString(requireContext(), "dk_vehicle_unknown"),
+            .positiveButton(DKResource.convertToString(requireContext(), identifier),
                 DialogInterface.OnClickListener { dialogInterface, _ ->  dialogInterface.dismiss() })
             .show()
     }

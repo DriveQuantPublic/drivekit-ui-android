@@ -64,12 +64,12 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                 val finalProgressStatus = progressStatus
                 progressBar.progress = finalProgressStatus
             }
-            activity?.runOnUiThread(Runnable {
+            activity?.runOnUiThread {
                 if (!isBeaconFound) {
                     stopBeaconScan()
                     viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
                 }
-            })
+            }
         })
         updateProgressBar.start()
     }
