@@ -19,10 +19,9 @@ import kotlinx.android.synthetic.main.fragment_beacon_connect.*
 class ConnectBeaconFragment : Fragment() {
 
     companion object {
-        fun newInstance(viewModel: BeaconViewModel, vehicle: Vehicle) : ConnectBeaconFragment {
+        fun newInstance(viewModel: BeaconViewModel) : ConnectBeaconFragment {
             val fragment = ConnectBeaconFragment()
             fragment.viewModel = viewModel
-            fragment.vehicle = vehicle // TODO remove vehicle params
             return fragment
         }
     }
@@ -55,6 +54,5 @@ class ConnectBeaconFragment : Fragment() {
         button_begin.setOnClickListener {
             viewModel.onConnectButtonClicked()
         }
-
     }
 }

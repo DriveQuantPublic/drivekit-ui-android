@@ -9,6 +9,5 @@
         android:padding="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="SUCCESS"/>
+        android:gravity="center" />
 </LinearLayout>

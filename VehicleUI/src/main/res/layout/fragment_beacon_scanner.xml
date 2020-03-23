@@ -21,7 +21,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/dk_margin_double" />
+            android:layout_margin="@dimen/dk_margin" />
     </LinearLayout>
     <FrameLayout
         android:id="@+id/container_child"

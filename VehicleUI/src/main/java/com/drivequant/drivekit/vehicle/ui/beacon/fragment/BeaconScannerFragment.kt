@@ -49,8 +49,7 @@ class BeaconScannerFragment : Fragment(), ScanState {
 
     private fun updateStep(beaconStep: BeaconStep){
         this.beaconStep = beaconStep
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        text_view_title.normalText(mainFontColor)
+        text_view_title.normalText(DriveKitUI.colors.mainFontColor())
         text_view_title.text = beaconStep.getTitle(requireContext(), viewModel)
         image_view.setImageDrawable(beaconStep.getImage(requireContext()))
     }

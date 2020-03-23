@@ -22,7 +22,7 @@ import java.io.Serializable
 class BeaconViewModel(
     val scanType: BeaconScanType,
     val vehicleId: String,
-    val beacon: Beacon?
+    var beacon: Beacon?
 ) : ViewModel(), Serializable {
 
     var vehicle: Vehicle?
@@ -32,22 +32,25 @@ class BeaconViewModel(
     var listener: ScanState? = null
 
     val progressBarObserver = MutableLiveData<Boolean>()
-    val codeObserver = MutableLiveData<Boolean>()
+    val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconStatus>>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
     init {
         vehicle = fetchVehicle()
 
         when (scanType){
-            PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this, vehicle!!))
+            PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this))
             DIAGNOSTIC -> TODO()
             VERIFY -> TODO()
         }
     }
 
-
     fun onConnectButtonClicked(){
-        fragmentDispatcher.postValue(BeaconInputIdFragment.newInstance(this, vehicle!!))
+        fragmentDispatcher.postValue(BeaconInputIdFragment.newInstance(this))
+    }
+
+    fun onCodeValid(){
+        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.SCAN))
     }
 
     fun checkCode(codeValue: String){
@@ -55,11 +58,10 @@ class BeaconViewModel(
         DriveKitVehicle.getBeaconByUniqueId(codeValue, object : VehicleGetBeaconQueryListener {
             override fun onResponse(status: VehicleBeaconStatus, beacon: Beacon) {
                 progressBarObserver.postValue(false)
-                if (status == SUCCESS){
-                    fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.SCAN))
-                } else {
-                    codeObserver.postValue(null)
-                }
+                this@BeaconViewModel.beacon = beacon
+                val map = HashMap<String, VehicleBeaconStatus>()
+                map[codeValue] = status
+                codeObserver.postValue(map)
             }
         })
     }

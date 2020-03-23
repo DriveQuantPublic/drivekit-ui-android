@@ -34,5 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin" />
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:onClick="onInputIdClicked"/>
 </LinearLayout>
