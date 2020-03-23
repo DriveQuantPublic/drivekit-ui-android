@@ -65,11 +65,10 @@ class BluetoothItemRecyclerViewAdapter(
     }
 
     private fun showDeviceAlreadyPaired(context: Context, bluetoothDevice: BluetoothData){
-        val closeStringButton = DKResource.convertToString(context, "dk_common_close")?.let { it }?: "Close"
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(closeStringButton,
+            .positiveButton(DKResource.convertToString(context, "dk_common_close"),
                 DialogInterface.OnClickListener { dialog, _ ->
                     dialog.dismiss()
                 })

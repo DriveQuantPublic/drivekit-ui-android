@@ -23,6 +23,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
@@ -71,7 +72,7 @@ enum class DetectionModeType(
     }
 
     fun getTitle(context: Context): String {
-       return DKResource.convertToString(context, this.title)?.let { it } ?: run { "" }
+       return DKResource.convertToString(context, this.title)
     }
 
     fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
@@ -109,7 +110,7 @@ enum class DetectionModeType(
 
     fun getConfigureButtonText(context: Context): String {
         return when (this){
-            BEACON, BLUETOOTH -> DKResource.convertToString(context, configureButtonText)?.let { it } ?: run { "" }
+            BEACON, BLUETOOTH -> DKResource.convertToString(context, configureButtonText)
             else -> ""
         }
     }
@@ -153,7 +154,7 @@ enum class DetectionModeType(
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
 
-        val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
+        val title = DKResource.convertToString(context, "app_name")
         val message = DKResource.buildString(context,
             "dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
@@ -222,28 +223,34 @@ enum class DetectionModeType(
             BEACON -> {
                 description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier()) // TODO: display vehicle name
 
-                // TODO check from Singleton if these actions are displayable
                 verify?.let {
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_verify")
                     it.setOnClickListener {
-                        // TODO launch beacon screen
+                        vehicle.beacon?.let { beacon ->
+                            BeaconActivity.launchActivity(context, BeaconScanType.VERIFY, vehicle.vehicleId, beacon)
+                        }
                     }
                 }
                 replace?.let {
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_replace")
                     it.setOnClickListener {
-                        // TODO launch beacon screen
+                        vehicle.beacon?.let { beacon ->
+                            BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId, beacon)
+                        }
                     }
                 }
-
                 delete?.let {
-                    it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
-                    it.setOnClickListener {
-                        alert.dismiss()
-                        viewModel.removeBeaconToVehicle(vehicle)
+                    if (DriveKitVehicleUI.canRemoveBeacon) {
+                        it.visibility = View.VISIBLE
+                        it.text = DKResource.convertToString(context, "dk_vehicle_delete")
+                        it.setOnClickListener {
+                            alert.dismiss()
+                            viewModel.removeBeaconToVehicle(vehicle)
+                        }
+                    } else {
+                        it.visibility = View.GONE
                     }
                 }
             }

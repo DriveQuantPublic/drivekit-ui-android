@@ -8,7 +8,6 @@ import java.io.Serializable
 
 class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serializable {
 
-    var imageFilePath: String? = null
     var vehicle: Vehicle?
     var groupFields: MutableList<GroupField> = mutableListOf()
 
@@ -32,7 +31,7 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
         }
     }
 
-    @SuppressWarnings("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     class VehicleDetailViewModelFactory(private val vehicleId: String)
         : ViewModelProvider.NewInstanceFactory() {
         override fun <T: ViewModel?> create(modelClass: Class<T>): T {

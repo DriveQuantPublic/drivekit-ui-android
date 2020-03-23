@@ -32,9 +32,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
 
     private lateinit var viewModel: BeaconViewModel
     private lateinit var updateProgressBar: Thread
-
     private lateinit var progressBar: ProgressBar
-
     private var isBeaconFound = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,12 +41,9 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         text_view_description.normalText()
         text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
-
         progressBar = view.findViewById(R.id.progress_bar)
-
         runUpdateProgressBarThread()
         startBeaconScan()
     }
@@ -113,19 +108,29 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                     }
                 })
             }
-            DIAGNOSTIC -> TODO()
-            VERIFY -> TODO()
+            DIAGNOSTIC -> {
+                viewModel.fetchVehicleFromBeacon()?.let {
+                    viewModel.vehicle = it
+                    viewModel.updateScanState(BeaconStep.VERIFIED)
+                }?:run  {
+                    viewModel.updateScanState(BeaconStep.WRONG_BEACON)
+                }
+            }
+            VERIFY -> {
+                if (viewModel.isBeaconValid()){
+                    viewModel.updateScanState(BeaconStep.VERIFIED)
+                } else {
+                    viewModel.updateScanState(BeaconStep.WRONG_BEACON)
+                }
+            }
         }
     }
 
     override fun beaconFound(beacon: BeaconInfo) {
+        stopBeaconScan()
         isBeaconFound = true
-        if (viewModel.scanType == PAIRING){
-            stopBeaconScan()
-            goToNextStep()
-        } else {
-            viewModel.clBeacon = Beacon(beacon.proximityUuid, beacon.major, beacon.minor)
-        }
+        viewModel.seenBeacon = beacon
+        goToNextStep()
     }
 
     override fun beaconList(): List<BeaconData> {

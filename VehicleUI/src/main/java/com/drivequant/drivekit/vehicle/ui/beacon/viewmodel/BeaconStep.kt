@@ -59,8 +59,9 @@ enum class BeaconStep {
             BEACON_ALREADY_PAIRED -> BeaconScannerAlreadyPairedFragment.newInstance(viewModel)
             CONGRATS -> BeaconScannerCongratsFragment.newInstance(viewModel)
             BEACON_UNAVAILABLE -> BeaconScannerBeaconUnavailableFragment.newInstance(viewModel)
-            // TODO: VERIFIED, WRONG_BEACON, BEACON_NOT_CONFIGURED
-            else -> null // TODO remove when all cases are handled
+            BEACON_NOT_CONFIGURED -> BeaconScannerBeaconNotConfiguredFragment.newInstance(viewModel)
+            VERIFIED -> BeaconScannerInfoFragment.newInstance(viewModel, isValid = true)
+            WRONG_BEACON -> BeaconScannerInfoFragment.newInstance(viewModel, isValid = false)
         }
     }
 

@@ -18,7 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
     private lateinit var scanType : BeaconScanType
-    private lateinit var vehicleId : String
+    private var vehicleId : String? = null
     private var beacon : Beacon? = null
 
     companion object {
@@ -28,7 +28,7 @@ class BeaconActivity : AppCompatActivity() {
 
         fun launchActivity(context: Context,
                            scanType: BeaconScanType,
-                           vehicleId: String,
+                           vehicleId: String? = null,
                            beacon: Beacon? = null
         ) {
             val intent = Intent(context, BeaconActivity::class.java)
@@ -49,12 +49,14 @@ class BeaconActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         scanType = intent.getSerializableExtra(SCAN_TYPE_EXTRA) as BeaconScanType
-        vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
+        vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String?
         beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
         viewModel = ViewModelProviders.of(this,
             BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
 
+
+        // DriveKit navigation ?
         viewModel.fragmentDispatcher.observe(this, Observer { fragment ->
             fragment?.let {
                 supportFragmentManager.beginTransaction()

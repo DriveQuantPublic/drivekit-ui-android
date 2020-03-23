@@ -31,8 +31,7 @@ enum class VehicleAction(
     DELETE("dk_vehicle_delete");
 
     override fun getTitle(context: Context): String {
-        val stringValue = DKResource.convertToString(context, descriptionIdentifier)
-        return stringValue?.let { it }?: run { "" }
+        return DKResource.convertToString(context, descriptionIdentifier)
     }
 
     override fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean {
@@ -63,8 +62,8 @@ enum class VehicleAction(
 
     private fun manageRenameVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         var vehicleFieldInputEditText: TextInputEditText? = null
-        val title = DKResource.convertToString(context, "dk_vehicle_rename_title")?.let { it }?: run { "" }
-        val message = DKResource.convertToString(context, "dk_vehicle_rename_description")?.let { it }?: run { "" }
+        val title = DKResource.convertToString(context, "dk_vehicle_rename_title")
+        val message = DKResource.convertToString(context, "dk_vehicle_rename_description")
         val vehicleName = viewModel.getTitle(context, vehicle)
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
@@ -106,7 +105,7 @@ enum class VehicleAction(
     }
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
-        val title = DKResource.convertToString(context, "app_name")?.let { it }?: run { "" }
+        val title = DKResource.convertToString(context, "app_name")
         val message = DKResource.buildString(context, "dk_vehicle_delete_confirm", vehicle.computeTitle(context, viewModel.vehiclesList))
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
