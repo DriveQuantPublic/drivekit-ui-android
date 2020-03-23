@@ -24,7 +24,6 @@ class BeaconViewModel(
     val vehicleId: String?,
     var beacon: Beacon?
 ) : ViewModel(), Serializable {
-
     var vehicle: Vehicle?
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
@@ -42,13 +41,15 @@ class BeaconViewModel(
 
         when (scanType){
             PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this))
-            DIAGNOSTIC -> TODO()
-            VERIFY -> {
-                if (DriveKitTripAnalysis.getConfig().beacons.isEmpty()) {
+            DIAGNOSTIC -> {
+                if (DriveKitTripAnalysis.getConfig().beacons.isEmpty()) { // TODO call DriveKitVehicleUI beacons param
                     fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.BEACON_NOT_CONFIGURED))
                 } else {
                     fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
                 }
+            }
+            VERIFY -> {
+                fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
             }
         }
     }
