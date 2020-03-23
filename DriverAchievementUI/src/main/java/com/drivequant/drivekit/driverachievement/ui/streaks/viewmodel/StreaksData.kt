@@ -100,7 +100,9 @@ class StreaksData(
                 size(R.dimen.dk_text_big)
             }).append(trip, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
-            }).append(" - $currentDistance - $currentDuration").toSpannable()
+            }).append(" - $currentDistance - $currentDuration", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+            }).toSpannable()
     }
 
     fun getBestStreakData(context: Context): SpannableString {
@@ -116,7 +118,9 @@ class StreaksData(
                         typeface(Typeface.BOLD)
                         size(R.dimen.dk_text_big)
                         color(DriveKitUI.colors.mainFontColor())
-                    }).append("$trip - $bestDistance - $bestDuration").toSpannable()
+                    }).append("$trip - $bestDistance - $bestDuration", context.resSpans {
+                        color(DriveKitUI.colors.mainFontColor())
+                    }).toSpannable()
 
             StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_achievements_streaks_congrats))
         }

@@ -54,6 +54,9 @@ class StreakViewHolder(itemView: View) :
         textViewBestTitle.headLine2()
         textViewCurrentTitle.headLine2()
         textViewTripsCount.headLine2()
+        textViewCurrentStreakDate.normalText()
+        textViewBestStreakDate.normalText()
+        textViewTripsCount.textSize = 20f
         imageViewInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
