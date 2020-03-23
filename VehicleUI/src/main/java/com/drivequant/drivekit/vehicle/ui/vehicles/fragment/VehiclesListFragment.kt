@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
 
 class VehiclesListFragment : Fragment() {
-    private var firstLaunch = true
     private lateinit var viewModel : VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
 
@@ -67,13 +66,7 @@ class VehiclesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (firstLaunch) {
-            updateVehicles()
-            firstLaunch = false
-        } else {
-            viewModel.fetchVehicles(SynchronizationType.CACHE)
-        }
-        setupAddVehicleButton()
+        updateVehicles()
     }
 
     private fun updateVehicles(){
@@ -97,6 +90,7 @@ class VehiclesListFragment : Fragment() {
             activity?.title = viewModel.getScreenTitle(context)
             refresh_vehicles.visibility = View.VISIBLE
             refresh_vehicles.isRefreshing = false
+            setupAddVehicleButton()
         })
         refresh_vehicles.isRefreshing = true
         viewModel.fetchVehicles()
@@ -107,9 +101,7 @@ class VehiclesListFragment : Fragment() {
             add_vehicle.visibility = View.VISIBLE
             add_vehicle.setOnClickListener {
                 if (viewModel.maxVehiclesReached()) {
-                    DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert")?.let {
-                        Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-                    }
+                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert"), Toast.LENGTH_LONG).show()
                 } else {
                     VehiclePickerActivity.launchActivity(requireContext())
                 }

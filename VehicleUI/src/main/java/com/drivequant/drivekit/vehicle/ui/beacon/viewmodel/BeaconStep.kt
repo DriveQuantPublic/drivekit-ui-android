@@ -5,10 +5,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.app.Fragment
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.BeaconScannerCongratsFragment
-import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.BeaconScannerNotFoundFragment
-import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.BeaconScannerProgressFragment
-import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.BeaconScannerSuccessFragment
+import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.*
 import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 
 enum class BeaconStep {
@@ -60,7 +57,9 @@ enum class BeaconStep {
             BEACON_NOT_FOUND -> BeaconScannerNotFoundFragment.newInstance(viewModel)
             SUCCESS -> BeaconScannerSuccessFragment.newInstance(viewModel)
             CONGRATS -> BeaconScannerCongratsFragment.newInstance(viewModel)
+            BEACON_ALREADY_PAIRED -> BeaconScannerAlreadyPairedFragment.newInstance(viewModel)
             // TODO: others steps...
+
             else -> null
         }
     }

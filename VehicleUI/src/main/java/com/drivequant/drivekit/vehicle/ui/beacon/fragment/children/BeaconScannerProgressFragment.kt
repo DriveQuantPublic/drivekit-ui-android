@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.drivequant.beaconutils.*
+import com.drivequant.beaconutils.compatibility.BeaconScannerPreLollipop
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -48,7 +50,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         progressBar = view.findViewById(R.id.progress_bar)
 
         runUpdateProgressBarThread()
-        BeaconScanner.registerListener(this, requireContext()) // TODO: verify scan pre-Lollipop
+        startBeaconScan()
     }
 
     private fun runUpdateProgressBarThread() {
@@ -63,9 +65,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                 progressBar.progress = finalProgressStatus
             }
             activity?.runOnUiThread(Runnable {
-                if (isBeaconFound){
-                    goToNextStep()
-                } else {
+                if (!isBeaconFound) {
                     stopBeaconScan()
                     viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
                 }
@@ -74,8 +74,20 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         updateProgressBar.start()
     }
 
+    private fun startBeaconScan(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BeaconScanner.registerListener(this, requireContext())
+        } else {
+            BeaconScannerPreLollipop.registerBeaconListener(requireContext(), this)
+        }
+    }
+
     private fun stopBeaconScan(){
-        BeaconScanner.unregisterListener(this, requireContext()) // TODO: verify scan pre-Lollipop, ensure unregister is at the right place
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BeaconScanner.unregisterListener(this, requireContext())
+        } else {
+            BeaconScannerPreLollipop.unregisterBeaconListener()
+        }
     }
 
     private fun goToNextStep(){
@@ -107,7 +119,9 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconFound(beacon: BeaconInfo) {
+        isBeaconFound = true
         if (viewModel.scanType == PAIRING){
+            stopBeaconScan()
             goToNextStep()
         } else {
             viewModel.clBeacon = Beacon(beacon.proximityUuid, beacon.major, beacon.minor)

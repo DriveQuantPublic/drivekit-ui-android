@@ -14,7 +14,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_notfound.*
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_not_found.*
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_progress.text_view_description
 
 class BeaconScannerNotFoundFragment : Fragment() {
@@ -29,7 +29,7 @@ class BeaconScannerNotFoundFragment : Fragment() {
     private lateinit var viewModel: BeaconViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_beacon_child_scanner_notfound, container, false).setDKStyle()
+        return inflater.inflate(R.layout.fragment_beacon_child_scanner_not_found, container, false).setDKStyle()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

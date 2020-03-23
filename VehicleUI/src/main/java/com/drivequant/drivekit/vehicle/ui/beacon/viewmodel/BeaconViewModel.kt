@@ -10,11 +10,8 @@ import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleAddBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
+import com.drivequant.drivekit.vehicle.manager.beacon.*
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleGetBeaconQueryListener
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
@@ -36,6 +33,7 @@ class BeaconViewModel(
     val progressBarObserver = MutableLiveData<Boolean>()
     val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
     val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
+    val beaconChangeObserver = MutableLiveData<VehicleBeaconStatus>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
     init {
@@ -77,6 +75,20 @@ class BeaconViewModel(
                     override fun onResponse(status: VehicleBeaconStatus) {
                         progressBarObserver.postValue(false)
                         beaconAddObserver.postValue(status)
+                    }
+                })
+            }
+        }
+    }
+
+    fun changeBeaconToVehicle(){
+        progressBarObserver.postValue(true)
+        beacon?.let { beacon ->
+            vehicle?.let { vehicle ->
+                DriveKitVehicle.changeBeaconToVehicle(beacon, vehicle, object : VehicleChangeBeaconQueryListener {
+                    override fun onResponse(status: VehicleBeaconStatus) {
+                        progressBarObserver.postValue(false)
+                        beaconChangeObserver.postValue(status)
                     }
                 })
             }
