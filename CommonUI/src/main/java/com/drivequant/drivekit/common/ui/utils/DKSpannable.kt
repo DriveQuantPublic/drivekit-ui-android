@@ -31,7 +31,6 @@ class DKSpannable {
         length += newText.length
     }
 
-    @JvmOverloads
     fun appendSpace(newText: CharSequence, before: Boolean = true) =
         if (before) append(" ").append(newText) else append(newText).append(" ")
 
