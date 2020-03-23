@@ -21,7 +21,6 @@
                 android:textSize="@dimen/dk_text_big"
                 android:layout_margin="@dimen/dk_margin"
                 android:textAllCaps="true"/>
-
             <TextView
                 android:layout_width="@dimen/dk_ic_xxbig"
                 android:layout_height="@dimen/dk_ic_xxbig"
@@ -33,7 +32,6 @@
                 android:layout_margin="@dimen/dk_margin_half"
                 android:gravity="center"
                 android:background="@drawable/circle_outline_black"/>
-
             <TextView
                 android:id="@+id/text_view_connect_desc_1"
                 android:layout_width="wrap_content"
@@ -41,7 +39,6 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin" />
-
             <TextView
                 android:layout_width="@dimen/dk_ic_xxbig"
                 android:layout_height="@dimen/dk_ic_xxbig"
@@ -53,7 +50,6 @@
                 android:layout_margin="@dimen/dk_margin_half"
                 android:gravity="center"
                 android:background="@drawable/circle_outline_black"/>
-
             <TextView
                 android:id="@+id/text_view_connect_desc_2"
                 android:layout_width="wrap_content"
@@ -61,7 +57,6 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin" />
-
             <TextView
                 android:layout_width="@dimen/dk_ic_xxbig"
                 android:layout_height="@dimen/dk_ic_xxbig"
@@ -73,7 +68,6 @@
                 android:layout_margin="@dimen/dk_margin_half"
                 android:gravity="center"
                 android:background="@drawable/circle_outline_black"/>
-
             <TextView
                 android:id="@+id/text_view_connect_desc_3"
                 android:layout_width="wrap_content"
@@ -82,7 +76,6 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dk_margin"/>
         </LinearLayout>
-
         <Button
             android:id="@+id/button_begin"
             android:layout_width="match_parent"

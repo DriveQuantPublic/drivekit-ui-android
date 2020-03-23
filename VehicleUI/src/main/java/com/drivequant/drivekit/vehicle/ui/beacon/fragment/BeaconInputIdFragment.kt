@@ -17,9 +17,8 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
+import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
 
@@ -58,17 +57,14 @@ class BeaconInputIdFragment : Fragment () {
             it?.let { map ->
                 val beaconCode = map.keys.first()
                 when (map[beaconCode]){
-                    SUCCESS -> viewModel.onCodeValid()
-                    ERROR, UNKNOWN_VEHICLE -> displayError("dk_vehicle_failed_to_retrieve_beacon")
-                    UNKNOWN_BEACON -> displayError("dk_vehicle_beacon_setup_code_unknown_id", beaconCode)
-                    INVALID_BEACON -> displayError("dk_vehicle_beacon_setup_code_invalid_id", beaconCode)
-                    UNAVAILABLE_BEACON -> displayError("dk_vehicle_beacon_setup_code_unavailable_id")
+                    VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
+                    VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(beaconCode)
                 }
             }
         })
     }
 
-    private fun displayError(identifier: String, vararg args: String) {
+    private fun displayError(vararg args: String) {
         val alert = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
             .layout(R.layout.template_alert_dialog_layout)
@@ -85,9 +81,9 @@ class BeaconInputIdFragment : Fragment () {
         title?.headLine1()
 
         if (args.isNotEmpty()) {
-            description?.text = DKResource.buildString(requireContext(), identifier, args[0])
+            description?.text = DKResource.buildString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon", args[0])
         } else {
-            description?.text = DKResource.convertToString(requireContext(), identifier)
+            description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon")
         }
         description?.normalText()
     }

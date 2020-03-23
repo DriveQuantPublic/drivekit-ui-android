@@ -22,12 +22,11 @@
         android:layout_marginTop="@dimen/dk_margin_medium"
         android:layout_marginStart="@dimen/dk_margin"
         android:layout_marginEnd="@dimen/dk_margin"
-        android:onClick="onFinishButtonClicked"/>
+        android:foreground="?android:attr/selectableItemBackground" />
     <TextView
         android:id="@+id/button_abort"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_medium"
-        android:onClick="onAbortButtonClicked"/>
+        android:layout_marginTop="@dimen/dk_margin_medium"/>
 </LinearLayout>

@@ -10,6 +10,8 @@ import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.manager.beacon.VehicleAddBeaconQueryListener
+import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleGetBeaconQueryListener
@@ -32,7 +34,8 @@ class BeaconViewModel(
     var listener: ScanState? = null
 
     val progressBarObserver = MutableLiveData<Boolean>()
-    val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconStatus>>()
+    val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
+    val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
     init {
@@ -56,14 +59,28 @@ class BeaconViewModel(
     fun checkCode(codeValue: String){
         progressBarObserver.postValue(true)
         DriveKitVehicle.getBeaconByUniqueId(codeValue, object : VehicleGetBeaconQueryListener {
-            override fun onResponse(status: VehicleBeaconStatus, beacon: Beacon) {
+            override fun onResponse(status: VehicleBeaconInfoStatus, beacon: Beacon) {
                 progressBarObserver.postValue(false)
                 this@BeaconViewModel.beacon = beacon
-                val map = HashMap<String, VehicleBeaconStatus>()
+                val map = HashMap<String, VehicleBeaconInfoStatus>()
                 map[codeValue] = status
                 codeObserver.postValue(map)
             }
         })
+    }
+
+    fun addBeaconToVehicle(){
+        progressBarObserver.postValue(true)
+        beacon?.let { beacon ->
+            vehicle?.let { vehicle ->
+                DriveKitVehicle.addBeaconToVehicle(beacon, vehicle, object : VehicleAddBeaconQueryListener{
+                    override fun onResponse(status: VehicleBeaconStatus) {
+                        progressBarObserver.postValue(false)
+                        beaconAddObserver.postValue(status)
+                    }
+                })
+            }
+        }
     }
 
     fun checkVehiclePaired(listener: ServiceListeners){

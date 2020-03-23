@@ -9,10 +9,10 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus
+import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconRemoveStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryListener
-import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
+import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
@@ -63,9 +63,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     fun removeBeaconToVehicle(vehicle: Vehicle){
         progressBarObserver.postValue(true)
         DriveKitVehicle.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
-            override fun onResponse(status: VehicleBeaconStatus) {
+            override fun onResponse(status: VehicleBeaconRemoveStatus) {
                 progressBarObserver.postValue(false)
-                removeBeaconOrBluetoothObserver.postValue(status == VehicleBeaconStatus.SUCCESS)
+                removeBeaconOrBluetoothObserver.postValue(status == VehicleBeaconRemoveStatus.SUCCESS)
             }
         })
     }
@@ -73,9 +73,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     fun removeBluetoothToVehicle(vehicle: Vehicle){
         progressBarObserver.postValue(true)
         DriveKitVehicle.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
-            override fun onResponse(status: VehicleBluetoothStatus) {
+            override fun onResponse(status: VehicleRemoveBluetoothStatus) {
                 progressBarObserver.postValue(false)
-                removeBeaconOrBluetoothObserver.postValue(status == VehicleBluetoothStatus.SUCCESS)
+                removeBeaconOrBluetoothObserver.postValue(status == VehicleRemoveBluetoothStatus.SUCCESS)
             }
         })
     }

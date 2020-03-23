@@ -45,7 +45,6 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
     fun addBluetoothToVehicle(bluetooth: BluetoothData){
         progressBarObserver.postValue(true)
         vehicle?.let {
-            // TODO: check which object to pass
             val name = bluetooth.name?.let { bluetooth.name } ?: run { bluetooth.macAddress }
 
             DriveKitVehicle.addBluetoothToVehicle(Bluetooth(bluetooth.macAddress, name), it, object: VehicleAddBluetoothQueryListener{
@@ -54,7 +53,6 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
                     when (status){
                         SUCCESS -> fragmentDispatcher.postValue(SuccessBluetoothFragment.newInstance(this@BluetoothViewModel, it))
                         ERROR -> addBluetoothObserver.postValue("dk_vehicle_failed_to_paired_bluetooth")
-                        INVALID_BLUETOOTH -> addBluetoothObserver.postValue("dk_vehicle_failed_to_paired_bluetooth")
                         UNKNOWN_VEHICLE -> addBluetoothObserver.postValue("dk_vehicle_unknown")
                         UNAVAILABLE_BLUETOOTH -> addBluetoothObserver.postValue("dk_vehicle_unknown")
                     }
