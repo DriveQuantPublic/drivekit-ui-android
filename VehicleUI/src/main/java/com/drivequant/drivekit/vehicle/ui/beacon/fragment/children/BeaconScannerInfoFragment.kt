@@ -2,12 +2,17 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.beaconutils.BeaconBatteryReaderListener
+import com.drivequant.beaconutils.BeaconBatteryReaderScanner
+import com.drivequant.beaconutils.BeaconData
+import com.drivequant.beaconutils.compatibility.BeaconScannerBatteryReaderPreLollipop
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -19,7 +24,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
 
-class BeaconScannerInfoFragment : Fragment() {
+class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
     companion object {
         fun newInstance(viewModel: BeaconViewModel, isValid: Boolean): BeaconScannerInfoFragment {
             val fragment = BeaconScannerInfoFragment()
@@ -31,6 +36,7 @@ class BeaconScannerInfoFragment : Fragment() {
 
     private lateinit var viewModel: BeaconViewModel
     private var isValid: Boolean = false
+    private var batteryLevel = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
@@ -38,6 +44,8 @@ class BeaconScannerInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //startBatteryReaderScanner()
 
         view_border.setBackgroundColor(DKColors().mainFontColor())
 
@@ -54,7 +62,7 @@ class BeaconScannerInfoFragment : Fragment() {
         }
 
         button_beacon_info.setOnClickListener {
-            // TODO launch beacon info
+            viewModel.launchDetailFragment()
         }
 
         view_separator.setBackgroundColor(neutralColor)
@@ -79,7 +87,7 @@ class BeaconScannerInfoFragment : Fragment() {
                 text_view_distance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
 
-            text_view_battery.text = buildBeaconCharacteristics("xx", "%")
+            text_view_battery.text = buildBeaconCharacteristics(batteryLevel.toString(), "%")
             computeBatteryDrawable(50)?.let { drawable ->
                 text_view_battery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
@@ -89,6 +97,40 @@ class BeaconScannerInfoFragment : Fragment() {
                 text_view_signal_intensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopBatteryReaderScanner()
+    }
+
+    private fun startBatteryReaderScanner(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BeaconBatteryReaderScanner.registerListener(this, requireContext())
+        } else {
+            BeaconScannerBatteryReaderPreLollipop.registerBeaconListener(requireContext(), this)
+        }
+    }
+
+    private fun stopBatteryReaderScanner(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            BeaconBatteryReaderScanner.unregisterListener(this, requireContext())
+        } else {
+            BeaconScannerBatteryReaderPreLollipop.unregisterBeaconListener()
+        }
+    }
+
+    override fun getBeacon(): BeaconData {
+        return viewModel.seenBeacon?.let {
+             BeaconData(it.proximityUuid, it.major, it.minor)
+        }?: run {
+            BeaconData("")
+        }
+    }
+
+    override fun onBatteryLevelRead(batteryLevel: Int) {
+        this.batteryLevel = batteryLevel
+        text_view_battery.text = buildBeaconCharacteristics(batteryLevel.toString(), "%")
     }
 
     private fun computeBatteryDrawable(batteryLevel: Int): Drawable? {

@@ -49,7 +49,7 @@ class BeaconActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         scanType = intent.getSerializableExtra(SCAN_TYPE_EXTRA) as BeaconScanType
-        vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String?
+        vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
         viewModel = ViewModelProviders.of(this,
@@ -64,6 +64,14 @@ class BeaconActivity : AppCompatActivity() {
                     .addToBackStack(fragment.javaClass.name)
                     .add(R.id.container, it)
                     .commit()
+            }
+        })
+
+        viewModel.beaconDetailObserver.observe(this, Observer {
+            viewModel.vehicleId?.let { vehicleId ->
+                viewModel.seenBeacon?.let { seenBeacon ->
+                    BeaconDetailActivity.launchActivity(this, vehicleId, 0, seenBeacon)
+                }
             }
         })
     }

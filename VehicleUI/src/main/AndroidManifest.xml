@@ -21,7 +21,9 @@
         <activity
             android:name=".beacon.activity.BeaconActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".beacon.activity.BeaconDetailActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:grantUriPermissions="true"

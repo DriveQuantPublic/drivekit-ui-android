@@ -34,6 +34,7 @@ class BeaconViewModel(
     val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
     val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconChangeObserver = MutableLiveData<VehicleBeaconStatus>()
+    val beaconDetailObserver = MutableLiveData<Any>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
     init {
@@ -134,6 +135,10 @@ class BeaconViewModel(
                 }
             }
         })
+    }
+
+    fun launchDetailFragment(){
+        beaconDetailObserver.postValue(null)
     }
 
     fun updateScanState(beaconStep: BeaconStep) {

@@ -5,6 +5,6 @@
     <item
         android:id="@+id/trip_delete"
         android:icon="@drawable/dk_trash"
-        android:title="Delete"
+        android:title="@string/dk_common_delete"
         app:showAsAction="always" />
 </menu>
