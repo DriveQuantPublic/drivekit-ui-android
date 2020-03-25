@@ -63,7 +63,7 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_battery"),
-                        buildValue(context, batteryLevel.toString(), "%") // TODO % in common ?
+                        buildValue(context, batteryLevel.toString(), "%")
                     )
                 )
                 data.add(
@@ -75,10 +75,13 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_rssi"),
-                        buildValue(context, seenBeacon.rssi.toString(), "dBm"))// TODO dBm in common ?
+                        buildValue(context, seenBeacon.rssi.toString(), "dBm"))
                 )
-
-                // TODO missing Tx ???
+                data.add(
+                    BeaconDetailField(
+                        getTitle(context, "dk_beacon_tx"),
+                        buildValue(context, seenBeacon.txPower.toString(), "dBm"))
+                )
             }
         }
     }
@@ -110,7 +113,6 @@ class BeaconDetailViewModel(
     private fun fetchVehicle(): Vehicle? {
         return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
-
 
     @Suppress("UNCHECKED_CAST")
     class BeaconDetailViewModelFactory(

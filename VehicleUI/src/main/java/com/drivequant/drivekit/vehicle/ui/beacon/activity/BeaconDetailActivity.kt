@@ -71,9 +71,7 @@ class BeaconDetailActivity : AppCompatActivity() {
                         R.animator.slide_in_left,
                         R.animator.slide_out_right
                     )
-                    .replace(
-                        R.id.container, BeaconDetailFragment.newInstance(viewModel, vehicle, batterylevel, beaconInfo)
-                    )
+                    .replace(R.id.container, BeaconDetailFragment.newInstance(viewModel, vehicle, batterylevel, beaconInfo))
                     .commit()
             }
         }

@@ -70,7 +70,7 @@ class BeaconActivity : AppCompatActivity() {
         viewModel.beaconDetailObserver.observe(this, Observer {
             viewModel.vehicleId?.let { vehicleId ->
                 viewModel.seenBeacon?.let { seenBeacon ->
-                    BeaconDetailActivity.launchActivity(this, vehicleId, 0, seenBeacon)
+                    BeaconDetailActivity.launchActivity(this, vehicleId, viewModel.batteryLevel, seenBeacon)
                 }
             }
         })

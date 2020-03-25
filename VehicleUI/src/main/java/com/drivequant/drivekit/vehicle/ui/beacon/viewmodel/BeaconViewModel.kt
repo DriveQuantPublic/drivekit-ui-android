@@ -27,7 +27,7 @@ class BeaconViewModel(
     var vehicle: Vehicle?
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
-
+    var batteryLevel: Int = 0
     var listener: ScanState? = null
 
     val progressBarObserver = MutableLiveData<Boolean>()

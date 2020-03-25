@@ -47,4 +47,5 @@
     <!-- TODO : Translate -->
     <string name="dk_common_unit_power">hp</string>
     <string name="dk_common_error_empty_field">Le champ ne peut pas être vide</string>
+    <string name="dk_beacon_tx">Tx (dBm)</string>
 </resources>
