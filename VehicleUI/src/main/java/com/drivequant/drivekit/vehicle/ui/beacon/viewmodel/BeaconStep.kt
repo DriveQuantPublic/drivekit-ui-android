@@ -28,7 +28,13 @@ enum class BeaconStep {
             INITIAL -> DKResource.buildString(context, "dk_vehicle_beacon_start_scan")
             SCAN -> DKResource.buildString(context, "dk_vehicle_beacon_setup_scan_title")
             SUCCESS -> DKResource.buildString(context, "dk_vehicle_beacon_setup_code_success_message")
-            BEACON_NOT_FOUND -> DKResource.buildString(context, "dk_vehicle_beacon_setup_code_not_matched", beaconCode)
+            BEACON_NOT_FOUND -> {
+                if (viewModel.scanType == BeaconScanType.DIAGNOSTIC){
+                    DKResource.buildString(context, "dk_beacon_not_seen", beaconCode)
+                } else {
+                    DKResource.buildString(context, "dk_vehicle_beacon_setup_code_not_matched", beaconCode)
+                }
+            }
             BEACON_ALREADY_PAIRED -> DKResource.buildString(context, "dk_vehicle_beacon_already_paired")
             CONGRATS -> DKResource.buildString(context, "dk_vehicle_beacon_setup_successlink_message", beaconCode, vehicleName)
             BEACON_UNAVAILABLE -> DKResource.buildString(context,"dk_vehicle_beacon_setup_code_unavailable_id", beaconCode)

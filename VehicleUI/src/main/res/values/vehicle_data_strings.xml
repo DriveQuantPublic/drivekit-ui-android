@@ -159,6 +159,7 @@
     <string name="dk_beacon_battery">Niveau de la batterie (%)</string>
     <string name="dk_beacon_paired_title">Associer un beacon</string>
     <string name="dk_beacon_diagnostic_title">Diagnostic de mon beacon</string>
+    <string name="dk_beacon_not_seen">Votre beacon n\'a pas été détecté</string>
 
     <string name="dk_common_permission_camera_rationale">L\'application a besoin de l\'autorisation d\'accéder à la caméra de votre smartphone pour utiliser cette fonctionnalité.</string>
     <string name="dk_common_permission_storage_rationale">L\'application a besoin de l\'autorisation d\'accéder au stockage de votre smartphone pour utiliser cette fonctionnalité.</string>
