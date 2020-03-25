@@ -21,7 +21,7 @@ import java.io.Serializable
 
 class BeaconViewModel(
     val scanType: BeaconScanType,
-    val vehicleId: String?,
+    var vehicleId: String?,
     var beacon: Beacon?
 ) : ViewModel(), Serializable {
     var vehicle: Vehicle?

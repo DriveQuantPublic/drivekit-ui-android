@@ -111,6 +111,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
             DIAGNOSTIC -> {
                 viewModel.fetchVehicleFromBeacon()?.let {
                     viewModel.vehicle = it
+                    viewModel.vehicleId = it.vehicleId
                     viewModel.updateScanState(BeaconStep.VERIFIED)
                 }?:run  {
                     viewModel.updateScanState(BeaconStep.WRONG_BEACON)
