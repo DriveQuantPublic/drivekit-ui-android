@@ -116,10 +116,6 @@
     <string name="dk_vehicle_bluetooth_congrats_desc">L\'appareil Bluetooth %s est désormais associé au véhicule %s</string>
     <string name="dk_vehicle_bluetooth_congrats_notice">Désormais l\'enregistrement de vos trajets démarrera automatiquement dès que votre téléphone se connecte à l\'appareil Bluetooth %s</string>
     <string name="dk_vehicle_bluetooth_devices_list_title">Appareils Bluetooth :</string>
-
-
-    <!-- TODO: CHECK duplicate string keys -->
-    <string name="dk_vehicle_detection_mode_desc_beacon_configured">Le beacon %s a été associé à ce véhicule. L\'application enregistre automatiquement votre trajet lorsque le beacon est a proximité de votre smartphone.</string>
     <string name="dk_vehicle_beacon_deactivate_alert">Le beacon %s sera dissocié du véhicule %s. \n Êtes-vous sûr de vouloir continuer ?</string>
     <string name="dk_vehicle_beacon_verify_wrong_vehicle">Le beacon détecté n\'est pas associé à ce véhicule.</string>
     <string name="dk_vehicle_beacon_scan_wrong_beacon">Le beacon détecté ne correspond pas à celui qui a été associé à votre véhicule</string>

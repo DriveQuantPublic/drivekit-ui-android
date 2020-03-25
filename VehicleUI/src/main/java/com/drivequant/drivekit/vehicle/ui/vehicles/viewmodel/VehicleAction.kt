@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
@@ -77,7 +76,7 @@ enum class VehicleAction(
                             override fun onResponse(status: VehicleManagerStatus) {
                                 viewModel.progressBarObserver.postValue(false)
                                 if (status == VehicleManagerStatus.SUCCESS){
-                                    viewModel.fetchVehicles(SynchronizationType.CACHE)
+                                    viewModel.fetchVehicles(context)
                                 } else {
                                     displayError(context)
                                 }
@@ -115,7 +114,7 @@ enum class VehicleAction(
                     DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
                         override fun onResponse(status: VehicleManagerStatus) {
                             if (status == VehicleManagerStatus.SUCCESS){
-                                viewModel.fetchVehicles(SynchronizationType.CACHE)
+                                viewModel.fetchVehicles(context)
                             } else {
                                 displayError(context)
                             }

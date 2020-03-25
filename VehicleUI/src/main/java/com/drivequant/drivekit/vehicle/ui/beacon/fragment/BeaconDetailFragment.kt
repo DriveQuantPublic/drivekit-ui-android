@@ -62,7 +62,6 @@ class BeaconDetailFragment : Fragment() {
 
     private fun sendEmail(){
         val emailAddress = DriveKitVehicleUI.beaconDiagnosticMail?.getMailAddress()
-
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "plain/text"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))

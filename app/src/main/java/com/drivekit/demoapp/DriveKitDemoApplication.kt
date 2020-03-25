@@ -27,11 +27,13 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDiagnosticMail
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
 
-class DriveKitDemoApplication: Application() {
+class DriveKitDemoApplication: Application(), BeaconDiagnosticMail{
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -52,9 +54,6 @@ class DriveKitDemoApplication: Application() {
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
-
-        Stetho.initializeWithDefaults(this)
-
 
         DriveKitUI.initialize()
 
@@ -122,8 +121,9 @@ class DriveKitDemoApplication: Application() {
         DriveKitVehicleUI.configureDetectionModes(
             listOf(DetectionMode.DISABLED, DetectionMode.GPS, DetectionMode.BEACON, DetectionMode.BLUETOOTH)
         )
-        val maxVehicles = 1
-        DriveKitVehicleUI.configureMaxVehicles(maxVehicles)
+        val categoryConfigType = CategoryConfigType.BOTH_CONFIG
+        DriveKitVehicleUI.configureCategoryConfigType(categoryConfigType)
+        DriveKitVehicleUI.configureBeaconDetailEmail(this)
 
         initFirstLaunch()
     }
@@ -142,5 +142,13 @@ class DriveKitDemoApplication: Application() {
         val receiver = TripReceiver()
         val filter = IntentFilter("com.drivequant.sdk.TRIP_ANALYSED")
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
+    }
+
+    override fun getMailAddress(): String {
+        return "steven@drivequant.com"
+    }
+
+    override fun getMailBody(): String {
+        return "Mock mail body in DriveKitDemoApplication.kt"
     }
 }

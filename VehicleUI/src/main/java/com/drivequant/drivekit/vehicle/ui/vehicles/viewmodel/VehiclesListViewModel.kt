@@ -7,7 +7,6 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconRemoveStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryListener
@@ -16,7 +15,9 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothS
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinnerItem
 import java.io.Serializable
 
@@ -27,17 +28,20 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     var vehiclesList: List<Vehicle> = listOf()
     var syncStatus: VehicleSyncStatus = VehicleSyncStatus.NO_ERROR
 
-    fun fetchVehicles(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
+    fun fetchVehicles(
+        context: Context,
+        synchronizationType: SynchronizationType = SynchronizationType.DEFAULT
+    ) {
         progressBarObserver.postValue(true)
         if (DriveKit.isConfigured()) {
-            DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
-                override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, synchronizationType, object : VehiclesFetchListener {
+                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
                     progressBarObserver.postValue(false)
-                    syncStatus = status
-                    vehiclesList = vehicles
+                    syncStatus = response.syncStatus
+                    vehiclesList = response.vehicles
                     vehiclesData.postValue(vehiclesList)
                 }
-            }, synchronizationType)
+            })
         } else {
             progressBarObserver.postValue(false)
             vehiclesData.postValue(listOf())
@@ -53,7 +57,8 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.computeTitle(context, vehiclesList)
+        val pos = VehicleUtils().getVehiclePositionInList(vehicle, vehiclesList)
+        return VehicleUtils().buildFormattedName(context, vehicle, pos)
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String? {
@@ -79,7 +84,6 @@ class VehiclesListViewModel : ViewModel(), Serializable {
             }
         })
     }
-
 
     fun buildDetectionModeSpinnerItems(context: Context): List<DetectionModeSpinnerItem> {
         val detectionModeSpinnerItems = mutableListOf<DetectionModeSpinnerItem>()

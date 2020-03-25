@@ -16,7 +16,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -138,7 +137,7 @@ enum class DetectionModeType(
             override fun onResponse(status: DetectionModeStatus) {
                 viewModel.progressBarObserver.postValue(false)
                 when (status){
-                    SUCCESS -> viewModel.fetchVehicles(SynchronizationType.CACHE)
+                    SUCCESS -> viewModel.fetchVehicles(context)
                     ERROR -> manageError(context, viewModel)
                     GPS_MODE_ALREADY_EXISTS -> manageGPSModeAlreadyExists(context, viewModel, detectionMode, vehicle)
                 }
@@ -148,7 +147,7 @@ enum class DetectionModeType(
 
     private fun manageError(context: Context, viewModel: VehiclesListViewModel){
         Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
-        viewModel.fetchVehicles(SynchronizationType.CACHE)
+        viewModel.fetchVehicles(context)
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
@@ -172,7 +171,7 @@ enum class DetectionModeType(
                 })
             .negativeButton(context.getString(R.string.dk_common_cancel),
                 DialogInterface.OnClickListener { dialog, _ ->
-                    viewModel.fetchVehicles(SynchronizationType.CACHE)
+                    viewModel.fetchVehicles(context)
                     dialog.dismiss()
                 })
             .show()

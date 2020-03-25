@@ -47,7 +47,7 @@ class VehiclesListFragment : Fragment() {
         })
 
         viewModel.removeBeaconOrBluetoothObserver.observe(this, Observer {
-            viewModel.fetchVehicles(SynchronizationType.CACHE)
+            viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
         })
     }
 
@@ -93,7 +93,7 @@ class VehiclesListFragment : Fragment() {
             setupAddVehicleButton()
         })
         refresh_vehicles.isRefreshing = true
-        viewModel.fetchVehicles()
+        viewModel.fetchVehicles(requireContext())
     }
 
     private fun setupAddVehicleButton(){

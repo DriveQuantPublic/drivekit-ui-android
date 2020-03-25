@@ -81,7 +81,7 @@ class BeaconInputIdFragment : Fragment () {
         title?.headLine1()
 
         if (args.isNotEmpty()) {
-            description?.text = DKResource.buildString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon", args[0])
+            description?.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_code_unknown_id", args[0])
         } else {
             description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon")
         }
