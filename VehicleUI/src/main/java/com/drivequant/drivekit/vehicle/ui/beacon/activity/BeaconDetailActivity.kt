@@ -62,19 +62,15 @@ class BeaconDetailActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.vehicle?.let { vehicle ->
-            beaconInfo?.let { beaconInfo ->
-                supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.animator.slide_in_left,
-                        R.animator.slide_out_right,
-                        R.animator.slide_in_left,
-                        R.animator.slide_out_right
-                    )
-                    .replace(R.id.container, BeaconDetailFragment.newInstance(viewModel, vehicle, batterylevel, beaconInfo))
-                    .commit()
-            }
-        }
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.animator.slide_in_left,
+                R.animator.slide_out_right,
+                R.animator.slide_in_left,
+                R.animator.slide_out_right
+            )
+            .replace(R.id.container, BeaconDetailFragment.newInstance(viewModel))
+            .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {

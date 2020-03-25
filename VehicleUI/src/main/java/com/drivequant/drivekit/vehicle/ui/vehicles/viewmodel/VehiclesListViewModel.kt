@@ -96,7 +96,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun maxVehiclesReached(): Boolean {
         return DriveKitVehicleUI.maxVehicles?.let {
-            vehiclesList.size < it
+            vehiclesList.size >= it
         } ?: run {
             false
         }

@@ -9,6 +9,7 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDiagnosticMail
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
@@ -18,7 +19,6 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
-import java.io.Serializable
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
 
@@ -41,6 +41,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     )
 
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
+    internal var beaconDiagnosticMail: BeaconDiagnosticMail? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -92,7 +93,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     fun configureMaxVehicles(maxVehicles: Int?){
-        this.maxVehicles = maxVehicles
+        if (maxVehicles != null && maxVehicles >= 0) {
+            this.maxVehicles = maxVehicles
+        }
     }
 
     fun configureVehicleActions(vehicleActions: List<VehicleAction>){
@@ -107,6 +110,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     fun addCustomFieldsToGroup(groupField: GroupField, fieldsToAdd: List<Field>){
         this.customFields[groupField] = fieldsToAdd
+    }
+
+    fun configureBeaconDetailEmail(beaconDiagnosticMail: BeaconDiagnosticMail){
+        this.beaconDiagnosticMail = beaconDiagnosticMail
     }
 
     override fun startVehicleListActivity(context: Context) {
@@ -130,9 +137,5 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         intent.putExtra(VEHICLE_ID_EXTRA,vehicleId)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
-    }
-
-    override fun createBluetoothActivity(context: Context, vehicleId: String) {
-        TODO("Not yet implemented")
     }
 }

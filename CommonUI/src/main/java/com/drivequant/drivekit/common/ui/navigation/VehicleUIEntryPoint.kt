@@ -11,6 +11,4 @@ interface VehicleUIEntryPoint {
 
     fun createVehicleDetailFragment(vehicleId: String): Fragment
     fun createVehicleDetailActivity(context: Context, vehicleId: String)
-
-    fun createBluetoothActivity(context: Context, vehicleId: String)
 }

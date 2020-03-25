@@ -1,35 +1,35 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_detail.*
+import java.lang.StringBuilder
 
 class BeaconDetailFragment : Fragment() {
     companion object {
-        fun newInstance(viewModel: BeaconDetailViewModel, vehicle: Vehicle, batteryLevel: Int, beaconInfo: BeaconInfo) : BeaconDetailFragment {
+        fun newInstance(viewModel: BeaconDetailViewModel) : BeaconDetailFragment {
             val fragment = BeaconDetailFragment()
             fragment.viewModel = viewModel
-            fragment.vehicle = vehicle
-            fragment.batteryLevel = batteryLevel
-            fragment.beaconInfo = beaconInfo
             return fragment
         }
     }
 
-    private lateinit var vehicle: Vehicle
-    private var batteryLevel: Int = 0
-    private lateinit var beaconInfo: BeaconInfo
     private lateinit var viewModel: BeaconDetailViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        DriveKitVehicleUI.beaconDiagnosticMail?.let {
+            setHasOptionsMenu(true)
+        }
         return inflater.inflate(R.layout.fragment_beacon_detail, container, false).setDKStyle()
     }
 
@@ -43,14 +43,41 @@ class BeaconDetailFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.beacon_detail_menu_bar, menu) // TODO : email icon in common ?
+            val menuInflater = activity?.menuInflater
+            menuInflater?.inflate(R.menu.beacon_detail_menu_bar, menu)
+
+            val item = menu?.findItem(R.id.action_email)
+            item?.let {
+                val wrapped = DrawableCompat.wrap(it.icon)
+                DrawableCompat.setTint(wrapped, Color.WHITE)
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.action_email){
-            // TODO send listener
+            sendEmail()
         }
-
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun sendEmail(){
+        val emailAddress = DriveKitVehicleUI.beaconDiagnosticMail?.getMailAddress()
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "plain/text"
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+        intent.putExtra(Intent.EXTRA_TEXT, buildBody())
+        startActivity(intent)
+    }
+
+    private fun buildBody(): String{
+        val body = DriveKitVehicleUI.beaconDiagnosticMail?.getMailBody()
+        val sb = StringBuilder()
+        sb.append(body)
+        sb.append("\n__________\n")
+        for (line in viewModel.data){
+            sb.append("${line.title} : ${line.value} \n")
+        }
+        return sb.toString()
     }
 }

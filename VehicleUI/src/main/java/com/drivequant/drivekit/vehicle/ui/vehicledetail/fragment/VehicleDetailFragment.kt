@@ -76,7 +76,6 @@ class VehicleDetailFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         val menuInflater = activity?.menuInflater
         menuInflater?.inflate(R.menu.vehicle_menu_bar, menu)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

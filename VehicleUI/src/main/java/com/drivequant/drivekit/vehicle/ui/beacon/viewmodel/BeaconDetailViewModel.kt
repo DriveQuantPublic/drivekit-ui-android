@@ -129,3 +129,8 @@ class BeaconDetailViewModel(
 data class BeaconDetailField(
     val title: String,
     val value: Spannable)
+
+interface BeaconDiagnosticMail {
+    fun getMailAddress(): String
+    fun getMailBody(): String
+}
