@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewholder
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -54,10 +55,13 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupUI() {
+        val maintFontColor = DriveKitUI.colors.mainFontColor()
+        val complementaryFontColor = DriveKitUI.colors.complementaryFontColor()
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        textViewTitle.headLine1()
-        textViewSubtitle.smallText()
-        textViewDetectionModeTitle.smallText() // TODO: normaltext & bold
+        textViewTitle.headLine1(maintFontColor)
+        textViewSubtitle.smallText(complementaryFontColor)
+        textViewDetectionModeTitle.normalText(complementaryFontColor)
+        textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
         textViewDetectionModeDescription.normalText()
 
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())

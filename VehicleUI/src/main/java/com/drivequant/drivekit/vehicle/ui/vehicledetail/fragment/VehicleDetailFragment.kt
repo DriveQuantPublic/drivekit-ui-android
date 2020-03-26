@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +17,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -38,6 +40,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import kotlinx.android.synthetic.main.activity_vehicle_detail.view.*
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
@@ -95,12 +98,17 @@ class VehicleDetailFragment : Fragment() {
         collapsingToolbar?.let {
             it.title = viewModel.vehicleName
             it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
+            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(requireContext()))
             it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
+            DKResource.convertToDrawable(requireContext(), "dk_gallery_image")?.let {drawable ->
+                val wrapped = DrawableCompat.wrap(drawable)
+                DrawableCompat.setTint(wrapped, DriveKitUI.colors.fontColorOnSecondaryColor())
+                it.setImageDrawable(wrapped)
+            }
             it.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
             it.setOnClickListener {
                 manageFabAlertDialog()

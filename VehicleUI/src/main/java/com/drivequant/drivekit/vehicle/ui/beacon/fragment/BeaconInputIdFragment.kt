@@ -11,10 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
@@ -42,7 +39,7 @@ class BeaconInputIdFragment : Fragment () {
         super.onActivityCreated(savedInstanceState)
         val mainFontColor = DriveKitUI.colors.mainFontColor()
 
-        text_view_beacon_code_text.normalText(mainFontColor)
+        text_view_beacon_code_text.bigText(mainFontColor)
         text_view_beacon_code_text.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
 
         code_wrapper.hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")

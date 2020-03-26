@@ -36,17 +36,18 @@ class GuideBluetoothFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val complementaryFontColor = DriveKitUI.colors.complementaryFontColor()
 
         text_view_guide_title.headLine1(mainFontColor)
         text_view_guide_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_header")
 
-        text_view_guide_desc1.normalText(mainFontColor)
+        text_view_guide_desc1.normalText(complementaryFontColor)
         text_view_guide_desc1.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc1_android")
 
-        text_view_guide_desc2.normalText(mainFontColor)
+        text_view_guide_desc2.normalText(complementaryFontColor)
         text_view_guide_desc2.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc2_android")
 
-        text_view_guide_desc3.normalText(mainFontColor)
+        text_view_guide_desc3.normalText(complementaryFontColor)
         text_view_guide_desc3.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc3_android")
 
         button_start.button()
