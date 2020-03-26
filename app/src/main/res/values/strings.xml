@@ -49,4 +49,6 @@
     <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
     <string name="driver_achievement_explanation">An example of DriveKit DriverAchievement implementation with its UI for the Streaks List</string>
     <string name="driver_achievement_button">Lancer DriverAchievement</string>
+    <string name="trip_cancelled_ble_device_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée en présence d\'un appareil bluetooth</string>
+    <string name="trip_cancelled_no_ble_device">Votre trajet a été annulé en absence d\'un appareil bluetooth</string>
 </resources>
