@@ -1,5 +1,0 @@
-GASOLINE,dk_vehicle_engine_gasoline,true,false,true,
-DIESEL,dk_vehicle_engine_diesel,true,true,true,
-ELECTRIC,dk_vehicle_engine_electric,true,true,true,
-GASOLINE_HYBRID,dk_vehicle_engine_gasoline_hybrid,true,false,false,
-DIESEL_HYBRID,dk_vehicle_engine_diesel_hybrid,true,false,false,

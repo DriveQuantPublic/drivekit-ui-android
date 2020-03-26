@@ -84,8 +84,8 @@ fun VehicleCategory.buildCategoryItem(context: Context): VehicleCategoryItem {
         getImage(context),
         getDescription(context),
         getLiteConfigDqIndex(),
-        isCar = true,
-        isMotorbike = false,
-        isTruck = false
+        isCar,
+        isMotorbike,
+        isTruck
     )
 }
