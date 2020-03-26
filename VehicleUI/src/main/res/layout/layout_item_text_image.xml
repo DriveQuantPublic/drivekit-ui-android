@@ -15,15 +15,18 @@
         android:orientation="vertical">
         <ImageView
             android:id="@+id/image_view"
-            android:layout_width="112dp"
-            android:layout_height="112dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_weight="1"
             android:layout_gravity="center_horizontal"/>
         <TextView android:id="@+id/text_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_margin="@dimen/dk_margin_half"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half"
+            android:layout_marginBottom="@dimen/dk_margin_half"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

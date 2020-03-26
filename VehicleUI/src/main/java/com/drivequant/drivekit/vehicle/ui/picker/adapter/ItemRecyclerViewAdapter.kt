@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment.AdapterType.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 
 class ItemRecyclerViewAdapter(
@@ -24,11 +25,12 @@ class ItemRecyclerViewAdapter(
     private val adapterType = VehicleItemListFragment.AdapterType.getAdapterTypeByPickerStep(currentPickerStep)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM){
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text_image, parent, false)
-        } else {
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_item_text, parent, false)
+        val layout = when (adapterType){
+            TEXT_ITEM -> R.layout.layout_item_text
+            TEXT_IMAGE_ITEM -> R.layout.layout_item_text_image
+            TEXT_OR_IMAGE_ITEM -> R.layout.layout_item_text_image
         }
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         FontUtils.overrideFonts(parent.context, view)
         return ViewHolder(view)
     }
@@ -50,10 +52,22 @@ class ItemRecyclerViewAdapter(
                 listener?.onSelectedItem(currentPickerStep, it)
             }
         }
-        if (adapterType == VehicleItemListFragment.AdapterType.TEXT_IMAGE_ITEM) {
-            holder.textView.normalText()
-        } else {
-            holder.textView.buttonText(backgroundColor = DriveKitUI.colors.secondaryColor())
+
+        holder.textView.visibility = View.VISIBLE
+        when (adapterType){
+            TEXT_ITEM -> {
+                holder.textView.buttonText(backgroundColor = DriveKitUI.colors.secondaryColor())
+            }
+            TEXT_IMAGE_ITEM -> {
+                holder.textView.normalText()
+            }
+            TEXT_OR_IMAGE_ITEM -> {
+                if (item.value.equals("OTHER_BRANDS", true)){
+                    holder.textView.normalText()
+                } else {
+                    holder.textView.visibility = View.GONE
+                }
+            }
         }
     }
 

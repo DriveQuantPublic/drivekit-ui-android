@@ -22,14 +22,14 @@ class VehicleItemListFragment : Fragment() {
 
     enum class AdapterType(val value: Int) {
         TEXT_ITEM(0),
-        TEXT_IMAGE_ITEM(1);
+        TEXT_IMAGE_ITEM(1),
+        TEXT_OR_IMAGE_ITEM(2);
 
         companion object {
             fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
                 return when (vehiclePickerStep) {
-                    CATEGORY,
-                    BRANDS_ICONS -> TEXT_IMAGE_ITEM
-
+                    CATEGORY -> TEXT_IMAGE_ITEM
+                    BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
                     TYPE,
                     ENGINE,
                     YEARS,
