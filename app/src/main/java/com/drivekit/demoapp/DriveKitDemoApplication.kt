@@ -8,8 +8,6 @@ import android.content.IntentFilter
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
-import com.drivekit.demoapp.config.ColorConfig
-import com.drivekit.demoapp.config.FontConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -23,12 +21,10 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
@@ -51,16 +47,16 @@ class DriveKitDemoApplication: Application(), ContentMail {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
+
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
 
         DriveKitUI.initialize()
-
-        DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
+        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
-
         DriveKitVehicleUI.initialize()
     }
 
@@ -104,26 +100,14 @@ class DriveKitDemoApplication: Application(), ContentMail {
             override fun sdkStateChanged(state: State) { }
         })
         DriveKitDriverData.initialize()
+
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-        Stetho.initializeWithDefaults(this)
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.configureDetectionModes(
-            listOf(DetectionMode.DISABLED, DetectionMode.GPS, DetectionMode.BEACON, DetectionMode.BLUETOOTH)
-        )
-        val categoryConfigType = CategoryConfigType.BOTH_CONFIG
-        DriveKitVehicleUI.configureCategoryConfigType(categoryConfigType)
+        // TODO: test only beacon detection mode
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
-
+        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
 
