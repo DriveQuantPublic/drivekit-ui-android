@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -143,8 +144,12 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             items.add(VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
         }
         if (withIcons){
-            if (selectedVehicleTypeItem.getBrands(context).isNotEmpty()){
-                items.add(VehiclePickerItem(items.size, context.getString(R.string.dk_vehicle_other_brands), "OTHER_BRANDS"))
+            if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.values().size){
+                items.add(
+                    VehiclePickerItem(
+                        items.size,
+                        DKResource.convertToString(context, "dk_vehicle_other_brands"),
+                        "OTHER_BRANDS"))
             }
         }
         return items

@@ -7,7 +7,10 @@ import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.buildBrandItem
 import com.drivequant.drivekit.vehicle.ui.extension.buildCategoryItem
+import com.drivequant.drivekit.vehicle.ui.extension.hasIcon
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleBrandItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import java.lang.IllegalArgumentException
 
@@ -40,19 +43,13 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
     }
 
     fun getBrands(context: Context, withIcons: Boolean = false): List<VehicleBrandItem> {
-        val lines = DKMedia.readCSVFile(context, R.raw.vehicle_brands)
         val brands = mutableListOf<VehicleBrandItem>()
-        for (i in lines!!.indices) {
-            val vehicleBrandItem = buildVehicleBrandItem(context, lines[i])
-            if (!withIcons || (withIcons && vehicleBrandItem.icon != null)){
-                if (DriveKitVehicleUI.brands.contains(vehicleBrandItem.brand)) {
-                    brands.add(vehicleBrandItem)
-                }
+        for (item in DriveKitVehicleUI.brands) {
+            if ((withIcons && item.hasIcon(context)) || !withIcons) {
+                brands.add(item.buildBrandItem(context))
             }
         }
-        return when (this){
-            CAR -> brands.filter { it.isCar}
-        }
+        return brands
     }
 
     fun getEngineIndexes(context: Context): List<VehicleEngineItem> {
