@@ -6,11 +6,11 @@
         <item name="android:background">@drawable/rounded_edges</item>
     </style>
 
-    <style name="SeekBar" tools:targetApi="lollipop">
+    <style name="SeekBar">
         <item name="android:gravity">center_vertical</item>
         <item name="android:max">102</item>
         <item name="android:maxHeight">2dp</item>
         <item name="android:minHeight">2dp</item>
-        <item name="android:splitTrack">false</item>
+        <item name="android:splitTrack" tools:targetApi="lollipop">false</item>
     </style>
 </resources>

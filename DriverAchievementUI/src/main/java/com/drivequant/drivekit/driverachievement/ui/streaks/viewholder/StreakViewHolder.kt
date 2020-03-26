@@ -16,8 +16,7 @@ import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
 import android.graphics.drawable.LayerDrawable
-import android.support.v4.graphics.drawable.DrawableCompat
-
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 
 
 class StreakViewHolder(itemView: View) :
@@ -68,8 +67,8 @@ class StreakViewHolder(itemView: View) :
         val progressBarDrawable = seekBar.progressDrawable as LayerDrawable
         val foregroundDrawable = progressBarDrawable.getDrawable(1)
         val backgroundDrawable = progressBarDrawable.getDrawable(0)
-        DrawableCompat.setTint(backgroundDrawable, DriveKitUI.colors.complementaryFontColor())
-        DrawableCompat.setTint(foregroundDrawable, DriveKitUI.colors.secondaryColor())
+        foregroundDrawable.tintDrawable(DriveKitUI.colors.secondaryColor())
+        backgroundDrawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
     }
 
     private fun setData(streaksData: StreaksData) {

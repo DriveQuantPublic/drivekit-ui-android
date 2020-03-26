@@ -4,7 +4,7 @@ import android.graphics.Color
 
 open class DKColors {
     open fun primaryColor(): Int = Color.parseColor("#0B4D6E")
-    open fun secondaryColor(): Int = Color.parseColor("#77E2B2")
+    open fun secondaryColor(): Int = Color.parseColor("#00EBB8")
     open fun mainFontColor(): Int = Color.parseColor("#161616")
     open fun complementaryFontColor(): Int = Color.parseColor("#9E9E9E")
     open fun fontColorOnPrimaryColor(): Int = Color.WHITE
