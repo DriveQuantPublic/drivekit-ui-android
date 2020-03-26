@@ -22,6 +22,7 @@ import java.io.Serializable
 class BeaconViewModel(
     val scanType: BeaconScanType,
     var vehicleId: String?,
+    var vehicleName: String?,
     var beacon: Beacon?
 ) : ViewModel(), Serializable {
     var vehicle: Vehicle?
@@ -209,10 +210,11 @@ class BeaconViewModel(
     class BeaconViewModelFactory(
         private val scanType: BeaconScanType,
         private val vehicleId: String?,
+        private val vehicleName: String?,
         private val beacon: Beacon?
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BeaconViewModel(scanType, vehicleId, beacon) as T
+            return BeaconViewModel(scanType, vehicleId, vehicleName, beacon) as T
         }
     }
 

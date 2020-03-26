@@ -16,7 +16,6 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_progress.text_view_description
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_success.*
 
@@ -39,8 +38,7 @@ class BeaconScannerSuccessFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val vehicleName = viewModel.vehicle?.computeTitle(requireContext(), listOf())?.let { it }?:run { "" }
+        val vehicleName = viewModel.vehicleName?.let { it }?:run { "" }
         val beaconCode = viewModel.beacon?.code?.let { it }?:run { "" }
 
         text_view_description.normalText()

@@ -118,9 +118,10 @@ enum class DetectionModeType(
         if (vehicle.isConfigured()){
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
+            val vehicleName = VehicleUtils().buildFormattedName(context, vehicle, viewModel.vehiclesList)
             when (this){
                 BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
-                BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId)
+                BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId, vehicleName)
                 else -> { } // do nothing
             }
         }
@@ -151,16 +152,13 @@ enum class DetectionModeType(
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
-        val vehiclePos = VehicleUtils().getVehiclePositionInList(vehicle, viewModel.vehiclesList)
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
-        val gpsVehiclePos = VehicleUtils().getVehiclePositionInList(gpsVehicle, viewModel.vehiclesList)
-
         val title = DKResource.convertToString(context, "app_name")
         val message = DKResource.buildString(context,
             "dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
-            VehicleUtils().buildFormattedName(context, vehicle, vehiclePos),
-            VehicleUtils().buildFormattedName(context, gpsVehicle, gpsVehiclePos),
+            VehicleUtils().buildFormattedName(context, vehicle, viewModel.vehiclesList),
+            VehicleUtils().buildFormattedName(context, gpsVehicle, viewModel.vehiclesList),
             gpsVehicle.getDetectionModeName(context)
         )
 
@@ -220,16 +218,18 @@ enum class DetectionModeType(
         separatorVerify?.setBackgroundColor(neutralColor)
         separatorReplace?.setBackgroundColor(neutralColor)
 
+        val vehicleName = viewModel.getTitle(context, vehicle)
+
         when (this){
             BEACON -> {
-                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier()) // TODO: display vehicle name
+                description?.text = DKResource.buildString(context, configureDescText, vehicleName)
 
                 verify?.let {
                     it.visibility = View.VISIBLE
                     it.text = DKResource.convertToString(context, "dk_vehicle_verify")
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
-                            BeaconActivity.launchActivity(context, BeaconScanType.VERIFY, vehicle.vehicleId, beacon)
+                            BeaconActivity.launchActivity(context, BeaconScanType.VERIFY, vehicle.vehicleId, vehicleName, beacon)
                         }
                     }
                 }
@@ -238,7 +238,7 @@ enum class DetectionModeType(
                     it.text = DKResource.convertToString(context, "dk_vehicle_replace")
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
-                            BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId, beacon)
+                            BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId, vehicleName, beacon)
                         }
                     }
                 }
@@ -256,7 +256,7 @@ enum class DetectionModeType(
                 }
             }
             BLUETOOTH -> {
-                description?.text = DKResource.buildString(context, configureDescText, vehicle.getDeviceDisplayIdentifier()) // TODO: display vehicle name
+                description?.text = DKResource.buildString(context, configureDescText, vehicleName)
 
                 delete?.let {
                     it.visibility = View.VISIBLE

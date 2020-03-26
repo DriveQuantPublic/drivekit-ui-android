@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 
 class VehicleDetailActivity : AppCompatActivity() {
 
@@ -27,13 +27,10 @@ class VehicleDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        DriveKitNavigationController.vehicleUIEntryPoint?.let {
-            val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container,
-                    it.createVehicleDetailFragment(vehicleId), "vehicleDetail")
-                .commit()
-        }
+        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, VehicleDetailFragment.newInstance(vehicleId), "vehicleDetailTag")
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,13 +52,13 @@ class VehicleDetailActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        val fragment = supportFragmentManager.findFragmentByTag("vehicleDetail")
+        val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager.findFragmentByTag("vehicleDetail")
+        val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         fragment?.onActivityResult(requestCode, resultCode, data)
     }
 }

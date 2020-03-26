@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.*
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 
 enum class BeaconStep {
     INITIAL,
@@ -22,7 +21,7 @@ enum class BeaconStep {
 
     fun getTitle(context: Context, viewModel: BeaconViewModel): Spannable {
         val beaconCode = viewModel.beacon?.code?.let { it }?: run { "" }
-        val vehicleName = viewModel.vehicle?.computeTitle(context, listOf())?.let { it }?: run { "" }
+        val vehicleName = viewModel.vehicleName?.let { it }?: run { "" }
 
         return when (this) {
             INITIAL -> DKResource.buildString(context, "dk_vehicle_beacon_start_scan")

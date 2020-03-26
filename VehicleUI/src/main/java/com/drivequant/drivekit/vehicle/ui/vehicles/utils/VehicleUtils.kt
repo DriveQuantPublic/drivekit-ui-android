@@ -11,6 +11,7 @@ import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import java.util.*
 
 open class VehicleUtils {
+
     fun fetchVehiclesOrderedByDisplayName(
         context: Context,
         synchronizationType: SynchronizationType,
@@ -26,7 +27,7 @@ open class VehicleUtils {
                     val vehicle2DisplayName = buildFormattedName(context, vehicle2, vehicle2Pos)
                     vehicle1DisplayName.compareTo(vehicle2DisplayName, ignoreCase = true)
                 })
-                listener.onVehiclesLoaded(VehicleFetchResponse(status, sortedVehicles))
+                listener.onVehiclesLoaded(status, sortedVehicles)
             }
         }, synchronizationType)
     }
@@ -40,7 +41,17 @@ open class VehicleUtils {
         return -1
     }
 
-    fun buildFormattedName(context: Context, vehicle: Vehicle, pos: Int): String{
+    fun buildFormattedName(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>) : String {
+        return if (!TextUtils.isEmpty(vehicle.name) && !isNameEqualsDefaultName(vehicle)) {
+            vehicle.name?.let { it }?:run { " " }
+        } else {
+            val vehicleNumber: Int = getVehiclePositionInList(vehicle, allVehicles) + 1
+            val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
+            "$myVehicleString - $vehicleNumber"
+        }
+    }
+
+    private fun buildFormattedName(context: Context, vehicle: Vehicle, pos: Int): String {
         return if (!TextUtils.isEmpty(vehicle.name) && !isNameEqualsDefaultName(vehicle)) {
             vehicle.name?.let { it }?:run { " " }
         } else {
@@ -65,10 +76,5 @@ open class VehicleUtils {
 }
 
 interface VehiclesFetchListener {
-    fun onVehiclesLoaded(response: VehicleFetchResponse)
+    fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>)
 }
-
-data class VehicleFetchResponse(
-    val syncStatus: VehicleSyncStatus,
-    val vehicles: List<Vehicle>
-)

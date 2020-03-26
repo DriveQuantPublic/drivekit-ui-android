@@ -19,8 +19,10 @@ import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SelectBluetoothFrag
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SuccessBluetoothFragment
 import java.io.Serializable
 
-class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
-
+class BluetoothViewModel(
+    val vehicleId: String,
+    val vehicleName: String
+): ViewModel(), Serializable {
     var vehicle: Vehicle?
     var bluetoothDevices: List<BluetoothData>
 
@@ -72,9 +74,9 @@ class BluetoothViewModel(val vehicleId: String): ViewModel(), Serializable {
     }
 
     @Suppress("UNCHECKED_CAST")
-    class BluetoothViewModelFactory(private val vehicleId: String) : ViewModelProvider.NewInstanceFactory() {
+    class BluetoothViewModelFactory(private val vehicleId: String, private val vehicleName: String) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BluetoothViewModel(vehicleId) as T
+            return BluetoothViewModel(vehicleId, vehicleName) as T
         }
     }
 }

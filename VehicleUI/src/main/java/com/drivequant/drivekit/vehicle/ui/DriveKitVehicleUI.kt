@@ -130,8 +130,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun createVehicleDetailFragment(vehicleId: String): Fragment = VehicleDetailFragment.newInstance(vehicleId)
-
     override fun createVehicleDetailActivity(context: Context, vehicleId: String) {
         val intent = Intent(context, VehicleDetailActivity::class.java)
         intent.putExtra(VEHICLE_ID_EXTRA,vehicleId)

@@ -6,7 +6,7 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 
 interface Field {
     fun getTitle(context: Context, vehicle: Vehicle): String?
-    fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String?
+    fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle> = listOf()): String?
     fun isEditable(): Boolean = false
     fun getKeyboardType(): Int? = InputType.TYPE_CLASS_TEXT
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false

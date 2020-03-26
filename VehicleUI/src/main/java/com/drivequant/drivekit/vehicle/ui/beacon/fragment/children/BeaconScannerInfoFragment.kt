@@ -22,7 +22,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
 
 class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
@@ -56,8 +55,8 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
         text_view_connected_vehicle_name.normalText(mainFontColor)
         text_view_connected_vehicle_name.typeface = Typeface.DEFAULT_BOLD
-        text_view_connected_vehicle_name.text = viewModel.vehicle?.let {
-            it.computeSubtitle(requireContext(), listOf()) // TODO listOf
+        text_view_connected_vehicle_name.text = viewModel.vehicleName?.let {
+            it
         }?:run {
             DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
         }

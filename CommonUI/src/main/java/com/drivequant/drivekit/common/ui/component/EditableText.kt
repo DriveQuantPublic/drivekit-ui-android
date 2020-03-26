@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 /**
  * Created by gabrielmorin on 05/04/2017.
  */
+
 class EditableText(context: Context) : LinearLayout(context) {
 
     interface OnTextChangedListener {

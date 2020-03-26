@@ -28,8 +28,7 @@ enum class GeneralField : Field {
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this){
             NAME -> {
-                val pos = VehicleUtils().getVehiclePositionInList(vehicle, allVehicles)
-                VehicleUtils().buildFormattedName(context, vehicle, pos)
+                VehicleUtils().buildFormattedName(context, vehicle, allVehicles)
             }
             CATEGORY -> vehicle.getCategoryName(context)
             BRAND -> vehicle.brand

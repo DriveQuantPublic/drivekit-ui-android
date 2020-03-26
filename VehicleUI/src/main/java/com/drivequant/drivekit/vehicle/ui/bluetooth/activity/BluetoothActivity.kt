@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.activity
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -14,20 +15,23 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 
 class BluetoothActivity : AppCompatActivity() {
-
     private lateinit var viewModel : BluetoothViewModel
     private lateinit var vehicleId: String
+    private lateinit var vehicleName: String
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
+        private const val VEHICLE_NAME_EXTRA = "vehicleName-extra"
 
-        fun launchActivity(context: Context, vehicleId: String) {
+        fun launchActivity(context: Context, vehicleId: String, vehicleName: String) {
             val intent = Intent(context, BluetoothActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
+            intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
             context.startActivity(intent)
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bluetooth)
@@ -37,8 +41,9 @@ class BluetoothActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
+        vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA) as String
 
-        viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId)).get(BluetoothViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName)).get(BluetoothViewModel::class.java)
 
         viewModel.fragmentDispatcher.observe(this, Observer { fragment ->
             fragment?.let {

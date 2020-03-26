@@ -37,14 +37,13 @@ class SuccessBluetoothFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val btDeviceName = vehicle.bluetooth?.name?.let { it }?: run { " "} // TODO method to retrieve btName (which can be btMacAddress)
-        val vehicleName = vehicle.name // TODO computeTitle
+        val btDeviceName = vehicle.bluetooth?.name?.let { it }?: run { "" }
 
         text_view_congrats_title.headLine1(mainFontColor)
         text_view_congrats_title.text = DKResource.convertToString(view.context, "dk_vehicle_bluetooth_congrats_title")
 
         text_view_congrats_description.normalText(mainFontColor)
-        text_view_congrats_description.text = DKResource.buildString(view.context, "dk_vehicle_bluetooth_congrats_desc", btDeviceName, vehicleName!!) // TODO: remove !!
+        text_view_congrats_description.text = DKResource.buildString(view.context, "dk_vehicle_bluetooth_congrats_desc", btDeviceName, viewModel.vehicleName)
 
         text_view_congrats_notice.normalText(mainFontColor)
         text_view_congrats_notice.text = DKResource.buildString(view.context, "dk_vehicle_bluetooth_congrats_notice", btDeviceName)

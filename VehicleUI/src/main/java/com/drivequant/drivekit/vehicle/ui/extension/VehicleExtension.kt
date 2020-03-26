@@ -6,29 +6,13 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
-
-// TODO: replace with buildFormattedName in VehicleUtils
-fun Vehicle.computeTitle(context: Context, vehicles: List<Vehicle>): String {
-    var defaultName = getDefaultTitle(this)
-    if (name.equals(defaultName, true)){
-        defaultName = "${context.getString(R.string.dk_vehicle_my_vehicle)} - ${getVehiclePositionInList(vehicles)}"
-    } else {
-        name?.let {
-            defaultName = it
-        }
-    }
-    return defaultName
-}
-
 fun Vehicle.computeSubtitle(context: Context, vehicles: List<Vehicle>): String? {
-    val vehiclePosition = VehicleUtils().getVehiclePositionInList(this, vehicles)
-    val title = VehicleUtils().buildFormattedName(context, this, vehiclePosition)
-    var subtitle: String? = getDefaultTitle(this)
+    val title = VehicleUtils().buildFormattedName(context, this, vehicles)
+    var subtitle: String? = "$brand $model $version"
 
     if (liteConfig){
         VehicleTypeItem.CAR.getCategories(context).first { it.liteConfigDqIndex == dqIndex}.title?.let { categoryName ->
@@ -94,12 +78,4 @@ fun Vehicle.getGearBoxName(context: Context): String? {
     } else {
         DKResource.convertToString(context, identifier)
     }
-}
-
-private fun Vehicle.getVehiclePositionInList(vehicles: List<Vehicle>): Int{
-    return vehicles.indexOf(this) + 1
-}
-
-private fun getDefaultTitle(vehicle: Vehicle): String {
-    return "${vehicle.brand} ${vehicle.model} ${vehicle.version}"
 }

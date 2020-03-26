@@ -2,7 +2,6 @@ package com.drivekit.demoapp.vehicle
 
 import android.content.Context
 import android.text.InputType
-import android.text.TextUtils
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 

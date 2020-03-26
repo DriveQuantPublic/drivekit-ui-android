@@ -31,7 +31,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
@@ -39,9 +38,6 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
@@ -71,7 +67,7 @@ class VehicleDetailFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("vehicleDetail", vehicleId)
+        outState.putSerializable("vehicleDetailTag", vehicleId)
         super.onSaveInstanceState(outState)
     }
 
@@ -84,29 +80,23 @@ class VehicleDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (savedInstanceState?.getSerializable("vehicleDetail") as String?)?.let{
+        (savedInstanceState?.getSerializable("vehicleDetailTag") as String?)?.let{
             vehicleId = it
         }
         viewModel = ViewModelProviders.of(this,
             VehicleDetailViewModel.VehicleDetailViewModelFactory(vehicleId)
         ).get(VehicleDetailViewModel::class.java)
+        viewModel.init(requireContext())
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         collapsingToolbar?.let {
-            VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext(), SynchronizationType.CACHE, object : VehiclesFetchListener {
-                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
-                    viewModel.vehicle?.let { vehicle ->
-                        val vehiclePos = VehicleUtils().getVehiclePositionInList(vehicle, response.vehicles)
-                        it.title = VehicleUtils().buildFormattedName(requireContext(), vehicle, vehiclePos)
-                        it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-                        it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
-                        it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
-                    }
-                }
-            })
+            it.title = viewModel.vehicleName
+            it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
+            it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)

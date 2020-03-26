@@ -15,7 +15,6 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothS
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinnerItem
@@ -35,10 +34,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         progressBarObserver.postValue(true)
         if (DriveKit.isConfigured()) {
             VehicleUtils().fetchVehiclesOrderedByDisplayName(context, synchronizationType, object : VehiclesFetchListener {
-                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
+                override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     progressBarObserver.postValue(false)
-                    syncStatus = response.syncStatus
-                    vehiclesList = response.vehicles
+                    vehiclesList = vehicles
                     vehiclesData.postValue(vehiclesList)
                 }
             })
@@ -57,8 +55,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        val pos = VehicleUtils().getVehiclePositionInList(vehicle, vehiclesList)
-        return VehicleUtils().buildFormattedName(context, vehicle, pos)
+        return VehicleUtils().buildFormattedName(context, vehicle, vehiclesList)
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String? {
