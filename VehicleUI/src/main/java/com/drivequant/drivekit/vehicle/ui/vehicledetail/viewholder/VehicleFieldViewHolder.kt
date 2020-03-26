@@ -6,10 +6,14 @@ import android.view.View
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.component.EditableText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 
 class VehicleFieldViewHolder(
     itemView: View,
@@ -32,10 +36,14 @@ class VehicleFieldViewHolder(
         val editTextSettings = EditableText(context)
         FontUtils.overrideFonts(context, editTextSettings)
         viewModel.vehicle?.let {
-            editTextSettings.setLabel(field.getTitle(context, it))
-            editTextSettings.setHint(field.getValue(context, it, listOf())) // TODO listOf
-            editTextSettings.setSettingsText(field.getValue(context, it, listOf())) // TODO listOf
-            editTextSettings.tag = field.getTitle(context, it) // TODO add interface method to retrieve keyValue ?
+            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener{
+                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
+                    editTextSettings.setLabel(field.getTitle(context, it))
+                    editTextSettings.setHint(field.getValue(context, it, response.vehicles))
+                    editTextSettings.setSettingsText(field.getValue(context, it, response.vehicles))
+                    editTextSettings.tag = field.getTitle(context, it) // TODO add interface method to retrieve keyValue ?
+                }
+            })
         }
         field.getKeyboardType()?.let {
             editTextSettings.setInputType(it)

@@ -21,19 +21,19 @@ import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDiagnosticMail
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
 
-class DriveKitDemoApplication: Application(), BeaconDiagnosticMail{
+class DriveKitDemoApplication: Application(), ContentMail {
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -114,8 +114,7 @@ class DriveKitDemoApplication: Application(), BeaconDiagnosticMail{
         /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         /////// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-        Stetho.initializeWithDefaults(this);
-        DriveKit.setApiKey("qDcgo5W2I1p3u5STEhuQ1AJo")
+        Stetho.initializeWithDefaults(this)
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.configureDetectionModes(
@@ -144,8 +143,16 @@ class DriveKitDemoApplication: Application(), BeaconDiagnosticMail{
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
     }
 
-    override fun getMailAddress(): String {
-        return "steven@drivequant.com"
+    override fun getRecipients(): List<String> {
+        return listOf("contact@drivequant.com")
+    }
+
+    override fun getBccRecipients(): List<String> {
+        return listOf()
+    }
+
+    override fun getSubject(): String {
+        return "Mock subject"
     }
 
     override fun getMailBody(): String {

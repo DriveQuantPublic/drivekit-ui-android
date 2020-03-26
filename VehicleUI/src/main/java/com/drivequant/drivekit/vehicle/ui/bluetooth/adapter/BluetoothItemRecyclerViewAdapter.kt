@@ -16,10 +16,13 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.tripanalysis.bluetooth.BluetoothData
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 
 class BluetoothItemRecyclerViewAdapter(
     var context: Context,
@@ -81,9 +84,14 @@ class BluetoothItemRecyclerViewAdapter(
 
         title?.text = DKResource.convertToString(context, "app_name")
         viewModel.vehicle?.let {
-            val vehicleName = it.computeTitle(context, listOf()) // TODO make fetchVehicles method available everywhere
-            val text = DKResource.buildString(context, "dk_vehicle_bluetooth_already_paired", btDeviceName, vehicleName)
-            description?.text = text
+            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener {
+                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
+                    val vehiclePos = VehicleUtils().getVehiclePositionInList(it, response.vehicles)
+                    val vehicleName = VehicleUtils().buildFormattedName(context, it, vehiclePos)
+                    val text = DKResource.buildString(context, "dk_vehicle_bluetooth_already_paired", btDeviceName, vehicleName)
+                    description?.text = text
+                }
+            })
         }
         title?.headLine1()
         description?.normalText()

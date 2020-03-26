@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_bluetooth_guide.*
 
 class GuideBluetoothFragment: Fragment() {
 
-    // TODO: override fonts in every fragment
     companion object {
         fun newInstance(viewModel: BluetoothViewModel, vehicleId: String): GuideBluetoothFragment {
             val fragment = GuideBluetoothFragment()

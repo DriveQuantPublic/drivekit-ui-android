@@ -27,10 +27,10 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 enum class DetectionModeType(
     private val title: String,
@@ -151,14 +151,16 @@ enum class DetectionModeType(
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
+        val vehiclePos = VehicleUtils().getVehiclePositionInList(vehicle, viewModel.vehiclesList)
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
+        val gpsVehiclePos = VehicleUtils().getVehiclePositionInList(gpsVehicle, viewModel.vehiclesList)
 
         val title = DKResource.convertToString(context, "app_name")
         val message = DKResource.buildString(context,
             "dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
-            vehicle.computeTitle(context, viewModel.vehiclesList),
-            gpsVehicle.computeTitle(context, viewModel.vehiclesList),
+            VehicleUtils().buildFormattedName(context, vehicle, vehiclePos),
+            VehicleUtils().buildFormattedName(context, gpsVehicle, gpsVehiclePos),
             gpsVehicle.getDetectionModeName(context)
         )
 

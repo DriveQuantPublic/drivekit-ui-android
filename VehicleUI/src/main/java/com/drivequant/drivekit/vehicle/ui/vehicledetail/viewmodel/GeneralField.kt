@@ -4,8 +4,8 @@ import android.content.Context
 import android.text.InputType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.extension.getCategoryName
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 enum class GeneralField : Field {
     NAME,
@@ -27,7 +27,10 @@ enum class GeneralField : Field {
 
     override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
         return when (this){
-            NAME -> vehicle.computeTitle(context, allVehicles)
+            NAME -> {
+                val pos = VehicleUtils().getVehiclePositionInList(vehicle, allVehicles)
+                VehicleUtils().buildFormattedName(context, vehicle, pos)
+            }
             CATEGORY -> vehicle.getCategoryName(context)
             BRAND -> vehicle.brand
             MODEL -> vehicle.model

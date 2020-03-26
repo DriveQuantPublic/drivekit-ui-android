@@ -46,7 +46,7 @@ class BeaconDetailFragment : Fragment() {
             val menuInflater = activity?.menuInflater
             menuInflater?.inflate(R.menu.beacon_detail_menu_bar, menu)
 
-            val item = menu?.findItem(R.id.action_email)
+            val item = menu?.findItem(R.id.action_mail)
             item?.let {
                 val wrapped = DrawableCompat.wrap(it.icon)
                 DrawableCompat.setTint(wrapped, Color.WHITE)
@@ -54,17 +54,21 @@ class BeaconDetailFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_email){
-            sendEmail()
+        if (item?.itemId == R.id.action_mail){
+            sendMail()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun sendEmail(){
-        val emailAddress = DriveKitVehicleUI.beaconDiagnosticMail?.getMailAddress()
+    private fun sendMail(){
+        val recipients = DriveKitVehicleUI.beaconDiagnosticMail?.getRecipients()?.toTypedArray()
+        val bccRecipients = DriveKitVehicleUI.beaconDiagnosticMail?.getBccRecipients()?.toTypedArray()
+        val subject = DriveKitVehicleUI.beaconDiagnosticMail?.getSubject()
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "plain/text"
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+        intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+        intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
         intent.putExtra(Intent.EXTRA_TEXT, buildBody())
         startActivity(intent)
     }

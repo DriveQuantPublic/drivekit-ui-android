@@ -30,7 +30,7 @@ enum class BeaconStep {
             SUCCESS -> DKResource.buildString(context, "dk_vehicle_beacon_setup_code_success_message")
             BEACON_NOT_FOUND -> {
                 if (viewModel.scanType == BeaconScanType.DIAGNOSTIC){
-                    DKResource.buildString(context, "dk_beacon_not_seen", beaconCode)
+                    DKResource.buildString(context, "dk_vehicle_beacon_not_seen", beaconCode)
                 } else {
                     DKResource.buildString(context, "dk_vehicle_beacon_setup_code_not_matched", beaconCode)
                 }

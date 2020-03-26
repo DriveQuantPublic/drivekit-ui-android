@@ -13,10 +13,10 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 
 class BeaconDetailViewModel(
     val vehicleId: String,
+    val vehicleName: String,
     private val batteryLevel: Int,
     private val seenBeacon: BeaconInfo
 ) : ViewModel() {
@@ -38,7 +38,7 @@ class BeaconDetailViewModel(
                     data.add(
                         BeaconDetailField(
                             getTitle(context, "dk_beacon_vehicule_linked"),
-                            DKSpannable().append(vehicle.computeTitle(context, listOf())).toSpannable()
+                            DKSpannable().append(vehicleName).toSpannable()
                         )
                     )
                 }
@@ -117,11 +117,12 @@ class BeaconDetailViewModel(
     @Suppress("UNCHECKED_CAST")
     class BeaconDetailViewModelFactory(
         private val vehicleId: String,
+        private val vehicleName: String,
         private val batteryLevel: Int,
         private val seenBeacon: BeaconInfo
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BeaconDetailViewModel(vehicleId, batteryLevel, seenBeacon) as T
+            return BeaconDetailViewModel(vehicleId, vehicleName, batteryLevel, seenBeacon) as T
         }
     }
 }
@@ -129,8 +130,3 @@ class BeaconDetailViewModel(
 data class BeaconDetailField(
     val title: String,
     val value: Spannable)
-
-interface BeaconDiagnosticMail {
-    fun getMailAddress(): String
-    fun getMailBody(): String
-}

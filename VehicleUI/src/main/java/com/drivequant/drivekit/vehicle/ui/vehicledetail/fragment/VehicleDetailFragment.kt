@@ -31,14 +31,17 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.extension.computeTitle
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleFetchResponse
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
@@ -93,10 +96,17 @@ class VehicleDetailFragment : Fragment() {
 
         val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         collapsingToolbar?.let {
-            it.title = viewModel.vehicle?.computeTitle(requireContext(), listOf()) // TODO: create a method to retrieve all vehicles, everywhere
-            it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
-            it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
+            VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext(), SynchronizationType.CACHE, object : VehiclesFetchListener {
+                override fun onVehiclesLoaded(response: VehicleFetchResponse) {
+                    viewModel.vehicle?.let { vehicle ->
+                        val vehiclePos = VehicleUtils().getVehiclePositionInList(vehicle, response.vehicles)
+                        it.title = VehicleUtils().buildFormattedName(requireContext(), vehicle, vehiclePos)
+                        it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+                        it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(context!!))
+                        it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
+                    }
+                }
+            })
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)

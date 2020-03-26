@@ -3,13 +3,13 @@ package com.drivequant.drivekit.vehicle.ui
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
+import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDiagnosticMail
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
@@ -41,7 +41,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     )
 
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
-    internal var beaconDiagnosticMail: BeaconDiagnosticMail? = null
+    internal var beaconDiagnosticMail: ContentMail? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -112,7 +112,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.customFields[groupField] = fieldsToAdd
     }
 
-    fun configureBeaconDetailEmail(beaconDiagnosticMail: BeaconDiagnosticMail){
+    fun configureBeaconDetailEmail(beaconDiagnosticMail: ContentMail){
         this.beaconDiagnosticMail = beaconDiagnosticMail
     }
 

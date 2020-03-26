@@ -8,8 +8,11 @@ import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
+
+// TODO: replace with buildFormattedName in VehicleUtils
 fun Vehicle.computeTitle(context: Context, vehicles: List<Vehicle>): String {
     var defaultName = getDefaultTitle(this)
     if (name.equals(defaultName, true)){
@@ -23,7 +26,8 @@ fun Vehicle.computeTitle(context: Context, vehicles: List<Vehicle>): String {
 }
 
 fun Vehicle.computeSubtitle(context: Context, vehicles: List<Vehicle>): String? {
-    val title = computeTitle(context, vehicles)
+    val vehiclePosition = VehicleUtils().getVehiclePositionInList(this, vehicles)
+    val title = VehicleUtils().buildFormattedName(context, this, vehiclePosition)
     var subtitle: String? = getDefaultTitle(this)
 
     if (liteConfig){
