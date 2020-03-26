@@ -9,10 +9,10 @@ import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.*
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
@@ -43,24 +43,30 @@ class BeaconViewModel(
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
     fun init(context: Context){
-        vehicle = fetchVehicle()
-        computeVehicleName(context)
+        vehicleId?.let { vehicleId ->
+            DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
+                override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
+                    this@BeaconViewModel.vehicle = vehicle
+                    computeVehicleName(context)
+                }
+            })
+        }
 
         when (scanType){
             PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this))
             DIAGNOSTIC -> {
                 if (DriveKitTripAnalysis.getConfig().getAllBeacons().isEmpty()) {
                     if (beacon != null){
-                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
+                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this, BeaconStep.INITIAL))
                     } else {
-                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.BEACON_NOT_CONFIGURED))
+                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this, BeaconStep.BEACON_NOT_CONFIGURED))
                     }
                 } else {
-                    fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
+                    fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this, BeaconStep.INITIAL))
                 }
             }
             VERIFY -> {
-                fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
+                fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this, BeaconStep.INITIAL))
             }
         }
     }
@@ -177,23 +183,10 @@ class BeaconViewModel(
         listener?.hideLoader()
     }
 
-    // TODO: refacto with other VM
-    private fun fetchVehicle(): Vehicle? {
-        return vehicleId?.let {
-            DbVehicleAccess.findVehicle(it).executeOne()
-        }?:run {
-            null
-        }
-    }
-
-    private fun fetchVehicles(): List<Vehicle> {
-        return DbVehicleAccess.findVehicles().execute()
-    }
-
-
-    fun fetchVehicleFromBeacon(): Vehicle? {
+    fun fetchVehicleFromBeacon(vehicles: List<Vehicle>): Vehicle? {
         var matchedVehicle : Vehicle? = null
-        for (vehicle in fetchVehicles()) {
+
+        for (vehicle in vehicles) {
             vehicle.beacon?.let { beacon ->
                 seenBeacon?.let { seenBeacon ->
                     if (beacon.proximityUuid.equals(seenBeacon.proximityUuid, true)

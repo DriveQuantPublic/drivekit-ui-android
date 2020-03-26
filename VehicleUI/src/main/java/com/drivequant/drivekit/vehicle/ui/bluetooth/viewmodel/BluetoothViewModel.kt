@@ -6,10 +6,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.support.v4.app.Fragment
 import com.drivequant.drivekit.databaseutils.entity.Bluetooth
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.bluetooth.BluetoothData
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleAddBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus.*
@@ -23,7 +24,7 @@ class BluetoothViewModel(
     val vehicleId: String,
     val vehicleName: String
 ): ViewModel(), Serializable {
-    var vehicle: Vehicle?
+    var vehicle: Vehicle? = null
     var bluetoothDevices: List<BluetoothData>
 
     var fragmentDispatcher = MutableLiveData<Fragment>()
@@ -31,7 +32,12 @@ class BluetoothViewModel(
     var addBluetoothObserver = MutableLiveData<String>()
 
     init {
-        vehicle = fetchVehicle()
+        DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
+            override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
+                this@BluetoothViewModel.vehicle = vehicle
+            }
+        })
+
         bluetoothDevices = DriveKitTripAnalysis.getBluetoothPairedDevices()
         fragmentDispatcher.postValue(GuideBluetoothFragment.newInstance(this, vehicleId))
     }
@@ -63,14 +69,10 @@ class BluetoothViewModel(
         }
     }
 
-    fun isBluetoothAlreadyPaired(macAddress: String): Boolean {
-        return !DbVehicleAccess.findVehicles().execute().filter {
+    fun isBluetoothAlreadyPaired(macAddress: String, vehicles: List<Vehicle>): Boolean {
+        return !vehicles.filter {
             it.bluetooth?.macAddress == macAddress
         }.isNullOrEmpty()
-    }
-
-    private fun fetchVehicle(): Vehicle? {
-        return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
 
     @Suppress("UNCHECKED_CAST")

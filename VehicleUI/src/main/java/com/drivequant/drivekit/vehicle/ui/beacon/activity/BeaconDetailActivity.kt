@@ -30,15 +30,15 @@ class BeaconDetailActivity : AppCompatActivity() {
         private const val BEACON_INFO_EXTRA = "beacon-info-extra"
 
         fun launchActivity(context: Context,
-            vehicleId: String,
-            vehicleName: String,
-            batterylevel: Int,
-            beaconInfo: BeaconInfo
+                           vehicleId: String,
+                           vehicleName: String,
+                           batteryLevel: Int,
+                           beaconInfo: BeaconInfo
         ) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
             intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-            intent.putExtra(BATTERY_LEVEL_EXTRA, batterylevel)
+            intent.putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
             intent.putExtra(BEACON_INFO_EXTRA, beaconInfo)
             context.startActivity(intent)
         }

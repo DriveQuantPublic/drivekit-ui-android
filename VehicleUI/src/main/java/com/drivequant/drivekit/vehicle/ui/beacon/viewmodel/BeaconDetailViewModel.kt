@@ -11,7 +11,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 
 class BeaconDetailViewModel(
@@ -22,68 +24,66 @@ class BeaconDetailViewModel(
 ) : ViewModel() {
 
     var data: MutableList<BeaconDetailField> = mutableListOf()
-    var vehicle: Vehicle? = null
-
-    init {
-        vehicle = fetchVehicle()
-    }
 
     fun buildListData(context: Context){
-        vehicle = fetchVehicle()
-        vehicle?.let { vehicle ->
-            vehicle.beacon?.let { beacon ->
-                if (beacon.proximityUuid.equals(seenBeacon.proximityUuid, true)
-                    && beacon.major == seenBeacon.major && beacon.minor == seenBeacon.minor)
-                {
-                    data.add(
-                        BeaconDetailField(
-                            getTitle(context, "dk_beacon_vehicule_linked"),
-                            DKSpannable().append(vehicleName).toSpannable()
+        DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
+            override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
+                vehicle?.let {
+                    it.beacon?.let { beacon ->
+                        if (beacon.proximityUuid.equals(seenBeacon.proximityUuid, true)
+                            && beacon.major == seenBeacon.major && beacon.minor == seenBeacon.minor)
+                        {
+                            data.add(
+                                BeaconDetailField(
+                                    getTitle(context, "dk_beacon_vehicule_linked"),
+                                    DKSpannable().append(vehicleName).toSpannable()
+                                )
+                            )
+                        }
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_uuid"),
+                                DKSpannable().append(beacon.proximityUuid.substring(0, 8) + "…").toSpannable()
+                            )
                         )
-                    )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_major"),
+                                DKSpannable().append(seenBeacon.major.toString()).toSpannable()
+                            )
+                        )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_minor"),
+                                DKSpannable().append(seenBeacon.minor.toString()).toSpannable()
+                            )
+                        )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_battery"),
+                                buildValue(context, batteryLevel.toString(), "%")
+                            )
+                        )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_distance"),
+                                buildValue(context, seenBeacon.accuracy.toString(), "dk_common_unit_meter")
+                            )
+                        )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_rssi"),
+                                buildValue(context, seenBeacon.rssi.toString(), "dBm"))
+                        )
+                        data.add(
+                            BeaconDetailField(
+                                getTitle(context, "dk_beacon_tx"),
+                                buildValue(context, seenBeacon.txPower.toString(), "dBm"))
+                        )
+                    }
                 }
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_uuid"),
-                        DKSpannable().append(beacon.proximityUuid.substring(0, 8) + "…").toSpannable()
-                    )
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_major"),
-                        DKSpannable().append(seenBeacon.major.toString()).toSpannable()
-                    )
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_minor"),
-                        DKSpannable().append(seenBeacon.minor.toString()).toSpannable()
-                    )
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_battery"),
-                        buildValue(context, batteryLevel.toString(), "%")
-                    )
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_distance"),
-                        buildValue(context, seenBeacon.accuracy.toString(), "dk_common_unit_meter")
-                    )
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_rssi"),
-                        buildValue(context, seenBeacon.rssi.toString(), "dBm"))
-                )
-                data.add(
-                    BeaconDetailField(
-                        getTitle(context, "dk_beacon_tx"),
-                        buildValue(context, seenBeacon.txPower.toString(), "dBm"))
-                )
             }
-        }
+        })
     }
 
     private fun getTitle(context: Context, identifier: String): String {
@@ -107,11 +107,6 @@ class BeaconDetailViewModel(
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_small)
             }).toSpannable()
-    }
-
-    // TODO: refacto
-    private fun fetchVehicle(): Vehicle? {
-        return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
 
     @Suppress("UNCHECKED_CAST")

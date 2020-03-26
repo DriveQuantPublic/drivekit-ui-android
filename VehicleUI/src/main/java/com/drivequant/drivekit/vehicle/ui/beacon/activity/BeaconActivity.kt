@@ -57,7 +57,6 @@ class BeaconActivity : AppCompatActivity() {
             BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
         viewModel.init(this)
 
-        // TODO: DriveKit navigation ?
         viewModel.fragmentDispatcher.observe(this, Observer { fragment ->
             fragment?.let {
                 supportFragmentManager.beginTransaction()

@@ -20,11 +20,9 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.DetectionModeSpinnerAdapter
-
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)

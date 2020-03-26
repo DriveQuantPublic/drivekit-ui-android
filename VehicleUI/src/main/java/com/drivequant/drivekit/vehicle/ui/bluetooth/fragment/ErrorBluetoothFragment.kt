@@ -27,7 +27,6 @@ class ErrorBluetoothFragment: Fragment() {
 
     private lateinit var vehicleId : String
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bluetooth_error, container, false).setDKStyle()
     }

@@ -4,16 +4,14 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.manager.VehicleCreateQueryListener
-import com.drivequant.drivekit.vehicle.manager.VehicleDeleteQueryListener
-import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
+import com.drivequant.drivekit.vehicle.manager.*
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -230,28 +228,32 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun createVehicle(){
         progressBarObserver.postValue(true)
-        val detectionMode = computeCreateVehicleDetectionMode()
-        DriveKitVehicle.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
-            override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                if (status == VehicleManagerStatus.SUCCESS){
-                    vehicleToDelete?.let {
-                        DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
-                            override fun onResponse(status: VehicleManagerStatus) {
-                                vehicleToDelete = null
+
+        DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
+            override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                val detectionMode = computeCreateVehicleDetectionMode(vehicles)
+                DriveKitVehicle.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
+                    override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
+                        if (status == VehicleManagerStatus.SUCCESS){
+                            vehicleToDelete?.let {
+                                DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
+                                    override fun onResponse(status: VehicleManagerStatus) {
+                                        vehicleToDelete = null
+                                        endObserver.postValue(null)
+                                        progressBarObserver.postValue(false)
+                                    }
+                                })
+                            }?: run {
                                 endObserver.postValue(null)
                                 progressBarObserver.postValue(false)
                             }
-                        })
-                    }?: run {
-                        endObserver.postValue(null)
-                        progressBarObserver.postValue(false)
+                        } else {
+                            fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                            progressBarObserver.postValue(false)
+                        }
                     }
-                } else {
-                    fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                    progressBarObserver.postValue(false)
-                }
-            }
-        }, isLiteConfig)
+                }, isLiteConfig)            }
+        }, SynchronizationType.CACHE)
     }
 
     private fun manageBrands(context: Context){
@@ -303,12 +305,12 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return typesItem
     }
 
-    private fun computeCreateVehicleDetectionMode(): DetectionMode {
+    private fun computeCreateVehicleDetectionMode(vehicles: List<Vehicle>): DetectionMode {
         val detectionModes = DriveKitVehicleUI.detectionModes
         return if (detectionModes.isEmpty()){
             DetectionMode.DISABLED
         } else if (detectionModes.contains(DetectionMode.GPS)){
-            if (DbVehicleAccess.findVehiclesByDetectionMode(DetectionMode.GPS).execute().isEmpty()){
+            if (vehicles.isEmpty()){
                 DetectionMode.GPS
             } else {
                 detectionModes.first()

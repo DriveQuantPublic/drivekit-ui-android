@@ -16,7 +16,12 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.bluetooth.BluetoothData
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 
@@ -50,11 +55,15 @@ class BluetoothItemRecyclerViewAdapter(
         holder.container.setOnClickListener {
             it.context?.let { context ->
                 val bluetoothDevice = viewModel.bluetoothDevices[position]
-                if (viewModel.isBluetoothAlreadyPaired(bluetoothDevice.macAddress)) {
-                    showDeviceAlreadyPaired(context, bluetoothDevice)
-                } else {
-                    viewModel.addBluetoothToVehicle(bluetoothDevice)
-                }
+                DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener{
+                    override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                        if (viewModel.isBluetoothAlreadyPaired(bluetoothDevice.macAddress, vehicles)) {
+                            showDeviceAlreadyPaired(context, bluetoothDevice)
+                        } else {
+                            viewModel.addBluetoothToVehicle(bluetoothDevice)
+                        }
+                    }
+                }, SynchronizationType.CACHE)
             }
         }
     }

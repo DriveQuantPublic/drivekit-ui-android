@@ -13,7 +13,12 @@ import com.drivequant.beaconutils.compatibility.BeaconScannerPreLollipop
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
@@ -108,14 +113,19 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                 })
             }
             DIAGNOSTIC -> {
-                viewModel.fetchVehicleFromBeacon()?.let {
-                    viewModel.vehicle = it
-                    viewModel.vehicleId = it.vehicleId
-                    viewModel.computeVehicleName(requireContext())
-                    viewModel.updateScanState(BeaconStep.VERIFIED)
-                }?:run  {
-                    viewModel.updateScanState(BeaconStep.WRONG_BEACON)
-                }
+                DriveKitVehicle.getVehiclesOrderByNameAsc(object: VehicleListQueryListener {
+                    override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                        viewModel.fetchVehicleFromBeacon(vehicles)?.let {
+                            viewModel.vehicle = it
+                            viewModel.vehicleId = it.vehicleId
+                            viewModel.computeVehicleName(requireContext())
+                            viewModel.updateScanState(BeaconStep.VERIFIED)
+                        }?:run  {
+                            viewModel.updateScanState(BeaconStep.WRONG_BEACON)
+                        }
+                    }
+                }, SynchronizationType.CACHE)
+
             }
             VERIFY -> {
                 if (viewModel.isBeaconValid()){

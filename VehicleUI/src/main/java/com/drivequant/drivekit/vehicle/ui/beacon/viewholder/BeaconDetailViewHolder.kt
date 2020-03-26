@@ -17,9 +17,7 @@ class BeaconDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     fun bind(lineData: BeaconDetailField){
         title.normalText(DKColors().mainFontColor())
         title.text = lineData.title
-
         value.text = lineData.value
-
         separator.setBackgroundColor(DKColors().neutralColor())
     }
 }

@@ -122,7 +122,7 @@ enum class DetectionModeType(
             when (this){
                 BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
                 BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId, vehicleName)
-                else -> { } // do nothing
+                else -> { }
             }
         }
     }

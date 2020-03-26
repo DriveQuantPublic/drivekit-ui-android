@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
@@ -20,17 +21,17 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     fun init(context: Context){
         VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener {
             override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                vehicle = fetchVehicle()
-                vehicle?.let {
-                    vehicleName = VehicleUtils().buildFormattedName(context, it , vehicles)
-                }
-                createGroupFields()
+                DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
+                    override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
+                        this@VehicleDetailViewModel.vehicle = vehicle
+                        vehicle?.let {
+                            vehicleName = VehicleUtils().buildFormattedName(context, it , vehicles)
+                            createGroupFields()
+                        }
+                    }
+                })
             }
         })
-    }
-
-    private fun fetchVehicle(): Vehicle? {
-        return DbVehicleAccess.findVehicle(vehicleId).executeOne()
     }
 
     private fun createGroupFields() {
