@@ -2,16 +2,17 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKMedia
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.buildCategoryItem
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import java.lang.IllegalArgumentException
 
-enum class VehicleTypeItem(
-    val vehicleType: VehicleType,
-    private val titleStringResId: Int
-) {
-    CAR(VehicleType.CAR, R.string.dk_vehicle_type_car_title);
+enum class VehicleTypeItem(val vehicleType: VehicleType) {
+    CAR(VehicleType.CAR);
 
     companion object {
         fun getEnumByVehicleType(vehicleType: VehicleType): VehicleTypeItem{
@@ -25,19 +26,17 @@ enum class VehicleTypeItem(
     }
 
     fun getTitle(context: Context): String {
-        return context.getString(this.titleStringResId)
+        return when (this){
+            CAR -> DKResource.convertToString(context, "dk_vehicle_type_car_title")
+        }
     }
 
     fun getCategories(context: Context): List<VehicleCategoryItem> {
-        val lines = DKMedia.readCSVFile(context, R.raw.vehicle_categories)
         val categories = mutableListOf<VehicleCategoryItem>()
-        for (i in lines!!.indices) {
-            val vehicleCategoryItem = buildVehicleCategoryItem(context, lines[i])
-            categories.add(vehicleCategoryItem)
+        for (item in VehicleCategory.getCategories(vehicleType)){
+            categories.add(item.buildCategoryItem(context))
         }
-        return when (this){
-            CAR -> categories.filter { it.isCar}
-        }
+        return categories
     }
 
     fun getBrands(context: Context, withIcons: Boolean = false): List<VehicleBrandItem> {

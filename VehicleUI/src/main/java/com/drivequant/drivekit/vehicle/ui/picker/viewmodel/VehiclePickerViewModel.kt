@@ -18,6 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
 
@@ -128,9 +129,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleCategories(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
-        val rawCategories = selectedVehicleTypeItem.getCategories(context)
-        for (i in rawCategories.indices){
-            items.add(VehiclePickerItem(i, rawCategories[i].title, rawCategories[i].category, rawCategories[i].icon1, rawCategories[i].icon2))
+        val categories = selectedVehicleTypeItem.getCategories(context)
+        for (i in categories.indices){
+            items.add(VehiclePickerItem(i, categories[i].title, categories[i].category, categories[i].icon1, categories[i].icon2))
         }
         return items
     }

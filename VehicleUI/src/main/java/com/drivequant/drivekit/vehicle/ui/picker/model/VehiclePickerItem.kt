@@ -10,3 +10,16 @@ data class VehiclePickerItem(
     val icon1: Drawable? = null,
     val icon2: Drawable? = null
 ) : Serializable
+
+data class VehicleCategoryItem(
+    val category: String,
+    val title: String?,
+    val icon1: Drawable?,
+    val icon2: Drawable?,
+    val description: String?,
+    val liteConfigDqIndex: String,
+    val isCar: Boolean,
+    val isMotorbike: Boolean,
+    val isTruck: Boolean
+) : Serializable
+

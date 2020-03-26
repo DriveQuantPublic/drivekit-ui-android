@@ -16,8 +16,8 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
+import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
-import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 
 class VehicleCategoryDescriptionFragment : Fragment() {
