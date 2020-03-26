@@ -18,7 +18,7 @@ enum class BeaconStep {
     BEACON_UNAVAILABLE,
     VERIFIED,
     WRONG_BEACON,
-    BEACON_NOT_CONFIGURED; // TODO : update diagram
+    BEACON_NOT_CONFIGURED;
 
     fun getTitle(context: Context, viewModel: BeaconViewModel): Spannable {
         val beaconCode = viewModel.beacon?.code?.let { it }?: run { "" }

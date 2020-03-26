@@ -135,7 +135,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconList(): List<BeaconData> {
-        return TripAnalysisConfig.beacons // TODO : avoid TA module depedency, replace with future DriveKitVehicleUI.getBeacons()
+        return TripAnalysisConfig.getAllBeacons()
     }
 
     override fun scanMode(): BeaconScannerMode {

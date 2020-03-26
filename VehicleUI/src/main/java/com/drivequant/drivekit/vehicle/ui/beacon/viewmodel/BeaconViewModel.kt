@@ -43,8 +43,12 @@ class BeaconViewModel(
         when (scanType){
             PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this))
             DIAGNOSTIC -> {
-                if (DriveKitTripAnalysis.getConfig().beacons.isEmpty()) { // TODO call DriveKitVehicleUI beacons param
-                    fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.BEACON_NOT_CONFIGURED))
+                if (DriveKitTripAnalysis.getConfig().getAllBeacons().isEmpty()) {
+                    if (beacon != null){
+                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
+                    } else {
+                        fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.BEACON_NOT_CONFIGURED))
+                    }
                 } else {
                     fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
                 }
