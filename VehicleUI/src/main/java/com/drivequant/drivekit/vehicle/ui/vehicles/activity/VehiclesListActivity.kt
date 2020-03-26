@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 
 class VehiclesListActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
@@ -17,11 +17,9 @@ class VehiclesListActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        DriveKitNavigationController.vehicleUIEntryPoint?.let {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, it.createVehicleListFragment())
-                .commit()
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, VehiclesListFragment())
+            .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {

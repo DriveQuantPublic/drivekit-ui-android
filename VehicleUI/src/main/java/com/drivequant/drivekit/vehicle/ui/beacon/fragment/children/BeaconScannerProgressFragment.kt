@@ -13,7 +13,6 @@ import com.drivequant.beaconutils.compatibility.BeaconScannerPreLollipop
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
@@ -112,6 +111,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                 viewModel.fetchVehicleFromBeacon()?.let {
                     viewModel.vehicle = it
                     viewModel.vehicleId = it.vehicleId
+                    viewModel.computeVehicleName(requireContext())
                     viewModel.updateScanState(BeaconStep.VERIFIED)
                 }?:run  {
                     viewModel.updateScanState(BeaconStep.WRONG_BEACON)

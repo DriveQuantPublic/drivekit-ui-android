@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.activity
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -40,6 +41,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_picker)

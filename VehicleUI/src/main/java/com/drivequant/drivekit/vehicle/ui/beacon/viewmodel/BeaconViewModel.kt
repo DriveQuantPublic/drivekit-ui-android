@@ -3,8 +3,10 @@ package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
 import android.support.v4.app.Fragment
 import com.drivequant.beaconutils.BeaconInfo
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.dbvehicleaccess.DbVehicleAccess
@@ -17,15 +19,17 @@ import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import java.io.Serializable
 
 class BeaconViewModel(
     val scanType: BeaconScanType,
     var vehicleId: String?,
-    var vehicleName: String?,
     var beacon: Beacon?
 ) : ViewModel(), Serializable {
-    var vehicle: Vehicle?
+    var vehicle: Vehicle? = null
+    var vehicleName: String? = null
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
@@ -38,8 +42,9 @@ class BeaconViewModel(
     val beaconDetailObserver = MutableLiveData<Any>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
 
-    init {
+    fun init(context: Context){
         vehicle = fetchVehicle()
+        computeVehicleName(context)
 
         when (scanType){
             PAIRING -> fragmentDispatcher.postValue(ConnectBeaconFragment.newInstance(this))
@@ -57,6 +62,16 @@ class BeaconViewModel(
             VERIFY -> {
                 fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.INITIAL))
             }
+        }
+    }
+
+    fun computeVehicleName(context: Context){
+        vehicle?.let {
+            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener{
+                override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                    vehicleName = VehicleUtils().buildFormattedName(context, it, vehicles)
+                }
+            })
         }
     }
 
@@ -210,11 +225,10 @@ class BeaconViewModel(
     class BeaconViewModelFactory(
         private val scanType: BeaconScanType,
         private val vehicleId: String?,
-        private val vehicleName: String?,
         private val beacon: Beacon?
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BeaconViewModel(scanType, vehicleId, vehicleName, beacon) as T
+            return BeaconViewModel(scanType, vehicleId, beacon) as T
         }
     }
 

@@ -229,7 +229,8 @@ enum class DetectionModeType(
                     it.text = DKResource.convertToString(context, "dk_vehicle_verify")
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
-                            BeaconActivity.launchActivity(context, BeaconScanType.VERIFY, vehicle.vehicleId, vehicleName, beacon)
+                            alert.dismiss()
+                            BeaconActivity.launchActivity(context, BeaconScanType.VERIFY, vehicle.vehicleId, beacon)
                         }
                     }
                 }
@@ -238,7 +239,8 @@ enum class DetectionModeType(
                     it.text = DKResource.convertToString(context, "dk_vehicle_replace")
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
-                            BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId, vehicleName, beacon)
+                            alert.dismiss()
+                            BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId, beacon)
                         }
                     }
                 }

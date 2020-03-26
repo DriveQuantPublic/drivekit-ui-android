@@ -52,7 +52,7 @@ enum class VehicleAction(
     }
 
     private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle){
-        DriveKitNavigationController.vehicleUIEntryPoint?.createVehicleDetailActivity(context, vehicle.vehicleId)
+        DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleDetailActivity(context, vehicle.vehicleId)
     }
 
     private fun manageReplaceVehicle(context: Context, vehicle: Vehicle){

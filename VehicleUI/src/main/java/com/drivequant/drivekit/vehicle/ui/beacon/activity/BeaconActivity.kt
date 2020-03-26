@@ -20,25 +20,21 @@ class BeaconActivity : AppCompatActivity() {
     private lateinit var scanType : BeaconScanType
 
     private var vehicleId : String? = null
-    private var vehicleName : String? = null
     private var beacon : Beacon? = null
 
     companion object {
         private const val SCAN_TYPE_EXTRA = "scan-type-extra"
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
-        private const val VEHICLE_NAME_EXTRA = "vehicleName-extra"
         private const val BEACON_EXTRA = "beacon-extra"
 
         fun launchActivity(context: Context,
                            scanType: BeaconScanType,
                            vehicleId: String? = null,
-                           vehicleName: String? = null,
                            beacon: Beacon? = null
         ) {
             val intent = Intent(context, BeaconActivity::class.java)
             intent.putExtra(SCAN_TYPE_EXTRA, scanType)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-            intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
             intent.putExtra(BEACON_EXTRA, beacon)
             context.startActivity(intent)
         }
@@ -55,12 +51,11 @@ class BeaconActivity : AppCompatActivity() {
 
         scanType = intent.getSerializableExtra(SCAN_TYPE_EXTRA) as BeaconScanType
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
-        vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
         beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
         viewModel = ViewModelProviders.of(this,
-            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, vehicleName, beacon)).get(BeaconViewModel::class.java)
-
+            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
+        viewModel.init(this)
 
         // TODO: DriveKit navigation ?
         viewModel.fragmentDispatcher.observe(this, Observer { fragment ->
