@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
@@ -10,14 +9,11 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
-import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
@@ -122,17 +118,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun createVehicleListFragment(): Fragment = VehiclesListFragment()
-
-    override fun createVehiclePickerActivity(context: Context) {
-        val intent = Intent(context, VehiclePickerActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
-    }
-
-    override fun createVehicleDetailActivity(context: Context, vehicleId: String) {
+    override fun startVehicleDetailActivity(context: Context, vehicleId: String) {
         val intent = Intent(context, VehicleDetailActivity::class.java)
-        intent.putExtra(VEHICLE_ID_EXTRA,vehicleId)
+        intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
