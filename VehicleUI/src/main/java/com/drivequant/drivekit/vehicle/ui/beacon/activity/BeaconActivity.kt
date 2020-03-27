@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.activity
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -9,11 +11,13 @@ import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import kotlinx.android.synthetic.main.fragment_bluetooth_select.*
 
 class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
@@ -76,6 +80,16 @@ class BeaconActivity : AppCompatActivity() {
                 }
             }
         })
+
+        viewModel.progressBarObserver.observe(this, Observer {
+            it?.let { displayProgressCircular ->
+                if (displayProgressCircular){
+                    showProgressCircular()
+                } else {
+                    hideProgressCircular()
+                }
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -89,5 +103,27 @@ class BeaconActivity : AppCompatActivity() {
         } else {
             supportFragmentManager.popBackStack()
         }
+    }
+
+    private fun hideProgressCircular() {
+        progress_circular.animate()
+            .alpha(0f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
+                }
+            })
     }
 }

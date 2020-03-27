@@ -57,7 +57,7 @@ class SelectBluetoothFragment: Fragment() {
         viewModel.progressBarObserver.observe(this, Observer {
             it?.let {displayProgressCircular ->
                 if (displayProgressCircular){
-                    progress_circular.visibility = View.VISIBLE
+                    showProgressCircular()
                 } else {
                     hideProgressCircular()
                 }
@@ -88,6 +88,17 @@ class SelectBluetoothFragment: Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     progress_circular?.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
