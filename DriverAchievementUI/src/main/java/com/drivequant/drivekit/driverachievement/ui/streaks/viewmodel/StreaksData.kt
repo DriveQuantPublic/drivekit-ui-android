@@ -39,8 +39,8 @@ class StreaksData(
         return when (streakTheme) {
             PHONE_DISTRACTION -> R.drawable.dk_common_distraction
             SAFETY -> R.drawable.dk_common_safety
-            SPEEDING -> R.drawable.dk_common_eco_decel
-            ACCELERATION -> R.drawable.dk_common_eco_accel
+            SPEEDING -> R.drawable.dk_common_eco_accel
+            ACCELERATION -> R.drawable.dk_common_safety_accel
             BRAKE -> R.drawable.dk_common_safety_decel
             ADHERENCE -> R.drawable.dk_common_safety_adherence
         }
@@ -100,7 +100,9 @@ class StreaksData(
                 size(R.dimen.dk_text_big)
             }).append(trip, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
-            }).appendSpace(" - $currentDistance - $currentDuration", before = false).toSpannable()
+            }).append(" - $currentDistance - $currentDuration", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+            }).toSpannable()
     }
 
     fun getBestStreakData(context: Context): SpannableString {
@@ -112,10 +114,13 @@ class StreaksData(
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET ->
 
                 DKSpannable()
-                .append("$bestTripsCount", context.resSpans {
-                    typeface(Typeface.BOLD)
-                    size(R.dimen.dk_text_big)
-                }).appendSpace("$trip - $bestDistance - $bestDuration", before = true).toSpannable()
+                    .append("$bestTripsCount ", context.resSpans {
+                        typeface(Typeface.BOLD)
+                        size(R.dimen.dk_text_big)
+                        color(DriveKitUI.colors.mainFontColor())
+                    }).append("$trip - $bestDistance - $bestDuration", context.resSpans {
+                        color(DriveKitUI.colors.mainFontColor())
+                    }).toSpannable()
 
             StreakStatus.BEST -> SpannableString.valueOf(context.getString(R.string.dk_achievements_streaks_congrats))
         }
@@ -131,8 +136,7 @@ class StreaksData(
     fun getBestStreakDate(context: Context): String {
         return when (getStreakStatus()) {
             StreakStatus.INIT -> context.getString(R.string.dk_achievements_streaks_empty)
-            StreakStatus.IN_PROGRESS -> context.getString(R.string.dk_achievements_streaks_congrats_text)
-            StreakStatus.RESET -> context.getString(R.string.dk_achievements_streaks_since_to, bestStartDate, bestEndDate)
+            StreakStatus.IN_PROGRESS, StreakStatus.RESET -> context.getString(R.string.dk_achievements_streaks_since_to, bestStartDate, bestEndDate)
             StreakStatus.BEST -> context.getString(R.string.dk_achievements_streaks_congrats_text)
         }
     }
