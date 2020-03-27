@@ -18,8 +18,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
-import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onVehiclePickerClicked(view: View){
+    fun onVehicleClicked(view: View){
         if (DriveKitTripAnalysis.isConfigured()) {
             when (view.id){
                 R.id.button_vehicle_picker -> {
@@ -99,10 +97,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    fun onBeaconDiagnosticClicked(view: View){
-        BeaconActivity.launchActivity(this, BeaconScanType.DIAGNOSTIC)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

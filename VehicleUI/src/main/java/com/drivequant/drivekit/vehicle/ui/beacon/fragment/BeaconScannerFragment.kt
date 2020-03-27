@@ -75,12 +75,4 @@ class BeaconScannerFragment : Fragment(), ScanState {
     override fun onScanFinished() {
         activity?.finish()
     }
-
-    override fun displayLoader() {
-        // TODO("Not yet implemented")
-    }
-
-    override fun hideLoader() {
-        // TODO("Not yet implemented")
-    }
 }

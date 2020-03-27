@@ -4,14 +4,18 @@
     <string name="add_beacon_off">Beacon is not configured</string>
     <string name="add_beacon_on">Beacon is configured</string>
     <string name="add_beacon_title">Beacon configuration</string>
+    <string name="app_name">DriveKit Demo App</string>
     <string name="auto_start_off">Activate to automatically detect your trips</string>
     <string name="autostart_on">Trips will be automatically detected</string>
     <string name="autostart_title">Auto start</string>
     <string name="battery_permission">Battery</string>
-    <string name="beacon_required_on">Beacon is required to validate a trip</string>
     <string name="beacon_required_off">Beacon is not required to validate a trip</string>
+    <string name="beacon_required_on">Beacon is required to validate a trip</string>
     <string name="beacon_required_title">Beacon required ?</string>
     <string name="cancel_trip">Cancel the trip</string>
+    <string name="driver_achievement_button">Launch Driver Achievement</string>
+    <string name="driver_achievement_explanation">An example of DriveKit Driver Achievement implementation with its UI for the Streaks List</string>
+    <string name="driver_data_button">Launch DriverData</string>
     <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
     <string name="enable_logging_pref_off">Enable this setting to write log on the device</string>
     <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
@@ -31,9 +35,12 @@
     <string name="stop_trip">Stop the trip</string>
     <string name="train_trip">Your trip was made by train</string>
     <string name="trip_analysis_settings">Trip Analysis Configuration</string>
+    <string name="trip_cancelled_beacon_no_speed">Your trip was cancelled because no speed was detected in the presence of the beacon</string>
     <string name="trip_cancelled_highspeed">Your trip has been canceled because you are traveling by train or plane</string>
+    <string name="trip_cancelled_missing_config">Your trip has been cancelled because the SDK configuration is invalid.</string>
     <string name="trip_cancelled_no_beacon">Your trip has been canceled because your Bluetooth badge has not been recognized</string>
     <string name="trip_cancelled_no_gps_data">The trip could not be analyzed because the GPS data could not be retrieved.</string>
+    <string name="trip_cancelled_no_speed">Your trip was cancelled because no speed was detected</string>
     <string name="trip_cancelled_reset">DriveKit reset during trip</string>
     <string name="trip_cancelled_user">Trip cancelled by the user</string>
     <string name="trip_finished">A new trip has just been analyzed</string>
@@ -41,32 +48,7 @@
     <string name="trip_started">A trip is recording</string>
     <string name="user_id_description">Tap to fill your user id</string>
     <string name="user_id_title">User id</string>
-
-   <!-- TODO translate -->
-   <string name="app_name">DriveKit Demo App</string>
-   <string name="driver_data_button">Lancer DriverData</string>
-   <string name="trip_cancelled_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée</string>
-   <string name="trip_cancelled_beacon_no_speed">Votre trajet a été annulé car aucune vitesse n\'a été détectée en présence du beacon</string>
-   <string name="trip_cancelled_missing_config">Votre trajet a été annulé car la configuration du SDK est incorrecte</string>
-   <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the Vehicle Picker, Vehicles List and Detail</string>
-   <string name="vehicle_picker_button">Sélection d\'un véhicule</string>
-   <string name="vehicle_list_button">Liste des véhicules</string>
-   <string name="beacon_diagnostic_button">Diagnostic Beacon</string>
-   <string name="driver_achievement_explanation">An example of DriveKit DriverAchievement implementation with its UI for the Streaks List</string>
-   <string name="driver_achievement_button">Lancer DriverAchievement</string>
-
-   <string name="category_car_commercial_description">This category corresponds to vehicles for professional use generally intended for the transport of goods. These vehicles have a large storage capacity and the total permissible laden weight is between 1.5 tonnes and 3.5 tonnes.</string>
-   <string name="category_car_compact_description">This category corresponds to vehicles belonging to segment B2. These are compact vehicles that are suitable for both urban and road use and are between 3.70 and 4.10 m long.</string>
-   <string name="category_car_luxury_description">This category corresponds to sedans with luxurious styling and powerful engines.</string>
-   <string name="category_car_micro_compact_description">This category corresponds to vehicles belonging to segments B0 and B1. These are very compact vehicles for urban use with a length of less than 3.70 m.</string>
-   <string name="category_car_minivan_description">This category corresponds to vehicles whose interior volume is optimized for families with several children. They generally offer five to seven places. Their size varies on average from 4.80 to 5.00 m.</string>
-   <string name="category_car_sedan_description">This category corresponds to vehicles belonging to segment D. They are larger than compact vehicles, equipped with powerful engines and whose length varies between 4.50 and 4.90 m.</string>
-   <string name="category_car_sport_description">This category includes vehicles with performance-oriented engines, chassis and braking systems.</string>
-   <string name="category_car_suv_description">This category corresponds to crossover vehicles or off-road vehicles with all-wheel drive (4x4) and whose length varies on average from 4.10 to 5.20 m.</string>
-
-   <string name="engine_type_diesel">Diesel</string>
-   <string name="engine_type_diesel_hybrid">Diesel-electric hybrid</string>
-   <string name="engine_type_electric">Electric</string>
-   <string name="engine_type_gasoline">Gasoline</string>
-   <string name="engine_type_gasoline_hybrid">Gasoline-electric hybrid</string>
+    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and bluetooth device pairing</string>
+    <string name="vehicle_list_button">Vehicles list</string>
+    <string name="vehicle_picker_button">Add a vehicle</string>
 </resources>

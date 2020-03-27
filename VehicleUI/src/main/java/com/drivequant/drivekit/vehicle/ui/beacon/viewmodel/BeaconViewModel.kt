@@ -175,14 +175,6 @@ class BeaconViewModel(
         listener?.onScanFinished()
     }
 
-    fun showLoader() {
-        listener?.displayLoader()
-    }
-
-    fun hideLoader() {
-        listener?.hideLoader()
-    }
-
     fun fetchVehicleFromBeacon(vehicles: List<Vehicle>): Vehicle? {
         var matchedVehicle : Vehicle? = null
 

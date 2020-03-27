@@ -92,10 +92,8 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     private fun goToNextStep(){
         when (viewModel.scanType){
             PAIRING -> {
-                viewModel.showLoader()
                 viewModel.checkVehiclePaired(object : BeaconViewModel.ServiceListeners {
                     override fun onCheckVehiclePaired(isSameVehicle : Boolean) {
-                        viewModel.hideLoader()
                         viewModel.vehiclePaired?.let {
                             if (isSameVehicle){
                                 Toast.makeText(requireContext(),

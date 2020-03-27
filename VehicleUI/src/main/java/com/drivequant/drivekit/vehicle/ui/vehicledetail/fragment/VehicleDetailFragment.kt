@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -40,7 +39,6 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_detail.view.*
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
