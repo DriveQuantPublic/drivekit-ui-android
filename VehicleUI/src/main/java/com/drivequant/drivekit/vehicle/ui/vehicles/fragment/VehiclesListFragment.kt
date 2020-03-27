@@ -39,7 +39,7 @@ class VehiclesListFragment : Fragment() {
         viewModel.progressBarObserver.observe(this, Observer {
             it?.let { displayProgressCircular ->
                 if (displayProgressCircular){
-                    progress_circular.visibility = View.VISIBLE
+                    showProgressCircular()
                 } else {
                     hideProgressCircular()
                 }
@@ -61,7 +61,6 @@ class VehiclesListFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicles_list.layoutManager = linearLayoutManager
-        add_vehicle.button()
     }
 
     override fun onResume() {
@@ -99,6 +98,8 @@ class VehiclesListFragment : Fragment() {
     private fun setupAddVehicleButton(){
         if (DriveKitVehicleUI.canAddVehicle){
             add_vehicle.visibility = View.VISIBLE
+            add_vehicle.button()
+            add_vehicle.text = DKResource.convertToString(requireContext(), "dk_vehicle_add")
             add_vehicle.setOnClickListener {
                 if (viewModel.maxVehiclesReached()) {
                     Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert"), Toast.LENGTH_LONG).show()
@@ -124,6 +125,17 @@ class VehiclesListFragment : Fragment() {
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     progress_circular?.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
