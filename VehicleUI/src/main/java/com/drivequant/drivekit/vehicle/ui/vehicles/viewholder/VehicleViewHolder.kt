@@ -55,15 +55,16 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupUI() {
-        val maintFontColor = DriveKitUI.colors.mainFontColor()
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
         val complementaryFontColor = DriveKitUI.colors.complementaryFontColor()
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        textViewTitle.headLine1(maintFontColor)
+        textViewTitle.headLine1(mainFontColor)
         textViewSubtitle.smallText(complementaryFontColor)
         textViewDetectionModeTitle.normalText(complementaryFontColor)
         textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
         textViewDetectionModeDescription.normalText()
 
+        popup.setImageDrawable(DKResource.convertToDrawable(itemView.context, "dk_common_dots"))
         popup.setColorFilter(DriveKitUI.colors.secondaryColor())
         buttonSetup.button(
             textColor = DriveKitUI.colors.secondaryColor(),
