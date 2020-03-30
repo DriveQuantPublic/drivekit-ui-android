@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.ui.R
 
 class TripSynthesisItem: LinearLayout {
@@ -66,7 +67,19 @@ class TripSynthesisItem: LinearLayout {
         textViewValue?.setTextColor(DriveKitUI.colors.secondaryColor())
     }
 
-    fun onTripItemSynthesisClick(vehicleId: Int) {
-        // TODO
+    fun onTripItemSynthesisClick(context: Context, vehicleId: String?, liteConfig: Boolean?) {
+        liteConfig?.let {
+            when {
+                liteConfig -> {
+                    DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleListActivity(context)
+                }
+                vehicleId != null -> {
+                    DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleDetailActivity(context, vehicleId)
+                }
+                else -> {
+                    // do nothing
+                }
+            }
+        }
     }
 }

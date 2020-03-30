@@ -3,6 +3,8 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -10,7 +12,21 @@ import com.drivequant.drivekit.ui.extension.computeRoadContext
 
 class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
+    var vehicleName: String? = null
+    var liteConfig: Boolean? = null
+
     private val notAvailableText = "-"
+
+    fun init(context: Context) {
+        this@SynthesisViewModel.vehicleName = "testName"
+        this@SynthesisViewModel.liteConfig = false
+        getVehicleDisplayName(context, object : VehicleInfoListener {
+            override fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
+                this@SynthesisViewModel.vehicleName = vehicleName
+                this@SynthesisViewModel.liteConfig = liteConfig
+            }
+        })
+    }
 
     fun getRoadContextValue(context: Context): String {
         return when (trip.computeRoadContext()) {
@@ -90,8 +106,8 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getVehicleDisplayName(): String {
-        return notAvailableText
+    fun getVehicleId() : String? {
+        return trip.vehicleId
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -99,5 +115,20 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return SynthesisViewModel(trip) as T
         }
+    }
+    private fun getVehicleDisplayName(context: Context, listener: VehicleInfoListener) {
+        trip.vehicleId?.let {
+            DriveKitNavigationController.vehicleUIEntryPoint?.getVehicleInfoById(context, it, object : GetVehicleInfoByVehicleIdListener{
+                override fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
+                    listener.onInfoRetrieved(vehicleName, liteConfig)
+                }
+            })
+        }?: run {
+            return listener.onInfoRetrieved(notAvailableText)
+        }
+    }
+
+    interface VehicleInfoListener {
+        fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean? = null)
     }
 }

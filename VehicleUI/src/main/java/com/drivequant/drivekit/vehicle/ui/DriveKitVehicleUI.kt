@@ -4,16 +4,25 @@ import android.content.Context
 import android.content.Intent
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
@@ -123,5 +132,20 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
+    }
+
+    override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {
+        DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
+            override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
+                    override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
+                        vehicle?.let {
+                            val vehicleName = VehicleUtils().buildFormattedName(context, it, vehicles)
+                            listener.onVehicleInfoRetrieved(vehicleName, vehicle.liteConfig)
+                        }
+                    }
+                })
+            }
+        }, SynchronizationType.CACHE)
     }
 }

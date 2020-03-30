@@ -9,72 +9,72 @@
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_vehicle_used"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_vehicle" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_speed_mean"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_mean_speed" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_idling_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_stop_time" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_fuel_consumption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_fuel_consumption" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_co2_emission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_co2_emissions" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_co2_mass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_co2_mass" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_condition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_condition" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_weather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_weather" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_road_context"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_columnWeight="1"
         app:layout_rowWeight="1"
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_road_context" />

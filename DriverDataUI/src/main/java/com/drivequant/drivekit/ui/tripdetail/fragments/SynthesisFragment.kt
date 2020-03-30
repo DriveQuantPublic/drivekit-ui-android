@@ -48,11 +48,19 @@ class SynthesisFragment : Fragment() {
             trip = it
         }
 
-        viewModel = ViewModelProviders.of(this,
-            SynthesisViewModel.SynthesisViewModelFactory(trip)
-        ).get(SynthesisViewModel::class.java)
+        if (!this::viewModel.isInitialized){
+            viewModel = ViewModelProviders.of(this,
+                SynthesisViewModel.SynthesisViewModelFactory(trip)
+            ).get(SynthesisViewModel::class.java)
+        }
 
-        item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
+        viewModel.init(requireContext())
+
+        item_vehicle_used.setValueItem(viewModel.vehicleName)
+        item_vehicle_used.setOnClickListener {
+            item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
+        }
+
         item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
         item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
 
