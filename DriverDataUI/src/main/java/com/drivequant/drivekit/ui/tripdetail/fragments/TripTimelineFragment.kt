@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -37,16 +38,13 @@ class TripTimelineFragment : Fragment() {
         return view
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let{
-            viewModel = it
+
+        if(!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(TripDetailViewModel::class.java)
         }
+
         timeline_list.layoutManager = LinearLayoutManager(requireContext())
         timeline_list.adapter = TripTimelineAdapter(viewModel.events, object : OnItemClickListener {
             override fun onItemClicked(position: Int) {

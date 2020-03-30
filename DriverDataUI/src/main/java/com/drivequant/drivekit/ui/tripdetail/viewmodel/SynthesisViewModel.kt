@@ -1,13 +1,14 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeRoadContext
-import java.io.Serializable
 
-class SynthesisViewModel(private val trip: Trip) : Serializable {
+class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     private val notAvailableText = "-"
 
@@ -91,5 +92,12 @@ class SynthesisViewModel(private val trip: Trip) : Serializable {
 
     fun getVehicleDisplayName(): String {
         return notAvailableText
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class SynthesisViewModelFactory(private val trip: Trip) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return SynthesisViewModel(trip) as T
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -17,11 +18,13 @@ class SynthesisFragment : Fragment() {
     companion object {
         fun newInstance(trip: Trip) : SynthesisFragment {
             val fragment = SynthesisFragment()
+            fragment.trip = trip
             fragment.viewModel = SynthesisViewModel(trip)
             return fragment
         }
     }
 
+    private lateinit var trip: Trip
     private lateinit var viewModel: SynthesisViewModel
 
     override fun onCreateView(
@@ -35,15 +38,19 @@ class SynthesisFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        outState.putSerializable("trip", trip)
         super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as SynthesisViewModel?)?.let{
-            viewModel = it
+        (savedInstanceState?.getSerializable("trip") as Trip?)?.let{
+            trip = it
         }
+
+        viewModel = ViewModelProviders.of(this,
+            SynthesisViewModel.SynthesisViewModelFactory(trip)
+        ).get(SynthesisViewModel::class.java)
 
         item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
         item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
