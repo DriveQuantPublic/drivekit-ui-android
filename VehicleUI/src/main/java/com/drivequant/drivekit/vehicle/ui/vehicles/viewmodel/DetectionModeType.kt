@@ -226,7 +226,7 @@ enum class DetectionModeType(
 
                 verify?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_verify")
+                    it.text = DKResource.convertToString(context, "dk_beacon_verify")
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
                             alert.dismiss()
