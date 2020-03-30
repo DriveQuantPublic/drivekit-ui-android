@@ -13,7 +13,7 @@
    <string name="dk_beacon_uuid">UUID</string>
    <string name="dk_beacon_vehicle_unknown">Unknown vehicle</string>
    <string name="dk_beacon_vehicule_linked">Associated vehicle</string>
-   <string name="dk_beacon_verify">Verify</string>
+   <string name="dk_beacon_verify">Inspect</string>
    <string name="dk_bluetooth_address">MAC address of the Bluetooth device</string>
    <string name="dk_bluetooth_name">Bluetooth device name</string>
    <string name="dk_brand">Brand</string>

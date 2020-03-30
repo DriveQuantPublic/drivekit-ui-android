@@ -145,7 +145,7 @@
    <string name="dk_vehicle_type_car_title">Voiture</string>
    <string name="dk_vehicle_type_motorbike_title">Moto</string>
    <string name="dk_vehicle_type_truck_title">Camion</string>
-   <string name="dk_vehicle_unknown">Le véhicule est inconnu, veuillez sélecctionner un autre véhicule.</string>
+   <string name="dk_vehicle_unknown">Le véhicule est inconnu, veuillez sélectionner un autre véhicule.</string>
    <string name="dk_vehicle_version_description">Version du véhicule ?</string>
    <string name="dk_vehicle_year_description">Année de mise en circulation ?</string>
    <string name="dk_version">Version</string>
