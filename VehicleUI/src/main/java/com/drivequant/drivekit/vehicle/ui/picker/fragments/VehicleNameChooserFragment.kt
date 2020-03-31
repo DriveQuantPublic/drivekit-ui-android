@@ -48,6 +48,7 @@ class VehicleNameChooserFragment : Fragment() {
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
         button_validate.button()
+        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
         button_validate.setOnClickListener {
             viewModel.name = editTextWrapper.editText?.editableText.toString()
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME)

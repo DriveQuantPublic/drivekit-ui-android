@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -50,15 +51,20 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         val textViewBrands = view.findViewById(R.id.text_view_brands) as TextView
 
         buttonValidate.button()
-        textViewBrands.headLine2(DriveKitUI.colors.secondaryColor())
-        textViewDescription.normalText()
-
-        imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
-        textViewDescription.text = vehiclePickerCategoryItem.description
-
+        buttonValidate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
         buttonValidate.setOnClickListener {
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.CATEGORY_DESCRIPTION)
         }
+
+        textViewBrands.headLine2(DriveKitUI.colors.secondaryColor())
+        textViewBrands.text = DKResource.convertToString(requireContext(), "dk_vehicle_category_display_brands")
+
+        textViewDescription.normalText()
+        textViewDescription.text = vehiclePickerCategoryItem.description
+
+        imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
+
+
 
         if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE

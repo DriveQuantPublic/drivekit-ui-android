@@ -13,8 +13,8 @@ enum class BeaconField : Field {
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
         val identifier = when (this) {
             UNIQUE_CODE -> "dk_beacon_code"
-            MAJOR -> "dk_beacon_major"
-            MINOR -> "dk_beacon_minor"
+            MAJOR -> "dk_vehicle_beacon_major"
+            MINOR -> "dk_vehicle_beacon_minor"
         }
         return DKResource.convertToString(context, identifier)
     }
