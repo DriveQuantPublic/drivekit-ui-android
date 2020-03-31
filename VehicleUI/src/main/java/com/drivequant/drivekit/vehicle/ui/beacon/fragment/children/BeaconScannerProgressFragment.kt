@@ -143,7 +143,11 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconList(): List<BeaconData> {
-        return TripAnalysisConfig.getAllBeacons()
+        val beaconsToCheck = TripAnalysisConfig.getAllBeacons().toMutableList()
+        viewModel.beacon?.let {
+            beaconsToCheck.add(BeaconData(it.proximityUuid))
+        }
+        return beaconsToCheck
     }
 
     override fun scanMode(): BeaconScannerMode {

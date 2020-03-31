@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -40,6 +40,10 @@ class VehicleNameChooserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        image_view.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_vehicle_name_chooser"))
+        text_view_description.normalText()
+        text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_name_chooser_description")
 
         val editTextWrapper = view.findViewById(R.id.text_input_layout) as TextInputLayout
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())

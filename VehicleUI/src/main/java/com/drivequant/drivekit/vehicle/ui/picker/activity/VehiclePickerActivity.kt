@@ -84,7 +84,13 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         })
 
         viewModel.endObserver.observe(this, Observer {
-            finish()
+            it?.let { vehiclePickerStatus ->
+                if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
+                    finish()
+                } else {
+                    Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
+                }
+            }
         })
 
         viewModel.computeNextScreen(this, null)
@@ -162,11 +168,25 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             NAME -> VehicleNameChooserFragment.newInstance(viewModel)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
         }
+
+        updateTitle(vehiclePickerStep)
+
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
             .addToBackStack(vehiclePickerStep.name)
             .add(R.id.container, fragment)
             .commit()
+    }
+
+    private fun updateTitle(vehiclePickerStep: VehiclePickerStep){
+        val screenTitle = when (vehiclePickerStep){
+            CATEGORY_DESCRIPTION -> viewModel.selectedCategory.title
+            NAME -> DKResource.convertToString(this, "dk_vehicle_name")
+            else -> DKResource.convertToString(this, "dk_vehicle_my_vehicle")
+        }
+        screenTitle?.let {
+            this.title = it
+        }
     }
 
     override fun onBackPressed() {

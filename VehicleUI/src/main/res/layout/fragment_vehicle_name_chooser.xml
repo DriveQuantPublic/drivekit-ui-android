@@ -14,8 +14,7 @@
         android:layout_margin="@dimen/dk_margin_half"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/dk_vehicle_name_chooser"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/text_view_description"
@@ -25,8 +24,7 @@
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/image_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/dk_vehicle_name_chooser_description"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input_layout"

@@ -60,7 +60,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
             it?.let { vehicleBeaconStatus ->
                 when (vehicleBeaconStatus){
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
-                    ERROR -> displayErrorAlert("dk_vehicle_error_message")
+                    ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")
                     UNKNOWN_VEHICLE -> displayErrorAlert("dk_vehicle_unknown")
                     UNAVAILABLE_BEACON -> viewModel.updateScanState(BeaconStep.BEACON_UNAVAILABLE)
                 }

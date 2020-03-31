@@ -25,7 +25,7 @@ import java.io.Serializable
 
 class VehiclePickerViewModel: ViewModel(), Serializable {
     val stepDispatcher = MutableLiveData<VehiclePickerStep>()
-    val endObserver = MutableLiveData<Any>()
+    val endObserver = MutableLiveData<VehiclePickerStatus>()
     val progressBarObserver = MutableLiveData<Boolean>()
     val fetchServiceErrorObserver = MutableLiveData<VehiclePickerStatus>()
 
@@ -245,20 +245,25 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                                 DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
                                     override fun onResponse(status: VehicleManagerStatus) {
                                         vehicleToDelete = null
-                                        endObserver.postValue(null)
+                                        if (status == VehicleManagerStatus.SUCCESS) {
+                                            endObserver.postValue(SUCCESS)
+                                        } else {
+                                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                                        }
                                         progressBarObserver.postValue(false)
                                     }
                                 })
                             }?: run {
-                                endObserver.postValue(null)
+                                endObserver.postValue(SUCCESS)
                                 progressBarObserver.postValue(false)
                             }
                         } else {
-                            fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
                             progressBarObserver.postValue(false)
                         }
                     }
-                }, isLiteConfig)            }
+                }, isLiteConfig)
+            }
         }, SynchronizationType.CACHE)
     }
 
