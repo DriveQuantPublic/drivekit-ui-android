@@ -149,4 +149,7 @@
    <string name="dk_vehicle_version_description">Version of the vehicle?</string>
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
+
+
+   <string name="dk_vehicle_list_empty">Veuillez ajouter au moins un véhicule</string>
 </resources>

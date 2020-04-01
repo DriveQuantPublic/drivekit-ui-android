@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -113,9 +114,21 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun displayVehiclesList(){
-        linear_layout_header_vehicle_list.visibility = View.GONE
-        vehicles_list.visibility = View.VISIBLE
+        if (viewModel.vehiclesList.isNotEmpty()) {
+            linear_layout_header_vehicle_list.visibility = View.GONE
+            vehicles_list.visibility = View.VISIBLE
+        } else {
+            setupEmptyListLayout()
+            linear_layout_header_vehicle_list.visibility = View.VISIBLE
+            vehicles_list.visibility = View.GONE
+        }
         hideProgressCircular()
+    }
+
+    private fun setupEmptyListLayout(){
+        text_view_summary_icon.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_high_priority_red"))
+        text_view_header_title.typeface = Typeface.DEFAULT_BOLD
+        text_view_header_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
     }
 
     private fun hideProgressCircular() {
