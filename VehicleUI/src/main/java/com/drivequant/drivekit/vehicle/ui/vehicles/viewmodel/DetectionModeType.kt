@@ -118,7 +118,7 @@ enum class DetectionModeType(
         if (vehicle.isConfigured()){
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
-            val vehicleName = vehicle.buildFormattedName(context, viewModel.vehiclesList)
+            val vehicleName = vehicle.buildFormattedName(context)
             when (this){
                 BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
                 BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId, vehicleName)
@@ -157,8 +157,8 @@ enum class DetectionModeType(
         val message = DKResource.buildString(context,
             "dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
-            vehicle.buildFormattedName(context, viewModel.vehiclesList),
-            gpsVehicle.buildFormattedName(context, viewModel.vehiclesList),
+            vehicle.buildFormattedName(context),
+            gpsVehicle.buildFormattedName(context),
             gpsVehicle.getDetectionModeName(context)
         )
 

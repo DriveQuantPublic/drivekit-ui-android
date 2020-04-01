@@ -32,7 +32,7 @@ enum class BeaconField : Field {
                 && vehicle.beacon != null
     }
 
-    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
+    override fun onFieldUpdated(value: String, vehicle: Vehicle) {
         // do nothing
     }
 }

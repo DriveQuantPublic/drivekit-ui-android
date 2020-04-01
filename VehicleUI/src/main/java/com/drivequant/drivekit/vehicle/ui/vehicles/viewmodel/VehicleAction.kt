@@ -105,7 +105,7 @@ enum class VehicleAction(
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val title = DKResource.convertToString(context, "app_name")
-        val vehicleName = vehicle.buildFormattedName(context, viewModel.vehiclesList)
+        val vehicleName = vehicle.buildFormattedName(context)
         val message = DKResource.buildString(context, "dk_vehicle_delete_confirm", vehicleName)
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)

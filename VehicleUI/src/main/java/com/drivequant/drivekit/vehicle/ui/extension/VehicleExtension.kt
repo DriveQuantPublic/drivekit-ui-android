@@ -11,18 +11,19 @@ import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
-fun Vehicle.buildFormattedName(context: Context, vehicles: List<Vehicle>) : String {
+fun Vehicle.buildFormattedName(context: Context) : String {
+    val sortedVehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
     return if (!TextUtils.isEmpty(name) && !VehicleUtils().isNameEqualsDefaultName(this)) {
         name?.let { it }?:run { " " }
     } else {
-        val vehicleNumber: Int = VehicleUtils().getVehiclePositionInList(this, vehicles) + 1
+        val vehiclePositionInList = sortedVehicles.indexOf(this) + 1
         val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
-        "$myVehicleString - $vehicleNumber"
+        "$myVehicleString - $vehiclePositionInList"
     }
 }
 
-fun Vehicle.computeSubtitle(context: Context, vehicles: List<Vehicle>): String? {
-    val title = this.buildFormattedName(context, vehicles)
+fun Vehicle.computeSubtitle(context: Context): String? {
+    val title = this.buildFormattedName(context)
     var subtitle: String? = "$brand $model $version"
 
     if (liteConfig){

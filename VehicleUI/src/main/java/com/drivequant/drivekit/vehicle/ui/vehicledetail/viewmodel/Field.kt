@@ -11,5 +11,5 @@ interface Field {
     fun getKeyboardType(): Int? = InputType.TYPE_CLASS_TEXT
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
     fun isValid(value: String): Boolean = true
-    fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle)
+    fun onFieldUpdated(value: String, vehicle: Vehicle)
 }

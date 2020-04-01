@@ -7,6 +7,7 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconRemoveStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryListener
@@ -17,7 +18,6 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinnerItem
 import java.io.Serializable
 
@@ -34,13 +34,13 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     ) {
         progressBarObserver.postValue(true)
         if (DriveKit.isConfigured()) {
-            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, synchronizationType, object : VehiclesFetchListener {
-                override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
+            DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
+                override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     progressBarObserver.postValue(false)
-                    vehiclesList = vehicles
+                    vehiclesList = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
                     vehiclesData.postValue(vehiclesList)
                 }
-            })
+            }, synchronizationType)
         } else {
             progressBarObserver.postValue(false)
             vehiclesData.postValue(listOf())
@@ -56,11 +56,11 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.buildFormattedName(context, vehiclesList)
+        return vehicle.buildFormattedName(context)
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String? {
-        return vehicle.computeSubtitle(context, vehiclesList)
+        return vehicle.computeSubtitle(context)
     }
 
     fun removeBeaconToVehicle(vehicle: Vehicle){

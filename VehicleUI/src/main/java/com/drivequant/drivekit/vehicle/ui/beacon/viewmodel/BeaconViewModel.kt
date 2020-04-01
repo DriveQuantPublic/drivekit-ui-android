@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.support.v4.app.Fragment
 import com.drivequant.beaconutils.BeaconInfo
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -20,8 +19,6 @@ import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import java.io.Serializable
 
 class BeaconViewModel(
@@ -74,11 +71,7 @@ class BeaconViewModel(
 
     fun computeVehicleName(context: Context){
         vehicle?.let {
-            VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener{
-                override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                    vehicleName = it.buildFormattedName(context, vehicles)
-                }
-            })
+            vehicleName = it.buildFormattedName(context)
         }
     }
 

@@ -7,6 +7,7 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getCategoryName
 
 enum class GeneralField : Field {
@@ -30,12 +31,7 @@ enum class GeneralField : Field {
     override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this){
             NAME -> {
-                /*VehicleUtils().fetchVehiclesOrderedByDisplayName(context, synchronizationType = SynchronizationType.CACHE, object : VehiclesFetchListener{
-                    override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                        vehicle.buildFormattedName(context, vehicles)
-                    }
-                })*/
-                vehicle.name
+                vehicle.buildFormattedName(context)
             }
             CATEGORY -> vehicle.getCategoryName(context)
             BRAND -> vehicle.brand
@@ -70,10 +66,10 @@ enum class GeneralField : Field {
         return true
     }
 
-    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
+    override fun onFieldUpdated(value: String, vehicle: Vehicle) {
         when (this){
             NAME -> {
-                DriveKitVehicle.renameVehicle(fieldValue, vehicle, object : VehicleRenameQueryListener {
+                DriveKitVehicle.renameVehicle(value, vehicle, object : VehicleRenameQueryListener {
                     override fun onResponse(status: VehicleManagerStatus) {
 
                     }
