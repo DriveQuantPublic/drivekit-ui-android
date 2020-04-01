@@ -124,11 +124,11 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
                 }
             })
         }?: run {
-            return listener.onInfoRetrieved(notAvailableText)
+            return listener.onInfoRetrieved(notAvailableText, null)
         }
     }
 
     interface VehicleInfoListener {
-        fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean? = null)
+        fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean?)
     }
 }

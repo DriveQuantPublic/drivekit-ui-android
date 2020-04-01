@@ -64,8 +64,6 @@ class VehicleCategoryDescriptionFragment : Fragment() {
 
         imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
 
-
-
         if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE
             textViewBrands.setOnClickListener {

@@ -9,5 +9,5 @@ interface VehicleUIEntryPoint {
 }
 
 interface GetVehicleInfoByVehicleIdListener {
-    fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean? = null)
+    fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean?)
 }
