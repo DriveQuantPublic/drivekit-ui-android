@@ -18,7 +18,7 @@ enum class EngineField : Field {
         return DKResource.convertToString(context, identifier)
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this){
             MOTOR -> vehicle.getEngineTypeName(context)
             CONSUMPTION -> DKDataFormatter.formatConsumption(context, vehicle.consumption)
@@ -29,7 +29,7 @@ enum class EngineField : Field {
         return true
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
         // do nothing
     }
 }

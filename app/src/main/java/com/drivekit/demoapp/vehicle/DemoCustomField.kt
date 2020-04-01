@@ -11,8 +11,8 @@ class DemoCustomField : Field {
         return "DemoCustomField title"
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
-        return "Only numeric characters"
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
+        return "1234"
     }
 
     override fun isEditable(): Boolean {
@@ -31,7 +31,7 @@ class DemoCustomField : Field {
         return value.toLongOrNull() != null
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
         // TODO:
     }
 }

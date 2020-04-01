@@ -23,8 +23,8 @@ open class VehicleUtils {
                 sortedVehicles.sortWith(Comparator { vehicle1: Vehicle, vehicle2: Vehicle ->
                     val vehicle1Pos: Int = getVehiclePositionInList(vehicle1, vehicles)
                     val vehicle2Pos: Int = getVehiclePositionInList(vehicle2, vehicles)
-                    val vehicle1DisplayName = buildFormattedName(context, vehicle1, vehicle1Pos)
-                    val vehicle2DisplayName = buildFormattedName(context, vehicle2, vehicle2Pos)
+                    val vehicle1DisplayName = buildFormattedNameByPosition(context, vehicle1, vehicle1Pos)
+                    val vehicle2DisplayName = buildFormattedNameByPosition(context, vehicle2, vehicle2Pos)
                     vehicle1DisplayName.compareTo(vehicle2DisplayName, ignoreCase = true)
                 })
                 listener.onVehiclesLoaded(status, sortedVehicles)
@@ -41,17 +41,7 @@ open class VehicleUtils {
         return -1
     }
 
-    fun buildFormattedName(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>) : String {
-        return if (!TextUtils.isEmpty(vehicle.name) && !isNameEqualsDefaultName(vehicle)) {
-            vehicle.name?.let { it }?:run { " " }
-        } else {
-            val vehicleNumber: Int = getVehiclePositionInList(vehicle, allVehicles) + 1
-            val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
-            "$myVehicleString - $vehicleNumber"
-        }
-    }
-
-    private fun buildFormattedName(context: Context, vehicle: Vehicle, pos: Int): String {
+    private fun buildFormattedNameByPosition(context: Context, vehicle: Vehicle, pos: Int): String {
         return if (!TextUtils.isEmpty(vehicle.name) && !isNameEqualsDefaultName(vehicle)) {
             vehicle.name?.let { it }?:run { " " }
         } else {
@@ -61,7 +51,7 @@ open class VehicleUtils {
         }
     }
 
-    private fun isNameEqualsDefaultName(vehicle: Vehicle): Boolean {
+    fun isNameEqualsDefaultName(vehicle: Vehicle): Boolean {
         return vehicle.name?.let {
             it.equals(getDefaultName(vehicle), true) ||
                     it.equals("${vehicle.model} ${vehicle.version}", true)

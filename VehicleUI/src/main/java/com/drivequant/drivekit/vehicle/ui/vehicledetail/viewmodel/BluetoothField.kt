@@ -17,7 +17,7 @@ enum class BluetoothField : Field {
         return DKResource.convertToString(context, identifier)
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this) {
             NAME -> vehicle.bluetooth?.name
             MAC_ADDRESS -> vehicle.bluetooth?.macAddress
@@ -29,7 +29,7 @@ enum class BluetoothField : Field {
                 && vehicle.bluetooth != null
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
         // do nothing
     }
 }

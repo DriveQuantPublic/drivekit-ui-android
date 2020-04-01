@@ -19,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
 import java.io.Serializable
@@ -75,7 +76,7 @@ class BeaconViewModel(
         vehicle?.let {
             VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener{
                 override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                    vehicleName = VehicleUtils().buildFormattedName(context, it, vehicles)
+                    vehicleName = it.buildFormattedName(context, vehicles)
                 }
             })
         }

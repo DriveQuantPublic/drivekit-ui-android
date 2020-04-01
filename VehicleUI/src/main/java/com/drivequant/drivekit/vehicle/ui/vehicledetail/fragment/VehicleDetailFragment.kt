@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -38,21 +37,23 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsLis
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GeneralField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
 class VehicleDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance(vehicleId: String) : VehicleDetailFragment {
+        fun newInstance(viewModel: VehicleDetailViewModel, vehicleId: String) : VehicleDetailFragment {
             val fragment = VehicleDetailFragment()
+            fragment.viewModel = viewModel
             fragment.vehicleId = vehicleId
             return fragment
         }
     }
 
-    private lateinit var viewModel : VehicleDetailViewModel
     private lateinit var vehicleId : String
+    private lateinit var viewModel : VehicleDetailViewModel
     private var fieldsAdapter : VehicleFieldsListAdapter? = null
 
     private var imageView: ImageView? = null
@@ -84,10 +85,6 @@ class VehicleDetailFragment : Fragment() {
         (savedInstanceState?.getSerializable("vehicleDetailTag") as String?)?.let{
             vehicleId = it
         }
-        viewModel = ViewModelProviders.of(this,
-            VehicleDetailViewModel.VehicleDetailViewModelFactory(vehicleId)
-        ).get(VehicleDetailViewModel::class.java)
-        viewModel.init(requireContext())
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -140,6 +137,24 @@ class VehicleDetailFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicle_fields.layoutManager = linearLayoutManager
+    }
+
+    fun onBackPressed(){
+        //TODO check if saveVehicle
+    }
+
+    fun saveVehicleInfo(){
+        viewModel.vehicle?.let { vehicle ->
+            for (groupField in viewModel.groupFields){
+                for (field in groupField.getFields(vehicle)){
+                    if (field.isEditable()){
+                        if (field is GeneralField && field.name == GeneralField.NAME.name){
+                            viewModel.renameVehicle("HC name")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun manageFabAlertDialog(){

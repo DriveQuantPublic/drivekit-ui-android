@@ -27,10 +27,10 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 enum class DetectionModeType(
     private val title: String,
@@ -118,7 +118,7 @@ enum class DetectionModeType(
         if (vehicle.isConfigured()){
             displayConfigAlertDialog(context, viewModel, vehicle)
         } else {
-            val vehicleName = VehicleUtils().buildFormattedName(context, vehicle, viewModel.vehiclesList)
+            val vehicleName = vehicle.buildFormattedName(context, viewModel.vehiclesList)
             when (this){
                 BEACON -> BeaconActivity.launchActivity(context, BeaconScanType.PAIRING, vehicle.vehicleId)
                 BLUETOOTH -> BluetoothActivity.launchActivity(context, vehicle.vehicleId, vehicleName)
@@ -157,8 +157,8 @@ enum class DetectionModeType(
         val message = DKResource.buildString(context,
             "dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
-            VehicleUtils().buildFormattedName(context, vehicle, viewModel.vehiclesList),
-            VehicleUtils().buildFormattedName(context, gpsVehicle, viewModel.vehiclesList),
+            vehicle.buildFormattedName(context, viewModel.vehiclesList),
+            gpsVehicle.buildFormattedName(context, viewModel.vehiclesList),
             gpsVehicle.getDetectionModeName(context)
         )
 

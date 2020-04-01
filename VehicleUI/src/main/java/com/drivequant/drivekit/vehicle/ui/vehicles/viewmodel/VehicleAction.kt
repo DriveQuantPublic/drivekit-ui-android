@@ -18,8 +18,8 @@ import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 enum class VehicleAction(
     private val descriptionIdentifier: String
@@ -105,7 +105,7 @@ enum class VehicleAction(
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
         val title = DKResource.convertToString(context, "app_name")
-        val vehicleName = VehicleUtils().buildFormattedName(context, vehicle, viewModel.vehiclesList)
+        val vehicleName = vehicle.buildFormattedName(context, viewModel.vehiclesList)
         val message = DKResource.buildString(context, "dk_vehicle_delete_confirm", vehicleName)
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)

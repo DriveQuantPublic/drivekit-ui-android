@@ -40,8 +40,8 @@ class VehicleFieldViewHolder(
             VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener{
                 override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
                     editTextSettings.setLabel(field.getTitle(context, it))
-                    editTextSettings.setHint(field.getValue(context, it, vehicles))
-                    editTextSettings.setSettingsText(field.getValue(context, it, vehicles))
+                    editTextSettings.setHint(field.getValue(context, it))
+                    editTextSettings.setSettingsText(field.getValue(context, it))
                     editTextSettings.tag = field.getTitle(context, it) // TODO add interface method to retrieve keyValue ?
                 }
             })

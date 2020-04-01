@@ -14,6 +14,7 @@ import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQ
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehiclesFetchListener
@@ -55,7 +56,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun getTitle(context: Context, vehicle: Vehicle): String {
-        return VehicleUtils().buildFormattedName(context, vehicle, vehiclesList)
+        return vehicle.buildFormattedName(context, vehiclesList)
     }
 
     fun getSubtitle(context: Context, vehicle: Vehicle): String? {

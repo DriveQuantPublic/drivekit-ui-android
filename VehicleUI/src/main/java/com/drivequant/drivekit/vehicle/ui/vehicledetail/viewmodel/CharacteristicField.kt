@@ -20,7 +20,7 @@ enum class CharacteristicField : Field {
         return DKResource.convertToString(context, identifier)
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this) {
             POWER -> DKDataFormatter.formatVehiclePower(context, vehicle.power)
             GEARBOX -> vehicle.getGearBoxName(context)
@@ -32,7 +32,7 @@ enum class CharacteristicField : Field {
         return true
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
         // do nothing
     }
 }

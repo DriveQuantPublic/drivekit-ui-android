@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
+import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -10,8 +11,18 @@ import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
+fun Vehicle.buildFormattedName(context: Context, vehicles: List<Vehicle>) : String {
+    return if (!TextUtils.isEmpty(name) && !VehicleUtils().isNameEqualsDefaultName(this)) {
+        name?.let { it }?:run { " " }
+    } else {
+        val vehicleNumber: Int = VehicleUtils().getVehiclePositionInList(this, vehicles) + 1
+        val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
+        "$myVehicleString - $vehicleNumber"
+    }
+}
+
 fun Vehicle.computeSubtitle(context: Context, vehicles: List<Vehicle>): String? {
-    val title = VehicleUtils().buildFormattedName(context, this, vehicles)
+    val title = this.buildFormattedName(context, vehicles)
     var subtitle: String? = "$brand $model $version"
 
     if (liteConfig){

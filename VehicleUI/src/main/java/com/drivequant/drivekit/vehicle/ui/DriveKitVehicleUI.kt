@@ -13,9 +13,9 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
@@ -135,17 +135,17 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {
-        DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
-            override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+        VehicleUtils().fetchVehiclesOrderedByDisplayName(context, SynchronizationType.CACHE, object : VehiclesFetchListener {
+            override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
                     override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
                         vehicle?.let {
-                            val vehicleName = VehicleUtils().buildFormattedName(context, it, vehicles)
+                            val vehicleName = vehicle.buildFormattedName(context, vehicles)
                             listener.onVehicleInfoRetrieved(vehicleName, vehicle.liteConfig)
                         }
                     }
                 })
             }
-        }, SynchronizationType.CACHE)
+        })
     }
 }

@@ -19,7 +19,7 @@ enum class BeaconField : Field {
         return DKResource.convertToString(context, identifier)
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this) {
             UNIQUE_CODE -> vehicle.beacon?.code
             MAJOR -> vehicle.beacon?.major.toString()
@@ -32,7 +32,7 @@ enum class BeaconField : Field {
                 && vehicle.beacon != null
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
         // do nothing
     }
 }

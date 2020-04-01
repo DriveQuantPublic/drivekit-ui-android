@@ -4,8 +4,10 @@ import android.content.Context
 import android.text.InputType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
+import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.extension.getCategoryName
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 enum class GeneralField : Field {
     NAME,
@@ -25,10 +27,15 @@ enum class GeneralField : Field {
         return DKResource.convertToString(context, identifier)
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle, allVehicles: List<Vehicle>): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String? {
         return when (this){
             NAME -> {
-                VehicleUtils().buildFormattedName(context, vehicle, allVehicles)
+                /*VehicleUtils().fetchVehiclesOrderedByDisplayName(context, synchronizationType = SynchronizationType.CACHE, object : VehiclesFetchListener{
+                    override fun onVehiclesLoaded(syncStatus: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                        vehicle.buildFormattedName(context, vehicles)
+                    }
+                })*/
+                vehicle.name
             }
             CATEGORY -> vehicle.getCategoryName(context)
             BRAND -> vehicle.brand
@@ -63,7 +70,16 @@ enum class GeneralField : Field {
         return true
     }
 
-    override fun onFieldUpdated(vehicle: Vehicle) {
-        // TODO : if field name then call service
+    override fun onFieldUpdated(fieldType: String, fieldValue: String, vehicle: Vehicle) {
+        when (this){
+            NAME -> {
+                DriveKitVehicle.renameVehicle(fieldValue, vehicle, object : VehicleRenameQueryListener {
+                    override fun onResponse(status: VehicleManagerStatus) {
+
+                    }
+                })
+            }
+            else -> { }
+        }
     }
 }

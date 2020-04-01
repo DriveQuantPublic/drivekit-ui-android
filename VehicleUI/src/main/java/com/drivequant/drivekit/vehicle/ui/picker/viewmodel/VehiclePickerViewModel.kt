@@ -238,7 +238,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 val detectionMode = computeCreateVehicleDetectionMode(vehicles)
-                DriveKitVehicle.createVehicle(characteristics, name, detectionMode, object: VehicleCreateQueryListener{
+                DriveKitVehicle.createVehicle(characteristics, selectedVehicleTypeItem.vehicleType, name, detectionMode, object: VehicleCreateQueryListener{
                     override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                         if (status == VehicleManagerStatus.SUCCESS){
                             vehicleToDelete?.let {
