@@ -1,2 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.drivequant.drivekit.permissionsutils" />
+    package="com.drivequant.drivekit.permissionsutils">
+
+    <application>
+        <activity android:name=".permissions.BasePermissionActivity" />
+        <activity android:name=".permissions.LocationPermissionActivity" />
+        <activity android:name=".permissions.BatteryOptimizationPermissionActivity" />
+        <activity android:name=".permissions.ActivityRecognitionPermissionActivity" />
+    </application>
+
+</manifest>
