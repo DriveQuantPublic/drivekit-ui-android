@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -33,11 +34,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     private lateinit var viewModel : VehiclePickerViewModel
 
     companion object {
+        const val REQUEST_VEHICLE_PICKER = 100
         private var vehicleToDelete: Vehicle? = null
-        fun launchActivity(context: Context, vehicleToDelete: Vehicle? = null) {
+        @JvmOverloads
+        fun launchActivity(activityContext: Context, vehicleToDelete: Vehicle? = null) {
             this.vehicleToDelete = vehicleToDelete
-            val intent = Intent(context, VehiclePickerActivity::class.java)
-            context.startActivity(intent)
+            val intent = Intent(activityContext, VehiclePickerActivity::class.java)
+            val activity = activityContext as Activity
+            activity.startActivityForResult(intent, REQUEST_VEHICLE_PICKER)
         }
     }
 
