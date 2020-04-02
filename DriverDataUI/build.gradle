@@ -45,7 +45,7 @@ dependencies {
 
     //debugImplementation project(':DriverData')
     //releaseImplementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
-    implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.4-beta1"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

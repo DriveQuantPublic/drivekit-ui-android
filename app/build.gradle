@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
-        versionName "$drivekit_version"
+        versionName "$drivekitui_version"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -35,9 +35,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
-    implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
-    implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.4-beta1"
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.4-beta1"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.4-beta1"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 
