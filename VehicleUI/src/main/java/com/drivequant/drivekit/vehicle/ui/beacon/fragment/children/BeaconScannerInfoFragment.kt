@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
-import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -22,6 +21,8 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
 
 class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
@@ -36,7 +37,6 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
     private lateinit var viewModel: BeaconViewModel
     private var isValid: Boolean = false
-    private var ctx: Context? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
@@ -55,10 +55,20 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
         text_view_connected_vehicle_name.normalText(mainFontColor)
         text_view_connected_vehicle_name.typeface = Typeface.DEFAULT_BOLD
-        text_view_connected_vehicle_name.text = viewModel.vehicleName?.let {
-            it
-        }?:run {
-            DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
+
+        if (isValid){
+            text_view_connected_vehicle_name.text = viewModel.vehicleName?.let {
+                it
+            }?:run {
+                DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
+            }
+        } else {
+            val vehicle = viewModel.fetchVehicleFromSeenBeacon(
+                VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext())
+            )
+            vehicle?.let {
+                text_view_connected_vehicle_name.text = vehicle.buildFormattedName(requireContext())
+            }
         }
 
         button_beacon_info.setOnClickListener {
