@@ -39,7 +39,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     implementation "com.drivequant.drivekit:drivekit-vehicle:1.4-beta3"
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:0.0.1"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.4-beta3"
 
     debugApi project(':CommonUI')
     releaseApi 'com.drivequant.drivekit:drivekit-common-ui:1.3.2'
