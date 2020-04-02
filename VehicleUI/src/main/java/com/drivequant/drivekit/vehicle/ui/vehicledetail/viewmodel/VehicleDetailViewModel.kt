@@ -9,13 +9,15 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import java.io.Serializable
 
 class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serializable {
 
     val progressBarObserver = MutableLiveData<Boolean>()
-    val renameObserver = MutableLiveData<VehicleManagerStatus>()
+    var newEditableFieldObserver = MutableLiveData<EditableField>()
 
+    val renameObserver = MutableLiveData<VehicleManagerStatus>()
     var vehicle: Vehicle? = null
     var vehicleName: String? = null
     var groupFields: MutableList<GroupField> = mutableListOf()

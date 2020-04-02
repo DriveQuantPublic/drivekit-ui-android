@@ -60,6 +60,10 @@ class EditableText(context: Context) : LinearLayout(context) {
         return textInputLayout
     }
 
+    fun getIsEditable() : Boolean {
+        return editTextSettingsEditable
+    }
+
     val text: String
         get() = editText!!.text.toString()
 

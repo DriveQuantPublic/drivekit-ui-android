@@ -62,6 +62,14 @@ enum class GeneralField : Field {
         return isValid
     }
 
+    override fun getErrorDescription(context: Context): String? {
+        return if (this == NAME) {
+            DKResource.convertToString(context, "dk_vehicle_field_name_error")
+        } else {
+            null
+        }
+    }
+
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
         return true
     }

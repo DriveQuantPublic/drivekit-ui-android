@@ -81,7 +81,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         if (item.itemId == R.id.action_save){
             val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
             if (fragment is VehicleDetailFragment){
-                fragment.saveVehicleInfo()
+                fragment.updateInformations()
             }
         }
         return super.onOptionsItemSelected(item)

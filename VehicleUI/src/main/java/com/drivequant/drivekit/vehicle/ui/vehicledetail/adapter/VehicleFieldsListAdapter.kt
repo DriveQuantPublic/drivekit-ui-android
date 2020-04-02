@@ -17,7 +17,7 @@ class VehicleFieldsListAdapter(
 
     override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): VehicleFieldViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.view_vehicle_field_item_list, viewgroup, false)
-        return VehicleFieldViewHolder(view, viewModel)
+        return VehicleFieldViewHolder(view, this, viewModel)
     }
 
     override fun onBindViewHolder(holder: VehicleFieldViewHolder, position: Int) {

@@ -8,7 +8,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 class DemoCustomField : Field {
 
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
-        return "DemoCustomField title"
+        return "DemoCustomField example"
     }
 
     override fun getValue(context: Context, vehicle: Vehicle): String? {
@@ -28,10 +28,14 @@ class DemoCustomField : Field {
     }
 
     override fun isValid(value: String): Boolean {
-        return value.toLongOrNull() != null
+        return (value.toLongOrNull() != null && value.toLong() <= 9999)
+    }
+
+    override fun getErrorDescription(context: Context): String? {
+        return "Value must be below 999"
     }
 
     override fun onFieldUpdated(value: String, vehicle: Vehicle) {
-        // TODO:
+        // TODO 
     }
 }

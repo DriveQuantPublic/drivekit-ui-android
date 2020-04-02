@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.arch.lifecycle.Observer
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -22,8 +23,10 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.EditableText
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -37,7 +40,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsLis
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GeneralField
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
@@ -55,6 +58,9 @@ class VehicleDetailFragment : Fragment() {
     private lateinit var vehicleId : String
     private lateinit var viewModel : VehicleDetailViewModel
     private var fieldsAdapter : VehicleFieldsListAdapter? = null
+
+    private var editableFields: MutableList<EditableField> = mutableListOf()
+    private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
 
@@ -137,24 +143,56 @@ class VehicleDetailFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicle_fields.layoutManager = linearLayoutManager
+
+        viewModel.newEditableFieldObserver.observe(this, Observer {
+            it?.let { newEditableField ->
+               if (!editableFields.contains(newEditableField)){
+                   editableFields.add(newEditableField)
+                   setupTextListener(newEditableField)
+               }
+            }
+        })
+    }
+
+    private fun setupTextListener(editableField: EditableField){
+        editableField.editableText.setOnTextChangedListener(object : EditableText.OnTextChangedListener{
+            override fun onTextChanged(editableText: EditableText, text: String?) {
+                hasChangesToUpdate = true
+                if (text != null && editableField.field.isValid(text)){
+                    editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
+                } else {
+                    editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
+                    editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext())
+                }
+            }
+        })
     }
 
     fun onBackPressed(){
-        //TODO check if saveVehicle
+        updateInformations()
     }
 
-    fun saveVehicleInfo(){
-        viewModel.vehicle?.let { vehicle ->
-            for (groupField in viewModel.groupFields){
-                for (field in groupField.getFields(vehicle)){
-                    if (field.isEditable()){
-                        if (field is GeneralField && field.name == GeneralField.NAME.name){
-                            viewModel.renameVehicle("HC name")
-                        }
+    fun updateInformations(){
+        if (hasChangesToUpdate) {
+            if (allFieldsValid()){
+                viewModel.vehicle?.let { vehicle ->
+                    for (item in editableFields){
+                        item.field.onFieldUpdated(item.editableText.text, vehicle)
                     }
                 }
+            } else {
+                Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_fields_not_valid"), Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun allFieldsValid() : Boolean {
+        for (item in editableFields){
+            if (!item.field.isValid(item.editableText.text)){
+                return false
+            }
+        }
+        return true
     }
 
     private fun manageFabAlertDialog(){

@@ -32,6 +32,10 @@ enum class CharacteristicField : Field {
         return true
     }
 
+    override fun getErrorDescription(context: Context): String? {
+        return null
+    }
+
     override fun onFieldUpdated(value: String, vehicle: Vehicle) {
         // do nothing
     }

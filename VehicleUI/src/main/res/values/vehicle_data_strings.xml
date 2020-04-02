@@ -150,6 +150,6 @@
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
 
-
    <string name="dk_vehicle_list_empty">Veuillez ajouter au moins un véhicule</string>
+   <string name="dk_vehicle_field_name_error">Le nom de votre véhicule ne doit pas dépasser 50 caractères</string>
 </resources>
