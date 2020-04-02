@@ -42,7 +42,7 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.4-beta3"
 
     debugApi project(':CommonUI')
-    releaseApi 'com.drivequant.drivekit:drivekit-common-ui:1.3.2'
+    releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 }
 
 uploadArchives {
