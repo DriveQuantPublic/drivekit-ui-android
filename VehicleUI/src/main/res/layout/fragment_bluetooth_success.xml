@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".bluetooth.activity.BluetoothActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <TextView
+        android:id="@+id/text_view_congrats_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/dk_margin"
+        android:layout_margin="@dimen/dk_margin"/>
+    <TextView android:id="@+id/text_view_congrats_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="This is a description text lorem"
+        android:paddingTop="@dimen/dk_margin_quarter"
+        android:layout_margin="@dimen/dk_margin"/>
+    <ImageView android:id="@+id/image_view_success"
+        android:layout_height="152dp"
+        android:layout_width="152dp"
+        android:layout_margin="@dimen/dk_margin"
+        android:layout_gravity="center"
+        android:src="@drawable/dk_thumbs_up" />
+    <TextView android:id="@+id/text_view_congrats_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/dk_margin"
+        android:layout_margin="@dimen/dk_margin"/>
+    <Button
+        android:id="@+id/button_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        android:foreground="?attr/selectableItemBackground"/>
+</LinearLayout>

@@ -89,7 +89,7 @@ class TripDetailFragment : Fragment() {
                             DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                         .show()
 
-                    val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                     val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
                     title?.text = getString(R.string.app_name)
@@ -107,10 +107,12 @@ class TripDetailFragment : Fragment() {
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this,
+                TripDetailViewModelFactory(itinId, DriverDataUI.mapItems)
+            ).get(TripDetailViewModel::class.java)
+        }
         progress_circular.visibility = View.VISIBLE
-        viewModel = ViewModelProviders.of(this,
-            TripDetailViewModelFactory(itinId, DriverDataUI.mapItems)
-        ).get(TripDetailViewModel::class.java)
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
         container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
@@ -141,7 +143,7 @@ class TripDetailFragment : Fragment() {
                     .cancelable(false)
                     .show()
 
-                val title = alert.findViewById<TextView>(R.id.text_view__alert_title)
+                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                 val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
                 title?.text = getString(R.string.app_name)
 

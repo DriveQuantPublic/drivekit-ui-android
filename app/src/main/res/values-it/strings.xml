@@ -4,14 +4,18 @@
    <string name="add_beacon_off">Il Beacon non è configurato</string>
    <string name="add_beacon_on">Il Beacon è configurato come segue</string>
    <string name="add_beacon_title">Configurazione dell\'Beacon</string>
+   <string name="app_name">DriveKit Demo App</string>
    <string name="auto_start_off">Attivare per rilevare automaticamente i tuoi viaggi</string>
    <string name="autostart_on">I viaggi saranno rilevati automaticamente</string>
    <string name="autostart_title">Inizio automatico</string>
    <string name="battery_permission">Batteria</string>
-   <string name="beacon_required_on">Beacon è tenuta a convalidare un viaggio</string>
    <string name="beacon_required_off">Beacon non è tenuta a convalidare un viaggio</string>
+   <string name="beacon_required_on">Beacon è tenuta a convalidare un viaggio</string>
    <string name="beacon_required_title">Beacon richiesto ?</string>
    <string name="cancel_trip">Annulla il viaggio</string>
+   <string name="driver_achievement_button">Lancio Driver Achievement</string>
+   <string name="driver_achievement_explanation">Un esempio di implementazione di DriveKit Driver Achievement con la sua interfaccia utente per la lista Streaks</string>
+   <string name="driver_data_button">Avviare DriverData</string>
    <string name="driver_data_explanation">Un esempio di implementazione di DriveKit DriverData con la sua interfaccia utente per l\'elenco dei viaggi e il dettaglio del viaggio.</string>
    <string name="enable_logging_pref_off">Attivare questa impostazione per scrivere il log sul dispositivo.</string>
    <string name="enable_logging_pref_on">I file di log saranno disponibili nella cartella \"DriveKit\" del telefono.</string>
@@ -31,9 +35,12 @@
    <string name="stop_trip">Interrompi il viaggio</string>
    <string name="train_trip">Il tuo viaggio è stato fatto in treno</string>
    <string name="trip_analysis_settings">Configurazione dell\' Trip Analysis</string>
+   <string name="trip_cancelled_beacon_no_speed">Il vostro viaggio è stato cancellato perché non è stata rilevata alcuna velocità in presenza del beacon.</string>
    <string name="trip_cancelled_highspeed">Il tuo viaggio è stato annullato perché viaggi in treno o in aereo</string>
+   <string name="trip_cancelled_missing_config">Il viaggio è stato annullato perché la configurazione SDK non è corretta.</string>
    <string name="trip_cancelled_no_beacon">Il tuo viaggio è stato annullato perché il tuo badge Bluetooth non è stato riconosciuto</string>
    <string name="trip_cancelled_no_gps_data">Il viaggio non può essere analizzato perché i dati GPS non possono essere recuperati.</string>
+   <string name="trip_cancelled_no_speed">Il tuo viaggio è stato cancellato perché non è stata rilevata alcuna velocità</string>
    <string name="trip_cancelled_reset">Reset del DriveKit durante il viaggio</string>
    <string name="trip_cancelled_user">Viaggio annullato dall\'utente</string>
    <string name="trip_finished">È stato appena analizzato un nuovo viaggio</string>
@@ -41,4 +48,7 @@
    <string name="trip_started">È in corso la registrazione di un viaggio</string>
    <string name="user_id_description">Clicca per riempire il tuo identificativo utente</string>
    <string name="user_id_title">Identificatore utente</string>
+   <string name="vehicle_explanation">Un esempio di implementazione di DriveKit Vehicle con l\'interfaccia utente per la raccolta dei veicoli, l\'elenco dei veicoli, il dettaglio del veicolo, il segnalatore e l\'accoppiamento di dispositivi bluetooth</string>
+   <string name="vehicle_list_button">Elenco veicoli</string>
+   <string name="vehicle_picker_button">Aggiungi un veicolo</string>
 </resources>

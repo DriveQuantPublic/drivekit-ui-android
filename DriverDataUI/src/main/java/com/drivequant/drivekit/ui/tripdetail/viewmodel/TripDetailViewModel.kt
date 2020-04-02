@@ -10,10 +10,9 @@ import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
-import java.io.Serializable
 import java.util.*
 
-class TripDetailViewModel(private val itinId: String, private val mapItems: List<MapItem>): ViewModel(), Serializable {
+class TripDetailViewModel(private val itinId: String, private val mapItems: List<MapItem>): ViewModel() {
 
     var trip: Trip? = null
         set(value) {

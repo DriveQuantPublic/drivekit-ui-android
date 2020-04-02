@@ -1,4 +1,9 @@
 <resources>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="Separator">
     </style>
 
@@ -56,5 +61,10 @@
         <item name="strokeSize">4dp</item>
         <item name="backColor">@color/dkGaugeBackColor</item>
         <item name="textSize">12sp</item>
+    </style>
+
+    <style name="Error_Appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/dkVeryBad</item>
+        <item name="android:textSize">@dimen/dk_text_small</item>
     </style>
 </resources>

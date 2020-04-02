@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
@@ -17,6 +18,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private var menu: Menu? = null
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -77,6 +80,20 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.button_trip_cancel -> {
                     DriveKitTripAnalysis.cancelTrip()
+                }
+            }
+        }
+    }
+
+    fun onVehicleClicked(view: View){
+        if (DriveKitTripAnalysis.isConfigured()) {
+            when (view.id){
+                R.id.button_vehicle_picker -> {
+                    VehiclePickerActivity.launchActivity(this)
+                }
+
+                R.id.button_vehicle_list -> {
+                    DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleListActivity(this)
                 }
             }
         }

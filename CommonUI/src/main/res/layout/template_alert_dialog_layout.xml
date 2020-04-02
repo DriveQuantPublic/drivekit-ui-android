@@ -10,15 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:orientation="horizontal">
-
         <ImageView
             android:id="@+id/image_view_alert_icon"
             android:layout_width="@dimen/dk_ic_big"
             android:layout_height="@dimen/dk_ic_big"
-            android:layout_marginEnd="@dimen/dk_margin" />
-
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:visibility="gone"/>
         <TextView
-            android:id="@+id/text_view__alert_title"
+            android:id="@+id/text_view_alert_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center|start" />

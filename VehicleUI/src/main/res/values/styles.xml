@@ -1,0 +1,5 @@
+<resources>
+    <style name="VehiclePickerTextItem">
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+</resources>

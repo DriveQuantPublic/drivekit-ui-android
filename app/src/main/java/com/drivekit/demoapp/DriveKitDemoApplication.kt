@@ -16,24 +16,27 @@ import com.drivequant.drivekit.tripanalysis.entity.TripNotification
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
+import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
+import com.facebook.stetho.Stetho
 import java.util.*
 
-class DriveKitDemoApplication: Application() {
+class DriveKitDemoApplication: Application(), ContentMail {
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(message)
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .bigText(message)
-                )
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
 
@@ -44,13 +47,17 @@ class DriveKitDemoApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
+
         createNotificationChannel()
         configureDriveKit()
         registerReceiver()
 
         DriveKitUI.initialize()
+        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
+        DriveKitVehicleUI.initialize()
     }
 
     private fun createNotificationChannel() {
@@ -89,11 +96,18 @@ class DriveKitDemoApplication: Application() {
 
             override fun beaconDetected() {
             }
+
+            override fun sdkStateChanged(state: State) { }
         })
         DriveKitDriverData.initialize()
+
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
 
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        // TODO: test only beacon detection mode
+        DriveKitVehicleUI.configureBeaconDetailEmail(this)
+        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
 
@@ -111,5 +125,21 @@ class DriveKitDemoApplication: Application() {
         val receiver = TripReceiver()
         val filter = IntentFilter("com.drivequant.sdk.TRIP_ANALYSED")
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
+    }
+
+    override fun getRecipients(): List<String> {
+        return listOf("contact@drivequant.com")
+    }
+
+    override fun getBccRecipients(): List<String> {
+        return listOf()
+    }
+
+    override fun getSubject(): String {
+        return "Mock subject"
+    }
+
+    override fun getMailBody(): String {
+        return "Mock mail body in DriveKitDemoApplication.kt"
     }
 }
