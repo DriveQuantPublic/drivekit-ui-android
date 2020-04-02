@@ -103,7 +103,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         if (vehicle.isConfigured()){
             textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)
         } else {
-            DKResource.convertToDrawable(context, "dk_common_info_filled")?.let { infoDrawable ->
+            DKResource.convertToDrawable(context, "dk_common_warning")?.let { infoDrawable ->
                 val bitmap = (infoDrawable as BitmapDrawable).bitmap
                 val size = context.resources.getDimension(R.dimen.dk_ic_medium).toInt()
                 val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))

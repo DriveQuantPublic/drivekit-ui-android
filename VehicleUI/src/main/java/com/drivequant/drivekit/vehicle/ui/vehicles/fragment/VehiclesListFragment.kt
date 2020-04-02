@@ -126,7 +126,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun setupEmptyListLayout(){
-        text_view_summary_icon.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_high_priority_red"))
+        text_view_summary_icon.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_warning"))
         text_view_header_title.typeface = Typeface.DEFAULT_BOLD
         text_view_header_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
     }
