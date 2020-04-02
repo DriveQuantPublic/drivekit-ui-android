@@ -14,13 +14,20 @@
    <string name="dk_common_duration">Duración</string>
    <string name="dk_common_ecodriving">Eco-conducción</string>
    <string name="dk_common_edit">Editar</string>
+   <string name="dk_common_error_empty_field">Este campo no puede estar vacío</string>
    <string name="dk_common_finish">Acabado</string>
-   <string name="dk_common_loading">Cargando. Por favor, espere…</string>
+   <string name="dk_common_loading">Cargando. Por favor, espere...</string>
    <string name="dk_common_mass">Masa</string>
    <string name="dk_common_mean_speed">Velocidad media</string>
    <string name="dk_common_ok">OK</string>
+   <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.
+</string>
+   <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.
+</string>
+   <string name="dk_common_permissions">Permisos</string>
    <string name="dk_common_safety">Seguridad</string>
    <string name="dk_common_save">Registro</string>
+   <string name="dk_common_settings">Ajustes</string>
    <string name="dk_common_speed">Velocidad</string>
    <string name="dk_common_trip_plural">viajes</string>
    <string name="dk_common_trip_singular">viaje</string>
@@ -41,6 +48,10 @@
    <string name="dk_common_unit_minute">min</string>
    <string name="dk_common_unit_mpg">mpg</string>
    <string name="dk_common_unit_mph">mph</string>
+   <string name="dk_common_unit_power">hp</string>
    <string name="dk_common_unit_second">s</string>
    <string name="dk_common_validate">Valido</string>
+   <string name="dk_select_image_gallery">Seleccione una foto existente</string>
+   <string name="dk_take_picture">Toma una foto</string>
+   <string name="dk_update_photo_title">Cambiar la imagen</string>
 </resources>
