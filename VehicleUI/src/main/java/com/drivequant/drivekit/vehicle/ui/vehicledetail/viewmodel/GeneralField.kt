@@ -74,12 +74,15 @@ enum class GeneralField : Field {
         return true
     }
 
-    override fun onFieldUpdated(value: String, vehicle: Vehicle) {
+    override fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener) {
         when (this){
             NAME -> {
                 DriveKitVehicle.renameVehicle(value, vehicle, object : VehicleRenameQueryListener {
                     override fun onResponse(status: VehicleManagerStatus) {
-
+                        listener.onFieldUpdated(
+                            status == VehicleManagerStatus.SUCCESS,
+                            DKResource.convertToString(context, "dk_change_success")
+                        )
                     }
                 })
             }

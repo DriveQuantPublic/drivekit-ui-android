@@ -41,6 +41,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_CAMERA
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper.REQUEST_GALLERY
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
 
@@ -177,7 +178,11 @@ class VehicleDetailFragment : Fragment() {
             if (allFieldsValid()){
                 viewModel.vehicle?.let { vehicle ->
                     for (item in editableFields){
-                        item.field.onFieldUpdated(item.editableText.text, vehicle)
+                        item.field.onFieldUpdated(requireContext(), item.editableText.text, vehicle, object : FieldUpdatedListener {
+                            override fun onFieldUpdated(success: Boolean, message: String) {
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     }
                 }
             } else {

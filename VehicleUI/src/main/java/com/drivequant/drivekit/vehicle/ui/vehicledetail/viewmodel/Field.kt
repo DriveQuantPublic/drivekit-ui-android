@@ -12,5 +12,9 @@ interface Field {
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
     fun isValid(value: String): Boolean = true
     fun getErrorDescription(context: Context): String?
-    fun onFieldUpdated(value: String, vehicle: Vehicle)
+    fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener)
+}
+
+interface FieldUpdatedListener {
+    fun onFieldUpdated(success: Boolean, message: String)
 }

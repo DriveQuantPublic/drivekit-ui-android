@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.InputType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
+import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 
 class DemoCustomField : Field {
 
@@ -35,7 +36,7 @@ class DemoCustomField : Field {
         return "Value must be below 999"
     }
 
-    override fun onFieldUpdated(value: String, vehicle: Vehicle) {
-        // TODO 
+    override fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener) {
+        // TODO
     }
 }

@@ -36,7 +36,7 @@ enum class BeaconField : Field {
         return null
     }
 
-    override fun onFieldUpdated(value: String, vehicle: Vehicle) {
+    override fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener) {
         // do nothing
     }
 }
