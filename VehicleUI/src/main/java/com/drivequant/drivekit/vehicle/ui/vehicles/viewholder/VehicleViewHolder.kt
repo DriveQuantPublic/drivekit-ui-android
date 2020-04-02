@@ -113,7 +113,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         }
 
         val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
-        val adapter = DetectionModeSpinnerAdapter(context, R.id.text_view, detectionModes)
+        val adapter = DetectionModeSpinnerAdapter(context, detectionModes)
         spinnerDetectionMode.adapter = adapter
     }
 
