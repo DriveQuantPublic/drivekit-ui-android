@@ -105,7 +105,6 @@ class DriveKitDemoApplication: Application(), ContentMail {
         DriveKit.setApiKey("Your API key here")
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        // TODO: test only beacon detection mode
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
