@@ -45,4 +45,5 @@ dependencies {
     implementation project(':DriverDataUI')
     implementation project(':VehicleUI')
     implementation project(':DriverAchievementUI')
+    implementation project(':PermissionsUtilsUI')
 }
