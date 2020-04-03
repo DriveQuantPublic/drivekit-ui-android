@@ -7,6 +7,6 @@ class BatteryOptimizationPermissionActivity : BasePermissionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_battery_optimization)
+        setContentView(R.layout.activity_battery_optimization_permission)
     }
 }
