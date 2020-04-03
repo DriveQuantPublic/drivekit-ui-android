@@ -17,6 +17,9 @@ import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
+import com.drivequant.drivekit.permissionsutils.permissions.PermissionView
+import com.drivequant.drivekit.permissionsutils.permissions.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -67,6 +70,22 @@ class MainActivity : AppCompatActivity() {
 
     fun onDriverAchievementClicked(view: View) {
         DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakListActivity(applicationContext)
+    }
+
+    fun onPermissionUtilsClicked(view: View) {
+        val permissionViews = arrayListOf(
+            PermissionView.ACTIVITY,
+            PermissionView.LOCATION,
+            PermissionView.BACKGROUND_TASK
+        )
+        PermissionUtilsUI.showPermissionViews(
+            this,
+            permissionViews,
+            object : PermissionViewListener {
+                override fun onFinish() {
+                    startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                }
+            })
     }
 
     fun buttonTripClicked(view: View){

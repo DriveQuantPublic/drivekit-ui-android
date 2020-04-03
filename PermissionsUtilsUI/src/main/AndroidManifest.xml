@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".permissions.BasePermissionActivity" />
         <activity android:name=".permissions.LocationPermissionActivity" />
-        <activity android:name=".permissions.BatteryOptimizationPermissionActivity" />
+        <activity android:name=".permissions.BackgroundTaskPermissionActivity" />
         <activity android:name=".permissions.ActivityRecognitionPermissionActivity" />
     </application>
 
