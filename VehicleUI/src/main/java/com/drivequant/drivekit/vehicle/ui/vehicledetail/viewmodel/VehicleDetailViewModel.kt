@@ -23,7 +23,7 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     var groupFields: MutableList<GroupField> = mutableListOf()
 
     fun init(context: Context){
-        vehicle = DriveKitVehicle.getVehiclesInDatabase().firstOrNull { it.vehicleId == vehicleId }
+        vehicle = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
         vehicle?.let {
             vehicleName = it.buildFormattedName(context)
             createGroupFields()

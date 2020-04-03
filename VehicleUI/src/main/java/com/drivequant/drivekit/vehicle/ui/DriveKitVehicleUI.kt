@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
@@ -121,16 +122,28 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun startVehicleDetailActivity(context: Context, vehicleId: String) {
-        val intent = Intent(context, VehicleDetailActivity::class.java)
-        intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    override fun startVehicleDetailActivity(context: Context, vehicleId: String) : Boolean {
+        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let { vehicle ->
+            return if (vehicle.liteConfig){
+                false
+            } else {
+                val intent = Intent(context, VehicleDetailActivity::class.java)
+                intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+                true
+            }
+        }?: run {
+            return false
+        }
     }
 
     override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {
-        val vehicle = DriveKitVehicle.getVehiclesInDatabase().first { it.vehicleId == vehicleId }
-        val vehicleName = vehicle.buildFormattedName(context)
-        listener.onVehicleInfoRetrieved(vehicleName, vehicle.liteConfig)
+        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let {
+            val vehicleName = it.buildFormattedName(context)
+            listener.onVehicleInfoRetrieved(vehicleName, it.liteConfig)
+        }?: run {
+            Log.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
+        }
     }
 }

@@ -18,14 +18,14 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
     private val notAvailableText = "-"
 
     fun init(context: Context) {
-        this@SynthesisViewModel.vehicleName = "testName"
-        this@SynthesisViewModel.liteConfig = false
-        getVehicleDisplayName(context, object : VehicleInfoListener {
-            override fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
-                this@SynthesisViewModel.vehicleName = vehicleName
-                this@SynthesisViewModel.liteConfig = liteConfig
-            }
-        })
+        trip.vehicleId?.let { vehicleId ->
+            DriveKitNavigationController.vehicleUIEntryPoint?.getVehicleInfoById(context, vehicleId, object: GetVehicleInfoByVehicleIdListener {
+                override fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
+                    this@SynthesisViewModel.vehicleName = vehicleName
+                    this@SynthesisViewModel.liteConfig = liteConfig
+                }
+            })
+        }
     }
 
     fun getRoadContextValue(context: Context): String {
@@ -110,25 +110,18 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         return trip.vehicleId
     }
 
+    fun getVehicleDisplayName() : String {
+        return vehicleName?.let {
+            it
+        }?:run {
+            notAvailableText
+        }
+    }
+
     @Suppress("UNCHECKED_CAST")
     class SynthesisViewModelFactory(private val trip: Trip) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return SynthesisViewModel(trip) as T
         }
-    }
-    private fun getVehicleDisplayName(context: Context, listener: VehicleInfoListener) {
-        trip.vehicleId?.let {
-            DriveKitNavigationController.vehicleUIEntryPoint?.getVehicleInfoById(context, it, object : GetVehicleInfoByVehicleIdListener{
-                override fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
-                    listener.onInfoRetrieved(vehicleName, liteConfig)
-                }
-            })
-        }?: run {
-            return listener.onInfoRetrieved(notAvailableText, null)
-        }
-    }
-
-    interface VehicleInfoListener {
-        fun onInfoRetrieved(vehicleName: String, liteConfig: Boolean?)
     }
 }

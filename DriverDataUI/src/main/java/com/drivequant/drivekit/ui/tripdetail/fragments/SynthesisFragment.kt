@@ -56,7 +56,7 @@ class SynthesisFragment : Fragment() {
 
         viewModel.init(requireContext())
 
-        item_vehicle_used.setValueItem(viewModel.vehicleName)
+        item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
         item_vehicle_used.setOnClickListener {
             item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
         }
