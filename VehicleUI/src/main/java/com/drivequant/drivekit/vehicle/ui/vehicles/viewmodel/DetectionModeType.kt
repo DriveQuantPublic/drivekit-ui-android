@@ -159,7 +159,7 @@ enum class DetectionModeType(
             getEnumByDetectionMode(detectionMode).getTitle(context),
             vehicle.buildFormattedName(context),
             gpsVehicle.buildFormattedName(context),
-            gpsVehicle.getDetectionModeName(context)
+            getEnumByDetectionMode(DetectionMode.DISABLED).getTitle(context)
         )
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
