@@ -1,3 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PermissionsUtils</string>
+    <string name="dk_perm_utils_permissions_location_title">Trip recording</string>
+    <string name="dk_perm_utils_permissions_location_text1_android">The application must be allowed to access the phone\'s position to detect and analyze your trips.</string>
+    <string name="dk_perm_utils_permissions_location_text2_post_android10">To do this, choose \"Always\" when the next popup is displayed.</string>
+    <string name="dk_perm_utils_permissions_location_text2_pre_android10">To do this, choose \"Allow\" when the next popup is displayed.</string>
+    <string name="dk_perm_utils_permissions_location_button_android">Open the settings</string>
+    <string name="dk_perm_utils_permissions_phone_settings_activity_title">Activity monitoring</string>
+    <string name="dk_perm_utils_permissions_phone_settings_activity_text">To improve the analysis of your trips and identify the mode of transport used, you must allow the application to access the phone activity.</string>
+    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Authorize activity tracking</string>
+    <string name="dk_perm_utils_permissions_phone_settings_background_title">Background task</string>
+    <string name="dk_perm_utils_permissions_phone_settings_background_text1">To avoid the application being stopped by the phone\'s battery saving system, you must accept background task.</string>
+    <string name="dk_perm_utils_permissions_phone_settings_background_text2">The application uses the GPS sensor only while driving. It has been optimized to avoid battery drain.</string>
+    <string name="dk_perm_utils_permissions_phone_settings_background_button">Allow background task</string>
 </resources>
