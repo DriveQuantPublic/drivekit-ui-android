@@ -8,6 +8,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,15 @@ class VehiclesListFragment : Fragment() {
 
     private fun updateTitle(title: String){
         if (activity is VehiclesListActivity) {
+            Log.e("TITLE", "UpdateTitle OK")
             (activity as VehiclesListActivity).updateTitle(title)
+        } else {
+            activity?.let {
+                Log.e("TITLE", "UpdateTitle1")
+                it.title = "UpdateTitle1"
+            }?:run {
+                Log.e("TITLE", "UpdateTitle2")
+            }
         }
     }
 
