@@ -75,6 +75,7 @@ class VehiclesListFragment : Fragment() {
             Log.e("TITLE", "UpdateTitle OK")
             (activity as VehiclesListActivity).updateTitle(title)
         }
+        activity?.title = "$title - mock"
     }
 
     private fun updateVehicles(){
