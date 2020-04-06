@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -43,7 +44,10 @@ class BeaconScannerFragment : Fragment(), ScanState {
             BeaconScanType.PAIRING -> "dk_beacon_paired_title"
             BeaconScanType.DIAGNOSTIC, BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
         }
-        activity?.title = DKResource.convertToString(requireContext(), titleIdentifier)
+
+        if (activity is BeaconActivity){
+            (activity as BeaconActivity).updateTitle(DKResource.convertToString(requireContext(), DKResource.convertToString(requireContext(), titleIdentifier)))
+        }
         updateChildFragment()
     }
 

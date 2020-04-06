@@ -20,8 +20,10 @@ import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
+import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
@@ -54,8 +56,6 @@ class VehiclesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = DKResource.convertToString(requireContext(), "dk_common_loading")
-
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
@@ -66,16 +66,27 @@ class VehiclesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
         updateVehicles()
+    }
+
+    private fun updateTitle(title: String){
+        if (activity is VehiclesListActivity) {
+            (activity as VehiclesListActivity).updateTitle(title)
+        }
     }
 
     private fun updateVehicles(){
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
-            if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
-                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_error_message"), Toast.LENGTH_LONG).show()
+            if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(requireContext(), "dk_vehicle_error_message"),
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            if (it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 linear_layout_header_vehicle_list.visibility = View.VISIBLE
             } else {
                 displayVehiclesList()
@@ -87,7 +98,9 @@ class VehiclesListFragment : Fragment() {
                     vehicles_list.adapter = adapter
                 }
             }
-            activity?.title = viewModel.getScreenTitle(context)
+
+            updateTitle(viewModel.getScreenTitle(requireContext()))
+
             refresh_vehicles.visibility = View.VISIBLE
             refresh_vehicles.isRefreshing = false
             setupAddVehicleButton()

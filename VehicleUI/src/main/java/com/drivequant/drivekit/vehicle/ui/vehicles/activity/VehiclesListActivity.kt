@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
+import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class VehiclesListActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
@@ -24,6 +25,10 @@ class VehiclesListActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, VehiclesListFragment())
             .commit()
+    }
+
+    fun updateTitle(title: String){
+        toolbar.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

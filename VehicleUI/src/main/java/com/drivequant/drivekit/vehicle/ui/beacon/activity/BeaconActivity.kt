@@ -18,7 +18,8 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.activity_beacon.*
+import kotlinx.android.synthetic.main.activity_beacon.progress_circular
+import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
@@ -95,6 +96,10 @@ class BeaconActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    fun updateTitle(title: String){
+        toolbar.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

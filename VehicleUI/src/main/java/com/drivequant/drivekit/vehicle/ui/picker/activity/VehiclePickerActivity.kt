@@ -28,7 +28,8 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
-import kotlinx.android.synthetic.main.activity_vehicle_picker.*
+import kotlinx.android.synthetic.main.activity_vehicle_detail.*
+import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
@@ -54,7 +55,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        setTitle(R.string.dk_vehicle_my_vehicle)
+
+        updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -105,6 +107,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.computeNextScreen(this, null)
     }
 
+    fun updateTitle(title: String){
+        toolbar.title = title
+    }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         var otherAction = false

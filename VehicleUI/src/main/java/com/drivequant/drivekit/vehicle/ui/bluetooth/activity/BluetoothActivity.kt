@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
+import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class BluetoothActivity : AppCompatActivity() {
     private lateinit var viewModel : BluetoothViewModel
@@ -60,7 +61,11 @@ class BluetoothActivity : AppCompatActivity() {
             }
         })
 
-        this.title = DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title")
+        updateTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
+    }
+
+    fun updateTitle(title: String){
+        toolbar.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {
