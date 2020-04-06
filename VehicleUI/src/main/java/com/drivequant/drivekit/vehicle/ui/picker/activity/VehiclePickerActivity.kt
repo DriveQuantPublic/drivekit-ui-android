@@ -11,6 +11,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -50,9 +51,13 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_picker)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        setTitle(R.string.dk_vehicle_my_vehicle)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        setTitle(R.string.dk_vehicle_my_vehicle)
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
 
