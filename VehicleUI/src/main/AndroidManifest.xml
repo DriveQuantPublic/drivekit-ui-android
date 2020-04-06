@@ -33,7 +33,7 @@
             android:name=".utils.BaseFileProvider"
             android:grantUriPermissions="true"
             android:exported="false"
-            android:authorities="drivekit-vehicle-ui.provider">
+            android:authorities="${applicationId}.provider">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths"/>
