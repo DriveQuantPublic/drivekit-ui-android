@@ -22,25 +22,36 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
 
+    @JvmStatic
     internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
+    @JvmStatic
     internal var brands: List<VehicleBrand> = VehicleBrand.getBrands(null)
+    @JvmStatic
     internal var categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG
+    @JvmStatic
     internal var vehicleEngineIndexes: List<VehicleEngineIndex> = VehicleEngineIndex.values().toList()
+    @JvmStatic
     internal var brandsWithIcons: Boolean = true
 
+    @JvmStatic
     internal var canAddVehicle: Boolean = true
+    @JvmStatic
     internal var canRemoveBeacon: Boolean = true
+    @JvmStatic
     internal var maxVehicles: Int? = null
+    @JvmStatic
     internal var vehicleActions: List<VehicleAction> = VehicleAction.values().toList()
 
+    @JvmStatic
     internal var detectionModes: List<DetectionMode> = listOf(
         DetectionMode.DISABLED,
         DetectionMode.GPS,
         DetectionMode.BEACON,
         DetectionMode.BLUETOOTH
     )
-
+    @JvmStatic
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
+    @JvmStatic
     internal var beaconDiagnosticMail: ContentMail? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
