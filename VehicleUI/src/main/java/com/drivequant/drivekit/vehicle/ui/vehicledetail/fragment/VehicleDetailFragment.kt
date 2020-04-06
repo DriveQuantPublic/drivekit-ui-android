@@ -216,7 +216,7 @@ class VehicleDetailFragment : Fragment() {
 
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
-        title?.text = DKResource.convertToString(requireContext(), "dk_update_photo_title")
+        title?.text = DKResource.convertToString(requireContext(), "dk_common_update_photo_title")
         title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         title?.setBackgroundColor(primaryColor)
 
@@ -227,7 +227,7 @@ class VehicleDetailFragment : Fragment() {
         separatorCamera?.setBackgroundColor(neutralColor)
         separatorGallery?.setBackgroundColor(neutralColor)
         cameraTextView?.let {
-            it.text = DKResource.convertToString(requireActivity(), "dk_take_picture")
+            it.text = DKResource.convertToString(requireActivity(), "dk_common_take_picture")
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(),
@@ -241,7 +241,7 @@ class VehicleDetailFragment : Fragment() {
             }
         }
         galleryTextView?.let {
-            it.text = DKResource.convertToString(requireContext(), "dk_select_image_gallery")
+            it.text = DKResource.convertToString(requireContext(), "dk_common_select_image_gallery")
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {

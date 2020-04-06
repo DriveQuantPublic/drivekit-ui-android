@@ -23,7 +23,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
