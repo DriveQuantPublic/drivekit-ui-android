@@ -74,13 +74,6 @@ class VehiclesListFragment : Fragment() {
         if (activity is VehiclesListActivity) {
             Log.e("TITLE", "UpdateTitle OK")
             (activity as VehiclesListActivity).updateTitle(title)
-        } else {
-            activity?.let {
-                Log.e("TITLE", "UpdateTitle1")
-                it.title = "UpdateTitle1"
-            }?:run {
-                Log.e("TITLE", "UpdateTitle2")
-            }
         }
     }
 
