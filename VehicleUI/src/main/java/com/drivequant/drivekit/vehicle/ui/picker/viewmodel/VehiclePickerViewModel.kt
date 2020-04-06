@@ -40,6 +40,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private var isLiteConfig = false
 
     var vehicleToDelete: Vehicle? = null
+    var createdVehicleId: String? = null
 
     lateinit var selectedVehicleTypeItem: VehicleTypeItem
     lateinit var selectedCategory: VehicleCategoryItem
@@ -245,6 +246,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                                 DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
                                     override fun onResponse(status: VehicleManagerStatus) {
                                         vehicleToDelete = null
+                                        createdVehicleId = vehicle.vehicleId
                                         if (status == VehicleManagerStatus.SUCCESS) {
                                             endObserver.postValue(SUCCESS)
                                         } else {

@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 
@@ -27,7 +28,8 @@ class VehiclesListActivity : AppCompatActivity() {
     }
 
     fun updateTitle(title: String){
-        supportActionBar?.title = title
+        Log.e("TITLE", "title value is : $title")
+        this.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

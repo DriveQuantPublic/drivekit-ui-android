@@ -33,6 +33,8 @@ import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
+    val ARG_NEW_VEHICLE_ID = "new-vehicle-idarg"
+
     private lateinit var viewModel : VehiclePickerViewModel
 
     companion object {
@@ -97,6 +99,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, Observer {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
+                    val intent = Intent()
+                    intent.putExtra(ARG_NEW_VEHICLE_ID, viewModel.createdVehicleId)
+                    setResult(RESULT_OK, intent)
                     finish()
                 } else {
                     Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
