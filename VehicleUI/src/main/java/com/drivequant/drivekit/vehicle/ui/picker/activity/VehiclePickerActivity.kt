@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
-    val ARG_NEW_VEHICLE_ID = "new-vehicle-idarg"
+    val ARG_NEW_VEHICLE_ID = "new-vehicle-id-arg"
 
     private lateinit var viewModel : VehiclePickerViewModel
 
