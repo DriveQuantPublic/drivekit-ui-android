@@ -30,7 +30,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name=".utils.BaseFileProvider"
             android:grantUriPermissions="true"
             android:exported="false"
             android:authorities="drivekit-vehicle-ui.provider">
