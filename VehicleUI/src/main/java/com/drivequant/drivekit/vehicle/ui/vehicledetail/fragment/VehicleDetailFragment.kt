@@ -230,12 +230,8 @@ class VehicleDetailFragment : Fragment() {
             it.text = DKResource.convertToString(requireActivity(), "dk_take_picture")
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
-                        displayRationaleAlert( "dk_common_permission_camera_rationale")
-                    } else {
-                        ActivityCompat.requestPermissions(requireActivity(),
-                            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA)
-                    }
+                    ActivityCompat.requestPermissions(requireActivity(),
+                        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA)
                 } else {
                     if (alert.isShowing){
                         alert.dismiss()
@@ -249,11 +245,7 @@ class VehicleDetailFragment : Fragment() {
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        displayRationaleAlert( "dk_common_permission_storage_rationale")
-                    } else {
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
-                    }
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
                 } else {
                     if (alert.isShowing){
                         alert.dismiss()
@@ -320,11 +312,25 @@ class VehicleDetailFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty()) {
-            if (requestCode == REQUEST_GALLERY) {
-                launchGalleryIntent()
-            } else {
-                launchCameraIntent()
+        when (requestCode){
+            REQUEST_GALLERY -> {
+                if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchGalleryIntent()
+                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    displayRationaleAlert( "dk_common_permission_storage_rationale")
+                } else {
+                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_permission_storage_rationale"), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            REQUEST_CAMERA -> {
+                if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchCameraIntent()
+                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
+                    displayRationaleAlert( "dk_common_permission_camera_rationale")
+                } else {
+                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(),"dk_common_permission_camera_rationale"), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
