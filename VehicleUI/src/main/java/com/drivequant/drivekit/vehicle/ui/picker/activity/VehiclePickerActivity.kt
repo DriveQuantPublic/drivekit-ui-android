@@ -20,6 +20,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -32,19 +33,16 @@ import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
-    val ARG_NEW_VEHICLE_ID = "new-vehicle-id-arg"
-
     private lateinit var viewModel : VehiclePickerViewModel
 
     companion object {
-        const val REQUEST_VEHICLE_PICKER = 100
         private var vehicleToDelete: Vehicle? = null
         @JvmOverloads
         fun launchActivity(activityContext: Context, vehicleToDelete: Vehicle? = null) {
             this.vehicleToDelete = vehicleToDelete
             val intent = Intent(activityContext, VehiclePickerActivity::class.java)
             val activity = activityContext as Activity
-            activity.startActivityForResult(intent, REQUEST_VEHICLE_PICKER)
+            activity.startActivity(intent)
         }
     }
 
@@ -98,10 +96,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, Observer {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
-                    val intent = Intent()
-                    intent.putExtra(ARG_NEW_VEHICLE_ID, viewModel.createdVehicleId)
-                    setResult(RESULT_OK, intent)
-                    finish()
+                    DriveKitVehicleUI.initFirstOdometerEntry?.let { listener ->
+                        viewModel.createdVehicleId?.let { vehicleId ->
+                            listener.onVehiclePickerFinished(vehicleId)
+                            finish()
+                        }
+                    }?:run {
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
                 }

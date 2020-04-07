@@ -256,6 +256,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                                     }
                                 })
                             }?: run {
+                                createdVehicleId = vehicle.vehicleId
                                 endObserver.postValue(SUCCESS)
                                 progressBarObserver.postValue(false)
                             }
