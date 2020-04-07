@@ -14,7 +14,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class BluetoothActivity : AppCompatActivity() {
     private lateinit var viewModel : BluetoothViewModel
@@ -39,7 +38,7 @@ class BluetoothActivity : AppCompatActivity() {
         setContentView(R.layout.activity_bluetooth)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
@@ -64,8 +63,8 @@ class BluetoothActivity : AppCompatActivity() {
         updateTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
     }
 
-    fun updateTitle(title: String){
-        toolbar.title = title
+    private fun updateTitle(title: String){
+        this.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

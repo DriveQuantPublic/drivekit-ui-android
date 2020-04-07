@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
-import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.ScanState
@@ -40,14 +37,6 @@ class BeaconScannerFragment : Fragment(), ScanState {
 
         viewModel.listener = this
         updateStep(beaconStep)
-        val titleIdentifier = when (viewModel.scanType){
-            BeaconScanType.PAIRING -> "dk_beacon_paired_title"
-            BeaconScanType.DIAGNOSTIC, BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
-        }
-
-        if (activity is BeaconActivity){
-            (activity as BeaconActivity).updateTitle(DKResource.convertToString(requireContext(), DKResource.convertToString(requireContext(), titleIdentifier)))
-        }
         updateChildFragment()
     }
 

@@ -53,7 +53,7 @@ class BeaconDetailActivity : AppCompatActivity() {
         title = DKResource.convertToString(this, "dk_beacon_diagnostic_title")
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))

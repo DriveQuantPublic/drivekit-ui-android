@@ -5,10 +5,8 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
-import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class VehiclesListActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
@@ -17,7 +15,7 @@ class VehiclesListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicles_list)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -29,10 +27,7 @@ class VehiclesListActivity : AppCompatActivity() {
     }
 
     fun updateTitle(title: String){
-        Log.e("TITLE", "title value is : $title")
         this.title = title
-        supportActionBar?.title = "$title + from SupportActionBar"
-        toolbar?.title = "$title + from Toolbar"
     }
 
     override fun onSupportNavigateUp(): Boolean {

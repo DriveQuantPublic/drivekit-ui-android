@@ -28,7 +28,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
-import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
@@ -55,7 +54,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         setContentView(R.layout.activity_vehicle_picker)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
@@ -113,7 +112,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     fun updateTitle(title: String){
-        toolbar.title = title
+        this.title = title
     }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {

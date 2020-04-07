@@ -34,7 +34,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicle_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

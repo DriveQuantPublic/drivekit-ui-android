@@ -14,16 +14,18 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.activity_beacon.progress_circular
-import kotlinx.android.synthetic.main.activity_vehicle_detail.*
 
 class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
     private lateinit var scanType : BeaconScanType
+
+    private lateinit var toolbar: Toolbar
 
     private var vehicleId : String? = null
     private var beacon : Beacon? = null
@@ -52,7 +54,7 @@ class BeaconActivity : AppCompatActivity() {
         setContentView(R.layout.activity_beacon)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar = findViewById(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
@@ -96,10 +98,17 @@ class BeaconActivity : AppCompatActivity() {
                 }
             }
         })
+
+        updateTitle()
     }
 
-    fun updateTitle(title: String){
-        toolbar.title = title
+    private fun updateTitle(){
+        val titleIdentifier = when (viewModel.scanType) {
+            BeaconScanType.PAIRING -> "dk_beacon_paired_title"
+            BeaconScanType.DIAGNOSTIC,
+            BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
+        }
+        this.title = DKResource.convertToString(this, titleIdentifier)
     }
 
     override fun onSupportNavigateUp(): Boolean {
