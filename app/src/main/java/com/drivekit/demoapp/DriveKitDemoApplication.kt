@@ -8,6 +8,8 @@ import android.content.IntentFilter
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
+import android.widget.Toast
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -25,11 +27,12 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.listener.InitFirstOdometerEntryListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
 
-class DriveKitDemoApplication: Application(), ContentMail {
+class DriveKitDemoApplication: Application(), ContentMail, InitFirstOdometerEntryListener {
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -106,6 +109,7 @@ class DriveKitDemoApplication: Application(), ContentMail {
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
+        DriveKitVehicleUI.configureInitFirstOdometerEntry(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
@@ -140,5 +144,9 @@ class DriveKitDemoApplication: Application(), ContentMail {
 
     override fun getMailBody(): String {
         return "Mock mail body in DriveKitDemoApplication.kt"
+    }
+
+    override fun onVehiclePickerFinished(vehicleId: String) {
+        Log.i("Vehicle Picker", "New vehicle created : $vehicleId")
     }
 }
