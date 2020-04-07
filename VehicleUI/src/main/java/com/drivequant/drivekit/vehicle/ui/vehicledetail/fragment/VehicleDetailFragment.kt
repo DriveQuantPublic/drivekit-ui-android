@@ -170,17 +170,40 @@ class VehicleDetailFragment : Fragment() {
     }
 
     fun onBackPressed(){
-        updateInformations()
+        if (hasChangesToUpdate){
+            val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
+                .layout(R.layout.template_alert_dialog_layout)
+                .cancelable(false)
+                .positiveButton(getString(R.string.dk_common_confirm),
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        updateInformations(true)
+                    })
+                .negativeButton(getString(R.string.dk_common_cancel),
+                    DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                .show()
+
+            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+
+            title?.text = getString(R.string.app_name)
+            description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_detail_back_edit_alert")
+        } else {
+            activity?.finish()
+        }
     }
 
-    fun updateInformations(){
+    fun updateInformations(fromBackButton: Boolean = false){
         if (hasChangesToUpdate) {
             if (allFieldsValid()){
                 viewModel.vehicle?.let { vehicle ->
                     for (item in editableFields){
                         item.field.onFieldUpdated(requireContext(), item.editableText.text, vehicle, object : FieldUpdatedListener {
                             override fun onFieldUpdated(success: Boolean, message: String) {
+                                hasChangesToUpdate = false
                                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                if (fromBackButton){
+                                    activity?.finish()
+                                }
                             }
                         })
                     }

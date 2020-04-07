@@ -115,7 +115,6 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         if (fragment is VehicleDetailFragment){
             fragment.onBackPressed()
