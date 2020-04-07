@@ -32,7 +32,6 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         context: Context,
         synchronizationType: SynchronizationType = SynchronizationType.DEFAULT
     ) {
-        progressBarObserver.postValue(true)
         if (DriveKit.isConfigured()) {
             DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
@@ -42,7 +41,6 @@ class VehiclesListViewModel : ViewModel(), Serializable {
                 }
             }, synchronizationType)
         } else {
-            progressBarObserver.postValue(false)
             vehiclesData.postValue(listOf())
         }
     }

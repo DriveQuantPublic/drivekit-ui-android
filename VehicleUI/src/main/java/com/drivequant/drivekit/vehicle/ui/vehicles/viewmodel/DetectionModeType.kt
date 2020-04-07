@@ -94,7 +94,7 @@ enum class DetectionModeType(
 
         return if (configured){
             DKSpannable().append(parameteredString, context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DriveKitUI.colors.complementaryFontColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
             }).toSpannable()

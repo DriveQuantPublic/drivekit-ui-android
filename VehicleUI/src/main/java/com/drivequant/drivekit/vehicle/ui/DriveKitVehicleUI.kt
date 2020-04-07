@@ -28,7 +28,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var vehicleEngineIndexes: List<VehicleEngineIndex> = VehicleEngineIndex.values().toList()
     internal var brandsWithIcons: Boolean = true
 
-    var canAddVehicle: Boolean = true
+    internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
     internal var vehicleActions: List<VehicleAction> = VehicleAction.values().toList()
