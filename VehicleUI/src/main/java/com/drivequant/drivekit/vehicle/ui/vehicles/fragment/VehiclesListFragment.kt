@@ -57,7 +57,7 @@ class VehiclesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refresh_vehicles.setOnRefreshListener {
-            updateVehicles()
+            updateVehicles(false)
         }
 
         val linearLayoutManager = LinearLayoutManager(view.context)
@@ -78,7 +78,7 @@ class VehiclesListFragment : Fragment() {
         activity?.title = "$title - mock"
     }
 
-    private fun updateVehicles(){
+    private fun updateVehicles(displayProgressBar: Boolean = true){
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
@@ -108,7 +108,7 @@ class VehiclesListFragment : Fragment() {
             setupAddVehicleButton()
         })
         refresh_vehicles.isRefreshing = true
-        viewModel.fetchVehicles(requireContext())
+        viewModel.fetchVehicles(requireContext(), displayProgressBar = displayProgressBar)
     }
 
     private fun setupAddVehicleButton(){
