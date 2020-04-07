@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -59,11 +61,12 @@ class ItemRecyclerViewAdapter(
                 holder.textView.buttonText(backgroundColor = DriveKitUI.colors.secondaryColor())
             }
             TEXT_IMAGE_ITEM -> {
-                holder.textView.normalText()
+                holder.textView.bigText(DKColors().primaryColor())
             }
             TEXT_OR_IMAGE_ITEM -> {
                 if (item.value.equals("OTHER_BRANDS", true)){
                     holder.textView.normalText()
+                    holder.textView.bigText(DKColors().primaryColor())
                 } else {
                     holder.textView.visibility = View.GONE
                 }
