@@ -307,7 +307,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return if (isLiteConfig){
             selectedCategory.title
         } else {
-            "$selectedBrand $selectedModel ${selectedVersion.version}"
+            "${selectedBrand.value} $selectedModel ${selectedVersion.version}"
         }
     }
 
