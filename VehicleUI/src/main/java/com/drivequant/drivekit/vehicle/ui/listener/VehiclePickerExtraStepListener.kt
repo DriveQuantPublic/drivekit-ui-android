@@ -1,5 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.listener
 
-interface InitFirstOdometerEntryListener {
+interface VehiclePickerExtraStepListener {
     fun onVehiclePickerFinished(vehicleId: String)
 }

@@ -9,7 +9,6 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
-import android.widget.Toast
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -27,12 +26,12 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.listener.InitFirstOdometerEntryListener
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
 
-class DriveKitDemoApplication: Application(), ContentMail, InitFirstOdometerEntryListener {
+class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraStepListener {
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -109,7 +108,7 @@ class DriveKitDemoApplication: Application(), ContentMail, InitFirstOdometerEntr
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.configureInitFirstOdometerEntry(this)
+        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
@@ -131,11 +130,11 @@ class DriveKitDemoApplication: Application(), ContentMail, InitFirstOdometerEntr
     }
 
     override fun getRecipients(): List<String> {
-        return listOf("contact@drivequant.com")
+        return listOf("recipient1@email.com")
     }
 
     override fun getBccRecipients(): List<String> {
-        return listOf()
+        return listOf("bcc_test1@email.com")
     }
 
     override fun getSubject(): String {
