@@ -6,5 +6,5 @@ package com.drivequant.drivekit.permissionsutils.diagnosis
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionType {
-    ACITIVITY, NOTIFICATION, LOCATION, EXTERNAL_STORAGE
+    ACTIVITY, NOTIFICATION, LOCATION, EXTERNAL_STORAGE
 }

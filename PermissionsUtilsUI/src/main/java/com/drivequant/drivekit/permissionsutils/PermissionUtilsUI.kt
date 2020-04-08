@@ -1,10 +1,9 @@
 package com.drivequant.drivekit.permissionsutils
 
-import android.content.Context
+import android.app.Activity
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
-import com.drivequant.drivekit.permissionsutils.permissions.PermissionView
-import com.drivequant.drivekit.permissionsutils.permissions.PermissionViewListener
+import com.drivequant.drivekit.permissionsutils.permissions.*
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -20,23 +19,16 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     fun showPermissionViews(
-        context: Context,
+        activity: Activity,
         permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener) {
         this.permissionViewListener = permissionViewListener
+        permissionView.first().launchActivity(activity,permissionView)
     }
 
+    override fun startActivityPermissionActivity(activity: Activity) = PermissionView.ACTIVITY.launchActivity(activity,arrayListOf(PermissionView.ACTIVITY))
 
-    override fun startActivityPermissionActivity(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun startLocationPermissionActivity(activity: Activity) = PermissionView.LOCATION.launchActivity(activity,arrayListOf(PermissionView.LOCATION))
 
-    override fun startLocationPermissionActivity(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun startBatteryOptimizationPermissionActivity(context: Context) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    override fun startBatteryOptimizationPermissionActivity(activity: Activity) = PermissionView.BACKGROUND_TASK.launchActivity(activity,arrayListOf(PermissionView.BACKGROUND_TASK))
 }

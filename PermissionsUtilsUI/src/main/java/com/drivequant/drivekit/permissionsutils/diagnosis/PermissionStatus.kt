@@ -6,5 +6,5 @@ package com.drivequant.drivekit.permissionsutils.diagnosis
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionStatus {
-    VALID, NOT_VALID, NOT_DETERMINATED
+    VALID, NOT_VALID
 }

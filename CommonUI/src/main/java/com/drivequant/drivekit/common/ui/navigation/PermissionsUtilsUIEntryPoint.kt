@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.common.ui.navigation
 
-import android.content.Context
+import android.app.Activity
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -8,7 +8,7 @@ import android.content.Context
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 interface PermissionsUtilsUIEntryPoint {
-    fun startActivityPermissionActivity(context: Context)
-    fun startLocationPermissionActivity(context: Context)
-    fun startBatteryOptimizationPermissionActivity(context: Context)
+    fun startActivityPermissionActivity(activity: Activity)
+    fun startLocationPermissionActivity(activity: Activity)
+    fun startBatteryOptimizationPermissionActivity(activity: Activity)
 }
