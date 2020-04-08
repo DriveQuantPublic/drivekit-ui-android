@@ -76,7 +76,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             val popupMenu = PopupMenu(context, it)
             val itemsList : List<VehicleActionItem> = DriveKitVehicleUI.vehicleActions
             for (i in itemsList.indices){
-                if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
+                if (itemsList[i].isDisplayable(vehicle)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
                     }).toSpannable())

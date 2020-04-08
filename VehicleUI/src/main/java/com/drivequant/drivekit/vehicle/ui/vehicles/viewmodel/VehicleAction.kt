@@ -33,12 +33,13 @@ enum class VehicleAction(
         return DKResource.convertToString(context, descriptionIdentifier)
     }
 
-    override fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean {
+    override fun isDisplayable(vehicle: Vehicle): Boolean {
         return when (this){
             SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
             RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
             REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
-            DELETE -> vehicles.size > 1 && DriveKitVehicleUI.vehicleActions.contains(DELETE)
+            DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().query().execute().size > 1
+                    && DriveKitVehicleUI.vehicleActions.contains(DELETE)
         }
     }
 

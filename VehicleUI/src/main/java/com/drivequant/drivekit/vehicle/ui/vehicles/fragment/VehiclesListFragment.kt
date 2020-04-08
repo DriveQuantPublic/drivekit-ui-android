@@ -65,7 +65,7 @@ class VehiclesListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
-        updateVehicles(false)
+        updateVehicles(true)
     }
 
     private fun updateTitle(title: String){

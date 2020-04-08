@@ -33,7 +33,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         synchronizationType: SynchronizationType = SynchronizationType.DEFAULT,
         displayProgressBar: Boolean = true
     ) {
-        if (displayProgressBar || synchronizationType == SynchronizationType.DEFAULT) {
+        if (displayProgressBar) {
             progressBarObserver.postValue(true)
         }
         if (DriveKit.isConfigured()) {

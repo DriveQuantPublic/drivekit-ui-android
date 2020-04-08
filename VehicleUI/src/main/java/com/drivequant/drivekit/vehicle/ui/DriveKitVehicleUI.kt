@@ -20,6 +20,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
 
@@ -32,7 +33,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
-    internal var vehicleActions: List<VehicleAction> = VehicleAction.values().toList()
+    internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
         DetectionMode.DISABLED,
@@ -99,7 +100,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    fun configureVehicleActions(vehicleActions: List<VehicleAction>){
+    fun configureVehicleActions(vehicleActions: List<VehicleActionItem>){
         this.vehicleActions = vehicleActions
     }
 
