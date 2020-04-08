@@ -14,10 +14,8 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.getSystemService
 import android.util.Log
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.DKUtils
+import com.drivequant.drivekit.common.ui.utils.DKReachability
 
 
 /**
@@ -35,55 +33,76 @@ object DiagnosisHelper {
     const val PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
     const val PERMISSION_ACTIVITY_RECOGNITION = Manifest.permission.ACTIVITY_RECOGNITION
 
-    fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(activity, PERMISSION_LOCATION) == PackageManager.PERMISSION_GRANTED
+    fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(
+        activity,
+        PERMISSION_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
 
-    fun hasBackgroundLocationApproved(activity: Activity) : Boolean = ActivityCompat.checkSelfPermission(activity, PERMISSION_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+    fun hasBackgroundLocationApproved(activity: Activity): Boolean =
+        ActivityCompat.checkSelfPermission(
+            activity,
+            PERMISSION_BACKGROUND_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 
-    fun isLocationAuthorize(activity: Activity): Boolean {
+    fun getLocationStatus(activity: Activity): PermissionStatus {
         if (!hasFineLocationPermission(activity)) {
-            return false
+            return PermissionStatus.NOT_VALID
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (!hasBackgroundLocationApproved(activity)) {
-                return false
+                return PermissionStatus.NOT_VALID
             }
         }
-        return true
+        return PermissionStatus.VALID
     }
 
-    fun isActivityRecognitionAuthorize(activity: Activity): Boolean {
+    fun getActivityStatus(activity: Activity): PermissionStatus {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(activity, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
+            if (ContextCompat.checkSelfPermission(
+                    activity,
+                    Manifest.permission.ACTIVITY_RECOGNITION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                PermissionStatus.VALID
+            } else {
+                PermissionStatus.NOT_VALID
+            }
         } else {
-            true
+            PermissionStatus.VALID
         }
     }
 
-    fun isIgnoringBatteryOptimizations(activity: Activity): Boolean {
+    fun getBatteryOptimizationsStatus(activity: Activity): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
                 activity.applicationContext?.let {
                     val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
                     val packageName = activity.packageName
-                    return pm.isIgnoringBatteryOptimizations(packageName)
+                    return if (pm.isIgnoringBatteryOptimizations(packageName)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
                 }
             } catch (e: ActivityNotFoundException) {
                 // Catch crashes on some Samsung devices
             }
-            return true
+            return PermissionStatus.NOT_VALID
         } else {
-            return true
+            return PermissionStatus.NOT_VALID
         }
     }
 
-    fun isNotificationAuthorize(activity: Activity): Boolean = NotificationManagerCompat.from(activity).areNotificationsEnabled()
+    fun getNotificationStatus(activity: Activity): PermissionStatus {
+        return if (NotificationManagerCompat.from(activity).areNotificationsEnabled()) {
+            PermissionStatus.VALID
+        } else {
+            PermissionStatus.NOT_VALID
+        }
+    }
 
     fun getPermissionStatus(activity: Activity, permissionType: PermissionType): PermissionStatus {
         return when (permissionType) {
-            PermissionType.LOCATION -> if (isLocationAuthorize(activity)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
+            PermissionType.LOCATION -> getLocationStatus(activity)
 
-            PermissionType.ACTIVITY -> if (isActivityRecognitionAuthorize(activity)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
+            PermissionType.ACTIVITY -> getActivityStatus(activity)
 
-            PermissionType.NOTIFICATION -> if (isNotificationAuthorize(activity)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
+            PermissionType.NOTIFICATION -> getNotificationStatus(activity)
 
             PermissionType.EXTERNAL_STORAGE -> PermissionStatus.NOT_VALID //TODO
         }
@@ -91,13 +110,14 @@ object DiagnosisHelper {
 
     @SuppressLint("MissingPermission")
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
-         return when(sensorType){
+        return when (sensorType) {
             SensorType.BLUETOOTH -> {
-                val bluetoothAdapter:BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+                val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
                 bluetoothAdapter?.isEnabled ?: false
             }
             SensorType.GPS -> {
-                val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                val locationManager =
+                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
                 locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
             }
         }
@@ -106,11 +126,15 @@ object DiagnosisHelper {
     fun isLocationSensorHighAccuracy(context: Context, isGPSEnabled: Boolean): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                val locationManager =
+                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
                 return isGPSEnabled && locationManager?.isLocationEnabled ?: run { false }
             } else {
                 try {
-                    val locationAccuracyLevel = Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+                    val locationAccuracyLevel = Settings.Secure.getInt(
+                        context.contentResolver,
+                        Settings.Secure.LOCATION_MODE
+                    )
                     return isGPSEnabled && locationAccuracyLevel == 3
                 } catch (e: Settings.SettingNotFoundException) {
                     Log.e("DiagnosticHelper", "Could not retrieve location accuracy level")
@@ -120,5 +144,5 @@ object DiagnosisHelper {
         return false
     }
 
-    fun isNetworkReachable(context: Context): Boolean = DKUtils.isInternetAvailable(context)
+    fun isNetworkReachable(context: Context): Boolean = DKReachability.isConnectedToNetwork(context)
 }

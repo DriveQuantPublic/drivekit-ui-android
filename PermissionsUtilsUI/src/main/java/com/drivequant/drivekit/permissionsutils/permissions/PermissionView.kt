@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.permissions.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
 
 /**
@@ -17,23 +18,26 @@ enum class PermissionView {
     ACTIVITY, LOCATION, BACKGROUND_TASK;
 
     fun launchActivity(activity: Activity, permissionViews: ArrayList<PermissionView>) {
-        if (!this.isAuthorized(activity)) {
-            activity.startActivity(this.buildIntent(activity, permissionViews))
-        } else {
-            permissionViews.remove(this)
-            if (permissionViews.isEmpty()) {
-                PermissionUtilsUI.permissionViewListener?.onFinish()
-            } else {
-                permissionViews.first().launchActivity(activity, permissionViews)
+        when (this.getCurrentPermissionStatus(activity)) {
+            PermissionStatus.NOT_VALID -> {
+                activity.startActivity(this.buildIntent(activity, permissionViews))
+            }
+            PermissionStatus.VALID -> {
+                permissionViews.remove(this)
+                if (permissionViews.isEmpty()) {
+                    PermissionUtilsUI.permissionViewListener?.onFinish()
+                } else {
+                    permissionViews.first().launchActivity(activity, permissionViews)
+                }
             }
         }
     }
 
-    private fun isAuthorized(context: Activity): Boolean {
+    private fun getCurrentPermissionStatus(context: Activity): PermissionStatus {
         return when (this) {
-            LOCATION -> DiagnosisHelper.isLocationAuthorize(context)
-            ACTIVITY -> DiagnosisHelper.isActivityRecognitionAuthorize(context)
-            BACKGROUND_TASK -> DiagnosisHelper.isIgnoringBatteryOptimizations(context)
+            LOCATION -> DiagnosisHelper.getLocationStatus(context)
+            ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
+            BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
         }
     }
 

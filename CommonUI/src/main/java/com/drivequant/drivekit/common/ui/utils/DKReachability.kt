@@ -12,10 +12,10 @@ import android.os.Build
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-object DKUtils {
+object DKReachability {
 
     @SuppressLint("MissingPermission")
-    fun isInternetAvailable(context: Context): Boolean {
+    fun isConnectedToNetwork(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
