@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.permissionsutils.permissions
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -27,6 +28,7 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
     private var nextPermissionView: PermissionView? = null
     protected var permissionCallback: OnPermissionCallback? = null
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +45,7 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS) {
             if (verifyPermissions(grantResults)) {
@@ -76,6 +79,7 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     protected fun request(context: Activity, permissionCallback: OnPermissionCallback, vararg permissionName: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             handlePermissions(context, permissionName as Array<String>)

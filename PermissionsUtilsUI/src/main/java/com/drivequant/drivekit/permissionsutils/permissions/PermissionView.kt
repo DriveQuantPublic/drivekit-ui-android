@@ -18,7 +18,7 @@ enum class PermissionView {
     ACTIVITY, LOCATION, BACKGROUND_TASK;
 
     fun launchActivity(activity: Activity, permissionViews: ArrayList<PermissionView>) {
-        when (this.getCurrentPermissionStatus(activity)) {
+        when (getCurrentPermissionStatus(activity)) {
             PermissionStatus.NOT_VALID -> {
                 activity.startActivity(this.buildIntent(activity, permissionViews))
             }

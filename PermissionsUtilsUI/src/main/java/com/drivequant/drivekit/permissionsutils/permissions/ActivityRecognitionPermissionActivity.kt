@@ -32,8 +32,8 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                next()
                 finish()
+                next()
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {

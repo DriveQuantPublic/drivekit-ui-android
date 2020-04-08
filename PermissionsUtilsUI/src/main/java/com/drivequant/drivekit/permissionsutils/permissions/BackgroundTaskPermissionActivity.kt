@@ -44,8 +44,8 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_BATTERY_OPTIMIZATION) {
             if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
-                next()
                 finish()
+                next()
             }
         }
     }
