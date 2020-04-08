@@ -42,8 +42,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                next()
-                finish()
+                forward()
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -83,12 +82,12 @@ class LocationPermissionActivity : BasePermissionActivity() {
         if (DiagnosisHelper.hasFineLocationPermission(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
-                    next()
+                    forward()
                 } else {
                     request(this, permissionCallback as OnPermissionCallback,PERMISSION_BACKGROUND_LOCATION)
                 }
             } else {
-                next()
+                forward()
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -97,6 +96,11 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 request(this, permissionCallback as OnPermissionCallback, PERMISSION_LOCATION)
             }
         }
+    }
+
+    private fun forward() {
+        finish()
+        next()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
