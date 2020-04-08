@@ -10,6 +10,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "$drivekitui_version"
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
