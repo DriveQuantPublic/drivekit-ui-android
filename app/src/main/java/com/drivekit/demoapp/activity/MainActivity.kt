@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +19,8 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
+import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.diagnosis.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -79,13 +82,28 @@ class MainActivity : AppCompatActivity() {
             PermissionView.BACKGROUND_TASK
         )
         PermissionUtilsUI.showPermissionViews(
-            this,
+            this@MainActivity,
             permissionViews,
             object : PermissionViewListener {
                 override fun onFinish() {
                     startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
                 }
             })
+    }
+
+    fun buttonPermissionClicked(view: View) {
+        when (view.id) {
+            R.id.button_start_activity -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startActivityPermissionActivity(this)
+            R.id.button_start_location -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startLocationPermissionActivity(this)
+            R.id.button_start_background_task -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startBatteryOptimizationPermissionActivity(this)
+        }
+    }
+
+    fun buttonSensorsClicked(view: View) {
+        when (view.id) {
+            R.id.button_gps -> Log.e("PERMISSION_TYPE_TEST", "GPS status : ${DiagnosisHelper.isLocationSensorHighAccuracy(this, DiagnosisHelper.isSensorActivated(this, SensorType.GPS))}")
+            R.id.button_bluetooth -> Log.e("PERMISSION_TYPE_TEST", "Bluetooth status : ${DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)}")
+        }
     }
 
     fun buttonTripClicked(view: View){

@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -58,6 +59,7 @@ class DriveKitDemoApplication: Application(), ContentMail {
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
+        PermissionUtilsUI.initialize()
     }
 
     private fun createNotificationChannel() {
