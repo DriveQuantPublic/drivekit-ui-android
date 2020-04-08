@@ -19,7 +19,7 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.activity_beacon.progress_circular
+import kotlinx.android.synthetic.main.activity_beacon.*
 
 class BeaconActivity : AppCompatActivity() {
     private lateinit var viewModel : BeaconViewModel
@@ -125,23 +125,23 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }

@@ -29,7 +29,7 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
-import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
+import kotlinx.android.synthetic.main.activity_vehicle_picker.*
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
@@ -96,7 +96,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, Observer {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
-                    DriveKitVehicleUI.initFirstOdometerEntry?.let { listener ->
+                    DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
                         viewModel.createdVehicleId?.let { vehicleId ->
                             listener.onVehiclePickerFinished(vehicleId)
                             finish()
@@ -156,23 +156,23 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }

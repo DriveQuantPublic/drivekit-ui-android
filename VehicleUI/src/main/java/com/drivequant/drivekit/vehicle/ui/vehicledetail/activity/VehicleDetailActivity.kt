@@ -56,16 +56,6 @@ class VehicleDetailActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.renameObserver.observe(this, Observer {
-            it?.let {status ->
-                val message = when (status){
-                    SUCCESS -> "dk_change_success"
-                    else -> "dk_fields_not_valid"
-                }
-                Toast.makeText(this, DKResource.convertToString(this, message), Toast.LENGTH_SHORT).show()
-            }
-        })
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, VehicleDetailFragment.newInstance(viewModel, vehicleId), "vehicleDetailTag")
             .commit()
@@ -88,23 +78,23 @@ class VehicleDetailActivity : AppCompatActivity() {
 
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }

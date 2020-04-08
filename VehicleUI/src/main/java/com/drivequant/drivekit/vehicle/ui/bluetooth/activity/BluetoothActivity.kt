@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.activity
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,10 +12,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
+import kotlinx.android.synthetic.main.activity_bluetooth.*
 
 class BluetoothActivity : AppCompatActivity() {
     private lateinit var viewModel : BluetoothViewModel
@@ -60,7 +64,39 @@ class BluetoothActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.progressBarObserver.observe(this, Observer {
+            it?.let {displayProgressCircular ->
+                if (displayProgressCircular){
+                    showProgressCircular()
+                } else {
+                    hideProgressCircular()
+                }
+            }
+        })
+
         updateTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
+    }
+
+    private fun hideProgressCircular() {
+        dk_progress_circular.animate()
+            .alpha(0f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    dk_progress_circular?.visibility = View.GONE
+                }
+            })
+    }
+
+    private fun showProgressCircular() {
+        dk_progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    dk_progress_circular?.visibility = View.VISIBLE
+                }
+            })
     }
 
     private fun updateTitle(title: String){

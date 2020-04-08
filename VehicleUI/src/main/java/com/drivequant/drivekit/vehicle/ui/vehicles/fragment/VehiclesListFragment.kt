@@ -8,7 +8,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
 
@@ -67,7 +65,7 @@ class VehiclesListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
-        updateVehicles()
+        updateVehicles(false)
     }
 
     private fun updateTitle(title: String){
@@ -145,23 +143,23 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }

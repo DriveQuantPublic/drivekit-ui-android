@@ -195,10 +195,12 @@ class VehicleDetailFragment : Fragment() {
     fun updateInformations(fromBackButton: Boolean = false){
         if (hasChangesToUpdate) {
             if (allFieldsValid()){
+                viewModel.progressBarObserver.postValue(true)
                 viewModel.vehicle?.let { vehicle ->
                     for (item in editableFields){
                         item.field.onFieldUpdated(requireContext(), item.editableText.text, vehicle, object : FieldUpdatedListener {
                             override fun onFieldUpdated(success: Boolean, message: String) {
+                                viewModel.progressBarObserver.postValue(false)
                                 hasChangesToUpdate = false
                                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                                 if (fromBackButton){
