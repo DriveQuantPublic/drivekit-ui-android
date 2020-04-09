@@ -17,6 +17,7 @@ import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionStatus
+import kotlinx.android.synthetic.main.activity_background_task_permission.*
 
 class BackgroundTaskPermissionActivity : BasePermissionActivity() {
 
@@ -24,10 +25,6 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_background_task_permission)
         setStyle()
-        findViewById<TextView>(R.id.text_view_background_task_permission_title).highlightSmall()
-        findViewById<TextView>(R.id.text_view_background_task_permission_text1).normalText()
-        findViewById<TextView>(R.id.text_view_background_task_permission_text2).normalText()
-        findViewById<Button>(R.id.button_request_background_permission).button()
     }
 
     fun onRequestPermissionClicked(view: View) {
@@ -53,7 +50,10 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
+        text_view_background_task_permission_title.highlightSmall()
+        text_view_background_task_permission_text1.normalText()
+        text_view_background_task_permission_text2.normalText()
+        button_request_background_permission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
-        FontUtils.overrideFonts(this, window.decorView)
     }
 }

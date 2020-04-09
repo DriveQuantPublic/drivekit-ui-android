@@ -113,6 +113,5 @@ class LocationPermissionActivity : BasePermissionActivity() {
         text_view_location_permission_text2.normalText()
         button_request_location_permission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
-        FontUtils.overrideFonts(this, window.decorView)
     }
 }

@@ -86,6 +86,5 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         text_view_activity_permission_text.normalText()
         button_request_activity_permission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
-        FontUtils.overrideFonts(this, window.decorView)
     }
 }

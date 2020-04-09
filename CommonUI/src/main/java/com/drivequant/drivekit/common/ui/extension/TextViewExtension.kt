@@ -61,7 +61,6 @@ fun TextView.highlightSmall(textColor: Int = DriveKitUI.colors.mainFontColor()) 
     this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xbig))
     this.setTextColor(textColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
-    this.typeface = Typeface.DEFAULT_BOLD
 }
 
 @JvmOverloads
@@ -69,7 +68,6 @@ fun TextView.highlightMedium(textColor: Int = DriveKitUI.colors.mainFontColor())
     this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xxbig))
     this.setTextColor(textColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
-
 }
 
 @JvmOverloads
