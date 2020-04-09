@@ -10,10 +10,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
@@ -101,8 +101,10 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonSensorsClicked(view: View) {
         when (view.id) {
-            R.id.button_gps -> Log.e("PERMISSION_TYPE_TEST", "GPS status : ${DiagnosisHelper.isLocationSensorHighAccuracy(this, DiagnosisHelper.isSensorActivated(this, SensorType.GPS))}")
-            R.id.button_bluetooth -> Log.e("PERMISSION_TYPE_TEST", "Bluetooth status : ${DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)}")
+            R.id.button_gps ->
+                Toast.makeText(this, "GPS Enabled : ${DiagnosisHelper.isLocationSensorHighAccuracy(this, DiagnosisHelper.isSensorActivated(this, SensorType.GPS))}", Toast.LENGTH_SHORT).show()
+            R.id.button_bluetooth ->
+                Toast.makeText(this, "BLUETOOTH Enabled : ${DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)}", Toast.LENGTH_SHORT).show()
         }
     }
 
