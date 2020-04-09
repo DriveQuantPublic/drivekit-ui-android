@@ -58,21 +58,21 @@ fun TextView.buttonText(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryC
 
 @JvmOverloads
 fun TextView.highlightSmall(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xbig))
+    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_big))
     this.setTextColor(textColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
 }
 
 @JvmOverloads
 fun TextView.highlightMedium(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xxbig))
+    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xbig))
     this.setTextColor(textColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
 }
 
 @JvmOverloads
 fun TextView.highlightBig(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xxxbig))
+    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xxbig))
     this.setTextColor(textColor)
     this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
 }
