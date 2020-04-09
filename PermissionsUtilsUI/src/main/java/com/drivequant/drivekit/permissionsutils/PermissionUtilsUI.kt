@@ -23,12 +23,6 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
         permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener) {
         this.permissionViewListener = permissionViewListener
-        permissionView.first().launchActivity(activity,permissionView)
+        permissionView.first().launchActivity(activity, permissionView)
     }
-
-    override fun startActivityPermissionActivity(activity: Activity) = PermissionView.ACTIVITY.launchActivity(activity,arrayListOf(PermissionView.ACTIVITY))
-
-    override fun startLocationPermissionActivity(activity: Activity) = PermissionView.LOCATION.launchActivity(activity,arrayListOf(PermissionView.LOCATION))
-
-    override fun startBatteryOptimizationPermissionActivity(activity: Activity) = PermissionView.BACKGROUND_TASK.launchActivity(activity,arrayListOf(PermissionView.BACKGROUND_TASK))
 }
