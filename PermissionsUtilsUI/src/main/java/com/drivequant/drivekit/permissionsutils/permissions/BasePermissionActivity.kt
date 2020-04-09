@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.permissions
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -54,7 +53,7 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
                 val declinedPermissions = declinedPermissions(this, permissions as Array<String>)
                 val deniedPermissionsLength = arrayListOf<Boolean>()
                 for (permissionName in declinedPermissions) {
-                    if (permissionName != null && !isExplanationNeeded(this, permissionName)) {
+                    if (!isExplanationNeeded(this, permissionName)) {
                         permissionCallback?.onPermissionTotallyDeclined(permissionName)
                         deniedPermissionsLength.add(false)
                     }

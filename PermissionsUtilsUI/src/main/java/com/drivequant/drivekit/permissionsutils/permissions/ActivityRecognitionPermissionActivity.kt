@@ -4,14 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.highlightSmall
+import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_ACTIVITY_RECOGNITION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
@@ -82,7 +79,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_activity_permission_title.highlightSmall()
+        text_view_activity_permission_title.highlightMedium()
         text_view_activity_permission_text.normalText()
         button_request_activity_permission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())

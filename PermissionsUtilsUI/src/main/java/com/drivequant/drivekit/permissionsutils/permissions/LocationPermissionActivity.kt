@@ -7,10 +7,9 @@ import android.os.Bundle
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.highlightSmall
+import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_BACKGROUND_LOCATION
@@ -108,7 +107,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_permission_location_title.highlightSmall()
+        text_view_permission_location_title.highlightMedium()
         text_view_location_permission_text1.normalText()
         text_view_location_permission_text2.normalText()
         button_request_location_permission.button()

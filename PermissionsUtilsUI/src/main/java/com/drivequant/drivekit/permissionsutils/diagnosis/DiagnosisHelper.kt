@@ -6,8 +6,10 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
@@ -55,7 +57,7 @@ object DiagnosisHelper {
         return PermissionStatus.VALID
     }
 
-    fun getActivityStatus(activity: Activity): PermissionStatus {
+    fun getActivityStatus(activity: Activity): PermissionStatus  {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
                     activity,
@@ -88,7 +90,15 @@ object DiagnosisHelper {
         }
     }
 
-    fun getNotificationStatus(activity: Activity): PermissionStatus {
+    fun requestBatteryOptimization(activity: Activity) {
+        val intent = Intent()
+        val packageName = activity.packageName
+        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+        intent.data = Uri.parse("package:$packageName")
+        activity.startActivityForResult(intent,REQUEST_BATTERY_OPTIMIZATION)
+    }
+
+    private fun getNotificationStatus(activity: Activity): PermissionStatus {
         return if (NotificationManagerCompat.from(activity).areNotificationsEnabled()) {
             PermissionStatus.VALID
         } else {

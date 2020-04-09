@@ -15,7 +15,8 @@
 
     <string name="dk_perm_utils_permissions">Permissions</string>
     <string name="dk_perm_utils_open_settings">Open settings</string>
-    <string name="dk_perm_utils_app_diag_activity_ko">You need to allow the application to access the activity monitoring so that it can detect and analyze your trips.</string>
     <string name="dk_perm_utils_settings">Settings</string>
+    <string name="dk_perm_utils_app_diag_activity_ko">You need to allow the application to access the activity monitoring so that it can detect and analyze your trips.</string>
+
     <string name="dk_perm_utils_app_diag_location_ko_android">To detect and analyze your trips, the application must be able to access the phone\'s location.</string>
 </resources>
