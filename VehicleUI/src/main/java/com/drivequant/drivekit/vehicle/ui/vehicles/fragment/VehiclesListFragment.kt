@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.header_vehicle_list.*
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
+    private var isInit: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
@@ -55,7 +56,7 @@ class VehiclesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refresh_vehicles.setOnRefreshListener {
-            updateVehicles(false)
+            updateVehicles()
         }
 
         val linearLayoutManager = LinearLayoutManager(view.context)
@@ -65,7 +66,12 @@ class VehiclesListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
-        updateVehicles(true)
+        if (isInit) {
+            isInit = false
+            updateVehicles()
+        } else {
+            updateVehicles(SynchronizationType.CACHE)
+        }
     }
 
     private fun updateTitle(title: String){
@@ -74,7 +80,7 @@ class VehiclesListFragment : Fragment() {
         }
     }
 
-    private fun updateVehicles(displayProgressBar: Boolean = true){
+    private fun updateVehicles(synchronizationType : SynchronizationType = SynchronizationType.DEFAULT){
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
@@ -104,7 +110,7 @@ class VehiclesListFragment : Fragment() {
             setupAddVehicleButton()
         })
         refresh_vehicles.isRefreshing = true
-        viewModel.fetchVehicles(requireContext(), displayProgressBar = displayProgressBar)
+        viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
     private fun setupAddVehicleButton(){

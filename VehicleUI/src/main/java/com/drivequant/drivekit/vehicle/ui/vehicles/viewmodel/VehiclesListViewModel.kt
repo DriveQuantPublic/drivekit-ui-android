@@ -30,10 +30,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun fetchVehicles(
         context: Context,
-        synchronizationType: SynchronizationType = SynchronizationType.DEFAULT,
-        displayProgressBar: Boolean = true
+        synchronizationType: SynchronizationType = SynchronizationType.DEFAULT
     ) {
-        if (displayProgressBar) {
+        if (synchronizationType == SynchronizationType.DEFAULT) {
             progressBarObserver.postValue(true)
         }
         if (DriveKit.isConfigured()) {
@@ -45,7 +44,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
                 }
             }, synchronizationType)
         } else {
-            if (displayProgressBar) {
+            if (synchronizationType == SynchronizationType.DEFAULT) {
                 progressBarObserver.postValue(false)
             }
             vehiclesData.postValue(listOf())
