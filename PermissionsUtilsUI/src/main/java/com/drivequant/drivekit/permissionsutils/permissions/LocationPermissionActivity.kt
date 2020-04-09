@@ -5,32 +5,28 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_BACKGROUND_LOCATION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_LOCATION
 import com.drivequant.drivekit.permissionsutils.diagnosis.OnPermissionCallback
+import kotlinx.android.synthetic.main.activity_location_permission.*
 
 class LocationPermissionActivity : BasePermissionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_permission)
+        setStyle()
 
-        findViewById<TextView>(R.id.text_view_permission_location_title).headLine1()
-        findViewById<TextView>(R.id.text_view_location_permission_text1).normalText()
-        findViewById<Button>(R.id.button_request_location_permission).button()
-        val textViewLocationPermissionText2 = findViewById<TextView>(R.id.text_view_location_permission_text2)
-
-        textViewLocationPermissionText2.normalText()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            textViewLocationPermissionText2.text =
+            text_view_location_permission_text2.text =
                 getString(R.string.dk_perm_utils_permissions_location_text2_post_android10)
         }
     }
@@ -59,6 +55,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
+                button_request_location_permission.text = getString(R.string.dk_perm_utils_open_settings)
                 DKAlertDialog.AlertBuilder()
                     .init(this@LocationPermissionActivity)
                     .title(getString(R.string.dk_perm_utils_permissions))
@@ -98,15 +95,24 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
-    private fun forward() {
-        finish()
-        next()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS) {
             checkRequiredPermissions()
         }
+    }
+
+    private fun forward() {
+        finish()
+        next()
+    }
+
+    private fun setStyle() {
+        text_view_permission_location_title.highlightSmall()
+        text_view_location_permission_text1.normalText()
+        text_view_location_permission_text2.normalText()
+        button_request_location_permission.button()
+        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        FontUtils.overrideFonts(this, window.decorView)
     }
 }

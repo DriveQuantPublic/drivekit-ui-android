@@ -8,9 +8,11 @@ import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
@@ -21,8 +23,8 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_background_task_permission)
-
-        findViewById<TextView>(R.id.text_view_background_task_permission_title).headLine1()
+        setStyle()
+        findViewById<TextView>(R.id.text_view_background_task_permission_title).highlightSmall()
         findViewById<TextView>(R.id.text_view_background_task_permission_text1).normalText()
         findViewById<TextView>(R.id.text_view_background_task_permission_text2).normalText()
         findViewById<Button>(R.id.button_request_background_permission).button()
@@ -48,5 +50,10 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
                 next()
             }
         }
+    }
+
+    private fun setStyle() {
+        window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        FontUtils.overrideFonts(this, window.decorView)
     }
 }
