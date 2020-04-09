@@ -221,46 +221,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/onboarding"/>
 
-
-        <LinearLayout
-            android:id="@+id/permission_buttons_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator_permissions_utils">
-            <Button
-                android:id="@+id/button_start_activity"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="Start Activity permission"
-                android:textSize="12sp"
-                android:onClick="buttonPermissionClicked"/>
-            <Button
-                android:id="@+id/button_start_location"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="Start Location permission"
-                android:textSize="12sp"
-                android:onClick="buttonPermissionClicked"/>
-            <Button
-                android:id="@+id/button_start_background_task"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:text="Start Battery Optimization"
-                android:textSize="12sp"
-                android:onClick="buttonPermissionClicked"/>
-        </LinearLayout>
-
         <View
             android:id="@+id/separator_permissions_buttons"
             android:layout_width="match_parent"
@@ -270,7 +230,7 @@
             android:background="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/permission_buttons_container"/>
+            app:layout_constraintTop_toBottomOf="@id/separator_permissions_utils"/>
 
         <LinearLayout
             android:id="@+id/permission_sensors_container"
@@ -301,6 +261,26 @@
                 android:ellipsize="end"
                 android:onClick="buttonSensorsClicked"
                 android:text="bluetooth status"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_network"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="Network status"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_notification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="Notif status"
                 android:textSize="12sp" />
         </LinearLayout>
 

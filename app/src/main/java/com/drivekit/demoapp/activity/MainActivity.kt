@@ -20,6 +20,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.PermissionViewListener
@@ -91,20 +92,40 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    fun buttonPermissionClicked(view: View) {
-        when (view.id) {
-            R.id.button_start_activity -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startActivityPermissionActivity(this)
-            R.id.button_start_location -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startLocationPermissionActivity(this)
-            R.id.button_start_background_task -> DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startBatteryOptimizationPermissionActivity(this)
-        }
-    }
-
     fun buttonSensorsClicked(view: View) {
         when (view.id) {
             R.id.button_gps ->
-                Toast.makeText(this, "GPS Enabled : ${DiagnosisHelper.isLocationSensorHighAccuracy(this, DiagnosisHelper.isSensorActivated(this, SensorType.GPS))}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "GPS Enable : ${DiagnosisHelper.isLocationSensorHighAccuracy(
+                        this,
+                        DiagnosisHelper.isSensorActivated(this, SensorType.GPS)
+                    )}",
+                    Toast.LENGTH_SHORT
+                ).show()
             R.id.button_bluetooth ->
-                Toast.makeText(this, "BLUETOOTH Enabled : ${DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "BLUETOOTH Enable : ${DiagnosisHelper.isSensorActivated(
+                        this,
+                        SensorType.BLUETOOTH
+                    )}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            R.id.button_network -> Toast.makeText(
+                this,
+                "Network Enable : ${DiagnosisHelper.isNetworkReachable(this)}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            R.id.button_notification -> Toast.makeText(
+                this,
+                "Notification Enable : ${DiagnosisHelper.getPermissionStatus(
+                    this,
+                    PermissionType.NOTIFICATION
+                )}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
