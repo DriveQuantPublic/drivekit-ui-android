@@ -29,7 +29,6 @@ import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 
@@ -95,7 +94,7 @@ enum class DetectionModeType(
 
         return if (configured){
             DKSpannable().append(parameteredString, context.resSpans {
-                color(DriveKitUI.colors.complementaryFontColor())
+                color(DriveKitUI.colors.mainFontColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
             }).toSpannable()
