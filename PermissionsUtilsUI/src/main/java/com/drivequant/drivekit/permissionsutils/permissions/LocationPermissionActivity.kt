@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -41,23 +43,31 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
-                DKAlertDialog.AlertBuilder()
+               val locationDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@LocationPermissionActivity)
-                    .title(getString(R.string.dk_common_permissions))
-                    .message(getString(R.string.dk_perm_utils_app_diag_location_ko_android))
+                    .layout(R.layout.template_alert_dialog_layout)
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_common_ok),
                         DialogInterface.OnClickListener { _, _ ->
                             checkRequiredPermissions()
                         })
                     .show()
+
+                val titleTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text = getString(R.string.dk_common_permissions)
+                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_location_ko_android)
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
                 button_request_location_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
-                DKAlertDialog.AlertBuilder()
+                val locationDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@LocationPermissionActivity)
-                    .title(getString(R.string.dk_common_permissions))
+                    .layout(R.layout.template_alert_dialog_layout)
                     .message(getString(R.string.dk_perm_utils_app_diag_location_ko_android))
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
@@ -72,6 +82,15 @@ class LocationPermissionActivity : BasePermissionActivity() {
                             dialog.cancel()
                         })
                     .show()
+
+                val titleTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text = getString(R.string.dk_common_permissions)
+                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_location_ko_android)
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
         }
 

@@ -4,8 +4,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -35,24 +37,31 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
-                DKAlertDialog.AlertBuilder()
+                val activityDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@ActivityRecognitionPermissionActivity)
-                    .title(getString(R.string.dk_common_permissions))
-                    .message(getString(R.string.dk_perm_utils_app_diag_activity_ko))
+                    .layout(R.layout.template_alert_dialog_layout)
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_common_ok),
                         DialogInterface.OnClickListener { _, _ ->
                             checkRequiredPermissions()
                         })
                     .show()
+
+                val titleTextView = activityDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = activityDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text = getString(R.string.dk_common_permissions)
+                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_activity_ko)
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
                 button_request_activity_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_activity_settings)
-                DKAlertDialog.AlertBuilder()
+                val activityDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@ActivityRecognitionPermissionActivity)
-                    .title(getString(R.string.dk_common_permissions))
-                    .message(getString(R.string.dk_perm_utils_app_diag_activity_ko))
+                    .layout(R.layout.template_alert_dialog_layout)
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
                         DialogInterface.OnClickListener { _, _ ->
@@ -66,6 +75,15 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
                             dialog.cancel()
                         })
                     .show()
+
+                val titleTextView = activityDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = activityDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text = getString(R.string.dk_common_permissions)
+                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_activity_ko)
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
         }
         request(this, permissionCallback as OnPermissionCallback, PERMISSION_ACTIVITY_RECOGNITION)
