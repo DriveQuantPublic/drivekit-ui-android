@@ -3,10 +3,10 @@
     package="com.drivequant.drivekit.permissionsutils">
 
     <application>
-        <activity android:name=".permissions.BasePermissionActivity" />
-        <activity android:name=".permissions.LocationPermissionActivity" />
-        <activity android:name=".permissions.BackgroundTaskPermissionActivity" />
-        <activity android:name=".permissions.ActivityRecognitionPermissionActivity" />
+        <activity android:name=".permissions.activity.BasePermissionActivity" />
+        <activity android:name=".permissions.activity.LocationPermissionActivity" />
+        <activity android:name=".permissions.activity.BackgroundTaskPermissionActivity" />
+        <activity android:name=".permissions.activity.ActivityRecognitionPermissionActivity" />
     </application>
 
 </manifest>

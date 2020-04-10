@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.listener
 
 /**
  * Created by Mohamed on 2020-04-02.

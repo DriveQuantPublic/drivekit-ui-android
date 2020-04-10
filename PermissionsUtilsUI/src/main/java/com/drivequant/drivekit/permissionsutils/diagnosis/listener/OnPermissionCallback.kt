@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.diagnosis
+package com.drivequant.drivekit.permissionsutils.diagnosis.listener
 
 /**
  * Created by Mohamed on 2020-04-03.

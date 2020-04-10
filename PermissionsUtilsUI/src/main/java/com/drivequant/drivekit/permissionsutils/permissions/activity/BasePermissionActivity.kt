@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.Manifest
 import android.app.Activity
@@ -14,17 +14,16 @@ import android.support.v4.app.ActivityCompat
 import android.util.Log
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
     companion object {
         const val PERMISSION_VIEWS_LIST_EXTRA = "permission-views-list-extra"
-        const val PERMISSION_VIEW_EXTRA = "permission-view-extra"
     }
 
     private var nextPermissionViews = ArrayList<PermissionView>()
-    private var nextPermissionView: PermissionView? = null
     protected var permissionCallback: OnPermissionCallback? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -32,15 +31,9 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
         super.onCreate(savedInstanceState)
 
         val permissionViewsListExtra = intent.getSerializableExtra(PERMISSION_VIEWS_LIST_EXTRA)
-        val permissionViewExtra = intent.getSerializableExtra(PERMISSION_VIEW_EXTRA)
-
         permissionViewsListExtra?.let {
             nextPermissionViews =
                 intent.getSerializableExtra(PERMISSION_VIEWS_LIST_EXTRA) as ArrayList<PermissionView>
-        } ?: run {
-            permissionViewExtra?.let {
-                nextPermissionView = intent.getSerializableExtra(PERMISSION_VIEW_EXTRA) as PermissionView
-            }
         }
     }
 
@@ -66,15 +59,11 @@ open class BasePermissionActivity : AppCompatActivity(), ActivityCompat.OnReques
     }
 
     protected fun next() {
-        nextPermissionView?.let {
-            it.launchActivity(this, arrayListOf(it))
-        } ?: run {
-            nextPermissionViews.remove(nextPermissionViews.first())
-            if (nextPermissionViews.isEmpty()) {
-                PermissionUtilsUI.permissionViewListener?.onFinish()
-            } else {
-                nextPermissionViews.first().launchActivity(this, nextPermissionViews)
-            }
+        nextPermissionViews.remove(nextPermissionViews.first())
+        if (nextPermissionViews.isEmpty()) {
+            PermissionUtilsUI.permissionViewListener?.onFinish()
+        } else {
+            nextPermissionViews.first().launchActivity(this, nextPermissionViews)
         }
     }
 

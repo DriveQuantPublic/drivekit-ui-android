@@ -20,10 +20,10 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionType
-import com.drivequant.drivekit.permissionsutils.diagnosis.SensorType
-import com.drivequant.drivekit.permissionsutils.permissions.PermissionView
-import com.drivequant.drivekit.permissionsutils.permissions.PermissionViewListener
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
+import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
+import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -85,7 +85,8 @@ class MainActivity : AppCompatActivity() {
         PermissionUtilsUI.showPermissionViews(
             this@MainActivity,
             permissionViews,
-            object : PermissionViewListener {
+            object :
+                PermissionViewListener {
                 override fun onFinish() {
                     startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
                 }

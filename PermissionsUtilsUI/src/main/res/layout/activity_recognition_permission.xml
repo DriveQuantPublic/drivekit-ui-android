@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".permissions.ActivityRecognitionPermissionActivity">
+    tools:context=".permissions.activity.ActivityRecognitionPermissionActivity">
 
     <ImageView
         android:id="@+id/image_view_activity_permission"

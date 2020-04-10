@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -14,7 +14,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_ACTIVITY_RECOGNITION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
-import com.drivequant.drivekit.permissionsutils.diagnosis.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_recognition_permission.*
 
 class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
@@ -30,7 +30,8 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     }
 
     private fun checkRequiredPermissions() {
-        permissionCallback = object : OnPermissionCallback {
+        permissionCallback = object :
+            OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
                 finish()
                 next()

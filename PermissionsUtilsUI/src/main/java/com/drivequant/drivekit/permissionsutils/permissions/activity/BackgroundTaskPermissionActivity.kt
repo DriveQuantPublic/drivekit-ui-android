@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
-import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionStatus
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import kotlinx.android.synthetic.main.activity_background_task_permission.*
 
 class BackgroundTaskPermissionActivity : BasePermissionActivity() {

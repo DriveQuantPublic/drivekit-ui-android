@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -16,7 +16,7 @@ import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_BACKGROUND_LOCATION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_LOCATION
-import com.drivequant.drivekit.permissionsutils.diagnosis.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_location_permission.*
 
 class LocationPermissionActivity : BasePermissionActivity() {
@@ -37,7 +37,8 @@ class LocationPermissionActivity : BasePermissionActivity() {
     }
 
     private fun checkRequiredPermissions() {
-        permissionCallback = object : OnPermissionCallback {
+        permissionCallback = object :
+            OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
                 forward()
             }

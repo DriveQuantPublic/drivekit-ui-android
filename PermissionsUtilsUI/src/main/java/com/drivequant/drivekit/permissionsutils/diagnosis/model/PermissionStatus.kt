@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.diagnosis
+package com.drivequant.drivekit.permissionsutils.diagnosis.model
 
 /**
  * Created by Mohamed on 2020-04-02.

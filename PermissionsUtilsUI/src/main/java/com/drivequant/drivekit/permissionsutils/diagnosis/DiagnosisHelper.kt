@@ -18,6 +18,9 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.drivequant.drivekit.common.ui.utils.DKReachability
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 
 
 /**
@@ -57,7 +60,7 @@ object DiagnosisHelper {
         return PermissionStatus.VALID
     }
 
-    fun getActivityStatus(activity: Activity): PermissionStatus  {
+    fun getActivityStatus(activity: Activity): PermissionStatus {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
                     activity,

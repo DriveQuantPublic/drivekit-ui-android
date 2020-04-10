@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions
+package com.drivequant.drivekit.permissionsutils.permissions.model
 
 import android.app.Activity
 import android.content.Context
@@ -6,8 +6,11 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.PermissionStatus
-import com.drivequant.drivekit.permissionsutils.permissions.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
+import com.drivequant.drivekit.permissionsutils.permissions.activity.ActivityRecognitionPermissionActivity
+import com.drivequant.drivekit.permissionsutils.permissions.activity.BackgroundTaskPermissionActivity
+import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
+import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPermissionActivity
 
 /**
  * Created by Mohamed on 2020-04-02.
