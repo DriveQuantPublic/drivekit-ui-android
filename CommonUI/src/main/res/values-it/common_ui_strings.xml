@@ -14,14 +14,21 @@
    <string name="dk_common_duration">Durata</string>
    <string name="dk_common_ecodriving">Guida ecologica</string>
    <string name="dk_common_edit">Modifica</string>
+   <string name="dk_common_error_empty_field">Il campo non può rimanere vuoto</string>
    <string name="dk_common_finish">Finitura</string>
-   <string name="dk_common_loading">Caricamento in corso. Ti preghiamo di attendere…</string>
+   <string name="dk_common_loading">Caricamento in corso. Ti preghiamo di attendere...</string>
    <string name="dk_common_mass">Massa</string>
    <string name="dk_common_mean_speed">Velocità media</string>
    <string name="dk_common_ok">OK</string>
+   <string name="dk_common_permission_camera_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla fotocamera dello smartphone.</string>
+   <string name="dk_common_permission_storage_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla memoria del vostro smartphone.</string>
+   <string name="dk_common_permissions">Permessi</string>
    <string name="dk_common_safety">Sicurezza</string>
    <string name="dk_common_save">Registrazione</string>
+   <string name="dk_common_select_image_gallery">Seleziona una foto esistente</string>
+   <string name="dk_common_settings">Impostazioni</string>
    <string name="dk_common_speed">Velocità</string>
+   <string name="dk_common_take_picture">Scatta una foto</string>
    <string name="dk_common_trip_plural">viaggi</string>
    <string name="dk_common_trip_singular">viaggio</string>
    <string name="dk_common_unit_T">T</string>
@@ -41,6 +48,8 @@
    <string name="dk_common_unit_minute">min</string>
    <string name="dk_common_unit_mpg">mpg</string>
    <string name="dk_common_unit_mph">mph</string>
+   <string name="dk_common_unit_power">CV</string>
    <string name="dk_common_unit_second">s</string>
+   <string name="dk_common_update_photo_title">Cambiare l\'immagine</string>
    <string name="dk_common_validate">Valido</string>
 </resources>

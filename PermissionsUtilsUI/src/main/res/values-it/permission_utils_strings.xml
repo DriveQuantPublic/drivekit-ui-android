@@ -70,9 +70,7 @@
    <string name="dk_perm_utils_app_diag_title">Diagnostica dell\'app</string>
    <string name="dk_perm_utils_diag_app_ok">Tutto è normale</string>
    <string name="dk_perm_utils_diag_app_ok_text">Le impostazioni del telefono sono buone e vengono attivati i sensori necessari per l\'analisi dei tuoi viaggi.</string>
-   <string name="dk_perm_utils_permissions_activity_popup_title">Permessi</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizzare la posizione</string>
-   <string name="dk_perm_utils_permissions_location_popup_title">Permessi</string>
    <string name="dk_perm_utils_permissions_location_text1_android">L\'applicazione deve poter accedere alla posizione del telefono per rilevare e analizzare i percorsi.</string>
    <string name="dk_perm_utils_permissions_location_text2_post_android10">Per fare questo, scegliere \"Consenti sempre\" quando viene visualizzato il popup successivo.</string>
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Per fare questo, scegliere \"Consenti\" quando viene visualizzata la prossima finestra popup.</string>

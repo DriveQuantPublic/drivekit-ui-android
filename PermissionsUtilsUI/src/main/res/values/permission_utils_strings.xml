@@ -70,9 +70,7 @@
     <string name="dk_perm_utils_app_diag_title">App diagnostics</string>
     <string name="dk_perm_utils_diag_app_ok">Everything is normal</string>
     <string name="dk_perm_utils_diag_app_ok_text">The settings of your phone are good and the sensors necessary for the analysis of your trips are activated.</string>
-    <string name="dk_perm_utils_permissions_activity_popup_title">Permissions</string>
     <string name="dk_perm_utils_permissions_location_button_android">Allow location</string>
-    <string name="dk_perm_utils_permissions_location_popup_title">Permissions</string>
     <string name="dk_perm_utils_permissions_location_text1_android">The application must be allowed to access the phone\'s position to detect and analyze your trips.</string>
     <string name="dk_perm_utils_permissions_location_text2_post_android10">To do this, choose \"Allow all the time\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_text2_pre_android10">To do this, choose \"Allow\" when the next popup is displayed.</string>

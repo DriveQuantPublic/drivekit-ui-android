@@ -70,9 +70,7 @@
    <string name="dk_perm_utils_app_diag_title">Diagnostic de l\'app</string>
    <string name="dk_perm_utils_diag_app_ok">Tout est normal</string>
    <string name="dk_perm_utils_diag_app_ok_text">Les réglages de votre téléphone sont bons et les capteurs nécessaires à l\’analyse de vos trajets sont activés.</string>
-   <string name="dk_perm_utils_permissions_activity_popup_title">Autorisations</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autoriser la localisation</string>
-   <string name="dk_perm_utils_permissions_location_popup_title">Autorisations</string>
    <string name="dk_perm_utils_permissions_location_text1_android">Afin de bénéficier de l\'enregistrement automatique de vos trajets, l\'application doit accéder à la position du téléphone.</string>
    <string name="dk_perm_utils_permissions_location_text2_post_android10">Pour cela, choisissez \"Toujours autoriser\" lorsque la prochaine popup sera affichée.</string>
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Pour cela, choisissez \"Autoriser\" lorsque la prochaine popup sera affichée.</string>

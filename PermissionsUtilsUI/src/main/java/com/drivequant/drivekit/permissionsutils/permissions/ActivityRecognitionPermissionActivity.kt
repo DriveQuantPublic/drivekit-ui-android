@@ -37,7 +37,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 DKAlertDialog.AlertBuilder()
                     .init(this@ActivityRecognitionPermissionActivity)
-                    .title(getString(R.string.dk_perm_utils_permissions))
+                    .title(getString(R.string.dk_common_permissions))
                     .message(getString(R.string.dk_perm_utils_app_diag_activity_ko))
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_common_ok),
@@ -48,13 +48,13 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_activity_permission.text = getString(R.string.dk_perm_utils_open_settings)
+                button_request_activity_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_activity_settings)
                 DKAlertDialog.AlertBuilder()
                     .init(this@ActivityRecognitionPermissionActivity)
-                    .title(getString(R.string.dk_perm_utils_permissions))
+                    .title(getString(R.string.dk_common_permissions))
                     .message(getString(R.string.dk_perm_utils_app_diag_activity_ko))
                     .cancelable(false)
-                    .positiveButton(getString(R.string.dk_perm_utils_settings),
+                    .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
                         DialogInterface.OnClickListener { _, _ ->
                             startActivityForResult(
                                 launchSettings(),

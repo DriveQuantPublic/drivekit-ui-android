@@ -43,7 +43,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 DKAlertDialog.AlertBuilder()
                     .init(this@LocationPermissionActivity)
-                    .title(getString(R.string.dk_perm_utils_permissions))
+                    .title(getString(R.string.dk_common_permissions))
                     .message(getString(R.string.dk_perm_utils_app_diag_location_ko_android))
                     .cancelable(false)
                     .positiveButton(getString(R.string.dk_common_ok),
@@ -54,13 +54,13 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_location_permission.text = getString(R.string.dk_perm_utils_open_settings)
+                button_request_location_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                 DKAlertDialog.AlertBuilder()
                     .init(this@LocationPermissionActivity)
-                    .title(getString(R.string.dk_perm_utils_permissions))
+                    .title(getString(R.string.dk_common_permissions))
                     .message(getString(R.string.dk_perm_utils_app_diag_location_ko_android))
                     .cancelable(false)
-                    .positiveButton(getString(R.string.dk_perm_utils_settings),
+                    .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
                         DialogInterface.OnClickListener { _, _ ->
                             startActivityForResult(
                                 launchSettings(),
