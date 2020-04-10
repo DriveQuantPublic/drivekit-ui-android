@@ -44,8 +44,9 @@
         android:id="@+id/text_view_background_task_permission_text2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:padding="@dimen/dk_margin"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
+        android:paddingBottom="@dimen/dk_margin"
         android:text="@string/dk_perm_utils_permissions_phone_settings_background_text2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,5 +63,5 @@
         android:text="@string/dk_perm_utils_permissions_phone_settings_background_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_background_task_permission_text2" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>
