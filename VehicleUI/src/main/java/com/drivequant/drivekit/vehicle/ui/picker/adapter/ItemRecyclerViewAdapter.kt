@@ -58,10 +58,11 @@ class ItemRecyclerViewAdapter(
         holder.textView.visibility = View.VISIBLE
         when (adapterType){
             TEXT_ITEM -> {
-                holder.textView.buttonText(backgroundColor = DriveKitUI.colors.secondaryColor())
+                holder.textView.normalText(DKColors().fontColorOnSecondaryColor())
+                holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
             }
             TEXT_IMAGE_ITEM -> {
-                holder.textView.bigText(DKColors().primaryColor())
+                holder.textView.normalText(DKColors().primaryColor())
             }
             TEXT_OR_IMAGE_ITEM -> {
                 if (item.value.equals("OTHER_BRANDS", true)){

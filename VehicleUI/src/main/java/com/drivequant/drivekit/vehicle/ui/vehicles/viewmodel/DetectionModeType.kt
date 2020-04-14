@@ -258,6 +258,7 @@ enum class DetectionModeType(
                 }
             }
             BLUETOOTH -> {
+                separatorVerify?.visibility = View.GONE
                 description?.text = DKResource.buildString(context, configureDescText, vehicleName)
 
                 delete?.let {

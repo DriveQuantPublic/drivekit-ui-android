@@ -105,6 +105,10 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
 
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
+        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
+
+
+
 
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
