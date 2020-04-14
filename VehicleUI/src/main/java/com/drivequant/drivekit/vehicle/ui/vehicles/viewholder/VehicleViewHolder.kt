@@ -61,6 +61,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         textViewTitle.headLine1(mainFontColor)
         textViewSubtitle.smallText(complementaryFontColor)
         textViewDetectionModeTitle.normalText(mainFontColor)
+        textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
         textViewDetectionModeDescription.normalText()
 
         popup.setImageDrawable(DKResource.convertToDrawable(itemView.context, "dk_common_dots"))
@@ -95,7 +96,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             linearLayoutDetectionMode.visibility = View.GONE
         } else {
             linearLayoutDetectionMode.visibility = View.VISIBLE
-            textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
+            textViewDetectionModeTitle.text = DKResource.convertToString(context,"dk_vehicle_detection_mode_title")
         }
 
         textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)

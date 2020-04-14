@@ -25,6 +25,8 @@
                 android:id="@+id/vehicles_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                android:layout_marginBottom="@dimen/dk_margin_quarter"
                 android:scrollbars="vertical" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

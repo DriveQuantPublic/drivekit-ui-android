@@ -95,7 +95,7 @@ enum class VehicleAction(
 
         titleTextView?.text = title
         titleTextView?.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        titleTextView?.headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
+        titleTextView?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         descriptionTextView?.text = message
         descriptionTextView?.setTextColor(DriveKitUI.colors.mainFontColor())
