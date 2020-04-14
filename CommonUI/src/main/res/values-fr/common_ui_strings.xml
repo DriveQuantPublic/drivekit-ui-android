@@ -25,8 +25,10 @@
    <string name="dk_common_permissions">Autorisations</string>
    <string name="dk_common_safety">Sécurité</string>
    <string name="dk_common_save">Enregistrer</string>
+   <string name="dk_common_select_image_gallery">Sélectionner une photo existante</string>
    <string name="dk_common_settings">Paramètres</string>
    <string name="dk_common_speed">Vitesse</string>
+   <string name="dk_common_take_picture">Prendre une photo</string>
    <string name="dk_common_trip_plural">trajets</string>
    <string name="dk_common_trip_singular">trajet</string>
    <string name="dk_common_unit_T">T</string>
@@ -48,8 +50,6 @@
    <string name="dk_common_unit_mph">mph</string>
    <string name="dk_common_unit_power">ch</string>
    <string name="dk_common_unit_second">s</string>
+   <string name="dk_common_update_photo_title">Changer l\'image</string>
    <string name="dk_common_validate">Valider</string>
-   <string name="dk_select_image_gallery">Sélectionner une photo existante</string>
-   <string name="dk_take_picture">Prendre une photo</string>
-   <string name="dk_update_photo_title">Changer l\'image</string>
 </resources>

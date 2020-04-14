@@ -27,8 +27,10 @@
    <string name="dk_common_permissions">Genehmigungen</string>
    <string name="dk_common_safety">Sicherheit</string>
    <string name="dk_common_save">Speichern</string>
+   <string name="dk_common_select_image_gallery">Wählen Sie ein vorhandenes Foto aus</string>
    <string name="dk_common_settings">Einstellungen</string>
    <string name="dk_common_speed">Geschwindigkeit</string>
+   <string name="dk_common_take_picture">Ein Foto machen</string>
    <string name="dk_common_trip_plural">fahrten</string>
    <string name="dk_common_trip_singular">fahrt</string>
    <string name="dk_common_unit_T">T</string>
@@ -50,8 +52,6 @@
    <string name="dk_common_unit_mph">mph</string>
    <string name="dk_common_unit_power">PS</string>
    <string name="dk_common_unit_second">s</string>
+   <string name="dk_common_update_photo_title">Ändern des Bildes</string>
    <string name="dk_common_validate">Gultig</string>
-   <string name="dk_select_image_gallery">Wählen Sie ein vorhandenes Foto aus</string>
-   <string name="dk_take_picture">Ein Foto machen</string>
-   <string name="dk_update_photo_title">Ändern des Bildes</string>
 </resources>
