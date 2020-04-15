@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.diagnosis
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.ActivityNotFoundException
@@ -34,19 +33,15 @@ object DiagnosisHelper {
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
-    const val PERMISSION_BACKGROUND_LOCATION = Manifest.permission.ACCESS_BACKGROUND_LOCATION
-    const val PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
-    const val PERMISSION_ACTIVITY_RECOGNITION = Manifest.permission.ACTIVITY_RECOGNITION
-
     fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(
         activity,
-        PERMISSION_LOCATION
+        Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
     fun hasBackgroundLocationApproved(activity: Activity): Boolean =
         ActivityCompat.checkSelfPermission(
             activity,
-            PERMISSION_BACKGROUND_LOCATION
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
     fun getLocationStatus(activity: Activity): PermissionStatus {
@@ -121,7 +116,6 @@ object DiagnosisHelper {
         }
     }
 
-    @SuppressLint("MissingPermission")
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
         return when (sensorType) {
             SensorType.BLUETOOTH -> {
@@ -157,5 +151,5 @@ object DiagnosisHelper {
         return false
     }
 
-    fun isNetworkReachable(context: Context): Boolean = DKReachability.isConnectedToNetwork(context)
+    fun isNetworkReachable(context: Context): Boolean = DKReachability().isConnectedToNetwork(context)
 }

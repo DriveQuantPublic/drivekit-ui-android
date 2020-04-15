@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.common.ui.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -12,9 +11,8 @@ import android.os.Build
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-object DKReachability {
+class DKReachability {
 
-    @SuppressLint("MissingPermission")
     fun isConnectedToNetwork(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

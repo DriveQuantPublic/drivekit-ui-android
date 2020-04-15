@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +13,6 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.permissionsutils.R
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.PERMISSION_ACTIVITY_RECOGNITION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_recognition_permission.*
@@ -87,7 +87,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
                 descriptionTextView?.normalText()
             }
         }
-        request(this, permissionCallback as OnPermissionCallback, PERMISSION_ACTIVITY_RECOGNITION)
+        request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACTIVITY_RECOGNITION)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
