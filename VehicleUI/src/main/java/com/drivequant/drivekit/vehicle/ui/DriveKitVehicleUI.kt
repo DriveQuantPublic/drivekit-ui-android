@@ -79,7 +79,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     fun configureEngineIndexes(vehicleEnginesIndex: List<VehicleEngineIndex>){
-        this.vehicleEngineIndexes = vehicleEnginesIndex
+        if (vehicleEnginesIndex.isNotEmpty()) {
+            this.vehicleEngineIndexes = vehicleEnginesIndex
+        }
     }
 
     fun showBrandsWithIcons(displayBrandsWithIcons: Boolean){
