@@ -47,6 +47,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
+    @JvmOverloads
     fun initialize(vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
                    maxVehicles: Int? = null,
                    categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
