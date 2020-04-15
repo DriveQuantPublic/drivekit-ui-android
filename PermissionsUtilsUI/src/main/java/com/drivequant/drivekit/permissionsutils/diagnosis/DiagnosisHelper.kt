@@ -88,6 +88,11 @@ object DiagnosisHelper {
         }
     }
 
+    private fun getExternalStorageStatus(activity: Activity): PermissionStatus {
+        val hasExternalStorage = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        return if (hasExternalStorage) PermissionStatus.VALID else PermissionStatus.NOT_VALID
+    }
+
     fun requestBatteryOptimization(activity: Activity) {
         val intent = Intent()
         val packageName = activity.packageName
@@ -112,7 +117,7 @@ object DiagnosisHelper {
 
             PermissionType.NOTIFICATION -> getNotificationStatus(activity)
 
-            PermissionType.EXTERNAL_STORAGE -> PermissionStatus.NOT_VALID //TODO
+            PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(activity)
         }
     }
 
