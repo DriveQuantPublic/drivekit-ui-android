@@ -8,6 +8,8 @@ import android.content.IntentFilter
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
+import com.drivekit.demoapp.config.ColorConfig
+import com.drivekit.demoapp.config.FontConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -22,6 +24,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -58,6 +61,7 @@ class DriveKitDemoApplication: Application(), ContentMail {
         DriverDataUI.initialize()
         DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
+        PermissionUtilsUI.initialize()
     }
 
     private fun createNotificationChannel() {

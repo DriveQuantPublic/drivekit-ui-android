@@ -51,4 +51,7 @@
     <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
+
+    <string name="permissions_utils_explanation">An example of DriveKit PermissionsUtils implementation with its UI for the on boarding permissions</string>
+
 </resources>

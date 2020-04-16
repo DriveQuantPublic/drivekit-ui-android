@@ -1,1 +1,1 @@
-include ':app', ':DriverDataUI', ':DriverAchievementUI', ':CommonUI', ':VehicleUI'
+include ':app', ':DriverDataUI', ':DriverAchievementUI', ':CommonUI', ':VehicleUI', ':PermissionsUtilsUI'

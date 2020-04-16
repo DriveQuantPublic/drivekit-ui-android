@@ -175,6 +175,128 @@
             app:layout_constraintTop_toBottomOf="@id/trip_buttons_container"/>
 
         <TextView
+            android:id="@+id/permissions_utils_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:text="PermissionsUtils"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trip_buttons_container"/>
+
+        <TextView
+            android:id="@+id/permissions_utils_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/permissions_utils_explanation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/permissions_utils_title"/>
+
+        <Button
+            android:id="@+id/onboarding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dk_margin_half"
+            android:text="LAUNCH PERMISSIONS"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="onPermissionUtilsClicked"
+            app:layout_constraintTop_toBottomOf="@id/permissions_utils_text"/>
+
+        <View
+            android:id="@+id/separator_permissions_utils"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/onboarding"/>
+
+        <View
+            android:id="@+id/separator_permissions_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator_permissions_utils"/>
+
+        <LinearLayout
+            android:id="@+id/permission_sensors_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator_permissions_buttons">
+
+            <Button
+                android:id="@+id/button_gps"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="gps status"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_bluetooth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="bluetooth status"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_network"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="Network status"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/button_notification"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:onClick="buttonSensorsClicked"
+                android:text="Notif status"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator_sensors_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/permission_sensors_container"/>
+
+
+        <TextView
             android:id="@+id/vehicle_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -185,7 +307,7 @@
             android:paddingTop="8dp"
             android:text="Vehicle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separator_trips"/>
+            app:layout_constraintTop_toBottomOf="@id/separator_sensors_buttons"/>
         <TextView
             android:id="@+id/vehicle_description"
             android:layout_width="match_parent"
