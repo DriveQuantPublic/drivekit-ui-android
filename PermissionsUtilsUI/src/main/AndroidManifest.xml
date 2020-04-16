@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <application>
+        <activity android:name=".permissions.activity.AppDiagnosisActivity" />
         <activity android:name=".permissions.activity.RequestPermissionActivity" />
         <activity android:name=".permissions.activity.BasePermissionActivity" />
         <activity android:name=".permissions.activity.LocationPermissionActivity" />

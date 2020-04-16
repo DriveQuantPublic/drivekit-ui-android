@@ -1,8 +1,11 @@
 package com.drivequant.drivekit.permissionsutils
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
+import com.drivequant.drivekit.permissionsutils.permissions.activity.AppDiagnosisActivity
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
@@ -27,4 +30,6 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
         this.permissionViewListener = permissionViewListener
         permissionView.first().launchActivity(activity, permissionView)
     }
+
+    override fun startAppDiagnosisActivity(context: Context) = context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 }

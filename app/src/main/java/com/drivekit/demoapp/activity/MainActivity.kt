@@ -130,6 +130,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun onAppDiagClicked(view: View) {
+        DriveKitNavigationController.permissionsUtilsUIEntryPoint?.let {
+            it.startAppDiagnosisActivity(this@MainActivity)
+        }
+    }
+
     fun buttonTripClicked(view: View){
         if (DriveKitTripAnalysis.isConfigured()) {
             when (view.id) {
