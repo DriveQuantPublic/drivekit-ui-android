@@ -86,9 +86,9 @@
    <string name="dk_vehicle_bluetooth_guide_desc3_android">Vous devrez sélectionner celui qui correspond au système Bluetooth de votre véhicule.</string>
    <string name="dk_vehicle_bluetooth_guide_desc3_ios">Allumer le contact. Le téléphone doit être connecté au véhicule pour réaliser l\'association.</string>
    <string name="dk_vehicle_bluetooth_guide_header">Avant de commencer</string>
-   <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté. \n \n Pour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth. \n \n Pouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
+   <string name="dk_vehicle_bluetooth_not_found">Aucun appareil Bluetooth n\'a été détecté. \n\nPour activer le démarrage automatique, assurez-vous que votre téléphone soit connecté au système Bluetooth. \n\nPouvez-vous vérifier dans les paramètres du téléphone que le système Bluetooth est bien connecté à votre téléphone ?</string>
    <string name="dk_vehicle_brand_description">Marque du véhicule ?</string>
-   <string name="dk_vehicle_category_car_commercial_description">Cette catégorie correspond aux véhicule à usage professionnel généralement destinés au transport de marchandises. Ces véhicules ont un grande capacité de stockage et le poids total autorisé en charge est compris entre 1,5 tonne et 3,5 tonnes.</string>
+   <string name="dk_vehicle_category_car_commercial_description">Cette catégorie correspond aux véhicules à usage professionnel généralement destinés au transport de marchandises. Ces véhicules ont un grande capacité de stockage et le poids total autorisé en charge est compris entre 1,5 tonne et 3,5 tonnes.</string>
    <string name="dk_vehicle_category_car_commercial_title">Utilitaires</string>
    <string name="dk_vehicle_category_car_compact_description">Cette catégorie correspond aux véhicules appartenant au segment B2. Il s\'agit de véhicules compacts qui sont adpatés en milieu urbain tout autant que sur route et dont la longueur varie entre 3,70 et 4,10 m.</string>
    <string name="dk_vehicle_category_car_compact_title">Citadine</string>
