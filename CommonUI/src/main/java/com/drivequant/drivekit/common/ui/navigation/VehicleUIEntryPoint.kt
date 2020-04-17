@@ -4,7 +4,7 @@ import android.content.Context
 
 interface VehicleUIEntryPoint {
     fun startVehicleListActivity(context: Context)
-    fun startVehicleDetailActivity(context: Context, vehicleId: String)
+    fun startVehicleDetailActivity(context: Context, vehicleId: String) : Boolean
     fun getVehicleInfoById(context: Context, vehicleId: String, listener : GetVehicleInfoByVehicleIdListener)
 }
 

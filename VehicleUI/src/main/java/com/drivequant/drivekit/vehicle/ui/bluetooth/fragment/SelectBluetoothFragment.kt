@@ -1,7 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,7 +18,6 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.adapter.BluetoothItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import kotlinx.android.synthetic.main.fragment_bluetooth_select.*
-import kotlinx.android.synthetic.main.fragment_bluetooth_select.progress_circular
 
 class SelectBluetoothFragment: Fragment() {
 
@@ -54,16 +51,6 @@ class SelectBluetoothFragment: Fragment() {
 
         setupRecyclerView()
 
-        viewModel.progressBarObserver.observe(this, Observer {
-            it?.let {displayProgressCircular ->
-                if (displayProgressCircular){
-                    showProgressCircular()
-                } else {
-                    hideProgressCircular()
-                }
-            }
-        })
-
         viewModel.addBluetoothObserver.observe(this, Observer { identifier ->
             identifier?.let {
                 val message = DKResource.convertToString(requireContext(), it)
@@ -79,27 +66,5 @@ class SelectBluetoothFragment: Fragment() {
             adapter = BluetoothItemRecyclerViewAdapter(requireContext(), viewModel)
             recyclerView.adapter = adapter
         }
-    }
-
-    private fun hideProgressCircular() {
-        progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
-                }
-            })
-    }
-
-    private fun showProgressCircular() {
-        progress_circular.animate()
-            .alpha(255f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
-                }
-            })
     }
 }

@@ -170,17 +170,46 @@ class VehicleDetailFragment : Fragment() {
     }
 
     fun onBackPressed(){
-        updateInformations()
+        if (hasChangesToUpdate){
+            val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
+                .layout(R.layout.template_alert_dialog_layout)
+                .cancelable(false)
+                .positiveButton(getString(R.string.dk_common_confirm),
+                    DialogInterface.OnClickListener { _, _ ->
+                        updateInformations(true)
+                    })
+                .negativeButton(getString(R.string.dk_common_cancel),
+                    DialogInterface.OnClickListener { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                        activity?.finish()
+                    }
+                )
+                .show()
+
+            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+
+            title?.text = getString(R.string.app_name)
+            description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_detail_back_edit_alert")
+        } else {
+            activity?.finish()
+        }
     }
 
-    fun updateInformations(){
+    fun updateInformations(fromBackButton: Boolean = false){
         if (hasChangesToUpdate) {
             if (allFieldsValid()){
+                viewModel.progressBarObserver.postValue(true)
                 viewModel.vehicle?.let { vehicle ->
                     for (item in editableFields){
                         item.field.onFieldUpdated(requireContext(), item.editableText.text, vehicle, object : FieldUpdatedListener {
                             override fun onFieldUpdated(success: Boolean, message: String) {
+                                viewModel.progressBarObserver.postValue(false)
+                                hasChangesToUpdate = false
                                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                if (fromBackButton){
+                                    activity?.finish()
+                                }
                             }
                         })
                     }
@@ -216,7 +245,7 @@ class VehicleDetailFragment : Fragment() {
 
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
-        title?.text = DKResource.convertToString(requireContext(), "dk_update_photo_title")
+        title?.text = DKResource.convertToString(requireContext(), "dk_common_update_photo_title")
         title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         title?.setBackgroundColor(primaryColor)
 
@@ -227,15 +256,11 @@ class VehicleDetailFragment : Fragment() {
         separatorCamera?.setBackgroundColor(neutralColor)
         separatorGallery?.setBackgroundColor(neutralColor)
         cameraTextView?.let {
-            it.text = DKResource.convertToString(requireActivity(), "dk_take_picture")
+            it.text = DKResource.convertToString(requireActivity(), "dk_common_take_picture")
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
-                        displayRationaleAlert( "dk_common_permission_camera_rationale")
-                    } else {
-                        ActivityCompat.requestPermissions(requireActivity(),
-                            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA)
-                    }
+                    ActivityCompat.requestPermissions(requireActivity(),
+                        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA)
                 } else {
                     if (alert.isShowing){
                         alert.dismiss()
@@ -245,15 +270,11 @@ class VehicleDetailFragment : Fragment() {
             }
         }
         galleryTextView?.let {
-            it.text = DKResource.convertToString(requireContext(), "dk_select_image_gallery")
+            it.text = DKResource.convertToString(requireContext(), "dk_common_select_image_gallery")
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        displayRationaleAlert( "dk_common_permission_storage_rationale")
-                    } else {
-                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
-                    }
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
                 } else {
                     if (alert.isShowing){
                         alert.dismiss()
@@ -320,11 +341,25 @@ class VehicleDetailFragment : Fragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty()) {
-            if (requestCode == REQUEST_GALLERY) {
-                launchGalleryIntent()
-            } else {
-                launchCameraIntent()
+        when (requestCode){
+            REQUEST_GALLERY -> {
+                if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchGalleryIntent()
+                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    displayRationaleAlert( "dk_common_permission_storage_rationale")
+                } else {
+                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_permission_storage_rationale"), Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            REQUEST_CAMERA -> {
+                if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchCameraIntent()
+                } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
+                    displayRationaleAlert( "dk_common_permission_camera_rationale")
+                } else {
+                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(),"dk_common_permission_camera_rationale"), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

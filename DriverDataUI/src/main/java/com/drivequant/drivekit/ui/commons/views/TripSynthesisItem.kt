@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,10 @@ class TripSynthesisItem: LinearLayout {
 
     fun setValueColor() {
         textViewValue?.setTextColor(DriveKitUI.colors.secondaryColor())
+    }
+
+    fun setValueTypeFace() {
+        textViewValue?.typeface = Typeface.DEFAULT_BOLD
     }
 
     fun onTripItemSynthesisClick(context: Context, vehicleId: String?, liteConfig: Boolean?) {

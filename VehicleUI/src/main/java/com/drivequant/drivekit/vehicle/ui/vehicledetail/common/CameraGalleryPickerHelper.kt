@@ -30,7 +30,7 @@ object CameraGalleryPickerHelper {
         try {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val file = createImageFile(activity, outputFilename)
-            val uri: Uri = FileProvider.getUriForFile(activity, "drivekit-vehicle-ui" + ".provider", file)
+            val uri: Uri = FileProvider.getUriForFile(activity, activity.packageName + ".provider", file)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
             val filePath = "file://" + file.absolutePath
             cameraCallback.pictureTaken(filePath)

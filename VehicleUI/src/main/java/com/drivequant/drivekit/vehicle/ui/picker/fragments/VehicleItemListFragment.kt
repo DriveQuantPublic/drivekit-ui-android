@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -101,7 +102,10 @@ class VehicleItemListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchItems()
-        activity?.title = DKResource.convertToString(requireContext(), "dk_vehicle_my_vehicle")
+
+        if (activity is VehiclePickerActivity){
+            (activity as VehiclePickerActivity).updateTitle(DKResource.convertToString(requireContext(), "dk_vehicle_my_vehicle"))
+        }
     }
 
     private fun fetchItems() {

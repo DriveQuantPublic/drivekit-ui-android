@@ -1,5 +1,8 @@
 <resources>
     <style name="VehiclePickerTextItem">
         <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>

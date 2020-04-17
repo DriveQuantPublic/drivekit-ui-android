@@ -13,10 +13,10 @@ import com.drivequant.beaconutils.BeaconBatteryReaderListener
 import com.drivequant.beaconutils.BeaconBatteryReaderScanner
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.beaconutils.compatibility.BeaconScannerBatteryReaderPreLollipop
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.R
@@ -47,11 +47,11 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
         startBatteryReaderScanner()
 
-        view_border.setBackgroundColor(DKColors().mainFontColor())
+        view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
-        val mainFontColor = DKColors().mainFontColor()
-        val primaryColor = DKColors().primaryColor()
-        val neutralColor = DKColors().neutralColor()
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val primaryColor = DriveKitUI.colors.primaryColor()
+        val neutralColor = DriveKitUI.colors.neutralColor()
 
         text_view_connected_vehicle_name.normalText(mainFontColor)
         text_view_connected_vehicle_name.typeface = Typeface.DEFAULT_BOLD
@@ -159,8 +159,8 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
     }
 
     private fun buildBeaconCharacteristics(value: String, unitIdentifier: String) : Spannable {
-        val mainFontColor = DKColors().mainFontColor()
-        val primaryColor = DKColors().primaryColor()
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        val primaryColor = DriveKitUI.colors.primaryColor()
         val unit = DKResource.convertToString(requireContext(), unitIdentifier)
 
         return DKSpannable()

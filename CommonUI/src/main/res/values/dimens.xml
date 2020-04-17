@@ -8,7 +8,7 @@
 
     <dimen name="dk_text_small">12sp</dimen>
     <dimen name="dk_text_normal">14sp</dimen>
-    <dimen name="dk_text_medium">16sp</dimen>
+    <dimen name="dk_text_medium">18sp</dimen>
     <dimen name="dk_text_big">20sp</dimen>
     <dimen name="dk_text_xbig">24sp</dimen>
     <dimen name="dk_text_xxbig">32sp</dimen>

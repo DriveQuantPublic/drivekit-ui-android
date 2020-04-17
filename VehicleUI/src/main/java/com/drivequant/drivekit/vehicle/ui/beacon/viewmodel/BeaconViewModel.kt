@@ -11,7 +11,6 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
-import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.*
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
@@ -42,12 +41,8 @@ class BeaconViewModel(
 
     fun init(context: Context){
         vehicleId?.let { vehicleId ->
-            DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
-                override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
-                    this@BeaconViewModel.vehicle = vehicle
-                    computeVehicleName(context)
-                }
-            })
+            this@BeaconViewModel.vehicle = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
+            computeVehicleName(context)
         }
 
         when (scanType){
