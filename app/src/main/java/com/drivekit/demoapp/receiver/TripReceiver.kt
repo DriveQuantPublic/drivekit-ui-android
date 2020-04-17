@@ -31,8 +31,7 @@ class TripReceiver : TripAnalysedReceiver() {
             CancelTrip.NO_GPS_DATA -> R.string.trip_cancelled_no_gps_data
             CancelTrip.RESET -> R.string.trip_cancelled_reset
             CancelTrip.BEACON_NO_SPEED -> R.string.trip_cancelled_beacon_no_speed
-            CancelTrip.BLE_DEVICE_NO_SPEED -> R.string.trip_cancelled_ble_device_no_speed
-            CancelTrip.NO_BLE_DEVICE -> R.string.trip_cancelled_no_ble_device
+            else -> R.string.trip_cancelled_reset
         }
         showNotification(context, context.getString(messageResId))
     }

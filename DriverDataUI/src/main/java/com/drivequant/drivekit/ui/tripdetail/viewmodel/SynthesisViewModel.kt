@@ -1,15 +1,32 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeRoadContext
-import java.io.Serializable
 
-class SynthesisViewModel(private val trip: Trip) : Serializable {
+class SynthesisViewModel(private val trip: Trip) : ViewModel() {
+
+    var vehicleName: String? = null
+    var liteConfig: Boolean? = null
 
     private val notAvailableText = "-"
+
+    fun init(context: Context) {
+        trip.vehicleId?.let { vehicleId ->
+            DriveKitNavigationController.vehicleUIEntryPoint?.getVehicleInfoById(context, vehicleId, object: GetVehicleInfoByVehicleIdListener {
+                override fun onVehicleInfoRetrieved(vehicleName: String, liteConfig: Boolean?) {
+                    this@SynthesisViewModel.vehicleName = vehicleName
+                    this@SynthesisViewModel.liteConfig = liteConfig
+                }
+            })
+        }
+    }
 
     fun getRoadContextValue(context: Context): String {
         return when (trip.computeRoadContext()) {
@@ -89,7 +106,22 @@ class SynthesisViewModel(private val trip: Trip) : Serializable {
         }
     }
 
-    fun getVehicleDisplayName(): String {
-        return notAvailableText
+    fun getVehicleId() : String? {
+        return trip.vehicleId
+    }
+
+    fun getVehicleDisplayName() : String {
+        return vehicleName?.let {
+            it
+        }?:run {
+            notAvailableText
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class SynthesisViewModelFactory(private val trip: Trip) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return SynthesisViewModel(trip) as T
+        }
     }
 }

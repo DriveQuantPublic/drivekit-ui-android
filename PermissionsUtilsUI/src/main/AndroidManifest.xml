@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.drivequant.drivekit.permissionsutils">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <application>
+        <activity android:name=".permissions.activity.RequestPermissionActivity" />
+        <activity android:name=".permissions.activity.BasePermissionActivity" />
+        <activity android:name=".permissions.activity.LocationPermissionActivity" />
+        <activity android:name=".permissions.activity.BackgroundTaskPermissionActivity" />
+        <activity android:name=".permissions.activity.ActivityRecognitionPermissionActivity" />
+    </application>
+
+</manifest>

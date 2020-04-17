@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
+import kotlinx.android.synthetic.main.item_trip_list.view.*
 import kotlinx.android.synthetic.main.trip_synthesis_fragment.*
 
 class SynthesisFragment : Fragment() {
@@ -17,11 +19,13 @@ class SynthesisFragment : Fragment() {
     companion object {
         fun newInstance(trip: Trip) : SynthesisFragment {
             val fragment = SynthesisFragment()
+            fragment.trip = trip
             fragment.viewModel = SynthesisViewModel(trip)
             return fragment
         }
     }
 
+    private lateinit var trip: Trip
     private lateinit var viewModel: SynthesisViewModel
 
     override fun onCreateView(
@@ -35,17 +39,35 @@ class SynthesisFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        outState.putSerializable("trip", trip)
         super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as SynthesisViewModel?)?.let{
-            viewModel = it
+        (savedInstanceState?.getSerializable("trip") as Trip?)?.let{
+            trip = it
         }
 
+        if (!this::viewModel.isInitialized){
+            viewModel = ViewModelProviders.of(this,
+                SynthesisViewModel.SynthesisViewModelFactory(trip)
+            ).get(SynthesisViewModel::class.java)
+        }
+
+        viewModel.init(requireContext())
+
         item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
+        viewModel.getVehicleId()?.let {
+
+            item_vehicle_used.setValueColor()
+            item_vehicle_used.setValueTypeFace()
+
+            item_vehicle_used.setOnClickListener {
+                item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
+            }
+        }
+
         item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
         item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
 

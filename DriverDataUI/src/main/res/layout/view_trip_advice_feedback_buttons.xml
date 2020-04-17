@@ -28,8 +28,7 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:text="test"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAllCaps="true"
-            android:text="test2"/>
+            android:textAllCaps="true"/>
     </LinearLayout>
 </LinearLayout>

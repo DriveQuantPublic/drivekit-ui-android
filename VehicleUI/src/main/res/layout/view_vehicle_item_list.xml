@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DKCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dk_margin_medium">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/dk_margin_eigth"
+            android:layout_marginBottom="@dimen/dk_margin_eigth"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="Véhicule 1" />
+            <ImageView
+                android:id="@+id/image_view_popup"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="?actionBarItemBackground"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            tools:text="Brand model version of the vehicle, or category name if liteConfig" />
+        <View
+            android:id="@+id/view_separator"
+            style="@style/Separator.Horizontal"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/detection_mode_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/text_view_detection_mode_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#F0F0F0">
+                    <Spinner
+                        android:id="@+id/spinner_vehicle_detection_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|start"
+                        android:gravity="center_vertical|start" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_view_detection_mode_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:drawablePadding="@dimen/dk_margin_quarter"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="5"
+                android:text="This text describes state of the selected detection mode" />
+
+            <Button
+                android:id="@+id/text_view_setup_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone"
+                tools:text="Configure beacon"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

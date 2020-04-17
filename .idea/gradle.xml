@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/CommonUI" />
             <option value="$PROJECT_DIR$/DriverAchievementUI" />
             <option value="$PROJECT_DIR$/DriverDataUI" />
+            <option value="$PROJECT_DIR$/PermissionsUtilsUI" />
+            <option value="$PROJECT_DIR$/VehicleUI" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

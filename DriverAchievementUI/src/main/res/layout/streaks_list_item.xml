@@ -32,7 +32,8 @@
             android:textSize="@dimen/dk_text_medium"
             app:layout_constraintEnd_toStartOf="@+id/image_view_info"
             app:layout_constraintStart_toEndOf="@+id/image_view_streak_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon"/>
 
         <ImageView
             android:id="@+id/image_view_info"
@@ -43,7 +44,8 @@
             android:src="@drawable/dk_common_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_streak_title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_streak_icon" />
 
         <TextView
             android:id="@+id/view_separator"
