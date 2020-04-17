@@ -21,8 +21,7 @@
     <string name="dk_common_mean_speed">Average speed</string>
     <string name="dk_common_ok">OK</string>
     <string name="dk_common_permission_camera_rationale">The application needs permission to access your smartphone\'s camera to use this feature.</string>
-    <string name="dk_common_permission_storage_rationale">The application needs authorization to access your smartphone\'s storage to use this feature.
-</string>
+    <string name="dk_common_permission_storage_rationale">The application needs authorization to access your smartphone\'s storage to use this feature.</string>
     <string name="dk_common_permissions">Permissions</string>
     <string name="dk_common_safety">Safety</string>
     <string name="dk_common_save">Record</string>

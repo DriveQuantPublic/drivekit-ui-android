@@ -20,10 +20,8 @@
    <string name="dk_common_mass">Gewicht</string>
    <string name="dk_common_mean_speed">Mittlere Velocity</string>
    <string name="dk_common_ok">OK</string>
-   <string name="dk_common_permission_camera_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf die Kamera Ihres Smartphones.
-</string>
-   <string name="dk_common_permission_storage_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf den Speicher Ihres Smartphones.
-</string>
+   <string name="dk_common_permission_camera_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf die Kamera Ihres Smartphones.</string>
+   <string name="dk_common_permission_storage_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf den Speicher Ihres Smartphones.</string>
    <string name="dk_common_permissions">Genehmigungen</string>
    <string name="dk_common_safety">Sicherheit</string>
    <string name="dk_common_save">Speichern</string>

@@ -20,10 +20,8 @@
    <string name="dk_common_mass">Massa</string>
    <string name="dk_common_mean_speed">Velocità media</string>
    <string name="dk_common_ok">OK</string>
-   <string name="dk_common_permission_camera_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla fotocamera dello smartphone.
-</string>
-   <string name="dk_common_permission_storage_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla memoria del vostro smartphone.
-</string>
+   <string name="dk_common_permission_camera_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla fotocamera dello smartphone.</string>
+   <string name="dk_common_permission_storage_rationale">Per utilizzare questa funzione, l\'applicazione necessita di un\'autorizzazione per accedere alla memoria del vostro smartphone.</string>
    <string name="dk_common_permissions">Permessi</string>
    <string name="dk_common_safety">Sicurezza</string>
    <string name="dk_common_save">Registrazione</string>
