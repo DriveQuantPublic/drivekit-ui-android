@@ -120,7 +120,7 @@
             app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
             app:diagnosisTextKO="@string/dk_perm_utils_app_diag_network_ko"
             app:diagnosisTextOK="@string/dk_perm_utils_app_diag_network_ok"
-            app:diagnosisTitle="@string/dk_perm_utils_permissions_location_title"
+            app:diagnosisTitle="@string/dk_perm_utils_app_diag_network_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/diag_item_activity_recognition" />
 

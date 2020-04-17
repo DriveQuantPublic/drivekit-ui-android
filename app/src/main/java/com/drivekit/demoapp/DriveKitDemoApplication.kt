@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
@@ -25,11 +26,13 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
+import com.drivequant.drivekit.permissionsutils.permissions.model.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
+import java.security.Permission
 import java.util.*
 
 class DriveKitDemoApplication: Application(), ContentMail {
@@ -62,6 +65,9 @@ class DriveKitDemoApplication: Application(), ContentMail {
         DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
         PermissionUtilsUI.initialize()
+        PermissionUtilsUI.configureBluetooth(true)
+        PermissionUtilsUI.configureDiagnosisLogs(true)
+        PermissionUtilsUI.configureContactType(ContactType.WEB(Uri.parse("https://www.google.com")))
     }
 
     private fun createNotificationChannel() {
