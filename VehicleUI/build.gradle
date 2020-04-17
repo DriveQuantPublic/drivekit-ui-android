@@ -38,8 +38,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.4-beta9"
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.4-beta9"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.4.0"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.4.0"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
