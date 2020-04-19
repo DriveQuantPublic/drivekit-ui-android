@@ -43,53 +43,20 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
-               val locationDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this@LocationPermissionActivity)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .cancelable(false)
-                    .positiveButton(getString(R.string.dk_common_ok),
-                        DialogInterface.OnClickListener { _, _ ->
-                            checkRequiredPermissions()
-                        })
-                    .show()
-
-                val titleTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_description)
-
-                titleTextView?.text = getString(R.string.dk_common_permissions)
-                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_location_ko_android)
-
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
+                handlePermissionDeclined(
+                    this@LocationPermissionActivity,
+                    R.string.dk_perm_utils_app_diag_location_ko_android,
+                    this@LocationPermissionActivity::checkRequiredPermissions
+                )
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_location_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
-                val locationDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this@LocationPermissionActivity)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .cancelable(false)
-                    .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
-                        DialogInterface.OnClickListener { _, _ ->
-                            startActivityForResult(
-                                launchSettings(),
-                                DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
-                            )
-                        })
-                    .negativeButton(getString(R.string.dk_common_close),
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.cancel()
-                        })
-                    .show()
-
-                val titleTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView = locationDialog.findViewById<TextView>(R.id.text_view_alert_description)
-
-                titleTextView?.text = getString(R.string.dk_common_permissions)
-                descriptionTextView?.text = getString(R.string.dk_perm_utils_app_diag_location_ko_android)
-
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
+                button_request_location_permission.text =
+                    getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                handlePermissionTotallyDeclined(
+                    this@LocationPermissionActivity,
+                    R.string.dk_perm_utils_app_diag_location_ko_android
+                )
             }
         }
 
