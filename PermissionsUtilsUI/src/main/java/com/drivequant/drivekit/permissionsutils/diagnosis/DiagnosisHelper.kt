@@ -30,6 +30,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 object DiagnosisHelper {
 
     const val REQUEST_PERMISSIONS = 1
+    const val REQUEST_STORAGE_PERMISSIONS_RATIONALE = 2
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 

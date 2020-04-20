@@ -2,7 +2,6 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.Manifest
 import android.app.Activity
-import android.content.ClipDescription
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -57,7 +56,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
         }
     }
 
-    protected fun launchSettings(): Intent {
+    private fun launchSettings(): Intent {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
@@ -137,7 +136,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
     }
 
     protected fun handlePermissionDeclined(context: Context, descriptionId: Int, callback: () -> Unit) {
-        alertDialog = DKAlertDialog.LayoutBuilder()
+        val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
@@ -147,8 +146,8 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
                 })
             .show()
 
-        val titleTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_title)
-        val descriptionTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_description)
+        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
 
         titleTextView?.text = getString(R.string.dk_common_permissions)
         descriptionTextView?.text = getString(descriptionId)
