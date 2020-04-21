@@ -52,9 +52,6 @@
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
 
-    <string name="permissions_utils_explanation">An example of DriveKit PermissionsUtils implementation with its UI for the on boarding permissions</string>
-    <string name="dk_perm_utils_ask_for_request">Technical support request</string>
-
-
-
+    <string name="permissions_utils_explanation">An example of DriveKit PermissionsUtils implementation with its UI for the on boarding permissions and app diagnosis</string>
+    <string name="ask_for_request">Technical support request</string>
 </resources>

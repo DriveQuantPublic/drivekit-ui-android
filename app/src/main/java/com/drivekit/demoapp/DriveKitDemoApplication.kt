@@ -66,7 +66,7 @@ class DriveKitDemoApplication: Application(), ContentMail {
         DriveKitVehicleUI.initialize()
         PermissionUtilsUI.initialize()
         PermissionUtilsUI.configureBluetooth(true)
-        PermissionUtilsUI.configureDiagnosisLogs(false)
+        PermissionUtilsUI.configureDiagnosisLogs(true)
         PermissionUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> {
                 return listOf("support@drivequant.com")
@@ -81,7 +81,7 @@ class DriveKitDemoApplication: Application(), ContentMail {
             }
 
             override fun getSubject(): String {
-                return getString(R.string.app_name) + " - " + getString(R.string.dk_perm_utils_ask_for_request)
+                return getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
             }
         }))
         PermissionUtilsUI.configureLogPathFile("/DQ-demo-test/")
