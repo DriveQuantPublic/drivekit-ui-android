@@ -38,7 +38,6 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.model.ContactType
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AppDiagnosisActivity : RequestPermissionActivity() {
@@ -48,58 +47,29 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_diagnosis)
+
         setSummaryContent()
-        setStyle()
         init()
+
+        displayBatteryOptimizationSection()
+        displayBluetoothItem()
+        displayActivityItem()
+        displayLogSection()
+        displayReportSection()
+
+        setStyle()
     }
 
-    private fun setStyle() {
-        text_view_summary_title.headLine1()
-        text_view_summary_description.normalText()
-        summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+    private fun init() {
+        checkGPS()
+        checkBluetooth()
+        checkLocation()
+        checkActivity()
+        checkNotification()
+        checkExternalStorage()
+        checkNetwork()
 
-        text_view_battery_title.headLine1()
-        text_view_battery_description_1.normalText()
-        text_view_battery_description_2.normalText()
-        text_view_battery_description_3.normalText()
-
-        button_help_report.button()
-        text_view_help_title.headLine1()
-        text_view_help_description.normalText()
-
-        switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
-        switch_enable_logging.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
-                com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
-            )
-        )
-        text_view_logging_description.normalText()
-    }
-
-    private fun setNormalState(diagnosticItem: DiagnosisItemView) {
-        diagnosticItem.setDiagnosisDrawable(false)
-        diagnosticItem.setOnClickListener {
-            val infoDiagnosis = DKAlertDialog.LayoutBuilder()
-                .init(this)
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(false)
-                .positiveButton(getString(R.string.dk_common_ok),
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.dismiss()
-                    }).show()
-
-            val titleTextView = infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_title)
-            val descriptionTextView =
-                infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_description)
-
-            titleTextView?.text = diagnosticItem.getDiagnosisTitle()
-            descriptionTextView?.text = diagnosticItem.getDiagnosticTextOK()
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
-        }
+        setSummaryContent()
     }
 
     private fun setSummaryContent() {
@@ -125,74 +95,158 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun init() {
-        SensorType.values().forEach { sensorType ->
-            when (sensorType) {
-                SensorType.GPS -> {
-                    if (DiagnosisHelper.isSensorActivated(this, sensorType)) {
-                        setNormalState(diag_item_location_sensor)
-                    } else {
-                        diag_item_location_sensor.setDiagnosisDrawable(true)
-                        diag_item_location_sensor.setOnClickListener {
-                            val alertDialog = DKAlertDialog.LayoutBuilder()
-                                .init(this)
-                                .layout(R.layout.template_alert_dialog_layout)
-                                .positiveButton(diag_item_location_sensor.getDiagnosisLink(),
-                                    DialogInterface.OnClickListener { _, _ ->
-                                        enableSensor(sensorType)
-                                    })
-                                .show()
+    private fun checkBluetooth() {
+        if (DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)) {
+            diag_item_bluetooth.setNormalState()
+        } else {
+            diag_item_bluetooth.setDiagnosisDrawable(true)
+            diag_item_bluetooth.setOnClickListener {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(this)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(diag_item_bluetooth.getDiagnosisLink(),
+                        DialogInterface.OnClickListener { _, _ ->
+                            enableSensor(SensorType.BLUETOOTH)
+                        })
+                    .show()
 
-                            val titleTextView =
-                                alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                            val descriptionTextView =
-                                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                            titleTextView?.text = diag_item_location_sensor.getDiagnosisTitle()
-                            descriptionTextView?.text =
-                                diag_item_location_sensor.getDiagnosticTextKO()
-                            titleTextView?.headLine1()
-                            descriptionTextView?.normalText()
-                        }
-                    }
-                }
-
-                SensorType.BLUETOOTH -> {
-                    if (DiagnosisHelper.isSensorActivated(this, sensorType)) {
-                        setNormalState(diag_item_bluetooth)
-                    } else {
-                        diag_item_bluetooth.setDiagnosisDrawable(true)
-                        diag_item_bluetooth.setOnClickListener {
-                            val alertDialog = DKAlertDialog.LayoutBuilder()
-                                .init(this)
-                                .layout(R.layout.template_alert_dialog_layout)
-                                .positiveButton(diag_item_bluetooth.getDiagnosisLink(),
-                                    DialogInterface.OnClickListener { _, _ ->
-                                        enableSensor(sensorType)
-                                    })
-                                .show()
-
-                            val titleTextView =
-                                alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                            val descriptionTextView =
-                                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                            titleTextView?.text = diag_item_bluetooth.getDiagnosisTitle()
-                            descriptionTextView?.text = diag_item_bluetooth.getDiagnosticTextKO()
-                        }
-                    }
-                }
+                val titleTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                titleTextView?.text = diag_item_bluetooth.getDiagnosisTitle()
+                descriptionTextView?.text = diag_item_bluetooth.getDiagnosticTextKO()
+                descriptionTextView?.text =
+                    diag_item_location_sensor.getDiagnosticTextKO()
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
         }
-        PermissionType.values().forEach { permissionType ->
-            when (permissionType) {
-                PermissionType.LOCATION -> checkLocation(permissionType)
-                PermissionType.ACTIVITY -> checkActivity(permissionType)
-                PermissionType.NOTIFICATION -> checkNotification(permissionType)
-                PermissionType.EXTERNAL_STORAGE -> checkExternalStorage(permissionType)
+    }
+
+    private fun checkGPS() {
+        if (DiagnosisHelper.isSensorActivated(this, SensorType.GPS)) {
+            diag_item_location_sensor.setNormalState()
+        } else {
+            diag_item_location_sensor.setDiagnosisDrawable(true)
+            diag_item_location_sensor.setOnClickListener {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(this)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(diag_item_location_sensor.getDiagnosisLink(),
+                        DialogInterface.OnClickListener { _, _ ->
+                            enableSensor(SensorType.GPS)
+                        })
+                    .show()
+
+                val titleTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                titleTextView?.text = diag_item_location_sensor.getDiagnosisTitle()
+                descriptionTextView?.text =
+                    diag_item_location_sensor.getDiagnosticTextKO()
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
         }
+    }
 
+    private fun checkActivity() {
+        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.ACTIVITY)) {
+            PermissionStatus.VALID -> {
+                diag_item_activity_recognition.setNormalState()
+            }
+
+            PermissionStatus.NOT_VALID -> {
+                setProblemState(PermissionType.ACTIVITY, diag_item_activity_recognition)
+            }
+        }
+    }
+
+    private fun checkLocation() {
+        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.LOCATION)) {
+            PermissionStatus.VALID -> {
+                diag_item_location.setNormalState()
+            }
+
+            PermissionStatus.NOT_VALID -> {
+                setProblemState(PermissionType.LOCATION, diag_item_location)
+            }
+        }
+    }
+
+    private fun checkExternalStorage() {
+        val loggingStatus = checkLoggingStatus()
+        switch_enable_logging.isChecked = loggingStatus
+        val description = if (loggingStatus) {
+            DKResource.buildString(
+                this,
+                "dk_perm_utils_app_diag_log_ok", PermissionUtilsUI.logPathFile.removePrefix("/")
+            )
+        } else {
+            getString(R.string.dk_perm_utils_app_diag_log_ko)
+        }
+        text_view_logging_description.text = description
+        switch_enable_logging.setOnClickListener {
+            if (DiagnosisHelper.getPermissionStatus(
+                    this,
+                    PermissionType.EXTERNAL_STORAGE
+                ) == PermissionStatus.NOT_VALID
+            ) {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(this)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(getString(R.string.dk_perm_utils_app_diag_log_link),
+                        DialogInterface.OnClickListener { _, _ ->
+                            requestPermission(PermissionType.EXTERNAL_STORAGE)
+                        })
+                    .show()
+
+                val titleTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text =
+                    getString(R.string.dk_perm_utils_app_diag_log_title)
+                descriptionTextView?.text =
+                    getString(R.string.dk_perm_utils_app_diag_log_ko)
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
+
+            } else {
+                val loggingDescription = if (switch_enable_logging.isChecked) {
+                    DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
+                    DKResource.buildString(
+                        this,
+                        "dk_perm_utils_app_diag_log_ok",
+                        PermissionUtilsUI.logPathFile.removePrefix("/")
+                    )
+                } else {
+                    DriveKit.disableLogging()
+                    getString(R.string.dk_perm_utils_app_diag_log_ko)
+                }
+                text_view_logging_description.text = loggingDescription
+            }
+        }
+    }
+
+    private fun checkNotification() {
+        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
+            PermissionStatus.VALID -> {
+                diag_item_notification.setNormalState()
+            }
+            PermissionStatus.NOT_VALID -> {
+                setProblemState(PermissionType.NOTIFICATION, diag_item_notification)
+            }
+        }
+    }
+
+    private fun checkNetwork() {
         if (DiagnosisHelper.isNetworkReachable(this)) {
-            setNormalState(diag_item_connectivity)
+            diag_item_connectivity.setNormalState()
         } else {
             diag_item_connectivity.setDiagnosisDrawable(true)
             diag_item_connectivity.setOnClickListener {
@@ -215,148 +269,96 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 descriptionTextView?.normalText()
             }
         }
-
-        setSummaryContent()
     }
 
-    private fun checkActivity(permissionType: PermissionType) {
-        when (DiagnosisHelper.getPermissionStatus(this, permissionType)) {
-            PermissionStatus.VALID -> {
-                setNormalState(diag_item_activity_recognition)
+    private fun displayBatteryOptimizationSection() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            text_view_battery_description_2.text = DKResource.buildString(
+                this,
+                "dk_perm_utils_app_diag_battery_text_android_02",
+                getString(R.string.dk_perm_utils_app_diag_battery_link_android)
+            )
+
+            if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
+                text_view_battery_description_2.visibility = View.GONE
             }
 
-            PermissionStatus.NOT_VALID -> {
-                diag_item_activity_recognition.setDiagnosisDrawable(true)
-                diag_item_activity_recognition.setOnClickListener {
-                    val alertDialog = DKAlertDialog.LayoutBuilder()
-                        .init(this)
-                        .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(diag_item_activity_recognition.getDiagnosisLink(),
-                            DialogInterface.OnClickListener { _, _ ->
-                                requestPermission(permissionType)
-                            })
-                        .show()
-
-                    val titleTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                    val descriptionTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                    titleTextView?.text =
-                        diag_item_activity_recognition.getDiagnosisTitle()
-                    descriptionTextView?.text =
-                        diag_item_activity_recognition.getDiagnosticTextKO()
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
-                }
+            text_view_battery_description_2.setOnClickListener {
+                DiagnosisHelper.requestBatteryOptimization(this)
             }
-        }
-    }
-
-    private fun checkLocation(permissionType: PermissionType) {
-        when (DiagnosisHelper.getPermissionStatus(this, permissionType)) {
-            PermissionStatus.VALID -> {
-                setNormalState(diag_item_location)
-            }
-
-            PermissionStatus.NOT_VALID -> {
-                diag_item_location.setDiagnosisDrawable(true)
-                diag_item_location.setOnClickListener {
-                    val alertDialog = DKAlertDialog.LayoutBuilder()
-                        .init(this)
-                        .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(diag_item_location.getDiagnosisLink(),
-                            DialogInterface.OnClickListener { _, _ ->
-                                requestPermission(permissionType)
-                            })
-                        .show()
-
-                    val titleTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                    val descriptionTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                    titleTextView?.text = diag_item_location.getDiagnosisTitle()
-                    descriptionTextView?.text = diag_item_location.getDiagnosticTextKO()
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
-                }
-            }
-        }
-    }
-
-    private fun checkExternalStorage(permissionType: PermissionType) {
-        switch_enable_logging.isChecked = isLoggingEnabled()
-        val description = if (isLoggingEnabled()) {
-            getString(R.string.dk_perm_utils_app_diag_log_ok)
         } else {
-            getString(R.string.dk_perm_utils_app_diag_log_ko)
+            text_view_battery_description_2.visibility = View.GONE
         }
-        text_view_logging_description.text = description
-        switch_enable_logging.setOnClickListener {
-            if (DiagnosisHelper.getPermissionStatus(this, PermissionType.EXTERNAL_STORAGE) == PermissionStatus.NOT_VALID) {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(getString(R.string.dk_perm_utils_app_diag_log_link),
-                        DialogInterface.OnClickListener { _, _ ->
-                            requestPermission(permissionType)
-                        })
-                    .show()
+    }
 
-                val titleTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-
-                titleTextView?.text =
-                    getString(R.string.dk_perm_utils_app_diag_log_title)
-                descriptionTextView?.text =
-                    getString(R.string.dk_perm_utils_app_diag_log_ko)
-
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
-
+    private fun displayActivityItem() {
+        diag_item_activity_recognition.visibility =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                View.VISIBLE
             } else {
-                val loggingDescription = if (switch_enable_logging.isChecked) {
-                    DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
-                    getString(R.string.dk_perm_utils_app_diag_log_ok)
-                } else {
-                    DriveKit.disableLogging()
-                    getString(R.string.dk_perm_utils_app_diag_log_ko)
+                View.GONE
+            }
+    }
+
+    private fun displayLogSection() {
+        val visibility =
+            if (PermissionUtilsUI.shouldDisplayDiagnosisLogs) View.VISIBLE else View.GONE
+        switch_enable_logging.visibility = visibility
+        text_view_logging_description.visibility = visibility
+    }
+
+    private fun displayReportSection() {
+        when (val contactType = PermissionUtilsUI.contactType) {
+            is ContactType.NONE -> {
+                text_view_help_title.visibility = View.GONE
+                text_view_help_description.visibility = View.GONE
+                button_help_report.visibility = View.GONE
+                support_view_separator.visibility = View.GONE
+            }
+            is ContactType.WEB -> {
+                button_help_report.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, contactType.url)
+                    startActivity(intent)
                 }
-                text_view_logging_description.text = loggingDescription
+            }
+            is ContactType.EMAIL -> {
+                button_help_report.setOnClickListener {
+                    val contentMail = contactType.contentMail
+                    val recipients = contentMail.getRecipients().toTypedArray()
+                    val bccRecipients = contentMail.getBccRecipients().toTypedArray()
+                    val subject = contentMail.getSubject()
+
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "plain/text"
+                    intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+                    intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
+                    intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+                    intent.putExtra(Intent.EXTRA_TEXT, contentMail.getMailBody())
+
+                    if (switch_enable_logging.isChecked && checkLoggingStatus()) {
+                        val root = Environment.getExternalStorageDirectory()
+                        val logPathFile = PermissionUtilsUI.logPathFile + getLoggingFile()
+                        val file = File(root, logPathFile)
+                        if (!file.exists() || !file.canRead()) {
+                            startActivity(intent)
+                        }
+                        val uri =
+                            FileProvider.getUriForFile(
+                                this,
+                                "drivekit-vehicle-ui" + ".provider",
+                                file
+                            )
+                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    }
+                    startActivity(intent)
+                }
             }
         }
     }
 
-    private fun checkNotification(permissionType: PermissionType) {
-        when (DiagnosisHelper.getPermissionStatus(this, permissionType)) {
-            PermissionStatus.VALID -> {
-                setNormalState(diag_item_notification)
-            }
-            PermissionStatus.NOT_VALID -> {
-                diag_item_notification.setDiagnosisDrawable(true)
-                diag_item_notification.setOnClickListener {
-                    val alertDialog = DKAlertDialog.LayoutBuilder()
-                        .init(this)
-                        .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(diag_item_notification.getDiagnosisLink(),
-                            DialogInterface.OnClickListener { _, _ ->
-                                requestPermission(permissionType)
-                            })
-                        .show()
-
-                    val titleTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                    val descriptionTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                    titleTextView?.text = diag_item_notification.getDiagnosisTitle()
-                    descriptionTextView?.text =
-                        diag_item_notification.getDiagnosticTextKO()
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
-                }
-            }
-        }
+    private fun displayBluetoothItem() {
+        val visibility = if (PermissionUtilsUI.isBluetoothNeeded) View.VISIBLE else View.GONE
+        diag_item_bluetooth.visibility = visibility
     }
 
     private fun enableSensor(sensorType: SensorType) {
@@ -395,13 +397,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         registerReceiver(sensorsReceiver, connectivityFilter)
     }
 
-    private fun loggingCurrentFileName(): String {
-        val currentMonth = SimpleDateFormat("M", Locale.getDefault())
-        val currentYear = SimpleDateFormat("yyyy", Locale.getDefault())
-        return "log-${currentYear.format(Date())}-${currentMonth.format(Date())}.txt"
+    private fun getLoggingFile(): String {
+        val calendar = Calendar.getInstance()
+        return "log-${calendar.get(Calendar.YEAR)}-${(calendar.get(Calendar.MONTH) + 1)}.txt"
     }
 
-    private fun isLoggingEnabled(): Boolean =
+    private fun checkLoggingStatus(): Boolean =
         DiagnosisHelper.getPermissionStatus(
             this,
             PermissionType.EXTERNAL_STORAGE
@@ -536,6 +537,56 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         )
     }
 
+    private fun setProblemState(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
+        diagnosticItem.setDiagnosisDrawable(true)
+        diagnosticItem.setOnClickListener {
+            val alertDialog = DKAlertDialog.LayoutBuilder()
+                .init(this)
+                .layout(R.layout.template_alert_dialog_layout)
+                .positiveButton(diagnosticItem.getDiagnosisLink(),
+                    DialogInterface.OnClickListener { _, _ ->
+                        requestPermission(permissionType)
+                    })
+                .show()
+
+            val titleTextView =
+                alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+            val descriptionTextView =
+                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+            titleTextView?.text = diagnosticItem.getDiagnosisTitle()
+            descriptionTextView?.text =
+                diagnosticItem.getDiagnosticTextKO()
+            titleTextView?.headLine1()
+            descriptionTextView?.normalText()
+        }
+    }
+
+    private fun setStyle() {
+        text_view_summary_title.headLine1()
+        text_view_summary_description.normalText()
+        summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+
+        text_view_battery_title.headLine1()
+        text_view_battery_description_1.normalText()
+        text_view_battery_description_2.normalText()
+        text_view_battery_description_3.normalText()
+
+        button_help_report.button()
+        text_view_help_title.headLine1()
+        text_view_help_description.normalText()
+
+        switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
+        switch_enable_logging.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
+                com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
+            )
+        )
+        text_view_logging_description.normalText()
+    }
+
     override fun onResume() {
         super.onResume()
         registerReceiver()
@@ -560,11 +611,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 }
             }
 
-            REQUEST_BATTERY_OPTIMIZATION -> {
+            REQUEST_BATTERY_OPTIMIZATION ->
                 if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
                     text_view_battery_description_2.visibility = View.GONE
                 }
-            }
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.permissionsutils.commons.views
 
 import android.content.Context
+import android.content.DialogInterface
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
@@ -10,7 +11,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.permissionsutils.R
 
 /**
@@ -100,6 +103,28 @@ class DiagnosisItemView : LinearLayout {
         val wrapped = DrawableCompat.wrap(drawableItem!!)
         DrawableCompat.setTint(wrapped, color)
         imageViewDiagnosis?.setImageDrawable(wrapped)
+    }
 
+    fun setNormalState() {
+        setDiagnosisDrawable(false)
+        this.setOnClickListener {
+            val infoDiagnosis = DKAlertDialog.LayoutBuilder()
+                .init(context)
+                .layout(R.layout.template_alert_dialog_layout)
+                .cancelable(false)
+                .positiveButton(context.getString(R.string.dk_common_ok),
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.dismiss()
+                    }).show()
+
+            val titleTextView = infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_title)
+            val descriptionTextView =
+                infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_description)
+
+            titleTextView?.text = this.getDiagnosisTitle()
+            descriptionTextView?.text = this.getDiagnosticTextOK()
+            titleTextView?.headLine1()
+            descriptionTextView?.normalText()
+        }
     }
 }
