@@ -1,18 +1,14 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
