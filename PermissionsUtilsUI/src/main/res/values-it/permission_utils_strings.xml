@@ -41,6 +41,7 @@
    <string name="dk_perm_utils_app_diag_help_request_button">Contatta l\'assistenza</string>
    <string name="dk_perm_utils_app_diag_help_request_text">Se il tuo telefono funziona su una versione di Android che include un\'interfaccia software personalizzata del produttore, ti invitiamo a cercare nel menu batteria per disabilitare le ottimizzazioni.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">L\'app non registra i tuoi viaggi?</string>
+   <string name="dk_perm_utils_app_diag_learn_more">Più informazioni</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ko">La geolocalización de su teléfono está desactivada. La aplicación no puede funcionar si no puede acceder a esta información.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_link">Attiva localizzazione</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ok">Hai abilitato la geolocalizzazione. Il sensore di posizione (GPS) misura la velocità e la direzione del veicolo. Se è disabilitato, l\'applicazione non può funzionare.</string>
@@ -65,7 +66,9 @@
    <string name="dk_perm_utils_app_diag_title">Diagnostica dell\'app</string>
    <string name="dk_perm_utils_diag_app_ok">Tutto è normale</string>
    <string name="dk_perm_utils_diag_app_ok_text">Le impostazioni del telefono sono buone e vengono attivati i sensori necessari per l\'analisi dei tuoi viaggi.</string>
+   <string name="dk_perm_utils_permissions_activity_popup_title">Permessi</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizzare la posizione</string>
+   <string name="dk_perm_utils_permissions_location_popup_title">Permessi</string>
    <string name="dk_perm_utils_permissions_location_text1_android">L\'applicazione deve poter accedere alla posizione del telefono per rilevare e analizzare i percorsi.</string>
    <string name="dk_perm_utils_permissions_location_text2_post_android10">Per fare questo, scegliere \"Consenti sempre\" quando viene visualizzato il popup successivo.</string>
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Per fare questo, scegliere \"Consenti\" quando viene visualizzata la prossima finestra popup.</string>
@@ -77,6 +80,9 @@
    <string name="dk_perm_utils_permissions_phone_settings_background_text1">Per evitare che l\'applicazione venga fermata dal sistema di risparmio della batteria del telefono, è necessario accettare l\'esecuzione in background.</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_text2">L\'applicazione utilizza il sensore GPS solo durante la guida. È stato ottimizzato per evitare lo scaricamento della batteria.</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_title">Funzionamento in background</string>
+   <string name="dk_perm_utils_permissions_phone_settings_location_step1">Premere \"Apri le impostazioni\"</string>
+   <string name="dk_perm_utils_permissions_phone_settings_location_step2">Premete su posizione</string>
+   <string name="dk_perm_utils_permissions_phone_settings_location_step3">Selezionare \"Sempre\"</string>
    <string name="dk_perm_utils_permissions_popup_button_settings">Impostazioni</string>
    <string name="dk_perm_utils_permissions_text_button_activity_settings">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_text_button_location_settings">Aprire le impostazioni</string>
