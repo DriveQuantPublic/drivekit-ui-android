@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.drivequant.drivekit.permissionsutils"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:resource="@xml/file_provider">
+    package="com.drivequant.drivekit.permissionsutils">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
@@ -13,5 +11,15 @@
         <activity android:name=".permissions.activity.LocationPermissionActivity" />
         <activity android:name=".permissions.activity.BackgroundTaskPermissionActivity" />
         <activity android:name=".permissions.activity.ActivityRecognitionPermissionActivity" />
+
+        <provider
+            android:name=".diagnosis.provider.PermissionFileProvider"
+            android:authorities="drivekit-permission-ui.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
     </application>
 </manifest>
