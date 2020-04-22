@@ -50,7 +50,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         setContentView(R.layout.activity_app_diagnosis)
 
         init()
-        setSummaryContent()
 
         displayBatteryOptimizationSection()
         displayBluetoothItem()
@@ -378,15 +377,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun registerReceiver() {
         sensorsReceiver = object : SensorsReceiver() {
             override fun getBluetoothState(bluetoothState: Boolean) {
-                //If we want to check bluetooth state individually
+                //If you want to get the bluetooth state individually
             }
 
             override fun getConnectivityState(connectivityState: Boolean) {
-                //If we want to check connectivity state individually
+                //If you want to get the connectivity state individually
             }
 
             override fun getGpsState(gpsState: Boolean) {
-                //If we want to check gps state individually
+                //If you want to get the GPS state individually
             }
 
             override fun onSensorBroadcastReceived() {
