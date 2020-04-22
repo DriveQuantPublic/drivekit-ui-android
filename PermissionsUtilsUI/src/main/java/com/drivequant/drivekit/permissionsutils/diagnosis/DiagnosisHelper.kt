@@ -34,17 +34,20 @@ object DiagnosisHelper {
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
+    @JvmStatic
     fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(
         activity,
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
+    @JvmStatic
     fun hasBackgroundLocationApproved(activity: Activity): Boolean =
         ActivityCompat.checkSelfPermission(
             activity,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
+    @JvmStatic
     fun getLocationStatus(activity: Activity): PermissionStatus {
         if (!hasFineLocationPermission(activity)) {
             return PermissionStatus.NOT_VALID
@@ -56,6 +59,7 @@ object DiagnosisHelper {
         return PermissionStatus.VALID
     }
 
+    @JvmStatic
     fun getActivityStatus(activity: Activity): PermissionStatus {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
@@ -72,6 +76,7 @@ object DiagnosisHelper {
         }
     }
 
+    @JvmStatic
     fun getBatteryOptimizationsStatus(activity: Activity): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -89,11 +94,13 @@ object DiagnosisHelper {
         }
     }
 
-    private fun getExternalStorageStatus(activity: Activity): PermissionStatus {
+    @JvmStatic
+    fun getExternalStorageStatus(activity: Activity): PermissionStatus {
         val hasExternalStorage = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         return if (hasExternalStorage) PermissionStatus.VALID else PermissionStatus.NOT_VALID
     }
 
+    @JvmStatic
     fun requestBatteryOptimization(activity: Activity) {
         val intent = Intent()
         val packageName = activity.packageName
@@ -102,7 +109,8 @@ object DiagnosisHelper {
         activity.startActivityForResult(intent,REQUEST_BATTERY_OPTIMIZATION)
     }
 
-    private fun getNotificationStatus(activity: Activity): PermissionStatus {
+    @JvmStatic
+    fun getNotificationStatus(activity: Activity): PermissionStatus {
         return if (NotificationManagerCompat.from(activity).areNotificationsEnabled()) {
             PermissionStatus.VALID
         } else {
@@ -110,6 +118,7 @@ object DiagnosisHelper {
         }
     }
 
+    @JvmStatic
     fun getPermissionStatus(activity: Activity, permissionType: PermissionType): PermissionStatus {
         return when (permissionType) {
             PermissionType.LOCATION -> getLocationStatus(activity)
@@ -122,6 +131,7 @@ object DiagnosisHelper {
         }
     }
 
+    @JvmStatic
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
         return when (sensorType) {
             SensorType.BLUETOOTH -> {
@@ -136,6 +146,7 @@ object DiagnosisHelper {
         }
     }
 
+    @JvmStatic
     fun isLocationSensorHighAccuracy(context: Context, isGPSEnabled: Boolean): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -157,5 +168,6 @@ object DiagnosisHelper {
         return false
     }
 
+    @JvmStatic
     fun isNetworkReachable(context: Context): Boolean = DKReachability().isConnectedToNetwork(context)
 }
