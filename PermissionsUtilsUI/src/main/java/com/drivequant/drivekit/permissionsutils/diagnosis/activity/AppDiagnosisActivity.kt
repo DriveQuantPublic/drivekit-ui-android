@@ -77,7 +77,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.ic_checked
+                    R.drawable.dk_perm_utils_checked
                 )
             )
             text_view_summary_title.text = getString(R.string.dk_perm_utils_diag_app_ok)
@@ -88,7 +88,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.ic_high_priority
+                    R.drawable.dk_perm_utils_high_priority
                 )
             )
             text_view_summary_title.text =  when (diagnosticProblemsCount) {

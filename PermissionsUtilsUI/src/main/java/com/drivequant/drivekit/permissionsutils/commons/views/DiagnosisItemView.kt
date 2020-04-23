@@ -89,9 +89,9 @@ class DiagnosisItemView : LinearLayout {
 
     fun setDiagnosisDrawable(hasProblem: Boolean) {
         val drawableItem = if (hasProblem) {
-            ContextCompat.getDrawable(context, R.drawable.ic_high_priority_generic)
+            ContextCompat.getDrawable(context, R.drawable.dk_perm_utils_high_priority_generic)
         } else {
-            ContextCompat.getDrawable(context, R.drawable.ic_checked_generic)
+            ContextCompat.getDrawable(context, R.drawable.dk_perm_utils_checked_generic)
         }
 
         val color = if (hasProblem) {

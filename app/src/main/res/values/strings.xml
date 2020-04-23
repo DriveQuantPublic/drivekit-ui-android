@@ -54,4 +54,6 @@
 
     <string name="permissions_utils_explanation">An example of DriveKit PermissionsUtils implementation with its UI for the on boarding permissions and app diagnosis</string>
     <string name="ask_for_request">Technical support request</string>
+    <string name="permission_utils_permissions_button">Launch Permissions</string>
+    <string name="permission_utils_diagnosis_button">Launch App Diagnosis</string>
 </resources>

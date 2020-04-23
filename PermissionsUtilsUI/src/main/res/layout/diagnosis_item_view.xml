@@ -23,12 +23,12 @@
             android:id="@+id/text_view_diagnosis_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Location" />
+            android:text="@string/dk_perm_utils_app_diag_network_title" />
 
         <TextView
             android:id="@+id/text_view_diagnosis_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="En savoir +" />
+            android:text="@string/dk_perm_utils_app_diag_learn_more" />
     </LinearLayout>
 </LinearLayout>
