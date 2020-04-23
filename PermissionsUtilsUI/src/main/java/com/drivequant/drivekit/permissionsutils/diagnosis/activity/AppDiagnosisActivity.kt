@@ -15,16 +15,19 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.permissionsutils.BuildConfig
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
@@ -88,10 +91,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun setSummaryContent() {
         if (diagnosticProblemsCount == 0) {
             image_view_summary_icon.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.dk_perm_utils_checked
-                )
+                DKResource.convertToDrawable(this, "dk_perm_utils_checked")
             )
             text_view_summary_title.text = getString(R.string.dk_perm_utils_diag_app_ok)
             text_view_summary_description.text = getString(R.string.dk_perm_utils_diag_app_ok_text)
@@ -99,12 +99,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             text_view_summary_description.text =
                 getString(R.string.dk_perm_utils_app_diag_app_ko_text)
             image_view_summary_icon.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.dk_perm_utils_high_priority
-                )
+                DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
-            text_view_summary_title.text =  when (diagnosticProblemsCount) {
+            text_view_summary_title.text = when (diagnosticProblemsCount) {
                 1 -> getString(R.string.dk_perm_utils_app_diag_app_ko_01)
                 2 -> getString(R.string.dk_perm_utils_app_diag_app_ko_02)
                 3 -> getString(R.string.dk_perm_utils_app_diag_app_ko_03)
@@ -326,6 +323,68 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         text_view_logging_description.visibility = visibility
     }
 
+    private fun buildYesNoFromBoolean(valid: Boolean) : String {
+        return if (valid) {
+            getString(R.string.dk_common_yes)
+        } else {
+            getString(R.string.dk_common_non)
+        }
+    }
+
+    private fun buildDiagnosisMail(): String {
+        val locationMail =
+            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.LOCATION)) {
+                PermissionStatus.VALID -> true
+                PermissionStatus.NOT_VALID -> false
+            }
+
+        val activityMail =
+            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.ACTIVITY)) {
+                PermissionStatus.VALID -> true
+                PermissionStatus.NOT_VALID -> false
+            }
+
+        val notificationMail =
+            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
+                PermissionStatus.VALID -> true
+                PermissionStatus.NOT_VALID -> false
+            }
+
+        val gpsMail = DiagnosisHelper.isSensorActivated(this, SensorType.GPS)
+        val bluetoothMail = DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)
+        val connectivityMail = DiagnosisHelper.isNetworkReachable(this)
+
+
+        var mailBody =
+            "${getString(R.string.dk_perm_utils_app_diag_email_app)} ${getString(R.string.app_name)} \n\n"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            mailBody +=
+                "${getString(R.string.dk_perm_utils_app_diag_email_activity)} ${buildYesNoFromBoolean(
+                    activityMail
+                )} \n"
+
+        }
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location)} ${buildYesNoFromBoolean(
+            locationMail
+        )} \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_notification)} ${buildYesNoFromBoolean(
+            notificationMail
+        )} \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
+        if (PermissionUtilsUI.isBluetoothNeeded) {
+            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} $bluetoothMail \n"
+        }
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n\n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
+            Locale.getDefault()
+        )} ${Build.MODEL} \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_app_version)} ${BuildConfig.VERSION_NAME} \n"
+        return mailBody
+    }
+
     private fun displayReportSection() {
         when (val contactType = PermissionUtilsUI.contactType) {
             is ContactType.NONE -> {
@@ -346,13 +405,14 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     val recipients = contentMail.getRecipients().toTypedArray()
                     val bccRecipients = contentMail.getBccRecipients().toTypedArray()
                     val subject = contentMail.getSubject()
+                    val mailBody = "${contentMail.getMailBody()} \n\n ${buildDiagnosisMail()}"
 
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "plain/text"
                     intent.putExtra(Intent.EXTRA_EMAIL, recipients)
                     intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
                     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-                    intent.putExtra(Intent.EXTRA_TEXT, contentMail.getMailBody())
+                    intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
                         val root = Environment.getExternalStorageDirectory()
@@ -635,5 +695,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     text_view_battery_description_2.visibility = View.GONE
                 }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

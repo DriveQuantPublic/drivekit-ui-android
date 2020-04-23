@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.R
 
 /**
@@ -27,11 +28,11 @@ class DiagnosisItemView : LinearLayout {
     private var textViewDiagnosisSubTitle: TextView? = null
     private var imageViewDiagnosis: ImageView? = null
 
-    private var diagnosisTitle: String? = null
-    private var diagnosisSubtitle: String? = null
-    private var diagnosisTextOK: String? = null
-    private var diagnosisTextKO: String? = null
-    private var diagnosisLink: String? = null
+    private lateinit var diagnosisTitle: String
+    private lateinit var diagnosisSubtitle: String
+    private lateinit var diagnosisTextOK: String
+    private lateinit var diagnosisTextKO: String
+    private lateinit var diagnosisLink: String
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -50,11 +51,26 @@ class DiagnosisItemView : LinearLayout {
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DiagnosisItemView, 0, 0)
             try {
-                diagnosisTitle = a.getString(R.styleable.DiagnosisItemView_diagnosisTitle)
-                diagnosisSubtitle = a.getString(R.styleable.DiagnosisItemView_diagnosisSubtitle)
-                diagnosisTextOK = a.getString(R.styleable.DiagnosisItemView_diagnosisTextOK)
-                diagnosisTextKO = a.getString(R.styleable.DiagnosisItemView_diagnosisTextKO)
-                diagnosisLink = a.getString(R.styleable.DiagnosisItemView_diagnosisLink)
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisTitle)?.let {
+                    diagnosisTitle = it
+                }
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisSubtitle)?.let {
+                    diagnosisSubtitle = it
+                }
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisTextOK)?.let {
+                    diagnosisTextOK = it
+                }
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisTextKO)?.let {
+                    diagnosisTextKO = it
+                }
+
+                a.getString(R.styleable.DiagnosisItemView_diagnosisLink)?.let {
+                    diagnosisLink = it
+                }
 
                 textViewDiagnosisTitle?.let {
                     it.text = diagnosisTitle
@@ -79,19 +95,19 @@ class DiagnosisItemView : LinearLayout {
         )
     }
 
-    fun getDiagnosisTitle(): String = diagnosisTitle!!
+    fun getDiagnosisTitle(): String = diagnosisTitle
 
-    fun getDiagnosticTextOK(): String = diagnosisTextOK!!
+    private fun getDiagnosticTextOK(): String = diagnosisTextOK
 
-    fun getDiagnosticTextKO(): String = diagnosisTextKO!!
+    fun getDiagnosticTextKO(): String = diagnosisTextKO
 
-    fun getDiagnosisLink(): String = diagnosisLink!!
+    fun getDiagnosisLink(): String = diagnosisLink
 
     fun setDiagnosisDrawable(hasProblem: Boolean) {
         val drawableItem = if (hasProblem) {
-            ContextCompat.getDrawable(context, R.drawable.dk_perm_utils_high_priority_generic)
+            DKResource.convertToDrawable(context, "dk_perm_utils_high_priority_generic")
         } else {
-            ContextCompat.getDrawable(context, R.drawable.dk_perm_utils_checked_generic)
+            DKResource.convertToDrawable(context, "dk_perm_utils_checked_generic")
         }
 
         val color = if (hasProblem) {

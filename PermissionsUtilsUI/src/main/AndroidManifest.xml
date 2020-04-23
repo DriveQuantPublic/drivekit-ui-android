@@ -5,12 +5,24 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application>
-        <activity android:name=".diagnosis.activity.AppDiagnosisActivity" />
+        <activity
+            android:name=".diagnosis.activity.AppDiagnosisActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".permissions.activity.RequestPermissionActivity" />
         <activity android:name=".permissions.activity.BasePermissionActivity" />
-        <activity android:name=".permissions.activity.LocationPermissionActivity" />
-        <activity android:name=".permissions.activity.BackgroundTaskPermissionActivity" />
-        <activity android:name=".permissions.activity.ActivityRecognitionPermissionActivity" />
+        <activity
+            android:name=".permissions.activity.LocationPermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".permissions.activity.BackgroundTaskPermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".permissions.activity.ActivityRecognitionPermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".diagnosis.provider.PermissionFileProvider"

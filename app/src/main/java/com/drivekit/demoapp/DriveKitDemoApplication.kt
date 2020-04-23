@@ -75,16 +75,20 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
             }
 
             override fun getMailBody(): String {
-                return "Mail Body Test"
+               return if(true) {
+                    "MAIF \n "
+                } else {
+                   "OTHER"
+               }
             }
 
             override fun getRecipients(): List<String> {
                 return listOf()
             }
 
-            override fun getSubject(): String {
-                return getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
-            }
+            override fun getSubject(): String = getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
+            override fun overrideMailBodyContent(): Boolean = false
+
         }))
         PermissionUtilsUI.configureLogPathFile("/DQ-demo-test/")
     }
@@ -171,6 +175,8 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
     override fun getMailBody(): String {
         return "Mock mail body in DriveKitDemoApplication.kt"
     }
+
+    override fun overrideMailBodyContent(): Boolean = true
 
     override fun onVehiclePickerFinished(vehicleId: String) {
         Log.i("Vehicle Picker", "New vehicle created : $vehicleId")
