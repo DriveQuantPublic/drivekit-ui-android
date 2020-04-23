@@ -17,9 +17,8 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinn
 
 open class DetectionModeSpinnerAdapter(
     context: Context,
-    resource: Int,
     list: List<DetectionModeSpinnerItem>
-) : ArrayAdapter<DetectionModeSpinnerItem>(context, resource, list) {
+) : ArrayAdapter<DetectionModeSpinnerItem>(context, R.layout.simple_list_item_spinner, list) {
 
     private var detectionModes: List<DetectionModeSpinnerItem> = list
 

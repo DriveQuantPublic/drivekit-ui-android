@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.graphical.DKColors
-import com.drivequant.drivekit.common.ui.graphical.DKFonts
 
 /**
  * Created by Mohamed on 2020-03-11.

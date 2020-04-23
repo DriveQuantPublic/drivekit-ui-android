@@ -37,6 +37,6 @@ class DemoCustomField : Field {
     }
 
     override fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener) {
-        // TODO
+
     }
 }

@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
@@ -12,12 +13,14 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
+import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
 
@@ -30,7 +33,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
-    internal var vehicleActions: List<VehicleAction> = VehicleAction.values().toList()
+    internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
         DetectionMode.DISABLED,
@@ -38,12 +41,13 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         DetectionMode.BEACON,
         DetectionMode.BLUETOOTH
     )
-
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
+    internal var vehiclePickerExtraStep: VehiclePickerExtraStepListener? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
+    @JvmOverloads
     fun initialize(vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
                    maxVehicles: Int? = null,
                    categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
@@ -76,7 +80,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     fun configureEngineIndexes(vehicleEnginesIndex: List<VehicleEngineIndex>){
-        this.vehicleEngineIndexes = vehicleEnginesIndex
+        if (vehicleEnginesIndex.isNotEmpty()) {
+            this.vehicleEngineIndexes = vehicleEnginesIndex
+        }
     }
 
     fun showBrandsWithIcons(displayBrandsWithIcons: Boolean){
@@ -97,7 +103,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    fun configureVehicleActions(vehicleActions: List<VehicleAction>){
+    fun configureVehicleActions(vehicleActions: List<VehicleActionItem>){
         this.vehicleActions = vehicleActions
     }
 
@@ -115,22 +121,38 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.beaconDiagnosticMail = beaconDiagnosticMail
     }
 
+    fun configureVehiclePickerExtraStep(listener: VehiclePickerExtraStepListener) {
+        this.vehiclePickerExtraStep = listener
+    }
+
     override fun startVehicleListActivity(context: Context) {
         val intent = Intent(context, VehiclesListActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
-    override fun startVehicleDetailActivity(context: Context, vehicleId: String) {
-        val intent = Intent(context, VehicleDetailActivity::class.java)
-        intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    override fun startVehicleDetailActivity(context: Context, vehicleId: String) : Boolean {
+        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let { vehicle ->
+            return if (vehicle.liteConfig){
+                false
+            } else {
+                val intent = Intent(context, VehicleDetailActivity::class.java)
+                intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+                true
+            }
+        }?: run {
+            return false
+        }
     }
 
     override fun getVehicleInfoById(context: Context, vehicleId: String, listener: GetVehicleInfoByVehicleIdListener) {
-        val vehicle = DriveKitVehicle.getVehiclesInDatabase().first { it.vehicleId == vehicleId }
-        val vehicleName = vehicle.buildFormattedName(context)
-        listener.onVehicleInfoRetrieved(vehicleName, vehicle.liteConfig)
+        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let {
+            val vehicleName = it.buildFormattedName(context)
+            listener.onVehicleInfoRetrieved(vehicleName, it.liteConfig)
+        }?: run {
+            Log.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
+        }
     }
 }

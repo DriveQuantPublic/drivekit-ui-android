@@ -52,7 +52,6 @@
    <string name="dk_vehicle_beacon_major">Major</string>
    <string name="dk_vehicle_beacon_minor">Minor</string>
    <string name="dk_vehicle_beacon_scan_retry">Toca la pantalla para volver a intentarlo</string>
-   <string name="dk_vehicle_beacon_scan_wrong_beacon">La baliza detectada no coincide con la que estaba asociada con su vehículo</string>
    <string name="dk_vehicle_beacon_setup_code_hint">Identificador del beacon</string>
    <string name="dk_vehicle_beacon_setup_code_invalid_id">El identificador del beacon %s no es válido</string>
    <string name="dk_vehicle_beacon_setup_code_not_matched">El identificador %s es válido pero no se ha detectado el beacon correspondiente. \n\n Asegúrate de que esta baliza esté encendida y cerca del teléfono</string>
@@ -61,9 +60,6 @@
    <string name="dk_vehicle_beacon_setup_code_success_recap">¿ Confirma la asignación del beacon %s al vehículo %s ?</string>
    <string name="dk_vehicle_beacon_setup_code_title">Por favor, introduzca la identificación que aparece en la baliza</string>
    <string name="dk_vehicle_beacon_setup_code_unavailable_id">El identificador del beacon %s no está disponible</string>
-   <string name="dk_vehicle_beacon_setup_code_unknown_id">El identificador del beacon %s es desconocido</string>
-   <string name="dk_vehicle_beacon_setup_congrats">Felicitaciones!</string>
-   <string name="dk_vehicle_beacon_setup_congrats_recap">El beacon %s está ahora emparejada con el vehículo %s</string>
    <string name="dk_vehicle_beacon_setup_guide_desc1">Súbete a tu vehículo</string>
    <string name="dk_vehicle_beacon_setup_guide_desc2">Asegúrese de que el número de identificación del beacon sea legible</string>
    <string name="dk_vehicle_beacon_setup_guide_desc3">Retire la lengüeta que protege la batería del beacon</string>
@@ -115,6 +111,7 @@
    <string name="dk_vehicle_configure_bluetooth_title">Configuración de Bluetooth</string>
    <string name="dk_vehicle_delete">Borrar</string>
    <string name="dk_vehicle_delete_confirm">¿Confirma la retirada de los %s del vehículo? Los datos de seguimiento y mantenimiento del kilometraje se perderán permanentemente.</string>
+   <string name="dk_vehicle_detail_back_edit_alert">Los datos del vehículo han sido modificados. ¿Te gustaría salvarlos?</string>
    <string name="dk_vehicle_detection_mode_title">Auto inicio:</string>
    <string name="dk_vehicle_engine_description">¿Tipo de motor?</string>
    <string name="dk_vehicle_engine_diesel">Diésel</string>
@@ -127,7 +124,9 @@
    <string name="dk_vehicle_failed_to_paired_bluetooth">La conexión Bluetooth del vehículo falló, por favor inténtalo de nuevo más tarde.</string>
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">Las características del vehículo no pudieron ser recuperadas.</string>
    <string name="dk_vehicle_failed_to_sync">Error al recuperar datos del vehículo, vuelva a intentarlo más tarde.</string>
+   <string name="dk_vehicle_field_name_error">El nombre de su vehículo no debe exceder los 50 caracteres.</string>
    <string name="dk_vehicle_gps_already_exists_confirm">¿Desea configurar el modo de detección %s para el vehículo %s? \n\nEl modo de detección del vehículo %s será cambiado a %s.</string>
+   <string name="dk_vehicle_list_empty">Por favor, añada al menos un vehículo</string>
    <string name="dk_vehicle_model_description">¿Modelo de vehículo?</string>
    <string name="dk_vehicle_my_vehicle">Mi vehículo</string>
    <string name="dk_vehicle_my_vehicles">Mis vehículos</string>

@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -10,6 +11,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -18,6 +20,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -34,10 +37,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     companion object {
         private var vehicleToDelete: Vehicle? = null
-        fun launchActivity(context: Context, vehicleToDelete: Vehicle? = null) {
+        @JvmOverloads
+        fun launchActivity(activityContext: Context, vehicleToDelete: Vehicle? = null) {
             this.vehicleToDelete = vehicleToDelete
-            val intent = Intent(context, VehiclePickerActivity::class.java)
-            context.startActivity(intent)
+            val intent = Intent(activityContext, VehiclePickerActivity::class.java)
+            val activity = activityContext as Activity
+            activity.startActivity(intent)
         }
     }
 
@@ -46,9 +51,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vehicle_picker)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+
+        updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        setTitle(R.string.dk_vehicle_my_vehicle)
 
         viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
 
@@ -86,7 +96,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, Observer {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
-                    finish()
+                    DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
+                        viewModel.createdVehicleId?.let { vehicleId ->
+                            listener.onVehiclePickerFinished(vehicleId)
+                            finish()
+                        }
+                    }?:run {
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
                 }
@@ -96,6 +113,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.computeNextScreen(this, null)
     }
 
+    fun updateTitle(title: String){
+        this.title = title
+    }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         var otherAction = false
@@ -136,23 +156,23 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }

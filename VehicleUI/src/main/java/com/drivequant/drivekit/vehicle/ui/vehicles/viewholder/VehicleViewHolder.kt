@@ -60,7 +60,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         textViewTitle.headLine1(mainFontColor)
         textViewSubtitle.smallText(complementaryFontColor)
-        textViewDetectionModeTitle.normalText(complementaryFontColor)
+        textViewDetectionModeTitle.normalText(mainFontColor)
         textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
         textViewDetectionModeDescription.normalText()
 
@@ -77,7 +77,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             val popupMenu = PopupMenu(context, it)
             val itemsList : List<VehicleActionItem> = DriveKitVehicleUI.vehicleActions
             for (i in itemsList.indices){
-                if (itemsList[i].isDisplayable(vehicle, viewModel.vehiclesList)) {
+                if (itemsList[i].isDisplayable(vehicle)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
                     }).toSpannable())
@@ -96,7 +96,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
             linearLayoutDetectionMode.visibility = View.GONE
         } else {
             linearLayoutDetectionMode.visibility = View.VISIBLE
-            textViewDetectionModeTitle.text = context.getString(R.string.dk_vehicle_detection_mode_title)
+            textViewDetectionModeTitle.text = DKResource.convertToString(context,"dk_vehicle_detection_mode_title")
         }
 
         textViewDetectionModeDescription.text = DetectionModeType.getEnumByDetectionMode(vehicle.detectionMode).getDescription(context, vehicle)
@@ -113,7 +113,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         }
 
         val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
-        val adapter = DetectionModeSpinnerAdapter(context, R.id.text_view, detectionModes)
+        val adapter = DetectionModeSpinnerAdapter(context, detectionModes)
         spinnerDetectionMode.adapter = adapter
     }
 

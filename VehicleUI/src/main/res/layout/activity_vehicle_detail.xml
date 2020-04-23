@@ -31,7 +31,7 @@
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"/>
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/dk_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -54,8 +54,6 @@
     <android.support.v4.widget.NestedScrollView
         style="@style/MM"
         android:clipToPadding="false"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:layout_marginBottom="@dimen/dk_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <FrameLayout
             android:id="@+id/container"
@@ -64,13 +62,8 @@
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
+    <include android:id="@+id/dk_progress_circular"
+        layout="@layout/dk_layout_progress_bar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

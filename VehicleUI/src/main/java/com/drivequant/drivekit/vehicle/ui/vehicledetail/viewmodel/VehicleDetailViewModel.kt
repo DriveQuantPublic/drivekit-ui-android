@@ -6,8 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
-import com.drivequant.drivekit.vehicle.manager.VehicleRenameQueryListener
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import java.io.Serializable
@@ -17,13 +15,12 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     val progressBarObserver = MutableLiveData<Boolean>()
     var newEditableFieldObserver = MutableLiveData<EditableField>()
 
-    val renameObserver = MutableLiveData<VehicleManagerStatus>()
     var vehicle: Vehicle? = null
     var vehicleName: String? = null
     var groupFields: MutableList<GroupField> = mutableListOf()
 
     fun init(context: Context){
-        vehicle = DriveKitVehicle.getVehiclesInDatabase().firstOrNull { it.vehicleId == vehicleId }
+        vehicle = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
         vehicle?.let {
             vehicleName = it.buildFormattedName(context)
             createGroupFields()
@@ -38,18 +35,6 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
                     groupFields.add(groupField)
                 }
             }
-        }
-    }
-
-    fun renameVehicle(vehicleName: String){
-        progressBarObserver.postValue(true)
-        vehicle?.let {vehicle ->
-            DriveKitVehicle.renameVehicle(vehicleName, vehicle, object : VehicleRenameQueryListener{
-                override fun onResponse(status: VehicleManagerStatus) {
-                    progressBarObserver.postValue(false)
-                    renameObserver.postValue(status)
-                }
-            })
         }
     }
 

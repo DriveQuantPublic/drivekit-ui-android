@@ -12,7 +12,7 @@
         android:layout_height="48dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         tools:text="Choose title"
         android:textAlignment="center"/>
 
@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/text_view_camera"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dk_ic_medium"
+            android:layout_height="@dimen/dk_ic_big"
             android:textAlignment="center"
             android:gravity="center"
             android:layout_margin="@dimen/dk_margin_quarter"
@@ -43,7 +43,7 @@
         <TextView
             android:id="@+id/text_view_gallery"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dk_ic_medium"
+            android:layout_height="@dimen/dk_ic_big"
             android:textAlignment="center"
             android:gravity="center"
             android:layout_margin="@dimen/dk_margin_quarter"

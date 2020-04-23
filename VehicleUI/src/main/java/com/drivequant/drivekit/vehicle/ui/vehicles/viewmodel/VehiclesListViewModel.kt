@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -14,7 +15,6 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
@@ -32,7 +32,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         context: Context,
         synchronizationType: SynchronizationType = SynchronizationType.DEFAULT
     ) {
-        progressBarObserver.postValue(true)
+        if (synchronizationType == SynchronizationType.DEFAULT) {
+            progressBarObserver.postValue(true)
+        }
         if (DriveKit.isConfigured()) {
             DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
                 override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
@@ -42,16 +44,18 @@ class VehiclesListViewModel : ViewModel(), Serializable {
                 }
             }, synchronizationType)
         } else {
-            progressBarObserver.postValue(false)
+            if (synchronizationType == SynchronizationType.DEFAULT) {
+                progressBarObserver.postValue(false)
+            }
             vehiclesData.postValue(listOf())
         }
     }
 
-    fun getScreenTitle(context: Context?): String? {
+    fun getScreenTitle(context: Context): String {
         return if (vehiclesList.size > 1) {
-            context?.getString(R.string.dk_vehicle_my_vehicles)
+            DKResource.convertToString(context, "dk_vehicle_my_vehicles")
         } else {
-            context?.getString(R.string.dk_vehicle_my_vehicle)
+            DKResource.convertToString(context, "dk_vehicle_my_vehicle")
         }
     }
 

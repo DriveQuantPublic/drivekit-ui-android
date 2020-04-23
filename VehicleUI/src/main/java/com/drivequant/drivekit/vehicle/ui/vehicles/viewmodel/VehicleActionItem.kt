@@ -5,6 +5,6 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 
 interface VehicleActionItem {
     fun getTitle(context: Context): String
-    fun isDisplayable(vehicle: Vehicle, vehicles: List<Vehicle>): Boolean
+    fun isDisplayable(vehicle: Vehicle): Boolean
     fun onItemClicked(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle)
 }

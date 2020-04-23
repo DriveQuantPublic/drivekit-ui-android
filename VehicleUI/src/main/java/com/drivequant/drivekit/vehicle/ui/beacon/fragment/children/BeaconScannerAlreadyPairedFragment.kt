@@ -17,6 +17,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_already_paired.*
 
 class BeaconScannerAlreadyPairedFragment : Fragment() {
@@ -40,7 +41,10 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         val beaconCode = viewModel.beacon?.code?.let { it }?:run { "" }
         val vehicleName = viewModel.vehicleName?.let { it }?: run { "" }
 
-        text_view_description.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_replace_description", beaconCode, vehicleName, vehicleName)
+        viewModel.vehiclePaired?.let {
+            val vehiclePairedName = it.buildFormattedName(requireContext())
+            text_view_description.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_replace_description", beaconCode, vehicleName, vehiclePairedName)
+        }
         text_view_description.normalText()
 
         button_validate.button()

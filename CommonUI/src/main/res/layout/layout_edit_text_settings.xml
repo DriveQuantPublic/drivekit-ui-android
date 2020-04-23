@@ -3,15 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/dk_margin_quarter"
-    android:paddingEnd="@dimen/dk_margin_quarter"
     android:orientation="vertical">
     <TextView
         android:id="@+id/text_view_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dk_margin_quarter"
-        android:paddingEnd="@dimen/dk_margin_quarter"
         tools:text="Label"/>
     <android.support.design.widget.TextInputLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,6 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             tools:hint="This is hint"
             tools:text="This is a text" />
     </android.support.design.widget.TextInputLayout>

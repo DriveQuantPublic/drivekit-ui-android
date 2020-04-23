@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
+import kotlinx.android.synthetic.main.item_trip_list.view.*
 import kotlinx.android.synthetic.main.trip_synthesis_fragment.*
 
 class SynthesisFragment : Fragment() {
@@ -56,9 +57,15 @@ class SynthesisFragment : Fragment() {
 
         viewModel.init(requireContext())
 
-        item_vehicle_used.setValueItem(viewModel.vehicleName)
-        item_vehicle_used.setOnClickListener {
-            item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
+        item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
+        viewModel.getVehicleId()?.let {
+
+            item_vehicle_used.setValueColor()
+            item_vehicle_used.setValueTypeFace()
+
+            item_vehicle_used.setOnClickListener {
+                item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
+            }
         }
 
         item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))

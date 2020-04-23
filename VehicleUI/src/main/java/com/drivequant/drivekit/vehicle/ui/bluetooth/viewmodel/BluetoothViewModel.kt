@@ -9,8 +9,6 @@ import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.bluetooth.BluetoothData
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.manager.VehicleQueryListener
-import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleAddBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleBluetoothStatus.*
@@ -32,12 +30,7 @@ class BluetoothViewModel(
     var addBluetoothObserver = MutableLiveData<String>()
 
     init {
-        DriveKitVehicle.getVehicleByVehicleId(vehicleId, object : VehicleQueryListener {
-            override fun onResponse(status: VehicleSyncStatus, vehicle: Vehicle?) {
-                this@BluetoothViewModel.vehicle = vehicle
-            }
-        })
-
+        this@BluetoothViewModel.vehicle = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
         bluetoothDevices = DriveKitTripAnalysis.getBluetoothPairedDevices()
         fragmentDispatcher.postValue(GuideBluetoothFragment.newInstance(this, vehicleId))
     }

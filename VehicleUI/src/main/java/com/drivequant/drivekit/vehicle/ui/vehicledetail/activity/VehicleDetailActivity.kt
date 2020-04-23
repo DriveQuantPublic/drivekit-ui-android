@@ -14,7 +14,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
 import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
@@ -35,7 +34,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_vehicle_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<android.support.v7.widget.Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -54,16 +53,6 @@ class VehicleDetailActivity : AppCompatActivity() {
                 } else {
                     hideProgressCircular()
                 }
-            }
-        })
-
-        viewModel.renameObserver.observe(this, Observer {
-            it?.let {status ->
-                val message = when (status){
-                    SUCCESS -> "dk_change_success"
-                    else -> "dk_fields_not_valid"
-                }
-                Toast.makeText(this, DKResource.convertToString(this, message), Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -89,23 +78,23 @@ class VehicleDetailActivity : AppCompatActivity() {
 
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
@@ -116,7 +105,6 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         if (fragment is VehicleDetailFragment){
             fragment.onBackPressed()

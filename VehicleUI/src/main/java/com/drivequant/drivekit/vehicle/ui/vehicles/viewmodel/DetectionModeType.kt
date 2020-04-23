@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -28,7 +29,6 @@ import com.drivequant.drivekit.vehicle.ui.beacon.activity.BeaconActivity
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.bluetooth.activity.BluetoothActivity
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import com.drivequant.drivekit.vehicle.ui.extension.getDetectionModeName
 import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 
@@ -148,7 +148,7 @@ enum class DetectionModeType(
 
     private fun manageError(context: Context, viewModel: VehiclesListViewModel){
         Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
-        viewModel.fetchVehicles(context)
+        viewModel.fetchVehicles(context, SynchronizationType.CACHE)
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
@@ -159,7 +159,7 @@ enum class DetectionModeType(
             getEnumByDetectionMode(detectionMode).getTitle(context),
             vehicle.buildFormattedName(context),
             gpsVehicle.buildFormattedName(context),
-            gpsVehicle.getDetectionModeName(context)
+            getEnumByDetectionMode(DetectionMode.DISABLED).getTitle(context)
         )
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
@@ -258,6 +258,7 @@ enum class DetectionModeType(
                 }
             }
             BLUETOOTH -> {
+                separatorVerify?.visibility = View.GONE
                 description?.text = DKResource.buildString(context, configureDescText, vehicleName)
 
                 delete?.let {

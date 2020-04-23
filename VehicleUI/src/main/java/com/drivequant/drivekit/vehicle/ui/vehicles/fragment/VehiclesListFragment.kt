@@ -20,15 +20,16 @@ import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_picker.progress_circular
 import kotlinx.android.synthetic.main.fragment_vehicles_list.*
 import kotlinx.android.synthetic.main.header_vehicle_list.*
 
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
+    private var isInit: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
@@ -54,8 +55,6 @@ class VehiclesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = DKResource.convertToString(requireContext(), "dk_common_loading")
-
         refresh_vehicles.setOnRefreshListener {
             updateVehicles()
         }
@@ -66,16 +65,32 @@ class VehiclesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateVehicles()
+        updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
+        if (isInit) {
+            isInit = false
+            updateVehicles()
+        } else {
+            updateVehicles(SynchronizationType.CACHE)
+        }
     }
 
-    private fun updateVehicles(){
+    private fun updateTitle(title: String){
+        if (activity is VehiclesListActivity) {
+            (activity as VehiclesListActivity).updateTitle(title)
+        }
+    }
+
+    private fun updateVehicles(synchronizationType : SynchronizationType = SynchronizationType.DEFAULT){
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, Observer {
-            if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY){
-                Toast.makeText(context, DKResource.convertToString(requireContext(), "dk_vehicle_error_message"), Toast.LENGTH_LONG).show()
+            if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(requireContext(), "dk_vehicle_error_message"),
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            if (it.isNullOrEmpty()){
+            if (it.isNullOrEmpty()) {
                 linear_layout_header_vehicle_list.visibility = View.VISIBLE
             } else {
                 displayVehiclesList()
@@ -87,13 +102,15 @@ class VehiclesListFragment : Fragment() {
                     vehicles_list.adapter = adapter
                 }
             }
-            activity?.title = viewModel.getScreenTitle(context)
+
+            updateTitle(viewModel.getScreenTitle(requireContext()))
+
             refresh_vehicles.visibility = View.VISIBLE
             refresh_vehicles.isRefreshing = false
             setupAddVehicleButton()
         })
         refresh_vehicles.isRefreshing = true
-        viewModel.fetchVehicles(requireContext())
+        viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
     private fun setupAddVehicleButton(){
@@ -132,23 +149,23 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    dk_progress_circular?.visibility = View.GONE
                 }
             })
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        dk_progress_circular.animate()
             .alpha(255f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    dk_progress_circular?.visibility = View.VISIBLE
                 }
             })
     }
