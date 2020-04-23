@@ -14,7 +14,7 @@
 
         <provider
             android:name=".diagnosis.provider.PermissionFileProvider"
-            android:authorities="drivekit-permission-ui.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -351,7 +351,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                         val uri =
                             FileProvider.getUriForFile(
                                 this,
-                                "drivekit-permission-ui.provider",
+                                "$packageName.provider",
                                 file
                             )
                         intent.putExtra(Intent.EXTRA_STREAM, uri)
