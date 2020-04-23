@@ -76,7 +76,7 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
 
             override fun getMailBody(): String {
                return if(true) {
-                    "MAIF \n "
+                    "MAIF"
                 } else {
                    "OTHER"
                }
