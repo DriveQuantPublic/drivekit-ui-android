@@ -327,7 +327,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         return if (valid) {
             getString(R.string.dk_common_yes)
         } else {
-            getString(R.string.dk_common_non)
+            getString(R.string.dk_common_no)
         }
     }
 
