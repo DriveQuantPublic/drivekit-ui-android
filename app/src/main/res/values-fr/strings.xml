@@ -5,6 +5,7 @@
    <string name="add_beacon_on">Le beacon est configuré</string>
    <string name="add_beacon_title">Configuration du beacon</string>
    <string name="app_name">DriveKit Demo App</string>
+   <string name="ask_for_request">Demande de support technique</string>
    <string name="auto_start_off">Activer pour détecter automatiquement vos trajets</string>
    <string name="autostart_on">Vos trajets seront automatiquement détectés</string>
    <string name="autostart_title">Démarrage automatique</string>
@@ -27,6 +28,9 @@
    <string name="global_config_settings">Configuration générale</string>
    <string name="location_permission">Autoriser l\'accès à la localisation.</string>
    <string name="notification_permission">Notifications</string>
+   <string name="permission_utils_diagnosis_button">Diagnostic de l\'app</string>
+   <string name="permission_utils_permissions_button">Recueil des permssions</string>
+   <string name="permissions_utils_explanation">Exemple d\'implémentation de DriveKit Permissions Utils comprenant le parcours utilisateur de recueil des permissions et l\écran de diagnostic de l\'application.</string>
    <string name="sandbox_mode_off">DriveKit est rattaché à l\'environnement de production de DriveQuant</string>
    <string name="sandbox_mode_on">DriveKit est rattaché à l\'environnement d\'intégration de DriveQuant</string>
    <string name="sandbox_mode_title">Mode sandbox</string>
