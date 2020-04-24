@@ -27,6 +27,7 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.permissionsutils.BuildConfig
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
@@ -485,8 +486,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         DiagnosisHelper.getPermissionStatus(
             this,
             PermissionType.EXTERNAL_STORAGE
-        ) == PermissionStatus.VALID
-                && DriveKit.config.logPath != null && PermissionUtilsUI.shouldDisplayDiagnosisLogs
+        ) == PermissionStatus.VALID && DriveKitLog.isLoggingEnabled &&
+   PermissionUtilsUI.shouldDisplayDiagnosisLogs
 
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
