@@ -5,13 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
-import com.drivekit.demoapp.config.ColorConfig
-import com.drivekit.demoapp.config.FontConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -27,14 +24,13 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
-import com.drivequant.drivekit.permissionsutils.permissions.model.ContactType
+import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
-import java.security.Permission
 import java.util.*
 
 class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraStepListener {
@@ -74,16 +70,11 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
                 return listOf("support@drivequant.com")
             }
 
-            override fun getMailBody(): String {
-               return if(true) {
-                    "MAIF"
-                } else {
-                   "OTHER"
-               }
-            }
+            override fun getMailBody(): String = "Mail body"
+
 
             override fun getRecipients(): List<String> {
-                return listOf()
+                return listOf("support@drivequant.com")
             }
 
             override fun getSubject(): String = getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)

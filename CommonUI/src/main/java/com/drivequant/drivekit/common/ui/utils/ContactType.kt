@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.permissionsutils.permissions.model
+package com.drivequant.drivekit.common.ui.utils
 
 import android.net.Uri
 import com.drivequant.drivekit.common.ui.listener.ContentMail
