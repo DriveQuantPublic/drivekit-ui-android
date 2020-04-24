@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".diagnosis.activity.AppDiagnosisActivity">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        layout="@layout/dk_layout_toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/scroll_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp">
 
             <ImageView
                 android:id="@+id/image_view_summary_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/dk_ic_xxbig"
+                android:layout_height="@dimen/dk_ic_xxbig"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginEnd="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:padding="@dimen/dk_margin_quarter"
                 app:layout_constraintBottom_toTopOf="@+id/summary_view_separator"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/scroll_content" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_summary_title"
@@ -44,7 +41,7 @@
                 android:text="@string/dk_perm_utils_diag_app_ok"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
-                app:layout_constraintTop_toTopOf="@+id/scroll_content" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_summary_description"
@@ -67,6 +64,7 @@
                 android:id="@+id/diag_item_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_location_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -80,6 +78,8 @@
                 android:id="@+id/diag_item_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_notification_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_notification_ko"
@@ -92,6 +92,8 @@
                 android:id="@+id/diag_item_location_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_loc_sensor_ko"
@@ -104,7 +106,10 @@
                 android:id="@+id/diag_item_bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_bluetooth_link"
+
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_bluetooth_ko"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_bluetooth_ok"
@@ -116,8 +121,11 @@
                 android:id="@+id/diag_item_activity_recognition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_activity_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_activity_ko"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_activity_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_activity_title"
@@ -128,6 +136,8 @@
                 android:id="@+id/diag_item_connectivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_eigth"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_network_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -213,11 +223,13 @@
 
             <Button
                 android:id="@+id/button_help_report"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/button_help_report_width"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dk_margin_half"
+                android:paddingStart="@dimen/dk_margin_half"
+                android:paddingEnd="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -238,7 +250,6 @@
                 android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_log_title"
                 android:textSize="@dimen/dk_text_medium"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/support_view_separator" />
 
@@ -251,8 +262,7 @@
                 android:text="@string/dk_perm_utils_app_diag_log_ko"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch_enable_logging" />
-
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
 

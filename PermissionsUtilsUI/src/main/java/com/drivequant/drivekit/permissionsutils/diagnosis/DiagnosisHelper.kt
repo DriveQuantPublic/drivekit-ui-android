@@ -139,9 +139,9 @@ object DiagnosisHelper {
                 bluetoothAdapter?.isEnabled ?: false
             }
             SensorType.GPS -> {
-                val locationManager =
-                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
+                val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                val isGPSEnabled = locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)  ?: false
+                isGPSEnabled && isLocationSensorHighAccuracy(context, isGPSEnabled)
             }
         }
     }
