@@ -195,11 +195,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkExternalStorage() {
         val loggingStatus = checkLoggingStatus()
+
         switch_enable_logging.isChecked = loggingStatus
         val description = if (loggingStatus) {
             DKResource.buildString(
                 this,
-                "dk_perm_utils_app_diag_log_ok", PermissionUtilsUI.logPathFile.removePrefix("/")
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.complementaryFontColor(),
+                "dk_perm_utils_app_diag_log_ok",
+                PermissionUtilsUI.logPathFile.removePrefix("/")
             )
         } else {
             getString(R.string.dk_perm_utils_app_diag_log_ko)
@@ -239,6 +243,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
                     DKResource.buildString(
                         this,
+                        DriveKitUI.colors.complementaryFontColor(),
+                        DriveKitUI.colors.mainFontColor(),
                         "dk_perm_utils_app_diag_log_ok",
                         PermissionUtilsUI.logPathFile.removePrefix("/")
                     )
@@ -293,6 +299,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             text_view_battery_description_2.text = DKResource.buildString(
                 this,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor(),
                 "dk_perm_utils_app_diag_battery_text_android_02",
                 getString(R.string.dk_perm_utils_app_diag_battery_link_android)
             )
@@ -666,7 +674,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             )
         )
         switch_enable_logging.setTypeface(DriveKitUI.primaryFont(this), Typeface.BOLD)
-        text_view_logging_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
         summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())

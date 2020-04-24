@@ -29,7 +29,13 @@ object DKResource {
         }
     }
 
-    fun buildString(context: Context, identifier: String, vararg args: String): Spannable {
+    fun buildString(
+        context: Context,
+        textColor: Int,
+        highlightColor: Int,
+        identifier: String,
+        vararg args: String
+    ): Spannable {
         val delimiter = "%s"
         val dkSpannable = DKSpannable()
         var currentArgPosition = 0
@@ -39,20 +45,20 @@ object DKResource {
             for ((index, value) in array.withIndex()) {
                 if (value.isBlank() && currentArgPosition < args.size) {
                     dkSpannable.append(args[currentArgPosition], context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(highlightColor)
                         typeface(Typeface.BOLD)
                         size(R.dimen.dk_text_normal)
                     })
                     currentArgPosition++
                 } else {
                     dkSpannable.append(array[index], context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
+                        color(textColor)
                         typeface(Typeface.NORMAL)
                         size(R.dimen.dk_text_normal)
                     })
                     if (currentArgPosition < args.size && args[currentArgPosition].isNotBlank()) {
                         dkSpannable.append(args[currentArgPosition], context.resSpans {
-                            color(DriveKitUI.colors.mainFontColor())
+                            color(highlightColor)
                             typeface(Typeface.BOLD)
                             size(R.dimen.dk_text_normal)
                         })
