@@ -11,7 +11,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
-import com.drivequant.drivekit.permissionsutils.permissions.model.ContactType
+import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 /**
@@ -22,9 +22,9 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
 
     internal var permissionViewListener: PermissionViewListener? = null
-    internal var isBluetoothNeeded:Boolean = true
-    internal var shouldDisplayDiagnosisLogs:Boolean = true
-    internal var contactType:ContactType = ContactType.NONE
+    internal var isBluetoothNeeded: Boolean = true
+    internal var shouldDisplayDiagnosisLogs: Boolean = true
+    internal var contactType: ContactType = ContactType.NONE
     internal var logPathFile: String = "/drivekit-permissions-utils/logs/"
 
     @JvmStatic
@@ -56,8 +56,8 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     @JvmStatic
-    fun configureContactType(contactType: ContactType) {
-        this.contactType = contactType
+    fun configureContactType(ContactType: ContactType) {
+        this.contactType = ContactType
     }
 
     @JvmStatic
@@ -70,18 +70,23 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
         val permissions = arrayListOf(
             PermissionType.LOCATION,
             PermissionType.ACTIVITY,
-            PermissionType.NOTIFICATION)
+            PermissionType.NOTIFICATION
+        )
 
         permissions.forEach {
             if (DiagnosisHelper.getPermissionStatus(activity, it) == PermissionStatus.NOT_VALID)
                 return true
         }
 
-        if(!DiagnosisHelper.isSensorActivated(activity, SensorType.BLUETOOTH) && isBluetoothNeeded) {
+        if (!DiagnosisHelper.isSensorActivated(
+                activity,
+                SensorType.BLUETOOTH
+            ) && isBluetoothNeeded
+        ) {
             return true
         }
 
-        if(!DiagnosisHelper.isSensorActivated(activity, SensorType.GPS)) {
+        if (!DiagnosisHelper.isSensorActivated(activity, SensorType.GPS)) {
             return true
         }
 

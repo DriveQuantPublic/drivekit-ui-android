@@ -16,6 +16,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
@@ -23,7 +24,6 @@ import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
@@ -39,7 +39,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionC
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
-import com.drivequant.drivekit.permissionsutils.permissions.model.ContactType
+import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
 import java.io.File
 import java.util.*
@@ -214,6 +214,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
+                    .cancelable(false)
                     .positiveButton(getString(R.string.dk_perm_utils_app_diag_log_link),
                         DialogInterface.OnClickListener { _, _ ->
                             requestPermission(PermissionType.EXTERNAL_STORAGE)
@@ -372,11 +373,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_notification)} ${buildYesNoFromBoolean(
             notificationMail
         )} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} ${buildYesNoFromBoolean(gpsMail)} \n"
         if (PermissionUtilsUI.isBluetoothNeeded) {
-            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} $bluetoothMail \n"
+            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} ${buildYesNoFromBoolean(bluetoothMail)} \n"
         }
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n\n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  ${buildYesNoFromBoolean(connectivityMail)} \n\n"
         mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
             Locale.getDefault()
         )} ${Build.MODEL} \n"
@@ -406,7 +407,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     val recipients = contentMail.getRecipients().toTypedArray()
                     val bccRecipients = contentMail.getBccRecipients().toTypedArray()
                     val subject = contentMail.getSubject()
-                    val mailBody = "${contentMail.getMailBody()} \n\n ${buildDiagnosisMail()}"
+                    var mailBody = "${contentMail.getMailBody()} \n\n ${buildDiagnosisMail()}"
+
+                    if (contentMail.overrideMailBodyContent()) {
+                        mailBody = contentMail.getMailBody()
+                    }
 
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.type = "plain/text"
@@ -643,20 +648,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun setStyle() {
         text_view_summary_title.headLine1()
-        text_view_summary_description.normalText()
-        summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        text_view_summary_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
         text_view_battery_title.headLine1()
-        text_view_battery_description_1.normalText()
-        text_view_battery_description_2.normalText()
-        text_view_battery_description_3.normalText()
+        text_view_battery_description_1.normalText(DriveKitUI.colors.complementaryFontColor())
+        text_view_battery_description_2.normalText(DriveKitUI.colors.complementaryFontColor())
+        text_view_battery_description_3.normalText(DriveKitUI.colors.complementaryFontColor())
 
         button_help_report.button()
         text_view_help_title.headLine1()
-        text_view_help_description.normalText()
+        text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
         switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
         switch_enable_logging.setTextSize(
@@ -664,7 +665,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
             )
         )
-        text_view_logging_description.normalText()
+        switch_enable_logging.setTypeface(DriveKitUI.primaryFont(this), Typeface.BOLD)
+        text_view_logging_description.normalText(DriveKitUI.colors.complementaryFontColor())
+
+        summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
     override fun onResume() {
