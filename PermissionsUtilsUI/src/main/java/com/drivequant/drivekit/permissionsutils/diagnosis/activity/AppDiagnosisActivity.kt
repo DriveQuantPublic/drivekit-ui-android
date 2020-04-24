@@ -195,19 +195,19 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkExternalStorage() {
         val loggingStatus = checkLoggingStatus()
-
         switch_enable_logging.isChecked = loggingStatus
         val description = if (loggingStatus) {
             DKResource.buildString(
                 this,
                 DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.mainFontColor(),
                 "dk_perm_utils_app_diag_log_ok",
                 PermissionUtilsUI.logPathFile.removePrefix("/")
             )
         } else {
             getString(R.string.dk_perm_utils_app_diag_log_ko)
         }
+
         text_view_logging_description.text = description
         switch_enable_logging.setOnClickListener {
             if (DiagnosisHelper.getPermissionStatus(
@@ -333,7 +333,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         text_view_logging_description.visibility = visibility
     }
 
-    private fun buildYesNoFromBoolean(valid: Boolean) : String {
+    private fun buildYesNoFromBoolean(valid: Boolean): String {
         return if (valid) {
             getString(R.string.dk_common_yes)
         } else {
@@ -381,11 +381,17 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_notification)} ${buildYesNoFromBoolean(
             notificationMail
         )} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} ${buildYesNoFromBoolean(gpsMail)} \n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} ${buildYesNoFromBoolean(
+            gpsMail
+        )} \n"
         if (PermissionUtilsUI.isBluetoothNeeded) {
-            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} ${buildYesNoFromBoolean(bluetoothMail)} \n"
+            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} ${buildYesNoFromBoolean(
+                bluetoothMail
+            )} \n"
         }
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  ${buildYesNoFromBoolean(connectivityMail)} \n\n"
+        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  ${buildYesNoFromBoolean(
+            connectivityMail
+        )} \n\n"
         mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
             Locale.getDefault()
         )} ${Build.MODEL} \n"
@@ -500,7 +506,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this,
             PermissionType.EXTERNAL_STORAGE
         ) == PermissionStatus.VALID && DriveKitLog.isLoggingEnabled &&
-   PermissionUtilsUI.shouldDisplayDiagnosisLogs
+                PermissionUtilsUI.shouldDisplayDiagnosisLogs
 
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
