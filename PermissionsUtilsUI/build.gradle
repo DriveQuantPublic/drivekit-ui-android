@@ -36,7 +36,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
     debugApi project(':CommonUI')
-    releaseApi 'com.drivequant.drivekit:drivekit-common-ui:1.3.2'
+    releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
+    implementation "com.drivequant.drivekit:drivekit-core:1.4.2"
 }
 
 uploadArchives {
@@ -46,13 +47,13 @@ uploadArchives {
                 repository(url: "$System.env.REPO_PATH") {
                     authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
                     pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-driver-permissions-utils-ui"
+                    pom.artifactId = "drivekit-permissions-utils-ui"
                     pom.version = android.defaultConfig.versionName
                 }
             } else {
                 repository(url: mavenLocal().url) {
                     pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-driver-permissions-utils-ui"
+                    pom.artifactId = "drivekit-permissions-utils-ui"
                     pom.version = android.defaultConfig.versionName
                 }
             }

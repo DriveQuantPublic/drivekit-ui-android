@@ -5,6 +5,7 @@
     <string name="add_beacon_on">Beacon is configured</string>
     <string name="add_beacon_title">Beacon configuration</string>
     <string name="app_name">DriveKit Demo App</string>
+    <string name="ask_for_request">Technical support request</string>
     <string name="auto_start_off">Activate to automatically detect your trips</string>
     <string name="autostart_on">Trips will be automatically detected</string>
     <string name="autostart_title">Auto start</string>
@@ -27,6 +28,9 @@
     <string name="global_config_settings">General Settings</string>
     <string name="location_permission">Allow access to the location.</string>
     <string name="notification_permission">Notifications</string>
+    <string name="permission_utils_diagnosis_button">Launch app diagnosis</string>
+    <string name="permission_utils_permissions_button">Launch permissions</string>
+    <string name="permissions_utils_explanation">An example of DriveKit Permissions Utils implementation with its UI for the on boarding permissions and application diagnosis</string>
     <string name="sandbox_mode_off">DriveKit is connected to DriveQuant production environment</string>
     <string name="sandbox_mode_on">DriveKit is connected to DriveQuant integration environment</string>
     <string name="sandbox_mode_title">Sandbox mode</string>
@@ -48,10 +52,7 @@
     <string name="trip_started">A trip is recording</string>
     <string name="user_id_description">Tap to fill your user id</string>
     <string name="user_id_title">User id</string>
-    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and bluetooth device pairing</string>
+    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
-
-    <string name="permissions_utils_explanation">An example of DriveKit PermissionsUtils implementation with its UI for the on boarding permissions</string>
-
 </resources>

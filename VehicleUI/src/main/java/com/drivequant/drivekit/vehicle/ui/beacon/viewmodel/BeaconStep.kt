@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.app.Fragment
 import android.text.Spannable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.children.*
 
@@ -22,24 +23,39 @@ enum class BeaconStep {
     fun getTitle(context: Context, viewModel: BeaconViewModel): Spannable {
         val beaconCode = viewModel.beacon?.code?.let { it }?: run { "" }
         val vehicleName = viewModel.vehicleName?.let { it }?: run { "" }
+        val mainFontColor = DriveKitUI.colors.mainFontColor()
 
         return when (this) {
-            INITIAL -> DKResource.buildString(context, "dk_vehicle_beacon_start_scan")
-            SCAN -> DKResource.buildString(context, "dk_vehicle_beacon_setup_scan_title")
-            SUCCESS -> DKResource.buildString(context, "dk_vehicle_beacon_setup_code_success_message")
+            INITIAL -> DKResource.buildString(context,
+                mainFontColor,
+                mainFontColor,"dk_vehicle_beacon_start_scan")
+            SCAN -> DKResource.buildString(context, mainFontColor,
+                mainFontColor,"dk_vehicle_beacon_setup_scan_title")
+            SUCCESS -> DKResource.buildString(context, mainFontColor,
+                mainFontColor,"dk_vehicle_beacon_setup_code_success_message")
             BEACON_NOT_FOUND -> {
                 if (viewModel.scanType == BeaconScanType.DIAGNOSTIC){
-                    DKResource.buildString(context, "dk_beacon_not_seen", beaconCode)
+                    DKResource.buildString(context, mainFontColor,
+                        mainFontColor,"dk_beacon_not_seen", beaconCode)
                 } else {
-                    DKResource.buildString(context, "dk_vehicle_beacon_setup_code_not_matched", beaconCode)
+                    DKResource.buildString(context, mainFontColor,
+                        mainFontColor,"dk_vehicle_beacon_setup_code_not_matched", beaconCode)
                 }
             }
-            BEACON_ALREADY_PAIRED -> DKResource.buildString(context, "dk_vehicle_beacon_already_paired")
-            CONGRATS -> DKResource.buildString(context, "dk_vehicle_beacon_setup_successlink_message", beaconCode, vehicleName)
-            BEACON_UNAVAILABLE -> DKResource.buildString(context,"dk_vehicle_beacon_setup_code_unavailable_id", beaconCode)
-            VERIFIED -> DKResource.buildString(context, "dk_vehicle_beacon_setup_code_success_message")
-            WRONG_BEACON -> DKResource.buildString(context, "dk_vehicle_beacon_verify_wrong_vehicle")
-            BEACON_NOT_CONFIGURED -> DKResource.buildString(context, "dk_vehicle_beacon_diagnostic_alert")
+            BEACON_ALREADY_PAIRED -> DKResource.buildString(context, DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.mainFontColor(),"dk_vehicle_beacon_already_paired")
+            CONGRATS -> DKResource.buildString(
+                context,
+                mainFontColor,
+                mainFontColor,
+                "dk_vehicle_beacon_setup_successlink_message",
+                beaconCode,
+                vehicleName
+            )
+            BEACON_UNAVAILABLE -> DKResource.buildString(context,mainFontColor,mainFontColor,"dk_vehicle_beacon_setup_code_unavailable_id", beaconCode)
+            VERIFIED -> DKResource.buildString(context, mainFontColor,mainFontColor,"dk_vehicle_beacon_setup_code_success_message")
+            WRONG_BEACON -> DKResource.buildString(context, mainFontColor,mainFontColor,"dk_vehicle_beacon_verify_wrong_vehicle")
+            BEACON_NOT_CONFIGURED -> DKResource.buildString(context, mainFontColor,mainFontColor,"dk_vehicle_beacon_diagnostic_alert")
         }
     }
 

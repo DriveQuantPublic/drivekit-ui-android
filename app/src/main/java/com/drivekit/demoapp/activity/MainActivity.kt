@@ -93,40 +93,9 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    fun buttonSensorsClicked(view: View) {
-        when (view.id) {
-            R.id.button_gps ->
-                Toast.makeText(
-                    this,
-                    "GPS Enable : ${DiagnosisHelper.isLocationSensorHighAccuracy(
-                        this,
-                        DiagnosisHelper.isSensorActivated(this, SensorType.GPS)
-                    )}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            R.id.button_bluetooth ->
-                Toast.makeText(
-                    this,
-                    "BLUETOOTH Enable : ${DiagnosisHelper.isSensorActivated(
-                        this,
-                        SensorType.BLUETOOTH
-                    )}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            R.id.button_network -> Toast.makeText(
-                this,
-                "Network Enable : ${DiagnosisHelper.isNetworkReachable(this)}",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            R.id.button_notification -> Toast.makeText(
-                this,
-                "Notification Enable : ${DiagnosisHelper.getPermissionStatus(
-                    this,
-                    PermissionType.NOTIFICATION
-                )}",
-                Toast.LENGTH_SHORT
-            ).show()
+    fun onAppDiagClicked(view: View) {
+        DriveKitNavigationController.permissionsUtilsUIEntryPoint?.let {
+            it.startAppDiagnosisActivity(this@MainActivity)
         }
     }
 

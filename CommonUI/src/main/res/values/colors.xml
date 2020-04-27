@@ -8,4 +8,5 @@
     <color name="dkGoodMean">#C6FF57</color>
     <color name="dkGood">#94FF57</color>
     <color name="dkExcellent">#30C8FC</color>
+    <color name="dkValid">#148014</color>
 </resources>

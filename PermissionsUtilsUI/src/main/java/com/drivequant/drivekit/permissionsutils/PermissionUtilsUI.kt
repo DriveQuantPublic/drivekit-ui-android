@@ -1,9 +1,17 @@
 package com.drivequant.drivekit.permissionsutils
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
+import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
+import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
+import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 /**
@@ -14,6 +22,10 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
 
     internal var permissionViewListener: PermissionViewListener? = null
+    internal var isBluetoothNeeded: Boolean = false
+    internal var shouldDisplayDiagnosisLogs: Boolean = false
+    internal var contactType: ContactType = ContactType.NONE
+    internal var logPathFile: String = "/drivekit-permissions-utils/logs/"
 
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
@@ -26,5 +38,51 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
     ) {
         this.permissionViewListener = permissionViewListener
         permissionView.first().launchActivity(activity, permissionView)
+    }
+
+    override fun startAppDiagnosisActivity(context: Context) =
+        context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
+
+    fun configureBluetooth(isBluetoothNeeded: Boolean) {
+        this.isBluetoothNeeded = isBluetoothNeeded
+    }
+
+    fun configureDiagnosisLogs(shouldDisplayDiagnosisLogs: Boolean) {
+        this.shouldDisplayDiagnosisLogs = shouldDisplayDiagnosisLogs
+    }
+
+    fun configureContactType(ContactType: ContactType) {
+        this.contactType = ContactType
+    }
+
+    fun configureLogPathFile(logPathFile: String) {
+        this.logPathFile = logPathFile
+    }
+
+    fun hasError(activity: Activity): Boolean {
+        val permissions = arrayListOf(
+            PermissionType.LOCATION,
+            PermissionType.ACTIVITY,
+            PermissionType.NOTIFICATION
+        )
+
+        permissions.forEach {
+            if (DiagnosisHelper.getPermissionStatus(activity, it) == PermissionStatus.NOT_VALID)
+                return true
+        }
+
+        if (!DiagnosisHelper.isSensorActivated(
+                activity,
+                SensorType.BLUETOOTH
+            ) && isBluetoothNeeded
+        ) {
+            return true
+        }
+
+        if (!DiagnosisHelper.isSensorActivated(activity, SensorType.GPS)) {
+            return true
+        }
+
+        return !DiagnosisHelper.isNetworkReachable(activity)
     }
 }

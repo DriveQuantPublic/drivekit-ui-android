@@ -30,6 +30,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 object DiagnosisHelper {
 
     const val REQUEST_PERMISSIONS = 1
+    const val REQUEST_STORAGE_PERMISSIONS_RATIONALE = 2
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
@@ -88,7 +89,7 @@ object DiagnosisHelper {
         }
     }
 
-    private fun getExternalStorageStatus(activity: Activity): PermissionStatus {
+    fun getExternalStorageStatus(activity: Activity): PermissionStatus {
         val hasExternalStorage = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         return if (hasExternalStorage) PermissionStatus.VALID else PermissionStatus.NOT_VALID
     }
@@ -101,7 +102,7 @@ object DiagnosisHelper {
         activity.startActivityForResult(intent,REQUEST_BATTERY_OPTIMIZATION)
     }
 
-    private fun getNotificationStatus(activity: Activity): PermissionStatus {
+    fun getNotificationStatus(activity: Activity): PermissionStatus {
         return if (NotificationManagerCompat.from(activity).areNotificationsEnabled()) {
             PermissionStatus.VALID
         } else {
@@ -128,9 +129,9 @@ object DiagnosisHelper {
                 bluetoothAdapter?.isEnabled ?: false
             }
             SensorType.GPS -> {
-                val locationManager =
-                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
+                val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                val isGPSEnabled = locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)  ?: false
+                isGPSEnabled && isLocationSensorHighAccuracy(context, isGPSEnabled)
             }
         }
     }

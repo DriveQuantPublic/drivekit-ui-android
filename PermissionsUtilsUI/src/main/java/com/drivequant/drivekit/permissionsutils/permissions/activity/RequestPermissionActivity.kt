@@ -3,6 +3,7 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,13 +11,20 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 
 open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequestPermissionsResultCallback {
 
     protected var permissionCallback: OnPermissionCallback? = null
+    protected var alertDialog:AlertDialog? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -48,7 +56,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
         }
     }
 
-    protected fun launchSettings(): Intent {
+    private fun launchSettings(): Intent {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
@@ -125,5 +133,54 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             }
         }
         return permissionsNeeded
+    }
+
+    protected fun handlePermissionDeclined(context: Context, descriptionId: Int, callback: () -> Unit) {
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(context)
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(getString(R.string.dk_common_ok),
+                DialogInterface.OnClickListener { _, _ ->
+                    callback()
+                })
+            .show()
+
+        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+        titleTextView?.text = getString(R.string.dk_common_permissions)
+        descriptionTextView?.text = getString(descriptionId)
+
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
+    }
+
+    protected fun handlePermissionTotallyDeclined(context: Context, descriptionId: Int) {
+        alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(context)
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
+                DialogInterface.OnClickListener { _, _ ->
+                    startActivityForResult(
+                        launchSettings(),
+                        DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
+                    )
+                })
+            .negativeButton(getString(R.string.dk_common_close),
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.cancel()
+                })
+            .show()
+
+        val titleTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_description)
+
+        titleTextView?.text = getString(R.string.dk_common_permissions)
+        descriptionTextView?.text = getString(descriptionId)
+
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 }

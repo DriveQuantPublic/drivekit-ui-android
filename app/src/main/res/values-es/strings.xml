@@ -5,6 +5,7 @@
    <string name="add_beacon_on">El Beacon está configurado</string>
    <string name="add_beacon_title">Configuración del Beacon</string>
    <string name="app_name">DriveKit Demo App</string>
+   <string name="ask_for_request">Solicitud de soporte técnico</string>
    <string name="auto_start_off">Activar para detectar automáticamente sus viajes</string>
    <string name="autostart_on">Los viajes se detectarán automáticamente</string>
    <string name="autostart_title">Inicio automático</string>
@@ -27,6 +28,9 @@
    <string name="global_config_settings">Opciones generales</string>
    <string name="location_permission">Permitir el acceso a la ubicación.</string>
    <string name="notification_permission">Notificaciones</string>
+   <string name="permission_utils_diagnosis_button">El diagnóstico de la aplicación</string>
+   <string name="permission_utils_permissions_button">Recopilación de permisos</string>
+   <string name="permissions_utils_explanation">Ejemplo de implementación de Utils de permisos DriveKit incluyendo la ruta de usuario para recoger los permisos y la pantalla de diagnóstico de la aplicación.</string>
    <string name="sandbox_mode_off">DriveKit está conectado al entorno de producción DriveQuant</string>
    <string name="sandbox_mode_on">DriveKit está conectado al entorno de integración DriveQuant</string>
    <string name="sandbox_mode_title">Modo Sandbox</string>
@@ -48,7 +52,7 @@
    <string name="trip_started">Se está registrando un viaje</string>
    <string name="user_id_description">Haga clic para rellenar su identificador de usuario</string>
    <string name="user_id_title">Identificador de usuario</string>
-   <string name="vehicle_explanation">Un ejemplo de implementación de DriveKit Vehículo con UI para el recolector de vehículos, lista de vehículos, detalle del vehículo, faro y emparejamiento de dispositivos bluetooth</string>
+   <string name="vehicle_explanation">Un ejemplo de implementación de DriveKit Vehículo con UI para el recolector de vehículos, lista de vehículos, detalle del vehículo, faro y emparejamiento de dispositivos Bluetooth</string>
    <string name="vehicle_list_button">Lista de vehículos</string>
    <string name="vehicle_picker_button">Añadir un vehículo</string>
 </resources>

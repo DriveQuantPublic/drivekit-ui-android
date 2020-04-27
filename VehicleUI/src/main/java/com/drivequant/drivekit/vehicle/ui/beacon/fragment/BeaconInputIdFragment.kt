@@ -74,11 +74,18 @@ class BeaconInputIdFragment : Fragment () {
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
-        title?.text = DKResource.buildString(requireContext(), "app_name")
+        title?.text = DKResource.buildString(
+            requireContext(),
+            DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),
+            "app_name"
+        )
         title?.headLine1()
 
         if (args.isNotEmpty()) {
-            description?.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_code_invalid_id", args[0])
+            description?.text = DKResource.buildString(requireContext(),
+                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.mainFontColor(),"dk_vehicle_beacon_setup_code_invalid_id", args[0])
         } else {
             description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon")
         }
