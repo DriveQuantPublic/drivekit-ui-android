@@ -16,6 +16,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Environment
@@ -673,6 +674,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
+        switch_enable_logging.thumbDrawable.setColorFilter(DriveKitUI.colors.secondaryColor(), PorterDuff.Mode.SRC_IN)
         switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
         switch_enable_logging.setTextSize(
             TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
@@ -680,6 +682,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             )
         )
         switch_enable_logging.setTypeface(DriveKitUI.primaryFont(this), Typeface.BOLD)
+        text_view_logging_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
         summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())

@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
@@ -65,23 +66,14 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         PermissionUtilsUI.initialize()
         PermissionUtilsUI.configureBluetooth(true)
         PermissionUtilsUI.configureDiagnosisLogs(true)
+        PermissionUtilsUI.configureLogPathFile("/DQ-demo-test/")
         PermissionUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> {
-                return listOf("support@drivequant.com")
-            }
-
+            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
             override fun getMailBody(): String = "Mail body"
-
-
-            override fun getRecipients(): List<String> {
-                return listOf("support@drivequant.com")
-            }
-
+            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
             override fun getSubject(): String = getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
             override fun overrideMailBodyContent(): Boolean = false
-
         }))
-        PermissionUtilsUI.configureLogPathFile("/DQ-demo-test/")
     }
 
     private fun createNotificationChannel() {

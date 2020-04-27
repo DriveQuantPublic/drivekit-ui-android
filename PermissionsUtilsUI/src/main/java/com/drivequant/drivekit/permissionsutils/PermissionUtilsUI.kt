@@ -22,17 +22,15 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
 
     internal var permissionViewListener: PermissionViewListener? = null
-    internal var isBluetoothNeeded: Boolean = true
-    internal var shouldDisplayDiagnosisLogs: Boolean = true
+    internal var isBluetoothNeeded: Boolean = false
+    internal var shouldDisplayDiagnosisLogs: Boolean = false
     internal var contactType: ContactType = ContactType.NONE
     internal var logPathFile: String = "/drivekit-permissions-utils/logs/"
 
-    @JvmStatic
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
     }
 
-    @JvmStatic
     fun showPermissionViews(
         activity: Activity,
         permissionView: ArrayList<PermissionView>,
@@ -45,27 +43,22 @@ object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
     override fun startAppDiagnosisActivity(context: Context) =
         context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 
-    @JvmStatic
     fun configureBluetooth(isBluetoothNeeded: Boolean) {
         this.isBluetoothNeeded = isBluetoothNeeded
     }
 
-    @JvmStatic
     fun configureDiagnosisLogs(shouldDisplayDiagnosisLogs: Boolean) {
         this.shouldDisplayDiagnosisLogs = shouldDisplayDiagnosisLogs
     }
 
-    @JvmStatic
     fun configureContactType(ContactType: ContactType) {
         this.contactType = ContactType
     }
 
-    @JvmStatic
     fun configureLogPathFile(logPathFile: String) {
         this.logPathFile = logPathFile
     }
 
-    @JvmStatic
     fun hasError(activity: Activity): Boolean {
         val permissions = arrayListOf(
             PermissionType.LOCATION,

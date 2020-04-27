@@ -113,7 +113,7 @@ class DiagnosisItemView : LinearLayout {
         val color = if (hasProblem) {
             DriveKitUI.colors.criticalColor()
         } else {
-            ContextCompat.getColor(context, R.color.colorPrimaryGreen)
+            ContextCompat.getColor(context, R.color.dkValid)
         }
 
         val wrapped = DrawableCompat.wrap(drawableItem!!)

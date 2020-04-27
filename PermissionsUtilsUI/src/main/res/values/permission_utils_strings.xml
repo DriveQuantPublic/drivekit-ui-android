@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_perm_utils_app_diag_activity_ko">You need to allow the application to access the activity monitoring so that it can detect and analyze your trips.</string>
-    <string name="dk_perm_utils_app_diag_activity_link">Allow access to activity tracking</string>
-    <string name="dk_perm_utils_app_diag_activity_ok">The application uses your phone\'s activity tracking to detect and analyze your trips. It can\'t work if you don\'t allow the application to access activity monitoring.</string>
+    <string name="dk_perm_utils_app_diag_activity_link">Allow access to activity monitoring</string>
+    <string name="dk_perm_utils_app_diag_activity_ok">The application uses your phone\'s activity monitoring to detect and analyze your trips. It can\'t work if you don\'t allow the application to access activity monitoring.</string>
     <string name="dk_perm_utils_app_diag_activity_title">Activity monitoring</string>
     <string name="dk_perm_utils_app_diag_app_ko_01">A problem has been detected!</string>
     <string name="dk_perm_utils_app_diag_app_ko_02">Two problems were detected!</string>
@@ -73,7 +73,7 @@
     <string name="dk_perm_utils_permissions_location_text2_post_android10">To do this, choose \"Allow all the time\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_text2_pre_android10">To do this, choose \"Allow\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_title">Trip recording</string>
-    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Authorize activity tracking</string>
+    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Authorize activity monitoring</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_text">To improve the analysis of your trips and identify the mode of transport used, you must activate the option Motion &amp; Fitness on your phone.</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_title">Activity monitoring</string>
     <string name="dk_perm_utils_permissions_phone_settings_background_button">Allow background task</string>
