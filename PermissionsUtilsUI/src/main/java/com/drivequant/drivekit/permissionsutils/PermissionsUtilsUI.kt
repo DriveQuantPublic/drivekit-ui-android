@@ -19,7 +19,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-object PermissionUtilsUI : PermissionsUtilsUIEntryPoint {
+object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
 
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false

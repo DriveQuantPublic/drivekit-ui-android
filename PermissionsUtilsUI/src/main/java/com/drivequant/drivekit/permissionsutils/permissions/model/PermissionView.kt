@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.permissions.activity.ActivityRecognitionPermissionActivity
@@ -28,7 +28,7 @@ enum class PermissionView {
             PermissionStatus.VALID -> {
                 permissionViews.remove(this)
                 if (permissionViews.isEmpty()) {
-                    PermissionUtilsUI.permissionViewListener?.onFinish()
+                    PermissionsUtilsUI.permissionViewListener?.onFinish()
                 } else {
                     permissionViews.first().launchActivity(activity, permissionViews)
                 }
