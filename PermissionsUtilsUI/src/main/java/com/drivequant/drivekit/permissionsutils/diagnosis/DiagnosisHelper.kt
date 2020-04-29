@@ -12,14 +12,17 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.drivequant.drivekit.common.ui.utils.DKReachability
+import com.drivequant.drivekit.permissionsutils.BuildConfig
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
+import java.util.*
 
 
 /**
@@ -34,32 +37,32 @@ object DiagnosisHelper {
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
-    fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(
-        activity,
+    fun hasFineLocationPermission(context: Context): Boolean = ContextCompat.checkSelfPermission(
+        context,
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
-    fun hasBackgroundLocationApproved(activity: Activity): Boolean =
-        ActivityCompat.checkSelfPermission(
-            activity,
+    fun hasBackgroundLocationApproved(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(
+            context,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
-    fun getLocationStatus(activity: Activity): PermissionStatus {
-        if (!hasFineLocationPermission(activity)) {
+    fun getLocationStatus(context: Context): PermissionStatus {
+        if (!hasFineLocationPermission(context)) {
             return PermissionStatus.NOT_VALID
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (!hasBackgroundLocationApproved(activity)) {
+            if (!hasBackgroundLocationApproved(context)) {
                 return PermissionStatus.NOT_VALID
             }
         }
         return PermissionStatus.VALID
     }
 
-    fun getActivityStatus(activity: Activity): PermissionStatus {
+    fun getActivityStatus(context: Context): PermissionStatus {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(
-                    activity,
+                    context,
                     Manifest.permission.ACTIVITY_RECOGNITION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
@@ -72,12 +75,12 @@ object DiagnosisHelper {
         }
     }
 
-    fun getBatteryOptimizationsStatus(activity: Activity): PermissionStatus {
+    fun getBatteryOptimizationsStatus(context: Context): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
-                activity.applicationContext?.let {
-                    val pm = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
-                    val packageName = activity.packageName
+                context.applicationContext?.let {
+                    val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+                    val packageName = context.packageName
                     return if (pm.isIgnoringBatteryOptimizations(packageName)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
                 }
             } catch (e: ActivityNotFoundException) {
@@ -89,8 +92,11 @@ object DiagnosisHelper {
         }
     }
 
-    fun getExternalStorageStatus(activity: Activity): PermissionStatus {
-        val hasExternalStorage = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    fun getExternalStorageStatus(context: Context): PermissionStatus {
+        val hasExternalStorage = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
         return if (hasExternalStorage) PermissionStatus.VALID else PermissionStatus.NOT_VALID
     }
 
@@ -99,26 +105,26 @@ object DiagnosisHelper {
         val packageName = activity.packageName
         intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
         intent.data = Uri.parse("package:$packageName")
-        activity.startActivityForResult(intent,REQUEST_BATTERY_OPTIMIZATION)
+        activity.startActivityForResult(intent, REQUEST_BATTERY_OPTIMIZATION)
     }
 
-    fun getNotificationStatus(activity: Activity): PermissionStatus {
-        return if (NotificationManagerCompat.from(activity).areNotificationsEnabled()) {
+    fun getNotificationStatus(context: Context): PermissionStatus {
+        return if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
             PermissionStatus.VALID
         } else {
             PermissionStatus.NOT_VALID
         }
     }
 
-    fun getPermissionStatus(activity: Activity, permissionType: PermissionType): PermissionStatus {
+    fun getPermissionStatus(context: Context, permissionType: PermissionType): PermissionStatus {
         return when (permissionType) {
-            PermissionType.LOCATION -> getLocationStatus(activity)
+            PermissionType.LOCATION -> getLocationStatus(context)
 
-            PermissionType.ACTIVITY -> getActivityStatus(activity)
+            PermissionType.ACTIVITY -> getActivityStatus(context)
 
-            PermissionType.NOTIFICATION -> getNotificationStatus(activity)
+            PermissionType.NOTIFICATION -> getNotificationStatus(context)
 
-            PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(activity)
+            PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(context)
         }
     }
 

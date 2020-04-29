@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.permissionsutils.permissions.model
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -20,23 +19,23 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPer
 enum class PermissionView {
     ACTIVITY, LOCATION, BACKGROUND_TASK;
 
-    fun launchActivity(activity: Activity, permissionViews: ArrayList<PermissionView>) {
-        when (getCurrentPermissionStatus(activity)) {
+    fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
+        when (getCurrentPermissionStatus(context)) {
             PermissionStatus.NOT_VALID -> {
-                activity.startActivity(this.buildIntent(activity, permissionViews))
+                context.startActivity(this.buildIntent(context, permissionViews))
             }
             PermissionStatus.VALID -> {
                 permissionViews.remove(this)
                 if (permissionViews.isEmpty()) {
                     PermissionsUtilsUI.permissionViewListener?.onFinish()
                 } else {
-                    permissionViews.first().launchActivity(activity, permissionViews)
+                    permissionViews.first().launchActivity(context, permissionViews)
                 }
             }
         }
     }
 
-    private fun getCurrentPermissionStatus(context: Activity): PermissionStatus {
+    private fun getCurrentPermissionStatus(context: Context): PermissionStatus {
         return when (this) {
             LOCATION -> DiagnosisHelper.getLocationStatus(context)
             ACTIVITY -> DiagnosisHelper.getActivityStatus(context)

@@ -23,6 +23,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Autorización para acceder al seguimiento de la actividad:</string>
    <string name="dk_perm_utils_app_diag_email_app">Aplicación:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Versión de la aplicación:</string>
+   <string name="dk_perm_utils_app_diag_email_battery">Optimización de la batería:</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Sensor de Bluetooth:</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motivo (comentarios):</string>
    <string name="dk_perm_utils_app_diag_email_email">Correo electrónico :</string>
