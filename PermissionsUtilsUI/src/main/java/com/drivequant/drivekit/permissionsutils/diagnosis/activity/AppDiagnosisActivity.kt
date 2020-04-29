@@ -356,7 +356,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     val bccRecipients = contentMail.getBccRecipients().toTypedArray()
                     val subject = contentMail.getSubject()
                     var mailBody =
-                        "${contentMail.getMailBody()} \n\n ${PermissionsUtilsUI.getDiagnosisDescription(
+                        "${contentMail.getMailBody()} ${PermissionsUtilsUI.getDiagnosisDescription(
                             this
                         )}"
 

@@ -3,11 +3,13 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
@@ -18,7 +20,14 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recognition_permission)
+        setToolbar()
         setStyle()
+    }
+
+    private fun setToolbar() {
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+        this.title = DKResource.convertToString(this, "dk_perm_utils_permissions_phone_settings_activity_title")
     }
 
     fun onRequestPermissionClicked(view: View) {

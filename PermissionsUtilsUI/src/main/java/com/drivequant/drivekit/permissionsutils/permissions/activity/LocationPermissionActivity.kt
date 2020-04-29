@@ -4,11 +4,13 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
@@ -19,12 +21,19 @@ class LocationPermissionActivity : BasePermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_permission)
+        setToolbar()
         setStyle()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             text_view_location_permission_text2.text =
                 getString(R.string.dk_perm_utils_permissions_location_text2_post_android10)
         }
+    }
+
+    private fun setToolbar() {
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+        this.title = DKResource.convertToString(this, "dk_perm_utils_permissions_location_title")
     }
 
     fun onRequestPermissionClicked(view: View) {
