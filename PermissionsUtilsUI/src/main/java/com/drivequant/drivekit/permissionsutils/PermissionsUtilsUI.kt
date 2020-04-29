@@ -117,14 +117,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         val bluetoothMail = DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH)
         val connectivityMail = DiagnosisHelper.isNetworkReachable(context)
 
-        var mailBody =
-            "${context.getString(R.string.dk_perm_utils_app_diag_email_app)} ${context.getString(R.string.app_name)} \n\n"
+
+        var mailBody = "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             mailBody +=
                 "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
 
         }
-        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
 
