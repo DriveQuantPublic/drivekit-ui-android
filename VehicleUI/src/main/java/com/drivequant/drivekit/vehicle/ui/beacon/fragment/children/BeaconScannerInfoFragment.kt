@@ -51,7 +51,6 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
         view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
 
         text_view_connected_vehicle_name.normalText(mainFontColor)
