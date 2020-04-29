@@ -118,7 +118,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)) {
             diag_item_bluetooth.setNormalState()
         } else {
-            diagnosticProblemsCount++
+            if (PermissionsUtilsUI.isBluetoothNeeded) {
+                diagnosticProblemsCount++
+            }
             diag_item_bluetooth.setDiagnosisDrawable(true)
             diag_item_bluetooth.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
