@@ -113,12 +113,26 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
-        val gpsMail = DiagnosisHelper.isSensorActivated(context, SensorType.GPS)
-        val bluetoothMail = DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH)
-        val connectivityMail = DiagnosisHelper.isNetworkReachable(context)
+        val gpsMail =
+            if (DiagnosisHelper.isSensorActivated(context, SensorType.GPS)) context.getString(
+                R.string.dk_common_yes
+            ) else context.getString(
+                R.string.dk_common_no
+            )
 
+        val bluetoothMail =
+            if (DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH)) context.getString(
+                R.string.dk_common_yes
+            ) else context.getString(
+                R.string.dk_common_no
+            )
+        val connectivityMail =
+            if (DiagnosisHelper.isNetworkReachable(context)) context.getString(R.string.dk_common_yes) else context.getString(
+                R.string.dk_common_no
+            )
 
-        var mailBody = "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
+        var mailBody =
+            "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             mailBody +=
                 "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
