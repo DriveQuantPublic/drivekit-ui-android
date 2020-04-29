@@ -16,7 +16,9 @@ open class VehicleUtils {
             .orderBy("brand", Query.Direction.ASCENDING)
             .query()
             .execute()
+            .sortedWith(compareBy(Vehicle::brand, Vehicle::model, Vehicle::version))
             .toMutableList()
+
         sortedVehicles.sortWith(Comparator { vehicle1: Vehicle, vehicle2: Vehicle ->
             val vehicle1DisplayName = buildFormattedNameByPosition(context, vehicle1, sortedVehicles)
             val vehicle2DisplayName = buildFormattedNameByPosition(context, vehicle2, sortedVehicles)

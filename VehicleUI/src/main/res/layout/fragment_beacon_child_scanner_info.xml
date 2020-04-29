@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dk_margin_half">
     <android.support.v7.widget.CardView
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/view_group_card_beacon_info"
@@ -32,14 +33,14 @@
                         android:layout_width="@dimen/dk_ic_big"
                         android:layout_height="@dimen/dk_ic_big"
                         android:layout_gravity="center_vertical"
-                        android:padding="@dimen/dk_margin_half"
-                        android:src="@drawable/dk_common_info"
-                        android:tint="@android:color/black"
+                        android:padding="@dimen/dk_margin_quarter"
                         android:foreground="?selectableItemBackground" />
                 </LinearLayout>
                 <View
                     android:id="@+id/view_separator"
-                    style="@style/Separator.Horizontal" />
+                    style="@style/Separator.Horizontal"
+                    android:layout_marginTop="@dimen/dk_margin_quarter"
+                    android:layout_marginBottom="@dimen/dk_margin_quarter" />
                 <LinearLayout style="@style/MW">
                     <LinearLayout
                         style="@style/MW"
