@@ -2,4 +2,5 @@
 <resources>
     <dimen name="button_help_report_width">300dp</dimen>
     <dimen name="diagnosis_layout_padding">6dp</dimen>
+    <dimen name="diagnosis_header_margin">10dp</dimen>
 </resources>
