@@ -139,7 +139,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 titleTextView?.text = diag_item_bluetooth.getDiagnosisTitle()
                 descriptionTextView?.text = diag_item_bluetooth.getDiagnosticTextKO()
                 descriptionTextView?.text =
-                    diag_item_location_sensor.getDiagnosticTextKO()
+                    diag_item_bluetooth.getDiagnosticTextKO()
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
