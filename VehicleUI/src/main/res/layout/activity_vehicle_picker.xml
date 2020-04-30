@@ -12,7 +12,8 @@
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dk_margin_medium"/>
     </LinearLayout>
     <include android:id="@+id/dk_progress_circular" layout="@layout/dk_layout_progress_bar" />
 </FrameLayout>

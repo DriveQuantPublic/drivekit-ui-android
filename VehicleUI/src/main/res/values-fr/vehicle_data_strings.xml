@@ -103,7 +103,7 @@
    <string name="dk_vehicle_category_car_sport_description">Cette catégorie correspond à des véhicules dotés de motorisation, de châssis et de système de freinage axés sur la performance.</string>
    <string name="dk_vehicle_category_car_sport_title">Coupé</string>
    <string name="dk_vehicle_category_car_suv_description">Cette catégorie correspond aux véhicules de type Crossover (ou \"multisegment\") ou aux véhicules tout-terrains à transmission intégrale (4x4) et dont la longueur varie en moyenne de 4,10 à 5,20 m.</string>
-   <string name="dk_vehicle_category_car_suv_title">SUV</string>
+   <string name="dk_vehicle_category_car_suv_title">4X4, SUV, Crossover</string>
    <string name="dk_vehicle_category_display_brands">Continuer pour sélectionner la marque et le modèle de votre véhicule</string>
    <string name="dk_vehicle_configure_beacon_desc">Un beacon est déjà associé au véhicule %s</string>
    <string name="dk_vehicle_configure_beacon_title">Configurer le beacon</string>
