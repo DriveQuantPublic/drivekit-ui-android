@@ -60,12 +60,12 @@ class ItemRecyclerViewAdapter(
                 holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
             }
             TEXT_IMAGE_ITEM -> {
-                holder.textView.normalText(DriveKitUI.colors.primaryColor())
+                holder.textView.normalText(DriveKitUI.colors.complementaryFontColor())
             }
             TEXT_OR_IMAGE_ITEM -> {
                 if (item.value.equals("OTHER_BRANDS", true)){
                     holder.textView.normalText()
-                    holder.textView.bigText(DriveKitUI.colors.primaryColor())
+                    holder.textView.bigText(DriveKitUI.colors.complementaryFontColor())
                 } else {
                     holder.textView.visibility = View.GONE
                 }

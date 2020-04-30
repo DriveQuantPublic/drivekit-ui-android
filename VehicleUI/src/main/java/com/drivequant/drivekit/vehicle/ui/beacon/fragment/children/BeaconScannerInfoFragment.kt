@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
@@ -50,41 +51,37 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
         view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
 
         text_view_connected_vehicle_name.normalText(mainFontColor)
         text_view_connected_vehicle_name.typeface = Typeface.DEFAULT_BOLD
 
         if (isValid){
+            view_border.setBackgroundColor(DriveKitUI.colors.secondaryColor())
             text_view_connected_vehicle_name.text = viewModel.vehicleName?.let {
                 it
             }?:run {
                 DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
             }
         } else {
-            val vehicle = viewModel.fetchVehicleFromSeenBeacon(
-                VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext())
-            )
-            vehicle?.let {
+            view_border.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
+            viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
                 text_view_connected_vehicle_name.text = vehicle.buildFormattedName(requireContext())
             }
         }
 
-        button_beacon_info.setOnClickListener {
-            viewModel.launchDetailFragment()
-        }
+        configureInfoButton()
 
         view_separator.setBackgroundColor(neutralColor)
 
-        text_view_major_title.normalText(primaryColor)
+        text_view_major_title.normalText(DriveKitUI.colors.complementaryFontColor())
         text_view_major_title.text = DKResource.convertToString(requireContext(), "dk_beacon_major")
 
         text_view_major_value.normalText(mainFontColor)
         text_view_major_value.typeface = Typeface.DEFAULT_BOLD
         text_view_major_value.text = viewModel.seenBeacon?.major.toString()
 
-        text_view_minor_title.normalText(primaryColor)
+        text_view_minor_title.normalText(DriveKitUI.colors.complementaryFontColor())
         text_view_minor_title.text = DKResource.convertToString(requireContext(), "dk_beacon_minor")
 
         text_view_minor_value.normalText(mainFontColor)
@@ -106,6 +103,14 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
             DKResource.convertToDrawable(requireContext(), "dk_beacon_signal_intensity")?.let { drawable ->
                 text_view_signal_intensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
+        }
+    }
+
+    private fun configureInfoButton(){
+        button_beacon_info.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_info"))
+        DrawableCompat.setTint(button_beacon_info.drawable, DriveKitUI.colors.secondaryColor())
+        button_beacon_info.setOnClickListener {
+            viewModel.launchDetailFragment()
         }
     }
 
@@ -171,9 +176,10 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
             })
             .append(" ")
             .append(unit, requireContext().resSpans {
-            color(mainFontColor)
-            typeface(Typeface.NORMAL)
-            size(R.dimen.dk_text_small)
-        }).toSpannable()
+                color(mainFontColor)
+                typeface(Typeface.NORMAL)
+                size(R.dimen.dk_text_small)
+            })
+            .toSpannable()
     }
 }

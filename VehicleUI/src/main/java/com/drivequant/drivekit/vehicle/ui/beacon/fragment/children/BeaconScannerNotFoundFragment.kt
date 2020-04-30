@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_not_found.*
@@ -43,17 +44,22 @@ class BeaconScannerNotFoundFragment : Fragment() {
             viewModel.updateScanState(BeaconStep.SCAN)
         }
 
-        button_cancel.button()
-        button_cancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
-        button_cancel.setOnClickListener {
-            activity?.onBackPressed()
-        }
+        if (viewModel.scanType != BeaconScanType.PAIRING) {
+            button_cancel.visibility = View.GONE
+            button_abort.visibility = View.GONE
+        } else {
+            button_cancel.button()
+            button_cancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+            button_cancel.setOnClickListener {
+                activity?.onBackPressed()
+            }
 
-        button_abort.normalText(DriveKitUI.colors.secondaryColor())
-        button_abort.typeface = Typeface.DEFAULT_BOLD
-        button_abort.text = DKResource.convertToString(requireContext(), "dk_common_finish")
-        button_abort.setOnClickListener {
-            viewModel.scanValidationFinished()
+            button_abort.normalText(DriveKitUI.colors.secondaryColor())
+            button_abort.typeface = Typeface.DEFAULT_BOLD
+            button_abort.text = DKResource.convertToString(requireContext(), "dk_common_finish")
+            button_abort.setOnClickListener {
+                viewModel.scanValidationFinished()
+            }
         }
     }
 }
