@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_activity_text"
+        android:text="@string/dk_perm_utils_permissions_phone_settings_activity_text_android"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_activity_permission_title" />
