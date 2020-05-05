@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="button_help_report_width">300dp</dimen>
-    <dimen name="diagnosis_layout_padding">6dp</dimen>
-    <dimen name="diagnosis_header_margin">10dp</dimen>
 </resources>

@@ -18,8 +18,8 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/diagnosis_layout_padding"
-            android:paddingEnd="@dimen/diagnosis_layout_padding">
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half">
 
             <ImageView
                 android:id="@+id/image_view_summary_icon"
@@ -37,7 +37,7 @@
                 android:id="@+id/text_view_summary_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/diagnosis_header_margin"
+                android:layout_margin="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_diag_app_ok"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
@@ -47,7 +47,7 @@
                 android:id="@+id/text_view_summary_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/diagnosis_header_margin"
+                android:layout_marginStart="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_diag_app_ok_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
@@ -64,7 +64,6 @@
                 android:id="@+id/diag_item_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_location_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -78,7 +77,6 @@
                 android:id="@+id/diag_item_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_notification_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -92,7 +90,6 @@
                 android:id="@+id/diag_item_location_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -106,7 +103,6 @@
                 android:id="@+id/diag_item_bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_bluetooth_link"
 
@@ -121,7 +117,6 @@
                 android:id="@+id/diag_item_activity_recognition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_activity_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -136,7 +131,6 @@
                 android:id="@+id/diag_item_connectivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_network_link"
