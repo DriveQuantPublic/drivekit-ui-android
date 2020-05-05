@@ -16,13 +16,9 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.drivequant.drivekit.common.ui.utils.DKReachability
-import com.drivequant.drivekit.permissionsutils.BuildConfig
-import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
-import java.util.*
 
 
 /**
