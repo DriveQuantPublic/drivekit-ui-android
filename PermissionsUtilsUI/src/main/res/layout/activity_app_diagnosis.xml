@@ -214,8 +214,9 @@
 
             <Button
                 android:id="@+id/button_help_report"
-                android:layout_width="@dimen/button_help_report_width"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.8"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dk_margin_half"
