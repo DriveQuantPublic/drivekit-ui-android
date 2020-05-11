@@ -133,7 +133,7 @@ class VehicleDetailFragment : Fragment() {
                 cameraFilePath = filePath
             }
         }
-        cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("VEHICLE_PICTURE_PREF_%s", vehicleId))
+        cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
         imageView = activity?.findViewById(R.id.image_view_vehicle)
         imageView?.let {
             Glide.with(this)
@@ -335,7 +335,7 @@ class VehicleDetailFragment : Fragment() {
 
     private fun saveVehiclePictureLocalPath(path: String?){
         path?.let {
-            DriveKitSharedPreferencesUtils.setString(String.format("VEHICLE_PICTURE_PREF_%s", vehicleId), path)
+            DriveKitSharedPreferencesUtils.setString(String.format("drivekit-vehicle-picture_%s", vehicleId), path)
         }
     }
 
