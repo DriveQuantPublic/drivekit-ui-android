@@ -2,6 +2,7 @@ package com.drivequant.drivekit.permissionsutils
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
@@ -12,6 +13,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.common.ui.utils.ContactType
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -113,6 +115,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
+        val versionName = try {
+            val pInfo = DriveKit.application!!.packageManager.getPackageInfo(DriveKit.application!!.packageName, 0)
+            pInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            "noName"
+        }
+
         val gpsMail =
             if (DiagnosisHelper.isSensorActivated(context, SensorType.GPS)) context.getString(
                 R.string.dk_common_yes
@@ -156,7 +165,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         )} ${Build.MODEL} \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
-        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} ${BuildConfig.VERSION_NAME} \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
         return mailBody
     }
 }
