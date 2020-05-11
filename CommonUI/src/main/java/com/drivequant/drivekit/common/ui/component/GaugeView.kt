@@ -12,6 +12,8 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var drawingArea: RectF = RectF()
     private var score: Double = 0.0
+    private var openAngle: Float = 0F
+    private var startAngle: Float = 0F
     private var strokeSize = 0F
     private var gaugeColor = Color.argb(0, 0, 0, 0)
     private var backGaugeColor = Color.argb(0, 0, 0, 0)
@@ -19,9 +21,12 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         calculateDrawableArea()
-        canvas?.drawArc(drawingArea, 270F, 128F, false, createPaint(Color.argb(0, 0, 0, 0)))
-        canvas?.drawArc(drawingArea, 38F, 232F, false, createPaint(backGaugeColor))
-        canvas?.drawArc(drawingArea, 38F, computePercent(), false, createPaint(gaugeColor))
+
+        if(openAngle == 128F) {
+            canvas?.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
+        }
+        canvas?.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
+        canvas?.drawArc(drawingArea, startAngle, computePercent(), false, createPaint(gaugeColor))
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -31,6 +36,16 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun configureScore(score: Double) {
         this.score = score
+        invalidate()
+    }
+
+    fun setOpenAngle(openAngle: Float) {
+        this.openAngle = openAngle
+        invalidate()
+    }
+
+    fun setStartAngle(startAngle: Float) {
+        this.startAngle = startAngle
         invalidate()
     }
 
@@ -58,9 +73,8 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawingArea = RectF(drawPadding, drawPadding, right, bottom)
     }
 
-
     private fun computePercent(): Float {
-        return (232F * score / 10F).toFloat()
+        return ((360 - openAngle) * score / 10F).toFloat()
     }
 
     private fun createPaint(color: Int): Paint {
