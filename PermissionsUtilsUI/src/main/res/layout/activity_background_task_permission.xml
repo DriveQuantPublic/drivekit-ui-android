@@ -67,5 +67,5 @@
         android:text="@string/dk_perm_utils_permissions_phone_settings_background_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text2" />
 </android.support.constraint.ConstraintLayout>

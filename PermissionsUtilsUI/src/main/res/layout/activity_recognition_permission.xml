@@ -54,5 +54,5 @@
         android:text="@string/dk_perm_utils_permissions_phone_settings_activity_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_activity_permission_text" />
 </android.support.constraint.ConstraintLayout>
