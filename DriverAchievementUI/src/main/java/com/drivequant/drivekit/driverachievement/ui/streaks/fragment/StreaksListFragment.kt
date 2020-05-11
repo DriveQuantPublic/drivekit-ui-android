@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
+import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 import kotlinx.android.synthetic.main.fragment_streaks_list.*
@@ -55,7 +55,7 @@ class StreaksListFragment : Fragment() {
 
     private fun updateStreaks() {
         listViewModel.streaksData.observe(this, Observer {
-            if (listViewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
+            if (listViewModel.syncStatus != StreakSyncStatus.NO_ERROR) {
                 Toast.makeText(context, context?.getString(R.string.dk_achievements_failed_to_sync_streaks), Toast.LENGTH_LONG)
                     .show()
             }
