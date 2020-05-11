@@ -609,11 +609,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         button_help_report.button()
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
-
-        switch_enable_logging.thumbDrawable.setColorFilter(
-            DriveKitUI.colors.secondaryColor(),
-            PorterDuff.Mode.SRC_IN
-        )
+        if(switch_enable_logging.isChecked) {
+            switch_enable_logging.thumbDrawable.setColorFilter(
+                DriveKitUI.colors.secondaryColor(),
+                PorterDuff.Mode.SRC_IN
+            )
+        }
         switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
         switch_enable_logging.setTextSize(
             TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
