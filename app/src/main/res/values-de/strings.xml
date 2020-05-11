@@ -14,8 +14,6 @@
    <string name="beacon_required_on">Beacon ist erforderlich, um eine Reise zu validieren.</string>
    <string name="beacon_required_title">beacon benötigt ?</string>
    <string name="cancel_trip">Stornierung der Reise</string>
-   <string name="driver_achievement_button">Start Driver Achievement</string>
-   <string name="driver_achievement_explanation">Ein Beispiel für die Implementierung des DriveKit Driver Achievement mit seiner UI für die Streak-Liste</string>
    <string name="driver_data_button">DriverData starten</string>
    <string name="driver_data_explanation">Ein Beispiel für die DriveKit DriverData-Implementierung mit seiner Benutzeroberfläche für die Reiseliste und das Reisendetail.</string>
    <string name="enable_logging_pref_off">Aktivieren Sie diese Einstellung, um das Protokoll auf das Gerät zu schreiben.</string>
@@ -55,4 +53,8 @@
    <string name="vehicle_explanation">Ein Beispiel für eine DriveKit-Vehicle mit UI für die Fahrzeugauswahl, Fahrzeugliste, Fahrzeugdetails, Baken- und Bluetooth-Gerätekopplung</string>
    <string name="vehicle_list_button">Liste der Fahrzeuge</string>
    <string name="vehicle_picker_button">Eine Fahrt hinzufügen</string>
+
+   <string name="driver_achievement_explanation">An example of DriveKit Driver Achievement implementation with its UI.</string>
+   <string name="driver_streaks_button">Launch Driver Streaks</string>
+   <string name="driver_badges_button">Launch Driver Badges</string>
 </resources>
