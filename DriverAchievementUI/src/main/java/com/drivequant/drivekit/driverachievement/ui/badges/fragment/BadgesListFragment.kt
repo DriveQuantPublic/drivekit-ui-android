@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import android.support.v7.widget.LinearLayoutManager
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
@@ -33,11 +33,8 @@ class BadgesListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_badges_list, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
-        return view
-    }
+    ): View? = inflater.inflate(R.layout.fragment_badges_list, container, false).setDKStyle()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

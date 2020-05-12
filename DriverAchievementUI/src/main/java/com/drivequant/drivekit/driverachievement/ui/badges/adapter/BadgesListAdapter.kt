@@ -33,5 +33,4 @@ class BadgesListAdapter(
         val badgesData = badgesListViewModel.filteredBadgesData[position]
         parent.bind(badgesData)
     }
-
 }
