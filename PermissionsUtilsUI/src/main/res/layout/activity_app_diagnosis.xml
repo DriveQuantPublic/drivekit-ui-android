@@ -74,6 +74,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/summary_view_separator" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_location_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_loc_sensor_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_loc_sensor_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_loc_sensor_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_location" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,19 +100,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_location" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
-                android:id="@+id/diag_item_location_sensor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dk_margin_quarter"
-                app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
-                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
-                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_loc_sensor_ko"
-                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_loc_sensor_ok"
-                app:diagnosisTitle="@string/dk_perm_utils_app_diag_loc_sensor_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_notification" />
-
-            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_bluetooth_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_bluetooth_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_location_sensor" />
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_notification" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_activity_recognition"
