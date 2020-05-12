@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <TextView
-        android:text="Nombre de trajet"
         android:id="@+id/text_view_badge_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/dk_margin_half"
+        android:paddingTop="@dimen/dk_margin_quarter"
+        android:paddingRight="@dimen/dk_margin_half"
+        android:paddingBottom="@dimen/dk_margin_quarter"
+        android:text="@string/badge_trip_number_theme"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,26 +30,29 @@
         app:layout_constraintTop_toBottomOf="@+id/text_view_badge_title">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <com.drivequant.drivekit.common.ui.component.GaugeImage
                 android:id="@+id/badge_silver"
+                android:padding="@dimen/dk_margin_half"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:layout_height="140dp"
                 app:gaugeStrokeSize="@dimen/dk_margin_half" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/text_view_bronze_badge_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HOLA" />
+                android:gravity="center"
+                android:text="@string/badge_acceleration_name_1" />
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -49,18 +60,21 @@
             <com.drivequant.drivekit.common.ui.component.GaugeImage
                 android:id="@+id/badge_bronze"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:padding="@dimen/dk_margin_half"
+                android:layout_height="140dp"
+                android:layout_marginBottom="@dimen/dk_margin"
                 app:gaugeStrokeSize="@dimen/dk_margin_half" />
 
             <TextView
+                android:id="@+id/text_view_silver_badge_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hola" />
+                android:gravity="center"
+                android:text="@string/badge_acceleration_name_1"/>
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -68,17 +82,17 @@
             <com.drivequant.drivekit.common.ui.component.GaugeImage
                 android:id="@+id/badge_gold"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="140dp"
+                android:padding="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin"
                 app:gaugeStrokeSize="@dimen/dk_margin_half" />
 
             <TextView
+                android:id="@+id/text_view_gold_badge_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HOLA" />
+                android:gravity="center"
+                android:text="@string/badge_acceleration_name_1" />
         </LinearLayout>
-
-
     </LinearLayout>
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

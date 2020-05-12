@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="badgeLevel1Color">#bd5e4a</color>
+    <color name="badgeLevel2Color">#a8a8a3</color>
+    <color name="badgeLevel3Color">#f9ed9e</color>
+    <color name="neutral">#F0F0F0</color>
 </resources>
