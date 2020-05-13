@@ -23,11 +23,11 @@ class BadgesData(
 
     fun getBadgeCategory(): BadgeCategory = category
 
-    fun getBadgeLevel1() = levels[0]
+    private fun getBadgeLevel1() = levels[0]
 
-    fun getBadgeLevel2() = levels[1]
+    private fun getBadgeLevel2() = levels[1]
 
-    fun getBadgeLevel3() = levels[2]
+    private fun getBadgeLevel3() = levels[2]
 
     fun isBadgeAcquired(): Triple<Boolean, Boolean, Boolean> =
         Triple(
@@ -37,7 +37,7 @@ class BadgesData(
         )
 
 
-    fun computePercent(progress: Double, threshold: Int): Double =
+    private fun computePercent(progress: Double, threshold: Int): Double =
         (progress / threshold) * 10
 
     fun getPercent(): Triple<Double, Double, Double> =
@@ -79,5 +79,8 @@ class BadgesData(
             DKResource.convertToString(context, getBadgeLevel2().descriptionKey),
             DKResource.convertToString(context, getBadgeLevel3().descriptionKey)
         )
+
+    fun getBadgeLevel(): Triple<DKLevel, DKLevel, DKLevel> =
+        Triple(getBadgeLevel1().level, getBadgeLevel2().level, getBadgeLevel3().level)
 }
 

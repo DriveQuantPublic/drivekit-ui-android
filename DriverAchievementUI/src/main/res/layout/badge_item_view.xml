@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.drivequant.drivekit.common.ui.component.GaugeImage
+        android:id="@+id/gauge_image"
+        android:layout_width="match_parent"
+        android:layout_height="133dp"
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:padding="@dimen/dk_margin_half"
+        app:gaugeStrokeSize="@dimen/dk_margin_half" />
+
+    <TextView
+        android:id="@+id/text_view_badge_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/badge_acceleration_name_1" />
+</LinearLayout>
