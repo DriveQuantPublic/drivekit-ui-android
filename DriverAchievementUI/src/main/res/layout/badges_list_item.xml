@@ -26,19 +26,19 @@
         <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
             android:id="@+id/badge_bronze"
             android:layout_width="0dp"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
             android:id="@+id/badge_silver"
             android:layout_width="0dp"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
         <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
             android:id="@+id/badge_gold"
             android:layout_width="0dp"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>
