@@ -58,6 +58,18 @@ class BadgeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             , badgesData.getBadgeName(context).third)
         }
 
+        bronzeBadge.setBadgeDescription(badgesData.getBadgeDescription(context).first)
+        silverBadge.setBadgeDescription(badgesData.getBadgeDescription(context).second)
+        goldBadge.setBadgeDescription(badgesData.getBadgeDescription(context).third)
+
+        bronzeBadge.setBadgeTitle(badgesData.getBadgeName(context).first)
+        silverBadge.setBadgeTitle(badgesData.getBadgeName(context).second)
+        goldBadge.setBadgeTitle(badgesData.getBadgeName(context).third)
+
+        bronzeBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).first)
+        silverBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).second)
+        goldBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).third)
+
         setStyle()
     }
 
