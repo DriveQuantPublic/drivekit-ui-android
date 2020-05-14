@@ -322,4 +322,5 @@
    <string name="badge_urban_distance_progress_3">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_urban_distance_theme">Conducción en zonas urbanas</string>
    <string name="badge_your_progress_title">Su progreso</string>
+   <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
 </resources>

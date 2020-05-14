@@ -54,10 +54,9 @@ class BadgesListFragment : Fragment() {
     private fun updateBadges() {
         listViewModel.badgesData.observe(this, Observer {
             if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
-                //TODO Replace Key string
                 Toast.makeText(
                     context,
-                    context?.getString(R.string.dk_achievements_failed_to_sync_streaks),
+                    context?.getString(R.string.dk_achievements_failed_to_sync_badges),
                     Toast.LENGTH_LONG
                 )
                     .show()

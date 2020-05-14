@@ -324,4 +324,5 @@
    <string name="badge_urban_distance_progress_3">Il vous reste %s trajets à parcourir pour remporter ce badge.</string>
    <string name="badge_urban_distance_theme">Conduite en zone urbaine</string>
    <string name="badge_your_progress_title">Votre avancement</string>
+   <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
 </resources>

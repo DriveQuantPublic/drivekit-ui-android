@@ -324,4 +324,5 @@
    <string name="badge_urban_distance_progress_3">Sie benötigen noch %s Fahrten, um diese Medaille zu gewinnen.</string>
    <string name="badge_urban_distance_theme">Fahren in Stadtgebieten</string>
    <string name="badge_your_progress_title">Ihre Fortschritte</string>
+   <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
 </resources>

@@ -13,5 +13,5 @@ open class DKColors {
     open fun backgroundViewColor(): Int = Color.parseColor("#FAFAFA")
     open fun warningColor(): Int = Color.parseColor("#FF6E57")
     open fun criticalColor(): Int = Color.parseColor("#E52027")
-    open fun transparentColor(): Int = Color.parseColor("#00FFFFFF")
+    open fun transparentColor(): Int = Color.parseColor("#000000FF")
 }

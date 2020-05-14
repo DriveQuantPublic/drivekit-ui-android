@@ -324,4 +324,5 @@
    <string name="badge_urban_distance_progress_3">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
    <string name="badge_urban_distance_theme">Guidare nelle aree urbane</string>
    <string name="badge_your_progress_title">Il tuo progresso</string>
+   <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
 </resources>
