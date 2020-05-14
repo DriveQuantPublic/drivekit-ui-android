@@ -14,7 +14,7 @@ import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesData
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class BadgeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val context = itemView.context
     private val title = itemView.findViewById<TextView>(R.id.text_view_badge_title)
     private val bronzeBadge = itemView.findViewById<BadgeItemView>(R.id.badge_bronze)
@@ -31,7 +31,9 @@ class BadgeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 badgesData.getBadgeColor(
                     badgesData.getBadgeLevel().first,
                     badgesData.isBadgeAcquired().first
-                ),badgesData.getBadgeName(context).first
+                ),
+
+                badgesData.getBadgeName(context).first
             )
         }
 
@@ -43,7 +45,8 @@ class BadgeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     badgesData.getBadgeLevel().second,
                     badgesData.isBadgeAcquired().second
                 )
-            ,badgesData.getBadgeName(context).second)
+                , badgesData.getBadgeName(context).second
+            )
 
         }
 
@@ -55,7 +58,8 @@ class BadgeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     badgesData.getBadgeLevel().third,
                     badgesData.isBadgeAcquired().third
                 )
-            , badgesData.getBadgeName(context).third)
+                , badgesData.getBadgeName(context).third
+            )
         }
 
         bronzeBadge.setBadgeDescription(badgesData.getBadgeDescription(context).first)

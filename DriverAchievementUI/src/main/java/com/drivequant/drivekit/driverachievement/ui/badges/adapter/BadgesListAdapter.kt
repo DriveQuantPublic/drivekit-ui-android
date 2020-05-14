@@ -21,7 +21,7 @@ class BadgesListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): BadgeViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.badges_list_item, parent, false)
-        FontUtils.overrideFonts(parent.context,view)
+        FontUtils.overrideFonts(parent.context, view)
         return BadgeViewHolder(view)
     }
 
