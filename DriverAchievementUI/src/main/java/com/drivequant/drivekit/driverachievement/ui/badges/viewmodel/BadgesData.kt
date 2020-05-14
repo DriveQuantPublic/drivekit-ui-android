@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.badges.viewmodel
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.BadgeLevel
@@ -20,8 +21,6 @@ class BadgesData(
 ) {
 
     fun getBadgeTitle(context: Context): String = DKResource.convertToString(context, themeKey)
-
-    fun getBadgeCategory(): BadgeCategory = category
 
     private fun getBadgeLevel1() = levels[0]
 
@@ -75,13 +74,13 @@ class BadgesData(
 
     fun getBadgeColor(dkLevel: DKLevel, isBadgeAcquired: Boolean): Int {
         return if (isBadgeAcquired) {
-            R.color.neutral
-        } else {
             when (dkLevel) {
-                DKLevel.GOLD -> R.color.badgeLevel3Color
-                DKLevel.SILVER -> R.color.badgeLevel2Color
-                DKLevel.BRONZE -> R.color.badgeLevel1Color
+                DKLevel.BRONZE -> R.color.dkBadgeLevel1Color
+                DKLevel.SILVER -> R.color.dkBadgeLevel2Color
+                DKLevel.GOLD -> R.color.dkBadgeLevel3Color
             }
+        } else {
+            DriveKitUI.colors.neutralColor()
         }
     }
 
@@ -102,12 +101,13 @@ class BadgesData(
     fun getBadgeLevel(): Triple<DKLevel, DKLevel, DKLevel> =
         Triple(getBadgeLevel1().level, getBadgeLevel2().level, getBadgeLevel3().level)
 
-    fun getBadgeProgressCongrats(context: Context) : Triple<String, String, String> {
+    fun getBadgeProgressCongrats(context: Context): Triple<String, String, String> {
         val textBadgeLevel1 = if (isBadgeAcquired().first) {
             DKResource.convertToString(context, getBadgeLevel1().congratsKey)
         } else {
             val remainingText = DKResource.convertToString(context, getBadgeLevel1().progressKey)
-            val remainingValue = computeRemainingValue(getBadgeLevel1().progressValue, getBadgeLevel1().threshold)
+            val remainingValue =
+                computeRemainingValue(getBadgeLevel1().progressValue, getBadgeLevel1().threshold)
             String.format(remainingText, remainingValue)
         }
 
@@ -116,7 +116,8 @@ class BadgesData(
         } else {
             DKResource.convertToString(context, getBadgeLevel2().progressKey)
             val remainingText = DKResource.convertToString(context, getBadgeLevel2().progressKey)
-            val remainingValue = computeRemainingValue(getBadgeLevel2().progressValue, getBadgeLevel2().threshold)
+            val remainingValue =
+                computeRemainingValue(getBadgeLevel2().progressValue, getBadgeLevel2().threshold)
             String.format(remainingText, remainingValue)
         }
 
@@ -125,13 +126,15 @@ class BadgesData(
         } else {
             DKResource.convertToString(context, getBadgeLevel3().progressKey)
             val remainingText = DKResource.convertToString(context, getBadgeLevel3().progressKey)
-            val remainingValue = computeRemainingValue(getBadgeLevel3().progressValue, getBadgeLevel3().threshold)
+            val remainingValue =
+                computeRemainingValue(getBadgeLevel3().progressValue, getBadgeLevel3().threshold)
             String.format(remainingText, remainingValue)
         }
 
         return Triple(textBadgeLevel1, textBadgeLevel2, textBadgeLevel3)
     }
 
-    private fun computeRemainingValue(progress:Double, threshold: Int): Int = threshold - progress.toInt()
+    private fun computeRemainingValue(progress: Double, threshold: Int): Int =
+        threshold - progress.toInt()
 }
 
