@@ -5,11 +5,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -20,12 +20,8 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
-import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
-import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -35,6 +31,7 @@ import com.facebook.stetho.Stetho
 import java.util.*
 
 class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraStepListener {
+
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -58,22 +55,12 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         configureDriveKit()
         registerReceiver()
 
-        DriveKitUI.initialize()
-        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
+        DriveKitConfig.configureDriveKitUI(this)
+        DriveKitConfig.configureDriverAchievement()
+        DriveKitConfig.configurePermissionsUtils(this)
+
         DriverDataUI.initialize()
-        DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
-        PermissionUtilsUI.initialize()
-        PermissionUtilsUI.configureBluetooth(true)
-        PermissionUtilsUI.configureDiagnosisLogs(true)
-        PermissionUtilsUI.configureLogPathFile("/DQ-demo-test/")
-        PermissionUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String = getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
-            override fun overrideMailBodyContent(): Boolean = false
-        }))
     }
 
     private fun createNotificationChannel() {

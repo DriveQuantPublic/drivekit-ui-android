@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="badgeLevel1Color">#bd5e4a</color>
-    <color name="badgeLevel2Color">#a8a8a3</color>
-    <color name="badgeLevel3Color">#f9ed9e</color>
-    <color name="neutral">#F0F0F0</color>
+    <color name="dkBadgeLevel1Color">#BD5E4A</color>
+    <color name="dkBadgeLevel2Color">#A8A8A3</color>
+    <color name="dkBadgeLevel3Color">#F9ED9E</color>
+    <color name="dkNeutral">#F0F0F0</color>
 </resources>

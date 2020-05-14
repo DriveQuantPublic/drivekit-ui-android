@@ -1,6 +1,6 @@
 package com.drivekit.demoapp.config
 
-import android.app.Application
+import android.content.Context
 import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
@@ -11,9 +11,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKColors
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class ColorConfig(private val application: Application) : DKColors() {
+class ColorConfig(private val context: Context) : DKColors() {
 
-    override fun secondaryColor(): Int = ContextCompat.getColor(application, R.color.colorPrimaryDark)
+    override fun secondaryColor(): Int = ContextCompat.getColor(context, R.color.colorPrimaryDark)
 
     override fun backgroundViewColor(): Int = Color.RED
 }
