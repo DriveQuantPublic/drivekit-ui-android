@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
@@ -35,7 +36,7 @@ class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gaugeView.setBackGaugeColor(
             attributes.getColor(
                 R.styleable.GaugeImage_gaugeBackColor,
-                DriveKitUI.colors.neutralColor()
+                DriveKitUI.colors.transparentColor()
             )
         )
         attributes.recycle()
@@ -46,6 +47,10 @@ class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gaugeView.setStartAngle(270F)
         gaugeView.configureScore(progress)
         imageView.setImageDrawable(gaugeDrawable)
-        gaugeView.setGaugeColor(ContextCompat.getColor(context, gaugeColor))
+        try {
+            gaugeView.setGaugeColor(ContextCompat.getColor(context, gaugeColor))
+        } catch  (e: Resources.NotFoundException) {
+            gaugeView.setGaugeColor(gaugeColor)
+        }
     }
 }
