@@ -29,7 +29,7 @@ class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gaugeView.updateStrokeSize(
             attributes.getDimension(
                 R.styleable.GaugeImage_gaugeStrokeSize,
-                resources.getDimension(R.dimen.dk_default_gauge_stroke)
+                resources.getDimension(R.dimen.dk_default_gauge_image_stroke)
             )
         )
 
