@@ -67,8 +67,14 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val drawPadding = strokeSize / 2
         val width = width.toFloat()
         val height = height.toFloat()
-        val right = width - drawPadding
-        val bottom = height - drawPadding
+        val edge = if (height < width) {
+              height
+        } else {
+            width
+        }
+
+        val right = edge - drawPadding
+        val bottom = edge - drawPadding
         drawingArea = RectF(drawPadding, drawPadding, right, bottom)
     }
 
