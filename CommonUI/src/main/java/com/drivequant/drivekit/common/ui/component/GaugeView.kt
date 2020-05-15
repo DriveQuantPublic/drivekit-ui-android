@@ -1,12 +1,11 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.graphics.RectF
+
 
 class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -22,7 +21,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         super.onDraw(canvas)
         calculateDrawableArea()
 
-        if(openAngle == 128F) {
+        if (openAngle == 128F) {
             canvas?.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
         }
         canvas?.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
