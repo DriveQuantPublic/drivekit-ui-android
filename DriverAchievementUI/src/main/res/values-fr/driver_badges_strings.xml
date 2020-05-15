@@ -150,8 +150,7 @@
    <string name="badge_expressway_distance_congrats_3">Félicitations, vous avez atteint l\'objectif !</string>
    <string name="badge_expressway_distance_description_1">Pour décrocher ce badge, vous devez rouler au moins 100 km sur des voies rapides. Attention, ces trajets sont plus monotones et fatiguant. Essayez de ne pas baisser votre vigilance.</string>
    <string name="badge_expressway_distance_description_2">Pour obtenir ce badge, il vous suffit de parcourir 300 km sur des voies rapides. Avant le départ, n\'oubliez pas de contrôler l’état de votre véhicule (pression des pneus, freins, éclairage et essuie-glaces).</string>
-   <string name="badge_expressway_distance_description_3">Conduisez 1000 km sur des voies rapides pour remporter ce badge. N\'oubliez jamais la règle de base : Pour limiter le risque d\'endormissement, faites des pauses d’une quinzaine de minutes toutes les deux heures.
-</string>
+   <string name="badge_expressway_distance_description_3">Conduisez 1000 km sur des voies rapides pour remporter ce badge. N\'oubliez jamais la règle de base : Pour limiter le risque d\'endormissement, faites des pauses d’une quinzaine de minutes toutes les deux heures.</string>
    <string name="badge_expressway_distance_name_1">Fast and Serious</string>
    <string name="badge_expressway_distance_name_2">Road Trip</string>
    <string name="badge_expressway_distance_name_3">Easy Rider</string>
@@ -165,8 +164,7 @@
    <string name="badge_extra_urban_distance_congrats_1">Félicitations, vous avez atteint l\'objectif !</string>
    <string name="badge_extra_urban_distance_congrats_2">Félicitations, vous avez atteint l\'objectif !</string>
    <string name="badge_extra_urban_distance_congrats_3">Félicitations, vous avez atteint l\'objectif !</string>
-   <string name="badge_extra_urban_distance_description_1">Parcourez plus de 100 km en dehors d\'une agglomération pour valider ce badge. Hors des villes, le trafic est plus fluide mais les dangers existent. Pensez toujours à respecter les distances de sécurité et à porter votre regard au loin pour anticiper toutes les situations.
-</string>
+   <string name="badge_extra_urban_distance_description_1">Parcourez plus de 100 km en dehors d\'une agglomération pour valider ce badge. Hors des villes, le trafic est plus fluide mais les dangers existent. Pensez toujours à respecter les distances de sécurité et à porter votre regard au loin pour anticiper toutes les situations.</string>
    <string name="badge_extra_urban_distance_description_2">Pour obtenir ce badge, vous devez conduire 300 km dans un environnement extra-urbain. Sur une route de campagne, pensez aux vélos en particulier en sortie de virage.</string>
    <string name="badge_extra_urban_distance_description_3">Pour gagner ce badge, vous devez réaliser 1000 km dans un environnement extra-urbain. Il est important de bien gérer les changements d\'allure lors des passages de la ville à des zones extra-urbaines. Augmentez progressivement votre allure dès la sortie de la ville. A l\'inverse, anticipez votre décélération pour atteindre une vitesse de 50 km/h lors d\'un retour en zone urbaine.</string>
    <string name="badge_extra_urban_distance_name_1">Balade</string>
@@ -324,5 +322,6 @@
    <string name="badge_urban_distance_progress_3">Il vous reste %s trajets à parcourir pour remporter ce badge.</string>
    <string name="badge_urban_distance_theme">Conduite en zone urbaine</string>
    <string name="badge_your_progress_title">Votre avancement</string>
-   <string name="dk_achievements_failed_to_sync_badges">Failed to synchronize badges, please retry later.</string>
+   <string name="dk_achievements_failed_to_sync_badges">Impossible de synchroniser les badges, veuillez réessayer plus tard.</string>
+   <string name="menu_mybadges">Mes badges</string>
 </resources>
