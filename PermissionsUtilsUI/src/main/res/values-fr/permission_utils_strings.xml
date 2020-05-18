@@ -23,6 +23,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Autorisation d\'accès au suivi d\'activité :</string>
    <string name="dk_perm_utils_app_diag_email_app">Application :</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Version de l\'application :</string>
+   <string name="dk_perm_utils_app_diag_email_battery">Optimisation de la batterie :</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Capteur Bluetooth :</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motif (commentaires) :</string>
    <string name="dk_perm_utils_app_diag_email_email">Email :</string>
@@ -74,7 +75,7 @@
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Pour cela, choisissez \"Autoriser\" lorsque la prochaine popup sera affichée.</string>
    <string name="dk_perm_utils_permissions_location_title">Suivi des trajets</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Autoriser le suivi de l\'activité</string>
-   <string name="dk_perm_utils_permissions_phone_settings_activity_text">Pour améliorer l\'analyse de vos trajets et identifier le mode de transport utilisé, vous devez activer l\'option Mouvements et forme de votre téléphone.</string>
+   <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">Pour améliorer l\'analyse de vos trajets et identifier le mode de transport utilisé, vous devez autoriser l\'application à accéder à l\'activité du téléphone.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_title">Suivi de l\'activité</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_button">Autoriser l\'execution en arrière-plan</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_text1">Pour éviter que l\’application soit stoppée par le système d\'économie de la batterie du téléphone, vous devez accepter l\'exécution en arrière-plan.</string>

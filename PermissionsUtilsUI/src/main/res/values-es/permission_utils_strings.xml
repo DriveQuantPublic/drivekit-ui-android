@@ -23,6 +23,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Autorización para acceder al seguimiento de la actividad:</string>
    <string name="dk_perm_utils_app_diag_email_app">Aplicación:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Versión de la aplicación:</string>
+   <string name="dk_perm_utils_app_diag_email_battery">Optimización de la batería:</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Sensor de Bluetooth:</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motivo (comentarios):</string>
    <string name="dk_perm_utils_app_diag_email_email">Correo electrónico :</string>
@@ -74,7 +75,7 @@
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Para ello, seleccione \"Permitir\" cuando aparezca la siguiente ventana emergente.</string>
    <string name="dk_perm_utils_permissions_location_title">Autoseguimiento de viajes</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Autorizar el seguimiento de la actividad</string>
-   <string name="dk_perm_utils_permissions_phone_settings_activity_text">Para mejorar el análisis de sus viajes e identificar el medio de transporte utilizado, debe activar la opción Condición y actividad física.</string>
+   <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">Para mejorar el análisis de sus viajes e identificar el medio de transporte utilizado, debe permitir que la aplicación acceda a la actividad telefónica.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_title">Seguimiento de la actividad</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_button">Permitir la ejecución en segundo plano</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_text1">Para evitar que la aplicación sea detenida por el sistema de ahorro de batería del teléfono, debe aceptar la ejecución en segundo plano.</string>

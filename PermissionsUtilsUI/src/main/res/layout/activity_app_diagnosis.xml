@@ -18,8 +18,8 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/diagnosis_layout_padding"
-            android:paddingEnd="@dimen/diagnosis_layout_padding">
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half">
 
             <ImageView
                 android:id="@+id/image_view_summary_icon"
@@ -64,7 +64,6 @@
                 android:id="@+id/diag_item_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_location_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -75,24 +74,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/summary_view_separator" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
-                android:id="@+id/diag_item_notification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
-                android:layout_marginTop="@dimen/dk_margin_quarter"
-                app:diagnosisLink="@string/dk_perm_utils_app_diag_notification_link"
-                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
-                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_notification_ko"
-                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_notification_ok"
-                app:diagnosisTitle="@string/dk_perm_utils_app_diag_notification_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_location" />
-
-            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_location_sensor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -100,13 +84,25 @@
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_loc_sensor_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_loc_sensor_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_notification" />
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_location" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_notification_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_notification_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_notification_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_notification_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_location_sensor" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_bluetooth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_bluetooth_link"
 
@@ -115,13 +111,12 @@
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_bluetooth_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_bluetooth_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_location_sensor" />
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_notification" />
 
             <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
                 android:id="@+id/diag_item_activity_recognition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_activity_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
@@ -136,7 +131,6 @@
                 android:id="@+id/diag_item_connectivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dk_margin_eigth"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_network_link"
@@ -220,8 +214,9 @@
 
             <Button
                 android:id="@+id/button_help_report"
-                android:layout_width="@dimen/button_help_report_width"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.8"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dk_margin_half"

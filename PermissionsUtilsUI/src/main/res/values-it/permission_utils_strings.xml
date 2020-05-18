@@ -23,6 +23,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Autorizzazione all\'accesso al monitoraggio delle attività:</string>
    <string name="dk_perm_utils_app_diag_email_app">Applicazione:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Versione dell\'applicazione:</string>
+   <string name="dk_perm_utils_app_diag_email_battery">Ottimizzazione della batteria:</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Sensore Bluetooth:</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motivazione (commenti):</string>
    <string name="dk_perm_utils_app_diag_email_email">Email :</string>
@@ -74,7 +75,7 @@
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Per fare questo, scegliere \"Consenti\" quando viene visualizzata la prossima finestra popup.</string>
    <string name="dk_perm_utils_permissions_location_title">Tracciabilità automatica dei viaggi</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Autorizzare il monitoraggio delle attività</string>
-   <string name="dk_perm_utils_permissions_phone_settings_activity_text">Per migliorare l\'analisi dei vostri viaggi e identificare il modo di trasporto utilizzato, è necessario attivare l\'opzione Movimento e fitness.</string>
+   <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">Per migliorare l\'analisi dei vostri viaggi e identificare il modo di trasporto utilizzato, è necessario consentire all\'applicazione di accedere all\'attività telefonica.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_title">Monitoraggio delle attività</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_button">Consentire l\'esecuzione in background</string>
    <string name="dk_perm_utils_permissions_phone_settings_background_text1">Per evitare che l\'applicazione venga fermata dal sistema di risparmio della batteria del telefono, è necessario accettare l\'esecuzione in background.</string>

@@ -18,6 +18,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recognition_permission)
+        setToolbar("dk_perm_utils_permissions_phone_settings_activity_title")
         setStyle()
     }
 
