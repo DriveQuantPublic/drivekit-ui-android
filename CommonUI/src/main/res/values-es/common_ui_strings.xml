@@ -19,15 +19,15 @@
    <string name="dk_common_loading">Cargando. Por favor, espere...</string>
    <string name="dk_common_mass">Masa</string>
    <string name="dk_common_mean_speed">Velocidad media</string>
+   <string name="dk_common_no">No</string>
    <string name="dk_common_ok">OK</string>
-   <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.
-</string>
-   <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.
-</string>
+   <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.</string>
+   <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permissions">Permisos</string>
    <string name="dk_common_safety">Seguridad</string>
    <string name="dk_common_save">Registro</string>
    <string name="dk_common_select_image_gallery">Seleccione una foto existente</string>
+   <string name="dk_common_send_mail_error">Su dispositivo no está configurado para enviar correo electrónico...</string>
    <string name="dk_common_settings">Ajustes</string>
    <string name="dk_common_speed">Velocidad</string>
    <string name="dk_common_take_picture">Toma una foto</string>
@@ -54,4 +54,5 @@
    <string name="dk_common_unit_second">s</string>
    <string name="dk_common_update_photo_title">Cambiar la imagen</string>
    <string name="dk_common_validate">Valido</string>
+   <string name="dk_common_yes">Sí</string>
 </resources>

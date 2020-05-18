@@ -90,7 +90,8 @@ enum class DetectionModeType(
                 }
             }
         }
-        val parameteredString = DKResource.buildString(context, stringIdentifier, parameter)
+        val parameteredString = DKResource.buildString(context,  DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),stringIdentifier, parameter)
 
         return if (configured){
             DKSpannable().append(parameteredString, context.resSpans {
@@ -155,7 +156,8 @@ enum class DetectionModeType(
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
         val title = DKResource.convertToString(context, "app_name")
         val message = DKResource.buildString(context,
-            "dk_vehicle_gps_already_exists_confirm",
+            DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),"dk_vehicle_gps_already_exists_confirm",
             getEnumByDetectionMode(detectionMode).getTitle(context),
             vehicle.buildFormattedName(context),
             gpsVehicle.buildFormattedName(context),
@@ -222,7 +224,10 @@ enum class DetectionModeType(
 
         when (this){
             BEACON -> {
-                description?.text = DKResource.buildString(context, configureDescText, vehicleName)
+                description?.text = DKResource.buildString(
+                    context, DriveKitUI.colors.mainFontColor(),
+                    DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                )
 
                 verify?.let {
                     it.visibility = View.VISIBLE
@@ -259,7 +264,10 @@ enum class DetectionModeType(
             }
             BLUETOOTH -> {
                 separatorVerify?.visibility = View.GONE
-                description?.text = DKResource.buildString(context, configureDescText, vehicleName)
+                description?.text = DKResource.buildString(
+                    context, DriveKitUI.colors.mainFontColor(),
+                    DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                )
 
                 delete?.let {
                     it.visibility = View.VISIBLE

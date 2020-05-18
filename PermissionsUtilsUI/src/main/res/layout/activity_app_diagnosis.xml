@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".diagnosis.activity.AppDiagnosisActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half">
+
+            <ImageView
+                android:id="@+id/image_view_summary_icon"
+                android:layout_width="@dimen/dk_ic_xxbig"
+                android:layout_height="@dimen/dk_ic_xxbig"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:padding="@dimen/dk_margin_quarter"
+                app:layout_constraintBottom_toTopOf="@+id/summary_view_separator"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_summary_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_diag_app_ok"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_summary_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_diag_app_ok_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_view_summary_icon"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_summary_title" />
+
+            <TextView
+                android:id="@+id/summary_view_separator"
+                style="@style/Separator.Horizontal"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_summary_description" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_location_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_location_ko_android"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_location_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_location_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/summary_view_separator" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_location_sensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_loc_sensor_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_loc_sensor_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_loc_sensor_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_loc_sensor_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_location" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_notification_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_notification_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_notification_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_notification_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_location_sensor" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_bluetooth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_bluetooth_link"
+
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_bluetooth_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_bluetooth_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_bluetooth_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_notification" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_activity_recognition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_activity_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_activity_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_activity_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_activity_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_bluetooth" />
+
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_connectivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_network_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_network_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_network_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_network_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_activity_recognition" />
+
+            <TextView
+                android:id="@+id/diag_view_separator"
+                style="@style/Separator.Horizontal"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_connectivity" />
+
+            <TextView
+                android:id="@+id/text_view_battery_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_battery_title"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_view_separator" />
+
+            <TextView
+                android:id="@+id/text_view_battery_description_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_battery_text_android_01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_title" />
+
+            <TextView
+                android:id="@+id/text_view_battery_description_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_battery_text_android_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_1" />
+
+            <TextView
+                android:id="@+id/text_view_battery_description_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_battery_text_android_03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_2" />
+
+            <TextView
+                android:id="@+id/battery_view_separator"
+                style="@style/Separator.Horizontal"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_3" />
+
+            <TextView
+                android:id="@+id/text_view_help_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_help_request_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/battery_view_separator" />
+
+            <TextView
+                android:id="@+id/text_view_help_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_help_request_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_help_title" />
+
+            <Button
+                android:id="@+id/button_help_report"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_percent="0.8"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/dk_margin_half"
+                android:paddingStart="@dimen/dk_margin_half"
+                android:paddingEnd="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_help_request_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_help_description" />
+
+            <TextView
+                android:id="@+id/support_view_separator"
+                style="@style/Separator.Horizontal"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_help_report" />
+
+            <Switch
+                android:id="@+id/switch_enable_logging"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_log_title"
+                android:textSize="@dimen/dk_text_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/support_view_separator" />
+
+            <TextView
+                android:id="@+id/text_view_logging_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:paddingBottom="@dimen/dk_margin_half"
+                android:text="@string/dk_perm_utils_app_diag_log_ko"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_enable_logging" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
+

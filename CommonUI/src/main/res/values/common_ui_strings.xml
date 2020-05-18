@@ -19,6 +19,7 @@
     <string name="dk_common_loading">Loading. Please wait...</string>
     <string name="dk_common_mass">Mass</string>
     <string name="dk_common_mean_speed">Average speed</string>
+    <string name="dk_common_no">No</string>
     <string name="dk_common_ok">OK</string>
     <string name="dk_common_permission_camera_rationale">The application needs permission to access your smartphone\'s camera to use this feature.</string>
     <string name="dk_common_permission_storage_rationale">The application needs authorization to access your smartphone\'s storage to use this feature.</string>
@@ -26,6 +27,7 @@
     <string name="dk_common_safety">Safety</string>
     <string name="dk_common_save">Record</string>
     <string name="dk_common_select_image_gallery">Select an existing photo</string>
+    <string name="dk_common_send_mail_error">Your device isn\'t configured to send email</string>
     <string name="dk_common_settings">Settings</string>
     <string name="dk_common_speed">Velocity</string>
     <string name="dk_common_take_picture">Take a picture</string>
@@ -52,4 +54,5 @@
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_update_photo_title">Edit the picture</string>
     <string name="dk_common_validate">Valid</string>
+    <string name="dk_common_yes">Yes</string>
 </resources>

@@ -88,7 +88,13 @@ class BluetoothItemRecyclerViewAdapter(
         val btDeviceName = bluetoothDevice.name?.let { it } ?:run { bluetoothDevice.macAddress }
 
         title?.text = DKResource.convertToString(context, "app_name")
-        val text = DKResource.buildString(context, "dk_vehicle_bluetooth_already_paired", btDeviceName, viewModel.vehicleName)
+        val text = DKResource.buildString(
+            context, DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),
+            "dk_vehicle_bluetooth_already_paired",
+            btDeviceName,
+            viewModel.vehicleName
+        )
         description?.text = text
 
         title?.headLine1()

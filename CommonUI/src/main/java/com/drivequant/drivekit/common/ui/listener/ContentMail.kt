@@ -5,4 +5,5 @@ interface ContentMail {
     fun getBccRecipients(): List<String>
     fun getSubject(): String
     fun getMailBody(): String
+    fun overrideMailBodyContent(): Boolean
 }

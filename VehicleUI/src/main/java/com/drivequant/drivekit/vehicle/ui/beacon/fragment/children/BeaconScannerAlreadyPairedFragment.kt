@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -31,19 +32,35 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
 
     private lateinit var viewModel: BeaconViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_beacon_child_scanner_already_paired, container, false).setDKStyle()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(
+            R.layout.fragment_beacon_child_scanner_already_paired,
+            container,
+            false
+        ).setDKStyle()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val beaconCode = viewModel.beacon?.code?.let { it }?:run { "" }
-        val vehicleName = viewModel.vehicleName?.let { it }?: run { "" }
+        val beaconCode = viewModel.beacon?.code?.let { it } ?: run { "" }
+        val vehicleName = viewModel.vehicleName?.let { it } ?: run { "" }
 
         viewModel.vehiclePaired?.let {
             val vehiclePairedName = it.buildFormattedName(requireContext())
-            text_view_description.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_replace_description", beaconCode, vehicleName, vehiclePairedName)
+            text_view_description.text = DKResource.buildString(
+                requireContext(),
+                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.mainFontColor(),
+                "dk_vehicle_beacon_setup_replace_description",
+                beaconCode,
+                vehicleName,
+                vehiclePairedName
+            )
         }
         text_view_description.normalText()
 
@@ -62,7 +79,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
 
         viewModel.beaconChangeObserver.observe(this, Observer {
             it?.let { vehicleBeaconStatus ->
-                when (vehicleBeaconStatus){
+                when (vehicleBeaconStatus) {
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
                     ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")
                     UNKNOWN_VEHICLE -> displayErrorAlert("dk_vehicle_unknown")
@@ -72,12 +89,12 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         })
     }
 
-    private fun displayErrorAlert(identifier: String){
+    private fun displayErrorAlert(identifier: String) {
         DKAlertDialog.LayoutBuilder().init(requireContext())
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
             .positiveButton(DKResource.convertToString(requireContext(), identifier),
-                DialogInterface.OnClickListener { dialogInterface, _ ->  dialogInterface.dismiss() })
+                DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() })
             .show()
     }
 }

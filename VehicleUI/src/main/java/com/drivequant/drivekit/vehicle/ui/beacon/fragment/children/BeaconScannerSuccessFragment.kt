@@ -42,7 +42,14 @@ class BeaconScannerSuccessFragment : Fragment() {
         val beaconCode = viewModel.beacon?.code?.let { it }?:run { "" }
 
         text_view_description.normalText()
-        text_view_description.text = DKResource.buildString(requireContext(), "dk_vehicle_beacon_setup_code_success_recap", beaconCode, vehicleName)
+        text_view_description.text = DKResource.buildString(
+            requireContext(),
+            DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),
+            "dk_vehicle_beacon_setup_code_success_recap",
+            beaconCode,
+            vehicleName
+        )
 
         button_validate.button()
         button_validate.text = DKResource.convertToString(requireContext(), "dk_common_confirm")
