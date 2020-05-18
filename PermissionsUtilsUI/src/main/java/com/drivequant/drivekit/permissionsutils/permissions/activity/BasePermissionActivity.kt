@@ -15,14 +15,7 @@ open class BasePermissionActivity : RequestPermissionActivity() {
 
     private var nextPermissionViews = ArrayList<PermissionView>()
 
-    protected fun setToolbar() {
-       val titleResId = when (this) {
-           is ActivityRecognitionPermissionActivity ->  "dk_perm_utils_permissions_phone_settings_activity_title"
-           is BackgroundTaskPermissionActivity -> "dk_perm_utils_permissions_phone_settings_background_title"
-           is LocationPermissionActivity ->   "dk_perm_utils_permissions_location_title"
-           else -> throw IllegalArgumentException("Instance must extends BaseActivity")
-        }
-
+    protected fun setToolbar(titleResId: String) {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         this.title = DKResource.convertToString(this, titleResId)

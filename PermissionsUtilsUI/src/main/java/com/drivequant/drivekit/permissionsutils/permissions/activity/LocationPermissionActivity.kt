@@ -19,7 +19,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_permission)
-        setToolbar()
+        setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
