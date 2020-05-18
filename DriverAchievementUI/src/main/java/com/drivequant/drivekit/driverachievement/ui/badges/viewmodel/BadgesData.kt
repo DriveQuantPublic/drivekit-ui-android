@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.BadgeLevel
 import com.drivequant.drivekit.databaseutils.entity.DKLevel
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -16,7 +15,6 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 class BadgesData(
     private val themeKey: String,
-    private val category: BadgeCategory,
     private val levels: List<BadgeLevel>
 ) {
 

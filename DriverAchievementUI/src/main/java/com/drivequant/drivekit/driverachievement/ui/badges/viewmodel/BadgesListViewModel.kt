@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Badge
+import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.BadgesQueryListener
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
@@ -38,14 +39,17 @@ class BadgesListViewModel : ViewModel() {
 
     fun getFilteredBadges(fetchedBadges: List<Badge>): MutableList<BadgesData> {
         if (fetchedBadges.isNotEmpty()) {
+            if (DriverAchievementUI.badgeCategories.isEmpty()) {
+                DriverAchievementUI.configureBadgeCategories(listOf(BadgeCategory.GENERIC))
+            }
             val filteredBadges =
                 fetchedBadges.filter { badge -> badge.category in DriverAchievementUI.badgeCategories }
+
             filteredBadgesData.clear()
             for (badge in filteredBadges) {
                 filteredBadgesData.add(
                     BadgesData(
                         badge.themeKey,
-                        badge.category,
                         badge.levels
                     )
                 )

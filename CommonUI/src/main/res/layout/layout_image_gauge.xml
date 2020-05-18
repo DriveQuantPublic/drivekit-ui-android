@@ -13,8 +13,7 @@
         android:id="@+id/image_view_gauge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dk_default_gauge_image_stroke"
-        android:src="@drawable/dk_common_safety_decel"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:padding="@dimen/dk_margin_medium" />
 </FrameLayout>

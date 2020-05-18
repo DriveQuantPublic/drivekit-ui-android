@@ -22,7 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
         android:id="@+id/badge_bronze"
         android:layout_width="0dp"
@@ -49,5 +48,4 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/badge_silver"
         app:layout_constraintTop_toBottomOf="@+id/text_view_badge_title" />
-
 </android.support.constraint.ConstraintLayout>

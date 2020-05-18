@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.badges.commons.views
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
@@ -21,7 +22,6 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 class BadgeItemView : LinearLayout {
 
-
     private lateinit var badgeGaugeImage: GaugeImage
     private lateinit var badgeName: TextView
     private var gaugeDrawable: Drawable? = null
@@ -30,7 +30,7 @@ class BadgeItemView : LinearLayout {
     private lateinit var badgeDescription: String
     private lateinit var badgeProgressCongrats: String
 
-    private var gaugeColor: Int = 0
+    private var gaugeColor: Int = Color.rgb(0, 0, 0)
     private var gaugeProgress: Double = 0.0
 
     constructor(context: Context) : super(context) {

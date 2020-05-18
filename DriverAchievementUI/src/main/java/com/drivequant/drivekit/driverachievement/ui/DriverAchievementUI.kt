@@ -20,10 +20,10 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         StreakTheme.ADHERENCE)
 
     internal var badgeCategories: List<BadgeCategory> = listOf(
-        BadgeCategory.PHONE_DISTRACTION,
+        BadgeCategory.GENERIC,
         BadgeCategory.SAFETY,
         BadgeCategory.ECO_DRIVING,
-        BadgeCategory.GENERIC
+        BadgeCategory.PHONE_DISTRACTION
     )
 
     fun initialize() {

@@ -16,7 +16,7 @@ import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListV
 
 class BadgesListAdapter(
     var context: Context?,
-    var badgesListViewModel: BadgesListViewModel
+    private var badgesListViewModel: BadgesListViewModel
 ) : RecyclerView.Adapter<BadgeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): BadgeViewHolder {
