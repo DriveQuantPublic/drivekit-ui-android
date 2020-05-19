@@ -24,7 +24,7 @@ class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(badgesData: BadgesData) {
         title.text = badgesData.getBadgeTitle(context)
 
-        badgesData.getIcon(context).first?.let {
+        badgesData.getIcon(context).first?.let { 
             bronzeBadge.configureBadge(
                 badgesData.getPercent().first,
                 it,
@@ -75,6 +75,24 @@ class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         goldBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).third)
 
         setStyle()
+    }
+
+    private fun setBadgeConfiguration(badgesData: BadgesData, badgeItemView: BadgeItemView) {
+        badgesData.getIcon(context).third?.let {
+            badgeItemView.configureBadge(
+                badgesData.getPercent().third,
+                it,
+                badgesData.getBadgeColor(
+                    badgesData.getBadgeLevel().third,
+                    badgesData.isBadgeAcquired().third
+                )
+                , badgesData.getBadgeName(context).third
+            )
+        }
+
+        badgeItemView.setBadgeDescription(badgesData.getBadgeDescription(context).first)
+        badgeItemView.setBadgeTitle(badgesData.getBadgeName(context).first)
+        badgeItemView.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).second)
     }
 
     private fun setStyle() {

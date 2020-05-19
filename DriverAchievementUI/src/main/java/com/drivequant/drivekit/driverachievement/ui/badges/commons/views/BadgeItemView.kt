@@ -24,7 +24,7 @@ class BadgeItemView : LinearLayout {
 
     private lateinit var badgeGaugeImage: GaugeImage
     private lateinit var badgeName: TextView
-    private var gaugeDrawable: Drawable? = null
+    private lateinit var gaugeDrawable: Drawable
 
     private lateinit var badgeTitle: String
     private lateinit var badgeDescription: String
@@ -60,24 +60,12 @@ class BadgeItemView : LinearLayout {
         )
     }
 
-    fun configureBadge(
-        progress: Double,
-        gaugeDrawable: Drawable,
-        gaugeColor: Int,
-        badgeName: String
-    ) {
-        gaugeDrawable.let {
-            this.gaugeDrawable = it
-            this.gaugeProgress = progress
-            this.gaugeColor = gaugeColor
-
-            badgeGaugeImage.configure(
-                progress,
-                gaugeDrawable,
-                gaugeColor
-            )
-            this.badgeName.text = badgeName
-        }
+    fun configureBadge(progress: Double, gaugeDrawable: Drawable, gaugeColor: Int, badgeName: String) {
+        this.gaugeDrawable = gaugeDrawable
+        this.gaugeProgress = progress
+        this.gaugeColor = gaugeColor
+        this.badgeName.text = badgeName
+        badgeGaugeImage.configure(progress, gaugeDrawable, gaugeColor)
     }
 
     fun setBadgeDescription(description: String) {
@@ -113,13 +101,7 @@ class BadgeItemView : LinearLayout {
         val progressViewSeparator =
             badgeDetails.findViewById<TextView>(R.id.progress_view_separator)
 
-        gaugeDrawable?.let {
-            gaugeImage?.configure(
-                gaugeProgress,
-                it,
-                gaugeColor
-            )
-        }
+        gaugeImage?.configure(gaugeProgress, gaugeDrawable, gaugeColor)
 
         badgeProgressCongrats?.text = this.badgeProgressCongrats
         badgeDescription?.text = this.badgeDescription

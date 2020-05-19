@@ -23,6 +23,5 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:ellipsize="end"
-        android:gravity="center"
-        android:text="@string/badge_acceleration_name_1" />
+        android:gravity="center" />
 </LinearLayout>
