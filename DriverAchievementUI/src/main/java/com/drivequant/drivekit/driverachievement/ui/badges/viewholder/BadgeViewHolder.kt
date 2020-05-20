@@ -5,8 +5,10 @@ import android.view.View
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.databaseutils.entity.BadgeLevel
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
+import com.drivequant.drivekit.driverachievement.ui.badges.extension.*
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesData
 
 /**
@@ -24,75 +26,25 @@ class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(badgesData: BadgesData) {
         title.text = badgesData.getBadgeTitle(context)
 
-        badgesData.getIcon(context).first?.let { 
-            bronzeBadge.configureBadge(
-                badgesData.getPercent().first,
-                it,
-                badgesData.getBadgeColor(
-                    badgesData.getBadgeLevel().first,
-                    badgesData.isBadgeAcquired().first
-                ),
-
-                badgesData.getBadgeName(context).first
-            )
-        }
-
-        badgesData.getIcon(context).second?.let {
-            silverBadge.configureBadge(
-                badgesData.getPercent().second,
-                it,
-                badgesData.getBadgeColor(
-                    badgesData.getBadgeLevel().second,
-                    badgesData.isBadgeAcquired().second
-                )
-                , badgesData.getBadgeName(context).second
-            )
-
-        }
-
-        badgesData.getIcon(context).third?.let {
-            goldBadge.configureBadge(
-                badgesData.getPercent().third,
-                it,
-                badgesData.getBadgeColor(
-                    badgesData.getBadgeLevel().third,
-                    badgesData.isBadgeAcquired().third
-                )
-                , badgesData.getBadgeName(context).third
-            )
-        }
-
-        bronzeBadge.setBadgeDescription(badgesData.getBadgeDescription(context).first)
-        silverBadge.setBadgeDescription(badgesData.getBadgeDescription(context).second)
-        goldBadge.setBadgeDescription(badgesData.getBadgeDescription(context).third)
-
-        bronzeBadge.setBadgeTitle(badgesData.getBadgeName(context).first)
-        silverBadge.setBadgeTitle(badgesData.getBadgeName(context).second)
-        goldBadge.setBadgeTitle(badgesData.getBadgeName(context).third)
-
-        bronzeBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).first)
-        silverBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).second)
-        goldBadge.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).third)
-
+        setBadgeConfiguration(badgesData.getBronzeBadgeLevel(), bronzeBadge)
+        setBadgeConfiguration(badgesData.getSilverBadgeLevel(), silverBadge)
+        setBadgeConfiguration(badgesData.getGoldBadgeLevel(), goldBadge)
         setStyle()
     }
 
-    private fun setBadgeConfiguration(badgesData: BadgesData, badgeItemView: BadgeItemView) {
-        badgesData.getIcon(context).third?.let {
+    private fun setBadgeConfiguration(badgeLevel: BadgeLevel, badgeItemView: BadgeItemView) {
+        badgeLevel.getIcon(context)?.let {
             badgeItemView.configureBadge(
-                badgesData.getPercent().third,
+                badgeLevel.computePercent(),
                 it,
-                badgesData.getBadgeColor(
-                    badgesData.getBadgeLevel().third,
-                    badgesData.isBadgeAcquired().third
-                )
-                , badgesData.getBadgeName(context).third
+                badgeLevel.getColor(),
+                badgeLevel.getName(context)
             )
         }
 
-        badgeItemView.setBadgeDescription(badgesData.getBadgeDescription(context).first)
-        badgeItemView.setBadgeTitle(badgesData.getBadgeName(context).first)
-        badgeItemView.setBadgeProgressCongrats(badgesData.getBadgeProgressCongrats(context).second)
+        badgeItemView.setBadgeDescription(badgeLevel.getDescription(context))
+        badgeItemView.setBadgeTitle(badgeLevel.getName(context))
+        badgeItemView.setBadgeProgressCongrats(badgeLevel.getProgressCongrats(context))
     }
 
     private fun setStyle() {
