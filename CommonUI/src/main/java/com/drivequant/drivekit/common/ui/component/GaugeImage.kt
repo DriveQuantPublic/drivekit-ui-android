@@ -22,6 +22,13 @@ class GaugeImage(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         gaugeView = findViewById(R.id.gauge)
         imageView = findViewById(R.id.image_view_gauge)
 
+        val padding =
+            context.resources.getDimension(R.dimen.dk_default_gauge_image_stroke) + context.resources.getDimension(
+                R.dimen.dk_margin_quarter
+            )
+
+        imageView.setPadding(padding.toInt(), padding.toInt(), padding.toInt(), padding.toInt())
+
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.GaugeImage)
 
         imageView.setImageDrawable(attributes.getDrawable(R.styleable.GaugeImage_gaugeImage))
