@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import android.support.v7.widget.LinearLayoutManager
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
@@ -33,14 +32,12 @@ class BadgesListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_badges_list, container, false).setDKStyle()
+    ): View? = inflater.inflate(R.layout.fragment_badges_list, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = LinearLayoutManager(view.context)
-        recycler_view_badges.layoutManager = layoutManager
-
+        recycler_view_badges.layoutManager = LinearLayoutManager(view.context)
         refresh_badges.setOnRefreshListener {
             updateBadges()
         }
@@ -54,12 +51,9 @@ class BadgesListFragment : Fragment() {
     private fun updateBadges() {
         listViewModel.badgesData.observe(this, Observer {
             if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
-                Toast.makeText(
-                    context,
+                Toast.makeText(context,
                     context?.getString(R.string.dk_achievements_failed_to_sync_badges),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                    Toast.LENGTH_LONG).show()
             }
             if (this::listAdapter.isInitialized) {
                 listAdapter.notifyDataSetChanged()

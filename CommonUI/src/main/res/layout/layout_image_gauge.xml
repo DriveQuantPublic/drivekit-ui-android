@@ -15,5 +15,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:padding="@dimen/dk_margin_medium" />
+        android:padding="@dimen/dk_default_gauge_image_stroke" />
 </FrameLayout>

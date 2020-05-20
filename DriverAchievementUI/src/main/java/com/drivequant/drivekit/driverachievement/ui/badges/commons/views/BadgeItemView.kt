@@ -42,7 +42,7 @@ class BadgeItemView : LinearLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.badges_item_view, null)
+        val view = View.inflate(context, R.layout.badges_item_view, null).setDKStyle()
         badgeGaugeImage = view.findViewById(R.id.gauge_image)
         badgeName = view.findViewById(R.id.text_view_badge_name)
 

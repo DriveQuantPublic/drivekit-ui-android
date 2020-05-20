@@ -35,7 +35,11 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     }
 
     fun configureBadgeCategories(badgeCategories: List<BadgeCategory>) {
-        this.badgeCategories = badgeCategories
+        if (badgeCategories.isEmpty()) {
+            this.badgeCategories = listOf(BadgeCategory.GENERIC)
+        } else {
+            this.badgeCategories = badgeCategories
+        }
     }
 
     override fun startStreakListActivity(context: Context) {

@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.graphics.RectF
+import kotlin.math.min
 
 
 class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -67,12 +68,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val drawPadding = strokeSize / 2
         val width = width.toFloat()
         val height = height.toFloat()
-        val edge = if (height < width) {
-              height
-        } else {
-            width
-        }
-
+        val edge = min (height , width)
         val right = edge - drawPadding
         val bottom = edge - drawPadding
         drawingArea = RectF(drawPadding, drawPadding, right, bottom)
