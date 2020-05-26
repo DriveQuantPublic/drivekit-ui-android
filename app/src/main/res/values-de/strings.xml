@@ -53,8 +53,5 @@
    <string name="vehicle_explanation">Ein Beispiel für eine DriveKit-Vehicle mit UI für die Fahrzeugauswahl, Fahrzeugliste, Fahrzeugdetails, Baken- und Bluetooth-Gerätekopplung</string>
    <string name="vehicle_list_button">Liste der Fahrzeuge</string>
    <string name="vehicle_picker_button">Eine Fahrt hinzufügen</string>
-
-   <string name="driver_achievement_explanation">An example of DriveKit Driver Achievement implementation with its UI.</string>
-   <string name="driver_streaks_button">Launch Driver Streaks</string>
-   <string name="driver_badges_button">Launch Driver Badges</string>
+   <string name="driver_achievement_explanation">Ein Beispiel für die DriveKit Driver Errungenschaften mit grafischen Benutzeroberflächen.</string>
 </resources>

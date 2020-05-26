@@ -53,8 +53,5 @@
    <string name="vehicle_explanation">Exemple d\'implémentation de DriveKit Vehicle avec la sélection d\'un véhicule, la liste la liste des véhicules, le détail d\'un véhicule, l\'appairage d\'un beacon et d\'un dispositif Bluetooth</string>
    <string name="vehicle_list_button">Liste des véhicules</string>
    <string name="vehicle_picker_button">Ajouter un véhicule</string>
-
-   <string name="driver_achievement_explanation">An example of DriveKit Driver Achievement implementation with its UI.</string>
-   <string name="driver_streaks_button">Launch Driver Streaks</string>
-   <string name="driver_badges_button">Launch Driver Badges</string>
+   <string name="driver_achievement_explanation">Un exemple de DriveKit Driver Achievements avec les interfaces graphiques.</string>
 </resources>
