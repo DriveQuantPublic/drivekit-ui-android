@@ -29,8 +29,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.permissionsutils.BuildConfig
-import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
@@ -119,7 +118,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)) {
             diag_item_bluetooth.setNormalState()
         } else {
-            diagnosticProblemsCount++
+            if (PermissionsUtilsUI.isBluetoothNeeded) {
+                diagnosticProblemsCount++
+            }
             diag_item_bluetooth.setDiagnosisDrawable(true)
             diag_item_bluetooth.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
@@ -138,7 +139,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 titleTextView?.text = diag_item_bluetooth.getDiagnosisTitle()
                 descriptionTextView?.text = diag_item_bluetooth.getDiagnosticTextKO()
                 descriptionTextView?.text =
-                    diag_item_location_sensor.getDiagnosticTextKO()
+                    diag_item_bluetooth.getDiagnosticTextKO()
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
@@ -203,7 +204,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.mainFontColor(),
                 "dk_perm_utils_app_diag_log_ok",
-                PermissionUtilsUI.logPathFile.removePrefix("/")
+                PermissionsUtilsUI.logPathFile.removePrefix("/")
             )
         } else {
             getString(R.string.dk_perm_utils_app_diag_log_ko)
@@ -241,13 +242,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
             } else {
                 val loggingDescription = if (switch_enable_logging.isChecked) {
-                    DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
+                    DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
                     DKResource.buildString(
                         this,
                         DriveKitUI.colors.complementaryFontColor(),
                         DriveKitUI.colors.mainFontColor(),
                         "dk_perm_utils_app_diag_log_ok",
-                        PermissionUtilsUI.logPathFile.removePrefix("/")
+                        PermissionsUtilsUI.logPathFile.removePrefix("/")
                     )
                 } else {
                     DriveKit.disableLogging()
@@ -329,81 +330,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun displayLogSection() {
         val visibility =
-            if (PermissionUtilsUI.shouldDisplayDiagnosisLogs) View.VISIBLE else View.GONE
+            if (PermissionsUtilsUI.shouldDisplayDiagnosisLogs) View.VISIBLE else View.GONE
         switch_enable_logging.visibility = visibility
         text_view_logging_description.visibility = visibility
     }
 
-    private fun buildYesNoFromBoolean(valid: Boolean): String {
-        return if (valid) {
-            getString(R.string.dk_common_yes)
-        } else {
-            getString(R.string.dk_common_no)
-        }
-    }
-
-    private fun buildDiagnosisMail(): String {
-        val locationMail =
-            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.LOCATION)) {
-                PermissionStatus.VALID -> true
-                PermissionStatus.NOT_VALID -> false
-            }
-
-        val activityMail =
-            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.ACTIVITY)) {
-                PermissionStatus.VALID -> true
-                PermissionStatus.NOT_VALID -> false
-            }
-
-        val notificationMail =
-            when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
-                PermissionStatus.VALID -> true
-                PermissionStatus.NOT_VALID -> false
-            }
-
-        val gpsMail = DiagnosisHelper.isSensorActivated(this, SensorType.GPS)
-        val bluetoothMail = DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)
-        val connectivityMail = DiagnosisHelper.isNetworkReachable(this)
-
-
-        var mailBody =
-            "${getString(R.string.dk_perm_utils_app_diag_email_app)} ${getString(R.string.app_name)} \n\n"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
-            mailBody +=
-                "${getString(R.string.dk_perm_utils_app_diag_email_activity)} ${buildYesNoFromBoolean(
-                    activityMail
-                )} \n"
-
-        }
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location)} ${buildYesNoFromBoolean(
-            locationMail
-        )} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_notification)} ${buildYesNoFromBoolean(
-            notificationMail
-        )} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} ${buildYesNoFromBoolean(
-            gpsMail
-        )} \n"
-        if (PermissionUtilsUI.isBluetoothNeeded) {
-            mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} ${buildYesNoFromBoolean(
-                bluetoothMail
-            )} \n"
-        }
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_network)}  ${buildYesNoFromBoolean(
-            connectivityMail
-        )} \n\n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
-            Locale.getDefault()
-        )} ${Build.MODEL} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
-        mailBody += "${getString(R.string.dk_perm_utils_app_diag_email_app_version)} ${BuildConfig.VERSION_NAME} \n"
-        return mailBody
-    }
-
     private fun displayReportSection() {
-        when (val contactType = PermissionUtilsUI.contactType) {
+        when (val contactType = PermissionsUtilsUI.contactType) {
             is ContactType.NONE -> {
                 text_view_help_title.visibility = View.GONE
                 text_view_help_description.visibility = View.GONE
@@ -422,7 +355,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     val recipients = contentMail.getRecipients().toTypedArray()
                     val bccRecipients = contentMail.getBccRecipients().toTypedArray()
                     val subject = contentMail.getSubject()
-                    var mailBody = "${contentMail.getMailBody()} \n\n ${buildDiagnosisMail()}"
+                    var mailBody =
+                        "${contentMail.getMailBody()} ${PermissionsUtilsUI.getDiagnosisDescription(
+                            this
+                        )}"
 
                     if (contentMail.overrideMailBodyContent()) {
                         mailBody = contentMail.getMailBody()
@@ -437,7 +373,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
                         val root = Environment.getExternalStorageDirectory()
-                        val logPathFile = PermissionUtilsUI.logPathFile + getLoggingFile()
+                        val logPathFile = PermissionsUtilsUI.logPathFile + getLoggingFile()
                         val file = File(root, logPathFile)
                         if (!file.exists() || !file.canRead()) {
                             startActivity(intent)
@@ -457,7 +393,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayBluetoothItem() {
-        val visibility = if (PermissionUtilsUI.isBluetoothNeeded) View.VISIBLE else View.GONE
+        val visibility = if (PermissionsUtilsUI.isBluetoothNeeded) View.VISIBLE else View.GONE
         diag_item_bluetooth.visibility = visibility
     }
 
@@ -507,7 +443,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this,
             PermissionType.EXTERNAL_STORAGE
         ) == PermissionStatus.VALID && DriveKitLog.isLoggingEnabled &&
-                PermissionUtilsUI.shouldDisplayDiagnosisLogs
+                PermissionsUtilsUI.shouldDisplayDiagnosisLogs
 
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
@@ -610,7 +546,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         permissionCallback = object :
             OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
+                DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
                 text_view_logging_description.text =
                     getString(R.string.dk_perm_utils_app_diag_log_ok)
             }
@@ -673,8 +609,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         button_help_report.button()
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
-
-        switch_enable_logging.thumbDrawable.setColorFilter(DriveKitUI.colors.secondaryColor(), PorterDuff.Mode.SRC_IN)
+        if(switch_enable_logging.isChecked) {
+            switch_enable_logging.thumbDrawable.setColorFilter(
+                DriveKitUI.colors.secondaryColor(),
+                PorterDuff.Mode.SRC_IN
+            )
+        }
         switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
         switch_enable_logging.setTextSize(
             TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
@@ -710,7 +650,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                         PermissionType.EXTERNAL_STORAGE
                     ) == PermissionStatus.VALID
                 ) {
-                    DriveKit.enableLogging(PermissionUtilsUI.logPathFile)
+                    DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
                 }
             }
 
