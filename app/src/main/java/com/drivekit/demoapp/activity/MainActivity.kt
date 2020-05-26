@@ -15,14 +15,9 @@ import android.view.MenuItem
 import android.view.View
 import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
-import com.drivequant.drivekit.permissionsutils.PermissionUtilsUI
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
