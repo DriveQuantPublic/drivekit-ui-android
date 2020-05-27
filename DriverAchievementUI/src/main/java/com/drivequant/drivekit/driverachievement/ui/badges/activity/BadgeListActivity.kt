@@ -9,7 +9,7 @@ class BadgeListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_badges_list)
+        setContentView(R.layout.dk_activity_badges_list)
 
         supportFragmentManager
             .beginTransaction()

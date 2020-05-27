@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_view_badge_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/dk_margin_half"
+        android:paddingTop="@dimen/dk_margin_quarter"
+        android:paddingRight="@dimen/dk_margin_half"
+        android:paddingBottom="@dimen/dk_margin_quarter"
+        android:text="@string/badge_trip_number_theme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
+        android:id="@+id/badge_bronze"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/badge_silver"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_badge_title" />
+
+    <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
+        android:id="@+id/badge_silver"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/badge_gold"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/badge_bronze"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_badge_title" />
+
+    <com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeItemView
+        android:id="@+id/badge_gold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/badge_silver"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_badge_title" />
+</android.support.constraint.ConstraintLayout>

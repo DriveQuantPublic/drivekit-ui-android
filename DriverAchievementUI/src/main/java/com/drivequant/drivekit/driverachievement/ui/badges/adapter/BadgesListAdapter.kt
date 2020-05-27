@@ -20,7 +20,7 @@ class BadgesListAdapter(
 ) : RecyclerView.Adapter<BadgeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): BadgeViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.badges_list_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.dk_badges_list_item, parent, false)
         FontUtils.overrideFonts(parent.context, view)
         return BadgeViewHolder(view)
     }

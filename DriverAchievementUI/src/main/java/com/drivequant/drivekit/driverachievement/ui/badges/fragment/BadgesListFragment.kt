@@ -14,8 +14,8 @@ import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListViewModel
-import kotlinx.android.synthetic.main.fragment_badges_list.*
-import kotlinx.android.synthetic.main.fragment_streaks_list.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_badges_list.*
+import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
 
 class BadgesListFragment : Fragment() {
@@ -32,7 +32,7 @@ class BadgesListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_badges_list, container, false)
+    ): View? = inflater.inflate(R.layout.dk_fragment_badges_list, container, false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

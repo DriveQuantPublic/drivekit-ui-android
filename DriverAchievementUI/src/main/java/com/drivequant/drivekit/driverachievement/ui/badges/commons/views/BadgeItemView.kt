@@ -42,7 +42,7 @@ class BadgeItemView : LinearLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.badges_item_view, null).setDKStyle()
+        val view = View.inflate(context, R.layout.dk_badges_item_view, null).setDKStyle()
         badgeGaugeImage = view.findViewById(R.id.gauge_image)
         badgeName = view.findViewById(R.id.text_view_badge_name)
 
@@ -83,7 +83,7 @@ class BadgeItemView : LinearLayout {
     private fun onBadgeClick() {
         val badgeDetails = DKAlertDialog.LayoutBuilder()
             .init(context)
-            .layout(R.layout.layout_badge_details)
+            .layout(R.layout.dk_layout_badge_details)
             .cancelable(true)
             .negativeButton(context.getString(R.string.dk_common_cancel),
                 DialogInterface.OnClickListener { dialog, _ ->

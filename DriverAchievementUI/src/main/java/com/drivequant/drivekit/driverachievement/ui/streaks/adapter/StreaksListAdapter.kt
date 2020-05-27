@@ -14,7 +14,7 @@ class StreaksListAdapter(
     var streaksListViewModel: StreaksListViewModel) : RecyclerView.Adapter<StreakViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): StreakViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.streaks_list_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.dk_streaks_list_item, parent, false)
         FontUtils.overrideFonts(parent.context,view)
         return StreakViewHolder(view)
     }
