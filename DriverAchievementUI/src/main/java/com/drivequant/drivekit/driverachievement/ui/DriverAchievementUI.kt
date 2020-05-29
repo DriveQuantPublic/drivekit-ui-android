@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui
 
 import android.content.Context
 import android.content.Intent
+import android.opengl.GLException
 import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverAchievementUIEntryPoint
@@ -34,12 +35,11 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         this.streakThemes = streakThemes
     }
 
-    fun configureBadgeCategories(badgeCategories: List<BadgeCategory>) {
-        if (badgeCategories.isEmpty()) {
-            this.badgeCategories = listOf(BadgeCategory.GENERIC)
-        } else {
-            this.badgeCategories = badgeCategories
+    fun configureBadgeCategories(badgeCategories: MutableList<BadgeCategory>) {
+        if (!badgeCategories.contains(BadgeCategory.GENERIC)) {
+            badgeCategories.add(BadgeCategory.GENERIC)
         }
+        this.badgeCategories = badgeCategories
     }
 
     override fun startStreakListActivity(context: Context) {
