@@ -285,7 +285,7 @@
    <string name="badge_safety_notif_1">You\'ve just won the Shepherd badge (10 trips with a safety score of 10). Bravo!</string>
    <string name="badge_safety_notif_2">You\'ve just won the Shepherd badge (20 trips with a safety score of 10). Bravo!</string>
    <string name="badge_safety_notif_3">You\'ve just won the Guardian Angel badge (50 trips with a safety score of 10). Bravo!</string>
-   <string name="badge_safety_progress_1">Still % trips before winning this badge.</string>
+   <string name="badge_safety_progress_1">Still %s trips before winning this badge.</string>
    <string name="badge_safety_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_safety_progress_3">You still have %s trips to complete to win this badge.</string>
    <string name="badge_safety_theme">Careful driving</string>
