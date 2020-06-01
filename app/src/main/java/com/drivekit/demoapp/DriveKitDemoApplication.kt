@@ -27,8 +27,10 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
@@ -63,6 +65,13 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
         PermissionsUtilsUI.initialize()
+
+        DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.TRUCK, VehicleType.CAR))
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        DriveKitVehicleUI.configureBeaconDetailEmail(this)
+        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
+        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
+
         PermissionsUtilsUI.configureBluetooth(true)
         PermissionsUtilsUI.configureDiagnosisLogs(true)
         PermissionsUtilsUI.configureLogPathFile("/DQ-demo-test/")
@@ -119,10 +128,6 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
 
-        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
-        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
 
