@@ -10,6 +10,7 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
+import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
@@ -45,6 +46,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     var createdVehicleId: String? = null
 
     lateinit var selectedVehicleTypeItem: VehicleTypeItem
+    var selectedTruckType: TruckType? = null
     lateinit var selectedCategory: VehicleCategoryItem
     lateinit var selectedBrand: VehicleBrand
     lateinit var selectedEngineIndex: VehicleEngineIndex
@@ -77,6 +79,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     itemTruckTypes = fetchTruckTypes(context)
                     stepDispatcher.postValue(TRUCK_TYPE)
                 }
+            }
+            TRUCK_TYPE -> {
+                manageBrands(context)
             }
             CATEGORY -> {
                 stepDispatcher.postValue(CATEGORY_DESCRIPTION)
@@ -162,7 +167,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             items.add(VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
         }
         if (withIcons){
-            if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.values().size){
+            if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.getBrands(selectedVehicleTypeItem.vehicleType).size){
                 items.add(
                     VehiclePickerItem(
                         items.size,
