@@ -24,7 +24,7 @@ object DriveKitConfig {
     fun configureDriverAchievement() {
         DriverAchievementUI.initialize()
         DriverAchievementUI.configureBadgeCategories(
-            listOf(
+            mutableListOf(
                 BadgeCategory.ECO_DRIVING,
                 BadgeCategory.GENERIC,
                 BadgeCategory.SAFETY,

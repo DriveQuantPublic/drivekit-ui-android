@@ -24,7 +24,8 @@ class BadgesListViewModel : ViewModel() {
             DriveKitDriverAchievement.getBadges(object : BadgesQueryListener {
                 override fun onResponse(
                     badgeSyncStatus: BadgeSyncStatus,
-                    badges: List<Badge>
+                    badges: List<Badge>,
+                    newAcquiredBadgesCount: Int
                 ) {
                     syncStatus = badgeSyncStatus
                     filteredBadgesData = getFilteredBadges(badges)
