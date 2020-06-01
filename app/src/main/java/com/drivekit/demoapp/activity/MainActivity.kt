@@ -17,6 +17,7 @@ import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
@@ -68,8 +69,14 @@ class MainActivity : AppCompatActivity() {
         DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(applicationContext)
     }
 
-    fun onDriverAchievementClicked(view: View) {
+    fun onDriverStreaksClicked(view: View) {
         DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakListActivity(applicationContext)
+    }
+
+    fun onDriverBadgesClicked(view: View) {
+        val intent = Intent(this, BadgeListActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
     fun onPermissionUtilsClicked(view: View) {

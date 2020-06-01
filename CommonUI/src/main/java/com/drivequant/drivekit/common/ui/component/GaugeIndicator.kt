@@ -19,7 +19,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     private val imageView: ImageView
 
     init {
-        inflate(context, R.layout.layout_gauge_view, this)
+        inflate(context, R.layout.layout_score_gauge, this)
 
         textView = findViewById(R.id.score)
         gaugeView = findViewById(R.id.gauge)
@@ -54,6 +54,8 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     }
 
     fun configure(score: Double, type: GaugeType) {
+        gaugeView.setOpenAngle(128F)
+        gaugeView.setStartAngle(38F)
         textView.text = score.removeZeroDecimal()
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))

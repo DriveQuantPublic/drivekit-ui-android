@@ -9,6 +9,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -19,7 +20,6 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -34,6 +34,7 @@ import com.facebook.stetho.Stetho
 import java.util.*
 
 class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraStepListener {
+
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -57,11 +58,13 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         configureDriveKit()
         registerReceiver()
 
-        DriveKitUI.initialize()
-        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
+        DriveKitConfig.configureDriveKitUI(this)
+        DriveKitConfig.configureDriverAchievement()
+        DriveKitConfig.configurePermissionsUtils(this)
+
         DriverDataUI.initialize()
-        DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
+
         PermissionsUtilsUI.initialize()
         PermissionsUtilsUI.configureBluetooth(true)
         PermissionsUtilsUI.configureDiagnosisLogs(true)

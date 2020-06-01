@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.drivequant.drivekit.driverachievement.streak.AchievementSyncStatus
+import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
-import kotlinx.android.synthetic.main.fragment_streaks_list.*
+import kotlinx.android.synthetic.main.dk_fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -33,7 +33,7 @@ class StreaksListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_streaks_list, container, false)
+        val view = inflater.inflate(R.layout.dk_fragment_streaks_list, container, false)
         view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
@@ -55,7 +55,7 @@ class StreaksListFragment : Fragment() {
 
     private fun updateStreaks() {
         listViewModel.streaksData.observe(this, Observer {
-            if (listViewModel.syncStatus != AchievementSyncStatus.NO_ERROR) {
+            if (listViewModel.syncStatus != StreakSyncStatus.NO_ERROR) {
                 Toast.makeText(context, context?.getString(R.string.dk_achievements_failed_to_sync_streaks), Toast.LENGTH_LONG)
                     .show()
             }
