@@ -141,11 +141,25 @@
    <string name="dk_vehicle_replace">Replace</string>
    <string name="dk_vehicle_select_bluetooth_description">Select a Bluetooth device to start the trip recording. \n \n As soon as the phone connects to this device, the application starts analyzing your trip. \n \n You can only select one device for this vehicle.</string>
    <string name="dk_vehicle_show">Show</string>
-   <string name="dk_vehicle_type_car_title">Car</string>
-   <string name="dk_vehicle_type_motorbike_title">Motorbike</string>
-   <string name="dk_vehicle_type_truck_title">Truck</string>
+
    <string name="dk_vehicle_unknown">The vehicle is unknown, please select another vehicle.</string>
    <string name="dk_vehicle_version_description">Version of the vehicle?</string>
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
+
+   <!-- TODO : Ask generated strings -->
+   <string name="dk_vehicle_type_selection_title">Choisissez la catégorie à laquelle appartient votre véhicule</string>
+   <string name="dk_vehicle_type_car_title">Véhicules légers et utilitaires de moins de 3,5 T</string>
+   <string name="dk_vehicle_type_truck_title">Poids lourds</string>
+   <string name="dk_vehicle_type_motorbike_title">Deux-roues motorisés</string>
+   <string name="dk_vehicle_category_truck_selection_title">Quel type de camion conduisez-vous ?</string>
+   <string name="dk_vehicle_category_truck_straight">Porteur</string>
+   <string name="dk_vehicle_type_truck_tractor_semi_trailer">Tracteur et semi-remorque</string>
+   <string name="dk_vehicle_type_truck_road_train">Train routier</string>
+   <string name="dk_vehicle_category_truck_straight_2_axles">Porteur à deux essieux</string>
+   <string name="dk_vehicle_category_truck_straight_3_axles">Porteur à trois essieux</string>
+   <string name="dk_vehicle_category_truck_straight_4_axles">Porteur à quatre essieux</string>
+   <string name="dk_vehicle_category_truck_trailer_2_axles">Tracteur à deux essieux</string>
+   <string name="dk_vehicle_category_truck_trailer_3_axles">Tracteur à trois essieux</string>
+   <string name="dk_vehicle_category_truck_trailer_4_axles">Tracteur à quatre essieux</string>
 </resources>

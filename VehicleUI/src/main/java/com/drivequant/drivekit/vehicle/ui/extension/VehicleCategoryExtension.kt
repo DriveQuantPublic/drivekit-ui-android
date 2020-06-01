@@ -17,6 +17,7 @@ fun VehicleCategory.getTitle(context: Context): String {
         COMMERCIAL -> "dk_vehicle_category_car_commercial_title"
         LUXURY -> "dk_vehicle_category_car_luxury_title"
         SPORT -> "dk_vehicle_category_car_sport_title"
+        else -> "" // TODO replace
     }
     return DKResource.convertToString(context, identifier)
 }
@@ -31,6 +32,7 @@ fun VehicleCategory.getIcon(context: Context): Drawable? {
         COMMERCIAL -> "dk_icon_commercial"
         LUXURY -> "dk_icon_luxury"
         SPORT -> "dk_icon_sport"
+        else -> "" // TODO replace
     }
     return DKResource.convertToDrawable(context, identifier)
 }
@@ -45,6 +47,7 @@ fun VehicleCategory.getImage(context: Context): Drawable? {
         COMMERCIAL -> "dk_image_commercial"
         LUXURY -> "dk_image_luxury"
         SPORT -> "dk_image_sport"
+        else -> "" // TODO replace
     }
     return DKResource.convertToDrawable(context, identifier)
 }
@@ -59,6 +62,7 @@ fun VehicleCategory.getDescription(context: Context): String {
         COMMERCIAL -> "dk_vehicle_category_car_commercial_description"
         LUXURY -> "dk_vehicle_category_car_luxury_description"
         SPORT -> "dk_vehicle_category_car_sport_description"
+        else -> ""
     }
     return DKResource.convertToString(context, identifier)
 }
@@ -73,6 +77,7 @@ fun VehicleCategory.getLiteConfigDqIndex(): String {
         COMMERCIAL -> "ReMa2018FT2P0125N050"
         LUXURY -> "AuA62018FT2P0190N018"
         SPORT -> "AlA12018FT1P0252N001"
+        else -> ""
     }
 }
 

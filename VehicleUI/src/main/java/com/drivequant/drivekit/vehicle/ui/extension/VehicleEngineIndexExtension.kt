@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex.*
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleEngineItem
 
 fun VehicleEngineIndex.getTitle(context: Context) : String {
@@ -25,4 +26,18 @@ fun VehicleEngineIndex.buildEngineIndexItem(context: Context) : VehicleEngineIte
         isMotorbike,
         isTruck
     )
+}
+
+fun VehicleEngineIndex.getVehicleType() : VehicleType? {
+    return when {
+        this.isCar -> {
+            VehicleType.CAR
+        }
+        this.isTruck -> {
+            VehicleType.TRUCK
+        }
+        else -> {
+            null
+        }
+    }
 }

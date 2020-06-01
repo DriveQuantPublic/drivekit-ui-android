@@ -29,6 +29,7 @@ class ItemRecyclerViewAdapter(
             TEXT_ITEM -> R.layout.layout_item_text
             TEXT_IMAGE_ITEM -> R.layout.layout_item_text_image
             TEXT_OR_IMAGE_ITEM -> R.layout.layout_item_text_image
+            TRUCK_TYPE_ITEM -> R.layout.layout_item_text_image
         }
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         FontUtils.overrideFonts(parent.context, view)

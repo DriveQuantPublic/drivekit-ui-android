@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand.*
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleBrandItem
 
 fun VehicleBrand.getTitle(): String {
@@ -45,9 +46,20 @@ fun VehicleBrand.hasIcon(context: Context) : Boolean {
 fun VehicleBrand.buildBrandItem(context: Context) : VehicleBrandItem {
     return VehicleBrandItem(
         this,
-        isCar = true,
-        isMotorbike = false,
-        isTruck = false,
         icon = getIcon(context)
     )
+}
+
+fun VehicleBrand.getVehicleType() : VehicleType? {
+    return when {
+        this.isCar -> {
+            VehicleType.CAR
+        }
+        this.isTruck -> {
+            VehicleType.TRUCK
+        }
+        else -> {
+            null
+        }
+    }
 }

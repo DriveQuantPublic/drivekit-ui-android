@@ -12,6 +12,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.manager.*
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
@@ -30,6 +31,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     val fetchServiceErrorObserver = MutableLiveData<VehiclePickerStatus>()
 
     private var itemTypes = listOf<VehiclePickerItem>()
+    private var itemTruckTypes = listOf<VehiclePickerItem>()
     private var itemCategories = listOf<VehiclePickerItem>()
     private var itemBrands = listOf<VehiclePickerItem>()
     private var itemEngines = listOf<VehiclePickerItem>()
@@ -50,7 +52,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var selectedYear: String
     lateinit var selectedVersion: VehicleVersion
     lateinit var name: String
-    lateinit var characteristics: VehicleCharacteristics
+    lateinit var carCharacteristics: CarCharacteristics
 
     fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, otherAction: Boolean = false){
         when (currentStep){
@@ -64,11 +66,16 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 }
             }
             TYPE -> {
-                if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.BRANDS_CONFIG_ONLY) {
-                    itemCategories = fetchVehicleCategories(context)
-                    stepDispatcher.postValue(CATEGORY)
+                if (selectedVehicleTypeItem.vehicleType == VehicleType.CAR) {
+                    if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.BRANDS_CONFIG_ONLY) {
+                        itemCategories = fetchVehicleCategories(context)
+                        stepDispatcher.postValue(CATEGORY)
+                    } else {
+                        manageBrands(context)
+                    }
                 } else {
-                    manageBrands(context)
+                    itemTruckTypes = fetchTruckTypes(context)
+                    stepDispatcher.postValue(TRUCK_TYPE)
                 }
             }
             CATEGORY -> {
@@ -108,6 +115,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     fun getItemsByStep(vehiclePickerStep: VehiclePickerStep): List<VehiclePickerItem> {
         return when (vehiclePickerStep){
             TYPE -> itemTypes
+            TRUCK_TYPE -> itemTruckTypes
             CATEGORY -> itemCategories
             BRANDS_ICONS -> itemBrands
             BRANDS_FULL -> itemBrands
@@ -125,6 +133,15 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         for (i in vehicleTypesItems.indices){
             val currentType = vehicleTypesItems[i]
             items.add(VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
+        }
+        return items
+    }
+
+    private fun fetchTruckTypes(context: Context): List<VehiclePickerItem> {
+        val items: MutableList<VehiclePickerItem> = mutableListOf()
+        val truckTypes = selectedVehicleTypeItem.getTruckTypes(context)
+        for (i in truckTypes.indices){
+            items.add(VehiclePickerItem(i, truckTypes[i].title, truckTypes[i].truckType, truckTypes[i].icon))
         }
         return items
     }
@@ -167,7 +184,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleModels() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
+        DriveKitVehiclePicker.getCarModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
             override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
                 when (status){
                     SUCCESS -> {
@@ -184,7 +201,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleYears() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
+        DriveKitVehiclePicker.getCarYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
                 when (status){
                     SUCCESS -> {
@@ -201,7 +218,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleVersions() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
+        DriveKitVehiclePicker.getCarVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
             override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
                 when (status){
                     SUCCESS -> {
@@ -218,11 +235,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleCharacteristics(){
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getCharacteristics(selectedVersion, object : VehicleCharacteristicsQueryListener {
-            override fun onResponse(status: VehiclePickerStatus, vehicleCharacteristics: VehicleCharacteristics) {
+        DriveKitVehiclePicker.getCarCharacteristics(selectedVersion, object : VehicleCarCharacteristicsQueryListener {
+            override fun onResponse(status: VehiclePickerStatus, carCharacteristics: CarCharacteristics) {
                 when (status){
                     SUCCESS -> {
-                        characteristics = vehicleCharacteristics
+                        this@VehiclePickerViewModel.carCharacteristics = carCharacteristics
                         stepDispatcher.postValue(NAME)
                     }
                     FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
@@ -239,7 +256,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 val detectionMode = computeCreateVehicleDetectionMode(vehicles)
-                DriveKitVehicle.createVehicle(characteristics, selectedVehicleTypeItem.vehicleType, name, detectionMode, object: VehicleCreateQueryListener{
+                DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object: VehicleCreateQueryListener{
                     override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                         if (status == VehicleManagerStatus.SUCCESS){
                             vehicleToDelete?.let {
@@ -293,13 +310,19 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep): String? {
-        return when (vehiclePickerStep){
-            BRANDS_FULL -> context.getString(R.string.dk_vehicle_brand_description)
-            ENGINE -> context.getString(R.string.dk_vehicle_engine_description)
-            MODELS -> context.getString(R.string.dk_vehicle_model_description)
-            YEARS -> context.getString(R.string.dk_vehicle_year_description)
-            VERSIONS -> context.getString(R.string.dk_vehicle_version_description)
+        val stringResId = when (vehiclePickerStep){
+            TYPE -> "dk_vehicle_type_selection_title"
+            BRANDS_FULL -> "dk_vehicle_brand_description"
+            ENGINE -> "dk_vehicle_engine_description"
+            MODELS -> "dk_vehicle_model_description"
+            YEARS -> "dk_vehicle_year_description"
+            VERSIONS -> "dk_vehicle_version_description"
             else -> null
+        }
+        stringResId?.let {
+            return DKResource.convertToString(context, it)
+        }?: run {
+            return null
         }
     }
 

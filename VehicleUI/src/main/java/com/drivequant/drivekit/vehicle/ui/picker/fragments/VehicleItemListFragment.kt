@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
@@ -25,11 +26,13 @@ class VehicleItemListFragment : Fragment() {
     enum class AdapterType(val value: Int) {
         TEXT_ITEM(0),
         TEXT_IMAGE_ITEM(1),
-        TEXT_OR_IMAGE_ITEM(2);
+        TEXT_OR_IMAGE_ITEM(2),
+        TRUCK_TYPE_ITEM(3);
 
         companion object {
             fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
                 return when (vehiclePickerStep) {
+                    TRUCK_TYPE -> TRUCK_TYPE_ITEM
                     CATEGORY -> TEXT_IMAGE_ITEM
                     BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
                     TYPE,
@@ -78,13 +81,26 @@ class VehicleItemListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_item_list, container,false)
         textViewDescription = view.findViewById(R.id.text_view_description) as TextView
+        textViewDescription.bigText()
         recyclerView = view.findViewById(R.id.list) as RecyclerView
         adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep).value
-        if (adapterType == AdapterType.TEXT_ITEM.value){
+
+        recyclerView.layoutManager = when (adapterType){
+            AdapterType.TEXT_ITEM.value -> {
+                LinearLayoutManager(context)
+            }
+            AdapterType.TRUCK_TYPE_ITEM.value -> {
+                GridLayoutManager(context, 1)
+            }
+            else -> {
+                GridLayoutManager(context, 2)
+            }
+        }
+        /*if (adapterType == AdapterType.TEXT_ITEM.value){
             recyclerView.layoutManager = LinearLayoutManager(context)
         } else {
             recyclerView.layoutManager = GridLayoutManager(context, 2)
-        }
+        }*/
         return view.setDKStyle()
     }
 
