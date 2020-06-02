@@ -37,8 +37,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.5-beta2"
-    implementation "com.drivequant.drivekit:drivekit-driver-data:1.5-beta2"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.5-beta4"
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.5-beta4"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 

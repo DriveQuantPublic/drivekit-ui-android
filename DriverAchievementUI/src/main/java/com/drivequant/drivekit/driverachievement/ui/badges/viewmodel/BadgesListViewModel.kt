@@ -45,8 +45,8 @@ class BadgesListViewModel : ViewModel() {
             for (badge in filteredBadges) {
                 filteredBadgesData.add(
                     BadgesData(
-                        badge.themeKey,
-                        badge.levels
+                        badge.theme,
+                        badge.badgeCharacteristics
                     )
                 )
             }
