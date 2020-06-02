@@ -25,17 +25,18 @@ class VehicleItemListFragment : Fragment() {
 
     enum class AdapterType(val value: Int) {
         TEXT_ITEM(0),
-        TEXT_IMAGE_ITEM(1),
-        TEXT_OR_IMAGE_ITEM(2),
-        TRUCK_TYPE_ITEM(3);
+        TEXT_ITEM_PADDING(1),
+        TEXT_IMAGE_ITEM(2),
+        TEXT_OR_IMAGE_ITEM(3),
+        TRUCK_TYPE_ITEM(4);
 
         companion object {
             fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
                 return when (vehiclePickerStep) {
+                    TYPE -> TEXT_ITEM_PADDING
                     TRUCK_TYPE -> TRUCK_TYPE_ITEM
                     CATEGORY -> TEXT_IMAGE_ITEM
                     BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
-                    TYPE,
                     ENGINE,
                     YEARS,
                     MODELS,
@@ -55,7 +56,7 @@ class VehicleItemListFragment : Fragment() {
     private lateinit var items: List<VehiclePickerItem>
 
     private var listener: OnListFragmentInteractionListener? = null
-    private var adapterType = 0
+    private lateinit var adapterType: AdapterType
     private lateinit var textViewDescription: TextView
     private lateinit var recyclerView: RecyclerView
     private var adapter: ItemRecyclerViewAdapter? = null
@@ -83,24 +84,21 @@ class VehicleItemListFragment : Fragment() {
         textViewDescription = view.findViewById(R.id.text_view_description) as TextView
         textViewDescription.bigText()
         recyclerView = view.findViewById(R.id.list) as RecyclerView
-        adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep).value
+        adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
 
         recyclerView.layoutManager = when (adapterType){
-            AdapterType.TEXT_ITEM.value -> {
+            AdapterType.TEXT_ITEM,
+            AdapterType.TEXT_ITEM_PADDING -> {
                 LinearLayoutManager(context)
             }
-            AdapterType.TRUCK_TYPE_ITEM.value -> {
+            AdapterType.TRUCK_TYPE_ITEM -> {
                 GridLayoutManager(context, 1)
             }
-            else -> {
+            AdapterType.TEXT_IMAGE_ITEM,
+            AdapterType.TEXT_OR_IMAGE_ITEM -> {
                 GridLayoutManager(context, 2)
             }
         }
-        /*if (adapterType == AdapterType.TEXT_ITEM.value){
-            recyclerView.layoutManager = LinearLayoutManager(context)
-        } else {
-            recyclerView.layoutManager = GridLayoutManager(context, 2)
-        }*/
         return view.setDKStyle()
     }
 

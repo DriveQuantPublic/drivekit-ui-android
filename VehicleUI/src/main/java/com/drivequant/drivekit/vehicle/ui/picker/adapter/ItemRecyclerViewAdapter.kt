@@ -26,9 +26,10 @@ class ItemRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (adapterType){
-            TEXT_ITEM -> R.layout.layout_item_text
-            TEXT_IMAGE_ITEM -> R.layout.layout_item_text_image
-            TEXT_OR_IMAGE_ITEM -> R.layout.layout_item_text_image
+            TEXT_ITEM_PADDING -> R.layout.layout_item_text_padding
+            TEXT_ITEM,
+            TEXT_IMAGE_ITEM,
+            TEXT_OR_IMAGE_ITEM,
             TRUCK_TYPE_ITEM -> R.layout.layout_item_text_image
         }
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
@@ -56,7 +57,8 @@ class ItemRecyclerViewAdapter(
 
         holder.textView.visibility = View.VISIBLE
         when (adapterType){
-            TEXT_ITEM -> {
+            TEXT_ITEM,
+            TEXT_ITEM_PADDING -> {
                 holder.textView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
                 holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
             }
