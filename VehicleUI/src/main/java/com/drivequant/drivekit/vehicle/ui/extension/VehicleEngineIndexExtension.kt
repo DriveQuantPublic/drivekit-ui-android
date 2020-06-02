@@ -28,16 +28,13 @@ fun VehicleEngineIndex.buildEngineIndexItem(context: Context) : VehicleEngineIte
     )
 }
 
-fun VehicleEngineIndex.getVehicleType() : VehicleType? {
-    return when {
-        this.isCar -> {
-            VehicleType.CAR
-        }
-        this.isTruck -> {
-            VehicleType.TRUCK
-        }
-        else -> {
-            null
-        }
+fun VehicleEngineIndex.getVehicleTypes() : List<VehicleType> {
+    val vehicleTypes = mutableListOf<VehicleType>()
+    if (isCar) {
+        vehicleTypes.add(VehicleType.CAR)
     }
+    if (isTruck) {
+        vehicleTypes.add(VehicleType.TRUCK)
+    }
+    return vehicleTypes
 }

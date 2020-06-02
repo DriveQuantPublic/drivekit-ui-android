@@ -66,7 +66,7 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
     fun getEngineIndexes(context: Context): List<VehicleEngineItem> {
         val engineIndexes = mutableListOf<VehicleEngineItem>()
         for (item in DriveKitVehicleUI.vehicleEngineIndexes){
-            if (this.vehicleType == item.getVehicleType()) {
+            if (item.getVehicleTypes().contains(this.vehicleType)) {
                 engineIndexes.add(item.buildEngineIndexItem(context))
             }
         }

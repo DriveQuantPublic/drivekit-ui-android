@@ -27,6 +27,7 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
@@ -67,6 +68,7 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         PermissionsUtilsUI.initialize()
 
         DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.TRUCK, VehicleType.CAR))
+        DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
         DriveKitVehicleUI.configureVehiclePickerExtraStep(this)

@@ -27,7 +27,7 @@ class ItemRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (adapterType){
             TEXT_ITEM_PADDING -> R.layout.layout_item_text_padding
-            TEXT_ITEM,
+            TEXT_ITEM -> R.layout.layout_item_text
             TEXT_IMAGE_ITEM,
             TEXT_OR_IMAGE_ITEM,
             TRUCK_TYPE_ITEM -> R.layout.layout_item_text_image

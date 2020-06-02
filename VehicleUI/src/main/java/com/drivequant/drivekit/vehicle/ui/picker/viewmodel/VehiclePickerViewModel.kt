@@ -55,6 +55,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var selectedVersion: VehicleVersion
     lateinit var name: String
     lateinit var carCharacteristics: CarCharacteristics
+    lateinit var truckCharacteristics: TruckCharacteristics
 
     fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, otherAction: Boolean = false){
         when (currentStep){
@@ -98,16 +99,15 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             }
             BRANDS_ICONS -> {
                 if (!otherAction) {
-                    itemEngines = fetchVehicleEngines(context)
-                    stepDispatcher.postValue(ENGINE)
+                    manageEngineIndexes(context)
                 } else {
                     itemBrands = fetchVehicleBrands(context)
                     stepDispatcher.postValue(BRANDS_FULL)
                 }
             }
             BRANDS_FULL -> {
-                itemEngines = fetchVehicleEngines(context)
-                stepDispatcher.postValue(ENGINE)
+                manageEngineIndexes(context)
+
             }
             ENGINE -> fetchVehicleModels()
             MODELS -> fetchVehicleYears()
@@ -168,11 +168,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
         if (withIcons){
             if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.getBrands(selectedVehicleTypeItem.vehicleType).size){
-                items.add(
-                    VehiclePickerItem(
-                        items.size,
-                        DKResource.convertToString(context, "dk_vehicle_other_brands"),
-                        "OTHER_BRANDS"))
+                items.add(VehiclePickerItem(items.size, DKResource.convertToString(context, "dk_vehicle_other_brands"), "OTHER_BRANDS"))
             }
         }
         return items
@@ -189,70 +185,140 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleModels() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getCarModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
-            override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
-                when (status){
-                    SUCCESS -> {
-                        itemModels = buildItemsFromStrings(models)
-                        stepDispatcher.postValue(MODELS)
+        when (selectedVehicleTypeItem.vehicleType){
+            VehicleType.CAR -> {
+                DriveKitVehiclePicker.getCarModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
+                    override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
+                        manageModelsResponse(status, models)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
-                }
-                progressBarObserver.postValue(false)
+                })
             }
-        })
+            VehicleType.TRUCK -> {
+                selectedTruckType?.let { truckType ->
+                    DriveKitVehiclePicker.getTruckModels(selectedBrand, truckType, object : VehicleModelsQueryListener {
+                        override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
+                            manageModelsResponse(status, models)
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun manageModelsResponse(status: VehiclePickerStatus, models: List<String>){
+        when (status){
+            SUCCESS -> {
+                itemModels = buildItemsFromStrings(models)
+                stepDispatcher.postValue(MODELS)
+            }
+            FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+            NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+        }
+        progressBarObserver.postValue(false)
     }
 
     private fun fetchVehicleYears() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getCarYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
-            override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
-                when (status){
-                    SUCCESS -> {
-                        itemYears = buildItemsFromStrings(years)
-                        stepDispatcher.postValue(YEARS)
+        when (selectedVehicleTypeItem.vehicleType){
+            VehicleType.CAR -> {
+                DriveKitVehiclePicker.getCarYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
+                    override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
+                        manageYearsResponse(status, years)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
-                }
-                progressBarObserver.postValue(false)
+                })
             }
-        })
+            VehicleType.TRUCK -> {
+                selectedTruckType?.let {truckType ->
+                    DriveKitVehiclePicker.getTruckYears(selectedBrand, truckType, selectedModel, object : VehicleYearsQueryListener {
+                        override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
+                            manageYearsResponse(status, years)
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun manageYearsResponse(status: VehiclePickerStatus, years: List<String>){
+        when (status){
+            SUCCESS -> {
+                itemYears = buildItemsFromStrings(years)
+                stepDispatcher.postValue(YEARS)
+            }
+            FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+            NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+        }
+        progressBarObserver.postValue(false)
     }
 
     private fun fetchVehicleVersions() {
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getCarVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
-            override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
-                when (status){
-                    SUCCESS -> {
-                        itemVersions = buildItemsFromVersions(versions)
-                        stepDispatcher.postValue(VERSIONS)
+        when (selectedVehicleTypeItem.vehicleType) {
+            VehicleType.CAR -> {
+                DriveKitVehiclePicker.getCarVersions(selectedBrand, selectedEngineIndex, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
+                    override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
+                        manageVersionsResponse(status, versions)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
-                }
-                progressBarObserver.postValue(false)
+                })
             }
-        })
+            VehicleType.TRUCK -> {
+                selectedTruckType?.let {truckType ->
+                    DriveKitVehiclePicker.getTruckVersions(selectedBrand, truckType, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
+                        override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
+                            manageVersionsResponse(status, versions)
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun manageVersionsResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>){
+        when (status){
+            SUCCESS -> {
+                itemVersions = buildItemsFromVersions(versions)
+                stepDispatcher.postValue(VERSIONS)
+            }
+            FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+            NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+        }
+        progressBarObserver.postValue(false)
     }
 
     private fun fetchVehicleCharacteristics(){
         progressBarObserver.postValue(true)
-        DriveKitVehiclePicker.getCarCharacteristics(selectedVersion, object : VehicleCarCharacteristicsQueryListener {
-            override fun onResponse(status: VehiclePickerStatus, carCharacteristics: CarCharacteristics) {
-                when (status){
-                    SUCCESS -> {
-                        this@VehiclePickerViewModel.carCharacteristics = carCharacteristics
-                        stepDispatcher.postValue(NAME)
+        when (selectedVehicleTypeItem.vehicleType){
+            VehicleType.CAR -> {
+                DriveKitVehiclePicker.getCarCharacteristics(selectedVersion, object : VehicleCarCharacteristicsQueryListener {
+                    override fun onResponse(status: VehiclePickerStatus, carCharacteristics: CarCharacteristics) {
+                        when (status){
+                            SUCCESS -> {
+                                this@VehiclePickerViewModel.carCharacteristics = carCharacteristics
+                                stepDispatcher.postValue(NAME)
+                            }
+                            FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                            NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+                        }
+                        progressBarObserver.postValue(false)
                     }
-                    FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                    NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
-                }
-                progressBarObserver.postValue(false)
+                })
             }
-        })
+            VehicleType.TRUCK -> {
+                DriveKitVehiclePicker.getTruckCharacteristics(selectedVersion, object : VehicleTruckCharacteristicsQueryListener {
+                    override fun onResponse(status: VehiclePickerStatus, truckCharacteristics: TruckCharacteristics) {
+                        when (status){
+                            SUCCESS -> {
+                                this@VehiclePickerViewModel.truckCharacteristics = truckCharacteristics
+                                stepDispatcher.postValue(NAME)
+                            }
+                            FAILED_TO_RETRIEVED_DATA -> fetchServiceErrorObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                            NO_RESULT -> fetchServiceErrorObserver.postValue(NO_RESULT)
+                        }
+                        progressBarObserver.postValue(false)
+                    }
+                })
+            }
+        }
     }
 
     private fun createVehicle(){
@@ -261,35 +327,53 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 val detectionMode = computeCreateVehicleDetectionMode(vehicles)
-                DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object: VehicleCreateQueryListener{
-                    override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                        if (status == VehicleManagerStatus.SUCCESS){
-                            vehicleToDelete?.let {
-                                DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
-                                    override fun onResponse(status: VehicleManagerStatus) {
-                                        vehicleToDelete = null
-                                        createdVehicleId = vehicle.vehicleId
-                                        if (status == VehicleManagerStatus.SUCCESS) {
-                                            endObserver.postValue(SUCCESS)
-                                        } else {
-                                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                                        }
-                                        progressBarObserver.postValue(false)
-                                    }
-                                })
-                            }?: run {
-                                createdVehicleId = vehicle.vehicleId
-                                endObserver.postValue(SUCCESS)
-                                progressBarObserver.postValue(false)
+
+                when (selectedVehicleTypeItem.vehicleType){
+                    VehicleType.CAR -> {
+                        DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object: VehicleCreateQueryListener{
+                            override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
+                                manageCreateVehicleResponse(status, vehicle)
                             }
-                        } else {
-                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                            progressBarObserver.postValue(false)
+                        }, isLiteConfig)
+                    }
+                    VehicleType.TRUCK -> {
+                        selectedTruckType?.let {truckType ->
+                            DriveKitVehicle.createTruckVehicle(truckCharacteristics, truckType, name, detectionMode, object : VehicleCreateQueryListener{
+                                override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
+                                    manageCreateVehicleResponse(status, vehicle)
+                                }
+                            })
                         }
                     }
-                }, isLiteConfig)
+                }
             }
         }, SynchronizationType.CACHE)
+    }
+
+    private fun manageCreateVehicleResponse(status: VehicleManagerStatus, vehicle: Vehicle){
+        if (status == VehicleManagerStatus.SUCCESS){
+            vehicleToDelete?.let {
+                DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
+                    override fun onResponse(status: VehicleManagerStatus) {
+                        vehicleToDelete = null
+                        createdVehicleId = vehicle.vehicleId
+                        if (status == VehicleManagerStatus.SUCCESS) {
+                            endObserver.postValue(SUCCESS)
+                        } else {
+                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+                        }
+                        progressBarObserver.postValue(false)
+                    }
+                })
+            }?: run {
+                createdVehicleId = vehicle.vehicleId
+                endObserver.postValue(SUCCESS)
+                progressBarObserver.postValue(false)
+            }
+        } else {
+            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
+            progressBarObserver.postValue(false)
+        }
     }
 
     private fun manageBrands(context: Context){
@@ -311,6 +395,16 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             } else {
                 stepDispatcher.postValue(BRANDS_FULL)
             }
+        }
+    }
+
+    private fun manageEngineIndexes(context: Context){
+        itemEngines = fetchVehicleEngines(context)
+        if (itemEngines.size == 1) {
+            selectedEngineIndex = VehicleEngineIndex.getEnumByName(itemEngines.first().value)
+            fetchVehicleModels()
+        } else {
+            stepDispatcher.postValue(ENGINE)
         }
     }
 
