@@ -9,7 +9,7 @@ class StreaksListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_streaks_list)
+        setContentView(R.layout.dk_activity_streaks_list)
         DriveKitNavigationController.driverAchievementUIEntryPoint?.let {
             supportFragmentManager
                 .beginTransaction()
