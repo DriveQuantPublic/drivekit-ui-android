@@ -11,7 +11,6 @@ import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 
 fun Vehicle.buildFormattedName(context: Context) : String {
     val sortedVehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
@@ -28,8 +27,8 @@ fun Vehicle.computeSubtitle(context: Context): String? {
     val title = this.buildFormattedName(context)
     var subtitle: String? = "$brand $model $version"
 
-    if (liteConfig){
-        VehicleTypeItem.CAR.getCategories(context).first { it.liteConfigDqIndex == dqIndex}.title?.let { categoryName ->
+    if (VehicleCategory.getVehicleType(this.typeIndex) == VehicleType.CAR && liteConfig){
+        VehicleTypeItem.getEnumByVehicleType(VehicleType.CAR).getCategories(context).first { it.liteConfigDqIndex == dqIndex}.title?.let { categoryName ->
             subtitle = if (categoryName.equals(title, true)){
                 null
             } else {
@@ -56,26 +55,30 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
     }
 }
 
-fun Vehicle.getDetectionModeName(context: Context): String {
-    return DetectionModeType.getEnumByDetectionMode(detectionMode).getTitle(context)
-}
-
 fun Vehicle.getCategoryName(context: Context): String? {
-    return VehicleCategory.getEnumByTypeIndex(typeIndex)?.let { vehicleCategory ->
-        val categories = VehicleTypeItem.CAR.getCategories(context)
-        val matchedCategory = categories.first {
-            vehicleCategory .name == it.category
-        }
-        matchedCategory.title
-    } ?: run { "-" }
+    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+        return VehicleCategory.getEnumByTypeIndex(typeIndex)?.let { vehicleCategory ->
+            val categories = VehicleTypeItem.getEnumByVehicleType(vehicleType).getCategories(context)
+            val matchedCategory = categories.first {
+                vehicleCategory.name == it.category
+            }
+            matchedCategory.title
+        } ?: run { "-" }
+    }?:run {
+        return "-"
+    }
 }
 
 fun Vehicle.getEngineTypeName(context: Context): String? {
-    val engineIndexes = VehicleTypeItem.CAR.getEngineIndexes(context)
-    val matchedEngineIndex = engineIndexes.first {
-        VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
+    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+        val engineIndexes = VehicleTypeItem.getEnumByVehicleType(vehicleType).getEngineIndexes(context)
+        val matchedEngineIndex = engineIndexes.first {
+            VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
+        }
+        return matchedEngineIndex.title
+    }?:run {
+        return null
     }
-    return matchedEngineIndex.title
 }
 
 fun Vehicle.getGearBoxName(context: Context): String? {
