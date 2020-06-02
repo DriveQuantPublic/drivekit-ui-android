@@ -18,7 +18,6 @@ import com.drivequant.drivekit.vehicle.manager.*
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
@@ -411,12 +410,16 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep): String? {
         val stringResId = when (vehiclePickerStep){
             TYPE -> "dk_vehicle_type_selection_title"
+            TRUCK_TYPE -> "dk_vehicle_category_truck_selection_title"
             BRANDS_FULL -> "dk_vehicle_brand_description"
             ENGINE -> "dk_vehicle_engine_description"
             MODELS -> "dk_vehicle_model_description"
             YEARS -> "dk_vehicle_year_description"
             VERSIONS -> "dk_vehicle_version_description"
-            else -> null
+            CATEGORY,
+            CATEGORY_DESCRIPTION,
+            BRANDS_ICONS,
+            NAME -> null
         }
         stringResId?.let {
             return DKResource.convertToString(context, it)
