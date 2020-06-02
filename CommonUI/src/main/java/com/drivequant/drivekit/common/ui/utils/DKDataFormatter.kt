@@ -72,8 +72,14 @@ object DKDataFormatter {
     fun formatConsumption(context: Context, consumption: Double) : String =
         "${consumption.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_l_per_100km)}"
 
-    fun formatMass(context: Context, mass: Double) : String =
-        "${mass.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_kg)}"
+    fun formatMass(context: Context, mass: Double) : String {
+        // TODO manage that rule
+        return if (mass < 3000){
+            "${mass.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_kg)}"
+        } else {
+            "${(mass/1000).removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_t)}"
+        }
+    }
 
     fun formatVehiclePower(context: Context, power: Double) : String =
         "${power.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_power)}"

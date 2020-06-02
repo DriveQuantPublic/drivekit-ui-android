@@ -162,4 +162,6 @@
    <string name="dk_vehicle_category_truck_trailer_2_axles">Tracteur à deux essieux</string>
    <string name="dk_vehicle_category_truck_trailer_3_axles">Tracteur à trois essieux</string>
    <string name="dk_vehicle_category_truck_trailer_4_axles">Tracteur à quatre essieux</string>
+   <string name="dk_vehicle_ptac">Poids total autorisé en charge (PTAC) du porteur</string>
+   <string name="dk_vehicle_curbweight">Poids à vide</string>
 </resources>

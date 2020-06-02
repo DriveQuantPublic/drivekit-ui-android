@@ -43,7 +43,7 @@ enum class GroupField{
             }
 
             CHARACTERISTICS -> {
-                fields.addAll(CharacteristicField.values().toList())
+                fields.addAll(CharacteristicField.getFields(vehicle))
             }
 
             BEACON -> {

@@ -194,7 +194,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             }
             VehicleType.TRUCK -> {
                 selectedTruckType?.let { truckType ->
-                    DriveKitVehiclePicker.getTruckModels(selectedBrand, truckType, object : VehicleModelsQueryListener {
+                    DriveKitVehiclePicker.getTruckModels(truckType, selectedBrand, object : VehicleModelsQueryListener {
                         override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
                             manageModelsResponse(status, models)
                         }
@@ -228,7 +228,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             }
             VehicleType.TRUCK -> {
                 selectedTruckType?.let {truckType ->
-                    DriveKitVehiclePicker.getTruckYears(selectedBrand, truckType, selectedModel, object : VehicleYearsQueryListener {
+                    DriveKitVehiclePicker.getTruckYears(truckType, selectedBrand, selectedModel, object : VehicleYearsQueryListener {
                         override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
                             manageYearsResponse(status, years)
                         }
@@ -262,7 +262,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             }
             VehicleType.TRUCK -> {
                 selectedTruckType?.let {truckType ->
-                    DriveKitVehiclePicker.getTruckVersions(selectedBrand, truckType, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
+                    DriveKitVehiclePicker.getTruckVersions(truckType, selectedBrand, selectedModel, selectedYear, object : VehicleVersionsQueryListener {
                         override fun onResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
                             manageVersionsResponse(status, versions)
                         }
@@ -288,7 +288,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         progressBarObserver.postValue(true)
         when (selectedVehicleTypeItem.vehicleType){
             VehicleType.CAR -> {
-                DriveKitVehiclePicker.getCarCharacteristics(selectedVersion, object : VehicleCarCharacteristicsQueryListener {
+                DriveKitVehiclePicker.getCarCharacteristics(selectedVersion, object : CarVehicleCharacteristicsQueryListener {
                     override fun onResponse(status: VehiclePickerStatus, carCharacteristics: CarCharacteristics) {
                         when (status){
                             SUCCESS -> {
@@ -303,7 +303,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 })
             }
             VehicleType.TRUCK -> {
-                DriveKitVehiclePicker.getTruckCharacteristics(selectedVersion, object : VehicleTruckCharacteristicsQueryListener {
+                DriveKitVehiclePicker.getTruckCharacteristics(selectedVersion, object : TruckVehicleCharacteristicsQueryListener {
                     override fun onResponse(status: VehiclePickerStatus, truckCharacteristics: TruckCharacteristics) {
                         when (status){
                             SUCCESS -> {

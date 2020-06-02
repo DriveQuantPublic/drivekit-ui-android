@@ -55,4 +55,7 @@
     <string name="dk_common_update_photo_title">Edit the picture</string>
     <string name="dk_common_validate">Valid</string>
     <string name="dk_common_yes">Yes</string>
+
+
+    <string name="dk_common_unit_t">t</string>
 </resources>
