@@ -7,6 +7,8 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
@@ -89,5 +91,20 @@ fun Vehicle.getGearBoxName(context: Context): String? {
         "-"
     } else {
         DKResource.convertToString(context, identifier)
+    }
+}
+
+fun Vehicle.getDefaultImage(): Int {
+    var drawableId: Int? = null
+    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+        drawableId = when (vehicleType) {
+            VehicleType.CAR -> R.drawable.dk_default_car
+            VehicleType.TRUCK -> R.drawable.dk_default_truck
+        }
+    }
+    drawableId?.let {
+        return it
+    }?:run {
+        return R.drawable.dk_default_car
     }
 }

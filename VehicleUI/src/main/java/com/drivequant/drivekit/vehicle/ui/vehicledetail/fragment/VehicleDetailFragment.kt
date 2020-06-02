@@ -35,6 +35,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
 import com.drivequant.drivekit.vehicle.ui.listener.OnCameraPictureTakenCallback
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.adapter.VehicleFieldsListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPickerHelper
@@ -64,6 +65,7 @@ class VehicleDetailFragment : Fragment() {
     private var hasChangesToUpdate = false
 
     private var imageView: ImageView? = null
+    private var defaultVehicleImage: Int = 0
 
     private var cameraFilePath : String? = null
 
@@ -135,10 +137,15 @@ class VehicleDetailFragment : Fragment() {
         }
         cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
         imageView = activity?.findViewById(R.id.image_view_vehicle)
+
+        viewModel.vehicle?.let {
+            defaultVehicleImage = it.getDefaultImage()
+        }
+
         imageView?.let {
             Glide.with(this)
-                .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else R.drawable.dk_vehicle_default)
-                .placeholder(R.drawable.dk_vehicle_default)
+                .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else defaultVehicleImage)
+                .placeholder(defaultVehicleImage)
                 .into(it)
         }
 
@@ -328,8 +335,11 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun updatePicture(uri: Uri?) {
-        imageView?.let {
-            Glide.with(this).load(uri).placeholder(R.drawable.dk_vehicle_default).into(it)
+        imageView?.let { imageView ->
+            viewModel.vehicle?.let { vehicle ->
+                defaultVehicleImage = vehicle.getDefaultImage()
+            }
+            Glide.with(this).load(uri).placeholder(defaultVehicleImage).into(imageView)
         }
     }
 
