@@ -37,7 +37,7 @@ dependencies {
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
-    api 'com.drivequant.drivekit:drivekit-driver-achievement:1.5-beta4'
+    api 'com.drivequant.drivekit:drivekit-driver-achievement:1.5-beta5'
 }
 
 uploadArchives {
