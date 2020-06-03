@@ -336,13 +336,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                         }, isLiteConfig)
                     }
                     VehicleType.TRUCK -> {
-                        selectedTruckType?.let {truckType ->
-                            DriveKitVehicle.createTruckVehicle(truckCharacteristics, truckType, name, detectionMode, object : VehicleCreateQueryListener{
-                                override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                                    manageCreateVehicleResponse(status, vehicle)
-                                }
-                            })
-                        }
+                        DriveKitVehicle.createTruckVehicle(truckCharacteristics, name, detectionMode, object : VehicleCreateQueryListener{
+                            override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
+                                manageCreateVehicleResponse(status, vehicle)
+                            }
+                        })
                     }
                 }
             }

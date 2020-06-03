@@ -10,7 +10,7 @@ interface Field {
     fun isEditable(): Boolean = false
     fun getKeyboardType(): Int? = InputType.TYPE_CLASS_TEXT
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
-    fun isValid(value: String): Boolean = true
+    fun isValid(value: String, vehicle: Vehicle): Boolean = true
     fun getErrorDescription(context: Context): String?
     fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener)
 }

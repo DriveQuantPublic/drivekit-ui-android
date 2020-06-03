@@ -77,7 +77,7 @@ object DKDataFormatter {
         return if (mass < 3000){
             "${mass.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_kg)}"
         } else {
-            "${(mass/1000).removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_t)}"
+            "${(mass/1000).removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_T)}"
         }
     }
 

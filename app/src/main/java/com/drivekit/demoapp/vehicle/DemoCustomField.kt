@@ -28,7 +28,7 @@ class DemoCustomField : Field {
         return true
     }
 
-    override fun isValid(value: String): Boolean {
+    override fun isValid(value: String, vehicle: Vehicle): Boolean {
         return (value.toLongOrNull() != null && value.toLong() <= 9999)
     }
 

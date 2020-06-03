@@ -166,11 +166,13 @@ class VehicleDetailFragment : Fragment() {
         editableField.editableText.setOnTextChangedListener(object : EditableText.OnTextChangedListener{
             override fun onTextChanged(editableText: EditableText, text: String?) {
                 hasChangesToUpdate = true
-                if (text != null && editableField.field.isValid(text)){
-                    editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
-                } else {
-                    editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
-                    editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext())
+                viewModel.vehicle?.let { vehicle ->
+                    if (text != null && editableField.field.isValid(text, vehicle)){
+                        editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
+                    } else {
+                        editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
+                        editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext())
+                    }
                 }
             }
         })
@@ -228,9 +230,11 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun allFieldsValid() : Boolean {
-        for (item in editableFields){
-            if (!item.field.isValid(item.editableText.text)){
-                return false
+        viewModel.vehicle?.let { vehicle ->
+            for (item in editableFields){
+                if (!item.field.isValid(item.editableText.text, vehicle)){
+                    return false
+                }
             }
         }
         return true

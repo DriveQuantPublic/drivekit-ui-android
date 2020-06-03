@@ -54,7 +54,7 @@ enum class GeneralField : Field {
         }
     }
 
-    override fun isValid(value: String): Boolean {
+    override fun isValid(value: String, vehicle: Vehicle): Boolean {
         var isValid = false
         if (this == NAME && value.length <= 50){
             isValid = true
