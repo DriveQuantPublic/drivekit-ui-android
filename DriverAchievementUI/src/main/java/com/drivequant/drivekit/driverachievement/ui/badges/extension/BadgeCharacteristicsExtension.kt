@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.BadgeCharacteristics
-import com.drivequant.drivekit.databaseutils.entity.DKLevel
+import com.drivequant.drivekit.databaseutils.entity.Level
 import com.drivequant.drivekit.driverachievement.ui.R
 
 
@@ -21,9 +21,9 @@ fun BadgeCharacteristics.getIcon(context: Context): Drawable? {
 fun BadgeCharacteristics.getColor(): Int {
     return if (isBadgeAcquired()) {
         when (level) {
-            DKLevel.BRONZE -> R.color.dkBadgeLevel1Color
-            DKLevel.SILVER -> R.color.dkBadgeLevel2Color
-            DKLevel.GOLD -> R.color.dkBadgeLevel3Color
+            Level.BRONZE -> R.color.dkBadgeLevel1Color
+            Level.SILVER -> R.color.dkBadgeLevel2Color
+            Level.GOLD -> R.color.dkBadgeLevel3Color
         }
     } else {
         DriveKitUI.colors.neutralColor()
