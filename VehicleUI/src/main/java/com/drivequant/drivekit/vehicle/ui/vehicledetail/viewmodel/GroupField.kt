@@ -28,49 +28,38 @@ enum class GroupField{
     }
 
     fun getFields(vehicle: Vehicle): List<Field> {
-        val fields = mutableListOf<Field>()
-        when (this){
-            GENERAL -> {
-                for (item in GeneralField.values()){
-                    if (item.alwaysDisplayable(vehicle)){
-                        fields.add((item))
-                    }
-                }
-            }
-
-            ENGINE -> {
-                fields.addAll(EngineField.values().toList())
-            }
-
-            CHARACTERISTICS -> {
-                fields.addAll(CharacteristicField.getFields(vehicle))
-            }
-
-            BEACON -> {
-                for (item in BeaconField.values()){
-                    if (item.alwaysDisplayable(vehicle)){
-                        fields.add((item))
-                    }
-                }
-            }
-
-            BLUETOOTH -> {
-                for (item in BluetoothField.values()){
-                    if (item.alwaysDisplayable(vehicle)){
-                        fields.add((item))
-                    }
-                }
-            }
+        val fields = when (this){
+            GENERAL -> addFieldsIfDisplayable(GeneralField.values().asList(), vehicle)
+            ENGINE -> addFieldsIfDisplayable(EngineField.values().asList(), vehicle)
+            CHARACTERISTICS -> addFieldsIfDisplayable(CharacteristicField.getFields(vehicle), vehicle)
+            BEACON -> addFieldsIfDisplayable(BeaconField.values().asList(), vehicle)
+            BLUETOOTH -> addFieldsIfDisplayable(BluetoothField.values().asList(), vehicle)
         }
-        getCustomFields()?.let {
+        getCustomFields(vehicle)?.let {
             fields.addAll(it)
         }
         return fields
     }
 
-    private fun getCustomFields(): List<Field>?{
+    private fun addFieldsIfDisplayable(fields: List<Field>, vehicle: Vehicle) : MutableList<Field> {
+        val filteredFields = mutableListOf<Field>()
+        for (item in fields){
+            if (item.alwaysDisplayable(vehicle)){
+                filteredFields.add(item)
+            }
+        }
+        return filteredFields
+    }
+
+    private fun getCustomFields(vehicle: Vehicle): List<Field>?{
         return DriveKitVehicleUI.customFields[this]?.let {
-            it
+            val filtered = mutableListOf<Field>()
+            for (field in it){
+                if (field.alwaysDisplayable(vehicle)){
+                    filtered.add(field)
+                }
+            }
+            filtered
         }?: run {
             null
         }

@@ -29,7 +29,7 @@ enum class EngineField : Field {
         return true
     }
 
-    override fun getErrorDescription(context: Context): String? {
+    override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
         return null
     }
 

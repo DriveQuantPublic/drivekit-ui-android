@@ -164,4 +164,7 @@
    <string name="dk_vehicle_category_truck_trailer_4_axles">Tracteur à quatre essieux</string>
    <string name="dk_vehicle_ptac">Poids total autorisé en charge (PTAC) du porteur</string>
    <string name="dk_vehicle_curbweight">Poids à vide</string>
+   <string name="dk_vehicle_ptac_straight_truck">Poids total autorisé en charge du porteur</string>
+   <string name="dk_vehicle_ptac_tractor_truck">Poids total autorisé en charge du tracteur</string>
+   <string name="dk_vehicle_ptac_truck_and_trailer">Poids total autorisé en charge de l\'ensemble routier</string>
 </resources>

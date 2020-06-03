@@ -171,7 +171,7 @@ class VehicleDetailFragment : Fragment() {
                         editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
                     } else {
                         editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
-                        editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext())
+                        editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext(), vehicle)
                     }
                 }
             }

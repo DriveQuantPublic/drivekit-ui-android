@@ -19,6 +19,7 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
+import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
@@ -73,6 +74,7 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.TRUCK, VehicleType.CAR))
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.CHARACTERISTICS, listOf(DemoPtacTrailerTruckField()))
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
         DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)

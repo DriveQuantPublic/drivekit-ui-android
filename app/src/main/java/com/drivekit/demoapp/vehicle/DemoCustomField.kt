@@ -32,7 +32,7 @@ class DemoCustomField : Field {
         return (value.toLongOrNull() != null && value.toLong() <= 9999)
     }
 
-    override fun getErrorDescription(context: Context): String? {
+    override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
         return "Value must be below 999"
     }
 
