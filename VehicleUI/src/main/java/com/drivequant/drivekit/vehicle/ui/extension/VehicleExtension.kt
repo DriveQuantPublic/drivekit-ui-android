@@ -26,8 +26,7 @@ fun Vehicle.buildFormattedName(context: Context) : String {
 fun Vehicle.computeSubtitle(context: Context): String? {
     val title = this.buildFormattedName(context)
     var subtitle: String? = "$brand $model $version"
-
-    if (VehicleCategory.getVehicleType(this.typeIndex) == VehicleType.CAR && liteConfig){
+    if (VehicleType.getVehicleType(this.typeIndex) == VehicleType.CAR && liteConfig){
         VehicleTypeItem.getEnumByVehicleType(VehicleType.CAR).getCategories(context).first { it.liteConfigDqIndex == dqIndex}.title?.let { categoryName ->
             subtitle = if (categoryName.equals(title, true)){
                 null
@@ -56,7 +55,7 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
 }
 
 fun Vehicle.getCategoryName(context: Context): String? {
-    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
         return VehicleCategory.getEnumByTypeIndex(typeIndex)?.let { vehicleCategory ->
             val categories = VehicleTypeItem.getEnumByVehicleType(vehicleType).getCategories(context)
             val matchedCategory = categories.first {
@@ -70,7 +69,7 @@ fun Vehicle.getCategoryName(context: Context): String? {
 }
 
 fun Vehicle.getEngineTypeName(context: Context): String? {
-    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
         val engineIndexes = VehicleTypeItem.getEnumByVehicleType(vehicleType).getEngineIndexes(context)
         val matchedEngineIndex = engineIndexes.first {
             VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
@@ -99,7 +98,7 @@ fun Vehicle.getGearBoxName(context: Context): String? {
 
 fun Vehicle.getDefaultImage(): Int {
     var drawableId: Int? = null
-    VehicleCategory.getVehicleType(typeIndex)?.let { vehicleType ->
+    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
         drawableId = when (vehicleType) {
             VehicleType.CAR -> R.drawable.dk_default_car
             VehicleType.TRUCK -> R.drawable.dk_default_truck

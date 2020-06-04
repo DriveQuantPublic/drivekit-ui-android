@@ -5,7 +5,6 @@ import android.support.annotation.Keep
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.getGearBoxName
 
@@ -20,7 +19,7 @@ enum class CharacteristicField : Field {
     companion object {
         fun getFields(vehicle: Vehicle): List<CharacteristicField> {
             val fields = mutableListOf<CharacteristicField>()
-            VehicleCategory.getVehicleType(vehicle.typeIndex)?.let { vehicleType ->
+            VehicleType.getVehicleType(vehicle.typeIndex)?.let { vehicleType ->
                 val list = when (vehicleType){
                     VehicleType.CAR -> listOf(POWER, GEARBOX, CAR_MASS)
                     VehicleType.TRUCK -> listOf(POWER, TRUCK_MASS, PTAC)

@@ -397,11 +397,18 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun manageEngineIndexes(context: Context){
         itemEngines = fetchVehicleEngines(context)
-        if (itemEngines.size == 1) {
-            selectedEngineIndex = VehicleEngineIndex.getEnumByName(itemEngines.first().value)
-            fetchVehicleModels()
-        } else {
-            stepDispatcher.postValue(ENGINE)
+        when {
+            selectedVehicleTypeItem.vehicleType == VehicleType.TRUCK -> {
+                selectedEngineIndex = VehicleEngineIndex.DIESEL
+                fetchVehicleModels()
+            }
+            itemEngines.size == 1 -> {
+                selectedEngineIndex = VehicleEngineIndex.getEnumByName(itemEngines.first().value)
+                fetchVehicleModels()
+            }
+            else -> {
+                stepDispatcher.postValue(ENGINE)
+            }
         }
     }
 

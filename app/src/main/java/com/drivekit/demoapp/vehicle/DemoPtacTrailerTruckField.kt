@@ -38,7 +38,7 @@ class DemoPtacTrailerTruckField : Field {
     }
 
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
-        return VehicleCategory.getVehicleType(vehicle.typeIndex) == VehicleType.TRUCK
+        return VehicleType.getVehicleType(vehicle.typeIndex) == VehicleType.TRUCK
     }
 
     override fun isValid(value: String, vehicle: Vehicle): Boolean {
