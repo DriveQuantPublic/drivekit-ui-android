@@ -5,7 +5,6 @@ import android.text.InputType
 import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
@@ -13,20 +12,16 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedLi
 class DemoPtacTrailerTruckField : Field {
 
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
-        val identifier = when (VehicleCategory.getEnumByTypeIndex(vehicle.typeIndex)){
-            VehicleCategory.TWO_AXLES_STRAIGHT_TRUCK,
-            VehicleCategory.THREE_AXLES_STRAIGHT_TRUCK,
-            VehicleCategory.FOUR_AXLES_STRAIGHT_TRUCK -> "dk_vehicle_ptac_straight_truck"
-            VehicleCategory.TWO_AXLES_TRACTOR,
-            VehicleCategory.THREE_AXLES_TRACTOR,
-            VehicleCategory.FOUR_AXLES_TRACTOR -> "dk_vehicle_ptac_tractor_truck"
-            else -> ""
-        }
-        return DKResource.convertToString(context, identifier)
+        return DKResource.convertToString(context, "dk_vehicle_ptac_truck_and_trailer")
+    }
+
+    override fun getDescription(context: Context, vehicle: Vehicle): String? {
+        return DKResource.convertToString(context, "dk_vehicle_ptac_truck_and_trailer_info")
     }
 
     override fun getValue(context: Context, vehicle: Vehicle): String? {
-        return String.format("%.0f", vehicle.mass/1000)
+        // TODO: retrieve the value you previously saved
+        return ""
     }
 
     override fun isEditable(): Boolean {
