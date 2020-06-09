@@ -71,7 +71,7 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
 
         PermissionsUtilsUI.initialize()
 
-        DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.TRUCK, VehicleType.CAR))
+        DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.CAR, VehicleType.TRUCK))
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
         DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.CHARACTERISTICS, listOf(DemoPtacTrailerTruckField()))
