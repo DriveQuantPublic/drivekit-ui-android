@@ -33,7 +33,6 @@
     <string name="dk_common_take_picture">Take a picture</string>
     <string name="dk_common_trip_plural">trips</string>
     <string name="dk_common_trip_singular">trip</string>
-    <string name="dk_common_unit_T">T</string>
     <string name="dk_common_unit_accel_meter_per_second_square">m/s²</string>
     <string name="dk_common_unit_day">d</string>
     <string name="dk_common_unit_g">g</string>
@@ -52,6 +51,7 @@
     <string name="dk_common_unit_mph">mph</string>
     <string name="dk_common_unit_power">hp</string>
     <string name="dk_common_unit_second">s</string>
+    <string name="dk_common_unit_ton">t</string>
     <string name="dk_common_update_photo_title">Edit the picture</string>
     <string name="dk_common_validate">Valid</string>
     <string name="dk_common_yes">Yes</string>

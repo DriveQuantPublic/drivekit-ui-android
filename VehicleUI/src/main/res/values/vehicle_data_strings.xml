@@ -86,7 +86,7 @@
    <string name="dk_vehicle_bluetooth_guide_desc3_android">You will need to select the one that matches your vehicle\'s Bluetooth system.</string>
    <string name="dk_vehicle_bluetooth_guide_desc3_ios">Switch on the ignition. The phone must be connected to the vehicle to make the association.</string>
    <string name="dk_vehicle_bluetooth_guide_header">Before you start</string>
-   <string name="dk_vehicle_bluetooth_not_found">No Bluetooth devices were detected. \n \n To enable auto start, make sure your phone is connected to the Bluetooth system. \n \n Can you verify in the phone settings that the Bluetooth system is connected to your phone?</string>
+   <string name="dk_vehicle_bluetooth_not_found">No Bluetooth devices were detected. \n \nTo enable auto start, make sure your phone is connected to the Bluetooth system. \n \nCan you verify in the phone settings that the Bluetooth system is connected to your phone?</string>
    <string name="dk_vehicle_brand_description">Vehicle brand?</string>
    <string name="dk_vehicle_category_car_commercial_description">This category corresponds to vehicles for professional use generally intended for the transport of goods. These vehicles have a large storage capacity and the total permissible laden weight is between 1.5 tonnes and 3.5 tonnes.</string>
    <string name="dk_vehicle_category_car_commercial_title">Commercial vehicle</string>
@@ -105,10 +105,19 @@
    <string name="dk_vehicle_category_car_suv_description">This category corresponds to crossover vehicles or off-road vehicles with all-wheel drive (4x4) and whose length varies on average from 4.10 to 5.20 m.</string>
    <string name="dk_vehicle_category_car_suv_title">4x4, SUV, Crossover</string>
    <string name="dk_vehicle_category_display_brands">Continue to select the brand and model of your vehicle</string>
+   <string name="dk_vehicle_category_truck_selection_title">What kind of truck do you drive?</string>
+   <string name="dk_vehicle_category_truck_straight">Straight truck</string>
+   <string name="dk_vehicle_category_truck_straight_2_axles">Two-axle straight truck</string>
+   <string name="dk_vehicle_category_truck_straight_3_axles">Three-axle straight truck</string>
+   <string name="dk_vehicle_category_truck_straight_4_axles">Four-axle straight truck</string>
+   <string name="dk_vehicle_category_truck_trailer_2_axles">Two-axle tractor</string>
+   <string name="dk_vehicle_category_truck_trailer_3_axles">Three-axle tractor</string>
+   <string name="dk_vehicle_category_truck_trailer_4_axles">Four-axle tractor</string>
    <string name="dk_vehicle_configure_beacon_desc">A beacon is already associated with the vehicle %s</string>
    <string name="dk_vehicle_configure_beacon_title">Configuring the beacon</string>
    <string name="dk_vehicle_configure_bluetooth_desc">The Bluetooth device is already paired to the vehicle.</string>
    <string name="dk_vehicle_configure_bluetooth_title">Configuring Bluetooth</string>
+   <string name="dk_vehicle_curbweight">Curb weight</string>
    <string name="dk_vehicle_delete">Delete</string>
    <string name="dk_vehicle_delete_confirm">Do you confirm the suppression of the vehicle %s? Mileage monitoring and maintenance data will be definitively deleted.</string>
    <string name="dk_vehicle_detail_back_edit_alert">The vehicle data has been modified. Would you like to save them?</string>
@@ -135,36 +144,25 @@
    <string name="dk_vehicle_no_data">No model found for this type of engine</string>
    <string name="dk_vehicle_open_bluetooth_settings">Open Bluetooth settings</string>
    <string name="dk_vehicle_other_brands">Other brands</string>
+   <string name="dk_vehicle_ptac">Gross vehicle weight rating</string>
+   <string name="dk_vehicle_ptac_truck_and_trailer">Gross weight rating for the truck and trailer combination</string>
+   <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">This value may not exceed 44 tonnes</string>
+   <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">This value must be greater than the curb weight</string>
+   <string name="dk_vehicle_ptac_truck_and_trailer_info">Depending on the type of trailer or the configuration of your vehicle, you can adjust the gross vehicle weight rating of the truck and trailer combination.</string>
    <string name="dk_vehicle_rename">Rename</string>
    <string name="dk_vehicle_rename_description">Choose a name to identify your vehicle</string>
    <string name="dk_vehicle_rename_title">Rename this vehicle</string>
    <string name="dk_vehicle_replace">Replace</string>
    <string name="dk_vehicle_select_bluetooth_description">Select a Bluetooth device to start the trip recording. \n \n As soon as the phone connects to this device, the application starts analyzing your trip. \n \n You can only select one device for this vehicle.</string>
    <string name="dk_vehicle_show">Show</string>
-
+   <string name="dk_vehicle_type_car_title">Light and commercial vehicles of less than 3.5 t</string>
+   <string name="dk_vehicle_type_motorbike_title">Motorized two-wheelers</string>
+   <string name="dk_vehicle_type_selection_title">Choose the category of your vehicle</string>
+   <string name="dk_vehicle_type_truck_road_train">Road train</string>
+   <string name="dk_vehicle_type_truck_title">Trucks</string>
+   <string name="dk_vehicle_type_truck_tractor_semi_trailer">Semi trailer truck</string>
    <string name="dk_vehicle_unknown">The vehicle is unknown, please select another vehicle.</string>
    <string name="dk_vehicle_version_description">Version of the vehicle?</string>
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
-
-   <!-- TODO : Ask generated strings -->
-   <string name="dk_vehicle_type_selection_title">Choisissez la catégorie à laquelle appartient votre véhicule</string>
-   <string name="dk_vehicle_type_car_title">Véhicules légers et utilitaires de moins de 3,5 T</string>
-   <string name="dk_vehicle_type_truck_title">Poids lourds</string>
-   <string name="dk_vehicle_type_motorbike_title">Deux-roues motorisés</string>
-   <string name="dk_vehicle_category_truck_selection_title">Quel type de camion conduisez-vous ?</string>
-   <string name="dk_vehicle_category_truck_straight">Porteur</string>
-   <string name="dk_vehicle_type_truck_tractor_semi_trailer">Tracteur et semi-remorque</string>
-   <string name="dk_vehicle_type_truck_road_train">Train routier</string>
-   <string name="dk_vehicle_category_truck_straight_2_axles">Porteur à deux essieux</string>
-   <string name="dk_vehicle_category_truck_straight_3_axles">Porteur à trois essieux</string>
-   <string name="dk_vehicle_category_truck_straight_4_axles">Porteur à quatre essieux</string>
-   <string name="dk_vehicle_category_truck_trailer_2_axles">Tracteur à deux essieux</string>
-   <string name="dk_vehicle_category_truck_trailer_3_axles">Tracteur à trois essieux</string>
-   <string name="dk_vehicle_category_truck_trailer_4_axles">Tracteur à quatre essieux</string>
-
-   <string name="dk_vehicle_curbweight">Poids à vide</string>
-   <string name="dk_vehicle_ptac">Poids total autorisé en charge du camion</string>
-   <string name="dk_vehicle_ptac_truck_and_trailer">Poids total autorisé en charge de l\'ensemble routier</string>
-   <string name="dk_vehicle_ptac_truck_and_trailer_info">En fonction du type de remorque ou de la configuration de votre véhicule, vous pouvez saisir le poids total autorisé en charge de l\'ensemble routier. </string>
 </resources>
