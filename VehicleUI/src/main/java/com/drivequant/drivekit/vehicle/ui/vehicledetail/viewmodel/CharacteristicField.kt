@@ -46,9 +46,9 @@ enum class CharacteristicField : Field {
             POWER -> DKDataFormatter.formatVehiclePower(context, vehicle.power)
             GEARBOX -> vehicle.getGearBoxName(context)
             CAR_MASS -> DKDataFormatter.formatMass(context, vehicle.mass)
-            TRUCK_MASS -> DKDataFormatter.formatMass(context, vehicle.mass)
+            TRUCK_MASS -> DKDataFormatter.formatMassInTon(context, vehicle.mass)
             PTAC -> {
-                vehicle.ptac?.let { DKDataFormatter.formatMass(context, it)
+                vehicle.ptac?.let { DKDataFormatter.formatMassInTon(context, it)
                 }
             }
         }

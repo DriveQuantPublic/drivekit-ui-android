@@ -3,6 +3,7 @@ package com.drivekit.demoapp.vehicle
 import android.content.Context
 import android.text.InputType
 import android.text.TextUtils
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleType
@@ -29,7 +30,7 @@ class DemoPtacTrailerTruckField : Field {
     }
 
     override fun getKeyboardType(): Int? {
-        return InputType.TYPE_CLASS_NUMBER
+        return InputType.TYPE_NUMBER_FLAG_DECIMAL
     }
 
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
@@ -52,7 +53,7 @@ class DemoPtacTrailerTruckField : Field {
     }
 
     override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
-        val minMass = String.format("%.0f", vehicle.mass/1000)
+        val minMass = DKDataFormatter.formatMass(context, vehicle.mass)
         val maxMass = 44
         return "Value must be between $minMass and $maxMass T"
     }

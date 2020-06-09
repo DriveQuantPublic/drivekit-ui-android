@@ -60,7 +60,7 @@ class ItemRecyclerViewAdapter(
         when (adapterType){
             TEXT_ITEM,
             TEXT_ITEM_PADDING -> {
-                holder.textView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+                holder.textView.bigText(DriveKitUI.colors.fontColorOnSecondaryColor())
                 holder.textView.background?.setColorFilter(DriveKitUI.colors.secondaryColor(), PorterDuff.Mode.SRC_ATOP)
             }
             TEXT_IMAGE_ITEM -> {
