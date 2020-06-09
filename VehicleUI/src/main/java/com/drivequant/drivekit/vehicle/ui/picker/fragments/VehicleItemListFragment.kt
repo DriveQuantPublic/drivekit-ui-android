@@ -83,6 +83,9 @@ class VehicleItemListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_item_list, container,false)
         textViewDescription = view.findViewById(R.id.text_view_description) as TextView
         textViewDescription.bigText()
+        if (vehiclePickerStep == TYPE) {
+            textViewDescription.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+        }
         recyclerView = view.findViewById(R.id.list) as RecyclerView
         adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
 

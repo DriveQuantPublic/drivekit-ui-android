@@ -22,7 +22,7 @@ enum class CharacteristicField : Field {
             VehicleType.getVehicleType(vehicle.typeIndex)?.let { vehicleType ->
                 val list = when (vehicleType){
                     VehicleType.CAR -> listOf(POWER, GEARBOX, CAR_MASS)
-                    VehicleType.TRUCK -> listOf(POWER, TRUCK_MASS, PTAC)
+                    VehicleType.TRUCK -> listOf(TRUCK_MASS, PTAC)
                 }
                 fields.addAll(list)
             }

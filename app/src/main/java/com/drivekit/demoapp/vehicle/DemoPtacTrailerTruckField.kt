@@ -30,7 +30,7 @@ class DemoPtacTrailerTruckField : Field {
     }
 
     override fun getKeyboardType(): Int? {
-        return InputType.TYPE_NUMBER_FLAG_DECIMAL
+        return InputType.TYPE_CLASS_NUMBER
     }
 
     override fun alwaysDisplayable(vehicle: Vehicle): Boolean {
