@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:focusable="true"
-    android:clickable="true">
+    android:clickable="true"
+    android:padding="@dimen/dk_margin_medium">
     <include layout="@layout/dk_layout_progress_bar" />
     <LinearLayout
         android:layout_width="match_parent"
