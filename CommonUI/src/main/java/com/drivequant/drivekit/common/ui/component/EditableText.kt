@@ -35,7 +35,7 @@ class EditableText(context: Context) : LinearLayout(context) {
     private var onTextChangedListener: OnTextChangedListener? = null
 
     init {
-        val view = View.inflate(context, R.layout.layout_edit_text_settings, null)
+        val view = View.inflate(context, R.layout.dk_layout_edit_text_settings, null)
         textInputLayout = view.findViewById(R.id.text_view)
         textViewLabel = view.findViewById(R.id.text_view_label)
         textViewLabel?.setTextColor(DriveKitUI.colors.complementaryFontColor())
