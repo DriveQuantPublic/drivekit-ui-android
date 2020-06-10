@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
@@ -122,6 +123,9 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         when (currentPickerStep){
             TYPE -> {
                 viewModel.selectedVehicleTypeItem = VehicleTypeItem.valueOf(item.value)
+            }
+            TRUCK_TYPE -> {
+                viewModel.selectedTruckType = TruckType.getEnumByName(item.value)
             }
             CATEGORY -> {
                 viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!

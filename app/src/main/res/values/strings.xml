@@ -14,8 +14,12 @@
     <string name="beacon_required_on">Beacon is required to validate a trip</string>
     <string name="beacon_required_title">Beacon required ?</string>
     <string name="cancel_trip">Cancel the trip</string>
+    <string name="driver_achievement_button">Launch Driver Achievement</string>
+    <string name="driver_achievement_explanation">An implementation example of the DriveKit Driver Achievements component and its user interface</string>
+    <string name="driver_badges_button">My badges</string>
     <string name="driver_data_button">Launch DriverData</string>
     <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
+    <string name="driver_streaks_button">Streak of hits</string>
     <string name="enable_logging_pref_off">Enable this setting to write log on the device</string>
     <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
     <string name="enable_logging_title">Logging</string>
@@ -53,5 +57,4 @@
     <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
-    <string name="driver_achievement_explanation">An example of DriveKit Driver Achievements with graphical user interfaces.</string>
 </resources>

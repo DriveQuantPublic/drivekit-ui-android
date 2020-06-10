@@ -54,7 +54,7 @@ enum class GeneralField : Field {
         }
     }
 
-    override fun isValid(value: String): Boolean {
+    override fun isValid(value: String, vehicle: Vehicle): Boolean {
         var isValid = false
         if (this == NAME && value.length <= 50){
             isValid = true
@@ -62,7 +62,7 @@ enum class GeneralField : Field {
         return isValid
     }
 
-    override fun getErrorDescription(context: Context): String? {
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
         return if (this == NAME) {
             DKResource.convertToString(context, "dk_vehicle_field_name_error")
         } else {

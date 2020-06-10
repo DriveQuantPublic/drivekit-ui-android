@@ -28,11 +28,11 @@ class DemoCustomField : Field {
         return true
     }
 
-    override fun isValid(value: String): Boolean {
+    override fun isValid(value: String, vehicle: Vehicle): Boolean {
         return (value.toLongOrNull() != null && value.toLong() <= 9999)
     }
 
-    override fun getErrorDescription(context: Context): String? {
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
         return "Value must be below 999"
     }
 

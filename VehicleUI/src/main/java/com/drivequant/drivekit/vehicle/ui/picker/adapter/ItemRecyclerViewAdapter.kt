@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.adapter
 
+import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -26,9 +27,11 @@ class ItemRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = when (adapterType){
+            TEXT_ITEM_PADDING -> R.layout.layout_item_text_padding
             TEXT_ITEM -> R.layout.layout_item_text
-            TEXT_IMAGE_ITEM -> R.layout.layout_item_text_image
-            TEXT_OR_IMAGE_ITEM -> R.layout.layout_item_text_image
+            TEXT_IMAGE_ITEM,
+            TEXT_OR_IMAGE_ITEM,
+            TRUCK_TYPE_ITEM -> R.layout.layout_item_text_image
         }
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         FontUtils.overrideFonts(parent.context, view)
@@ -55,9 +58,10 @@ class ItemRecyclerViewAdapter(
 
         holder.textView.visibility = View.VISIBLE
         when (adapterType){
-            TEXT_ITEM -> {
-                holder.textView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            TEXT_ITEM,
+            TEXT_ITEM_PADDING -> {
+                holder.textView.bigText(DriveKitUI.colors.fontColorOnSecondaryColor())
+                holder.textView.background?.setColorFilter(DriveKitUI.colors.secondaryColor(), PorterDuff.Mode.SRC_ATOP)
             }
             TEXT_IMAGE_ITEM -> {
                 holder.textView.normalText(DriveKitUI.colors.complementaryFontColor())

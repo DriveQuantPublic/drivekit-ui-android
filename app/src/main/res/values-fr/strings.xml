@@ -14,8 +14,12 @@
    <string name="beacon_required_on">Le beacon n\'est pas requis pour valider un trajet</string>
    <string name="beacon_required_title">Beacon requis ?</string>
    <string name="cancel_trip">Annuler le trajet</string>
+   <string name="driver_achievement_button">Lancer Driver Achievement</string>
+   <string name="driver_achievement_explanation">Un exemple d\'implémentation du composant DriveKit Driver Achievements et de son interface</string>
+   <string name="driver_badges_button">Mes badges</string>
    <string name="driver_data_button">Lancer DriverData</string>
    <string name="driver_data_explanation">Exemple d\'implémentation du SDK Driver Data avec la liste des trajets et le détail d\'un trajet</string>
+   <string name="driver_streaks_button">Séquences de succès</string>
    <string name="enable_logging_pref_off">Activer ce réglage pour écrire les logs sur le téléphone</string>
    <string name="enable_logging_pref_on">Les fichiers de log seront disponibles dans le dossier \"DriveKit\" du téléphone</string>
    <string name="enable_logging_title">Logging</string>
@@ -53,5 +57,4 @@
    <string name="vehicle_explanation">Exemple d\'implémentation de DriveKit Vehicle avec la sélection d\'un véhicule, la liste la liste des véhicules, le détail d\'un véhicule, l\'appairage d\'un beacon et d\'un dispositif Bluetooth</string>
    <string name="vehicle_list_button">Liste des véhicules</string>
    <string name="vehicle_picker_button">Ajouter un véhicule</string>
-   <string name="driver_achievement_explanation">Un exemple de DriveKit Driver Achievements avec les interfaces graphiques.</string>
 </resources>
