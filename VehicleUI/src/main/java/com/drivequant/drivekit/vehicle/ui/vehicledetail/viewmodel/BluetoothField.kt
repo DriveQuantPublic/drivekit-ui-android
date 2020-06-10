@@ -29,7 +29,7 @@ enum class BluetoothField : Field {
                 && vehicle.bluetooth != null
     }
 
-    override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
         return null
     }
 

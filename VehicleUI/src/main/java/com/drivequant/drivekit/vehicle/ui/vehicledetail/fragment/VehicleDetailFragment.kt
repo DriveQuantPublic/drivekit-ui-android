@@ -167,11 +167,13 @@ class VehicleDetailFragment : Fragment() {
             override fun onTextChanged(editableText: EditableText, text: String?) {
                 hasChangesToUpdate = true
                 viewModel.vehicle?.let { vehicle ->
-                    if (text != null && editableField.field.isValid(text, vehicle)){
-                        editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
-                    } else {
-                        editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
-                        editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext(), vehicle)
+                    if (text != null) {
+                        if (editableField.field.isValid(text, vehicle)) {
+                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = false
+                        } else {
+                            editableField.editableText.getTextInputLayout()?.isErrorEnabled = true
+                            editableField.editableText.getTextInputLayout()?.error = editableField.field.getErrorDescription(requireContext(), text, vehicle)
+                        }
                     }
                 }
             }

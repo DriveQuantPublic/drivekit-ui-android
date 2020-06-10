@@ -52,10 +52,23 @@ class DemoPtacTrailerTruckField : Field {
         }
     }
 
-    override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
-        val minMass = DKDataFormatter.formatMass(context, vehicle.mass)
-        val maxMass = 44
-        return "Value must be between $minMass and $maxMass T"
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
+        if (!value.isBlank() && TextUtils.isDigitsOnly(value)){
+            val valueMassInKg = Integer.parseInt(value) * 1000
+            val identifier = when {
+                valueMassInKg < vehicle.mass -> {
+                    "dk_vehicle_ptac_truck_and_trailer_alert_min"
+                }
+                valueMassInKg > 44000 -> {
+                    "dk_vehicle_ptac_truck_and_trailer_alert_max"
+                }
+                else -> {
+                    ""
+                }
+            }
+            return DKResource.convertToString(context, identifier)
+        }
+        return null
     }
 
     override fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener) {

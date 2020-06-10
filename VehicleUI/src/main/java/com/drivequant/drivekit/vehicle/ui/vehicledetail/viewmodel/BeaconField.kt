@@ -32,7 +32,7 @@ enum class BeaconField : Field {
                 && vehicle.beacon != null
     }
 
-    override fun getErrorDescription(context: Context, vehicle: Vehicle): String? {
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
         return null
     }
 

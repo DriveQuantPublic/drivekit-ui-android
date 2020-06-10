@@ -12,7 +12,7 @@ interface Field {
     fun getKeyboardType(): Int? = InputType.TYPE_CLASS_TEXT
     fun alwaysDisplayable(vehicle: Vehicle): Boolean = false
     fun isValid(value: String, vehicle: Vehicle): Boolean = true
-    fun getErrorDescription(context: Context, vehicle: Vehicle): String?
+    fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String?
     fun onFieldUpdated(context: Context, value: String, vehicle: Vehicle, listener: FieldUpdatedListener)
 }
 
