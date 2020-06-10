@@ -33,7 +33,6 @@
    <string name="dk_common_take_picture">Scatta una foto</string>
    <string name="dk_common_trip_plural">viaggi</string>
    <string name="dk_common_trip_singular">viaggio</string>
-   <string name="dk_common_unit_T">T</string>
    <string name="dk_common_unit_accel_meter_per_second_square">m/s²</string>
    <string name="dk_common_unit_day">g</string>
    <string name="dk_common_unit_g">g</string>
@@ -52,6 +51,7 @@
    <string name="dk_common_unit_mph">mph</string>
    <string name="dk_common_unit_power">CV</string>
    <string name="dk_common_unit_second">s</string>
+   <string name="dk_common_unit_ton">t</string>
    <string name="dk_common_update_photo_title">Cambiare l\'immagine</string>
    <string name="dk_common_validate">Valido</string>
    <string name="dk_common_yes">Sì</string>

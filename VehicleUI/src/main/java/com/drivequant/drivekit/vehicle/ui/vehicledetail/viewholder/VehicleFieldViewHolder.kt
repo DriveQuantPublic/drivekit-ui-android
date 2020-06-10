@@ -36,6 +36,7 @@ class VehicleFieldViewHolder(
         FontUtils.overrideFonts(context, editTextSettings)
         viewModel.vehicle?.let {
             editTextSettings.setLabel(field.getTitle(context, it))
+            editTextSettings.setDescription(field.getDescription(context, it))
             editTextSettings.setHint(field.getValue(context, it))
             editTextSettings.setSettingsText(field.getValue(context, it))
             editTextSettings.tag = field.getTitle(context, it)

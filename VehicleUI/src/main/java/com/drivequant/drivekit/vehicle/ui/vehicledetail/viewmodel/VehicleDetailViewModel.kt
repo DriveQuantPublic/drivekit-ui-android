@@ -30,7 +30,7 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     private fun createGroupFields() {
         vehicle?.let {
             groupFields.clear()
-            for (groupField in GroupField.values()){
+            for (groupField in GroupField.getGroupFields(it)){
                 if (groupField.isDisplayable(it)){
                     groupFields.add(groupField)
                 }

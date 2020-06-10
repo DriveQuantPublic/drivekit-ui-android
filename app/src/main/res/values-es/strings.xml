@@ -14,8 +14,12 @@
    <string name="beacon_required_on">Beacon es necesario para validar un viaje</string>
    <string name="beacon_required_title">¿ Necesita beacon ?</string>
    <string name="cancel_trip">Cancelar el viaje</string>
+   <string name="driver_achievement_button">Lanzar Driver Achievement</string>
+   <string name="driver_achievement_explanation">Un ejemplo de implementación del componente DriveKit Driver Achievements y su interfaz</string>
+   <string name="driver_badges_button">Mis insignias</string>
    <string name="driver_data_button">Iniciar DriverData</string>
    <string name="driver_data_explanation">Un ejemplo de implementación de DriveKit DriverData con su interfaz de usuario para la Lista de Viaje y el Detalle de Viaje</string>
+   <string name="driver_streaks_button">Racha de éxitos</string>
    <string name="enable_logging_pref_off">Habilite esta opción para escribir el registro en el dispositivo</string>
    <string name="enable_logging_pref_on">Los archivos de registro estarán disponibles en la carpeta \"DriveKit\" del teléfono.</string>
    <string name="enable_logging_title">Logging</string>
@@ -53,5 +57,4 @@
    <string name="vehicle_explanation">Un ejemplo de implementación de DriveKit Vehículo con UI para el recolector de vehículos, lista de vehículos, detalle del vehículo, faro y emparejamiento de dispositivos Bluetooth</string>
    <string name="vehicle_list_button">Lista de vehículos</string>
    <string name="vehicle_picker_button">Añadir un vehículo</string>
-   <string name="driver_achievement_explanation">Un ejemplo de los DriveKit Driver Achievement con interfaces gráficas de usuario.</string>
 </resources>

@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.smallText
 
 /**
  * Created by gabrielmorin on 05/04/2017.
@@ -28,6 +29,7 @@ class EditableText(context: Context) : LinearLayout(context) {
     private var inputType = InputType.TYPE_CLASS_TEXT
     private var textInputLayout: TextInputLayout? = null
     private var textViewLabel: TextView? = null
+    private var textViewDescription: TextView? = null
     private var editText: EditText? = null
     private var mKeepUnderline = false
     private var onTextChangedListener: OnTextChangedListener? = null
@@ -37,6 +39,10 @@ class EditableText(context: Context) : LinearLayout(context) {
         textInputLayout = view.findViewById(R.id.text_view)
         textViewLabel = view.findViewById(R.id.text_view_label)
         textViewLabel?.setTextColor(DriveKitUI.colors.complementaryFontColor())
+
+        textViewDescription = view.findViewById(R.id.text_view_description)
+        textViewDescription?.smallText(DriveKitUI.colors.complementaryFontColor())
+
         editText = view.findViewById(R.id.edit_text)
         editText?.setTextColor(DriveKitUI.colors.mainFontColor())
         editText?.addTextChangedListener(object : TextWatcher {
@@ -73,15 +79,24 @@ class EditableText(context: Context) : LinearLayout(context) {
 
     fun setInputType(inputType: Int) {
         this.inputType = inputType
-        editText!!.inputType = inputType
+        editText?.inputType = inputType
     }
 
     fun setHint(hint: String?) {
-        editText!!.hint = hint
+        editText?.hint = hint
     }
 
     fun setLabel(label: String?) {
-        textViewLabel!!.text = label
+        textViewLabel?.text = label
+    }
+
+    fun setDescription(description: String?){
+        description?.let {
+            textViewDescription?.text = description
+            textViewDescription?.visibility = View.VISIBLE
+        }?:run {
+            textViewDescription?.visibility = View.GONE
+        }
     }
 
     fun setSettingsTitle(settingsTitle: String?) {

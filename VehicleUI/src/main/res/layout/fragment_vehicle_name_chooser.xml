@@ -4,16 +4,19 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
-    android:clickable="true">
+    android:clickable="true"
+    android:padding="@dimen/dk_margin_medium">
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="192dp"
-        android:layout_height="192dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dk_margin_half"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_bias="0.3"/>
 
     <TextView
         android:id="@+id/text_view_description"

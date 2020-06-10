@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.model
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import java.io.Serializable
 
 data class VehiclePickerItem(
@@ -11,6 +12,12 @@ data class VehiclePickerItem(
     val value: String,
     val icon1: Drawable? = null,
     val icon2: Drawable? = null
+) : Serializable
+
+data class VehicleTruckTypeItem(
+    val truckType: String,
+    val title: String?,
+    val icon: Drawable?
 ) : Serializable
 
 data class VehicleCategoryItem(
@@ -27,9 +34,6 @@ data class VehicleCategoryItem(
 
 data class VehicleBrandItem(
     val brand: VehicleBrand,
-    val isCar: Boolean,
-    val isMotorbike: Boolean,
-    val isTruck: Boolean,
     val icon: Drawable?
 ) : Serializable
 
