@@ -24,7 +24,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
 object DriveKitVehicleUI : VehicleUIEntryPoint {
 
-    internal var vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR)
+    internal var vehicleTypes: List<VehicleType> = VehicleType.values().asList()
     internal var brands: List<VehicleBrand> = VehicleBrand.values().asList()
     internal var categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG
     internal var vehicleEngineIndexes: List<VehicleEngineIndex> = VehicleEngineIndex.values().toList()
