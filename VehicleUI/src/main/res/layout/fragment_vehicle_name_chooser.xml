@@ -8,15 +8,13 @@
     android:padding="@dimen/dk_margin_medium">
 
     <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/dk_image_view_vehicle_name"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
         android:layout_margin="@dimen/dk_margin_half"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintHorizontal_bias="0.3"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/text_view_description"
@@ -25,7 +23,7 @@
         android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/image_view"
+        app:layout_constraintTop_toBottomOf="@id/dk_image_view_vehicle_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
