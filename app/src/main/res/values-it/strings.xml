@@ -15,9 +15,11 @@
    <string name="beacon_required_title">Beacon richiesto ?</string>
    <string name="cancel_trip">Annulla il viaggio</string>
    <string name="driver_achievement_button">Lancio Driver Achievement</string>
-   <string name="driver_achievement_explanation">Un esempio di implementazione di DriveKit Driver Achievement con la sua interfaccia utente per la lista Streaks</string>
+   <string name="driver_achievement_explanation">Un esempio di implementazione del componente DriveKit Driver Achievements e della sua interfaccia</string>
+   <string name="driver_badges_button">I miei distintivi</string>
    <string name="driver_data_button">Avviare DriverData</string>
    <string name="driver_data_explanation">Un esempio di implementazione di DriveKit DriverData con la sua interfaccia utente per l\'elenco dei viaggi e il dettaglio del viaggio.</string>
+   <string name="driver_streaks_button">Vena di successi</string>
    <string name="enable_logging_pref_off">Attivare questa impostazione per scrivere il log sul dispositivo.</string>
    <string name="enable_logging_pref_on">I file di log saranno disponibili nella cartella \"DriveKit\" del telefono.</string>
    <string name="enable_logging_title">Logging</string>
@@ -30,7 +32,8 @@
    <string name="notification_permission">Notifiche</string>
    <string name="permission_utils_diagnosis_button">Diagnosi dell\'app</string>
    <string name="permission_utils_permissions_button">Raccolta delle autorizzazioni</string>
-   <string name="permissions_utils_explanation">Esempio di implementazione di DriveKit Permissions Utils che include il percorso dell\'utente per la raccolta dei permessi e la schermata di diagnostica dell\'applicazione.</string>
+   <string name="permissions_utils_explanation">Esempio di implementazione di DriveKit Permissions Utils che include il percorso dell\'utente per la raccolta dei permessi e la schermata di diagnostica dell\'applicazione.
+</string>
    <string name="sandbox_mode_off">DriveKit è collegato all\'ambiente di produzione di DriveQuant</string>
    <string name="sandbox_mode_on">DriveKit è collegato all\'ambiente di integrazione di DriveQuant</string>
    <string name="sandbox_mode_title">Modo sandbox</string>

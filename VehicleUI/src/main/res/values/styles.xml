@@ -4,5 +4,6 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/dk_text_item_background</item>
     </style>
 </resources>

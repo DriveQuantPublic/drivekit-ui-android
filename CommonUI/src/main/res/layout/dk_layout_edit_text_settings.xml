@@ -9,6 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Label"/>
+    <TextView
+        android:id="@+id/text_view_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Optional Description"
+        android:visibility="gone"/>
     <android.support.design.widget.TextInputLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/text_view"

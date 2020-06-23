@@ -9,6 +9,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -18,8 +19,8 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
+import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -27,13 +28,17 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.enums.VehicleBrand
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehicleTypeItem
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.facebook.stetho.Stetho
 import java.util.*
 
 class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraStepListener {
+
     companion object {
         fun showNotification(context: Context, message: String){
             val builder = NotificationCompat.Builder(context, "notif_channel")
@@ -57,12 +62,24 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         configureDriveKit()
         registerReceiver()
 
-        DriveKitUI.initialize()
-        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(this))
+        DriveKitConfig.configureDriveKitUI(this)
+        DriveKitConfig.configureDriverAchievement()
+        DriveKitConfig.configurePermissionsUtils(this)
+
         DriverDataUI.initialize()
-        DriverAchievementUI.initialize()
         DriveKitVehicleUI.initialize()
+
         PermissionsUtilsUI.initialize()
+
+        val vehiclesTypes = listOf(VehicleType.CAR, VehicleType.TRUCK)
+        DriveKitVehicleUI.configureVehiclesTypes(vehiclesTypes)
+        DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
+        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.CHARACTERISTICS, listOf(DemoPtacTrailerTruckField()))
+        DriveKitVehicleUI.configureBeaconDetailEmail(this)
+        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
+        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
+
         PermissionsUtilsUI.configureBluetooth(true)
         PermissionsUtilsUI.configureDiagnosisLogs(true)
         PermissionsUtilsUI.configureLogPathFile("/DQ-demo-test/")
@@ -119,10 +136,6 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         // TODO: Push you api key here
         DriveKit.setApiKey("Your API key here")
 
-        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
-        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         initFirstLaunch()
     }
 

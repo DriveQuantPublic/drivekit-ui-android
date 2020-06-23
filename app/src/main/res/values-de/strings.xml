@@ -15,9 +15,11 @@
    <string name="beacon_required_title">beacon benötigt ?</string>
    <string name="cancel_trip">Stornierung der Reise</string>
    <string name="driver_achievement_button">Start Driver Achievement</string>
-   <string name="driver_achievement_explanation">Ein Beispiel für die Implementierung des DriveKit Driver Achievement mit seiner UI für die Streak-Liste</string>
+   <string name="driver_achievement_explanation">Eine Beispielimplementierung der DriveKit Driver Achievements-Komponente und ihrer Schnittstelle</string>
+   <string name="driver_badges_button">Meine Elemente</string>
    <string name="driver_data_button">DriverData starten</string>
    <string name="driver_data_explanation">Ein Beispiel für die DriveKit DriverData-Implementierung mit seiner Benutzeroberfläche für die Reiseliste und das Reisendetail.</string>
+   <string name="driver_streaks_button">Streifen von Treffern</string>
    <string name="enable_logging_pref_off">Aktivieren Sie diese Einstellung, um das Protokoll auf das Gerät zu schreiben.</string>
    <string name="enable_logging_pref_on">Die Protokolldateien sind im Ordner \"DriveKit\" des Telefons verfügbar.</string>
    <string name="enable_logging_title">Logging</string>

@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex.*
+import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleEngineItem
 
 fun VehicleEngineIndex.getTitle(context: Context) : String {
@@ -25,4 +26,15 @@ fun VehicleEngineIndex.buildEngineIndexItem(context: Context) : VehicleEngineIte
         isMotorbike,
         isTruck
     )
+}
+
+fun VehicleEngineIndex.getVehicleTypes() : List<VehicleType> {
+    val vehicleTypes = mutableListOf<VehicleType>()
+    if (isCar) {
+        vehicleTypes.add(VehicleType.CAR)
+    }
+    if (isTruck) {
+        vehicleTypes.add(VehicleType.TRUCK)
+    }
+    return vehicleTypes
 }

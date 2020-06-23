@@ -41,7 +41,7 @@ class VehicleNameChooserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        image_view.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_vehicle_name_chooser"))
+        dk_image_view_vehicle_name.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_vehicle_name_chooser"))
         text_view_description.normalText()
         text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_name_chooser_description")
 

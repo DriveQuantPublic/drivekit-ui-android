@@ -43,9 +43,9 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:28.0.0'
 
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.5.0"
     //debugImplementation project(':DriverData')
     //releaseImplementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
-    implementation "com.drivequant.drivekit:drivekit-driver-data:1.4.2"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
