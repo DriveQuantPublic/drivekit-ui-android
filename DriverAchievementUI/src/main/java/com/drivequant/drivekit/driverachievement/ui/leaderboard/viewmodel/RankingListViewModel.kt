@@ -15,7 +15,7 @@ class RankingListViewModel : ViewModel() {
     lateinit var rankingListData: RankingListData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var mutableLiveDataRankingListData: MutableLiveData<RankingListData> = MutableLiveData()
-    var currentRankingPeriod: RankingPeriod = RankingPeriod.WEEKLY
+    var currentRankingPeriod: RankingPeriod = RankingPeriod.LEGACY
 
     fun fetchRankingList(rankingType: RankingType) {
             DriveKitDriverAchievement.getRanking(

@@ -25,26 +25,41 @@ class RankingListFragment : Fragment() {
 
     companion object {
         fun newInstance(
-            rankingType: RankingType): RankingListFragment {
+            rankingType: RankingType
+        ): RankingListFragment {
             val fragment = RankingListFragment()
             fragment.rankingType = rankingType
             return fragment
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if(!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(rankingType.name,RankingListViewModel::class.java)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (!this::viewModel.isInitialized) {
+            viewModel =
+                ViewModelProviders.of(this).get(rankingType.name, RankingListViewModel::class.java)
         }
     }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.dk_fragment_ranking_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
+    }
 
+    override fun onResume() {
+        super.onResume()
+        updateRanking()
+    }
+
+    private fun updateRanking() {
         viewModel.mutableLiveDataRankingListData.observe(this,
             Observer {
+                //TODO check userNotRanked and handle UI with Popup
                 if (viewModel.syncStatus != RankingSyncStatus.NO_ERROR && viewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
                     Toast.makeText(
                         context,
@@ -54,13 +69,12 @@ class RankingListFragment : Fragment() {
                     ).show()
                 }
 
-                    if (this::listAdapter.isInitialized) {
-                        listAdapter.notifyDataSetChanged()
-                    } else {
-                        listAdapter = RankingListAdapter(view.context, viewModel)
-                        recycler_view_ranking.adapter = listAdapter
-                    }
-
+                if (this::listAdapter.isInitialized) {
+                    listAdapter.notifyDataSetChanged()
+                } else {
+                    listAdapter = RankingListAdapter(requireContext(), viewModel)
+                    recycler_view_ranking.adapter = listAdapter
+                }
                 updateProgressVisibility(false)
             })
 
@@ -68,20 +82,11 @@ class RankingListFragment : Fragment() {
         viewModel.fetchRankingList(rankingType)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_ranking_list, container, false)
-
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
             progress_circular.visibility = View.VISIBLE
         } else {
             progress_circular.visibility = View.GONE
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 }
