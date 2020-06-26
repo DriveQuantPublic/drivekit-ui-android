@@ -3,81 +3,60 @@ package com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.databaseutils.entity.RankingType
-import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingsFragmentPagerAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
 import kotlinx.android.synthetic.main.dk_fragment_leaderboard.*
 
 class LeaderBoardFragment : Fragment() {
-    lateinit var viewModel: RankingListViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
-    }
+    lateinit var rankingViewModel: RankingListViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+
         setViewPager()
         setTabLayout()
-        setLeaderBoardHeader()
+        setupSelectors()
+
+        view_pager_leader_board.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                RankingListFragment.newInstance(
+                    rankingViewModel,
+                    DriverAchievementUI.rankingTypes[position]
+                )
+            }
+
+            override fun onPageScrollStateChanged(position: Int) {
+
+            }
+        })
     }
 
-    private fun buildRankingSelector(selectorText: String): Button {
+    private fun createRankingSelectors(selectorText: String): Button {
         val button = Button(requireContext())
         button.text = selectorText
-        button.tag = selectorText
         button.setBackgroundResource(R.drawable.button_selector)
         return button
     }
 
-    private fun setLeaderBoardHeader() {
-        when (val rankingSelector = DriverAchievementUI.rankingSelector) {
-            is RankingSelectorType.NONE -> {
-                //TODO nothing
-            }
-            is RankingSelectorType.PERIOD -> {
-                val periods = rankingSelector.rankingPeriods
-                for (selector in periods) {
-                    val button = buildRankingSelector(selector.getValue())
-                    onSelectorClick(button)
-                    selector_container.addView(button)
-                }
-            }
-        }
-    }
+    private fun setupSelectors() {
 
-    private fun onSelectorClick(view: View) {
-        view.setOnClickListener {
-            when (view.tag) {
-                "LEGACY" -> {
-                    Toast.makeText(requireContext(), "legacy", Toast.LENGTH_SHORT).show()
-                }
-                "MONTH" -> {
-                    Toast.makeText(requireContext(), "month", Toast.LENGTH_SHORT).show()
-                }
-                "WEEK" -> {
-                    Toast.makeText(requireContext(), "week", Toast.LENGTH_SHORT).show()
-                }
-                "ALL_TIME" -> {
-                    Toast.makeText(requireContext(), "all_time", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 
     override fun onCreateView(
@@ -90,11 +69,12 @@ class LeaderBoardFragment : Fragment() {
     }
 
     private fun setViewPager() {
-        view_pager_leader_board.offscreenPageLimit = 3
         view_pager_leader_board.adapter =
             RankingsFragmentPagerAdapter(
+                rankingViewModel,
                 requireContext(),
-                childFragmentManager)
+                childFragmentManager
+            )
         tab_layout_leader_board.setupWithViewPager(view_pager_leader_board)
 //        for ((index, rankingType) in DriverAchievementUI.rankingTypes.withIndex()){
 //            tab_layout_leader_board.getTabAt(index)?.let {
@@ -116,7 +96,7 @@ class LeaderBoardFragment : Fragment() {
     }
 
     private fun setTabLayout() {
-        if(DriverAchievementUI.rankingTypes.size == 1) {
+        if (DriverAchievementUI.rankingTypes.size == 1) {
             tab_layout_leader_board.removeAllTabs()
         }
     }

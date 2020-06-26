@@ -4,6 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.PagerAdapter
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -11,11 +13,12 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment.Ranking
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
 
 class RankingsFragmentPagerAdapter(
+    private val viewModel: RankingListViewModel,
     private val context: Context,
     fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment =
-        RankingListFragment.newInstance(DriverAchievementUI.rankingTypes[position])
+        RankingListFragment.newInstance(viewModel, DriverAchievementUI.rankingTypes[position])
 
 
     override fun getPageTitle(position: Int): CharSequence? {
