@@ -2,7 +2,6 @@ package com.drivequant.drivekit.driverachievement.ui
 
 import android.content.Context
 import android.content.Intent
-import android.opengl.GLException
 import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverAchievementUIEntryPoint
@@ -18,7 +17,9 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         StreakTheme.SAFETY,
         StreakTheme.ACCELERATION,
         StreakTheme.BRAKE,
-        StreakTheme.ADHERENCE)
+        StreakTheme.ADHERENCE,
+        StreakTheme.SPEEDING
+    )
 
     internal var badgeCategories: List<BadgeCategory> = listOf(
         BadgeCategory.GENERIC,
