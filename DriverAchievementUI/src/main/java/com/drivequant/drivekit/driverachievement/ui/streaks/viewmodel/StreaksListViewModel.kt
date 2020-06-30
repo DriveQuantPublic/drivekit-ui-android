@@ -33,16 +33,17 @@ class StreaksListViewModel : ViewModel() {
 
     fun getFilteredStreaks(fetchedStreaks: List<Streak>): MutableList<StreaksData> {
         if (fetchedStreaks.isNotEmpty()) {
-            val filteredStreaks = fetchedStreaks.filter { streak -> streak.theme in DriverAchievementUI.streakThemes }
             filteredStreaksData.clear()
-            for (streak in filteredStreaks) {
-                filteredStreaksData.add(
-                    StreaksData(
-                        streak.theme,
-                        streak.best,
-                        streak.current
+            for (streakTheme in DriverAchievementUI.streakThemes) {
+                fetchedStreaks.find { it.theme == streakTheme }?.let { streak ->
+                    filteredStreaksData.add(
+                        StreaksData(
+                            streak.theme,
+                            streak.best,
+                            streak.current
+                        )
                     )
-                )
+                }
             }
         }
         return filteredStreaksData
