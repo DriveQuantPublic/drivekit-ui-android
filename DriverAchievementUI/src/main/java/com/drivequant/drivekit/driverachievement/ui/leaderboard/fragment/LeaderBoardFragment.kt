@@ -4,50 +4,57 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingSelectorAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingsFragmentPagerAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
 import kotlinx.android.synthetic.main.dk_fragment_leaderboard.*
 
-class LeaderBoardFragment : Fragment() {
+class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingListViewModel
     lateinit var rankingsFragmentPagerAdapter: RankingsFragmentPagerAdapter
+    lateinit var rankingSelectorAdapter: RankingSelectorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
         setTabLayout()
         setViewPager()
-        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
 
-        weekly.setOnClickListener {
-            val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-            currentFragment.updateRanking(RankingPeriod.WEEKLY)
-        }
-
-        monthly.setOnClickListener {
-            val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-            currentFragment.updateRanking(RankingPeriod.MONTHLY)
-        }
-
-        legacy.setOnClickListener {
-            val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-            currentFragment.updateRanking(RankingPeriod.LEGACY)
-        }
     }
 
-    private fun createRankingSelectors(selectorText: String): Button {
-        val button = Button(requireContext())
-        button.text = selectorText
-        button.setBackgroundResource(R.drawable.button_selector)
-        return button
+    override fun onResume() {
+        super.onResume()
+        createRankingSelectors()
+    }
+
+
+    private fun createRankingSelectors() {
+        when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
+            is RankingSelectorType.NONE -> {
+                recycler_view_selector.visibility = View.GONE
+            }
+            is RankingSelectorType.PERIOD -> {
+                rankingSelectorAdapter = RankingSelectorAdapter(
+                    requireContext(),
+                    rankingSelectorType.rankingPeriods,
+                    this
+                )
+            }
+        }
+        recycler_view_selector.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recycler_view_selector.adapter = rankingSelectorAdapter
     }
 
     override fun onCreateView(
@@ -60,7 +67,7 @@ class LeaderBoardFragment : Fragment() {
     }
 
     private fun setViewPager() {
-      rankingsFragmentPagerAdapter =  RankingsFragmentPagerAdapter(childFragmentManager)
+        rankingsFragmentPagerAdapter = RankingsFragmentPagerAdapter(childFragmentManager)
         view_pager_leader_board.offscreenPageLimit = 4
         view_pager_leader_board.adapter = rankingsFragmentPagerAdapter
 
@@ -80,11 +87,13 @@ class LeaderBoardFragment : Fragment() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int) {
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
-                val currentFragment = rankingsFragmentPagerAdapter.fragments[position] as RankingListFragment
+                val currentFragment =
+                    rankingsFragmentPagerAdapter.fragments[position] as RankingListFragment
                 currentFragment.updateRanking()
             }
 
@@ -99,5 +108,10 @@ class LeaderBoardFragment : Fragment() {
         if (DriverAchievementUI.rankingTypes.size == 1) {
             tab_layout_leader_board.removeAllTabs()
         }
+    }
+
+    override fun onClickSelector(rankingPeriod: RankingPeriod) {
+        val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
+        currentFragment.updateRanking(rankingPeriod)
     }
 }

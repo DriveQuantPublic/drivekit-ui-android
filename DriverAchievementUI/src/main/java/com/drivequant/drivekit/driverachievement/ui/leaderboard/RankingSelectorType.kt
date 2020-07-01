@@ -6,3 +6,4 @@ sealed class RankingSelectorType {
     object NONE : RankingSelectorType()
     data class PERIOD(val rankingPeriods: List<RankingPeriod>) : RankingSelectorType()
 }
+
