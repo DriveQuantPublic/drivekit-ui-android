@@ -10,7 +10,7 @@ class DriverInfoViewModel : ViewModel() {
     var syncStatus: MutableLiveData<Boolean> = MutableLiveData()
 
     fun updateUserInfo(nickname: String) {
-        DriveKit.updateUserInfos(nickname, listener = object :UpdateUserInfosQueryListener{
+        DriveKit.updateUserInfos(nickname, listener = object : UpdateUserInfosQueryListener {
             override fun onResponse(status: Boolean) {
                 if (status) {
                     syncStatus.postValue(status)

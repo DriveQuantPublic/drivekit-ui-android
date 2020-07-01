@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
+import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingListAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.DriverInfoViewModel
@@ -24,53 +25,53 @@ import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
 class RankingListFragment : Fragment() {
 
-    lateinit var viewModel: RankingListViewModel
-    lateinit var listAdapter: RankingListAdapter
+    private lateinit var rankingViewModel: RankingListViewModel
+    lateinit var rankingAdapter: RankingListAdapter
     lateinit var rankingType: RankingType
     lateinit var driverInfoViewModel: DriverInfoViewModel
 
     companion object {
         fun newInstance(
-            viewModel: RankingListViewModel,
             rankingType: RankingType
         ): RankingListFragment {
-            Log.e("TAG_RANKING_LIST","$rankingType -- newInstance")
+            Log.e("TAG_RANKING_LIST", "$rankingType -- newInstance")
             val fragment = RankingListFragment()
-            fragment.viewModel = viewModel
             fragment.rankingType = rankingType
             return fragment
         }
     }
 
     override fun onPause() {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onPause")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onPause")
         super.onPause()
     }
 
     override fun onStop() {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onStop")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onStop")
         super.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("TAG_RANKING_LIST","$rankingType -- onDestroy")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onDestroy")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onActivityCreated")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onActivityCreated")
         super.onActivityCreated(savedInstanceState)
         driverInfoViewModel = ViewModelProviders.of(this).get(DriverInfoViewModel::class.java)
+        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+
     }
 
     override fun onDetach() {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onDetach")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onDetach")
 
         super.onDetach()
     }
 
     override fun onAttach(context: Context?) {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onAttach")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onAttach")
         super.onAttach(context)
     }
 
@@ -78,53 +79,29 @@ class RankingListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onCreateView")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onCreateView")
         return inflater.inflate(R.layout.dk_fragment_ranking_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onViewCreated")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
 
     }
 
     override fun onResume() {
-        Log.e("TAG_RANKING_LIST","$rankingType -- onResume")
+        Log.e("TAG_RANKING_LIST", "$rankingType -- onResume")
         super.onResume()
         updateRanking()
     }
 
-    private fun setUserNickname() {
-
-
-        val alertDialog = DKAlertDialog.LayoutBuilder()
-            .init(requireContext())
-            .layout(R.layout.dk_layout_badge_details)
-            .cancelable(false)
-            .positiveButton(getString(R.string.dk_common_validate),
-                DialogInterface.OnClickListener { _, _ ->
-
-                })
-            .negativeButton(requireContext().getString(R.string.dk_common_cancel),
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                    //TODO finish activity
-                }).show()
-
-
-
-
-
-
-    }
-
-    fun updateRanking() {
-        Log.e("TAG_RANKING_LIST","$rankingType -- updateRanking")
-        viewModel.mutableLiveDataRankingListData.observe(this,
+    fun updateRanking(rankingPeriod: RankingPeriod = RankingPeriod.LEGACY) {
+        Log.e("TAG_RANKING_LIST", "$rankingType -- updateRanking")
+        rankingViewModel.mutableLiveDataRankingListData.observe(this,
             Observer {
                 //TODO check userNotRanked and handle UI with Popup
-                if (viewModel.syncStatus != RankingSyncStatus.NO_ERROR && viewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
+                if (rankingViewModel.syncStatus != RankingSyncStatus.NO_ERROR && rankingViewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
                     Toast.makeText(
                         context,
                         //TODO Add rankings keys strings
@@ -133,17 +110,17 @@ class RankingListFragment : Fragment() {
                     ).show()
                 }
 
-                if (this::listAdapter.isInitialized) {
-                    listAdapter.notifyDataSetChanged()
+                if (this::rankingAdapter.isInitialized) {
+                    rankingAdapter.notifyDataSetChanged()
                 } else {
-                    listAdapter = RankingListAdapter(requireContext(), viewModel)
-                    recycler_view_ranking.adapter = listAdapter
+                    rankingAdapter = RankingListAdapter(requireContext(), rankingViewModel)
+                    recycler_view_ranking.adapter = rankingAdapter
                 }
                 updateProgressVisibility(false)
             })
 
         updateProgressVisibility(true)
-        viewModel.fetchRankingList(rankingType)
+        rankingViewModel.fetchRankingList(rankingType, rankingPeriod)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

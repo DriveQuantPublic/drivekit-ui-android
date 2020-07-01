@@ -15,12 +15,11 @@ class RankingListViewModel : ViewModel() {
     lateinit var rankingListData: RankingListData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var mutableLiveDataRankingListData: MutableLiveData<RankingListData> = MutableLiveData()
-    var currentRankingPeriod: RankingPeriod = RankingPeriod.LEGACY
 
-    fun fetchRankingList(rankingType: RankingType) {
+    fun fetchRankingList(rankingType: RankingType, rankingPeriod: RankingPeriod) {
             DriveKitDriverAchievement.getRanking(
                 rankingType = rankingType,
-                rankingPeriod = currentRankingPeriod,
+                rankingPeriod = rankingPeriod,
                 rankingDepth = DriverAchievementUI.rankingDepth,
                 listener = object : RankingQueryListener {
                     override fun onResponse(
