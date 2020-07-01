@@ -75,9 +75,9 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
         for ((index, rankType) in DriverAchievementUI.rankingTypes.withIndex()) {
             tab_layout_leader_board.getTabAt(index)?.let {
                 val tabIcon = when (rankType) {
-                    RankingType.DISTRACTION -> R.drawable.dk_common_distraction
-                    RankingType.ECO_DRIVING -> R.drawable.dk_common_ecodriving
-                    RankingType.SAFETY -> R.drawable.dk_common_safety
+                    RankingType.DISTRACTION -> R.drawable.dk_achievements_phone_distraction
+                    RankingType.ECO_DRIVING -> R.drawable.dk_achievements_ecodriving
+                    RankingType.SAFETY -> R.drawable.dk_achievements_safety
                 }
                 it.setIcon(tabIcon)
             }
