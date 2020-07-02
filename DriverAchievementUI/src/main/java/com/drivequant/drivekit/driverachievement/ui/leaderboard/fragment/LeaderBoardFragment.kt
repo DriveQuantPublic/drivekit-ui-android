@@ -1,14 +1,18 @@
 package com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.RankingType
+import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -28,16 +32,11 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
         super.onViewCreated(view, savedInstanceState)
 
         rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+        createRankingSelectors()
         setTabLayout()
         setViewPager()
-
+        setLeaderBoardHeader()
     }
-
-    override fun onResume() {
-        super.onResume()
-        createRankingSelectors()
-    }
-
 
     private fun createRankingSelectors() {
         when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
@@ -67,6 +66,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
     }
 
     private fun setViewPager() {
+        Log.e("TAG_RANKING_LIST", " -- setViewPager")
         rankingsFragmentPagerAdapter = RankingsFragmentPagerAdapter(childFragmentManager)
         view_pager_leader_board.offscreenPageLimit = 4
         view_pager_leader_board.adapter = rankingsFragmentPagerAdapter
@@ -103,10 +103,47 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
         })
     }
 
+    private fun setLeaderBoardHeader() {
+        rankingViewModel.mutableLiveDataLeaderBoardData.observe(
+            this, Observer {
+                if (rankingViewModel.syncStatus == RankingSyncStatus.NO_ERROR || rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
+
+                    Log.e("TAG_RANKING_LIST", " -- setLeaderBoardHeader")
+                    ranking_status.setRankingStatus(
+                        it!!.getLeaderBoardStatus(requireContext()),
+                        it.getStatus()
+                    )
+                    text_view_ranking_title.text =
+                        it.getLeaderBoardTitle()
+                    image_view_ranking_type.setImageDrawable(
+                        DKResource.convertToDrawable(
+                            requireContext(),
+                            it.getIcon()
+                        )
+                    )
+                }
+                updateProgressVisibility(false)
+            })
+        updateProgressVisibility(true)
+        rankingViewModel.fetchLeaderBoardStatus(DriverAchievementUI.rankingTypes[0], RankingPeriod.LEGACY)
+    }
+
     private fun setTabLayout() {
+        Log.e("TAG_RANKING_LIST", " -- setTabLayout")
         tab_layout_leader_board.setupWithViewPager(view_pager_leader_board)
         if (DriverAchievementUI.rankingTypes.size == 1) {
             tab_layout_leader_board.removeAllTabs()
+        } else {
+            image_view_ranking_type.visibility = View.GONE
+            text_view_ranking_title.visibility = View.GONE
+        }
+    }
+
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        if (displayProgress) {
+            progress_circular.visibility = View.VISIBLE
+        } else {
+            progress_circular.visibility = View.GONE
         }
     }
 

@@ -61,12 +61,10 @@ class RankingListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         driverInfoViewModel = ViewModelProviders.of(this).get(DriverInfoViewModel::class.java)
         rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
-
     }
 
     override fun onDetach() {
         Log.e("TAG_RANKING_LIST", "$rankingType -- onDetach")
-
         super.onDetach()
     }
 
