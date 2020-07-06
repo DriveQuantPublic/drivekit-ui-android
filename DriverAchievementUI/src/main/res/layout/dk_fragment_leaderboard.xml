@@ -17,35 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/leader_board_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/image_view_ranking_type"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/dk_achievements_phone_distraction"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_view_ranking_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="sécurité"
-            app:layout_constraintStart_toEndOf="@+id/image_view_ranking_type"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingStatusView
-            android:id="@+id/ranking_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/image_view_ranking_type"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_ranking_title" />
-    </android.support.constraint.ConstraintLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

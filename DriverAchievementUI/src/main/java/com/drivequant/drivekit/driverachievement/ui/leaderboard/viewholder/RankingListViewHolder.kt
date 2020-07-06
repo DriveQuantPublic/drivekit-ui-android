@@ -27,29 +27,35 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val textViewDriverScore = itemView.findViewById<TextView>(R.id.text_view_driver_score)
     private val viewSeparator = itemView.findViewById<TextView>(R.id.view_separator)
 
-    fun bind(driverRanked: DriverRanked) {
-        textViewDriverDistance.text = DKDataFormatter.formatDistance(itemView.context, driverRanked.distance)
+    fun bind(driverRanked: DriverRanked, userPosition: Int) {
+        textViewDriverDistance.text =
+            DKDataFormatter.formatDistance(itemView.context, driverRanked.distance)
         textViewDriverScore.text = driverRanked.score.removeZeroDecimal()
-        textViewDriverNickname.text = if (driverRanked.nickname.isNullOrEmpty()) "-" else driverRanked.nickname
+        textViewDriverNickname.text =
+            if (driverRanked.nickname.isNullOrEmpty()) "-" else driverRanked.nickname
 
-        if(driverRanked.rank in 1..3) {
-            textViewDriverPosition.visibility = View.GONE
-           val rankResId =  when (driverRanked.rank) {
-                1 -> "dk_achievements_rank_1"
-                2 -> "dk_achievements_rank_2"
-                3 -> "dk_achievements_rank_3"
-               else -> null
-           }
-           val drawable = rankResId?.let {
-                DKResource.convertToDrawable(
-                    itemView.context,
-                    it
-                )
-            }
-            imageViewDriverPosition.setImageDrawable(drawable)
-        } else {
-            textViewDriverPosition.text = driverRanked.rank.toString()
+        if (driverRanked.rank == userPosition) {
+            itemView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         }
+
+            if (driverRanked.rank in 1..3) {
+                textViewDriverPosition.visibility = View.GONE
+                val rankResId = when (driverRanked.rank) {
+                    1 -> "dk_achievements_rank_1"
+                    2 -> "dk_achievements_rank_2"
+                    3 -> "dk_achievements_rank_3"
+                    else -> null
+                }
+                val drawable = rankResId?.let {
+                    DKResource.convertToDrawable(
+                        itemView.context,
+                        it
+                    )
+                }
+                imageViewDriverPosition.setImageDrawable(drawable)
+            } else {
+                textViewDriverPosition.text = driverRanked.rank.toString()
+            }
         setStyle()
     }
 

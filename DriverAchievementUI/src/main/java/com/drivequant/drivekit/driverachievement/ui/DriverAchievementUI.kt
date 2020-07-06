@@ -30,8 +30,8 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     )
 
     internal var rankingTypes = listOf(
-        RankingType.SAFETY,
-        RankingType.ECO_DRIVING)
+        RankingType.ECO_DRIVING,
+        RankingType.DISTRACTION)
 
     internal var rankingSelector: RankingSelectorType = RankingSelectorType.PERIOD(
         listOf(

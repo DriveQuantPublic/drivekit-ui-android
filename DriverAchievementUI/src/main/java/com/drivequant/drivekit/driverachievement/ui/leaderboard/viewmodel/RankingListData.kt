@@ -15,8 +15,9 @@ class RankingListData(private val ranking: Ranking) {
         return RankingStatus.GOING_DOWN
     }
 
-    fun getLeaderBoardStatus(context: Context): SpannableString =
+    fun getDriverPosition():Int = ranking.userPosition
 
+    fun getLeaderBoardStatus(context: Context): SpannableString =
         DKSpannable().append("${ranking.userPosition}", context.resSpans {
             color(DriveKitUI.colors.secondaryColor())
             size(R.dimen.dk_text_xbig)

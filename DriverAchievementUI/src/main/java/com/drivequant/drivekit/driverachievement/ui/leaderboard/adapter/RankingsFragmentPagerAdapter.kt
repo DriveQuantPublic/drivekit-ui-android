@@ -8,19 +8,20 @@ import com.drivequant.drivekit.databaseutils.entity.RankingType
 
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment.RankingListFragment
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
 
 class RankingsFragmentPagerAdapter(
     fragmentManager: FragmentManager
 ) : FragmentPagerAdapter(fragmentManager) {
 
-    val fragments = mutableListOf<Fragment>()
+    private val fragments = mutableListOf<Fragment>()
     var currentFragment: Fragment? = null
 
     init {
         for (rankingType in DriverAchievementUI.rankingTypes) {
             val fragment =  when (rankingType) {
                 RankingType.SAFETY -> RankingListFragment.newInstance(
-                    RankingType.SAFETY
+                            RankingType.SAFETY
                 )
 
                 RankingType.DISTRACTION -> RankingListFragment.newInstance(

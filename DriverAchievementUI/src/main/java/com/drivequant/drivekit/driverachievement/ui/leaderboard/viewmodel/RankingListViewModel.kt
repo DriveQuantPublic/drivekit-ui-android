@@ -14,14 +14,10 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
 class RankingListViewModel : ViewModel() {
     lateinit var rankingListData: RankingListData
-    lateinit var leaderBoardData: RankingListData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var mutableLiveDataRankingListData: MutableLiveData<RankingListData> = MutableLiveData()
-    var mutableLiveDataLeaderBoardData: MutableLiveData<RankingListData> = MutableLiveData()
 
-
-    fun fetchRankingList(rankingType: RankingType, rankingPeriod: RankingPeriod) {
-        Log.e("TAG_RANKING_LIST", "$rankingType -- fetchRankingList")
+    fun fetchRankingList(rankingType: RankingType, rankingPeriod: RankingPeriod = RankingPeriod.LEGACY) {
         DriveKitDriverAchievement.getRanking(
                 rankingType = rankingType,
                 rankingPeriod = rankingPeriod,
@@ -37,9 +33,5 @@ class RankingListViewModel : ViewModel() {
                         mutableLiveDataRankingListData.postValue(rankingData)
                     }
                 })
-    }
-
-    fun buildLeaderBoardData() {
-
     }
 }
