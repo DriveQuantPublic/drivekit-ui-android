@@ -16,22 +16,24 @@ class RankingListViewModel : ViewModel() {
     lateinit var rankingListData: RankingListData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var mutableLiveDataRankingListData: MutableLiveData<RankingListData> = MutableLiveData()
+    var currentRankingPeriod: RankingPeriod = RankingPeriod.LEGACY
 
-    fun fetchRankingList(rankingType: RankingType, rankingPeriod: RankingPeriod = RankingPeriod.LEGACY) {
+    fun fetchRankingList(rankingType: RankingType) {
+        //TODO check if DriveKit is configured
         DriveKitDriverAchievement.getRanking(
-                rankingType = rankingType,
-                rankingPeriod = rankingPeriod,
-                rankingDepth = DriverAchievementUI.rankingDepth,
-                listener = object : RankingQueryListener {
-                    override fun onResponse(
-                        rankingSyncStatus: RankingSyncStatus,
-                        ranking: Ranking
-                    ) {
-                        syncStatus = rankingSyncStatus
-                        val rankingData = RankingListData(ranking)
-                        rankingListData = rankingData
-                        mutableLiveDataRankingListData.postValue(rankingData)
-                    }
-                })
+            rankingType = rankingType,
+            rankingPeriod = currentRankingPeriod,
+            rankingDepth = DriverAchievementUI.rankingDepth,
+            listener = object : RankingQueryListener {
+                override fun onResponse(
+                    rankingSyncStatus: RankingSyncStatus,
+                    ranking: Ranking
+                ) {
+                    syncStatus = rankingSyncStatus
+                    val rankingData = RankingListData(ranking)
+                    rankingListData = rankingData
+                    mutableLiveDataRankingListData.postValue(rankingData)
+                }
+            })
     }
 }

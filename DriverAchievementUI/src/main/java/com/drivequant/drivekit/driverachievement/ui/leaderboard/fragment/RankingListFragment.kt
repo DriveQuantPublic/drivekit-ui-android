@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
-import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingListAdapter
@@ -28,29 +26,29 @@ class RankingListFragment : Fragment() {
 
     companion object {
         fun newInstance(
-            rankingType: RankingType
-        ): RankingListFragment {
+            rankingViewModel: RankingListViewModel,
+            rankingType: RankingType): RankingListFragment {
             val fragment = RankingListFragment()
             fragment.rankingType = rankingType
+            fragment.rankingViewModel = rankingViewModel
             return fragment
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.dk_fragment_ranking_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
-
+        if (DriverAchievementUI.rankingTypes.size != 1) {
+            image_view_ranking_type.visibility = View.GONE
+            text_view_ranking_title.visibility = View.GONE
+        }
     }
 
     override fun onResume() {
@@ -59,12 +57,7 @@ class RankingListFragment : Fragment() {
     }
 
     private fun setupLeaderBoardHeader() {
-        if (DriverAchievementUI.rankingTypes.size != 1) {
-            image_view_ranking_type.visibility = View.GONE
-            text_view_ranking_title.visibility = View.GONE
-        }
-
-        ranking_status.setRankingStatus(
+        user_progression_view.setUserProgression(
             rankingViewModel.rankingListData.getLeaderBoardStatus(requireContext()),
             rankingViewModel.rankingListData.getStatus()
         )
@@ -78,7 +71,7 @@ class RankingListFragment : Fragment() {
         )
     }
 
-    fun updateRanking(rankingPeriod: RankingPeriod = RankingPeriod.LEGACY) {
+    fun updateRanking() {
         rankingViewModel.mutableLiveDataRankingListData.observe(this,
             Observer {
                 //TODO check userNotRanked and handle UI with Popup
@@ -102,7 +95,7 @@ class RankingListFragment : Fragment() {
             })
 
         updateProgressVisibility(true)
-        rankingViewModel.fetchRankingList(rankingType, rankingPeriod)
+        rankingViewModel.fetchRankingList(rankingType)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

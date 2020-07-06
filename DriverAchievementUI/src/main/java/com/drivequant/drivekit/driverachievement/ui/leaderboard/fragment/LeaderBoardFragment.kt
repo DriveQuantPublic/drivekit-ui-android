@@ -26,43 +26,39 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+        if (!this::rankingViewModel.isInitialized) {
+            rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+        }
         createRankingSelectors()
         setTabLayout()
         setViewPager()
     }
 
     private fun createRankingSelectors() {
-        when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
-            is RankingSelectorType.NONE -> {
-                recycler_view_selector.visibility = View.GONE
-            }
-            is RankingSelectorType.PERIOD -> {
-                rankingSelectorAdapter = RankingSelectorAdapter(
-                    requireContext(),
-                    rankingSelectorType.rankingPeriods,
-                    this
-                )
-            }
+        if (DriverAchievementUI.rankingSelector is RankingSelectorType.NONE) {
+            recycler_view_selector.visibility = View.GONE
+        } else {
+            rankingSelectorAdapter = RankingSelectorAdapter(
+                requireContext(),
+                this
+            )
+            recycler_view_selector.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recycler_view_selector.adapter = rankingSelectorAdapter
         }
-        recycler_view_selector.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recycler_view_selector.adapter = rankingSelectorAdapter
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.dk_fragment_leaderboard, container, false)
     }
 
     private fun setViewPager() {
         rankingsFragmentPagerAdapter =
-            RankingsFragmentPagerAdapter(childFragmentManager)
+            RankingsFragmentPagerAdapter(rankingViewModel, childFragmentManager)
         view_pager_leader_board.offscreenPageLimit = 4
         view_pager_leader_board.adapter = rankingsFragmentPagerAdapter
 
@@ -82,12 +78,12 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
+                positionOffsetPixels: Int) {
             }
 
             override fun onPageSelected(position: Int) {
-
+                val currentFragment = rankingsFragmentPagerAdapter.fragments[position] as RankingListFragment
+                currentFragment.updateRanking()
             }
 
             override fun onPageScrollStateChanged(position: Int) {
@@ -105,6 +101,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
 
     override fun onClickSelector(rankingPeriod: RankingPeriod) {
         val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-        currentFragment.updateRanking(rankingPeriod)
+        rankingViewModel.currentRankingPeriod = rankingPeriod
+        currentFragment.updateRanking()
     }
 }

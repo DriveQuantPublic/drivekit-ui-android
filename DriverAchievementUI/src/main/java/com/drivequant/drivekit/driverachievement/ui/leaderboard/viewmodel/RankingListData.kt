@@ -11,8 +11,8 @@ import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingListData(private val ranking: Ranking) {
-    fun getStatus(): RankingStatus {
-        return RankingStatus.GOING_DOWN
+    fun getStatus(): DriverProgression {
+        return DriverProgression.GOING_DOWN
     }
 
     fun getDriverPosition():Int = ranking.userPosition
