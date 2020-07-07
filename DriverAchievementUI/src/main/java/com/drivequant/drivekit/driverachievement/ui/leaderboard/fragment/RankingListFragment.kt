@@ -57,7 +57,7 @@ class RankingListFragment : Fragment() {
     }
 
     private fun setupLeaderBoardHeader() {
-        user_progression_view.setUserProgression(
+        driver_progression_view.setDriverProgression(
             rankingViewModel.rankingListData.getLeaderBoardStatus(requireContext()),
             rankingViewModel.rankingListData.getStatus()
         )
@@ -74,7 +74,7 @@ class RankingListFragment : Fragment() {
     fun updateRanking() {
         rankingViewModel.mutableLiveDataRankingListData.observe(this,
             Observer {
-                //TODO check userNotRanked and handle UI with Popup
+                //TODO check driverNotRanked and handle UI with Popup
                 if (rankingViewModel.syncStatus != RankingSyncStatus.NO_ERROR && rankingViewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
                     Toast.makeText(
                         context,

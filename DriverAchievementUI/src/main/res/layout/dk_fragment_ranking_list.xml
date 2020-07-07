@@ -23,11 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@+id/image_view_ranking_type"
-            app:layout_constraintBottom_toTopOf="@+id/user_progression_view"
+            app:layout_constraintBottom_toTopOf="@+id/driver_progression_view"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.UserProgressionView
-            android:id="@+id/user_progression_view"
+        <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.DriverProgressionView
+            android:id="@+id/driver_progression_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@+id/image_view_ranking_type"
