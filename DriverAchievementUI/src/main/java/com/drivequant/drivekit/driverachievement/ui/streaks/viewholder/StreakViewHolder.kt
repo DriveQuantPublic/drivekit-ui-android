@@ -114,7 +114,7 @@ class StreakViewHolder(itemView: View) :
         if (reset) {
             textViewBestStreakData.normalText()
             textViewTripsCount.setTextColor(DriveKitUI.colors.complementaryFontColor())
-            background.setStroke(5, DriveKitUI.colors.complementaryFontColor())
+            background.setStroke(1, DriveKitUI.colors.complementaryFontColor())
             seekBar.thumb.mutate().alpha = 255
         } else {
             textViewBestStreakData.headLine1()

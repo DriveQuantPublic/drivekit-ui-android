@@ -3,8 +3,10 @@ package com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
@@ -19,9 +21,9 @@ class RankingSelectorAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolderSelector {
-        val button = LayoutInflater.from(context).inflate(R.layout.dk_selector_item, parent, false) as Button
-        FontUtils.overrideFonts(parent.context, button)
-        return ViewHolderSelector(button)
+        val view = LayoutInflater.from(context).inflate(R.layout.dk_selector_item, parent, false)
+        FontUtils.overrideFonts(parent.context, view)
+        return ViewHolderSelector(view)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +39,7 @@ class RankingSelectorAdapter(
             is RankingSelectorType.NONE -> {} //TODO
             is RankingSelectorType.PERIOD -> {
                 val rankingPeriod = rankingSelectorType.rankingPeriods[position]
-                holder.button.text = when (rankingPeriod) {
+                holder.textView.text = when (rankingPeriod) {
                     //TODO Add strings keys
                     RankingPeriod.LEGACY -> "legacy"
                     RankingPeriod.MONTHLY -> "monthly"
@@ -50,20 +52,22 @@ class RankingSelectorAdapter(
             }
         }
 
-        holder.button.setBackgroundResource(R.drawable.button_selector)
-        holder.button.setOnClickListener {
+        holder.textView.setBackgroundResource(R.drawable.dk_ranking_selector_rectangle)
+        holder.textView.setOnClickListener {
             isChecked = true
-            holder.button.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            holder.button.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+            holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            holder.textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
 
         if(isChecked) {
-            holder.button.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            holder.button.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+            holder.textView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            holder.textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
     }
 
-    class ViewHolderSelector(val button: Button) : RecyclerView.ViewHolder(button)
+    class ViewHolderSelector(val view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.findViewById(R.id.text_view_selector)
+    }
 
     interface RankingSelectorListener {
         fun onClickSelector(rankingPeriod: RankingPeriod)

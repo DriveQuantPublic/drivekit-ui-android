@@ -27,8 +27,7 @@ class RankingListViewModel : ViewModel() {
             listener = object : RankingQueryListener {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
-                    ranking: Ranking
-                ) {
+                    ranking: Ranking) {
                     syncStatus = rankingSyncStatus
                     val rankingData = RankingListData(ranking)
                     rankingListData = rankingData

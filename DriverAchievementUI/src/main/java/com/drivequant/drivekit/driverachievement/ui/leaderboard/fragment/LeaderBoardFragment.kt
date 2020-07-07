@@ -38,12 +38,9 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
         if (DriverAchievementUI.rankingSelector is RankingSelectorType.NONE) {
             recycler_view_selector.visibility = View.GONE
         } else {
-            rankingSelectorAdapter = RankingSelectorAdapter(
-                requireContext(),
-                this
-            )
-            recycler_view_selector.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            rankingSelectorAdapter = RankingSelectorAdapter(requireContext(), this)
+            val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            recycler_view_selector.layoutManager = linearLayoutManager
             recycler_view_selector.adapter = rankingSelectorAdapter
         }
     }
@@ -51,14 +48,15 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.dk_fragment_leaderboard, container, false)
     }
 
     private fun setViewPager() {
         rankingsFragmentPagerAdapter =
-            RankingsFragmentPagerAdapter(rankingViewModel, childFragmentManager)
+            RankingsFragmentPagerAdapter(childFragmentManager)
         view_pager_leader_board.offscreenPageLimit = 4
         view_pager_leader_board.adapter = rankingsFragmentPagerAdapter
 
@@ -78,11 +76,13 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int) {
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
-                val currentFragment = rankingsFragmentPagerAdapter.fragments[position] as RankingListFragment
+                val currentFragment =
+                    rankingsFragmentPagerAdapter.fragments[position] as RankingListFragment
                 currentFragment.updateRanking()
             }
 
@@ -101,7 +101,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorLi
 
     override fun onClickSelector(rankingPeriod: RankingPeriod) {
         val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-        rankingViewModel.currentRankingPeriod = rankingPeriod
+        currentFragment.rankingViewModel.currentRankingPeriod = rankingPeriod
         currentFragment.updateRanking()
     }
 }

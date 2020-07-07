@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -20,17 +21,15 @@ import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
 class RankingListFragment : Fragment() {
 
-    private lateinit var rankingViewModel: RankingListViewModel
-    lateinit var rankingAdapter: RankingListAdapter
+    lateinit var rankingViewModel: RankingListViewModel
+    private lateinit var rankingAdapter: RankingListAdapter
     lateinit var rankingType: RankingType
 
     companion object {
         fun newInstance(
-            rankingViewModel: RankingListViewModel,
             rankingType: RankingType): RankingListFragment {
             val fragment = RankingListFragment()
             fragment.rankingType = rankingType
-            fragment.rankingViewModel = rankingViewModel
             return fragment
         }
     }
@@ -40,6 +39,13 @@ class RankingListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.dk_fragment_ranking_list, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (!this::rankingViewModel.isInitialized) {
+            rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
