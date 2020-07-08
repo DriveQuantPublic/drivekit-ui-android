@@ -41,13 +41,15 @@ class RankingListViewModel : ViewModel() {
     }
 
     fun buildRankingListData(driversRanked: List<DriverRanked>): MutableList<RankingListData> {
+        rankingListData.clear()
         for (driverRanked in driversRanked) {
             rankingListData.add(
                 RankingListData(
                     driverRanked.rank,
                     driverRanked.nickname,
                     driverRanked.distance,
-                    driverRanked.score
+                    driverRanked.score,
+                    driverRanked.userId
                 )
             )
         }

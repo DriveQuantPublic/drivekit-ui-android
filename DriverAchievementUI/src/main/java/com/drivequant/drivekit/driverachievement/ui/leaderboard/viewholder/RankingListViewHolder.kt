@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListData
 
@@ -32,7 +33,15 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
 
 
-    fun bind(rankingListData: RankingListData) {
+    fun bind(rankingListData: RankingListData, position: Int) {
+        if (rankingListData.driverId == DriveKit.config.userId) {
+            setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
+            setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
+        } else {
+            setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.neutralColor())
+            setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
+        }
+
         textViewDriverDistance.text =
             DKDataFormatter.formatDistance(itemView.context, rankingListData.driverDistance)
         textViewDriverScore.text =
@@ -72,10 +81,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         textViewDriverNickname.headLine2()
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())
         textViewDriverPosition.bigText()
-
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
-        setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
     }
 
     private fun setBackgroundDrawableColor(background: GradientDrawable, color: Int) {
