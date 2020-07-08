@@ -22,6 +22,6 @@ class RankingListAdapter(
     override fun getItemCount(): Int = viewModel.rankingListData.size
 
     override fun onBindViewHolder(parent: RankingListViewHolder, position: Int) {
-        parent.bind(viewModel.rankingListData[position], position)
+        parent.bind(viewModel.rankingListData[position])
     }
 }

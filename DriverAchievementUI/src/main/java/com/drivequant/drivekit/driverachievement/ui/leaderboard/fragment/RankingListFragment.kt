@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
@@ -51,10 +52,6 @@ class RankingListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
-        if (DriverAchievementUI.rankingTypes.size != 1) {
-            image_view_ranking_type.visibility = View.GONE
-            text_view_ranking_title.visibility = View.GONE
-        }
     }
 
     override fun onResume() {
@@ -65,15 +62,9 @@ class RankingListFragment : Fragment() {
     private fun setupLeaderBoardHeader() {
         driver_progression_view.setDriverProgression(
             rankingViewModel.leaderBoardData.getLeaderBoardStatus(requireContext()),
-            rankingViewModel.leaderBoardData.getStatus(rankingViewModel.previousRank)
-        )
-        text_view_ranking_title.text =
-            rankingViewModel.leaderBoardData.getLeaderBoardTitle()
-        image_view_ranking_type.setImageDrawable(
-            DKResource.convertToDrawable(
-                requireContext(),
-                rankingViewModel.leaderBoardData.getIcon()
-            )
+            rankingViewModel.leaderBoardData.getStatus(rankingViewModel.previousRank),
+            rankingViewModel.leaderBoardData.getLeaderBoardTitle(),
+            rankingViewModel.leaderBoardData.getIcon()
         )
     }
 

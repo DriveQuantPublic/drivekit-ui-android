@@ -33,7 +33,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
 
 
-    fun bind(rankingListData: RankingListData, position: Int) {
+    fun bind(rankingListData: RankingListData) {
         if (rankingListData.driverId == DriveKit.config.userId) {
             setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
             setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
