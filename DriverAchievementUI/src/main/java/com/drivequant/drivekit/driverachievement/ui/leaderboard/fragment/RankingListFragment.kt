@@ -64,21 +64,21 @@ class RankingListFragment : Fragment() {
 
     private fun setupLeaderBoardHeader() {
         driver_progression_view.setDriverProgression(
-            rankingViewModel.rankingListData.getLeaderBoardStatus(requireContext()),
-            rankingViewModel.rankingListData.getStatus()
+            rankingViewModel.leaderBoardData.getLeaderBoardStatus(requireContext()),
+            rankingViewModel.leaderBoardData.getStatus()
         )
         text_view_ranking_title.text =
-            rankingViewModel.rankingListData.getLeaderBoardTitle()
+            rankingViewModel.leaderBoardData.getLeaderBoardTitle()
         image_view_ranking_type.setImageDrawable(
             DKResource.convertToDrawable(
                 requireContext(),
-                rankingViewModel.rankingListData.getIcon()
+                rankingViewModel.leaderBoardData.getIcon()
             )
         )
     }
 
     fun updateRanking() {
-        rankingViewModel.mutableLiveDataRankingListData.observe(this,
+        rankingViewModel.mutableLiveDataLeaderBoardData.observe(this,
             Observer {
                 //TODO check driverNotRanked and handle UI with Popup
                 if (rankingViewModel.syncStatus != RankingSyncStatus.NO_ERROR && rankingViewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
