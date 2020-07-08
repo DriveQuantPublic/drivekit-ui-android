@@ -11,8 +11,12 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 class LeaderBoardData(private val ranking: Ranking) {
 
-    fun getStatus(): DriverProgression {
-        return DriverProgression.GOING_DOWN
+    fun getStatus(previousRank: Int): DriverProgression {
+       return if (previousRank > ranking.userPosition) {
+            DriverProgression.GOING_UP
+        } else {
+            DriverProgression.GOING_DOWN
+        }
     }
 
     fun getLeaderBoardStatus(context: Context): SpannableString =

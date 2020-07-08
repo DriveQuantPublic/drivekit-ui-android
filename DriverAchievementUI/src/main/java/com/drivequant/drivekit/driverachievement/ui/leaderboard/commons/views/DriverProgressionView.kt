@@ -54,7 +54,6 @@ class DriverProgressionView : LinearLayout {
         val rankingStatusDrawable = when (driverProgression) {
             DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
             DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
-            DriverProgression.STEADY -> null
         }
 
         rankingStatusDrawable?.let {

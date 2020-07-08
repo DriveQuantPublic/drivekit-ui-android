@@ -65,7 +65,7 @@ class RankingListFragment : Fragment() {
     private fun setupLeaderBoardHeader() {
         driver_progression_view.setDriverProgression(
             rankingViewModel.leaderBoardData.getLeaderBoardStatus(requireContext()),
-            rankingViewModel.leaderBoardData.getStatus()
+            rankingViewModel.leaderBoardData.getStatus(rankingViewModel.previousRank)
         )
         text_view_ranking_title.text =
             rankingViewModel.leaderBoardData.getLeaderBoardTitle()
