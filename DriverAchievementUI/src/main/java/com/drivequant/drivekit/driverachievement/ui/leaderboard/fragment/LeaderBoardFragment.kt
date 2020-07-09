@@ -17,6 +17,7 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorT
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingsFragmentPagerAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.SelectorItemView
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModelFactory
 import kotlinx.android.synthetic.main.dk_fragment_leaderboard.*
 
 
@@ -27,9 +28,6 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!this::rankingViewModel.isInitialized) {
-            rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
-        }
         setTabLayout()
         setViewPager()
         createRankingSelectors()
@@ -44,21 +42,28 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
                     //TODO
                 }
                 is RankingSelectorType.PERIOD -> {
-                    for (rankingPeriod in rankingSelectorType.rankingPeriods) {
-                        val selectorItem = SelectorItemView(requireContext())
-                        selectorItem.rankingSelectorListener = this
-                        selectorItem.setSelectorText(
-                            when (rankingPeriod) {
-                                //TODO Add strings keys
-                                RankingPeriod.LEGACY -> "legacy"
-                                RankingPeriod.MONTHLY -> "monthly"
-                                RankingPeriod.ALL_TIME -> "all time"
-                                RankingPeriod.WEEKLY -> "weekly"
-                            }
-                        )
+                    if(rankingSelectorType.rankingPeriods.size == 1) {
+                        selectors_container.visibility = View.GONE
+                        if (!this::rankingViewModel.isInitialized) {
+                            rankingViewModel = ViewModelProviders.of(this, RankingViewModelFactory(rankingSelectorType.rankingPeriods.first())).get(RankingListViewModel::class.java)
+                        }
+                    } else {
+                        for (rankingPeriod in rankingSelectorType.rankingPeriods) {
+                            val selectorItem = SelectorItemView(requireContext())
+                            selectorItem.rankingSelectorListener = this
+                            selectorItem.setSelectorText(
+                                when (rankingPeriod) {
+                                    //TODO Add strings keys
+                                    RankingPeriod.LEGACY -> "legacy"
+                                    RankingPeriod.MONTHLY -> "monthly"
+                                    RankingPeriod.ALL_TIME -> "all time"
+                                    RankingPeriod.WEEKLY -> "weekly"
+                                }
+                            )
 
-                        selectors_container.addView(selectorItem)
-                        selectorItem.onClickSelector(rankingPeriod)
+                            selectors_container.addView(selectorItem)
+                            selectorItem.onClickSelector(rankingPeriod)
+                        }
                     }
                 }
             }
@@ -95,8 +100,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
+                positionOffsetPixels: Int) {
             }
 
             override fun onPageSelected(position: Int) {
@@ -120,7 +124,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
 
     override fun onClickSelector(rankingPeriod: RankingPeriod) {
         val currentFragment = rankingsFragmentPagerAdapter.currentFragment as RankingListFragment
-        currentFragment.rankingViewModel.currentRankingPeriod = rankingPeriod
+        currentFragment.rankingViewModel.rankingPeriod = rankingPeriod
         currentFragment.updateRanking()
     }
 }

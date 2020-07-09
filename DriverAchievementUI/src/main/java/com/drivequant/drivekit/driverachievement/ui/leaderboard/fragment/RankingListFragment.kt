@@ -9,14 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingListAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModelFactory
 import kotlinx.android.synthetic.main.dk_fragment_ranking_list.*
 import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
@@ -45,7 +45,12 @@ class RankingListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!this::rankingViewModel.isInitialized) {
-            rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
+            when(val rankingSelectorType = DriverAchievementUI.rankingSelector) {
+               is RankingSelectorType.PERIOD -> {
+                       rankingViewModel = ViewModelProviders.of(this, RankingViewModelFactory(rankingSelectorType.rankingPeriods.first()))
+                           .get(RankingListViewModel::class.java)
+               }
+            }
         }
     }
 
