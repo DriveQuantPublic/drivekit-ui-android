@@ -4,52 +4,71 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorListener
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingSelectorAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingsFragmentPagerAdapter
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.SelectorItemView
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
 import kotlinx.android.synthetic.main.dk_fragment_leaderboard.*
 
-class LeaderBoardFragment : Fragment(), RankingSelectorAdapter.RankingSelectorListener {
+
+class LeaderBoardFragment : Fragment(), RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingListViewModel
     lateinit var rankingsFragmentPagerAdapter: RankingsFragmentPagerAdapter
-    lateinit var rankingSelectorAdapter: RankingSelectorAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!this::rankingViewModel.isInitialized) {
             rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
         }
-        createRankingSelectors()
         setTabLayout()
         setViewPager()
+        createRankingSelectors()
     }
 
     private fun createRankingSelectors() {
         if (DriverAchievementUI.rankingSelector is RankingSelectorType.NONE) {
-            recycler_view_selector.visibility = View.GONE
+            selectors_container.visibility = View.GONE
         } else {
-            rankingSelectorAdapter = RankingSelectorAdapter(requireContext(), this)
-            val linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            recycler_view_selector.layoutManager = linearLayoutManager
-            recycler_view_selector.adapter = rankingSelectorAdapter
+            when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
+                is RankingSelectorType.NONE -> {
+                    //TODO
+                }
+                is RankingSelectorType.PERIOD -> {
+                    for (rankingPeriod in rankingSelectorType.rankingPeriods) {
+                        val selectorItem = SelectorItemView(requireContext())
+                        selectorItem.rankingSelectorListener = this
+                        selectorItem.setSelectorText(
+                            when (rankingPeriod) {
+                                //TODO Add strings keys
+                                RankingPeriod.LEGACY -> "legacy"
+                                RankingPeriod.MONTHLY -> "monthly"
+                                RankingPeriod.ALL_TIME -> "all time"
+                                RankingPeriod.WEEKLY -> "weekly"
+                            }
+                        )
+
+                        selectors_container.addView(selectorItem)
+                        selectorItem.onClickSelector(rankingPeriod)
+                    }
+                }
+            }
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.dk_fragment_leaderboard, container, false)
     }

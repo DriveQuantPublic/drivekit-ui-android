@@ -7,3 +7,7 @@ sealed class RankingSelectorType {
     data class PERIOD(val rankingPeriods: List<RankingPeriod>) : RankingSelectorType()
 }
 
+interface RankingSelectorListener {
+    fun onClickSelector(rankingPeriod: RankingPeriod)
+}
+
