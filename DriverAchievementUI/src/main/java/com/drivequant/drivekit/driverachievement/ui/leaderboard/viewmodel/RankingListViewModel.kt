@@ -2,7 +2,6 @@ package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.databaseutils.entity.DriverRanked
 import com.drivequant.drivekit.databaseutils.entity.Ranking
 import com.drivequant.drivekit.databaseutils.entity.RankingType
@@ -11,13 +10,16 @@ import com.drivequant.drivekit.driverachievement.RankingQueryListener
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
 
-class RankingListViewModel(var rankingPeriod: RankingPeriod) : ViewModel() {
+
+class RankingListViewModel : ViewModel() {
     var previousRank: Int = 0
     var rankingListData = mutableListOf<RankingListData>()
     lateinit var leaderBoardData: LeaderBoardData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var mutableLiveDataLeaderBoardData: MutableLiveData<LeaderBoardData> = MutableLiveData()
+    var rankingPeriod:RankingPeriod = RankingPeriod.LEGACY
 
     fun fetchRankingList(rankingType: RankingType) {
         //TODO check if DriveKit is configured
@@ -29,8 +31,7 @@ class RankingListViewModel(var rankingPeriod: RankingPeriod) : ViewModel() {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
                     ranking: Ranking,
-                    driverPreviousRank: Int
-                ) {
+                    driverPreviousRank: Int) {
                     syncStatus = rankingSyncStatus
                     previousRank = driverPreviousRank
                     rankingListData = buildRankingListData(ranking.driversRanked)
@@ -54,12 +55,5 @@ class RankingListViewModel(var rankingPeriod: RankingPeriod) : ViewModel() {
             )
         }
         return rankingListData
-    }
-}
-
-@Suppress("UNCHECKED_CAST")
-class RankingViewModelFactory(private val rankingPeriod: RankingPeriod) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return RankingListViewModel(rankingPeriod) as T
     }
 }

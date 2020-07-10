@@ -1,8 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewholder
 
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
@@ -12,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListData
@@ -35,11 +34,11 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     fun bind(rankingListData: RankingListData) {
         if (rankingListData.driverId == DriveKit.config.userId) {
-            setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
-            setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
+            DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
+            DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
         } else {
-            setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.neutralColor())
-            setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
+            DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.neutralColor())
+            DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
         }
 
         textViewDriverDistance.text =
@@ -54,7 +53,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             }).toSpannable()
 
         textViewDriverNickname.text =
-            if (rankingListData.driverNickname.isNullOrEmpty()) "-" else rankingListData.driverNickname
+            if (rankingListData.driverNickname.isNullOrEmpty()) DKResource.convertToString(itemView.context, "dk_achievements_ranking_anonymous_driver") else rankingListData.driverNickname
 
         if (rankingListData.driverRank in 1..3) {
             textViewDriverPosition.visibility = View.INVISIBLE
@@ -82,13 +81,5 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())
         textViewDriverPosition.bigText()
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-    }
-
-    private fun setBackgroundDrawableColor(background: GradientDrawable, color: Int) {
-        when (background) {
-            is ShapeDrawable -> (background as ShapeDrawable).paint.color = color
-            is GradientDrawable -> background.setColor(color)
-            is ColorDrawable -> (background as ColorDrawable).color = color
-        }
     }
 }

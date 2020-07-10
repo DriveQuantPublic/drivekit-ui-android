@@ -60,7 +60,11 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     }
 
     fun configureRankingTypes(rankingTypes: List<RankingType>) {
-        this.rankingTypes = rankingTypes
+        if (rankingTypes.isEmpty()) {
+            this.rankingTypes = listOf(RankingType.SAFETY)
+        } else {
+            this.rankingTypes = rankingTypes.distinct()
+        }
     }
 
     fun configureRankingDepth(rankingDepth: Int) {

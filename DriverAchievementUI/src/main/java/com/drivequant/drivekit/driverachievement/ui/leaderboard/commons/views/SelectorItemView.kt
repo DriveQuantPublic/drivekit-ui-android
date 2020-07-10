@@ -1,50 +1,67 @@
 package com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
-import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorListener
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.setMarginLeft
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.setMarginRight
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelector
 
-class SelectorItemView(context: Context?) : LinearLayout(context) {
-
-
-    private var textViewSelector: TextView
+class SelectorItemView(context: Context) : LinearLayout(context) {
+    private var buttonSelector: Button
     lateinit var rankingSelectorListener: RankingSelectorListener
-    private var isChecked = false
+    var isChecked: Boolean = false
 
     init {
         val view = View.inflate(context, R.layout.dk_selector_item, null).setDKStyle()
-        textViewSelector = view.findViewById(R.id.text_view_selector)
-
-        addView(
-            view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
+        buttonSelector = view.findViewById(R.id.button_selector)
+        addView(view)
         setStyle()
     }
 
-    fun setSelectorText(text: String) {
-        textViewSelector.text = text
+    @SuppressLint("SetTextI18n")
+    fun setSelectorText(rankingSelector: RankingSelector) {
+        buttonSelector.text = "${rankingSelector.title} ${DKResource.convertToString(context, "dk_achievements_ranking_days")}"
     }
 
-    fun onClickSelector(rankingPeriod: RankingPeriod) {
-        textViewSelector.setOnClickListener {
+    fun onRankingSelectorButtonSelected(rankingPeriod: RankingPeriod) {
+        buttonSelector.setOnClickListener {
             rankingSelectorListener.onClickSelector(rankingPeriod)
         }
     }
 
     private fun setStyle() {
-        textViewSelector.normalText()
-        textViewSelector.setBackgroundResource(R.drawable.dk_ranking_selector_rectangle)
+        buttonSelector.setMarginLeft(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
+        buttonSelector.setMarginRight(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
+        buttonSelector.normalText()
+        DKUtils.setBackgroundDrawableColor(buttonSelector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+    }
 
+
+    fun setButtonSelected(selected: Boolean) {
+        if (selected) {
+            isChecked = true
+            DKUtils.setBackgroundDrawableColor(
+                buttonSelector.background as GradientDrawable,
+                DriveKitUI.colors.secondaryColor()
+            )
+        } else {
+            DKUtils.setBackgroundDrawableColor(
+                buttonSelector.background as GradientDrawable,
+                DriveKitUI.colors.neutralColor()
+            )
+        }
     }
 }
+

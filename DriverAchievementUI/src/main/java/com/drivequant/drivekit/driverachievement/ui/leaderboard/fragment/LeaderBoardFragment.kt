@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -17,16 +16,38 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorT
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingsFragmentPagerAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.SelectorItemView
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModelFactory
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelector
 import kotlinx.android.synthetic.main.dk_fragment_leaderboard.*
-
 
 class LeaderBoardFragment : Fragment(), RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingListViewModel
     lateinit var rankingsFragmentPagerAdapter: RankingsFragmentPagerAdapter
+    val rankingSelectors = mutableListOf<RankingSelector>()
+    var selectedRankingSelector:RankingSelector
+
+    init {
+        when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
+            is RankingSelectorType.NONE -> {
+                selectors_container.visibility = View.GONE
+            }
+            is RankingSelectorType.PERIOD -> {
+                for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.withIndex()) {
+                    val nbDays = when (rankingPeriod) {
+                        RankingPeriod.WEEKLY -> 7
+                        RankingPeriod.LEGACY -> 14
+                        RankingPeriod.MONTHLY -> 30
+                        RankingPeriod.ALL_TIME -> 0
+                    }
+                    rankingSelectors.add(RankingSelector( index,"$nbDays",rankingPeriod))
+                }
+            }
+        }
+        selectedRankingSelector = rankingSelectors.first()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        rankingViewModel = ViewModelProviders.of(this).get(RankingListViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
         setTabLayout()
         setViewPager()
@@ -34,39 +55,14 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
     }
 
     private fun createRankingSelectors() {
-        if (DriverAchievementUI.rankingSelector is RankingSelectorType.NONE) {
-            selectors_container.visibility = View.GONE
-        } else {
-            when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
-                is RankingSelectorType.NONE -> {
-                    //TODO
-                }
-                is RankingSelectorType.PERIOD -> {
-                    if(rankingSelectorType.rankingPeriods.size == 1) {
-                        selectors_container.visibility = View.GONE
-                        if (!this::rankingViewModel.isInitialized) {
-                            rankingViewModel = ViewModelProviders.of(this, RankingViewModelFactory(rankingSelectorType.rankingPeriods.first())).get(RankingListViewModel::class.java)
-                        }
-                    } else {
-                        for (rankingPeriod in rankingSelectorType.rankingPeriods) {
-                            val selectorItem = SelectorItemView(requireContext())
-                            selectorItem.rankingSelectorListener = this
-                            selectorItem.setSelectorText(
-                                when (rankingPeriod) {
-                                    //TODO Add strings keys
-                                    RankingPeriod.LEGACY -> "legacy"
-                                    RankingPeriod.MONTHLY -> "monthly"
-                                    RankingPeriod.ALL_TIME -> "all time"
-                                    RankingPeriod.WEEKLY -> "weekly"
-                                }
-                            )
-
-                            selectors_container.addView(selectorItem)
-                            selectorItem.onClickSelector(rankingPeriod)
-                        }
-                    }
-                }
-            }
+        for (rankingSelector in rankingSelectors) {
+            val selectorItem = SelectorItemView(requireContext())
+            selectorItem.setSelectorText(rankingSelector)
+            val selected = selectedRankingSelector.index == rankingSelector.index
+            selectorItem.setButtonSelected(selected)
+            selectorItem.rankingSelectorListener = this
+            selectorItem.onRankingSelectorButtonSelected(rankingSelector.rankingPeriod)
+            selectors_container.addView(selectorItem)
         }
     }
 
@@ -75,6 +71,7 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+
         return inflater.inflate(R.layout.dk_fragment_leaderboard, container, false)
     }
 
@@ -100,7 +97,8 @@ class LeaderBoardFragment : Fragment(), RankingSelectorListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int) {
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {
