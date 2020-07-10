@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_achievements_ranking_anonymous_driver">Anonimo</string>
+    <string name="dk_achievements_ranking_days">giorni</string>
+    <string name="dk_achievements_ranking_driver">Conducente</string>
+    <string name="dk_achievements_ranking_menu_ranking">La mia posizione in classifica</string>
+    <string name="dk_achievements_ranking_no_pseudo_set">Devi inserire un nickname per accedere a questa pagina.</string>
+    <string name="dk_achievements_ranking_rank">Grado</string>
+    <string name="dk_achievements_ranking_score">Punteggio</string>
+</resources>

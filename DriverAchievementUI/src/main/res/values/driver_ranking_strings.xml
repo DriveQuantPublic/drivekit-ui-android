@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_achievements_ranking_anonymous_driver">Anonymous</string>
+    <string name="dk_achievements_ranking_days">days</string>
+    <string name="dk_achievements_ranking_driver">Driver</string>
+    <string name="dk_achievements_ranking_menu_ranking">My ranking</string>
+    <string name="dk_achievements_ranking_no_pseudo_set">You need to enter a nickname to access this page.</string>
+    <string name="dk_achievements_ranking_rank">Rank</string>
+    <string name="dk_achievements_ranking_score">Score</string>
+    <string name="dk_achievements_failed_to_sync_rankings">Failed to synchronize rankings, please retry later.</string>
+</resources>

@@ -27,5 +27,4 @@
     <string name="dk_achievements_streaks_speeding_reset">You exceeded the speed limit on your last trip.</string>
     <string name="dk_achievements_streaks_speeding_text">Try to make a series of trips within the speed limits. The speed limit score must be higher than 9.8/10. \n \n Each time you succeed, the trip counter increases. \n \n If you fail, the counter is reset and you must restart from scratch. \n \n The number of trips in your best sequence of success is memorized and you can try to surpass it.</string>
     <string name="dk_achievements_streaks_speeding_title">No speeding</string>
-    <string name="dk_achievements_failed_to_sync_rankings">Failed to synchronize rankings, please retry later.</string>
 </resources>
