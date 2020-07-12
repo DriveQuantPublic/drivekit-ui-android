@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListData
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingDriverData
 
 
 class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,8 +32,8 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
 
 
-    fun bind(rankingListData: RankingListData) {
-        if (rankingListData.driverId == DriveKit.config.userId) {
+    fun bind(rankingDriverData: RankingDriverData) {
+        if (rankingDriverData.driverId == DriveKit.config.userId) {
             DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
             DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
         } else {
@@ -42,9 +42,9 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         }
 
         textViewDriverDistance.text =
-            DKDataFormatter.formatDistance(itemView.context, rankingListData.driverDistance)
+            DKDataFormatter.formatDistance(itemView.context, rankingDriverData.driverDistance)
         textViewDriverScore.text =
-            DKSpannable().append(rankingListData.driverScore.removeZeroDecimal(), itemView.context.resSpans {
+            DKSpannable().append(rankingDriverData.driverScore.removeZeroDecimal(), itemView.context.resSpans {
                 size(R.dimen.dk_text_medium)
                 color(DriveKitUI.colors.mainFontColor())
             }).append(" / 10", itemView.context.resSpans {
@@ -53,11 +53,11 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             }).toSpannable()
 
         textViewDriverNickname.text =
-            if (rankingListData.driverNickname.isNullOrEmpty()) DKResource.convertToString(itemView.context, "dk_achievements_ranking_anonymous_driver") else rankingListData.driverNickname
+            if (rankingDriverData.driverNickname.isNullOrEmpty()) DKResource.convertToString(itemView.context, "dk_achievements_ranking_anonymous_driver") else rankingDriverData.driverNickname
 
-        if (rankingListData.driverRank in 1..3) {
+        if (rankingDriverData.driverRank in 1..3) {
             textViewDriverPosition.visibility = View.INVISIBLE
-            val rankResId = when (rankingListData.driverRank) {
+            val rankResId = when (rankingDriverData.driverRank) {
                 1 -> "dk_achievements_rank_1"
                 2 -> "dk_achievements_rank_2"
                 3 -> "dk_achievements_rank_3"
@@ -71,7 +71,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             }
             imageViewDriverPosition.setImageDrawable(drawable)
         } else {
-            textViewDriverPosition.text = rankingListData.driverRank.toString()
+            textViewDriverPosition.text = rankingDriverData.driverRank.toString()
         }
         setStyle()
     }

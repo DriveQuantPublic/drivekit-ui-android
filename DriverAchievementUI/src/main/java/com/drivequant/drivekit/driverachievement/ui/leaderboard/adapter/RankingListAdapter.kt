@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewholder.RankingListViewHolder
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingListViewModel
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModel
 
 class RankingListAdapter(
     val context: Context?,
-    private val viewModel: RankingListViewModel) : RecyclerView.Adapter<RankingListViewHolder>() {
+    private val rankingViewModel: RankingViewModel) : RecyclerView.Adapter<RankingListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RankingListViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.dk_ranking_list_item, parent, false)
@@ -19,9 +19,9 @@ class RankingListAdapter(
         return RankingListViewHolder(view)
     }
 
-    override fun getItemCount(): Int = viewModel.rankingListData.size
+    override fun getItemCount(): Int = rankingViewModel.rankingListData.size
 
     override fun onBindViewHolder(parent: RankingListViewHolder, position: Int) {
-        parent.bind(viewModel.rankingListData[position])
+        parent.bind(rankingViewModel.rankingListData[position])
     }
 }

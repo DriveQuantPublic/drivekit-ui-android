@@ -9,7 +9,7 @@ import com.drivequant.drivekit.databaseutils.entity.Ranking
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ui.R
 
-class LeaderBoardData(private val ranking: Ranking) {
+class RankingHeaderData(private val ranking: Ranking) {
 
     fun getStatus(previousRank: Int): DriverProgression {
        return if (previousRank > ranking.userPosition) {

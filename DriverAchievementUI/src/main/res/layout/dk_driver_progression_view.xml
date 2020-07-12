@@ -13,9 +13,8 @@
 
         <ImageView
             android:id="@+id/image_view_ranking_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/dk_achievements_phone_distraction" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -28,8 +27,7 @@
             android:id="@+id/text_view_ranking_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin"
-            android:text="Distraction" />
+            android:layout_marginBottom="@dimen/dk_margin" />
 
         <TextView
             android:id="@+id/text_view_driver_progression"
