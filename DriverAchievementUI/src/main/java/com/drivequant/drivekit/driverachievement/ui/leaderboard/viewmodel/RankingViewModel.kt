@@ -14,12 +14,12 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorT
 
 class RankingViewModel : ViewModel() {
     var previousRank: Int = 0
-    var rankingListData = mutableListOf<RankingDriverData>()
-    lateinit var rankingHeaderData: RankingHeaderData
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
+    var rankingListData = mutableListOf<RankingDriverData>()
     var mutableLiveDataRankingHeaderData: MutableLiveData<RankingHeaderData> = MutableLiveData()
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
+    lateinit var rankingHeaderData: RankingHeaderData
     var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
 
@@ -52,7 +52,6 @@ class RankingViewModel : ViewModel() {
     }
 
     fun fetchRankingList() {
-        //TODO check if DriveKit is configured
         DriveKitDriverAchievement.getRanking(
             rankingType = selectedRankingTypeData.rankingType,
             rankingPeriod = selectedRankingSelectorData.rankingPeriod,
@@ -60,10 +59,8 @@ class RankingViewModel : ViewModel() {
             listener = object : RankingQueryListener {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
-                    ranking: Ranking,
-                    driverPreviousRank: Int) {
+                    ranking: Ranking) {
                     syncStatus = rankingSyncStatus
-                    previousRank = driverPreviousRank
                     rankingListData = buildRankingListData(ranking.driversRanked)
                     rankingHeaderData = RankingHeaderData(ranking)
                     mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)

@@ -24,6 +24,7 @@ class DriverProgressionView : LinearLayout {
     private lateinit var textViewDriverProgression: TextView
     private lateinit var textViewLeaderBoardTitle: TextView
     private lateinit var imageViewLeaderBoard: ImageView
+    private lateinit var imageViewDriverProgression: ImageView
 
     constructor(context: Context) : super(context) {
         init()
@@ -38,6 +39,7 @@ class DriverProgressionView : LinearLayout {
         textViewDriverProgression = view.findViewById(R.id.text_view_driver_progression)
         textViewLeaderBoardTitle = view.findViewById(R.id.text_view_ranking_title)
         imageViewLeaderBoard = view.findViewById(R.id.image_view_ranking_type)
+        imageViewDriverProgression = view.findViewById(R.id.image_view_driver_position)
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -48,13 +50,12 @@ class DriverProgressionView : LinearLayout {
     }
 
     private fun setStyle() {
-        textViewDriverProgression.bigText()
-
-        if (DriverAchievementUI.rankingTypes.size != 1) {
+        if (DriverAchievementUI.rankingTypes.size > 1) {
             imageViewLeaderBoard.visibility = View.GONE
             textViewLeaderBoardTitle.visibility = View.GONE
         }
         textViewLeaderBoardTitle.bigText()
+        textViewDriverProgression.bigText()
     }
 
     fun setDriverProgression(
@@ -75,7 +76,7 @@ class DriverProgressionView : LinearLayout {
         }
 
         rankingStatusDrawable.let {
-            textViewDriverProgression.setCompoundDrawables(DKResource.convertToDrawable(context, it),null,null,null)
+            imageViewDriverProgression.setImageDrawable(DKResource.convertToDrawable(context, it))
         }
     }
 }

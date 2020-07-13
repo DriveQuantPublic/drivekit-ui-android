@@ -57,6 +57,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
         if (rankingDriverData.driverRank in 1..3) {
             textViewDriverPosition.visibility = View.INVISIBLE
+            imageViewDriverPosition.visibility = View.VISIBLE
             val rankResId = when (rankingDriverData.driverRank) {
                 1 -> "dk_achievements_rank_1"
                 2 -> "dk_achievements_rank_2"
@@ -71,9 +72,19 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             }
             imageViewDriverPosition.setImageDrawable(drawable)
         } else {
+            imageViewDriverPosition.visibility = View.INVISIBLE
+            textViewDriverPosition.visibility = View.VISIBLE
             textViewDriverPosition.text = rankingDriverData.driverRank.toString()
         }
         setStyle()
+    }
+
+    private fun handleIconPosition(visibility:Boolean) {
+        if (visibility){
+
+        }
+        textViewDriverPosition.visibility = View.INVISIBLE
+        imageViewDriverPosition.visibility = View.VISIBLE
     }
 
     private fun setStyle() {
