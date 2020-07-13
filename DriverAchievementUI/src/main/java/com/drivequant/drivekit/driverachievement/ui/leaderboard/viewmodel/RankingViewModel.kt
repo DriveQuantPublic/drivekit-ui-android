@@ -10,7 +10,6 @@ import com.drivequant.drivekit.driverachievement.RankingQueryListener
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
 
 class RankingViewModel : ViewModel() {
     var previousRank: Int = 0
@@ -24,7 +23,7 @@ class RankingViewModel : ViewModel() {
     var selectedRankingTypeData: RankingTypeData
 
     init {
-        for (rankingType in DriverAchievementUI.rankingTypes) {
+        for (rankingType in DriverAchievementUI.rankingTypes.distinct()) {
             val iconId = when(rankingType) {
                 RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
                 RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"

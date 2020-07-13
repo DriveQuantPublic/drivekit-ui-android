@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard
+package com.drivequant.drivekit.driverachievement.ui.leaderboard.extension
 
 import android.view.View
 import android.view.ViewGroup

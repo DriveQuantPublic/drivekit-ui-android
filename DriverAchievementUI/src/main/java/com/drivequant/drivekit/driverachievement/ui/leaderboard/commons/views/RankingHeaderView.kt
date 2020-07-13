@@ -42,10 +42,10 @@ class RankingHeaderView : LinearLayout {
 
     private fun setStyle() {
         if (DriverAchievementUI.rankingTypes.size > 1) {
-               val params = right_container.layoutParams as LayoutParams
-               params.weight = 1.7f
-               right_container.layoutParams = params
-               left_container.visibility = View.INVISIBLE
+            val params = right_container.layoutParams as LayoutParams
+            params.weight = 1.7f
+            right_container.layoutParams = params
+            left_container.visibility = View.INVISIBLE
         }
         text_view_header_title.bigText()
         text_view_global_rank.bigText()
@@ -53,16 +53,22 @@ class RankingHeaderView : LinearLayout {
 
     fun setHeaderData(rankingViewModel: RankingViewModel) {
         text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
-        val progressionIconId = when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
-            DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
-            DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
-        }
+        val progressionIconId =
+            when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
+                DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
+                DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
+            }
         text_view_header_title.text = rankingViewModel.rankingHeaderData.getTitle()
         DKResource.convertToDrawable(context, rankingViewModel.rankingHeaderData.getIcon())?.let {
             image_view_ranking_type.setImageDrawable(it)
         }
         progressionIconId.let {
-            image_view_driver_progression.setImageDrawable(DKResource.convertToDrawable(context, it))
+            image_view_driver_progression.setImageDrawable(
+                DKResource.convertToDrawable(
+                    context,
+                    it
+                )
+            )
         }
     }
 }

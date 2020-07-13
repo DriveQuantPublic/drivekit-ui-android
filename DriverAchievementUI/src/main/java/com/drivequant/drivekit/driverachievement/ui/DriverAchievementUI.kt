@@ -9,7 +9,7 @@ import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorType
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverachievement.ui.streaks.activity.StreaksListActivity
 import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksListFragment
 
@@ -26,17 +26,17 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         BadgeCategory.GENERIC,
         BadgeCategory.SAFETY,
         BadgeCategory.ECO_DRIVING,
-        BadgeCategory.PHONE_DISTRACTION
-    )
+        BadgeCategory.PHONE_DISTRACTION)
 
     internal var rankingTypes = listOf(
-        RankingType.ECO_DRIVING,
         RankingType.SAFETY,
+        RankingType.ECO_DRIVING,
         RankingType.DISTRACTION)
 
     internal var rankingSelector: RankingSelectorType = RankingSelectorType.PERIOD(
-        listOf(
-            RankingPeriod.MONTHLY))
+        listOf(RankingPeriod.WEEKLY,
+            RankingPeriod.MONTHLY,
+            RankingPeriod.ALL_TIME))
 
     internal var rankingDepth:Int = 5
 

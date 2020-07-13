@@ -5,7 +5,7 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
 
 object DKUtils {
-     fun setBackgroundDrawableColor(background: GradientDrawable, color: Int) {
+    fun setBackgroundDrawableColor(background: GradientDrawable, color: Int) {
         when (background) {
             is ShapeDrawable -> (background as ShapeDrawable).paint.color = color
             is GradientDrawable -> background.setColor(color)

@@ -1,8 +1,7 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard
+package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel
 
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingSelectorView
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
 
 sealed class RankingSelectorType {
     object NONE : RankingSelectorType()

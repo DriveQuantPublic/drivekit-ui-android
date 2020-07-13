@@ -16,7 +16,7 @@
         android:id="@+id/selectors_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:gravity="center"
         android:orientation="horizontal" />
 
@@ -24,20 +24,20 @@
         android:id="@+id/ranking_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin" />
+        android:layout_marginBottom="@dimen/dk_margin_quarter" />
 
     <LinearLayout
-        android:layout_marginBottom="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin_half"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/text_view_position_header"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_height="wrap_content"
             android:text="@string/dk_achievements_ranking_rank" />
 
         <TextView
@@ -50,14 +50,16 @@
         <TextView
             android:id="@+id/tex_view_score_header"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/dk_achievements_ranking_score" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/view_separator"
         style="@style/Separator.Horizontal" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -12,11 +12,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorListener
+import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorListener
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingListAdapter
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingSelectorView
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
@@ -24,16 +25,17 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.Rankin
 import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 
-class RankingFragment : Fragment(), RankingSelectorListener {
+class RankingFragment : Fragment(),
+    RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingViewModel
     private lateinit var rankingAdapter: RankingListAdapter
     private lateinit var selectedRankingSelectorView: RankingSelectorView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
-        super.onViewCreated(view, savedInstanceState)
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
@@ -59,11 +61,9 @@ class RankingFragment : Fragment(), RankingSelectorListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
+        savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
 
-        return inflater.inflate(R.layout.dk_fragment_ranking, container, false)
-    }
 
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {

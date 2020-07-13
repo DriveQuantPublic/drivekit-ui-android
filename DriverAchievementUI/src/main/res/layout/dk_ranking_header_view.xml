@@ -37,12 +37,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:paddingTop="@dimen/dk_margin_quarter"
-                android:paddingBottom="@dimen/dk_margin_quarter"
-                android:paddingEnd="@dimen/dk_margin_quarter"
                 android:id="@+id/image_view_driver_progression"
                 android:layout_width="@dimen/dk_ic_big"
-                android:layout_height="@dimen/dk_ic_big" />
+                android:layout_height="@dimen/dk_ic_big"
+                android:paddingTop="@dimen/dk_margin_quarter"
+                android:paddingEnd="@dimen/dk_margin_quarter"
+                android:paddingBottom="@dimen/dk_margin_quarter" />
 
             <TextView
                 android:id="@+id/text_view_global_rank"
