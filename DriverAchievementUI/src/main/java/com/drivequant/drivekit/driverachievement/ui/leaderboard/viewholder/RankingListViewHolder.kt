@@ -47,7 +47,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             DKSpannable().append(rankingDriverData.driverScore.removeZeroDecimal(), itemView.context.resSpans {
                 size(R.dimen.dk_text_medium)
                 color(DriveKitUI.colors.mainFontColor())
-            }).append(" / 10", itemView.context.resSpans {
+            }).append(" /10", itemView.context.resSpans {
                 size(R.dimen.dk_text_small)
                 color(DriveKitUI.colors.mainFontColor())
             }).toSpannable()

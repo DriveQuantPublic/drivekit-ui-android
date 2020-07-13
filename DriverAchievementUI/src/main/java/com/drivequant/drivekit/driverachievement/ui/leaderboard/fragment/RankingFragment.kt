@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -20,7 +22,7 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.Ra
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_fragment_ranking.*
-import kotlinx.android.synthetic.main.dk_fragment_ranking.progress_circular
+
 
 class RankingFragment : Fragment(), RankingSelectorListener {
 
@@ -36,6 +38,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
         }
+        setStyle()
     }
 
     private fun createRankingSelectors() {
@@ -70,6 +73,11 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                 tab.setIcon(it)
             }
             tab_layout_leader_board.addTab(tab)
+        }
+
+        for (i in 0 until tab_layout_leader_board.tabCount) {
+            val tab = tab_layout_leader_board.getTabAt(i)
+            tab?.setCustomView(R.layout.dk_ranking_view_tab)
         }
 
         if (rankingViewModel.rankingTypesData.size < 2) {
@@ -145,5 +153,12 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         } else {
             progress_circular.visibility = View.GONE
         }
+    }
+
+    private fun setStyle() {
+        text_view_position_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        text_view_nickname_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        tex_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

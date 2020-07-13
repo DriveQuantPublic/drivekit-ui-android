@@ -51,11 +51,12 @@
 
         <TextView
             android:id="@+id/text_view_driver_score"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/dk_margin"
             android:background="@drawable/dk_driver_score_rectangle"
-            android:gravity="end|center_vertical"
+            android:gravity="center"
+            android:maxLines="1"
             android:paddingLeft="@dimen/dk_margin"
             android:paddingRight="@dimen/dk_margin" />
     </LinearLayout>
