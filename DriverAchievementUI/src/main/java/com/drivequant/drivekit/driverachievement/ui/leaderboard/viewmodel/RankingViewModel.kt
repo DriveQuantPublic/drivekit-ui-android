@@ -15,7 +15,7 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.RankingSelectorT
 class RankingViewModel : ViewModel() {
     var previousRank: Int = 0
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
-    var rankingListData = mutableListOf<RankingDriverData>()
+    var rankingDriverData = mutableListOf<RankingDriverData>()
     var mutableLiveDataRankingHeaderData: MutableLiveData<RankingHeaderData> = MutableLiveData()
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
@@ -61,17 +61,17 @@ class RankingViewModel : ViewModel() {
                     rankingSyncStatus: RankingSyncStatus,
                     ranking: Ranking) {
                     syncStatus = rankingSyncStatus
-                    rankingListData = buildRankingListData(ranking.driversRanked)
+                    rankingDriverData = buildRankingDriverData(ranking.driversRanked)
                     rankingHeaderData = RankingHeaderData(ranking)
                     mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)
                 }
             })
     }
 
-    fun buildRankingListData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
-        rankingListData.clear()
+    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
+        rankingDriverData.clear()
         for (driverRanked in driversRanked) {
-            rankingListData.add(
+            rankingDriverData.add(
                 RankingDriverData(
                     driverRanked.rank,
                     driverRanked.nickname,
@@ -79,6 +79,6 @@ class RankingViewModel : ViewModel() {
                     driverRanked.score,
                     driverRanked.userId))
         }
-        return rankingListData
+        return rankingDriverData
     }
 }

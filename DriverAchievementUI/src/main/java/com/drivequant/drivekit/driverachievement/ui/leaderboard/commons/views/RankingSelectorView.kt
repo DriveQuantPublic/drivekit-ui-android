@@ -17,45 +17,43 @@ import com.drivequant.drivekit.driverachievement.ui.leaderboard.setMarginRight
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
 
 class RankingSelectorView(context: Context) : LinearLayout(context) {
-    private var buttonSelector: Button
+    private var selector: Button
     lateinit var rankingSelectorListener: RankingSelectorListener
-    var isChecked: Boolean = false
 
     init {
         val view = View.inflate(context, R.layout.dk_ranking_selector_view, null).setDKStyle()
-        buttonSelector = view.findViewById(R.id.button_selector)
+        selector = view.findViewById(R.id.button_selector)
         addView(view)
         setStyle()
     }
 
-    fun configureRankingSelectorButton(rankingSelectorData: RankingSelectorData) {
-        buttonSelector.text = DKResource.convertToString(context, rankingSelectorData.titleId)
-        buttonSelector.setOnClickListener {
+    fun configureRankingSelector(rankingSelectorData: RankingSelectorData) {
+        selector.text = DKResource.convertToString(context, rankingSelectorData.titleId)
+        selector.setOnClickListener {
             rankingSelectorListener.onClickSelector(rankingSelectorData, this)
         }
     }
 
     private fun setStyle() {
-        buttonSelector.setMarginLeft(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
-        buttonSelector.setMarginRight(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
-        buttonSelector.normalText()
-        DKUtils.setBackgroundDrawableColor(buttonSelector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+        selector.setMarginLeft(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
+        selector.setMarginRight(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
+        selector.normalText()
+        DKUtils.setBackgroundDrawableColor(selector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
     }
 
-    fun setButtonSelected(selected: Boolean) {
+    fun setRankingSelectorSelected(selected: Boolean) {
         if (selected) {
-            isChecked = true
             DKUtils.setBackgroundDrawableColor(
-                buttonSelector.background as GradientDrawable,
+                selector.background as GradientDrawable,
                 DriveKitUI.colors.secondaryColor()
             )
-            buttonSelector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         } else {
             DKUtils.setBackgroundDrawableColor(
-                buttonSelector.background as GradientDrawable,
+                selector.background as GradientDrawable,
                 DriveKitUI.colors.neutralColor()
             )
-            buttonSelector.normalText()
+            selector.normalText()
         }
     }
 }

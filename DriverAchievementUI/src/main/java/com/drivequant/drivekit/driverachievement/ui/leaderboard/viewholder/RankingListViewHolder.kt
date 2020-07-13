@@ -79,14 +79,6 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         setStyle()
     }
 
-    private fun handleIconPosition(visibility:Boolean) {
-        if (visibility){
-
-        }
-        textViewDriverPosition.visibility = View.INVISIBLE
-        imageViewDriverPosition.visibility = View.VISIBLE
-    }
-
     private fun setStyle() {
         textViewDriverNickname.headLine2()
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())

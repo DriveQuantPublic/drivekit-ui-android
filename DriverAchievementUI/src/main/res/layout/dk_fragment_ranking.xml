@@ -20,8 +20,8 @@
         android:gravity="center"
         android:orientation="horizontal" />
 
-    <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.DriverProgressionView
-        android:id="@+id/driver_progression_view"
+    <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingHeaderView
+        android:id="@+id/ranking_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin" />

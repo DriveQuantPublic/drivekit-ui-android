@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/left_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,13 +19,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/right_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_view_ranking_title"
+            android:id="@+id/text_view_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dk_margin" />
@@ -35,13 +37,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:padding="@dimen/dk_margin_quarter"
-                android:id="@+id/image_view_driver_position"
+                android:paddingTop="@dimen/dk_margin_quarter"
+                android:paddingBottom="@dimen/dk_margin_quarter"
+                android:paddingEnd="@dimen/dk_margin_quarter"
+                android:id="@+id/image_view_driver_progression"
                 android:layout_width="@dimen/dk_ic_big"
                 android:layout_height="@dimen/dk_ic_big" />
 
             <TextView
-                android:id="@+id/text_view_driver_progression"
+                android:id="@+id/text_view_global_rank"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

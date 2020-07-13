@@ -45,9 +45,9 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         val selectedRankingSelector = rankingViewModel.selectedRankingSelectorData
         for (rankingSelector in rankingViewModel.rankingSelectorsData) {
             val rankingSelectorView = RankingSelectorView(requireContext())
-            rankingSelectorView.configureRankingSelectorButton(rankingSelector)
+            rankingSelectorView.configureRankingSelector(rankingSelector)
             val selected = selectedRankingSelector.index == rankingSelector.index
-            rankingSelectorView.setButtonSelected(selected)
+            rankingSelectorView.setRankingSelectorSelected(selected)
             if (selected) {
                 selectedRankingSelectorView = rankingSelectorView
             }
@@ -102,20 +102,11 @@ class RankingFragment : Fragment(), RankingSelectorListener {
     }
 
     override fun onClickSelector(rankingSelectorData: RankingSelectorData, rankingSelectorView: RankingSelectorView) {
-        selectedRankingSelectorView.setButtonSelected(false)
+        selectedRankingSelectorView.setRankingSelectorSelected(false)
         selectedRankingSelectorView = rankingSelectorView
-        rankingSelectorView.setButtonSelected(true)
+        rankingSelectorView.setRankingSelectorSelected(true)
         rankingViewModel.selectedRankingSelectorData = rankingSelectorData
         updateRanking()
-    }
-
-    private fun setupLeaderBoardHeader() {
-        driver_progression_view.setDriverProgression(
-            rankingViewModel.rankingHeaderData.getLeaderBoardStatus(requireContext()),
-            rankingViewModel.rankingHeaderData.getStatus(rankingViewModel.previousRank),
-            rankingViewModel.rankingHeaderData.getLeaderBoardTitle(),
-            rankingViewModel.rankingHeaderData.getIcon()
-        )
     }
 
     override fun onResume() {
@@ -139,7 +130,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                     rankingAdapter = RankingListAdapter(requireContext(), rankingViewModel)
                     recycler_view_ranking.adapter = rankingAdapter
                 }
-                setupLeaderBoardHeader()
+                ranking_header_view.setHeaderData(rankingViewModel)
                 updateProgressVisibility(false)
             })
 
