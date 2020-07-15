@@ -73,14 +73,10 @@ object DiagnosisHelper {
 
     fun getBatteryOptimizationsStatus(context: Context): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                context.applicationContext?.let {
-                    val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-                    val packageName = context.packageName
-                    return if (pm.isIgnoringBatteryOptimizations(packageName)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
-                }
-            } catch (e: ActivityNotFoundException) {
-                // Catch crashes on some Samsung devices
+            context.applicationContext?.let {
+                val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+                val packageName = context.packageName
+                return if (pm.isIgnoringBatteryOptimizations(packageName)) PermissionStatus.VALID else PermissionStatus.NOT_VALID
             }
             return PermissionStatus.NOT_VALID
         } else {
@@ -97,11 +93,15 @@ object DiagnosisHelper {
     }
 
     fun requestBatteryOptimization(activity: Activity) {
-        val intent = Intent()
-        val packageName = activity.packageName
-        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-        intent.data = Uri.parse("package:$packageName")
-        activity.startActivityForResult(intent, REQUEST_BATTERY_OPTIMIZATION)
+        try {
+            val intent = Intent()
+            val packageName = activity.packageName
+            intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+            intent.data = Uri.parse("package:$packageName")
+            activity.startActivityForResult(intent, REQUEST_BATTERY_OPTIMIZATION)
+        } catch (e: ActivityNotFoundException) {
+            // Catch crashes on some Samsung devices
+        }
     }
 
     fun getNotificationStatus(context: Context): PermissionStatus {
