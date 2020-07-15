@@ -93,14 +93,16 @@ object DiagnosisHelper {
     }
 
     fun requestBatteryOptimization(activity: Activity) {
-        try {
-            val intent = Intent()
-            val packageName = activity.packageName
-            intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-            intent.data = Uri.parse("package:$packageName")
-            activity.startActivityForResult(intent, REQUEST_BATTERY_OPTIMIZATION)
-        } catch (e: ActivityNotFoundException) {
-            // Catch crashes on some Samsung devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                val intent = Intent()
+                val packageName = activity.packageName
+                intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:$packageName")
+                activity.startActivityForResult(intent, REQUEST_BATTERY_OPTIMIZATION)
+            } catch (e: ActivityNotFoundException) {
+                // Catch crashes on some Samsung devices
+            }
         }
     }
 
