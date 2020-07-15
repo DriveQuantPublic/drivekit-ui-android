@@ -84,7 +84,7 @@ object DiagnosisHelper {
             }
             return PermissionStatus.NOT_VALID
         } else {
-            return PermissionStatus.NOT_VALID
+            return PermissionStatus.VALID
         }
     }
 
