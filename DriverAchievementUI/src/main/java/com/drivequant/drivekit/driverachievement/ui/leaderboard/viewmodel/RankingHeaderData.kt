@@ -19,20 +19,26 @@ class RankingHeaderData(private val ranking: Ranking) {
         }
     }
 
-    fun getDriverGlobalRank(context: Context): SpannableString =
-        DKSpannable().append("${ranking.userPosition}", context.resSpans {
+    fun getDriverGlobalRank(context: Context): SpannableString {
+        val userPosition = if (ranking.userPosition == 0) {
+            "-"
+        } else {
+            "${ranking.userPosition}"
+        }
+        return DKSpannable().append(userPosition, context.resSpans {
             color(DriveKitUI.colors.secondaryColor())
             size(R.dimen.dk_text_xbig)
-        }).append("/ ",context.resSpans {
+        }).append(" / ",context.resSpans {
             color(DriveKitUI.colors.mainFontColor())
             size(R.dimen.dk_text_xbig)
         }).append(
-            "${ranking.nbDriverRanked}",context.resSpans {
+            "${ranking.nbDriverRanked}", context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
                 size(R.dimen.dk_text_xbig)
             }
         )
             .toSpannable()
+    }
 
     fun getTitle(): String {
         return when (ranking.rankingType) {

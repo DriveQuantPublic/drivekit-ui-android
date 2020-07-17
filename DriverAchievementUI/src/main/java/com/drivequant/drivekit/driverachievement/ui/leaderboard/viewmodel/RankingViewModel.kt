@@ -19,7 +19,7 @@ class RankingViewModel : ViewModel() {
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
     lateinit var rankingHeaderData: RankingHeaderData
-    var selectedRankingSelectorData: RankingSelectorData
+    lateinit var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
 
     init {
@@ -34,20 +34,23 @@ class RankingViewModel : ViewModel() {
         selectedRankingTypeData = rankingTypesData.first()
 
         when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
-            is RankingSelectorType.NONE -> {}
+            is RankingSelectorType.NONE -> {
+
+            }
             is RankingSelectorType.PERIOD -> {
                 for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.withIndex()) {
                     val titleId = when (rankingPeriod) {
                         RankingPeriod.WEEKLY -> "dk_achievements_ranking_week"
                         RankingPeriod.LEGACY -> "dk_achievements_ranking_two_weeks"
                         RankingPeriod.MONTHLY -> "dk_achievements_ranking_month"
-                        RankingPeriod.ALL_TIME -> "dk_achievement_ranking_permanent"
+                        RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent"
                     }
                     rankingSelectorsData.add(RankingSelectorData(index, titleId,rankingPeriod))
                 }
+                selectedRankingSelectorData = rankingSelectorsData.first()
             }
         }
-        selectedRankingSelectorData = rankingSelectorsData.first()
+
     }
 
     fun fetchRankingList() {

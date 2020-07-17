@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.DriverProgression
@@ -53,12 +54,19 @@ class RankingHeaderView : LinearLayout {
 
     fun setHeaderData(rankingViewModel: RankingViewModel) {
         text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
+        text_view_header_title.text = rankingViewModel.rankingHeaderData.getTitle()
         val progressionIconId =
             when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
                 DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
                 DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
             }
-        text_view_header_title.text = rankingViewModel.rankingHeaderData.getTitle()
+
+        image_view_driver_progression.visibility =
+        if (rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
         DKResource.convertToDrawable(context, rankingViewModel.rankingHeaderData.getIcon())?.let {
             image_view_ranking_type.setImageDrawable(it)
         }
