@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views
+package com.drivequant.drivekit.driverachievement.ui.rankings.commons.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.extension.setMarginBottom
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.extension.setMarginTop
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.DriverProgression
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModel
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginBottom
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginLeft
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginTop
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.DriverProgression
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_ranking_header_view.view.*
 
 /**
@@ -34,41 +36,34 @@ class RankingHeaderView : LinearLayout {
 
     private fun init() {
         val view = View.inflate(context, R.layout.dk_ranking_header_view, null).setDKStyle()
-        addView(
-            view, ViewGroup.LayoutParams(
+        addView(view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
+                ViewGroup.LayoutParams.MATCH_PARENT))
         setStyle()
     }
 
     private fun setStyle() {
-        if (DriverAchievementUI.rankingTypes.size > 1) {
-            image_view_ranking_type.visibility = View.GONE
-            text_view_header_title.visibility = View.GONE
-        }
         container.setMarginTop(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
         container.setMarginBottom(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
         text_view_header_title.bigText()
-        text_view_global_rank.bigText()
+        text_view_global_rank.headLine2()
     }
 
     fun setHeaderData(rankingViewModel: RankingViewModel) {
         text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
-        text_view_header_title.text = rankingViewModel.rankingHeaderData.getTitle()
+        text_view_header_title.text =
+            DKResource.convertToString(context, rankingViewModel.rankingHeaderData.getTitle())
         val progressionIconId =
             when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
                 DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
                 DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
             }
-
         image_view_driver_progression.visibility =
-        if (rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
+            if (rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
         DKResource.convertToDrawable(context, rankingViewModel.rankingHeaderData.getIcon())?.let {
             image_view_ranking_type.setImageDrawable(it)
         }
@@ -79,6 +74,11 @@ class RankingHeaderView : LinearLayout {
                     it
                 )
             )
+        }
+        if (DriverAchievementUI.rankingTypes.size > 1 && rankingViewModel.rankingSelectorsData.size > 1) {
+            image_view_ranking_type.visibility = View.GONE
+            text_view_header_title.visibility = View.GONE
+            text_view_global_rank.setMarginLeft(0)
         }
     }
 }

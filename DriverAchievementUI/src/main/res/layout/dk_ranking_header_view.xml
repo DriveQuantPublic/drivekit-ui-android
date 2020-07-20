@@ -13,6 +13,7 @@
         android:layout_marginEnd="@dimen/dk_margin_double" />
 
     <LinearLayout
+        android:layout_marginStart="@dimen/dk_margin"
         android:id="@+id/right_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

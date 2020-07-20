@@ -19,7 +19,7 @@
         android:gravity="center"
         android:orientation="horizontal" />
 
-    <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingHeaderView
+    <com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.RankingHeaderView
         android:id="@+id/ranking_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

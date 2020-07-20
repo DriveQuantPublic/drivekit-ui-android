@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewholder
+package com.drivequant.drivekit.driverachievement.ui.rankings.viewholder
 
 import android.graphics.drawable.GradientDrawable
 import android.support.v7.widget.RecyclerView
@@ -7,13 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingDriverData
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingDriverData
 
 
 class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,11 +29,10 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val viewSeparator = itemView.findViewById<TextView>(R.id.view_separator)
     private val driverPositionBackground = textViewDriverPosition.background as GradientDrawable
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
+    private var driverPositionColor = DriveKitUI.colors.mainFontColor()
+    private var driverScoreColor = DriveKitUI.colors.mainFontColor()
 
     fun bind(rankingDriverData: RankingDriverData) {
-        val driverPositionColor:Int
-        val driverScoreColor:Int
-
         if (rankingDriverData.driverId == DriveKit.config.userId) {
             driverPositionColor = DriveKitUI.colors.fontColorOnSecondaryColor()
             driverScoreColor = DriveKitUI.colors.fontColorOnSecondaryColor()
@@ -50,19 +48,15 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
             textViewDriverPosition.setBackgroundResource(0)
         }
 
-        textViewDriverDistance.text = DKDataFormatter.formatDistance(
-            itemView.context,
-            rankingDriverData.driverDistance
-        )
-
-        val driverScore = if(rankingDriverData.driverScore < 9) {
-            rankingDriverData.driverScore.format(2)
-        } else {
+        textViewDriverDistance.text = "${rankingDriverData.driverDistance} km"
+        val formattedDriverScore = if(rankingDriverData.driverScore == 10.0) {
             rankingDriverData.driverScore.removeZeroDecimal()
+        } else {
+            rankingDriverData.driverScore.format(2)
         }
 
         textViewDriverScore.text =
-            DKSpannable().append(driverScore, itemView.context.resSpans {
+            DKSpannable().append(formattedDriverScore, itemView.context.resSpans {
                 size(R.dimen.dk_text_medium)
                 color(driverScoreColor)
             }).append(" / 10", itemView.context.resSpans {

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter
+package com.drivequant.drivekit.driverachievement.ui.rankings.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewholder.RankingListViewHolder
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModel
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewholder.RankingListViewHolder
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 
 class RankingListAdapter(
     val context: Context?,

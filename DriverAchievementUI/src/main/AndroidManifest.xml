@@ -3,7 +3,7 @@
     package="com.drivequant.drivekit.driverachievement.ui">
 
     <application>
-        <activity android:name=".leaderboard.activity.RankingActivity"/>
+        <activity android:name=".rankings.activity.RankingActivity"/>
         <activity android:name=".badges.activity.BadgeListActivity" />
         <activity
             android:name=".streaks.activity.StreaksListActivity"

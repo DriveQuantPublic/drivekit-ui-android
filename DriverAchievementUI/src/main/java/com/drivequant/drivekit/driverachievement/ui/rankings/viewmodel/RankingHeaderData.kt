@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel
+package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
 import android.content.Context
 import android.text.SpannableString
@@ -42,9 +42,9 @@ class RankingHeaderData(private val ranking: Ranking) {
 
     fun getTitle(): String {
         return when (ranking.rankingType) {
-            RankingType.SAFETY -> "Safety"
-            RankingType.DISTRACTION -> "Distraction"
-            RankingType.ECO_DRIVING -> "Eco-Driving"
+            RankingType.SAFETY -> "dk_common_safety"
+            RankingType.DISTRACTION -> "dk_common_distraction"
+            RankingType.ECO_DRIVING -> "dk_common_ecodriving"
         }
     }
 

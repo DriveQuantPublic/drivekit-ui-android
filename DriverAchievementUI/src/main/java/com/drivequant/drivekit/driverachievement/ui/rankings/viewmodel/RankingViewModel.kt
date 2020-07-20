@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel
+package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -19,7 +19,7 @@ class RankingViewModel : ViewModel() {
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
     lateinit var rankingHeaderData: RankingHeaderData
-    lateinit var selectedRankingSelectorData: RankingSelectorData
+    var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
 
     init {
@@ -35,7 +35,7 @@ class RankingViewModel : ViewModel() {
 
         when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
             is RankingSelectorType.NONE -> {
-
+                selectedRankingSelectorData = RankingSelectorData(0,"dk_achievements_ranking_week",RankingPeriod.WEEKLY)
             }
             is RankingSelectorType.PERIOD -> {
                 for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.withIndex()) {

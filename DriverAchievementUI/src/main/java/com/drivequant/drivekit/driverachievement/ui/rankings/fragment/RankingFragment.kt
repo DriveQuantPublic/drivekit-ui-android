@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment
+package com.drivequant.drivekit.driverachievement.ui.rankings.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,18 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorListener
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.adapter.RankingListAdapter
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingSelectorView
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingViewModel
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
+import com.drivequant.drivekit.driverachievement.ui.rankings.adapter.RankingListAdapter
+import com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.RankingSelectorView
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 

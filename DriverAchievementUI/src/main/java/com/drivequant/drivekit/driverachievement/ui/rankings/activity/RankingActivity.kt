@@ -1,9 +1,9 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.activity
+package com.drivequant.drivekit.driverachievement.ui.rankings.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.fragment.RankingFragment
+import com.drivequant.drivekit.driverachievement.ui.rankings.fragment.RankingFragment
 
 class RankingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

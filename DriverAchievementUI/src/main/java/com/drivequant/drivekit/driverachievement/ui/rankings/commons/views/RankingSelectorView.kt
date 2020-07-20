@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views
+package com.drivequant.drivekit.driverachievement.ui.rankings.commons.views
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -10,11 +10,11 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.extension.setMarginLeft
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.extension.setMarginRight
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.extension.setMarginTop
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorListener
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel.RankingSelectorData
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginLeft
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginRight
+import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginTop
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
 import kotlinx.android.synthetic.main.dk_ranking_selector_view.view.*
 
 class RankingSelectorView(context: Context) : LinearLayout(context) {

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.leaderboard.viewmodel
+package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
 class RankingDriverData(
     val driverRank: Int,

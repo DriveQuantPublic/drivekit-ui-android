@@ -18,7 +18,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
-import com.drivequant.drivekit.driverachievement.ui.leaderboard.activity.RankingActivity
+import com.drivequant.drivekit.driverachievement.ui.rankings.activity.RankingActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
