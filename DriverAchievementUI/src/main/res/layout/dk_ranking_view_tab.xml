@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="@dimen/dk_ic_big"
-        android:layout_height="@dimen/dk_ic_big" />
+        android:layout_width="@dimen/dk_ic_xbig"
+        android:layout_height="@dimen/dk_ic_xbig" />
 
 </LinearLayout>

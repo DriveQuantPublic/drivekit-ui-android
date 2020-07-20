@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -147,9 +148,9 @@ class RankingFragment : Fragment(),
     }
 
     private fun setStyle() {
-        text_view_position_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_nickname_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        tex_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        text_view_position_header.smallText(DriveKitUI.colors.complementaryFontColor())
+        text_view_nickname_header.smallText(DriveKitUI.colors.complementaryFontColor())
+        text_view_score_header.smallText(DriveKitUI.colors.complementaryFontColor())
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

@@ -30,63 +30,78 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val viewSeparator = itemView.findViewById<TextView>(R.id.view_separator)
     private val driverPositionBackground = textViewDriverPosition.background as GradientDrawable
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
-    private var driverPositionColor = DriveKitUI.colors.mainFontColor()
-    private var driverScoreColor = DriveKitUI.colors.mainFontColor()
 
     fun bind(rankingDriverData: RankingDriverData) {
-            if (rankingDriverData.driverId == DriveKit.config.userId) {
-                driverPositionColor = DriveKitUI.colors.fontColorOnSecondaryColor()
-                driverScoreColor = DriveKitUI.colors.fontColorOnSecondaryColor()
-                DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
-                DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
-            } else {
-                DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
-                textViewDriverPosition.setBackgroundResource(0)
+        val driverPositionColor:Int
+        val driverScoreColor:Int
+
+        if (rankingDriverData.driverId == DriveKit.config.userId) {
+            driverPositionColor = DriveKitUI.colors.fontColorOnSecondaryColor()
+            driverScoreColor = DriveKitUI.colors.fontColorOnSecondaryColor()
+            DKUtils.setBackgroundDrawableColor(driverPositionBackground,
+                DriveKitUI.colors.secondaryColor())
+            DKUtils.setBackgroundDrawableColor(driverScoreBackground,
+                DriveKitUI.colors.secondaryColor())
+        } else {
+            driverPositionColor = DriveKitUI.colors.mainFontColor()
+            driverScoreColor = DriveKitUI.colors.mainFontColor()
+            DKUtils.setBackgroundDrawableColor(driverScoreBackground,
+                DriveKitUI.colors.neutralColor())
+            textViewDriverPosition.setBackgroundResource(0)
+        }
+
+        textViewDriverDistance.text = DKDataFormatter.formatDistance(
+            itemView.context,
+            rankingDriverData.driverDistance
+        )
+
+        val driverScore = if(rankingDriverData.driverScore < 9) {
+            rankingDriverData.driverScore.format(2)
+        } else {
+            rankingDriverData.driverScore.removeZeroDecimal()
+        }
+
+        textViewDriverScore.text =
+            DKSpannable().append(driverScore, itemView.context.resSpans {
+                size(R.dimen.dk_text_medium)
+                color(driverScoreColor)
+            }).append(" / 10", itemView.context.resSpans {
+                size(R.dimen.dk_text_small)
+                color(driverScoreColor)
+            }).toSpannable()
+
+
+        textViewDriverNickname.text =
+            if (rankingDriverData.driverNickname.isNullOrEmpty()) DKResource.convertToString(
+                itemView.context,
+                "dk_achievements_ranking_anonymous_driver"
+            ) else rankingDriverData.driverNickname
+
+        if (rankingDriverData.driverRank in 1..3) {
+            textViewDriverPosition.visibility = View.INVISIBLE
+            imageViewDriverPosition.visibility = View.VISIBLE
+            val rankResId = when (rankingDriverData.driverRank) {
+                1 -> "dk_achievements_rank_1"
+                2 -> "dk_achievements_rank_2"
+                3 -> "dk_achievements_rank_3"
+                else -> null
             }
-
-            textViewDriverDistance.text =
-                DKDataFormatter.formatDistance(itemView.context, rankingDriverData.driverDistance)
-            textViewDriverScore.text =
-                DKSpannable().append(rankingDriverData.driverScore.removeZeroDecimal(), itemView.context.resSpans {
-                    size(R.dimen.dk_text_medium)
-                    color(driverScoreColor)
-                }).append(" / 10", itemView.context.resSpans {
-                    size(R.dimen.dk_text_small)
-                    color(driverScoreColor)
-                }).toSpannable()
-
-
-            textViewDriverNickname.text =
-                if (rankingDriverData.driverNickname.isNullOrEmpty()) DKResource.convertToString(itemView.context, "dk_achievements_ranking_anonymous_driver") else rankingDriverData.driverNickname
-
-            if (rankingDriverData.driverRank in 1..3) {
-                textViewDriverPosition.visibility = View.INVISIBLE
-                imageViewDriverPosition.visibility = View.VISIBLE
-                val rankResId = when (rankingDriverData.driverRank) {
-                    1 -> "dk_achievements_rank_1"
-                    2 -> "dk_achievements_rank_2"
-                    3 -> "dk_achievements_rank_3"
-                    else -> null
-                }
-                val drawable = rankResId?.let {
-                    DKResource.convertToDrawable(
-                        itemView.context,
-                        it
-                    )
-                }
-                imageViewDriverPosition.setImageDrawable(drawable)
-            } else {
-                imageViewDriverPosition.visibility = View.INVISIBLE
-                textViewDriverPosition.visibility = View.VISIBLE
-                textViewDriverPosition.text = rankingDriverData.driverRank.toString()
+            val drawable = rankResId?.let {
+                DKResource.convertToDrawable(
+                    itemView.context,
+                    it
+                )
             }
-        setStyle()
-    }
+            imageViewDriverPosition.setImageDrawable(drawable)
+        } else {
+            imageViewDriverPosition.visibility = View.INVISIBLE
+            textViewDriverPosition.visibility = View.VISIBLE
+            textViewDriverPosition.text = rankingDriverData.driverRank.toString()
+        }
 
-    private fun setStyle() {
         textViewDriverNickname.headLine2()
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())
-        textViewDriverPosition.bigText(textColor = driverPositionColor)
+        textViewDriverPosition.normalText(textColor = driverPositionColor)
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

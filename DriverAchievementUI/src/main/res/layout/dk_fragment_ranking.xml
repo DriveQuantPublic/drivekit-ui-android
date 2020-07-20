@@ -9,7 +9,6 @@
         android:id="@+id/tab_layout_leader_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin"
         app:tabMode="fixed" />
 
     <LinearLayout
@@ -23,42 +22,48 @@
     <com.drivequant.drivekit.driverachievement.ui.leaderboard.commons.views.RankingHeaderView
         android:id="@+id/ranking_header_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin_quarter" />
+        android:layout_height="wrap_content"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin_half"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:orientation="horizontal"
+        android:padding="@dimen/dk_margin_quarter">
 
         <TextView
             android:id="@+id/text_view_position_header"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/dk_margin"
             android:gravity="center"
             android:text="@string/dk_achievements_ranking_rank" />
 
         <TextView
             android:id="@+id/text_view_nickname_header"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dk_margin_half"
             android:layout_weight="1"
             android:text="@string/dk_achievements_ranking_driver" />
 
         <TextView
-            android:id="@+id/tex_view_score_header"
-            android:layout_width="0dp"
+            android:id="@+id/text_view_score_header"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:layout_gravity="start"
+            android:layout_marginEnd="@dimen/dk_margin_half"
+            android:background="@drawable/dk_driver_score_rectangle"
             android:text="@string/dk_achievements_ranking_score" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/view_separator"
-        style="@style/Separator.Horizontal" />
+        style="@style/Separator.Horizontal"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginEnd="@dimen/dk_margin_half" />
 
     <FrameLayout
         android:layout_width="match_parent"
