@@ -14,7 +14,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 class RankingViewModel : ViewModel() {
     var previousRank: Int = 0
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
-    var rankingDriverData = mutableListOf<RankingDriverData>()
+    var rankingDriverData = mutableListOf<RankingDriverData?>()
     var mutableLiveDataRankingHeaderData: MutableLiveData<RankingHeaderData> = MutableLiveData()
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
@@ -38,7 +38,7 @@ class RankingViewModel : ViewModel() {
                 selectedRankingSelectorData = RankingSelectorData(0,"dk_achievements_ranking_week",RankingPeriod.WEEKLY)
             }
             is RankingSelectorType.PERIOD -> {
-                for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.withIndex()) {
+                for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.distinct().withIndex()) {
                     val titleId = when (rankingPeriod) {
                         RankingPeriod.WEEKLY -> "dk_achievements_ranking_week"
                         RankingPeriod.LEGACY -> "dk_achievements_ranking_two_weeks"
@@ -50,7 +50,6 @@ class RankingViewModel : ViewModel() {
                 selectedRankingSelectorData = rankingSelectorsData.first()
             }
         }
-
     }
 
     fun fetchRankingList() {
@@ -70,7 +69,7 @@ class RankingViewModel : ViewModel() {
             })
     }
 
-    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
+    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData?> {
         rankingDriverData.clear()
         for (driverRanked in driversRanked) {
             rankingDriverData.add(
@@ -80,6 +79,9 @@ class RankingViewModel : ViewModel() {
                     driverRanked.distance,
                     driverRanked.score,
                     driverRanked.userId))
+        }
+        if (rankingDriverData.size > 5 && syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
+            rankingDriverData.add(5,null)
         }
         return rankingDriverData
     }
