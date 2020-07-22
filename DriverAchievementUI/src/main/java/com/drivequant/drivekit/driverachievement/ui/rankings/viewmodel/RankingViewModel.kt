@@ -24,7 +24,7 @@ class RankingViewModel : ViewModel() {
 
     init {
         for (rankingType in DriverAchievementUI.rankingTypes.distinct()) {
-            val iconId = when(rankingType) {
+            val iconId = when (rankingType) {
                 RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
                 RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
                 RankingType.SAFETY -> "dk_achievements_safety"
@@ -35,17 +35,19 @@ class RankingViewModel : ViewModel() {
 
         when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
             is RankingSelectorType.NONE -> {
-                selectedRankingSelectorData = RankingSelectorData(0,"dk_achievements_ranking_week",RankingPeriod.WEEKLY)
+                selectedRankingSelectorData =
+                    RankingSelectorData(0, "dk_achievements_ranking_week", RankingPeriod.WEEKLY)
             }
             is RankingSelectorType.PERIOD -> {
-                for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.distinct().withIndex()) {
+                for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.distinct()
+                    .withIndex()) {
                     val titleId = when (rankingPeriod) {
                         RankingPeriod.WEEKLY -> "dk_achievements_ranking_week"
                         RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy"
                         RankingPeriod.MONTHLY -> "dk_achievements_ranking_month"
                         RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent"
                     }
-                    rankingSelectorsData.add(RankingSelectorData(index, titleId,rankingPeriod))
+                    rankingSelectorsData.add(RankingSelectorData(index, titleId, rankingPeriod))
                 }
                 selectedRankingSelectorData = rankingSelectorsData.first()
             }
@@ -60,7 +62,8 @@ class RankingViewModel : ViewModel() {
             listener = object : RankingQueryListener {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
-                    ranking: Ranking) {
+                    ranking: Ranking
+                ) {
                     previousRank = ranking.driverPreviousRank
                     syncStatus = rankingSyncStatus
                     rankingDriversData = buildRankingDriverData(ranking.driversRanked)
@@ -72,20 +75,23 @@ class RankingViewModel : ViewModel() {
 
     private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData?> {
         rankingDriversData.clear()
-        for (driverRanked in driversRanked) {
+        var alreadyInserted = false
+        for ((index, driverRanked) in driversRanked.withIndex()) {
             rankingDriversData.add(
                 RankingDriverData(
                     driverRanked.rank,
                     driverRanked.nickname,
                     driverRanked.distance,
                     driverRanked.score,
-                    driverRanked.userId))
-        }
-
-
-        if (rankingDriversData.size > 10 && syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
-            rankingDriversData.add(5,null)
+                    driverRanked.userId
+                )
+            )
+            if (index + 1 != driverRanked.rank && !alreadyInserted) {
+                rankingDriversData.add(index, null)
+                alreadyInserted = true
+            }
         }
         return rankingDriversData
     }
 }
+
