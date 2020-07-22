@@ -62,13 +62,11 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
                textViewDriverPosition.visibility = View.VISIBLE
                textViewDriverPosition.text = "${it.driverRank}"
            }
-            setStyle()
-
        } ?: kotlin.run {
            container.visibility = View.GONE
            imageViewJump.visibility = View.VISIBLE
        }
-
+        setStyle()
     }
 
     private fun setStyle() {
