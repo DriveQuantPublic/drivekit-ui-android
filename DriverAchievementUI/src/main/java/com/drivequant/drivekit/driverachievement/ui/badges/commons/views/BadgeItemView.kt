@@ -85,7 +85,7 @@ class BadgeItemView : LinearLayout {
             .init(context)
             .layout(R.layout.dk_layout_badge_details)
             .cancelable(true)
-            .negativeButton(context.getString(R.string.dk_common_cancel),
+            .negativeButton(context.getString(R.string.dk_common_close),
                 DialogInterface.OnClickListener { dialog, _ ->
                     dialog.dismiss()
                 }).show()

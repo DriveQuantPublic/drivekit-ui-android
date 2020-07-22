@@ -20,7 +20,9 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         StreakTheme.SAFETY,
         StreakTheme.ACCELERATION,
         StreakTheme.BRAKE,
-        StreakTheme.ADHERENCE)
+        StreakTheme.ADHERENCE,
+        StreakTheme.SPEEDING
+    )
 
     internal var badgeCategories: List<BadgeCategory> = listOf(
         BadgeCategory.GENERIC,
