@@ -19,9 +19,9 @@ class RankingListAdapter(
         return RankingListViewHolder(view)
     }
 
-    override fun getItemCount(): Int = rankingViewModel.rankingDriverData.size
+    override fun getItemCount(): Int = rankingViewModel.rankingDriversData.size
 
     override fun onBindViewHolder(parent: RankingListViewHolder, position: Int) {
-        parent.bind(rankingViewModel.rankingDriverData[position])
+        parent.bind(rankingViewModel.rankingDriversData[position])
     }
 }

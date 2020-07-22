@@ -14,7 +14,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 class RankingViewModel : ViewModel() {
     var previousRank: Int = 0
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
-    var rankingDriverData = mutableListOf<RankingDriverData?>()
+    var rankingDriversData = mutableListOf<RankingDriverData?>()
     var mutableLiveDataRankingHeaderData: MutableLiveData<RankingHeaderData> = MutableLiveData()
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
@@ -41,7 +41,7 @@ class RankingViewModel : ViewModel() {
                 for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.distinct().withIndex()) {
                     val titleId = when (rankingPeriod) {
                         RankingPeriod.WEEKLY -> "dk_achievements_ranking_week"
-                        RankingPeriod.LEGACY -> "dk_achievements_ranking_two_weeks"
+                        RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy"
                         RankingPeriod.MONTHLY -> "dk_achievements_ranking_month"
                         RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent"
                     }
@@ -61,8 +61,9 @@ class RankingViewModel : ViewModel() {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
                     ranking: Ranking) {
+                    previousRank = ranking.driverPreviousRank
                     syncStatus = rankingSyncStatus
-                    rankingDriverData = buildRankingDriverData(ranking.driversRanked)
+                    rankingDriversData = buildRankingDriverData(ranking.driversRanked)
                     rankingHeaderData = RankingHeaderData(ranking)
                     mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)
                 }
@@ -70,9 +71,9 @@ class RankingViewModel : ViewModel() {
     }
 
     private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData?> {
-        rankingDriverData.clear()
+        rankingDriversData.clear()
         for (driverRanked in driversRanked) {
-            rankingDriverData.add(
+            rankingDriversData.add(
                 RankingDriverData(
                     driverRanked.rank,
                     driverRanked.nickname,
@@ -80,9 +81,11 @@ class RankingViewModel : ViewModel() {
                     driverRanked.score,
                     driverRanked.userId))
         }
-        if (rankingDriverData.size > 5 && syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
-            rankingDriverData.add(5,null)
+
+
+        if (rankingDriversData.size > 10 && syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
+            rankingDriversData.add(5,null)
         }
-        return rankingDriverData
+        return rankingDriversData
     }
 }

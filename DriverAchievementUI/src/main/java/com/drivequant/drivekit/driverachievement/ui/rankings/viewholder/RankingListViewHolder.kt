@@ -30,30 +30,25 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val imageViewJump = itemView.findViewById<ImageView>(R.id.image_view_jump)
     private val driverPositionBackground = textViewDriverPosition.background as GradientDrawable
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
-    private var driverPositionColor = DriveKitUI.colors.mainFontColor()
-    private var driverScoreColor = DriveKitUI.colors.mainFontColor()
+    private var currentDriverColor = DriveKitUI.colors.mainFontColor()
 
     fun bind(rankingDriverData: RankingDriverData?) {
        rankingDriverData?.let {
            container.visibility = View.VISIBLE
            imageViewJump.visibility = View.GONE
            if (it.driverId == DriveKit.config.userId) {
-               driverPositionColor = DriveKitUI.colors.fontColorOnSecondaryColor()
-               driverScoreColor = DriveKitUI.colors.fontColorOnSecondaryColor()
-               DKUtils.setBackgroundDrawableColor(driverPositionBackground,
-                   DriveKitUI.colors.secondaryColor())
-               DKUtils.setBackgroundDrawableColor(driverScoreBackground,
-                   DriveKitUI.colors.secondaryColor())
+               currentDriverColor = DriveKitUI.colors.fontColorOnSecondaryColor()
+               DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
+               DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
+
            } else {
-               driverPositionColor = DriveKitUI.colors.mainFontColor()
-               driverScoreColor = DriveKitUI.colors.mainFontColor()
-               DKUtils.setBackgroundDrawableColor(driverScoreBackground,
-                   DriveKitUI.colors.neutralColor())
-               textViewDriverPosition.setBackgroundResource(0)
+               currentDriverColor = DriveKitUI.colors.mainFontColor()
+               DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
+               DKUtils.setBackgroundDrawableColor(driverPositionBackground, 0x00000000)
            }
 
            textViewDriverDistance.text = it.getFormattedDistance()
-           textViewDriverScore.text = it.getFormattedScore(itemView.context, driverScoreColor)
+           textViewDriverScore.text = it.getFormattedScore(itemView.context, currentDriverColor)
            textViewDriverNickname.text = it.getNickname(itemView.context)
 
            if (it.driverRank in 1..3) {
@@ -73,12 +68,13 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
            container.visibility = View.GONE
            imageViewJump.visibility = View.VISIBLE
        }
-        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+
     }
 
     private fun setStyle() {
+        textViewDriverPosition.normalText(textColor = currentDriverColor)
         textViewDriverNickname.headLine2()
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())
-        textViewDriverPosition.normalText(textColor = driverPositionColor)
+        viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }
