@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:gravity="center"
+        android:padding="@dimen/dk_margin_quarter"
         android:orientation="horizontal" />
 
     <com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.RankingHeaderView
@@ -53,9 +54,8 @@
             android:id="@+id/text_view_score_header"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:gravity="center"
             android:layout_marginEnd="@dimen/dk_margin_half"
-            android:background="@drawable/dk_driver_score_rectangle"
             android:text="@string/dk_achievements_ranking_score" />
     </LinearLayout>
 
