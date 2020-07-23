@@ -115,13 +115,15 @@ class RankingFragment : Fragment(),
     }
 
     fun updateRanking() {
+        var isToastShowed = false
         rankingViewModel.mutableLiveDataRankingHeaderData.observe(this,
             Observer {
-                if (rankingViewModel.syncStatus != RankingSyncStatus.NO_ERROR && rankingViewModel.syncStatus != RankingSyncStatus.USER_NOT_RANKED) {
+                if ((rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY || rankingViewModel.syncStatus == RankingSyncStatus.CACHE_DATA_ONLY)  && !isToastShowed) {
                     Toast.makeText(
                         context, context?.getString(R.string.dk_achievements_failed_to_sync_rankings),
                         Toast.LENGTH_SHORT
                     ).show()
+                    isToastShowed = true
                 }
 
                 if (this::rankingAdapter.isInitialized) {

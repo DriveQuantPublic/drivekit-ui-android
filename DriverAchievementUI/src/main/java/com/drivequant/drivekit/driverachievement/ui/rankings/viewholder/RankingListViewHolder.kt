@@ -44,7 +44,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
            } else {
                currentDriverColor = DriveKitUI.colors.mainFontColor()
                DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
-               DKUtils.setBackgroundDrawableColor(driverPositionBackground, 0x00000000)
+               DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.transparentColor())
            }
 
            textViewDriverDistance.text = it.getFormattedDistance()

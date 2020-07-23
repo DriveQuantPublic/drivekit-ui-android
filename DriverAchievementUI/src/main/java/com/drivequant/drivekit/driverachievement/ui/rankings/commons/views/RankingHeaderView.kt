@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.extension.headLine2
+
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginBottom
-import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginLeft
-import com.drivequant.drivekit.driverachievement.ui.rankings.extension.setMarginTop
+import com.drivequant.drivekit.common.ui.extension.setMarginBottom
+import com.drivequant.drivekit.common.ui.extension.setMarginTop
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.DriverProgression
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_ranking_header_view.view.*
@@ -43,42 +42,25 @@ class RankingHeaderView : LinearLayout {
     }
 
     private fun setStyle() {
+        text_view_header_title.bigText()
         container.setMarginTop(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
         container.setMarginBottom(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
-        text_view_header_title.bigText()
-        text_view_global_rank.headLine2()
+
     }
 
     fun setHeaderData(rankingViewModel: RankingViewModel) {
-        text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
-        text_view_header_title.text =
-            DKResource.convertToString(context, rankingViewModel.rankingHeaderData.getTitle())
-        val progressionIconId =
-            when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
-                DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
-                DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
-            }
-        image_view_driver_progression.visibility =
-            if (rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
+        driver_progression.setDriverProgression(rankingViewModel)
+        text_view_header_title.text = DKResource.convertToString(context, rankingViewModel.rankingHeaderData.getTitle())
+
+
         DKResource.convertToDrawable(context, rankingViewModel.rankingHeaderData.getIcon())?.let {
             image_view_ranking_type.setImageDrawable(it)
         }
-        progressionIconId.let {
-            image_view_driver_progression.setImageDrawable(
-                DKResource.convertToDrawable(
-                    context,
-                    it
-                )
-            )
-        }
+
         if (DriverAchievementUI.rankingTypes.size > 1 && rankingViewModel.rankingSelectorsData.size > 1) {
-            image_view_ranking_type.visibility = View.GONE
-            text_view_header_title.visibility = View.GONE
-            text_view_global_rank.setMarginLeft(0)
+            full_ranking_header_container.visibility = View.GONE
+            driver_progression_only.visibility = View.VISIBLE
+            driver_progression_only.setDriverProgression(rankingViewModel)
         }
     }
 }

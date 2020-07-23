@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.rankings.extension
+package com.drivequant.drivekit.common.ui.extension
 
 import android.view.View
 import android.view.ViewGroup

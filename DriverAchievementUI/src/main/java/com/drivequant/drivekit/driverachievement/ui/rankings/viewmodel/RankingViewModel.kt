@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DriverRanked
 import com.drivequant.drivekit.databaseutils.entity.Ranking
 import com.drivequant.drivekit.databaseutils.entity.RankingType
@@ -21,6 +22,7 @@ class RankingViewModel : ViewModel() {
     lateinit var rankingHeaderData: RankingHeaderData
     var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
+    val useCache: MutableMap<String,Boolean> = mutableMapOf()
 
     init {
         for (rankingType in DriverAchievementUI.rankingTypes.distinct()) {
@@ -55,20 +57,36 @@ class RankingViewModel : ViewModel() {
     }
 
     fun fetchRankingList() {
+        val useCacheKey =
+            "${selectedRankingTypeData.rankingType}-${selectedRankingSelectorData.rankingPeriod}"
+        val synchronizationType = if (useCache[useCacheKey] == true) {
+            SynchronizationType.CACHE
+        } else {
+            SynchronizationType.DEFAULT
+        }
+
         DriveKitDriverAchievement.getRanking(
             rankingType = selectedRankingTypeData.rankingType,
             rankingPeriod = selectedRankingSelectorData.rankingPeriod,
             rankingDepth = DriverAchievementUI.rankingDepth,
+            synchronizationType = synchronizationType,
             listener = object : RankingQueryListener {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
-                    ranking: Ranking
-                ) {
+                    ranking: Ranking) {
                     previousRank = ranking.driverPreviousRank
                     syncStatus = rankingSyncStatus
                     rankingDriversData = buildRankingDriverData(ranking.driversRanked)
                     rankingHeaderData = RankingHeaderData(ranking)
                     mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)
+                    val isSynchronized = when (syncStatus) {
+                        RankingSyncStatus.USER_NOT_RANKED,
+                        RankingSyncStatus.CACHE_DATA_ONLY,
+                        RankingSyncStatus.SYNC_ALREADY_IN_PROGRESS,
+                        RankingSyncStatus.NO_ERROR -> true
+                        RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY -> false
+                    }
+                    useCache[useCacheKey] = isSynchronized
                 }
             })
     }
