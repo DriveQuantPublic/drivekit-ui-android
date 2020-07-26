@@ -10,9 +10,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.common.ui.extension.setMarginLeft
-import com.drivequant.drivekit.common.ui.extension.setMarginRight
-import com.drivequant.drivekit.common.ui.extension.setMarginTop
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
 import kotlinx.android.synthetic.main.dk_ranking_selector_view.view.*
@@ -34,9 +31,14 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     }
 
     private fun setStyle() {
-        button_selector.setMarginLeft(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
-        button_selector.setMarginRight(context.resources.getDimension(R.dimen.dk_margin_half).toInt())
-        button_selector.setMarginTop(context.resources.getDimension(R.dimen.dk_margin).toInt())
+        val params = button_selector.layoutParams as MarginLayoutParams
+        params.setMargins(
+            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            params.topMargin,
+            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            params.bottomMargin
+        )
+        layoutParams = params
         button_selector.normalText()
         DKUtils.setBackgroundDrawableColor(button_selector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
     }

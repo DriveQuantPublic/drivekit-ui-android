@@ -12,9 +12,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.common.ui.extension.setMarginBottom
-import com.drivequant.drivekit.common.ui.extension.setMarginTop
-import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.DriverProgression
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_ranking_header_view.view.*
 
@@ -42,10 +39,10 @@ class RankingHeaderView : LinearLayout {
     }
 
     private fun setStyle() {
+        val params = container.layoutParams as MarginLayoutParams
+        params.setMargins(params.leftMargin, context.resources.getDimension(R.dimen.dk_margin_medium).toInt(), params.rightMargin, context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
+        layoutParams = params
         text_view_header_title.bigText()
-        container.setMarginTop(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
-        container.setMarginBottom(context.resources.getDimension(R.dimen.dk_margin_medium).toInt())
-
     }
 
     fun setHeaderData(rankingViewModel: RankingViewModel) {

@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:layout_marginTop="@dimen/dk_margin_half"
         android:gravity="center"
         android:padding="@dimen/dk_margin_quarter"
         android:orientation="horizontal" />

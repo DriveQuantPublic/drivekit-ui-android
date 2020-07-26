@@ -114,13 +114,19 @@ class RankingFragment : Fragment(),
         updateRanking()
     }
 
+    override fun onStop() {
+        super.onStop()
+        rankingViewModel.useCache.clear()
+    }
+
     fun updateRanking() {
         var isToastShowed = false
         rankingViewModel.mutableLiveDataRankingHeaderData.observe(this,
             Observer {
-                if ((rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY || rankingViewModel.syncStatus == RankingSyncStatus.CACHE_DATA_ONLY)  && !isToastShowed) {
+                if (rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY && !isToastShowed) {
                     Toast.makeText(
-                        context, context?.getString(R.string.dk_achievements_failed_to_sync_rankings),
+                        context,
+                        context?.getString(R.string.dk_achievements_failed_to_sync_rankings),
                         Toast.LENGTH_SHORT
                     ).show()
                     isToastShowed = true

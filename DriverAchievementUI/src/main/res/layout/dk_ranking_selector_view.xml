@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/dk_margin_quarter"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <Button
         android:id="@+id/button_selector"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dk_margin_double"
+        android:layout_height="@dimen/dk_ic_big"
         android:background="@drawable/ranking_rounded_edges"
         android:textAllCaps="false" />
 </LinearLayout>
