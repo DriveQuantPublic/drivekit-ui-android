@@ -83,9 +83,9 @@ class RankingViewModel : ViewModel() {
                     mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)
                     val isSynchronized = when (syncStatus) {
                         RankingSyncStatus.USER_NOT_RANKED,
+                        RankingSyncStatus.CACHE_DATA_ONLY,
                         RankingSyncStatus.NO_ERROR -> true
                         RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY,
-                        RankingSyncStatus.CACHE_DATA_ONLY,
                         RankingSyncStatus.SYNC_ALREADY_IN_PROGRESS -> false
                     }
                     useCache[useCacheKey] = isSynchronized
