@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
+import com.drivequant.drivekit.common.ui.extension.formatLeadingZero
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -33,7 +34,7 @@ object DKDataFormatter {
                         R.string.dk_common_unit_hour
                     )}"
                 } else {
-                    "$nbHour ${context.getString(R.string.dk_common_unit_hour)} $nbMinute"
+                    "$nbHour ${context.getString(R.string.dk_common_unit_hour)} ${nbMinute.formatLeadingZero()}"
                 }
             } else {
                 "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
