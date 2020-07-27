@@ -6,6 +6,7 @@ import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -17,7 +18,8 @@ class RankingDriverData(
     private val driverScore: Double,
     val driverId: String) {
 
-    fun getFormattedDistance(): String = "$driverDistance km"
+    fun getFormattedDistance(context: Context): String =
+        DKDataFormatter.formatDistance(context, driverDistance * 1000)
 
     fun getFormattedScore(context: Context, textColor: Int): SpannableString {
         val preFormattedScore = if (driverScore == 10.0) {
