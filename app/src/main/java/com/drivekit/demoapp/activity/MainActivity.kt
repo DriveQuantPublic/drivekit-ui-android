@@ -17,6 +17,7 @@ import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
 import com.drivequant.drivekit.driverachievement.ui.rankings.activity.RankingActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -81,9 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onDriverRankingClicked(view: View) {
-        val intent = Intent(this, RankingActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        DriverAchievementUI.startRankingActivity(this)
     }
 
     fun onPermissionUtilsClicked(view: View) {

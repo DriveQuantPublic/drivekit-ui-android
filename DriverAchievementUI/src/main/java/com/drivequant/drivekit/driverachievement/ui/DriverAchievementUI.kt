@@ -9,6 +9,8 @@ import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
+import com.drivequant.drivekit.driverachievement.ui.rankings.activity.RankingActivity
+import com.drivequant.drivekit.driverachievement.ui.rankings.fragment.RankingFragment
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverachievement.ui.streaks.activity.StreaksListActivity
 import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksListFragment
@@ -79,4 +81,12 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     }
 
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
+
+    fun startRankingActivity(context: Context) {
+        val intent = Intent(context, RankingActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun createRankingFragment(): Fragment = RankingFragment()
 }
