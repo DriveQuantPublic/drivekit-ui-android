@@ -6,7 +6,12 @@ import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverAchievementUIEntryPoint
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
+import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.databaseutils.entity.StreakTheme
+import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
+import com.drivequant.drivekit.driverachievement.ui.rankings.activity.RankingActivity
+import com.drivequant.drivekit.driverachievement.ui.rankings.fragment.RankingFragment
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverachievement.ui.streaks.activity.StreaksListActivity
 import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksListFragment
 
@@ -25,8 +30,18 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         BadgeCategory.GENERIC,
         BadgeCategory.SAFETY,
         BadgeCategory.ECO_DRIVING,
-        BadgeCategory.PHONE_DISTRACTION
+        BadgeCategory.PHONE_DISTRACTION)
+
+    internal var rankingTypes = listOf(
+        RankingType.SAFETY,
+        RankingType.ECO_DRIVING,
+        RankingType.DISTRACTION)
+
+    internal var rankingSelector: RankingSelectorType = RankingSelectorType.PERIOD(
+        listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
     )
+
+    internal var rankingDepth:Int = 5
 
     fun initialize() {
         DriveKitNavigationController.driverAchievementUIEntryPoint = this
@@ -43,6 +58,22 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         this.badgeCategories = badgeCategories
     }
 
+    fun configureRankingSelector(rankingSelector: RankingSelectorType) {
+        this.rankingSelector = rankingSelector
+    }
+
+    fun configureRankingTypes(rankingTypes: List<RankingType>) {
+        if (rankingTypes.isEmpty()) {
+            this.rankingTypes = listOf(RankingType.SAFETY)
+        } else {
+            this.rankingTypes = rankingTypes.distinct()
+        }
+    }
+
+    fun configureRankingDepth(rankingDepth: Int) {
+        this.rankingDepth = rankingDepth
+    }
+
     override fun startStreakListActivity(context: Context) {
         val intent = Intent(context, StreaksListActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -50,4 +81,12 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     }
 
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
+
+    fun startRankingActivity(context: Context) {
+        val intent = Intent(context, RankingActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun createRankingFragment(): Fragment = RankingFragment()
 }

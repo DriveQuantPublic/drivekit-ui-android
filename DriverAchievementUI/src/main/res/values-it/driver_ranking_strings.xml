@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_achievements_failed_to_sync_rankings">Non è stato possibile sincronizzare le classifiche, riprovare più tardi.</string>
+    <string name="dk_achievements_ranking_anonymous_driver">Anonimo</string>
+    <string name="dk_achievements_ranking_driver">Conducente</string>
+    <string name="dk_achievements_ranking_legacy">Bimestrale</string>
+    <string name="dk_achievements_ranking_menu_ranking">La mia posizione in classifica</string>
+    <string name="dk_achievements_ranking_month">Mensile</string>
+    <string name="dk_achievements_ranking_no_pseudo_set">Devi inserire un nickname per accedere a questa pagina.</string>
+    <string name="dk_achievements_ranking_permanent">Permanente</string>
+    <string name="dk_achievements_ranking_rank">Grado</string>
+    <string name="dk_achievements_ranking_score">Punteggio</string>
+    <string name="dk_achievements_ranking_week">Settimanale</string>
+</resources>

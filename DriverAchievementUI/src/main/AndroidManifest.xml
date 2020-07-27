@@ -3,7 +3,11 @@
     package="com.drivequant.drivekit.driverachievement.ui">
 
     <application>
-        <activity android:name=".badges.activity.BadgeListActivity"/>
+        <activity
+            android:name=".rankings.activity.RankingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".badges.activity.BadgeListActivity" />
         <activity
             android:name=".streaks.activity.StreaksListActivity"
             android:screenOrientation="portrait" />
