@@ -36,6 +36,8 @@ class PermissionUtils {
         val permissionFineLocationApproved = ActivityCompat.checkSelfPermission(activity,
             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
+
+        val shouldRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
         if (permissionFineLocationApproved) {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val backgroundLocationPermissionApproved = ActivityCompat.checkSelfPermission(
