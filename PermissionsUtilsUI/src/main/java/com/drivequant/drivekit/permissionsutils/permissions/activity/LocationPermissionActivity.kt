@@ -33,8 +33,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     }
 
     private fun checkRequiredPermissions() {
-        permissionCallback = object :
-            OnPermissionCallback {
+        permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
                 forward()
             }
@@ -62,13 +61,16 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
-                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    // TODO display an AlertDialog that launch the intent
+                    startActivityForResult(DiagnosisHelper.buildSettingsIntent(this), DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS)
+                    //request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 }
             } else {
                 forward()
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // TODO do not ask fine location & background location in the same call or it will be ignored
                 request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             } else {
                 request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION)

@@ -164,7 +164,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
                 DialogInterface.OnClickListener { _, _ ->
                     startActivityForResult(
-                        launchSettings(),
+                        DiagnosisHelper.buildSettingsIntent(context),
                         DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
                     )
                 })

@@ -127,6 +127,13 @@ object DiagnosisHelper {
         }
     }
 
+    fun buildSettingsIntent(context: Context): Intent {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", context.packageName, null)
+        intent.data = uri
+        return intent
+    }
+
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
         return when (sensorType) {
             SensorType.BLUETOOTH -> {
