@@ -1,14 +1,17 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
@@ -22,6 +25,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
+        // TODO if >= R, add new post_android11 key
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             text_view_location_permission_text2.text =
                 getString(R.string.dk_perm_utils_permissions_location_text2_post_android10)
@@ -35,7 +39,15 @@ class LocationPermissionActivity : BasePermissionActivity() {
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                forward()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (permissionName.size == 1 && permissionName.first() == Manifest.permission.ACCESS_FINE_LOCATION){
+                        checkRequiredPermissions()
+                    } else {
+                        forward()
+                    }
+                } else {
+                    forward()
+                }
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -61,19 +73,38 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
-                    // TODO display an AlertDialog that launch the intent
-                    startActivityForResult(DiagnosisHelper.buildSettingsIntent(this), DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS)
-                    //request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        // TODO : Hardcoded strings keys
+                        val alwaysLabel = packageManager.backgroundPermissionOptionLabel
+                        DKAlertDialog.AlertBuilder()
+                            .init(this)
+                            .title("Allow location $alwaysLabel")
+                            .message("Please select \"$alwaysLabel\" in the following Settings screen")
+                            .positiveButton(
+                                "SETTINGS",
+                                DialogInterface.OnClickListener { _, _ ->
+                                    ActivityCompat.requestPermissions(
+                                        this,
+                                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                                        DiagnosisHelper.REQUEST_PERMISSIONS
+                                    )
+                                })
+                            .show()
+                    } else {
+                        request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    }
                 }
             } else {
                 forward()
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                // TODO do not ask fine location & background location in the same call or it will be ignored
-                request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-            } else {
-                request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION)
+            when (Build.VERSION.SDK_INT) {
+                Build.VERSION_CODES.Q -> {
+                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
+                else -> {
+                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION)
+                }
             }
         }
     }

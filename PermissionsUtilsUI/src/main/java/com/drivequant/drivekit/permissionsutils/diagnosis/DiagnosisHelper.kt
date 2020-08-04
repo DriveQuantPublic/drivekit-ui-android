@@ -40,10 +40,7 @@ object DiagnosisHelper {
     ) == PackageManager.PERMISSION_GRANTED
 
     fun hasBackgroundLocationApproved(activity: Activity): Boolean =
-        ActivityCompat.shouldShowRequestPermissionRationale(
-            activity,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-        )
+        ActivityCompat.checkSelfPermission(activity.applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
 
     fun getLocationStatus(activity: Activity): PermissionStatus {
         if (!hasFineLocationPermission(activity)) {
