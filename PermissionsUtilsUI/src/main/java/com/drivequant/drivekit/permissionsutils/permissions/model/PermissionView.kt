@@ -7,6 +7,7 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.permissions.activity.ActivityRecognitionPermissionActivity
+import com.drivequant.drivekit.permissionsutils.permissions.activity.AutoResetPermissionActivity
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BackgroundTaskPermissionActivity
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
 import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPermissionActivity
@@ -17,7 +18,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPer
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionView {
-    ACTIVITY, LOCATION, BACKGROUND_TASK;
+    ACTIVITY, LOCATION, AUTO_RESET, BACKGROUND_TASK;
 
     fun launchActivity(activity: Activity, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(activity)) {
@@ -39,6 +40,7 @@ enum class PermissionView {
         return when (this) {
             LOCATION -> DiagnosisHelper.getLocationStatus(activity)
             ACTIVITY -> DiagnosisHelper.getActivityStatus(activity)
+            AUTO_RESET -> DiagnosisHelper.getAutoResetStatus(activity)
             BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(activity)
         }
     }
@@ -47,6 +49,7 @@ enum class PermissionView {
         val intent = when (this) {
             LOCATION -> Intent(activity, LocationPermissionActivity::class.java)
             ACTIVITY -> Intent(activity, ActivityRecognitionPermissionActivity::class.java)
+            AUTO_RESET -> Intent(activity, AutoResetPermissionActivity::class.java)
             BACKGROUND_TASK -> Intent(activity, BackgroundTaskPermissionActivity::class.java)
         }
         intent.putExtra(PERMISSION_VIEWS_LIST_EXTRA, permissionViews)

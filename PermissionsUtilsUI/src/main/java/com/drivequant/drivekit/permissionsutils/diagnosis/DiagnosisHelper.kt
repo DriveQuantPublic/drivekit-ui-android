@@ -69,6 +69,18 @@ object DiagnosisHelper {
         }
     }
 
+    fun getAutoResetStatus(activity: Activity): PermissionStatus {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            if (activity.packageManager.isAutoRevokeWhitelisted){
+                PermissionStatus.VALID
+            } else {
+                PermissionStatus.NOT_VALID
+            }
+        } else {
+            PermissionStatus.VALID
+        }
+    }
+
     fun getBatteryOptimizationsStatus(context: Context): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.applicationContext?.let {
