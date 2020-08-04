@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
@@ -25,11 +26,18 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
-        // TODO if >= R, add new post_android11 key
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            text_view_location_permission_text2.text =
-                getString(R.string.dk_perm_utils_permissions_location_text2_post_android10)
+        val stringResId = when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                R.string.dk_perm_utils_permissions_location_text2_post_android11
+            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+                R.string.dk_perm_utils_permissions_location_text2_post_android10
+            }
+            else -> {
+                R.string.dk_perm_utils_permissions_location_text2_pre_android10
+            }
         }
+        text_view_location_permission_text2.text = getString(stringResId)
     }
 
     fun onRequestPermissionClicked(view: View) {
@@ -74,14 +82,19 @@ class LocationPermissionActivity : BasePermissionActivity() {
                     forward()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        // TODO : Hardcoded strings keys
                         val alwaysLabel = packageManager.backgroundPermissionOptionLabel
+                        val message = DKResource.buildString(this,
+                            DriveKitUI.colors.mainFontColor(),
+                            DriveKitUI.colors.mainFontColor(),
+                            "dk_perm_utils_permissions_location_alert_dialog_message_post_android11",
+                            alwaysLabel.toString()
+                        )
                         DKAlertDialog.AlertBuilder()
                             .init(this)
-                            .title("Allow location $alwaysLabel")
-                            .message("Please select \"$alwaysLabel\" in the following Settings screen")
+                            .title("$alwaysLabel")
+                            .message(message)
                             .positiveButton(
-                                "SETTINGS",
+                                getString(R.string.dk_perm_utils_permissions_popup_button_settings),
                                 DialogInterface.OnClickListener { _, _ ->
                                     ActivityCompat.requestPermissions(
                                         this,
