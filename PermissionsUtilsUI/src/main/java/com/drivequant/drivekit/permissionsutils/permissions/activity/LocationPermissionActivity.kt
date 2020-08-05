@@ -129,11 +129,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
-    private fun forward() {
-        finish()
-        next()
-    }
-
     private fun setStyle() {
         text_view_permission_location_title.highlightMedium()
         text_view_location_permission_text1.normalText()

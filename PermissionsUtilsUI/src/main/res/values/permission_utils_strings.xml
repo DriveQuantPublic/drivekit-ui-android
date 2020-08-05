@@ -96,4 +96,5 @@
     <string name="dk_perm_utils_permissions_auto_reset_text1">Lorsque l\'application est inactive durant une période prolongée, le système peut désactiver les permissions essentielles à la détection et à l\'analyse de vos trajets.</string>
     <string name="dk_perm_utils_permissions_auto_reset_text2">Afin de préserver le bon fonctionnement de l\'application, veuillez dans la fenêtre qui s\'ouvre:\n- Cliquer sur Permissions\n- En bas de la page désactiver le paramètre \"Remove permissions if app isn\'t used".</string>
     <string name="dk_perm_utils_permissions_auto_reset_button">Empêcher la désactivation</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_ko">Vous devez empêcher le système de révoquer automatiquement les permissions afin que l\'application puisse détecter et analyser vos trajets.</string>
 </resources>
