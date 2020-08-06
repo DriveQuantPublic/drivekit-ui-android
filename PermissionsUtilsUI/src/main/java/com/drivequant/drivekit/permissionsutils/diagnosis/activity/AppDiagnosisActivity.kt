@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import android.Manifest
+import android.annotation.SuppressLint
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -47,8 +48,9 @@ import java.util.*
 class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private var sensorsReceiver: SensorsReceiver? = null
-    private var diagnosticProblemsCount = 0
+    private var errorsCount = 0
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_diagnosis)
@@ -61,6 +63,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayBatteryOptimizationSection()
         displayBluetoothItem()
         displayActivityItem()
+        displayAutoResetItem()
         displayLogSection()
         displayReportSection()
 
@@ -82,6 +85,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         checkBluetooth()
         checkLocation()
         checkActivity()
+        checkAutoReset()
         checkNotification()
         checkExternalStorage()
         checkNetwork()
@@ -90,7 +94,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun setSummaryContent() {
-        if (diagnosticProblemsCount == 0) {
+        if (errorsCount == 0) {
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_checked")
             )
@@ -102,7 +106,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
-            text_view_summary_title.text = when (diagnosticProblemsCount) {
+            text_view_summary_title.text = when (errorsCount) {
                 1 -> getString(R.string.dk_perm_utils_app_diag_app_ko_01)
                 2 -> getString(R.string.dk_perm_utils_app_diag_app_ko_02)
                 3 -> getString(R.string.dk_perm_utils_app_diag_app_ko_03)
@@ -111,7 +115,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 else -> getString(R.string.dk_perm_utils_app_diag_app_ko_01)
             }
         }
-        diagnosticProblemsCount = 0
+        errorsCount = 0
     }
 
     private fun checkBluetooth() {
@@ -119,7 +123,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             diag_item_bluetooth.setNormalState()
         } else {
             if (PermissionsUtilsUI.isBluetoothNeeded) {
-                diagnosticProblemsCount++
+                errorsCount++
             }
             diag_item_bluetooth.setDiagnosisDrawable(true)
             diag_item_bluetooth.setOnClickListener {
@@ -150,7 +154,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (DiagnosisHelper.isSensorActivated(this, SensorType.GPS)) {
             diag_item_location_sensor.setNormalState()
         } else {
-            diagnosticProblemsCount++
+            errorsCount++
             diag_item_location_sensor.setDiagnosisDrawable(true)
             diag_item_location_sensor.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
@@ -179,7 +183,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         when (DiagnosisHelper.getPermissionStatus(this, PermissionType.ACTIVITY)) {
             PermissionStatus.VALID -> diag_item_activity_recognition.setNormalState()
             PermissionStatus.NOT_VALID -> {
-                diagnosticProblemsCount++
+                errorsCount++
                 setProblemState(PermissionType.ACTIVITY, diag_item_activity_recognition)
             }
         }
@@ -189,8 +193,20 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         when (DiagnosisHelper.getPermissionStatus(this, PermissionType.LOCATION)) {
             PermissionStatus.VALID -> diag_item_location.setNormalState()
             PermissionStatus.NOT_VALID -> {
-                diagnosticProblemsCount++
+                errorsCount++
                 setProblemState(PermissionType.LOCATION, diag_item_location)
+            }
+        }
+    }
+
+    private fun checkAutoReset() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // TODO
+            if (DiagnosisHelper.getAutoResetStatus(this) == PermissionStatus.VALID) {
+                diag_item_auto_reset_permissions.setNormalState()
+            } else {
+                errorsCount++
+                setProblemState(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
             }
         }
     }
@@ -263,7 +279,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
             PermissionStatus.VALID -> diag_item_notification.setNormalState()
             PermissionStatus.NOT_VALID -> {
-                diagnosticProblemsCount++
+                errorsCount++
                 setProblemState(PermissionType.NOTIFICATION, diag_item_notification)
             }
         }
@@ -273,7 +289,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (DiagnosisHelper.isNetworkReachable(this)) {
             diag_item_connectivity.setNormalState()
         } else {
-            diagnosticProblemsCount++
+            errorsCount++
             diag_item_connectivity.setDiagnosisDrawable(true)
             diag_item_connectivity.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
@@ -322,6 +338,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun displayActivityItem() {
         diag_item_activity_recognition.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
+    private fun displayAutoResetItem() {
+        diag_item_auto_reset_permissions.visibility =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -449,6 +474,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         when (permissionType) {
             PermissionType.LOCATION -> requestLocationPermission()
             PermissionType.ACTIVITY -> requestActivityPermission()
+            PermissionType.AUTO_RESET -> requestAutoResetPermission()
             PermissionType.EXTERNAL_STORAGE -> requestExternalStoragePermission()
             PermissionType.NOTIFICATION -> {
                 val notificationIntent = Intent()
@@ -490,6 +516,14 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             permissionCallback as OnPermissionCallback,
             Manifest.permission.ACTIVITY_RECOGNITION
         )
+    }
+
+    private fun requestAutoResetPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val intent = DiagnosisHelper.buildSettingsIntent(this)
+            intent.action = Intent.ACTION_AUTO_REVOKE_PERMISSIONS
+            startActivityForResult(intent, REQUEST_PERMISSIONS_OPEN_SETTINGS)
+        }
     }
 
     private fun requestLocationPermission() {

@@ -133,6 +133,8 @@ object DiagnosisHelper {
             PermissionType.NOTIFICATION -> getNotificationStatus(activity)
 
             PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(activity)
+
+            PermissionType.AUTO_RESET -> getAutoResetStatus(activity)
         }
     }
 
