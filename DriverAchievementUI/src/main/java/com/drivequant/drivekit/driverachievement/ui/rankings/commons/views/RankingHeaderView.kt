@@ -9,7 +9,6 @@ import com.drivequant.drivekit.common.ui.extension.bigText
 
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
@@ -48,12 +47,9 @@ class RankingHeaderView : LinearLayout {
     fun setHeaderData(rankingViewModel: RankingViewModel) {
         driver_progression.setDriverProgression(rankingViewModel)
         text_view_header_title.text = DKResource.convertToString(context, rankingViewModel.rankingHeaderData.getTitle())
-
-
         DKResource.convertToDrawable(context, rankingViewModel.rankingHeaderData.getIcon())?.let {
             image_view_ranking_type.setImageDrawable(it)
         }
-
         if (DriverAchievementUI.rankingTypes.size > 1 && rankingViewModel.rankingSelectorsData.size > 1) {
             full_ranking_header_container.visibility = View.GONE
             driver_progression_only.visibility = View.VISIBLE
