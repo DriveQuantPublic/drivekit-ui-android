@@ -47,15 +47,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    if (permissionName.size == 1 && permissionName.first() == Manifest.permission.ACCESS_FINE_LOCATION){
-                        checkRequiredPermissions()
-                    } else {
-                        forward()
-                    }
-                } else {
-                    forward()
-                }
+                forward()
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -81,38 +73,14 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        val alwaysLabel = packageManager.backgroundPermissionOptionLabel
-                        val message = DKResource.buildString(this,
-                            DriveKitUI.colors.mainFontColor(),
-                            DriveKitUI.colors.mainFontColor(),
-                            "dk_perm_utils_permissions_location_alert_dialog_message_post_android11",
-                            alwaysLabel.toString()
-                        )
-                        DKAlertDialog.AlertBuilder()
-                            .init(this)
-                            .title("$alwaysLabel")
-                            .message(message)
-                            .positiveButton(
-                                getString(R.string.dk_perm_utils_permissions_popup_button_settings),
-                                DialogInterface.OnClickListener { _, _ ->
-                                    ActivityCompat.requestPermissions(
-                                        this,
-                                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                                        DiagnosisHelper.REQUEST_PERMISSIONS
-                                    )
-                                })
-                            .show()
-                    } else {
-                        request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                    }
+                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 }
             } else {
                 forward()
             }
         } else {
             when (Build.VERSION.SDK_INT) {
-                Build.VERSION_CODES.Q -> {
+                 Build.VERSION_CODES.Q -> {
                     request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 }
                 else -> {
