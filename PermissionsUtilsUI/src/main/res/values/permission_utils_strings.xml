@@ -90,12 +90,7 @@
 
 
     <!-- TODO translate -->
-    <string name="dk_perm_utils_permissions_location_text2_post_android11">Pour cela, choisissez \"While using the app\" ou  \"Only this time\" lorsque la prochaine popup sera affichée</string>
-    <string name="dk_perm_utils_permissions_location_alert_dialog_message_post_android11">Afin que l\'application puisse détecter vos trajets en arrière-plan, sélectionnez \"%s\" dans l\'écran des paramètres</string>
-    <string name="dk_perm_utils_permissions_auto_reset_title">Empêcher la désactivation automatique des permissions</string>
-    <string name="dk_perm_utils_permissions_auto_reset_text1">Lorsque l\'application est inactive durant une période prolongée, le système peut désactiver les permissions essentielles à la détection et à l\'analyse de vos trajets.</string>
-    <string name="dk_perm_utils_permissions_auto_reset_text2">Afin de préserver le bon fonctionnement de l\'application, veuillez dans la fenêtre qui s\'ouvre:\n- Cliquer sur Permissions\n- En bas de la page désactiver le paramètre \"Remove permissions if app isn\'t used".</string>
-    <string name="dk_perm_utils_permissions_auto_reset_button">Empêcher la désactivation</string>
+    <string name="dk_perm_utils_permissions_location_text2_post_android11">Pour cela, dans lorsque la prochaine popup sera affichée, choisissez \"Autourisez-la à le faire dans les paramètres\" situé dans la description.</string>
     <string name="dk_perm_utils_app_diag_auto_reset_ko">Afin de préserver le bon fonctionnement de l\'application, veuillez dans la fenêtre qui s\'ouvre:\n- Cliquer sur Permissions\n- En bas de la page désactiver le paramètre \"Remove permissions if app isn\'t used".</string>
     <string name="dk_perm_utils_app_diag_auto_reset_link">Empêcher la révocation auto. des permissions</string>
     <string name="dk_perm_utils_app_diag_auto_reset_ok">Vous avez correctement désactivé la révocation automatique des permissions. Si l\'option est activée, l\'application peut ne plus fonctionner.</string>
