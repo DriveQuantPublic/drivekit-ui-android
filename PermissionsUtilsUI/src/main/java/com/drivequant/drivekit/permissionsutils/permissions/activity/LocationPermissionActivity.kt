@@ -5,10 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.view.View
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -70,30 +71,54 @@ class LocationPermissionActivity : BasePermissionActivity() {
                     getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                 handlePermissionTotallyDeclined(
                     this@LocationPermissionActivity,
-                    R.string.dk_perm_utils_app_diag_location_ko_android
-                )
+                    R.string.dk_perm_utils_app_diag_location_ko_android)
             }
         }
-
         if (DiagnosisHelper.hasFineLocationPermission(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        val alertDialog = DKAlertDialog.LayoutBuilder()
+                            .init(this)
+                            .layout(R.layout.template_alert_dialog_layout)
+                            .cancelable(false)
+                            .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
+                                DialogInterface.OnClickListener { _, _ ->
+                                    if (isExplanationNeeded(
+                                            this,
+                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                                        request(this,
+                                            permissionCallback as OnPermissionCallback,
+                                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                                    } else {
+                                        startActivityForResult(
+                                            DiagnosisHelper.buildSettingsIntent(this),
+                                            DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS)
+                                    }
+                                }).show()
 
-                        request(
+                        val titleTextView =
+                            alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                        val descriptionTextView =
+                            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                        titleTextView?.text = DKResource.convertToString(
                             this,
-                            permissionCallback as OnPermissionCallback,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                            "dk_perm_utils_permissions_location_title"
                         )
-                    } else {
-                        request(
+                        descriptionTextView?.text = DKResource.convertToString(
                             this,
+                            "dk_perm_utils_permissions_location_alert_dialog_message_post_android11"
+                        )
+
+                        titleTextView?.headLine1()
+                        descriptionTextView?.normalText()
+                    } else {
+                        request(this,
                             permissionCallback as OnPermissionCallback,
                             Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        )
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                     }
                 }
             } else {
@@ -106,15 +131,13 @@ class LocationPermissionActivity : BasePermissionActivity() {
                         this,
                         permissionCallback as OnPermissionCallback,
                         Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    )
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 }
                 else -> {
                     request(
                         this,
                         permissionCallback as OnPermissionCallback,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
+                        Manifest.permission.ACCESS_FINE_LOCATION)
                 }
             }
         }

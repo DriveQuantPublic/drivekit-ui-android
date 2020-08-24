@@ -22,6 +22,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -397,7 +398,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        val root = Environment.getExternalStorageDirectory()
+                        val root = getExternalFilesDirs( null)[0]
                         val logPathFile = PermissionsUtilsUI.logPathFile + getLoggingFile()
                         val file = File(root, logPathFile)
                         if (!file.exists() || !file.canRead()) {

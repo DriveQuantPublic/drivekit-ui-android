@@ -56,13 +56,6 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
         }
     }
 
-    private fun launchSettings(): Intent {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri = Uri.fromParts("package", packageName, null)
-        intent.data = uri
-        return intent
-    }
-
     private fun handlePermissions(context: Activity, permissionNames: Array<String>) {
         val permissions = declinedPermissionsAsList(context, permissionNames)
         if (permissions.isEmpty()) {
@@ -103,7 +96,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
 
     private fun isPermissionDeclined(context: Context, permission: String): Boolean = ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED
 
-    private fun isExplanationNeeded(activity: Activity, permissionName: String): Boolean = ActivityCompat.shouldShowRequestPermissionRationale(activity, permissionName)
+    protected fun isExplanationNeeded(activity: Activity, permissionName: String): Boolean = ActivityCompat.shouldShowRequestPermissionRationale(activity, permissionName)
 
     private fun permissionExists(context: Context, permissionName: String): Boolean {
         try {
