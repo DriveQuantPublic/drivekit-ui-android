@@ -47,15 +47,22 @@ class LocationPermissionActivity : BasePermissionActivity() {
     private fun checkRequiredPermissions() {
         permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                forward()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (permissionName.size == 1 && permissionName.first() == Manifest.permission.ACCESS_FINE_LOCATION) {
+                        checkRequiredPermissions()
+                    } else {
+                        forward()
+                    }
+                } else {
+                    forward()
+                }
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
                     this@LocationPermissionActivity,
                     R.string.dk_perm_utils_app_diag_location_ko_android,
-                    this@LocationPermissionActivity::checkRequiredPermissions
-                )
+                    this@LocationPermissionActivity::checkRequiredPermissions)
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
@@ -73,18 +80,41 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
-                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
+                        request(
+                            this,
+                            permissionCallback as OnPermissionCallback,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        )
+                    } else {
+                        request(
+                            this,
+                            permissionCallback as OnPermissionCallback,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        )
+                    }
                 }
             } else {
                 forward()
             }
         } else {
             when (Build.VERSION.SDK_INT) {
-                 Build.VERSION_CODES.Q -> {
-                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                Build.VERSION_CODES.Q -> {
+                    request(
+                        this,
+                        permissionCallback as OnPermissionCallback,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    )
                 }
                 else -> {
-                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION)
+                    request(
+                        this,
+                        permissionCallback as OnPermissionCallback,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
                 }
             }
         }
