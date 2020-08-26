@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="dk_tag_vehicles_list" translatable="false">drivekit-vehicles-list</string>
-    <string name="dk_tag_vehicles_detail" translatable="false">drivekit-vehicles-detail</string>
-</resources>

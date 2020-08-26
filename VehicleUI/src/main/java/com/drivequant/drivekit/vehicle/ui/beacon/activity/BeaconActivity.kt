@@ -51,6 +51,7 @@ class BeaconActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_beacon_scan"), javaClass.simpleName)
         setContentView(R.layout.activity_beacon)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -98,7 +99,6 @@ class BeaconActivity : AppCompatActivity() {
                 }
             }
         })
-
         updateTitle()
     }
 

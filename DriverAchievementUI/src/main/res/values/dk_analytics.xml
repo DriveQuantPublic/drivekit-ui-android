@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_badges" translatable="false">drivekit-badges</string>
+    <string name="dk_tag_rankings" translatable="false">drivekit-rankings</string>
+    <string name="dk_tag_streaks" translatable="false">drivekit-streaks</string>
+</resources>

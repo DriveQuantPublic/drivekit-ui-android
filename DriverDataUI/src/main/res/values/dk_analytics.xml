@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_trips_list" translatable="false">drivekit-trips-list</string>
+    <string name="dk_tag_trips_detail" translatable="false">drivekit-trips-detail</string>
+</resources>

@@ -48,6 +48,7 @@ class BeaconDetailActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_beacon_info"), javaClass.simpleName)
 
         setContentView(R.layout.activity_beacon)
         title = DKResource.convertToString(this, "dk_beacon_diagnostic_title")
