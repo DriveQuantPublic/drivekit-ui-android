@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_achievements_failed_to_sync_rankings">La récupération du classement a échoué. Veuillez réessayer plus tard.</string>
+    <string name="dk_achievements_ranking_anonymous_driver">Anonyme</string>
+    <string name="dk_achievements_ranking_driver">Conducteur</string>
+    <string name="dk_achievements_ranking_legacy">Bi-mensuel</string>
+    <string name="dk_achievements_ranking_menu_ranking">Mon classement</string>
+    <string name="dk_achievements_ranking_month">Mensuel</string>
+    <string name="dk_achievements_ranking_no_pseudo_set">Vous devez renseigner un pseudo pour accéder à cette page.</string>
+    <string name="dk_achievements_ranking_permanent">Permanent</string>
+    <string name="dk_achievements_ranking_rank">Position</string>
+    <string name="dk_achievements_ranking_score">Score</string>
+    <string name="dk_achievements_ranking_week">Hebdo</string>
+</resources>

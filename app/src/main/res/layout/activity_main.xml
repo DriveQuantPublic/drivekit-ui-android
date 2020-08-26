@@ -347,5 +347,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="onDriverBadgesClicked"/>
+
+        <Button
+            android:id="@+id/button_driver_leader_board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RANKING"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toBottomOf="@id/button_driver_badges"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="onDriverRankingClicked"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

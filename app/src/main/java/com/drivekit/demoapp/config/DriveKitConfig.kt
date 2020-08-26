@@ -6,7 +6,10 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
+import com.drivequant.drivekit.databaseutils.entity.RankingType
+import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 
 /**
@@ -31,6 +34,18 @@ object DriveKitConfig {
                 BadgeCategory.PHONE_DISTRACTION
             )
         )
+
+        val rankingTypes =
+            listOf(RankingType.SAFETY, RankingType.ECO_DRIVING, RankingType.DISTRACTION)
+        DriverAchievementUI.configureRankingTypes(rankingTypes)
+
+        val rankingPeriods =
+            listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
+        val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
+        DriverAchievementUI.configureRankingSelector(rankingSelectorType)
+
+        val rankingDepthValue = 20
+        DriverAchievementUI.configureRankingDepth(rankingDepthValue)
     }
 
     fun configurePermissionsUtils(context: Context) {

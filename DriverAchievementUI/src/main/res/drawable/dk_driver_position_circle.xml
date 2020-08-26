@@ -1,0 +1,8 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid />
+    <stroke android:width="0dp" />
+    <size
+        android:width="@dimen/dk_ic_big"
+        android:height="@dimen/dk_ic_big" />
+</shape>
