@@ -160,6 +160,7 @@ class VehicleDetailFragment : Fragment() {
                }
             }
         })
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_detail"), javaClass.simpleName)
     }
 
     private fun setupTextListener(editableField: EditableField){
