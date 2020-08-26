@@ -3,6 +3,7 @@ package com.drivekit.demoapp.config
 import android.content.Context
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
@@ -17,10 +18,11 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-object DriveKitConfig {
+object DriveKitConfig : DriveKitAnalyticsListener {
 
-    fun configureDriveKitUI(context: Context) {
+    fun configureDriveKitUI() {
         DriveKitUI.initialize()
+        DriveKitUI.configureAnalytics(this)
         //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }
 
@@ -60,5 +62,13 @@ object DriveKitConfig {
             override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
+    }
+
+    override fun trackScreen(screen: String, className: String) {
+        // TODO: manage screen tracking here
+    }
+
+    override fun trackEvent(event: String) {
+        // TODO: manage event tracking here
     }
 }
