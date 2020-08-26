@@ -11,18 +11,16 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingHeaderData(private val ranking: Ranking) {
 
-    fun getProgression(previousRank: Int): DriverProgression? {
-       return when {
-           previousRank < ranking.userPosition -> {
-               DriverProgression.GOING_UP
-           }
-           previousRank > ranking.userPosition -> {
-               DriverProgression.GOING_DOWN
-           }
-           else -> {
-               null
-           }
-       }
+    fun getProgression(previousRank: Int?): DriverProgression? {
+        return previousRank?.let {
+            if (it < ranking.userPosition) {
+                DriverProgression.GOING_UP
+            } else {
+                DriverProgression.GOING_DOWN
+            }
+        } ?: kotlin.run {
+            null
+        }
     }
 
     fun getDriverGlobalRank(context: Context): SpannableString {
