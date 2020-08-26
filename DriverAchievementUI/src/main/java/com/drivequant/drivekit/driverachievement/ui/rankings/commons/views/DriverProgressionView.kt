@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.DriverProgression
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
@@ -39,27 +38,22 @@ class DriverProgressionView  : LinearLayout {
             when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
                 DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
                 DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
+                else -> null
             }
         text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
-
-        image_view_driver_progression.visibility = if (rankingViewModel.syncStatus == RankingSyncStatus.USER_NOT_RANKED) {
-            View.GONE
-        } else {
-            View.VISIBLE
-        }
-
-        progressionIconId.let {
+        progressionIconId?.let {
             image_view_driver_progression.setImageDrawable(
                 DKResource.convertToDrawable(
                     context,
                     it
                 )
             )
+        }?:run {
+            image_view_driver_progression.visibility = View.GONE
         }
-
     }
 
-    private fun setStyle(){
+    private fun setStyle() {
         text_view_global_rank.headLine2()
     }
 }

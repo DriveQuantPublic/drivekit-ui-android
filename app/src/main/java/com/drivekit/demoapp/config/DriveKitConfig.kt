@@ -35,10 +35,12 @@ object DriveKitConfig {
             )
         )
 
-        val rankingTypes = listOf(RankingType.DISTRACTION)
+        val rankingTypes =
+            listOf(RankingType.SAFETY, RankingType.ECO_DRIVING, RankingType.DISTRACTION)
         DriverAchievementUI.configureRankingTypes(rankingTypes)
 
-        val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
+        val rankingPeriods =
+            listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
         val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
         DriverAchievementUI.configureRankingSelector(rankingSelectorType)
 
