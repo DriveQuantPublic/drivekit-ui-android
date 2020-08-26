@@ -18,11 +18,19 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
  */
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
-object DriveKitConfig : DriveKitAnalyticsListener {
+object DriveKitConfig {
 
     fun configureDriveKitUI() {
         DriveKitUI.initialize()
-        DriveKitUI.configureAnalytics(this)
+        DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener{
+            override fun trackScreen(screen: String, className: String) {
+                // TODO: manage screen tracking here
+            }
+
+            override fun trackEvent(event: String) {
+                // TODO: manage event tracking here
+            }
+        })
         //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }
 
@@ -62,13 +70,5 @@ object DriveKitConfig : DriveKitAnalyticsListener {
             override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
-    }
-
-    override fun trackScreen(screen: String, className: String) {
-        // TODO: manage screen tracking here
-    }
-
-    override fun trackEvent(event: String) {
-        // TODO: manage event tracking here
     }
 }
