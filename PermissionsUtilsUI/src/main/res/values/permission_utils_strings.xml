@@ -4,11 +4,6 @@
     <string name="dk_perm_utils_app_diag_activity_link">Allow access to activity monitoring</string>
     <string name="dk_perm_utils_app_diag_activity_ok">The application uses your phone\'s activity monitoring to detect and analyze your trips. It can\'t work if you don\'t allow the application to access activity monitoring.</string>
     <string name="dk_perm_utils_app_diag_activity_title">Activity monitoring</string>
-    <string name="dk_perm_utils_app_diag_app_ko_01">A problem has been detected!</string>
-    <string name="dk_perm_utils_app_diag_app_ko_02">Two problems were detected!</string>
-    <string name="dk_perm_utils_app_diag_app_ko_03">Three problems were detected!</string>
-    <string name="dk_perm_utils_app_diag_app_ko_04">Four problems were detected!</string>
-    <string name="dk_perm_utils_app_diag_app_ko_05">Five problems were detected!</string>
     <string name="dk_perm_utils_app_diag_app_ko_text">The application requires your intervention to adapt the settings of your phone. In order for the app to record your trips, you need to follow the directions below.</string>
     <string name="dk_perm_utils_app_diag_battery_link_android">Do not optimize the battery</string>
     <string name="dk_perm_utils_app_diag_battery_text_android_01">On some phone models, Battery Optimization Services may shut down the application when it is running in the background.</string>
@@ -90,12 +85,14 @@
 
     <!-- TODO translate -->
     <string name="dk_perm_utils_permissions_location_text1_android11">Afin d’analyser vos trajets et pour le calcul de vos scores de conduite, l\'application doit utiliser la position du téléphone.</string>
-    <string name="dk_perm_utils_permissions_location_text2_android11">Pour cela, choisissez l\'option %s après avoir appuyé sur le bouton ci-dessous.</string>
+    <string name="dk_perm_utils_permissions_location_text2_android11">Pour cela, choisissez l\'option \"Lorsque vous utilisez l\'application\" après avoir appuyé sur le bouton ci-dessous.</string>
     <string name="dk_perm_utils_permissions_location_text3_android11">Afin de bénéficier de l\'enregistrement automatique de vos trajets, l\'application doit accéder à la position du téléphone quand elle fonctionne en arrière-plan.</string>
     <string name="dk_perm_utils_permissions_location_text4_android11">Pour cela, appuyer sur le bouton \"ouvrir les réglages\" et sélectionnez l’option %s dans les paramètres du téléphone.</string>
-
-    <string name="dk_perm_utils_app_diag_auto_reset_ko">Afin de préserver le bon fonctionnement de l\'application, veuillez dans la fenêtre qui s\'ouvre:\n- Cliquer sur Permissions\n- En bas de la page désactiver le paramètre \"Remove permissions if app isn\'t used".</string>
-    <string name="dk_perm_utils_app_diag_auto_reset_link">Empêcher la révocation auto. des permissions</string>
-    <string name="dk_perm_utils_app_diag_auto_reset_ok">Vous avez correctement désactivé la révocation automatique des permissions. Si l\'option est activée, l\'application peut ne plus fonctionner.</string>
-    <string name="dk_perm_utils_app_diag_auto_reset_title">Révocation automatique des permissions</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_ko">La fonction de suppression automatique des autorisations est activée. Nous vous invitons à modifier ce réglage pour que l\’application fonctionne normalement.</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_link">Désactiver la suppression automatique des autorisations</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_ok">La suppression automatique des permissions est désactivée. Si vous activez cette fonctionnalité, l\'application ne pourra plus enregistrer vos trajets automatiquement.</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_title">Ne pas supprimer les autorisations</string>
+    <string name="dk_perm_utils_app_diag_app_ko_singular">%s problème a été détecté !</string>
+    <string name="dk_perm_utils_app_diag_app_ko_plural">%s problèmes ont été détectés !</string>
+    <string name="dk_perm_utils_app_diag_mail_auto_reset">Désactiver la suppression des autorisations</string>
 </resources>

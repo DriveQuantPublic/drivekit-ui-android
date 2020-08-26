@@ -17,10 +17,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -104,14 +106,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
-            text_view_summary_title.text = when (errorsCount) {
-                1 -> getString(R.string.dk_perm_utils_app_diag_app_ko_01)
-                2 -> getString(R.string.dk_perm_utils_app_diag_app_ko_02)
-                3 -> getString(R.string.dk_perm_utils_app_diag_app_ko_03)
-                4 -> getString(R.string.dk_perm_utils_app_diag_app_ko_04)
-                5 -> getString(R.string.dk_perm_utils_app_diag_app_ko_05)
-                else -> getString(R.string.dk_perm_utils_app_diag_app_ko_01)
-            }
+            text_view_summary_title.text = resources.getQuantityString(R.plurals.diagnosis_error_plural, errorsCount, errorsCount)
         }
         errorsCount = 0
     }
@@ -361,12 +356,18 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_EMAIL, recipients)
                     intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
                     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-                    intent.putExtra(Intent.EXTRA_TEXT, mailBody)
+                    intent.putExtra(Intent.EXTRA_TIME, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        val root = getExternalFilesDirs( null)[0]
-                        val logPathFile = PermissionsUtilsUI.logPathFile + getLoggingFile()
-                        val file = File(root, logPathFile)
+                        val externalStorageVolumes: Array<out File> = ContextCompat.getExternalFilesDirs(
+                            this, null)
+                        val primaryExternalStorage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            externalStorageVolumes[1]
+                        } else {
+                            externalStorageVolumes[0]
+                        }
+                        val logDirectory = File("${primaryExternalStorage.absolutePath}/${PermissionsUtilsUI.logPathFile}")
+                        val file = File(logDirectory, getLoggingFile())
                         if (!file.exists() || !file.canRead()) {
                             startActivity(intent)
                         }

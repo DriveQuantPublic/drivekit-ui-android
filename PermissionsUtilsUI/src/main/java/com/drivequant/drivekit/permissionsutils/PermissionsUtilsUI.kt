@@ -104,6 +104,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
             }
 
+        val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(activity)) {
+            PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
+            PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+        }
+
         val notificationMail =
             when (DiagnosisHelper.getPermissionStatus(activity, PermissionType.NOTIFICATION)) {
                 PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
@@ -148,6 +153,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 "${activity.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
 
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_mail_auto_reset)} $autoResetMail \n"
+        }
+
         mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
         mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
 
