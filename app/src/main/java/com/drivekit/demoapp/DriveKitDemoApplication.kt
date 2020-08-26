@@ -142,7 +142,6 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
         if (firstLaunch){
             DriveKitTripAnalysis.activateAutoStart(true)
-            DriveKit.enableLogging("/DriveKit")
             DriveKitTripAnalysis.setStopTimeOut(4*60)
             DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
         }

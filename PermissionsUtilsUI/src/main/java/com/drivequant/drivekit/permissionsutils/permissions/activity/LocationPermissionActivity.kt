@@ -29,7 +29,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
 
         val stringResId = when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                R.string.dk_perm_utils_permissions_location_text2_post_android11
+                R.string.dk_perm_utils_permissions_location_text1_android11
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
                 R.string.dk_perm_utils_permissions_location_text2_post_android10

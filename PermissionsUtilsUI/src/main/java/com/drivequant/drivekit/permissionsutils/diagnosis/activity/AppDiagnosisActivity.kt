@@ -20,9 +20,7 @@ import android.content.pm.ActivityInfo
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
-import android.os.Environment
 import android.provider.Settings
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -36,7 +34,6 @@ import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_STORAGE_PERMISSIONS_RATIONALE
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
@@ -202,7 +199,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkAutoReset() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // TODO
             if (DiagnosisHelper.getAutoResetStatus(this) == PermissionStatus.VALID) {
                 diag_item_auto_reset_permissions.setNormalState()
             } else {
@@ -229,35 +225,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
         text_view_logging_description.text = description
         switch_enable_logging.setOnClickListener {
-            if (DiagnosisHelper.getPermissionStatus(
-                    this,
-                    PermissionType.EXTERNAL_STORAGE
-                ) == PermissionStatus.NOT_VALID
-            ) {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .cancelable(false)
-                    .positiveButton(getString(R.string.dk_perm_utils_app_diag_log_link),
-                        DialogInterface.OnClickListener { _, _ ->
-                            requestPermission(PermissionType.EXTERNAL_STORAGE)
-                        })
-                    .show()
-
-                val titleTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-
-                titleTextView?.text =
-                    getString(R.string.dk_perm_utils_app_diag_log_title)
-                descriptionTextView?.text =
-                    getString(R.string.dk_perm_utils_app_diag_log_ko)
-
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
-
-            } else {
                 val loggingDescription = if (switch_enable_logging.isChecked) {
                     DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
                     DKResource.buildString(
@@ -273,7 +240,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 }
                 text_view_logging_description.text = loggingDescription
             }
-        }
     }
 
     private fun checkNotification() {
@@ -465,10 +431,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun checkLoggingStatus(): Boolean =
-        DiagnosisHelper.getPermissionStatus(
-            this,
-            PermissionType.EXTERNAL_STORAGE
-        ) == PermissionStatus.VALID && DriveKitLog.isLoggingEnabled &&
+        DriveKitLog.isLoggingEnabled &&
                 PermissionsUtilsUI.shouldDisplayDiagnosisLogs
 
     private fun requestPermission(permissionType: PermissionType) {
@@ -476,7 +439,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             PermissionType.LOCATION -> requestLocationPermission()
             PermissionType.ACTIVITY -> requestActivityPermission()
             PermissionType.AUTO_RESET -> requestAutoResetPermission()
-            PermissionType.EXTERNAL_STORAGE -> requestExternalStoragePermission()
             PermissionType.NOTIFICATION -> {
                 val notificationIntent = Intent()
                 notificationIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
@@ -577,37 +539,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun requestExternalStoragePermission() {
-        permissionCallback = object :
-            OnPermissionCallback {
-            override fun onPermissionGranted(permissionName: Array<String>) {
-                DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
-                text_view_logging_description.text =
-                    getString(R.string.dk_perm_utils_app_diag_log_ok)
-            }
-
-            override fun onPermissionDeclined(permissionName: Array<String>) {
-                handlePermissionDeclined(
-                    this@AppDiagnosisActivity,
-                    R.string.dk_common_permission_storage_rationale,
-                    this@AppDiagnosisActivity::requestExternalStoragePermission
-                )
-            }
-
-            override fun onPermissionTotallyDeclined(permissionName: String) {
-                handlePermissionTotallyDeclined(
-                    this@AppDiagnosisActivity,
-                    R.string.dk_common_permission_storage_rationale
-                )
-            }
-        }
-        request(
-            this,
-            permissionCallback as OnPermissionCallback,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-    }
-
     private fun setProblemState(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
         diagnosticItem.setDiagnosisDrawable(true)
         diagnosticItem.setOnClickListener {
@@ -679,16 +610,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_PERMISSIONS_OPEN_SETTINGS -> alertDialog?.dismiss()
-            REQUEST_STORAGE_PERMISSIONS_RATIONALE -> {
-                if (DiagnosisHelper.getPermissionStatus(
-                        this,
-                        PermissionType.EXTERNAL_STORAGE
-                    ) == PermissionStatus.VALID
-                ) {
-                    DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
-                }
-            }
-
             REQUEST_BATTERY_OPTIMIZATION ->
                 if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
                     text_view_battery_description_2.visibility = View.GONE
