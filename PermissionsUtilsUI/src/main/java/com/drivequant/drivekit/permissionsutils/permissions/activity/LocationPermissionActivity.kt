@@ -47,7 +47,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
 
     fun onRequestPermissionClicked(view: View) {
         if (DiagnosisHelper.hasFineLocationPermission(this)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
                 request(this,
                     permissionCallback as OnPermissionCallback,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION)
@@ -81,17 +81,11 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    startActivityForResult(
-                        DiagnosisHelper.buildSettingsIntent(this@LocationPermissionActivity),
-                        DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS)
-                } else {
                     button_request_location_permission.text =
                         getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                     handlePermissionTotallyDeclined(
                         this@LocationPermissionActivity,
                         R.string.dk_perm_utils_app_diag_location_ko_android)
-                }
             }
         }
 

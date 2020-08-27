@@ -155,7 +155,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_mail_auto_reset)} $autoResetMail \n"
+            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_auto_reset)} $autoResetMail \n"
         }
 
         mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
