@@ -98,11 +98,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_checked")
             )
-            text_view_summary_title.text = getString(R.string.dk_perm_utils_diag_app_ok)
-            text_view_summary_description.text = getString(R.string.dk_perm_utils_diag_app_ok_text)
+            text_view_summary_title.text =
+                DKResource.convertToString(this, "dk_perm_utils_diag_app_ok")
+            text_view_summary_description.text =
+                DKResource.convertToString(this, "dk_perm_utils_diag_app_ok_text")
         } else {
             text_view_summary_description.text =
-                getString(R.string.dk_perm_utils_app_diag_app_ko_text)
+                DKResource.convertToString(this, "dk_perm_utils_app_diag_app_ko_text")
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
@@ -215,7 +217,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 PermissionsUtilsUI.logPathFile.removePrefix("/")
             )
         } else {
-            getString(R.string.dk_perm_utils_app_diag_log_ko)
+            DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
         }
 
         text_view_logging_description.text = description
@@ -231,7 +233,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     )
                 } else {
                     DriveKit.disableLogging()
-                    getString(R.string.dk_perm_utils_app_diag_log_ko)
+                    DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
                 }
                 text_view_logging_description.text = loggingDescription
             }
@@ -282,7 +284,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.secondaryColor(),
                 "dk_perm_utils_app_diag_battery_text_android_02",
-                getString(R.string.dk_perm_utils_app_diag_battery_link_android)
+                DKResource.convertToString(this, "dk_perm_utils_app_diag_battery_link_android")
             )
 
             if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
@@ -356,7 +358,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_EMAIL, recipients)
                     intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
                     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-                    intent.putExtra(Intent.EXTRA_TIME, mailBody)
+                    intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
                         val externalStorageVolumes: Array<out File> = ContextCompat.getExternalFilesDirs(
