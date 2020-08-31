@@ -26,10 +26,6 @@ object DriveKitConfig {
             override fun trackScreen(screen: String, className: String) {
                 // TODO: manage screen tracking here
             }
-
-            override fun trackEvent(event: String) {
-                // TODO: manage event tracking here
-            }
         })
         //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }

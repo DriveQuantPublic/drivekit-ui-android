@@ -2,4 +2,6 @@
 <resources>
     <string name="dk_tag_trips_list" translatable="false">drivekit-trips-list</string>
     <string name="dk_tag_trips_detail" translatable="false">drivekit-trips-detail</string>
+    <string name="dk_tag_trips_detail_advice_safety" translatable="false">drivekit-trips-detail-advice-safety</string>
+    <string name="dk_tag_trips_detail_advice_efficiency" translatable="false">drivekit-trips-detail-advice-efficiency</string>
 </resources>

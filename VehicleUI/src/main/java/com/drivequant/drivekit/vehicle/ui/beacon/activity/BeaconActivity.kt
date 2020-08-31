@@ -51,7 +51,6 @@ class BeaconActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_beacon_scan"), javaClass.simpleName)
         setContentView(R.layout.activity_beacon)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -99,6 +98,14 @@ class BeaconActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val screenNameResId = when (viewModel.scanType){
+            BeaconScanType.PAIRING -> "dk_tag_vehicles_beacon_add"
+            BeaconScanType.DIAGNOSTIC -> "dk_tag_vehicles_beacon_diagnosis"
+            BeaconScanType.VERIFY -> "dk_tag_vehicles_beacon_verify"
+        }
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, screenNameResId), javaClass.simpleName)
+
         updateTitle()
     }
 
