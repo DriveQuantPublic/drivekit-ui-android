@@ -2,12 +2,15 @@ package com.drivequant.drivekit.vehicle.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.util.Log
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
+import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -21,6 +24,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailAc
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
@@ -158,7 +162,20 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    override fun getVehiclesFilterItems(vehiclesFilterItems: List<FilterItem>) {
-        DriveKitVehicle.vehiclesQuery().noFilter()
+    override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
+        val vehiclesFilterItems = mutableListOf<FilterItem>()
+        val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
+        if (vehicles.isNotEmpty()) {
+            for (vehicle in vehicles) {
+                vehiclesFilterItems.add(
+                    FilterItem(
+                        vehicle.vehicleId,
+                        VehicleUtils().getVehicleDrawable(context, vehicle.vehicleId),
+                        vehicle.buildFormattedName(context)
+                    )
+                )
+            }
+            listener.onFilterItemsReceived(vehiclesFilterItems)
+        }
     }
 }

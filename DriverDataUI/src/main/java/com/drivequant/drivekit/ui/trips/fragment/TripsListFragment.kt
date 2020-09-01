@@ -40,14 +40,6 @@ class TripsListFragment : Fragment() {
         refresh_trips.setOnRefreshListener {
             updateTrips()
         }
-
-        /*val list = mutableListOf<FilterItem>()
-        DriveKitNavigationController.vehicleUIEntryPoint?.let {
-            it.
-        }
-        vehicle_filter.setItems(list)
-        */
-        
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let{
                 TripDetailActivity.launchActivity(requireContext(), it.itinId)
@@ -81,6 +73,7 @@ class TripsListFragment : Fragment() {
         })
         updateProgressVisibility(true)
         viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
+        viewModel.getVehiclesFilterItems(requireContext())
     }
 
     private fun displayNoTrips(){

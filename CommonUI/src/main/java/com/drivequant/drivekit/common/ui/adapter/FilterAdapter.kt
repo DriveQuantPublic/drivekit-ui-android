@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.common.ui.adapter
 
 import android.content.Context
-import android.text.TextUtils
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 
 class FilterAdapter(
     context: Context,
@@ -34,16 +33,19 @@ class FilterAdapter(
         val textViewItem = view.findViewById<TextView>(R.id.text_view_display_name_item)
         val item = filterItemList[position]
         textViewItem.text = item.title
-        Glide.with(view)
-            .load(item.image)
-            .apply(RequestOptions.circleCropTransform())
-            .into(imageViewItem)
+        item.image?.let {
+            Glide.with(view)
+                .load(item.image)
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(item.image)
+                .into(imageViewItem)
+        }
         return view
     }
 }
 
 data class FilterItem(
     val itemId: Any?,
-    val image: String,
+    val image: Drawable?,
     val title: String
 )

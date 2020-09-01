@@ -2,8 +2,10 @@ package com.drivequant.drivekit.ui.trips.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -47,9 +49,13 @@ class TripsListViewModel: ViewModel() {
         return null
     }
 
-    fun getVehiclesFilterItems(): List<FilterItem>? {
-        return DriveKitNavigationController.vehicleUIEntryPoint?.let {
-            it.getVehiclesFilterItems()
-        }
+    fun getVehiclesFilterItems(context: Context): List<FilterItem>? {
+        var list = listOf<FilterItem>()
+        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context, object : GetVehiclesFilterItems{
+            override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
+                    list = vehiclesFilterItems
+            }
+        })
+       return list
     }
 }
