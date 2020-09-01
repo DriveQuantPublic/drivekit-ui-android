@@ -13,6 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.drivequant.drivekit.common.ui.component.FilterView
+                android:id="@+id/vehicle_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/trips_count"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"/>
         <ExpandableListView
             android:id="@+id/trips_list"
             android:clipToPadding="false"
@@ -21,6 +36,7 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:groupIndicator="@null" />
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar

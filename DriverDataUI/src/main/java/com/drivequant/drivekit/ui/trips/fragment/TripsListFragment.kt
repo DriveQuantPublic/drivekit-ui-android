@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.adapter.FilterItem
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -38,6 +40,14 @@ class TripsListFragment : Fragment() {
         refresh_trips.setOnRefreshListener {
             updateTrips()
         }
+
+        /*val list = mutableListOf<FilterItem>()
+        DriveKitNavigationController.vehicleUIEntryPoint?.let {
+            it.
+        }
+        vehicle_filter.setItems(list)
+        */
+        
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let{
                 TripDetailActivity.launchActivity(requireContext(), it.itinId)

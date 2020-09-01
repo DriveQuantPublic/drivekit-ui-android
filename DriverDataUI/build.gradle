@@ -25,7 +25,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta2'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     //noinspection GradleCompatible

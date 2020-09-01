@@ -3,10 +3,12 @@ package com.drivequant.drivekit.vehicle.ui
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -154,5 +156,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }?: run {
             Log.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
         }
+    }
+
+    override fun getVehiclesFilterItems(vehiclesFilterItems: List<FilterItem>) {
+        DriveKitVehicle.vehiclesQuery().noFilter()
     }
 }
