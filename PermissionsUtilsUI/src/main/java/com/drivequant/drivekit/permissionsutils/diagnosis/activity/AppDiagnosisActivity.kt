@@ -361,15 +361,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        val externalStorageVolumes: Array<out File> = ContextCompat.getExternalFilesDirs(
-                            this, null)
-                        val primaryExternalStorage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            externalStorageVolumes[1]
-                        } else {
-                            externalStorageVolumes[0]
-                        }
-                        val logDirectory = File("${primaryExternalStorage.absolutePath}/${PermissionsUtilsUI.logPathFile}")
-                        val file = File(logDirectory, getLoggingFile())
+                        val logDirectory = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile)
+                        val file = File(logDirectory, DriveKitLog.buildFileName())
                         if (!file.exists() || !file.canRead()) {
                             startActivity(intent)
                         }
@@ -426,11 +419,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
         val connectivityFilter = IntentFilter(SensorsReceiver.CONNECTIVITY_INTENT_ACTION)
         registerReceiver(sensorsReceiver, connectivityFilter)
-    }
-
-    private fun getLoggingFile(): String {
-        val calendar = Calendar.getInstance()
-        return "log-${calendar.get(Calendar.YEAR)}-${(calendar.get(Calendar.MONTH) + 1)}.txt"
     }
 
     private fun checkLoggingStatus(): Boolean =
@@ -604,8 +592,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         registerReceiver()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         unregisterReceiver(sensorsReceiver)
     }
 

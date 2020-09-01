@@ -20,9 +20,6 @@
     <string name="driver_data_button">Launch DriverData</string>
     <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
     <string name="driver_streaks_button">Streak of hits</string>
-    <string name="enable_logging_pref_off">Enable this setting to write log on the device</string>
-    <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
-    <string name="enable_logging_title">Logging</string>
     <string name="enable_share_position_off">Enable this setting to share your position during the trip</string>
     <string name="enable_share_position_on">Disable this setting no to share your position during the trip</string>
     <string name="enable_share_position_title">Share position ?</string>

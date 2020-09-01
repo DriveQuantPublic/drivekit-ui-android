@@ -53,7 +53,6 @@ class SettingsActivity : AppCompatActivity() {
                 "stop_timeout" -> DriveKitTripAnalysis.setStopTimeOut(sharedPreferences.getInt(key, 4) * 60)
                 "beacon_required" -> DriveKitTripAnalysis.setBeaconRequired(sharedPreferences.getBoolean(key, false))
                 "enable_share_position" -> DriveKitTripAnalysis.enableSharePosition(sharedPreferences.getBoolean(key, false))
-                "logging" -> configureLogging(sharedPreferences.getBoolean(key, false))
                 "sandbox_mode" -> DriveKit.enableSandboxMode(sharedPreferences.getBoolean(key, false))
                 "user_id" -> {
                     reconfigureDriveKit(sharedPreferences.getString(key, "")!!)
@@ -67,7 +66,6 @@ class SettingsActivity : AppCompatActivity() {
         @SuppressLint("ApplySharedPref")
         private fun initPreferences(){
             preferenceManager.sharedPreferences.edit().putBoolean("autostart", DriveKitTripAnalysis.getConfig().autostart).commit()
-            preferenceManager.sharedPreferences.edit().putBoolean("logging", false).commit()
             preferenceManager.sharedPreferences.edit().putInt("stop_timeout", DriveKitTripAnalysis.getConfig().stopTimeOut/60).commit()
         }
 
@@ -76,13 +74,6 @@ class SettingsActivity : AppCompatActivity() {
                 DriveKitTripAnalysis.setBeacons(listOf(BeaconData("699ebc80-e1f3-11e3-9a0f-0cf3ee3bc012", -1, -1)))
             else
                 DriveKitTripAnalysis.setBeacons(listOf())
-        }
-
-        private fun configureLogging(enable: Boolean){
-            if (enable)
-                DriveKit.enableLogging("/DriveKit")
-            else
-                DriveKit.disableLogging()
         }
 
         private fun reconfigureDriveKit(userId: String){
