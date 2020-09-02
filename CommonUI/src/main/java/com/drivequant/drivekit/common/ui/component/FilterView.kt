@@ -33,7 +33,7 @@ class FilterView : LinearLayout {
 
     fun setItems(filterItems: List<FilterItem>) {
         listOfItems = filterItems
-        val adapter = FilterAdapter(context, R.id.accelerate, listOfItems)
+        val adapter = FilterAdapter(context, R.layout.dk_adapter_resource, listOfItems)
         spinner_filter.adapter = adapter
         spinner_filter.setSelection(0, false)
     }

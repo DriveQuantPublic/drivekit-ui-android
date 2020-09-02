@@ -17,6 +17,7 @@ import java.util.*
 class TripsListViewModel: ViewModel() {
     var tripsByDate: List<TripsByDate> = listOf()
     val tripsData : MutableLiveData<List<TripsByDate>> = MutableLiveData()
+    val filterItems : MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
 
     fun fetchTrips(dayTripDescendingOrder: Boolean) {
@@ -49,13 +50,11 @@ class TripsListViewModel: ViewModel() {
         return null
     }
 
-    fun getVehiclesFilterItems(context: Context): List<FilterItem>? {
-        var list = listOf<FilterItem>()
+    fun getVehiclesFilterItems(context: Context) {
         DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context, object : GetVehiclesFilterItems{
             override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                    list = vehiclesFilterItems
+                filterItems.postValue(vehiclesFilterItems)
             }
         })
-       return list
     }
 }
