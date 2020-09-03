@@ -76,7 +76,6 @@ class VehicleDetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
     private fun hideProgressCircular() {
         dk_progress_circular.animate()
             .alpha(0f)

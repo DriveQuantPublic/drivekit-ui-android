@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -61,6 +62,7 @@ class VehiclesListFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(view.context)
         vehicles_list.layoutManager = linearLayoutManager
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_list"), javaClass.simpleName)
     }
 
     override fun onResume() {

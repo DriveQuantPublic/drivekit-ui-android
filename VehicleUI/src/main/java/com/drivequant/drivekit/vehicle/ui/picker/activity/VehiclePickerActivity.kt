@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.Toast
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.TruckType
@@ -50,6 +51,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_add"), javaClass.simpleName)
+
         setContentView(R.layout.activity_vehicle_picker)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

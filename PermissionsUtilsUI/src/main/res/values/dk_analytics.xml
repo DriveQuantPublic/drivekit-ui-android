@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_permissions_diagnosis" translatable="false">drivekit-permissions-diagnosis</string>
+    <string name="dk_tag_permissions_onboarding" translatable="false">drivekit-permissions-onboarding</string>
+</resources>

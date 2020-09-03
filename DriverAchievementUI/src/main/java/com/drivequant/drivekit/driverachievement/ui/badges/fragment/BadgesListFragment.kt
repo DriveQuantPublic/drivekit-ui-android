@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import android.support.v7.widget.LinearLayoutManager
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
@@ -37,6 +39,7 @@ class BadgesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_badges"), javaClass.simpleName)
         recycler_view_badges.layoutManager = LinearLayoutManager(view.context)
         refresh_badges.setOnRefreshListener {
             updateBadges()

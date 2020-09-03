@@ -34,6 +34,7 @@ class RankingFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_rankings"), javaClass.simpleName)
         rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
         recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
         setTabLayout()
