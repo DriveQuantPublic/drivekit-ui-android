@@ -11,11 +11,13 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 
 class FilterAdapter(
     context: Context,
     resource: Int,
-    private val filterItemList: List<FilterItem>) : ArrayAdapter<FilterItem>(context,resource) {
+    private val filterItemList: List<FilterItem>
+) : ArrayAdapter<FilterItem>(context, resource, filterItemList) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, parent)
@@ -40,6 +42,7 @@ class FilterAdapter(
                 .placeholder(item.image)
                 .into(imageViewItem)
         }
+        FontUtils.overrideFonts(context, view)
         return view
     }
 }

@@ -5,16 +5,15 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Spinner
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.adapter.FilterAdapter
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import kotlinx.android.synthetic.main.dk_filter_view_layout.view.*
 
 class FilterView : LinearLayout {
 
-    private var listOfItems = listOf<FilterItem>()
-    private lateinit var currentItem: FilterItem
+    lateinit var spinner: Spinner
 
     constructor(context: Context) : super(context) {
         init()
@@ -26,29 +25,15 @@ class FilterView : LinearLayout {
 
     private fun init() {
         val view = View.inflate(context, R.layout.dk_filter_view_layout, null).setDKStyle()
+        spinner = view.findViewById(R.id.spinner_filter)
         addView(view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT))
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
     fun setItems(filterItems: List<FilterItem>) {
-        listOfItems = filterItems
-        val adapter = FilterAdapter(context, R.layout.dk_adapter_resource, listOfItems)
-        spinner_filter.adapter = adapter
-        spinner_filter.setSelection(0, false)
-    }
-
-    private fun getItemPositionInList(itemId: Any?): Any? {
-        for (i in listOfItems.indices) {
-            if (listOfItems[i].itemId == itemId) {
-                return i
-            }
-        }
-        return 0
-    }
-
-    private fun updateSelectedItem(position: Int) {
-        currentItem = listOfItems[position]
-        //TODO update filter text
+        val adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
+        spinner.adapter = adapter
+        spinner.setSelection(0, false)
     }
 }

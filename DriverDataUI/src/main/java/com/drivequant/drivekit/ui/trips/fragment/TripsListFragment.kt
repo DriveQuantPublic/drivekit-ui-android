@@ -10,8 +10,14 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -22,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 class TripsListFragment : Fragment() {
-    private lateinit var viewModel : TripsListViewModel
+    private lateinit var viewModel: TripsListViewModel
     private var adapter: TripsListAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -36,10 +42,11 @@ class TripsListFragment : Fragment() {
 
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
         refresh_trips.setOnRefreshListener {
+            filter_view_vehicle.spinner.setSelection(0)
             updateTrips()
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            adapter?.getChild(groupPosition, childPosition)?.let{
+            adapter?.getChild(groupPosition, childPosition)?.let {
                 TripDetailActivity.launchActivity(requireContext(), it.itinId)
             }
             false
@@ -48,26 +55,70 @@ class TripsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateTrips()
-        setupVehicleFilter()
+        setupVehicleFilterView()
     }
 
-    private fun setupVehicleFilter() {
-        viewModel.filterItems.observe(this, Observer {
-            vehicle_filter.setItems(it!!)
-        })
+    private fun vehicleFilterVisibility(visibility: Boolean) {
+        text_view_trips_synthesis.visibility =  if (visibility) View.VISIBLE else View.GONE
+        filter_view_vehicle.visibility = if (visibility) View.VISIBLE else View.GONE
+    }
 
+    private fun setupVehicleFilterView() {
+        viewModel.filterData.observe(this, Observer {
+            filter_view_vehicle.setItems(viewModel.filterItems)
+            vehicleFilterVisibility(true)
+        })
         viewModel.getVehiclesFilterItems(requireContext())
+        filter_view_vehicle.spinner.onItemSelectedListener = object :
+            OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
+                viewModel.currentItemPosition = i
+                updateTrips()
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun updateTripsSynthesis() {
+        if (viewModel.tripsByDate.isEmpty()) {
+            text_view_trips_synthesis.visibility = View.GONE
+        } else {
+            val tripsNumber = viewModel.computedSynthesis.first
+            val tripsDistance = viewModel.computedSynthesis.second
+            val trip =
+                requireContext().resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
+            val tripSynthesis = DKSpannable().append("$tripsNumber", requireContext().resSpans {
+                color(DriveKitUI.colors.primaryColor())
+                size(R.dimen.dk_text_big)
+            }).append(" - $trip ", requireContext().resSpans {
+
+            }).append(
+                DKDataFormatter.formatDistance(requireContext(), tripsDistance),
+                requireContext().resSpans {
+                    color(DriveKitUI.colors.primaryColor())
+                    size(R.dimen.dk_text_big)
+                }).toSpannable()
+            text_view_trips_synthesis.text = tripSynthesis
+        }
     }
 
     private fun updateTrips() {
         viewModel.tripsData.observe(this, Observer {
-            if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR){
-                Toast.makeText(context, context?.getString(R.string.dk_driverdata_failed_to_sync_trips), Toast.LENGTH_LONG).show()
+            if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR) {
+                Toast.makeText(
+                    context,
+                    context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            if (viewModel.tripsByDate.isNullOrEmpty()){
+            if (viewModel.tripsByDate.isNullOrEmpty()) {
+                text_view_trips_synthesis.visibility = View.GONE
                 displayNoTrips()
             } else {
+                if (DriverDataUI.shouldDisplayVehicleFilter) {
+                    updateTripsSynthesis()
+                }
                 displayTripsList()
                 if (adapter != null) {
                     adapter?.notifyDataSetChanged()
@@ -82,16 +133,21 @@ class TripsListFragment : Fragment() {
         viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
     }
 
-    private fun displayNoTrips(){
+    private fun displayNoTrips() {
         no_trips.visibility = View.VISIBLE
         trips_list.emptyView = no_trips
         no_trips_recorded_text.text = context?.getString(R.string.dk_driverdata_no_trips_recorded)
         no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
-        image_view_no_trips.setImageDrawable(ContextCompat.getDrawable(requireContext(), DriverDataUI.noTripsRecordedDrawable))
+        image_view_no_trips.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                DriverDataUI.noTripsRecordedDrawable
+            )
+        )
         hideProgressCircular()
     }
 
-    private fun displayTripsList(){
+    private fun displayTripsList() {
         no_trips.visibility = View.GONE
         trips_list.visibility = View.VISIBLE
         hideProgressCircular()
@@ -118,8 +174,8 @@ class TripsListFragment : Fragment() {
         return view
     }
 
-    private fun updateProgressVisibility(displayProgress: Boolean){
-        if (displayProgress){
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        if (displayProgress) {
             progress_circular.visibility = View.VISIBLE
             refresh_trips.isRefreshing = true
         } else {

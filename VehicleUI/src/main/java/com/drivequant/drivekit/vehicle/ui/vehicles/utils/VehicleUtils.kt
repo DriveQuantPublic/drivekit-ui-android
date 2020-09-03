@@ -6,15 +6,19 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
+import kotlinx.android.synthetic.main.fragment_vehicles_list.view.*
 import java.util.*
 
 
@@ -61,10 +65,13 @@ open class VehicleUtils {
         }
     }
 
-    fun getVehicleDrawable(context: Context, vehicleId: String): Drawable? {
-        val vehicle =
+    fun getVehicleDrawable(context: Context, vehicleId: String?): Drawable? {
+        val vehicle =  vehicleId?.let {
             DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne()
                 .executeOne()
+        }?: kotlin.run {
+            null
+        }
 
         val defaultVehicleDrawable = vehicle?.let {
             ResourcesCompat.getDrawable(
@@ -73,7 +80,7 @@ open class VehicleUtils {
                 null
             )
         }?:run {
-            null
+            ContextCompat.getDrawable(context, R.drawable.circle_outline_black)
         }
 
        val cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))

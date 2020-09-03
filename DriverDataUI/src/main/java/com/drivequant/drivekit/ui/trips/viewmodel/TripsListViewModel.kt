@@ -11,50 +11,71 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.orderByDay
 import java.util.*
 
-class TripsListViewModel: ViewModel() {
+class TripsListViewModel : ViewModel() {
     var tripsByDate: List<TripsByDate> = listOf()
-    val tripsData : MutableLiveData<List<TripsByDate>> = MutableLiveData()
-    val filterItems : MutableLiveData<List<FilterItem>> = MutableLiveData()
+    var filterItems: List<FilterItem> = listOf()
+    val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
+    val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
+    var currentItemPosition: Int = 0
+    lateinit var computedSynthesis: Pair<Int, Double>
 
     fun fetchTrips(dayTripDescendingOrder: Boolean) {
         if (DriveKitDriverData.isConfigured()) {
-            DriveKitDriverData.getTripsOrderByDateDesc(object: TripsQueryListener {
+            DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     syncStatus = status
                     tripsByDate = sortTrips(trips, dayTripDescendingOrder)
                     tripsData.postValue(tripsByDate)
                 }
             }, SynchronizationType.DEFAULT)
-        }else{
+        } else {
             tripsData.postValue(mutableListOf())
         }
     }
 
-    fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean) : List<TripsByDate> {
-        if (fetchedTrips.isNotEmpty()){
-            tripsByDate = fetchedTrips.orderByDay(dayTripDescendingOrder)
+    private fun filterTrips(fetchedTrips: List<Trip>): List<Trip> {
+        return if (currentItemPosition != 0) {
+            val tripsByVehicleId = mutableListOf<Trip>()
+            for (trip in fetchedTrips) {
+                if (trip.vehicleId == filterItems[currentItemPosition].itemId) {
+                    tripsByVehicleId.add(trip)
+                }
+            }
+            tripsByVehicleId
+        } else {
+            fetchedTrips
         }
+    }
+
+    fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean): List<TripsByDate> {
+        val filteredTrips = filterTrips(fetchedTrips)
+        tripsByDate = filteredTrips.orderByDay(dayTripDescendingOrder)
+        computedSynthesis = Pair(filteredTrips.size, filteredTrips.computeTotalDistance())
         return tripsByDate
     }
 
-    fun getTripsByDate(date: Date) : TripsByDate? {
-        for (currentTripsBydate in tripsByDate){
-            if (currentTripsBydate.date == date){
-                return currentTripsBydate
+    fun getTripsByDate(date: Date): TripsByDate? {
+        for (currentTripsByDate in tripsByDate) {
+            if (currentTripsByDate.date == date) {
+                return currentTripsByDate
             }
         }
         return null
     }
 
     fun getVehiclesFilterItems(context: Context) {
-        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context, object : GetVehiclesFilterItems{
-            override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                filterItems.postValue(vehiclesFilterItems)
-            }
-        })
+        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(
+            context,
+            object : GetVehiclesFilterItems {
+                override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
+                    filterItems = vehiclesFilterItems
+                    filterData.postValue(filterItems)
+                }
+            })
     }
 }

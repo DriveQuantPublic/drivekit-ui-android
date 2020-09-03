@@ -18,7 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.viewholder.DetectionModeSpinn
 open class DetectionModeSpinnerAdapter(
     context: Context,
     list: List<DetectionModeSpinnerItem>
-) : ArrayAdapter<DetectionModeSpinnerItem>(context, R.layout.simple_list_item_spinner, list) {
+) : ArrayAdapter<DetectionModeSpinnerItem>(context, R.layout.dk_simple_list_item_spinner, list) {
 
     private var detectionModes: List<DetectionModeSpinnerItem> = list
 
@@ -30,7 +30,7 @@ open class DetectionModeSpinnerAdapter(
 
     private fun getCustomView(position: Int, parent: ViewGroup): View {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.simple_list_item_spinner, parent, false)
+            .inflate(R.layout.dk_simple_list_item_spinner, parent, false)
         val detectionMode = detectionModes[position]
         val textViewDetectionMode = view.findViewById<TextView>(R.id.text_view)
         textViewDetectionMode.text = detectionMode.detectionModeType.getTitle(context)

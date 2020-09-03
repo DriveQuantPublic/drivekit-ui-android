@@ -8,7 +8,7 @@
         android:layout_margin="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.AppCompatSpinner
+        <Spinner
             android:id="@+id/spinner_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
