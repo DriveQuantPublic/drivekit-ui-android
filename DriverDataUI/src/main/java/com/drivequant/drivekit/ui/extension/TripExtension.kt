@@ -66,6 +66,9 @@ fun List<Trip>.orderByDay(orderDesc: Boolean) : MutableList<TripsByDate> {
                     currentDay = this[i].endDate
                     dayTrips = mutableListOf()
                     dayTrips.add(this[i])
+                    if (i == this.size -1) {
+                        tripsSorted.add(TripsByDate(currentDay, dayTrips))
+                    }
                 }
             }
         } else {
