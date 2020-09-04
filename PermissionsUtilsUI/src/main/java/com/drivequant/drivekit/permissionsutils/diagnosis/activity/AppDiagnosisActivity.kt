@@ -361,8 +361,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        val logDirectory = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile)
-                        val file = File(logDirectory, DriveKitLog.buildFileName())
+                        val file = File(DriveKitLog.getLogUriFile()?.path)
                         if (!file.exists() || !file.canRead()) {
                             startActivity(intent)
                         }

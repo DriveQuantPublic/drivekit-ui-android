@@ -56,7 +56,7 @@
    <string name="dk_perm_utils_app_diag_log_folder">Accéder au dossier du journal d\'activité</string>
    <string name="dk_perm_utils_app_diag_log_ko">L\'enregistrement du journal est désactivé. En cas de dysfonctionnement de l\'application, nous vous recommandons d\'autoriser l\'enregistrement du journal pour faciliter le diagnostic.</string>
    <string name="dk_perm_utils_app_diag_log_link">Autoriser l\'écriture du journal d\'activité sur votre smartphone.</string>
-   <string name="dk_perm_utils_app_diag_log_ok">L\'enregistrement du journal est activé. Ce fichier contient les événements importants pour analyser le comportement de l\'application. Il est stocké dans le dossier %s.</string>
+   <string name="dk_perm_utils_app_diag_log_ok">L\'enregistrement du journal est activé. Ce fichier contient les événements importants pour analyser le comportement de l\'application.</string>
    <string name="dk_perm_utils_app_diag_log_title">Enregistrer le journal d\'activité</string>
    <string name="dk_perm_utils_app_diag_network_ko">Les données mobiles ne sont pas activées. Cela ne bloquera pas le déclenchement et l\'enregistrement (en local) de votre trajet. En revanche, les données mobiles sont indispensables pour analyser les données de votre trajet. Si les données mobiles sont désactivées, le trajet ne sera pas perdu et l\'analyse sera faite à la reconnexion à un réseau mobile.</string>
    <string name="dk_perm_utils_app_diag_network_link">Activer les données mobiles</string>
