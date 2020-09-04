@@ -16,12 +16,11 @@ import com.drivequant.drivekit.ui.extension.orderByDay
 import java.util.*
 
 class TripsListViewModel : ViewModel() {
-    var tripsByDate: List<TripsByDate> = listOf()
+    var tripsByDate: MutableList<TripsByDate> = mutableListOf()
     var filterItems: List<FilterItem> = listOf()
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
-    var currentItemPosition: Int = 0
     lateinit var computedSynthesis: Pair<Int, Double>
 
     fun fetchTrips(dayTripDescendingOrder: Boolean) {
@@ -29,8 +28,8 @@ class TripsListViewModel : ViewModel() {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     syncStatus = status
-                    tripsByDate = sortTrips(trips, dayTripDescendingOrder)
-                    tripsData.postValue(tripsByDate)
+                    computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
+                    tripsData.postValue(sortTrips(trips, dayTripDescendingOrder))
                 }
             }, SynchronizationType.DEFAULT)
         } else {
@@ -38,24 +37,29 @@ class TripsListViewModel : ViewModel() {
         }
     }
 
-    private fun filterTrips(fetchedTrips: List<Trip>): List<Trip> {
-        return if (currentItemPosition != 0) {
-            val tripsByVehicleId = mutableListOf<Trip>()
-            for (trip in fetchedTrips) {
-                if (trip.vehicleId == filterItems[currentItemPosition].itemId) {
-                    tripsByVehicleId.add(trip)
-                }
-            }
-            tripsByVehicleId
-        } else {
-            fetchedTrips
+    fun filterTripsByVehicleId(dayTripDescendingOrder: Boolean, vehicleId: String? = null) {
+        val whereReference = DriveKitDriverData.tripsQuery()
+        val trips = vehicleId?.let {
+            whereReference.whereEqualTo("vehicleId", vehicleId).query().execute()
+        } ?: kotlin.run {
+            whereReference.noFilter().query().execute()
         }
+        computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
+        tripsByDate.clear()
+        tripsByDate = sortTrips(trips, dayTripDescendingOrder)
+        tripsData.postValue(if (tripsByDate.isNotEmpty()) tripsByDate else mutableListOf())
     }
 
-    fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean): List<TripsByDate> {
-        val filteredTrips = filterTrips(fetchedTrips)
-        tripsByDate = filteredTrips.orderByDay(dayTripDescendingOrder)
-        computedSynthesis = Pair(filteredTrips.size, filteredTrips.computeTotalDistance())
+    private fun updateTripsSynthesis() {
+
+    }
+
+    private fun sortTrips(
+        fetchedTrips: List<Trip>,
+        dayTripDescendingOrder: Boolean): MutableList<TripsByDate> {
+        if (fetchedTrips.isNotEmpty()) {
+            tripsByDate = fetchedTrips.orderByDay(dayTripDescendingOrder)
+        }
         return tripsByDate
     }
 

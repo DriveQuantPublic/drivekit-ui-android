@@ -17,8 +17,7 @@
         <com.drivequant.drivekit.common.ui.component.FilterView
             android:id="@+id/filter_view_vehicle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/text_view_trips_synthesis"
@@ -26,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dk_margin_half"
-            android:gravity="center"
-            android:visibility="gone" />
+            android:gravity="center"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_trips"
