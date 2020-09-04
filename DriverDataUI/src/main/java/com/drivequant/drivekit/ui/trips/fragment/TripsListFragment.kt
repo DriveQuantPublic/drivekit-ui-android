@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -71,8 +72,8 @@ class TripsListFragment : Fragment() {
         viewModel.getVehiclesFilterItems(requireContext())
         filter_view_vehicle.spinner.onItemSelectedListener = object :
             OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
-                viewModel.currentItemPosition = i
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View, position: Int, l: Long) {
+                viewModel.currentItemPosition = position
                 updateTrips()
             }
 
@@ -90,14 +91,16 @@ class TripsListFragment : Fragment() {
                 requireContext().resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
             val tripSynthesis = DKSpannable().append("$tripsNumber", requireContext().resSpans {
                 color(DriveKitUI.colors.primaryColor())
-                size(R.dimen.dk_text_big)
+                size(R.dimen.dk_text_medium)
+                typeface(Typeface.BOLD)
             }).append(" - $trip ", requireContext().resSpans {
 
             }).append(
                 DKDataFormatter.formatDistance(requireContext(), tripsDistance),
                 requireContext().resSpans {
                     color(DriveKitUI.colors.primaryColor())
-                    size(R.dimen.dk_text_big)
+                    size(R.dimen.dk_text_medium)
+                    typeface(Typeface.BOLD)
                 }).toSpannable()
             text_view_trips_synthesis.text = tripSynthesis
         }
