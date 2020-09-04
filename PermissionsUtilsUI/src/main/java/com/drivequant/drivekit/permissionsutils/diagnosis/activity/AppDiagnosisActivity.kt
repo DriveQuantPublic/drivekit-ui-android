@@ -108,7 +108,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             image_view_summary_icon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
-            text_view_summary_title.text = resources.getQuantityString(R.plurals.diagnosis_error_plural, errorsCount, errorsCount)
+            text_view_summary_title.text = resources.getQuantityString(
+                R.plurals.diagnosis_error_plural,
+                errorsCount,
+                errorsCount
+            )
         }
         errorsCount = 0
     }
@@ -208,35 +212,24 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun checkExternalStorage() {
         val loggingStatus = checkLoggingStatus()
         switch_enable_logging.isChecked = loggingStatus
-        val description = if (loggingStatus) {
-            DKResource.buildString(
-                this,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.mainFontColor(),
-                "dk_perm_utils_app_diag_log_ok",
-                PermissionsUtilsUI.logPathFile.removePrefix("/")
-            )
+        val descriptionId = if (loggingStatus) {
+            "dk_perm_utils_app_diag_log_ok"
         } else {
-            DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
+            "dk_perm_utils_app_diag_log_ko"
         }
 
-        text_view_logging_description.text = description
+        text_view_logging_description.text = DKResource.convertToString(this, descriptionId)
         switch_enable_logging.setOnClickListener {
-                val loggingDescription = if (switch_enable_logging.isChecked) {
-                    DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
-                    DKResource.buildString(
-                        this,
-                        DriveKitUI.colors.complementaryFontColor(),
-                        DriveKitUI.colors.mainFontColor(),
-                        "dk_perm_utils_app_diag_log_ok",
-                        PermissionsUtilsUI.logPathFile.removePrefix("/")
-                    )
-                } else {
-                    DriveKit.disableLogging()
-                    DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
-                }
-                text_view_logging_description.text = loggingDescription
+            val loggingDescriptionId = if (switch_enable_logging.isChecked) {
+                DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
+                "dk_perm_utils_app_diag_log_ok"
+            } else {
+                DriveKit.disableLogging()
+                "dk_perm_utils_app_diag_log_ko"
             }
+            text_view_logging_description.text =
+                DKResource.convertToString(this, loggingDescriptionId)
+        }
     }
 
     private fun checkNotification() {
@@ -471,7 +464,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         )
     }
 
-    private fun requestAutoResetPermission(){
+    private fun requestAutoResetPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val intent = DiagnosisHelper.buildSettingsIntent(this)
             intent.action = Intent.ACTION_AUTO_REVOKE_PERMISSIONS
@@ -565,7 +558,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         button_help_report.button()
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
-        if(switch_enable_logging.isChecked) {
+        if (switch_enable_logging.isChecked) {
             switch_enable_logging.thumbDrawable.setColorFilter(
                 DriveKitUI.colors.secondaryColor(),
                 PorterDuff.Mode.SRC_IN
