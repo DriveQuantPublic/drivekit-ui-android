@@ -2,6 +2,7 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.R
@@ -24,6 +25,7 @@ open class BasePermissionActivity : RequestPermissionActivity() {
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_onboarding"), javaClass.simpleName)
 
         val permissionViewsListExtra = intent.getSerializableExtra(PERMISSION_VIEWS_LIST_EXTRA)
         permissionViewsListExtra?.let {

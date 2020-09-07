@@ -3,6 +3,7 @@ package com.drivekit.demoapp.config
 import android.content.Context
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
@@ -19,8 +20,13 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 
 object DriveKitConfig {
 
-    fun configureDriveKitUI(context: Context) {
+    fun configureDriveKitUI() {
         DriveKitUI.initialize()
+        DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener{
+            override fun trackScreen(screen: String, className: String) {
+                // TODO: manage screen tracking here
+            }
+        })
         //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }
 

@@ -39,6 +39,8 @@ class BluetoothActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_bluetooth_add"), javaClass.simpleName)
+
         setContentView(R.layout.activity_bluetooth)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -73,7 +75,6 @@ class BluetoothActivity : AppCompatActivity() {
                 }
             }
         })
-
         updateTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
     }
 

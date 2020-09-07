@@ -61,7 +61,7 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         configureDriveKit()
         registerReceiver()
 
-        DriveKitConfig.configureDriveKitUI(this)
+        DriveKitConfig.configureDriveKitUI()
         DriveKitConfig.configureDriverAchievement()
         DriveKitConfig.configurePermissionsUtils(this)
 

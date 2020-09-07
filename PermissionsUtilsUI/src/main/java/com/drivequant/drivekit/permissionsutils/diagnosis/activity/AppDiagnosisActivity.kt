@@ -51,8 +51,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app_diagnosis)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_diagnosis"), javaClass.simpleName)
 
+        setContentView(R.layout.activity_app_diagnosis)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setToolbar()
 
