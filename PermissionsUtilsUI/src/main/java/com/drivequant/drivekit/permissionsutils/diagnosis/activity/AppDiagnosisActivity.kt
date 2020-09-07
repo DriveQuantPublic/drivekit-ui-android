@@ -354,19 +354,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
 
                     if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        val file = File(DriveKitLog.getLogUriFile()?.path)
-                        if (!file.exists() || !file.canRead()) {
-                            startActivity(intent)
+                        DriveKitLog.getLogUriFile(this)?.let {
+                            intent.putExtra(Intent.EXTRA_STREAM, it)
                         }
-                        val uri =
-                            FileProvider.getUriForFile(
-                                this,
-                                "$packageName.provider",
-                                file
-                            )
-                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+                        startActivity(intent)
                     }
-                    startActivity(intent)
                 }
             }
         }
