@@ -77,6 +77,18 @@ class TripsListFragment : Fragment() {
             }
             false
         }
+        filter_view_vehicle.spinner.onItemSelectedListener = object :
+            OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                position: Int,
+                l: Long) {
+
+                viewModel.filterTripsByVehicleId(false, viewModel.filterItems[viewModel.currentItemPosition].itemId as String?)
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
     }
 
     override fun onResume() {
@@ -90,19 +102,6 @@ class TripsListFragment : Fragment() {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
         viewModel.getVehiclesFilterItems(requireContext())
-        filter_view_vehicle.spinner.onItemSelectedListener = object :
-            OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?,
-                view: View,
-                position: Int,
-                l: Long) {
-                viewModel.filterTripsByVehicleId(
-                    false,
-                    viewModel.filterItems[position].itemId as String?)
-            }
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        }
     }
 
     private fun updateTripsSynthesis() {
@@ -114,7 +113,7 @@ class TripsListFragment : Fragment() {
             color(DriveKitUI.colors.primaryColor())
             size(R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
-        }).append(" - $trip ", requireContext().resSpans {
+        }).append(" $trip - ", requireContext().resSpans {
 
         }).append(
             DKDataFormatter.formatDistance(requireContext(), tripsDistance),

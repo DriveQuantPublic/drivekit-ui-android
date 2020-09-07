@@ -21,6 +21,7 @@ class TripsListViewModel : ViewModel() {
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
+    var currentItemPosition = 0
     lateinit var computedSynthesis: Pair<Int, Double>
 
     fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType) {
