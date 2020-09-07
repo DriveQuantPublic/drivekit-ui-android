@@ -21,6 +21,7 @@ class TripsListViewModel : ViewModel() {
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
+    var currentItemPosition = 0
     lateinit var computedSynthesis: Pair<Int, Double>
 
     fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType) {
@@ -38,10 +39,10 @@ class TripsListViewModel : ViewModel() {
         }
     }
 
-    fun filterTripsByVehicleId(dayTripDescendingOrder: Boolean, vehicleId: String? = null) {
+    fun filterTripsByVehicleId(dayTripDescendingOrder: Boolean) {
         val whereReference = DriveKitDriverData.tripsQuery()
-        val trips = vehicleId?.let {
-            whereReference.whereEqualTo("vehicleId", vehicleId).query().execute()
+        val trips = filterItems[currentItemPosition].itemId?.let {
+            whereReference.whereEqualTo("vehicleId", filterItems[currentItemPosition].itemId as String).query().execute()
         } ?: kotlin.run {
             whereReference.noFilter().query().execute()
         }

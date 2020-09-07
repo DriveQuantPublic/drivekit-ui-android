@@ -37,6 +37,21 @@ class TripsListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
+        initFilterView()
+        filter_view_vehicle.spinner.onItemSelectedListener = object :
+            OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                position: Int,
+                l: Long) {
+                viewModel.currentItemPosition = position
+                viewModel.filterTripsByVehicleId(
+                    false)
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
         viewModel.tripsData.observe(this, Observer {
             if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR) {
                 Toast.makeText(
@@ -61,11 +76,17 @@ class TripsListFragment : Fragment() {
             }
             updateProgressVisibility(false)
         })
+        updateTrips()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_list"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_trips_list"
+            ), javaClass.simpleName
+        )
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
         refresh_trips.setOnRefreshListener {
             filter_view_vehicle.spinner.setSelection(0)
@@ -79,30 +100,11 @@ class TripsListFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateTrips()
-        initFilterView()
-    }
-
     private fun initFilterView() {
         viewModel.filterData.observe(this, Observer {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
         viewModel.getVehiclesFilterItems(requireContext())
-        filter_view_vehicle.spinner.onItemSelectedListener = object :
-            OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?,
-                view: View,
-                position: Int,
-                l: Long) {
-                viewModel.filterTripsByVehicleId(
-                    false,
-                    viewModel.filterItems[position].itemId as String?)
-            }
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        }
     }
 
     private fun updateTripsSynthesis() {
@@ -114,7 +116,7 @@ class TripsListFragment : Fragment() {
             color(DriveKitUI.colors.primaryColor())
             size(R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
-        }).append(" - $trip ", requireContext().resSpans {
+        }).append(" $trip - ", requireContext().resSpans {
 
         }).append(
             DKDataFormatter.formatDistance(requireContext(), tripsDistance),
@@ -141,7 +143,7 @@ class TripsListFragment : Fragment() {
         text_view_trips_synthesis.visibility = View.GONE
         trips_list.emptyView = view
         no_trips_recorded_text.text =
-            context?.getString(R.string.dk_driverdata_no_trips_recorded)
+            DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
         no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
         image_view_no_trips.setImageDrawable(
             ContextCompat.getDrawable(
@@ -149,8 +151,8 @@ class TripsListFragment : Fragment() {
                 DriverDataUI.noTripsRecordedDrawable
             )
         )
-    hideProgressCircular()
-}
+        hideProgressCircular()
+    }
 
     private fun displayFilterVehicle() {
         if ((viewModel.filterItems.size != 2 && viewModel.filterItems[0].itemId == null)) {
