@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
@@ -18,7 +17,6 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
-import kotlinx.android.synthetic.main.fragment_vehicles_list.view.*
 import java.util.*
 
 
@@ -80,7 +78,7 @@ open class VehicleUtils {
                 null
             )
         }?:run {
-            ContextCompat.getDrawable(context, R.drawable.circle_outline_black)
+            ContextCompat.getDrawable(context, R.drawable.dk_my_trips)
         }
 
        val cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))

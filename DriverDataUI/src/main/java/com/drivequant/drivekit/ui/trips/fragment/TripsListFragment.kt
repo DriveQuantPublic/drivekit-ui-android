@@ -44,14 +44,13 @@ class TripsListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            displayFilterVehicle()
             if (viewModel.tripsByDate.isNullOrEmpty()) {
                 displayNoTrips()
-                text_view_trips_synthesis.visibility = View.GONE
                 adapter?.notifyDataSetChanged()
             } else {
                 if (DriverDataUI.shouldDisplayVehicleFilter) {
                     updateTripsSynthesis()
+                    displayFilterVehicle()
                 }
                 displayTripsList()
                 adapter?.notifyDataSetChanged() ?: run {
@@ -82,10 +81,10 @@ class TripsListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateTrips()
-        setupVehicleFilterView()
+        initFilterView()
     }
 
-    private fun setupVehicleFilterView() {
+    private fun initFilterView() {
         viewModel.filterData.observe(this, Observer {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
@@ -106,7 +105,6 @@ class TripsListFragment : Fragment() {
     }
 
     private fun updateTripsSynthesis() {
-        text_view_trips_synthesis.visibility = View.VISIBLE
         val tripsNumber = viewModel.computedSynthesis.first
         val tripsDistance = viewModel.computedSynthesis.second
         val trip =
@@ -139,6 +137,7 @@ class TripsListFragment : Fragment() {
             no_trips
         }
         view.visibility = View.VISIBLE
+        text_view_trips_synthesis.visibility = View.GONE
         trips_list.emptyView = view
         no_trips_recorded_text.text =
             context?.getString(R.string.dk_driverdata_no_trips_recorded)
@@ -153,11 +152,9 @@ class TripsListFragment : Fragment() {
 }
 
     private fun displayFilterVehicle() {
-        if (DriverDataUI.shouldDisplayVehicleFilter) {
-            if ((viewModel.filterItems.size != 2 && viewModel.filterItems[0].itemId == null)) {
-                text_view_trips_synthesis.visibility = View.VISIBLE
-                filter_view_vehicle.visibility = View.VISIBLE
-            }
+        if ((viewModel.filterItems.size != 2 && viewModel.filterItems[0].itemId == null)) {
+            text_view_trips_synthesis.visibility = View.VISIBLE
+            filter_view_vehicle.visibility = View.VISIBLE
         }
     }
 
