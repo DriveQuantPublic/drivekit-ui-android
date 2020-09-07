@@ -78,5 +78,5 @@
 
    <!--//TODO translate-->
    <string name="dk_driverdata_default_filter_option">All my trips</string>
-
+   <string name="trip_list_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
 </resources>

@@ -12,7 +12,6 @@
         android:drawableTop="@drawable/dk_no_vehicle_trips"
         android:text="@string/trip_list_no_trip_placeholder"
         android:gravity="center"
-        android:layout_margin="@dimen/dk_margin"
-        android:visibility="invisible" />
+        android:layout_margin="@dimen/dk_margin" />
 
 </LinearLayout>

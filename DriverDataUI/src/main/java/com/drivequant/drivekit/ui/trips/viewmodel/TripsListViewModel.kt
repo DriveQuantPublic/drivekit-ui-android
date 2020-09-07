@@ -23,15 +23,16 @@ class TripsListViewModel : ViewModel() {
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
     lateinit var computedSynthesis: Pair<Int, Double>
 
-    fun fetchTrips(dayTripDescendingOrder: Boolean) {
+    fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     syncStatus = status
                     computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
-                    tripsData.postValue(sortTrips(trips, dayTripDescendingOrder))
+                    tripsByDate = sortTrips(trips, dayTripDescendingOrder)
+                    tripsData.postValue(tripsByDate)
                 }
-            }, SynchronizationType.DEFAULT)
+            }, synchronizationType)
         } else {
             tripsData.postValue(mutableListOf())
         }
@@ -47,16 +48,10 @@ class TripsListViewModel : ViewModel() {
         computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
         tripsByDate.clear()
         tripsByDate = sortTrips(trips, dayTripDescendingOrder)
-        tripsData.postValue(if (tripsByDate.isNotEmpty()) tripsByDate else mutableListOf())
+        tripsData.postValue(tripsByDate)
     }
 
-    private fun updateTripsSynthesis() {
-
-    }
-
-    private fun sortTrips(
-        fetchedTrips: List<Trip>,
-        dayTripDescendingOrder: Boolean): MutableList<TripsByDate> {
+    private fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean): MutableList<TripsByDate> {
         if (fetchedTrips.isNotEmpty()) {
             tripsByDate = fetchedTrips.orderByDay(dayTripDescendingOrder)
         }

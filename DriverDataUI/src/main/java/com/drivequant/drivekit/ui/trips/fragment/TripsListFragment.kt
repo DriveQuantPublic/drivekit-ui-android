@@ -18,6 +18,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -43,10 +44,11 @@ class TripsListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+            displayFilterVehicle()
             if (viewModel.tripsByDate.isNullOrEmpty()) {
-                adapter?.notifyDataSetChanged()
-                text_view_trips_synthesis.visibility = View.GONE
                 displayNoTrips()
+                text_view_trips_synthesis.visibility = View.GONE
+                adapter?.notifyDataSetChanged()
             } else {
                 if (DriverDataUI.shouldDisplayVehicleFilter) {
                     updateTripsSynthesis()
@@ -75,27 +77,12 @@ class TripsListFragment : Fragment() {
             }
             false
         }
-        filter_view_vehicle.spinner.onItemSelectedListener = object :
-            OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View, position: Int, l: Long) {
-                viewModel.filterTripsByVehicleId(false, viewModel.filterItems[position].itemId as String?)
-            }
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
-        }
     }
 
     override fun onResume() {
         super.onResume()
         updateTrips()
         setupVehicleFilterView()
-        if ((viewModel.filterItems.size == 1 && viewModel.filterItems[0].itemId == null) || !DriverDataUI.shouldDisplayVehicleFilter || viewModel.filterItems.isEmpty()) {
-            vehicleFilterVisibility(false)
-        }
-    }
-
-    private fun vehicleFilterVisibility(visibility: Boolean) {
-        text_view_trips_synthesis.visibility =  if (visibility) View.VISIBLE else View.GONE
-        filter_view_vehicle.visibility = if (visibility) View.VISIBLE else View.GONE
     }
 
     private fun setupVehicleFilterView() {
@@ -103,38 +90,58 @@ class TripsListFragment : Fragment() {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
         viewModel.getVehiclesFilterItems(requireContext())
+        filter_view_vehicle.spinner.onItemSelectedListener = object :
+            OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                position: Int,
+                l: Long) {
+                viewModel.filterTripsByVehicleId(
+                    false,
+                    viewModel.filterItems[position].itemId as String?)
+            }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
     }
 
     private fun updateTripsSynthesis() {
-            val tripsNumber = viewModel.computedSynthesis.first
-            val tripsDistance = viewModel.computedSynthesis.second
-            val trip =
-                requireContext().resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
-            val tripSynthesis = DKSpannable().append("$tripsNumber", requireContext().resSpans {
+        text_view_trips_synthesis.visibility = View.VISIBLE
+        val tripsNumber = viewModel.computedSynthesis.first
+        val tripsDistance = viewModel.computedSynthesis.second
+        val trip =
+            requireContext().resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
+        val tripSynthesis = DKSpannable().append("$tripsNumber", requireContext().resSpans {
+            color(DriveKitUI.colors.primaryColor())
+            size(R.dimen.dk_text_medium)
+            typeface(Typeface.BOLD)
+        }).append(" - $trip ", requireContext().resSpans {
+
+        }).append(
+            DKDataFormatter.formatDistance(requireContext(), tripsDistance),
+            requireContext().resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 size(R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
-            }).append(" - $trip ", requireContext().resSpans {
-
-            }).append(
-                DKDataFormatter.formatDistance(requireContext(), tripsDistance),
-                requireContext().resSpans {
-                    color(DriveKitUI.colors.primaryColor())
-                    size(R.dimen.dk_text_medium)
-                    typeface(Typeface.BOLD)
-                }).toSpannable()
-            text_view_trips_synthesis.text = tripSynthesis
+            }).toSpannable()
+        text_view_trips_synthesis.text = tripSynthesis
     }
 
     private fun updateTrips() {
         updateProgressVisibility(true)
-        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
+        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, SynchronizationType.DEFAULT)
     }
 
     private fun displayNoTrips() {
-        no_trips.visibility = View.VISIBLE
-        trips_list.emptyView = no_trips
-        no_trips_recorded_text.text = context?.getString(R.string.dk_driverdata_no_trips_recorded)
+        val view = if (adapter != null) {
+            no_car_trips
+        } else {
+            no_trips
+        }
+        view.visibility = View.VISIBLE
+        trips_list.emptyView = view
+        no_trips_recorded_text.text =
+            context?.getString(R.string.dk_driverdata_no_trips_recorded)
         no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
         image_view_no_trips.setImageDrawable(
             ContextCompat.getDrawable(
@@ -142,7 +149,16 @@ class TripsListFragment : Fragment() {
                 DriverDataUI.noTripsRecordedDrawable
             )
         )
-        hideProgressCircular()
+    hideProgressCircular()
+}
+
+    private fun displayFilterVehicle() {
+        if (DriverDataUI.shouldDisplayVehicleFilter) {
+            if ((viewModel.filterItems.size != 2 && viewModel.filterItems[0].itemId == null)) {
+                text_view_trips_synthesis.visibility = View.VISIBLE
+                filter_view_vehicle.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun displayTripsList() {
