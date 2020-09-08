@@ -43,14 +43,14 @@ class TripsListFragment : Fragment() {
                 position: Int,
                 l: Long) {
                 viewModel.currentFilterItemPosition = position
-                viewModel.filterTripsByVehicleId(
-                    false)
+                viewModel.fetchTrips(
+                    false, SynchronizationType.CACHE)
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
         viewModel.tripsData.observe(this, Observer {
-            if (viewModel.syncStatus != TripsSyncStatus.NO_ERROR) {
+            if (viewModel.syncStatus == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                 Toast.makeText(
                     context,
                     context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
@@ -63,7 +63,6 @@ class TripsListFragment : Fragment() {
             } else {
                 if (DriverDataUI.enableVehicleFilter) {
                     text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
-
                     displayFilterVehicle()
                 }
                 displayTripsList()
