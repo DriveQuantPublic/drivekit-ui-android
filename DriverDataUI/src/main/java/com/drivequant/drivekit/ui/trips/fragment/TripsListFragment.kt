@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -15,9 +14,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
@@ -46,7 +42,7 @@ class TripsListFragment : Fragment() {
                 view: View,
                 position: Int,
                 l: Long) {
-                viewModel.currentItemPosition = position
+                viewModel.currentFilterItemPosition = position
                 viewModel.filterTripsByVehicleId(
                     false)
             }
@@ -65,8 +61,9 @@ class TripsListFragment : Fragment() {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
             } else {
-                if (DriverDataUI.shouldDisplayVehicleFilter) {
-                    updateTripsSynthesis()
+                if (DriverDataUI.enableVehicleFilter) {
+                    text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
+
                     displayFilterVehicle()
                 }
                 displayTripsList()
@@ -106,27 +103,6 @@ class TripsListFragment : Fragment() {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
         viewModel.getVehiclesFilterItems(requireContext())
-    }
-
-    private fun updateTripsSynthesis() {
-        val tripsNumber = viewModel.computedSynthesis.first
-        val tripsDistance = viewModel.computedSynthesis.second
-        val trip =
-            requireContext().resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
-        val tripSynthesis = DKSpannable().append("$tripsNumber", requireContext().resSpans {
-            color(DriveKitUI.colors.primaryColor())
-            size(R.dimen.dk_text_medium)
-            typeface(Typeface.BOLD)
-        }).append(" $trip - ", requireContext().resSpans {
-
-        }).append(
-            DKDataFormatter.formatDistance(requireContext(), tripsDistance),
-            requireContext().resSpans {
-                color(DriveKitUI.colors.primaryColor())
-                size(R.dimen.dk_text_medium)
-                typeface(Typeface.BOLD)
-            }).toSpannable()
-        text_view_trips_synthesis.text = tripSynthesis
     }
 
     private fun updateTrips() {
