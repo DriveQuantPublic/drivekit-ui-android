@@ -78,4 +78,7 @@ class TripsListViewModel : ViewModel() {
                 }
             })
     }
+
+    fun getVehicleFilterVisibility(): Boolean =
+        filterItems.size != 2 && filterItems[0].itemId == null
 }

@@ -157,7 +157,7 @@ class TripsListFragment : Fragment() {
     }
 
     private fun displayFilterVehicle() {
-        if ((viewModel.filterItems.size != 2 && viewModel.filterItems[0].itemId == null)) {
+        if (viewModel.getVehicleFilterVisibility()) {
             text_view_trips_synthesis.visibility = View.VISIBLE
             filter_view_vehicle.visibility = View.VISIBLE
         }
