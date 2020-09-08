@@ -75,4 +75,6 @@
    <string name="dk_driverdata_weather_rain">con la pioggia</string>
    <string name="dk_driverdata_weather_snow">in nevicata</string>
    <string name="dk_driverdata_weather_sun">Con il sereno</string>
+   <string name="dk_driverdata_default_filter_item">Tutti i miei viaggi</string>
+   <string name="dk_driverdata_no_trip_placeholder">Non hai ancora fatto nessun viaggio con questo veicolo.</string>
 </resources>

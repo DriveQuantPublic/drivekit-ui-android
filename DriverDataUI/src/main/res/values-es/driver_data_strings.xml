@@ -75,4 +75,6 @@
    <string name="dk_driverdata_weather_rain">con tiempo lluvioso</string>
    <string name="dk_driverdata_weather_snow">in nevicata</string>
    <string name="dk_driverdata_weather_sun">En tiempo despejado</string>
+   <string name="dk_driverdata_default_filter_item">Todos mis viajes</string>
+   <string name="dk_driverdata_no_trip_placeholder">Aún no has hecho ningún viaje con este vehículo.</string>
 </resources>

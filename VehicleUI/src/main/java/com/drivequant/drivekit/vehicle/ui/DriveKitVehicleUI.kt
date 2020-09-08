@@ -176,7 +176,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         if (newVehicleList.isNotEmpty()) {
             for (vehicle in newVehicleList) {
                 val title = vehicle?.buildFormattedName(context) ?: kotlin.run {
-                    DKResource.convertToString(context, "dk_driverdata_default_filter_option")
+                    DKResource.convertToString(context, "dk_driverdata_default_filter_item")
                 }
                 vehiclesFilterItems.add(
                     FilterItem(

@@ -75,8 +75,6 @@
    <string name="dk_driverdata_weather_rain">Rainy weather</string>
    <string name="dk_driverdata_weather_snow">Snowy weather</string>
    <string name="dk_driverdata_weather_sun">Clear weather</string>
-
-   <!--//TODO translate-->
-   <string name="dk_driverdata_default_filter_option">All my trips</string>
-   <string name="trip_list_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
+   <string name="dk_driverdata_default_filter_item">All my trips</string>
+   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
 </resources>

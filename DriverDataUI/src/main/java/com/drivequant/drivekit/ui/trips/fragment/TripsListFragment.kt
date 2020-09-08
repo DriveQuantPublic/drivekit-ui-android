@@ -26,6 +26,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.adapter.TripsListAdapter
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
+import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
 import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
@@ -135,6 +136,7 @@ class TripsListFragment : Fragment() {
 
     private fun displayNoTrips() {
         val view = if (adapter != null) {
+            text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
             no_trips

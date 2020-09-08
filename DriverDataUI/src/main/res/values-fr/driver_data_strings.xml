@@ -75,4 +75,6 @@
    <string name="dk_driverdata_weather_rain">Temps pluvieux</string>
    <string name="dk_driverdata_weather_snow">Temps neigeux</string>
    <string name="dk_driverdata_weather_sun">Temps clair</string>
+   <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
+   <string name="dk_driverdata_no_trip_placeholder">Vous n\'avez pas encore réalisé de trajets avec ce véhicule.</string>
 </resources>

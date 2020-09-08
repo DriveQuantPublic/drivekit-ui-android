@@ -75,4 +75,6 @@
    <string name="dk_driverdata_weather_rain">bei regnerischem Wetter</string>
    <string name="dk_driverdata_weather_snow">bei Schneefall</string>
    <string name="dk_driverdata_weather_sun">bei klarem Wetter</string>
+   <string name="dk_driverdata_default_filter_item">Alle meine Reisen</string>
+   <string name="dk_driverdata_no_trip_placeholder">Du hast noch keine Fahrten mit diesem Fahrzeug gemacht.</string>
 </resources>
