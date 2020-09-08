@@ -52,12 +52,8 @@ fun List<Trip>.orderByDay(orderDesc: Boolean): MutableList<TripsByDate> {
             for (i in this.indices) {
                 if (this[i].endDate.isSameDay(currentDay)) {
                     dayTrips.add(this[i])
-                    if (i == this.size - 1) {
-                        val tripsByDate = TripsByDate(currentDay, dayTrips)
-                        tripsSorted.add(tripsByDate)
-                    }
                 } else {
-                    if (!orderDesc) {
+                    if (orderDesc) {
                         dayTrips = dayTrips.asReversed()
                     }
                     val tripsByDate = TripsByDate(currentDay, dayTrips)
@@ -66,9 +62,9 @@ fun List<Trip>.orderByDay(orderDesc: Boolean): MutableList<TripsByDate> {
                     currentDay = this[i].endDate
                     dayTrips = mutableListOf()
                     dayTrips.add(this[i])
-                    if (i == this.size - 1) {
-                        tripsSorted.add(TripsByDate(currentDay, dayTrips))
-                    }
+                }
+                if (i == this.size - 1) {
+                    tripsSorted.add(TripsByDate(currentDay, dayTrips))
                 }
             }
         } else {
