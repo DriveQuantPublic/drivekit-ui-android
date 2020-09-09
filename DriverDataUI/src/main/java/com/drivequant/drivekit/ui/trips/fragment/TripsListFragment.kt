@@ -35,20 +35,20 @@ class TripsListFragment : Fragment() {
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
         initFilterView()
-        filter_view_vehicle.spinner.onItemSelectedListener = object :
-            OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>?,
-                view: View,
-                position: Int,
-                l: Long) {
-                viewModel.currentFilterItemPosition = position
-                if (adapter != null) {
+        filter_view_vehicle.spinner.post {
+            filter_view_vehicle.spinner.onItemSelectedListener = object :
+                OnItemSelectedListener {
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>?,
+                    view: View,
+                    position: Int,
+                    l: Long) {
+                    viewModel.currentFilterItemPosition = position
                     updateTrips(SynchronizationType.CACHE)
-                }
-            }
 
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+                }
+                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+            }
         }
         viewModel.tripsData.observe(this, Observer {
             if (viewModel.syncStatus == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
