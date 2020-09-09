@@ -49,9 +49,8 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun filterTrips() {
-        val whereReference = DriveKitDriverData.tripsQuery()
-        val trips =filterItems[currentFilterItemPosition].itemId?.let {
-            whereReference.whereEqualTo("vehicleId", it as String).query().execute()
+        val trips = filterItems[currentFilterItemPosition].itemId?.let {
+            allTrips.filter { it1 -> it1.vehicleId == it as String }
         } ?: kotlin.run {
             allTrips
         }
