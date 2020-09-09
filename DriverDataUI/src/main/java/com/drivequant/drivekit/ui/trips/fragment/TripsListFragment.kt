@@ -43,8 +43,9 @@ class TripsListFragment : Fragment() {
                 position: Int,
                 l: Long) {
                 viewModel.currentFilterItemPosition = position
-                viewModel.fetchTrips(
-                    false, SynchronizationType.CACHE)
+                if (adapter != null) {
+                    updateTrips(SynchronizationType.CACHE)
+                }
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
@@ -104,9 +105,9 @@ class TripsListFragment : Fragment() {
         viewModel.getVehiclesFilterItems(requireContext())
     }
 
-    private fun updateTrips() {
+    private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         updateProgressVisibility(true)
-        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, SynchronizationType.DEFAULT)
+        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, synchronizationType)
     }
 
     private fun displayNoTrips() {
