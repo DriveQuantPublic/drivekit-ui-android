@@ -4,10 +4,10 @@
    <string name="dk_perm_utils_app_diag_activity_link">Permitir el acceso al seguimiento de la actividad</string>
    <string name="dk_perm_utils_app_diag_activity_ok">La aplicación utiliza el seguimiento de actividad de su teléfono para detectar y analizar sus rutas. No puede funcionar si no permite que la aplicación acceda al seguimiento de actividades.</string>
    <string name="dk_perm_utils_app_diag_activity_title">Seguimiento de la actividad</string>
-   <string name="dk_perm_utils_app_diag_app_ko_plural">¡Se detectaron %s problemas!</string>
-   <string name="dk_perm_utils_app_diag_app_ko_singular">¡Se ha detectado %s problema!</string>
+   <string name="dk_perm_utils_app_diag_app_ko_plural">¡Se detectaron %d problemas!</string>
+   <string name="dk_perm_utils_app_diag_app_ko_singular">¡Se ha detectado %d problema!</string>
    <string name="dk_perm_utils_app_diag_app_ko_text">La aplicación requiere su intervención para adaptar la configuración de su teléfono. Para operar la aplicación, debe seguir las instrucciones a continuación.</string>
-   <string name="dk_perm_utils_app_diag_auto_reset_ko">La función de supresión automática de autorizaciones está activada. Se le pide que cambie esta configuración para permitir que la aplicación funcione con normalidad.</string>
+   <string name="dk_perm_utils_app_diag_auto_reset_ko">La función de supresión automática de autorizaciones está activada. Se le pide que cambie esta configuración para permitir que la aplicación funcione con normalidad. Para ello, ve a \"Permisos\" y desmarca \"Quitar permisos si la aplicación no se utilisa\" en la parte inferior de la pantalla.</string>
    <string name="dk_perm_utils_app_diag_auto_reset_link">Desactivar la supresión automática de autorizaciones</string>
    <string name="dk_perm_utils_app_diag_auto_reset_ok">El borrado automático de los permisos está desactivado. Si activa esta función, la aplicación ya no podrá registrar sus viajes automáticamente.</string>
    <string name="dk_perm_utils_app_diag_auto_reset_title">No elimine las autorizaciones</string>
@@ -24,7 +24,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Autorización para acceder al seguimiento de la actividad:</string>
    <string name="dk_perm_utils_app_diag_email_app">Aplicación:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Versión de la aplicación:</string>
-   <string name="dk_perm_utils_app_diag_email_auto_reset">Eliminación automática de las autorizaciones :</string>
+   <string name="dk_perm_utils_app_diag_email_auto_reset">Mantener las permisos :</string>
    <string name="dk_perm_utils_app_diag_email_battery">Optimización de la batería:</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Sensor de Bluetooth:</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motivo (comentarios):</string>
@@ -56,7 +56,9 @@
    <string name="dk_perm_utils_app_diag_log_folder">Acceda al archivo de registro de actividad</string>
    <string name="dk_perm_utils_app_diag_log_ko">El registro está desactivado. En caso de un mal funcionamiento de la aplicación, recomendamos que se permita el registro para facilitar el diagnóstico.</string>
    <string name="dk_perm_utils_app_diag_log_link">Permita que se escriba el registro de actividades en su smartphone.</string>
-   <string name="dk_perm_utils_app_diag_log_ok">El registro está activo. Este archivo contiene eventos que son importantes para analizar el comportamiento de la aplicación.</string>
+   <string name="dk_perm_utils_app_diag_log_ok">El registro está activo. Este archivo contiene eventos que son importantes para analizar el comportamiento de la aplicación. Se almacena en la carpeta %s.</string>
+   <string name="dk_perm_utils_app_diag_log_ok_android11">El registro está activo. Este archivo contiene eventos que son importantes para analizar el comportamiento de la aplicación.</string>
+   <string name="dk_perm_utils_app_diag_log_ok_contact_mail">El registro está activado. Este archivo contiene eventos importantes para analizar el comportamiento de la aplicación. Se adjuntará automáticamente al correo electrónico de contacto de apoyo.</string>
    <string name="dk_perm_utils_app_diag_log_title">Grabar el log de actividad</string>
    <string name="dk_perm_utils_app_diag_network_ko">I dati mobili non sono abilitati. Ciò non bloccherà il rilevamento del viaggio e la registrazione del viaggio. D\'altra parte, i dati mobili sono essenziali per analizzare i dati del tuo viaggio. Se i dati mobili sono disabilitati, il viaggio non verrà perso ma i risultati del viaggio verranno visualizzati solo dopo la riconnessione a una rete mobile.</string>
    <string name="dk_perm_utils_app_diag_network_link">Habilitar datos móviles</string>

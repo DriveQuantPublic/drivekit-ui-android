@@ -17,14 +17,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.content.res.Resources
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -42,8 +41,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
-import java.io.File
-import java.util.*
+
 
 class AppDiagnosisActivity : RequestPermissionActivity() {
 
@@ -209,26 +207,51 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
+    private fun getIndexOfNthOccurrence(path: String, subString: String, occurrence: Int): Int {
+        var index = 0
+        var nbOccurrence = 0
+        while (nbOccurrence < occurrence && index != -1) {
+            index = path.indexOf(subString, index + subString.length)
+            nbOccurrence++
+        }
+        return index
+    }
+
     private fun checkExternalStorage() {
         val loggingStatus = checkLoggingStatus()
         switch_enable_logging.isChecked = loggingStatus
-        val descriptionId = if (loggingStatus) {
-            "dk_perm_utils_app_diag_log_ok"
+        val description = if (loggingStatus) {
+            handleLoggingDescription()
         } else {
-            "dk_perm_utils_app_diag_log_ko"
+            DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
         }
 
-        text_view_logging_description.text = DKResource.convertToString(this, descriptionId)
+        text_view_logging_description.text = SpannableString.valueOf(description)
         switch_enable_logging.setOnClickListener {
-            val loggingDescriptionId = if (switch_enable_logging.isChecked) {
+            val loggingDescription = if (switch_enable_logging.isChecked) {
                 DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
-                "dk_perm_utils_app_diag_log_ok"
+                handleLoggingDescription()
             } else {
                 DriveKit.disableLogging()
-                "dk_perm_utils_app_diag_log_ko"
+                DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
             }
-            text_view_logging_description.text =
-                DKResource.convertToString(this, loggingDescriptionId)
+            text_view_logging_description.text = SpannableString.valueOf(loggingDescription)
+        }
+    }
+
+
+    private fun handleLoggingDescription() : Spannable {
+      return  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+           SpannableString.valueOf(DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ok_android11"))
+        } else {
+            var path = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile).path
+            path = path.substring(getIndexOfNthOccurrence(path, "/", 3))
+            DKResource.buildString(
+                this,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.mainFontColor(),
+                "dk_perm_utils_app_diag_log_ok",
+                path)
         }
     }
 
@@ -357,8 +380,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                         DriveKitLog.getLogUriFile(this)?.let {
                             intent.putExtra(Intent.EXTRA_STREAM, it)
                         }
-                        startActivity(intent)
                     }
+                    startActivity(intent)
                 }
             }
         }

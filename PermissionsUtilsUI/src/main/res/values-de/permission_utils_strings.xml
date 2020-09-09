@@ -4,10 +4,10 @@
    <string name="dk_perm_utils_app_diag_activity_link">Zugriff auf die Aktivitätsverfolgung ermöglichen</string>
    <string name="dk_perm_utils_app_diag_activity_ok">Die Anwendung verwendet die Aktivitätsverfolgung Ihres Telefons, um Ihre Routen zu erkennen und zu analysieren. Es kann nicht funktionieren, wenn Sie der Anwendung nicht erlauben, auf die Aktivitätsverfolgung zuzugreifen.</string>
    <string name="dk_perm_utils_app_diag_activity_title">Nachverfolgung der Aktivität</string>
-   <string name="dk_perm_utils_app_diag_app_ko_plural">%s Probleme wurden festgestellt!</string>
-   <string name="dk_perm_utils_app_diag_app_ko_singular">%s Problem wurde festgestellt!</string>
+   <string name="dk_perm_utils_app_diag_app_ko_plural">%d Probleme wurden festgestellt!</string>
+   <string name="dk_perm_utils_app_diag_app_ko_singular">%d Problem wurde festgestellt!</string>
    <string name="dk_perm_utils_app_diag_app_ko_text">Die Anwendung erfordert Ihr Eingreifen, um die Einstellungen Ihres Telefons anzupassen. Um die Anwendung zu bedienen, müssen Sie die folgenden Anweisungen befolgen.</string>
-   <string name="dk_perm_utils_app_diag_auto_reset_ko">Die Funktion zum automatischen Löschen von Berechtigungen ist aktiviert. Sie werden aufgefordert, diese Einstellung zu ändern, damit die Anwendung normal funktionieren kann.</string>
+   <string name="dk_perm_utils_app_diag_auto_reset_ko">Die Funktion zum automatischen Löschen von Berechtigungen ist aktiviert. Sie werden aufgefordert, diese Einstellung zu ändern, damit die Anwendung normal funktionieren kann. Gehen Sie dazu auf \"Berechtigungen\" und deaktivieren Sie \"Berechtigungen entfermen, wenn die App nicht verwendet wird\" am unteren Rand des Bildschirms.</string>
    <string name="dk_perm_utils_app_diag_auto_reset_link">Deaktivieren der automatischen Löschung von Berechtigungen</string>
    <string name="dk_perm_utils_app_diag_auto_reset_ok">Das automatische Löschen von Berechtigungen ist deaktiviert. Wenn Sie diese Funktion aktivieren, kann die Anwendung Ihre Fahrten nicht mehr automatisch erfassen.</string>
    <string name="dk_perm_utils_app_diag_auto_reset_title">Berechtigungen nicht löschen</string>
@@ -24,7 +24,7 @@
    <string name="dk_perm_utils_app_diag_email_activity">Berechtigung zum Zugriff auf die Aktivitätsverfolgung:</string>
    <string name="dk_perm_utils_app_diag_email_app">Anwendung:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Version der Anwendung:</string>
-   <string name="dk_perm_utils_app_diag_email_auto_reset">Automatische Löschung von Berechtigungen :</string>
+   <string name="dk_perm_utils_app_diag_email_auto_reset">Pflege der berechtigungen:</string>
    <string name="dk_perm_utils_app_diag_email_battery">Optimierung der Batterie:</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Bluetooth-Sensor:</string>
    <string name="dk_perm_utils_app_diag_email_comment">Begründung (Kommentare) :</string>
@@ -56,7 +56,9 @@
    <string name="dk_perm_utils_app_diag_log_folder">Zugriff auf die Aktivitätsprotokolldatei</string>
    <string name="dk_perm_utils_app_diag_log_ko">Die Protokollierung ist deaktiviert. Im Falle einer Fehlfunktion in der Anwendung empfehlen wir Ihnen, die Protokollierung zur einfachen Diagnose zuzulassen.</string>
    <string name="dk_perm_utils_app_diag_log_link">Erlauben Sie das Schreiben des Aktivitätsprotokolls auf Ihr Smartphone.</string>
-   <string name="dk_perm_utils_app_diag_log_ok">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind.</string>
+   <string name="dk_perm_utils_app_diag_log_ok">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind. Sie wird im Ordner %s gespeichert.</string>
+   <string name="dk_perm_utils_app_diag_log_ok_android11">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind.</string>
+   <string name="dk_perm_utils_app_diag_log_ok_contact_mail">Die Protokollierung ist aktiviert. Diese Datei enthält wichtige Ereignisse, um das Verhalten der Anwendung zu analysieren. Sie wird automatisch an die E-Mail des Support-Kontaktes angehängt.</string>
    <string name="dk_perm_utils_app_diag_log_title">Sichern Sie das Aktivitätsprotokoll</string>
    <string name="dk_perm_utils_app_diag_network_ko">Mobile Daten sind nicht aktiviert. Dies blockiert nicht die Auslöseerkennung und die Auslöseaufnahme. Auf der anderen Seite sind mobile Daten wesentlich für die Analyse der Daten Ihrer Fahrten. Wenn mobile Daten deaktiviert sind, geht die Fahrt nicht verloren, die Ergebnisse werden jedoch erst angezeigt, nachdem Sie sich erneut mit einem Mobilfunknetz verbunden haben.</string>
    <string name="dk_perm_utils_app_diag_network_link">Mobile Daten aktivieren</string>

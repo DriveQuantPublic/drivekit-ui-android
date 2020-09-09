@@ -4,10 +4,10 @@
     <string name="dk_perm_utils_app_diag_activity_link">Allow access to activity monitoring</string>
     <string name="dk_perm_utils_app_diag_activity_ok">The application uses your phone\'s activity monitoring to detect and analyze your trips. It can\'t work if you don\'t allow the application to access activity monitoring.</string>
     <string name="dk_perm_utils_app_diag_activity_title">Activity monitoring</string>
-    <string name="dk_perm_utils_app_diag_app_ko_plural">%s problems were detected!</string>
-    <string name="dk_perm_utils_app_diag_app_ko_singular">%s problem has been detected!</string>
+    <string name="dk_perm_utils_app_diag_app_ko_plural">%d problems were detected!</string>
+    <string name="dk_perm_utils_app_diag_app_ko_singular">%d problem has been detected!</string>
     <string name="dk_perm_utils_app_diag_app_ko_text">The application requires your intervention to adapt the settings of your phone. In order for the app to record your trips, you need to follow the directions below.</string>
-    <string name="dk_perm_utils_app_diag_auto_reset_ko">The automatic deletion of authorizations function is enabled. Please change this setting to ensure that the application runs normally.</string>
+    <string name="dk_perm_utils_app_diag_auto_reset_ko">The automatic deletion of authorizations function is enabled. Please change this setting to ensure that the application runs normally. To do this, go to \"Permissions\" and uncheck \"Remove permission if app isnt\'t used\" at the bottom of the screen.</string>
     <string name="dk_perm_utils_app_diag_auto_reset_link">Disable automatic deletion of authorizations</string>
     <string name="dk_perm_utils_app_diag_auto_reset_ok">Automatic deletion of permissions is disabled. If you enable this feature, the application will no longer be able to record your trips automatically.</string>
     <string name="dk_perm_utils_app_diag_auto_reset_title">Do not delete permissions</string>
@@ -24,7 +24,7 @@
     <string name="dk_perm_utils_app_diag_email_activity">Authorization to access activity monitoring:</string>
     <string name="dk_perm_utils_app_diag_email_app">Application:</string>
     <string name="dk_perm_utils_app_diag_email_app_version">Version of the application:</string>
-    <string name="dk_perm_utils_app_diag_email_auto_reset">Automatic suppression of authorizations :</string>
+    <string name="dk_perm_utils_app_diag_email_auto_reset">Retaining permissions:</string>
     <string name="dk_perm_utils_app_diag_email_battery">Optimization of the battery:</string>
     <string name="dk_perm_utils_app_diag_email_bluetooth">Bluetooth sensor:</string>
     <string name="dk_perm_utils_app_diag_email_comment">Comment :</string>
@@ -56,7 +56,9 @@
     <string name="dk_perm_utils_app_diag_log_folder">Access the activity log file</string>
     <string name="dk_perm_utils_app_diag_log_ko">Logging is disabled. In case something goes wrong with the application, we recommend that you allow logging for diagnostic purposes.</string>
     <string name="dk_perm_utils_app_diag_log_link">Allow the activity log to be written to your smartphone.</string>
-    <string name="dk_perm_utils_app_diag_log_ok">Logging is enabled. This file contains events that are important for analyzing the application\'s behavior.</string>
+    <string name="dk_perm_utils_app_diag_log_ok">Logging is enabled. This file contains events that are important for analyzing the application\'s behavior. It is stored in the %s folder.</string>
+    <string name="dk_perm_utils_app_diag_log_ok_android11">Logging is enabled. This file contains events that are important for analyzing the application\'s behavior.</string>
+    <string name="dk_perm_utils_app_diag_log_ok_contact_mail">Logging is enabled. This file contains important events for analyzing the application\'s behavior. It will be automatically attached to the support contact email.</string>
     <string name="dk_perm_utils_app_diag_log_title">Enable app activity logging</string>
     <string name="dk_perm_utils_app_diag_network_ko">Mobile data is not enabled. This will not block the trip detection and trip recording. On the other hand, mobile data is essential for analyzing the data of your trip. If mobile data is disabled, the trip will not be lost but trip results will be displayed only after reconnecting to a mobile network.</string>
     <string name="dk_perm_utils_app_diag_network_link">Enable mobile data</string>
@@ -76,7 +78,7 @@
     <string name="dk_perm_utils_permissions_location_text2_post_android10">To do this, choose \"Allow all the time\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_text2_pre_android10">To do this, choose \"Allow\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_text3_android11">In order to enjoy the automatic recording of your trips, the application must access the phone location when it is running in the background.</string>
-    <string name="dk_perm_utils_permissions_location_text4_android11">To do this, press the \"open settings\" button and select the \"%s\" option in the phone settings.</string>
+    <string name="dk_perm_utils_permissions_location_text4_android11">To do this, press the \"open settings\" button and select the %s option in the phone settings.</string>
     <string name="dk_perm_utils_permissions_location_title">Trip recording</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_button">Authorize activity monitoring</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">To improve the analysis of your trips and identify the mode of transport used, you must allow the application to access the phone activity.</string>
