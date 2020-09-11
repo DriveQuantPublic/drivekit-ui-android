@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -92,7 +93,7 @@ class TripsListFragment : Fragment() {
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let {
-                TripDetailActivity.launchActivity(requireContext(), it.itinId)
+                TripDetailActivity.launchActivity(requireActivity(), it.itinId)
             }
             false
         }
@@ -105,7 +106,7 @@ class TripsListFragment : Fragment() {
         viewModel.getVehiclesFilterItems(requireContext())
     }
 
-    private fun updateTrips() {
+    fun updateTrips() {
         updateProgressVisibility(true)
         viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, SynchronizationType.DEFAULT)
     }

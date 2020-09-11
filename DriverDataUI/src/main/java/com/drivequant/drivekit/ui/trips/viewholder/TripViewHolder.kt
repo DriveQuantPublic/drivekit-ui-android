@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
+import android.app.Activity
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -116,7 +117,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 textView.visibility = View.GONE
             }
             tripInfoItem.setOnClickListener {
-                TripDetailActivity.launchActivity(itemView.context,
+                TripDetailActivity.launchActivity(itemView.context as Activity,
                     trip.itinId,
                     openAdvice = true)
             }
