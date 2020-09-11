@@ -3,7 +3,6 @@
     package="com.drivequant.drivekit.permissionsutils">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application>
         <activity
