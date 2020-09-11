@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import kotlinx.android.synthetic.main.fragment_trips_list.*
 
@@ -28,7 +29,7 @@ class TripsListActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 103) {
+        if (requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
             fragment.updateTrips()
             fragment.filter_view_vehicle.spinner.setSelection(0, false)
         }
