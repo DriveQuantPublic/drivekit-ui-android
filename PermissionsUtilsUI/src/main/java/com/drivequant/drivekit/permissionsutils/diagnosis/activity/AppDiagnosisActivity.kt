@@ -207,16 +207,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun getIndexOfNthOccurrence(path: String, subString: String, occurrence: Int): Int {
-        var index = 0
-        var nbOccurrence = 0
-        while (nbOccurrence < occurrence && index != -1) {
-            index = path.indexOf(subString, index + subString.length)
-            nbOccurrence++
-        }
-        return index
-    }
-
     private fun checkExternalStorage() {
         val loggingStatus = checkLoggingStatus()
         switch_enable_logging.isChecked = loggingStatus
@@ -239,19 +229,27 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
+    private fun getUserFriendlyPath() : String {
+        val path = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile).path
+        return path.substring("storage/emulated/0/".lastIndex + 1)
+    }
 
-    private fun handleLoggingDescription() : Spannable {
-      return  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-           SpannableString.valueOf(DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ok_android11"))
+    private fun handleLoggingDescription(): Spannable {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            SpannableString.valueOf(
+                DKResource.convertToString(
+                    this,
+                    "dk_perm_utils_app_diag_log_ok_android11"
+                )
+            )
         } else {
-            var path = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile).path
-            path = path.substring(getIndexOfNthOccurrence(path, "/", 3))
             DKResource.buildString(
                 this,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.mainFontColor(),
                 "dk_perm_utils_app_diag_log_ok",
-                path)
+                getUserFriendlyPath()
+            )
         }
     }
 
