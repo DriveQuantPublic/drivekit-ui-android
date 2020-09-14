@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
@@ -33,35 +34,44 @@ object DiagnosisHelper {
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
-    fun hasFineLocationPermission(context: Context): Boolean = ContextCompat.checkSelfPermission(
-        context,
+    fun hasFineLocationPermission(activity: Activity): Boolean = ActivityCompat.checkSelfPermission(
+        activity,
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
-    fun hasBackgroundLocationApproved(context: Context): Boolean =
-        ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+    fun hasBackgroundLocationApproved(activity: Activity): Boolean =
+        ActivityCompat.checkSelfPermission(activity.applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-    fun getLocationStatus(context: Context): PermissionStatus {
-        if (!hasFineLocationPermission(context)) {
+    fun getLocationStatus(activity: Activity): PermissionStatus {
+        if (!hasFineLocationPermission(activity)) {
             return PermissionStatus.NOT_VALID
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (!hasBackgroundLocationApproved(context)) {
+            if (!hasBackgroundLocationApproved(activity)) {
                 return PermissionStatus.NOT_VALID
             }
         }
         return PermissionStatus.VALID
     }
 
-    fun getActivityStatus(context: Context): PermissionStatus {
+    fun getActivityStatus(activity: Activity): PermissionStatus {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ContextCompat.checkSelfPermission(
-                    context,
+            if (ActivityCompat.checkSelfPermission(
+                    activity,
                     Manifest.permission.ACTIVITY_RECOGNITION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
+                PermissionStatus.VALID
+            } else {
+                PermissionStatus.NOT_VALID
+            }
+        } else {
+            PermissionStatus.VALID
+        }
+    }
+
+    fun getAutoResetStatus(activity: Activity): PermissionStatus {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            if (activity.packageManager.isAutoRevokeWhitelisted){
                 PermissionStatus.VALID
             } else {
                 PermissionStatus.NOT_VALID
@@ -114,16 +124,23 @@ object DiagnosisHelper {
         }
     }
 
-    fun getPermissionStatus(context: Context, permissionType: PermissionType): PermissionStatus {
+    fun getPermissionStatus(activity: Activity, permissionType: PermissionType): PermissionStatus {
         return when (permissionType) {
-            PermissionType.LOCATION -> getLocationStatus(context)
+            PermissionType.LOCATION -> getLocationStatus(activity)
 
-            PermissionType.ACTIVITY -> getActivityStatus(context)
+            PermissionType.ACTIVITY -> getActivityStatus(activity)
 
-            PermissionType.NOTIFICATION -> getNotificationStatus(context)
+            PermissionType.NOTIFICATION -> getNotificationStatus(activity)
 
-            PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(context)
+            PermissionType.AUTO_RESET -> getAutoResetStatus(activity)
         }
+    }
+
+    fun buildSettingsIntent(context: Context): Intent {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", context.packageName, null)
+        intent.data = uri
+        return intent
     }
 
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {

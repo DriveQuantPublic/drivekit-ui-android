@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.permissions.model
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -19,35 +19,35 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPer
 enum class PermissionView {
     ACTIVITY, LOCATION, BACKGROUND_TASK;
 
-    fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
-        when (getCurrentPermissionStatus(context)) {
+    fun launchActivity(activity: Activity, permissionViews: ArrayList<PermissionView>) {
+        when (getCurrentPermissionStatus(activity)) {
             PermissionStatus.NOT_VALID -> {
-                context.startActivity(this.buildIntent(context, permissionViews))
+                activity.startActivity(this.buildIntent(activity, permissionViews))
             }
             PermissionStatus.VALID -> {
                 permissionViews.remove(this)
                 if (permissionViews.isEmpty()) {
                     PermissionsUtilsUI.permissionViewListener?.onFinish()
                 } else {
-                    permissionViews.first().launchActivity(context, permissionViews)
+                    permissionViews.first().launchActivity(activity, permissionViews)
                 }
             }
         }
     }
 
-    private fun getCurrentPermissionStatus(context: Context): PermissionStatus {
+    private fun getCurrentPermissionStatus(activity: Activity): PermissionStatus {
         return when (this) {
-            LOCATION -> DiagnosisHelper.getLocationStatus(context)
-            ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
-            BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
+            LOCATION -> DiagnosisHelper.getLocationStatus(activity)
+            ACTIVITY -> DiagnosisHelper.getActivityStatus(activity)
+            BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(activity)
         }
     }
 
-    private fun buildIntent(context: Context, permissionViews: ArrayList<PermissionView>): Intent {
+    private fun buildIntent(activity: Activity, permissionViews: ArrayList<PermissionView>): Intent {
         val intent = when (this) {
-            LOCATION -> Intent(context, LocationPermissionActivity::class.java)
-            ACTIVITY -> Intent(context, ActivityRecognitionPermissionActivity::class.java)
-            BACKGROUND_TASK -> Intent(context, BackgroundTaskPermissionActivity::class.java)
+            LOCATION -> Intent(activity, LocationPermissionActivity::class.java)
+            ACTIVITY -> Intent(activity, ActivityRecognitionPermissionActivity::class.java)
+            BACKGROUND_TASK -> Intent(activity, BackgroundTaskPermissionActivity::class.java)
         }
         intent.putExtra(PERMISSION_VIEWS_LIST_EXTRA, permissionViews)
         intent.flags = FLAG_ACTIVITY_NEW_TASK

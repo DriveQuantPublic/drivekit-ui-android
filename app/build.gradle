@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.example.drivekitdemoapp"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "$drivekitui_version"
         multiDexEnabled true
@@ -37,9 +37,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.0"
-    implementation "com.drivequant.drivekit:drivekit-driver-data:1.6.0"
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.0"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.1-beta1"
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.6.1-beta1"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.1-beta1"
 
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 

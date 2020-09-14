@@ -3,23 +3,15 @@ package com.drivekit.demoapp.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.drivekit.demoapp.utils.PermissionUtils
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
-import com.drivequant.drivekit.driverachievement.ui.rankings.activity.RankingActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
@@ -29,11 +21,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val permissionUtils = PermissionUtils()
-    private val REQUEST_LOCATION = 0
-    private val REQUEST_LOGGING = 1
-    private val REQUEST_ACTIVITY = 2
-
     private var menu: Menu? = null
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -42,11 +29,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setSupportActionBar(dk_toolbar)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        handlePermissionButtonsVisibility()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -87,8 +69,8 @@ class MainActivity : AppCompatActivity() {
 
     fun onPermissionUtilsClicked(view: View) {
         val permissionViews = arrayListOf(
-            PermissionView.ACTIVITY,
             PermissionView.LOCATION,
+            PermissionView.ACTIVITY,
             PermissionView.BACKGROUND_TASK
         )
         PermissionsUtilsUI.showPermissionViews(
@@ -103,9 +85,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onAppDiagClicked(view: View) {
-        DriveKitNavigationController.permissionsUtilsUIEntryPoint?.let {
-            it.startAppDiagnosisActivity(this@MainActivity)
-        }
+        DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this@MainActivity)
     }
 
     fun buttonTripClicked(view: View){
@@ -136,92 +116,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            REQUEST_LOCATION -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    handlePermissionButtonsVisibility()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)){
-                            launchSettingsIntent()
-                        }
-                    } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                        launchSettingsIntent()
-                    }
-                }
-                return
-            }
-            REQUEST_ACTIVITY -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    handlePermissionButtonsVisibility()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACTIVITY_RECOGNITION)){
-                            launchSettingsIntent()
-                        }
-                    }
-                }
-            }
-            REQUEST_LOGGING -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    handlePermissionButtonsVisibility()
-                } else {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                        launchSettingsIntent()
-                    }
-                }
-                return
-            }
-            else -> {
-                // Ignore all other requests.
-            }
-        }
-    }
-
-    fun permissionClicked(view: View){
-        when (view.id){
-            R.id.button_location -> { permissionUtils.checkLocationPermission(this, REQUEST_LOCATION) }
-            R.id.button_activity -> { permissionUtils.checkActivityRecognitionPermission(this, REQUEST_ACTIVITY) }
-            R.id.button_battery -> { permissionUtils.checkBatteryOptimization(this) }
-            R.id.button_storage -> { permissionUtils.checkLoggingPermission(this, REQUEST_LOGGING) }
-        }
-    }
-
-    private fun handlePermissionButtonsVisibility(){
-        if (!permissionUtils.isLocationAuthorize(this)){
-            button_location.visibility = View.VISIBLE
-        } else {
-            button_location.visibility = View.GONE
-        }
-
-        if (!permissionUtils.isActivityRecognitionAuthorize(this)){
-            button_activity.visibility = View.VISIBLE
-        } else {
-            button_activity.visibility = View.GONE
-        }
-
-        if (!permissionUtils.isIgnoringBatteryOptimizations(this)){
-            button_battery.visibility = View.VISIBLE
-        } else {
-            button_battery.visibility = View.GONE
-        }
-
-        val logPath = DriveKitSharedPreferencesUtils.contains("drivekit-logging")
-        if (logPath && !permissionUtils.isLoggingAuthorize(this)){
-            button_storage.visibility = View.VISIBLE
-        } else {
-            button_storage.visibility = View.GONE
-        }
-    }
-
-    private fun launchSettingsIntent(){
-        val intent = Intent()
-        val packageName = packageName
-        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        intent.data = Uri.parse("package:$packageName")
-        startActivity(intent)
     }
 }

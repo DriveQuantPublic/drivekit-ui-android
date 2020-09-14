@@ -24,7 +24,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -77,17 +76,6 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
         DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
-
-        PermissionsUtilsUI.configureBluetooth(true)
-        PermissionsUtilsUI.configureDiagnosisLogs(true)
-        PermissionsUtilsUI.configureLogPathFile("/DQ-demo-test/")
-        PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String = getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
-            override fun overrideMailBodyContent(): Boolean = false
-        }))
     }
 
     private fun createNotificationChannel() {
@@ -141,7 +129,6 @@ class DriveKitDemoApplication: Application(), ContentMail, VehiclePickerExtraSte
         val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
         if (firstLaunch){
             DriveKitTripAnalysis.activateAutoStart(true)
-            DriveKit.enableLogging("/DriveKit")
             DriveKitTripAnalysis.setStopTimeOut(4*60)
             DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
         }
