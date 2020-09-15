@@ -74,7 +74,7 @@
    <string name="dk_perm_utils_permissions_location_button_android">Standort zulassen</string>
    <string name="dk_perm_utils_permissions_location_text1_android">Die Anwendung muss auf die Position des Telefons zugreifen können, um Ihre Routen zu erkennen und zu analysieren.</string>
    <string name="dk_perm_utils_permissions_location_text1_android11">Die Anwendung muss auf die Position des Telefons zugreifen können, um Ihre Routen zu erkennen und zu analysieren.</string>
-   <string name="dk_perm_utils_permissions_location_text2_android11">Wählen Sie dazu die Option \"Zugriff nur während der App zulassen\", nachdem Sie die Schaltfläche unten gedrückt haben.</string>
+   <string name="dk_perm_utils_permissions_location_text2_android11">Wählen Sie dazu die Option <b>\"Bei Nutzung der App\"</b>, nachdem Sie die Schaltfläche unten gedrückt haben.</string>
    <string name="dk_perm_utils_permissions_location_text2_post_android10">Wählen Sie dazu bei der Anzeige des nächsten Popups \"Immer zulassen\".</string>
    <string name="dk_perm_utils_permissions_location_text2_pre_android10">Wählen Sie dazu bei der Anzeige des nächsten Popups \"Zulassen\".</string>
    <string name="dk_perm_utils_permissions_location_text3_android11">Um die Vorteile der automatischen Aufzeichnung Ihrer Reisen nutzen zu können, muss die Anwendung auf den Standort des Telefons zugreifen, wenn es im Hintergrund läuft.</string>
