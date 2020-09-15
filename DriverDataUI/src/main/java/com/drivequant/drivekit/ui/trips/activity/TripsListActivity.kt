@@ -29,9 +29,13 @@ class TripsListActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
-            fragment.updateTrips()
-            fragment.filter_view_vehicle.spinner.setSelection(0, false)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
+                fragment.apply {
+                    updateTrips()
+                    filter_view_vehicle.spinner.setSelection(0, false)
+                }
+            }
         }
     }
 }
