@@ -37,12 +37,12 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     fun showPermissionViews(
-        activity: Activity,
+        context: Context,
         permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener
     ) {
         this.permissionViewListener = permissionViewListener
-        permissionView.first().launchActivity(activity, permissionView)
+        permissionView.first().launchActivity(context, permissionView)
     }
 
     override fun startAppDiagnosisActivity(context: Context) =
