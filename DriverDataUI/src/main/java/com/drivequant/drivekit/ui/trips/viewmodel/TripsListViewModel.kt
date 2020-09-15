@@ -32,32 +32,34 @@ class TripsListViewModel : ViewModel() {
     lateinit var computedSynthesis: Pair<Int, Double>
     var allTrips = listOf<Trip>()
 
-    fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType) {
+    fun fetchTrips(dayTripDescendingOrder: Boolean) {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     syncStatus = status
                     allTrips = trips
-                    computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
-                    tripsByDate = sortTrips(trips, dayTripDescendingOrder)
-                    tripsData.postValue(tripsByDate)
+                    computeTrips(trips, dayTripDescendingOrder)
                 }
-            }, synchronizationType)
+            }, SynchronizationType.DEFAULT)
         } else {
             tripsData.postValue(mutableListOf())
         }
     }
 
-    fun filterTrips() {
+    private fun computeTrips(trips: List<Trip>, dayTripDescendingOrder: Boolean) {
+        computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
+        tripsByDate = sortTrips(trips, dayTripDescendingOrder)
+        tripsData.postValue(tripsByDate)
+    }
+
+    fun filterTrips(dayTripDescendingOrder: Boolean) {
         val trips = filterItems[currentFilterItemPosition].itemId?.let {
             allTrips.filter { it1 -> it1.vehicleId == it as String }
         } ?: kotlin.run {
             allTrips
         }
-        computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
         tripsByDate.clear()
-        tripsByDate = sortTrips(trips, false)
-        tripsData.postValue(tripsByDate)
+        computeTrips(trips, dayTripDescendingOrder)
     }
 
     private fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean): MutableList<TripsByDate> {

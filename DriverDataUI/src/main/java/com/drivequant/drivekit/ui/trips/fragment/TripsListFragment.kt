@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -15,7 +14,6 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -45,8 +43,7 @@ class TripsListFragment : Fragment() {
                     position: Int,
                     l: Long) {
                     viewModel.currentFilterItemPosition = position
-                    viewModel.filterTrips()
-
+                    viewModel.filterTrips(DriverDataUI.dayTripDescendingOrder)
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}
             }
@@ -108,7 +105,7 @@ class TripsListFragment : Fragment() {
 
     fun updateTrips() {
         updateProgressVisibility(true)
-        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, SynchronizationType.DEFAULT)
+        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
     }
 
     private fun displayNoTrips() {
