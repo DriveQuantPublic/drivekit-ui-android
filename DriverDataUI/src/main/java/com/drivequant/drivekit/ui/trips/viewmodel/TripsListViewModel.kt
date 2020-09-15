@@ -32,7 +32,7 @@ class TripsListViewModel : ViewModel() {
     lateinit var computedSynthesis: Pair<Int, Double>
     var allTrips = listOf<Trip>()
 
-    fun fetchTrips(dayTripDescendingOrder: Boolean) {
+    fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
@@ -40,7 +40,7 @@ class TripsListViewModel : ViewModel() {
                     allTrips = trips
                     computeTrips(trips, dayTripDescendingOrder)
                 }
-            }, SynchronizationType.DEFAULT)
+            }, synchronizationType)
         } else {
             tripsData.postValue(mutableListOf())
         }

@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -103,9 +104,9 @@ class TripsListFragment : Fragment() {
         viewModel.getVehiclesFilterItems(requireContext())
     }
 
-    fun updateTrips() {
+    fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         updateProgressVisibility(true)
-        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder)
+        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, synchronizationType)
     }
 
     private fun displayNoTrips() {

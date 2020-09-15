@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
@@ -32,7 +33,7 @@ class TripsListActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             if (requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
                 fragment.apply {
-                    updateTrips()
+                    updateTrips(SynchronizationType.CACHE)
                     filter_view_vehicle.spinner.setSelection(0, false)
                 }
             }
