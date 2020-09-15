@@ -34,6 +34,11 @@ open class BasePermissionActivity : RequestPermissionActivity() {
         }
     }
 
+    protected fun forward(){
+        finish()
+        next()
+    }
+
     protected fun next() {
         nextPermissionViews.remove(nextPermissionViews.first())
         if (nextPermissionViews.isEmpty()) {

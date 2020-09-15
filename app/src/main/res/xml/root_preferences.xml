@@ -26,13 +26,6 @@
             app:defaultValue=""
             />
 
-        <SwitchPreferenceCompat
-            app:key="logging"
-            app:summaryOff="@string/enable_logging_pref_off"
-            app:summaryOn="@string/enable_logging_pref_on"
-            app:title="@string/enable_logging_title"
-            app:icon="@drawable/ic_logging" />
-
         <!-- <SwitchPreferenceCompat
             app:key="sandbox_mode"
             app:summaryOff="@string/sandbox_mode_off"

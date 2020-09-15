@@ -24,7 +24,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand

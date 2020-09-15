@@ -1,14 +1,22 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.view.View
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
@@ -22,38 +30,62 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            text_view_location_permission_text1.text =
+                DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android11")
             text_view_location_permission_text2.text =
-                getString(R.string.dk_perm_utils_permissions_location_text2_post_android10)
+                DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android11")
+        } else {
+            val stringResId = when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
+                    "dk_perm_utils_permissions_location_text2_post_android10"
+                else -> "dk_perm_utils_permissions_location_text2_pre_android10"
+            }
+            text_view_location_permission_text2.text = DKResource.convertToString(this, stringResId)
         }
     }
 
     fun onRequestPermissionClicked(view: View) {
-        checkRequiredPermissions()
+        if (DiagnosisHelper.hasFineLocationPermission(this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
+                request(this,
+                    permissionCallback as OnPermissionCallback,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            } else {
+                checkRequiredPermissions()
+            }
+        } else {
+            checkRequiredPermissions()
+        }
     }
 
     private fun checkRequiredPermissions() {
-        permissionCallback = object :
-            OnPermissionCallback {
+        permissionCallback = object : OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                forward()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    if (permissionName.size == 1 && permissionName.first() == Manifest.permission.ACCESS_FINE_LOCATION) {
+                        checkRequiredPermissions()
+                    } else {
+                        forward()
+                    }
+                } else {
+                    forward()
+                }
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
                     this@LocationPermissionActivity,
                     R.string.dk_perm_utils_app_diag_location_ko_android,
-                    this@LocationPermissionActivity::checkRequiredPermissions
-                )
+                    this@LocationPermissionActivity::checkRequiredPermissions)
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_location_permission.text =
-                    getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
-                handlePermissionTotallyDeclined(
-                    this@LocationPermissionActivity,
-                    R.string.dk_perm_utils_app_diag_location_ko_android
-                )
+                    button_request_location_permission.text =
+                        getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                    handlePermissionTotallyDeclined(
+                        this@LocationPermissionActivity,
+                        R.string.dk_perm_utils_app_diag_location_ko_android)
             }
         }
 
@@ -62,16 +94,48 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 if (DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     forward()
                 } else {
-                    request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        text_view_location_permission_text1.text = DKResource.convertToString(
+                            this,
+                            "dk_perm_utils_permissions_location_text3_android11"
+                        )
+                        val alwaysLabel = packageManager.backgroundPermissionOptionLabel
+                        text_view_location_permission_text2.text = DKResource.buildString(
+                            this,
+                            DriveKitUI.colors.mainFontColor(),
+                            DriveKitUI.colors.mainFontColor(),
+                            "dk_perm_utils_permissions_location_text4_android11",
+                            "$alwaysLabel"
+                        )
+                        button_request_location_permission.text = DKResource.convertToString(
+                            this,
+                            "dk_perm_utils_permissions_text_button_location_settings"
+                        )
+                    } else {
+                        request(this,
+                            permissionCallback as OnPermissionCallback,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                    }
                 }
             } else {
                 forward()
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-            } else {
-                request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACCESS_FINE_LOCATION)
+            when (Build.VERSION.SDK_INT) {
+                Build.VERSION_CODES.Q -> {
+                    request(
+                        this,
+                        permissionCallback as OnPermissionCallback,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
+                else -> {
+                    request(
+                        this,
+                        permissionCallback as OnPermissionCallback,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                }
             }
         }
     }
@@ -81,11 +145,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS) {
             checkRequiredPermissions()
         }
-    }
-
-    private fun forward() {
-        finish()
-        next()
     }
 
     private fun setStyle() {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="diagnosis_error_plural">
+        <item quantity="one">@string/dk_perm_utils_app_diag_app_ko_singular</item>
+        <item quantity="other">@string/dk_perm_utils_app_diag_app_ko_plural</item>
+    </plurals>
+</resources>
