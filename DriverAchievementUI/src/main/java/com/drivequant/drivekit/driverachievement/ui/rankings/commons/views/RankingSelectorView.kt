@@ -33,9 +33,9 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     private fun setStyle() {
         val params = text_view_selector.layoutParams as MarginLayoutParams
         params.setMargins(
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.topMargin,
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.bottomMargin
         )
         layoutParams = params

@@ -7,8 +7,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dk_ic_big"
         android:gravity="center"
-        android:paddingBottom="@dimen/dk_margin_half"
-        android:paddingTop="@dimen/dk_margin_half"
         android:paddingEnd="@dimen/dk_margin_medium"
         android:paddingStart="@dimen/dk_margin_medium"
         android:background="@drawable/dk_ranking_rounded_edges" />
