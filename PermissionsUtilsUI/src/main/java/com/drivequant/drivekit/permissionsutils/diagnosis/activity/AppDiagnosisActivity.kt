@@ -591,6 +591,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        dk_diagnosis_root.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 
     override fun onResume() {
