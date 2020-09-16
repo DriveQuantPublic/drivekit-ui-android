@@ -2,11 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/button_selector"
+    <TextView
+        android:id="@+id/text_view_selector"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dk_ic_big"
-        android:background="@drawable/ranking_rounded_edges"
-        android:textAllCaps="false" />
+        android:gravity="center"
+        android:textAlignment="center"
+        android:paddingBottom="@dimen/dk_margin_half"
+        android:paddingTop="@dimen/dk_margin_half"
+        android:paddingEnd="@dimen/dk_margin_medium"
+        android:paddingStart="@dimen/dk_margin_medium"
+        android:background="@drawable/dk_ranking_rounded_edges" />
 </LinearLayout>
 
