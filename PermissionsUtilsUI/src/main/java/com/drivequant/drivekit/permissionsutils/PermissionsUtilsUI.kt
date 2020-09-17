@@ -64,13 +64,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     fun hasError(context: Context): Boolean {
-        val permissions = arrayListOf(
-            PermissionType.LOCATION,
-            PermissionType.ACTIVITY,
-            PermissionType.NOTIFICATION
-        )
-
-        permissions.forEach {
+        PermissionType.values().forEach {
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
                 return true
         }
