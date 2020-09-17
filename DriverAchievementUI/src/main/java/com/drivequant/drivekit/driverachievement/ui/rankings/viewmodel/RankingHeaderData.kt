@@ -49,6 +49,7 @@ class RankingHeaderData(private val ranking: Ranking) {
             RankingType.SAFETY -> "dk_common_safety"
             RankingType.DISTRACTION -> "dk_common_distraction"
             RankingType.ECO_DRIVING -> "dk_common_ecodriving"
+            RankingType.SPEEDING -> "dk_common_speed_limit"
         }
     }
 
@@ -57,6 +58,7 @@ class RankingHeaderData(private val ranking: Ranking) {
             RankingType.SAFETY -> "dk_achievements_safety"
             RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
             RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
+            RankingType.SPEEDING -> "dk_achievements_speeding"
         }
     }
 }
