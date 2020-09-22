@@ -30,7 +30,6 @@
    <string name="dk_common_send_mail_error">Il dispositivo non è configurato per l\'invio di e-mail...</string>
    <string name="dk_common_settings">Impostazioni</string>
    <string name="dk_common_speed">Velocità</string>
-   <string name="dk_common_speed_limit">Limite di velocità</string>
    <string name="dk_common_take_picture">Scatta una foto</string>
    <string name="dk_common_trip_plural">viaggi</string>
    <string name="dk_common_trip_singular">viaggio</string>
