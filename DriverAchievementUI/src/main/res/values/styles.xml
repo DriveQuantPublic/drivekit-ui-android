@@ -3,7 +3,7 @@
         <item name="android:textSize">@dimen/dk_text_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/dk_streak_rounded_edges</item>
+        <item name="android:background">@drawable/rounded_edges</item>
     </style>
 
     <style name="SeekBar">

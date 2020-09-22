@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.permissionsutils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -37,12 +36,12 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     fun showPermissionViews(
-        activity: Activity,
+        context: Context,
         permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener
     ) {
         this.permissionViewListener = permissionViewListener
-        permissionView.first().launchActivity(activity, permissionView)
+        permissionView.first().launchActivity(context, permissionView)
     }
 
     override fun startAppDiagnosisActivity(context: Context) =
@@ -64,61 +63,55 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         this.logPathFile = logPathFile
     }
 
-    fun hasError(activity: Activity): Boolean {
-        val permissions = arrayListOf(
-            PermissionType.LOCATION,
-            PermissionType.ACTIVITY,
-            PermissionType.NOTIFICATION
-        )
-
-        permissions.forEach {
-            if (DiagnosisHelper.getPermissionStatus(activity, it) == PermissionStatus.NOT_VALID)
+    fun hasError(context: Context): Boolean {
+        PermissionType.values().forEach {
+            if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
                 return true
         }
 
         if (!DiagnosisHelper.isSensorActivated(
-                activity,
+                context,
                 SensorType.BLUETOOTH
             ) && isBluetoothNeeded
         ) {
             return true
         }
 
-        if (!DiagnosisHelper.isSensorActivated(activity, SensorType.GPS)) {
+        if (!DiagnosisHelper.isSensorActivated(context, SensorType.GPS)) {
             return true
         }
 
-        return !DiagnosisHelper.isNetworkReachable(activity)
+        return !DiagnosisHelper.isNetworkReachable(context)
     }
 
-    fun getDiagnosisDescription(activity: Activity): String {
+    fun getDiagnosisDescription(context: Context): String {
         val locationMail =
-            when (DiagnosisHelper.getPermissionStatus(activity, PermissionType.LOCATION)) {
-                PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
-                PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+            when (DiagnosisHelper.getPermissionStatus(context, PermissionType.LOCATION)) {
+                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val activityMail =
-            when (DiagnosisHelper.getPermissionStatus(activity, PermissionType.ACTIVITY)) {
-                PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
-                PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+            when (DiagnosisHelper.getPermissionStatus(context, PermissionType.ACTIVITY)) {
+                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
-        val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(activity)) {
-            PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
-            PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+        val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(context)) {
+            PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
         }
 
         val notificationMail =
-            when (DiagnosisHelper.getPermissionStatus(activity, PermissionType.NOTIFICATION)) {
-                PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
-                PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+            when (DiagnosisHelper.getPermissionStatus(context, PermissionType.NOTIFICATION)) {
+                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val batteryOptimization =
-            when(DiagnosisHelper.getBatteryOptimizationsStatus(activity)) {
-                PermissionStatus.VALID -> activity.getString(R.string.dk_common_yes)
-                PermissionStatus.NOT_VALID -> activity.getString(R.string.dk_common_no)
+            when(DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
+                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val versionName = try {
@@ -129,54 +122,54 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         val gpsMail =
-            if (DiagnosisHelper.isSensorActivated(activity, SensorType.GPS)) activity.getString(
+            if (DiagnosisHelper.isSensorActivated(context, SensorType.GPS)) context.getString(
                 R.string.dk_common_yes
-            ) else activity.getString(
+            ) else context.getString(
                 R.string.dk_common_no
             )
 
         val bluetoothMail =
-            if (DiagnosisHelper.isSensorActivated(activity, SensorType.BLUETOOTH)) activity.getString(
+            if (DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH)) context.getString(
                 R.string.dk_common_yes
-            ) else activity.getString(
+            ) else context.getString(
                 R.string.dk_common_no
             )
         val connectivityMail =
-            if (DiagnosisHelper.isNetworkReachable(activity)) activity.getString(R.string.dk_common_yes) else activity.getString(
+            if (DiagnosisHelper.isNetworkReachable(context)) context.getString(R.string.dk_common_yes) else context.getString(
                 R.string.dk_common_no
             )
 
         var mailBody =
-            "${activity.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
+            "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             mailBody +=
-                "${activity.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
+                "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
 
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_auto_reset)} $autoResetMail \n"
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_auto_reset)} $autoResetMail \n"
         }
 
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
 
         if (isBluetoothNeeded) {
-            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} $bluetoothMail \n"
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} $bluetoothMail \n"
         }
 
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_battery)}  $batteryOptimization \n\n"
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_battery)}  $batteryOptimization \n\n"
         }
 
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
             Locale.getDefault()
         )} ${Build.MODEL} \n"
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
-        mailBody += "${activity.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
         return mailBody
     }
 }

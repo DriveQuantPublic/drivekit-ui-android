@@ -31,7 +31,6 @@ class RankingViewModel : ViewModel() {
                 RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
                 RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
                 RankingType.SAFETY -> "dk_achievements_safety"
-                RankingType.SPEEDING -> "dk_achievements_speeding"
             }
             rankingTypesData.add(RankingTypeData(iconId, rankingType))
         }
