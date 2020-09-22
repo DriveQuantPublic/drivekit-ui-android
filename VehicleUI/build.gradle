@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "$drivekitui_version"
 
@@ -45,8 +45,8 @@ dependencies {
     //noinspection GradleCompatible
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.0"
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.0"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.1-beta1"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.1-beta1"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

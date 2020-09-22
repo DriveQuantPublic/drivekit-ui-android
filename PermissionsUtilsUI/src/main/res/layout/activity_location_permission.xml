@@ -54,7 +54,6 @@
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         android:paddingBottom="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_location_text2_pre_android10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_location_permission_text1" />

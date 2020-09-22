@@ -99,6 +99,13 @@ class BeaconActivity : AppCompatActivity() {
             }
         })
 
+        val screenNameResId = when (viewModel.scanType){
+            BeaconScanType.PAIRING -> "dk_tag_vehicles_beacon_add"
+            BeaconScanType.DIAGNOSTIC -> "dk_tag_vehicles_beacon_diagnosis"
+            BeaconScanType.VERIFY -> "dk_tag_vehicles_beacon_verify"
+        }
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, screenNameResId), javaClass.simpleName)
+
         updateTitle()
     }
 

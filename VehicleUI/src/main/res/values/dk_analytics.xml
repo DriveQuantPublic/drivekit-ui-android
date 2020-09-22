@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_vehicles_list" translatable="false">drivekit-vehicles-list</string>
+    <string name="dk_tag_vehicles_detail" translatable="false">drivekit-vehicles-detail</string>
+    <string name="dk_tag_vehicles_add" translatable="false">drivekit-vehicles-add</string>
+    <string name="dk_tag_vehicles_beacon_verify" translatable="false">drivekit-vehicles-beacon-verify</string>
+    <string name="dk_tag_vehicles_beacon_add" translatable="false">drivekit-vehicles-beacon-add</string>
+    <string name="dk_tag_vehicles_beacon_diagnosis" translatable="false">drivekit-vehicles-beacon-diagnosis</string>
+    <string name="dk_tag_vehicles_bluetooth_add" translatable="false">drivekit-vehicles-bluetooth-add</string>
+</resources>

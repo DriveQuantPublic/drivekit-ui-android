@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.drivekit.drivekitdemoapp">
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.drivekit.demoapp.DriveKitDemoApplication"
         android:allowBackup="false"
@@ -22,6 +21,5 @@
         </activity>
         <activity android:name="com.drivekit.demoapp.activity.SettingsActivity"
             android:screenOrientation="portrait" />
-
     </application>
 </manifest>

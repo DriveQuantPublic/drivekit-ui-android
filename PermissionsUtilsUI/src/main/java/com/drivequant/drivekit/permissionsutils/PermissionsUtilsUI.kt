@@ -64,13 +64,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     fun hasError(context: Context): Boolean {
-        val permissions = arrayListOf(
-            PermissionType.LOCATION,
-            PermissionType.ACTIVITY,
-            PermissionType.NOTIFICATION
-        )
-
-        permissions.forEach {
+        PermissionType.values().forEach {
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
                 return true
         }
@@ -102,6 +96,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
+
+        val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(context)) {
+            PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+        }
 
         val notificationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.NOTIFICATION)) {
@@ -147,6 +146,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
 
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_auto_reset)} $autoResetMail \n"
+        }
+
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_notification)} $notificationMail \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_location_sensor)} $gpsMail \n"
 

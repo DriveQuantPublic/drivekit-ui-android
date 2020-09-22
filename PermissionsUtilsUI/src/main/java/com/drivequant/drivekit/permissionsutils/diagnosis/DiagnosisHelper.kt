@@ -29,7 +29,6 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 object DiagnosisHelper {
 
     const val REQUEST_PERMISSIONS = 1
-    const val REQUEST_STORAGE_PERMISSIONS_RATIONALE = 2
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
@@ -40,7 +39,7 @@ object DiagnosisHelper {
 
     fun hasBackgroundLocationApproved(context: Context): Boolean =
         ContextCompat.checkSelfPermission(
-            context,
+            context.applicationContext,
             Manifest.permission.ACCESS_BACKGROUND_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
 
@@ -71,6 +70,18 @@ object DiagnosisHelper {
         }
     }
 
+    fun getAutoResetStatus(context: Context): PermissionStatus {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (context.packageManager.isAutoRevokeWhitelisted) {
+                PermissionStatus.VALID
+            } else {
+                PermissionStatus.NOT_VALID
+            }
+        } else {
+            PermissionStatus.VALID
+        }
+    }
+
     fun getBatteryOptimizationsStatus(context: Context): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.applicationContext?.let {
@@ -82,14 +93,6 @@ object DiagnosisHelper {
         } else {
             return PermissionStatus.VALID
         }
-    }
-
-    fun getExternalStorageStatus(context: Context): PermissionStatus {
-        val hasExternalStorage = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED
-        return if (hasExternalStorage) PermissionStatus.VALID else PermissionStatus.NOT_VALID
     }
 
     fun requestBatteryOptimization(activity: Activity) {
@@ -117,13 +120,17 @@ object DiagnosisHelper {
     fun getPermissionStatus(context: Context, permissionType: PermissionType): PermissionStatus {
         return when (permissionType) {
             PermissionType.LOCATION -> getLocationStatus(context)
-
             PermissionType.ACTIVITY -> getActivityStatus(context)
-
             PermissionType.NOTIFICATION -> getNotificationStatus(context)
-
-            PermissionType.EXTERNAL_STORAGE -> getExternalStorageStatus(context)
+            PermissionType.AUTO_RESET -> getAutoResetStatus(context)
         }
+    }
+
+    fun buildSettingsIntent(context: Context): Intent {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", context.packageName, null)
+        intent.data = uri
+        return intent
     }
 
     fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
@@ -133,8 +140,10 @@ object DiagnosisHelper {
                 bluetoothAdapter?.isEnabled ?: false
             }
             SensorType.GPS -> {
-                val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                val isGPSEnabled = locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)  ?: false
+                val locationManager =
+                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                val isGPSEnabled =
+                    locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
                 isGPSEnabled && isLocationSensorHighAccuracy(context, isGPSEnabled)
             }
         }
@@ -161,5 +170,6 @@ object DiagnosisHelper {
         return false
     }
 
-    fun isNetworkReachable(context: Context): Boolean = DKReachability().isConnectedToNetwork(context)
+    fun isNetworkReachable(context: Context): Boolean =
+        DKReachability().isConnectedToNetwork(context)
 }

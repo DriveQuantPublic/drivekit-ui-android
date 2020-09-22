@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.text.Spannable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -103,7 +104,7 @@ object DKAlertDialog {
             alertDialog?.setTitle(title)
         }
 
-        fun message(message: String) = apply { alertDialog?.setMessage(message) }
+        fun message(message: Spannable) = apply { alertDialog?.setMessage(message) }
 
         fun positiveButton(positiveText: String, positiveListener: DialogInterface.OnClickListener) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener)

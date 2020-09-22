@@ -14,6 +14,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksLis
 import kotlinx.android.synthetic.main.dk_fragment_streaks_list.*
 import android.support.v7.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
 
@@ -40,6 +41,8 @@ class StreaksListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_streaks"), javaClass.simpleName)
+
         val layoutManager = LinearLayoutManager(view.context)
         recycler_view_streaks.layoutManager = layoutManager
 

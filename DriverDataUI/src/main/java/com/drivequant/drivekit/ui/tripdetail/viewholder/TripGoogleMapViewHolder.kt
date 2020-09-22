@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.support.design.widget.FloatingActionButton
 import android.util.TypedValue
 import android.view.View
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -73,6 +75,11 @@ class TripGoogleMapViewHolder(
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
                     fragment.displayAdvice(mapItem)
+                    if (mapItem == MapItem.SAFETY){
+                        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_safety"), javaClass.simpleName)
+                    } else if (mapItem == MapItem.ECO_DRIVING){
+                        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_efficiency"), javaClass.simpleName)
+                    }
                 }
             }
         }
