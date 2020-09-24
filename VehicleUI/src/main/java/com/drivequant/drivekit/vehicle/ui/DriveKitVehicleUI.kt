@@ -3,11 +3,15 @@ package com.drivequant.drivekit.vehicle.ui
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
+import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
+import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
@@ -19,6 +23,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailAc
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
@@ -153,6 +158,35 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
             listener.onVehicleInfoRetrieved(vehicleName, it.liteConfig)
         }?: run {
             Log.e("DriveKitVehicleUI", "Could not find vehicle with following vehicleId : $vehicleId")
+        }
+    }
+
+    override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
+        val vehiclesFilterItems = mutableListOf<FilterItem>()
+        val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
+        val newVehicleList = mutableListOf<Vehicle?>()
+        if (vehicles.size != 1) {
+            newVehicleList.add(0, null)
+            for ((index, vehicle) in vehicles.withIndex()) {
+                newVehicleList.add(index + 1, vehicle)
+            }
+        } else {
+            newVehicleList.addAll(vehicles)
+        }
+        if (newVehicleList.isNotEmpty()) {
+            for (vehicle in newVehicleList) {
+                val title = vehicle?.buildFormattedName(context) ?: kotlin.run {
+                    DKResource.convertToString(context, "dk_driverdata_default_filter_item")
+                }
+                vehiclesFilterItems.add(
+                    FilterItem(
+                        vehicle?.vehicleId,
+                        VehicleUtils().getVehicleDrawable(context, vehicle?.vehicleId),
+                        title
+                    )
+                )
+            }
+            listener.onFilterItemsReceived(vehiclesFilterItems)
         }
     }
 }

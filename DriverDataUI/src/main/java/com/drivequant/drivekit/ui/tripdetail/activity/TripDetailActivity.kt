@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -15,14 +16,15 @@ class TripDetailActivity : AppCompatActivity() {
     companion object {
         private const val ITINID_EXTRA = "itinId-extra"
         private const val OPEN_ADVICE_EXTRA = "openAdvice-extra"
+        const val UPDATE_TRIPS_REQUEST_CODE = 103
 
-        fun launchActivity(context: Context,
+        fun launchActivity(activity: Activity,
                            itinId : String,
                            openAdvice: Boolean = false) {
-            val intent = Intent(context, TripDetailActivity::class.java)
+            val intent = Intent(activity, TripDetailActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
             intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
-            context.startActivity(intent)
+            activity.startActivityForResult(intent, UPDATE_TRIPS_REQUEST_CODE)
         }
     }
 
