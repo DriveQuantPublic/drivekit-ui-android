@@ -30,6 +30,7 @@
    <string name="dk_common_send_mail_error">Votre appareil n\'est pas configuré pour l\'envoi d\'email</string>
    <string name="dk_common_settings">Paramètres</string>
    <string name="dk_common_speed">Vitesse</string>
+   <string name="dk_common_speed_limit">Limite de vitesse</string>
    <string name="dk_common_take_picture">Prendre une photo</string>
    <string name="dk_common_trip_plural">trajets</string>
    <string name="dk_common_trip_singular">trajet</string>
