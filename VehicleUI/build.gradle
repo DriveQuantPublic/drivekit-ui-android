@@ -40,8 +40,8 @@ dependencies {
     //noinspection GradleCompatible
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.1-beta2"
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.1-beta2"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.7-beta1"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.7-beta1"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
