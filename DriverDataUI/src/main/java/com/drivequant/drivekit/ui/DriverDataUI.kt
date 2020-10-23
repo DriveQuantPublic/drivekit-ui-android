@@ -28,6 +28,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var enableDeleteTrip: Boolean = true
     internal var dayTripDescendingOrder: Boolean = false
     internal var enableAdviceFeedback: Boolean = true
+    internal var enableVehicleFilter: Boolean = true
     internal var headerDay: HeaderDay = HeaderDay.DISTANCE_DURATION
 
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
@@ -60,6 +61,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun configureHeaderDay(headerDay: HeaderDay) {
         this.headerDay = headerDay
+    }
+
+    fun enableVehicleFilter(enableVehicleFilter: Boolean) {
+        this.enableVehicleFilter = enableVehicleFilter
     }
 
     override fun startTripListActivity(context: Context) {

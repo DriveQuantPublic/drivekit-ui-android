@@ -24,38 +24,38 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     }
 
     fun configureRankingSelector(rankingSelectorData: RankingSelectorData) {
-        button_selector.text = DKResource.convertToString(context, rankingSelectorData.titleId)
-        button_selector.setOnClickListener {
+        text_view_selector.text = DKResource.convertToString(context, rankingSelectorData.titleId)
+        text_view_selector.setOnClickListener {
             rankingSelectorListener.onClickSelector(rankingSelectorData, this)
         }
     }
 
     private fun setStyle() {
-        val params = button_selector.layoutParams as MarginLayoutParams
+        val params = text_view_selector.layoutParams as MarginLayoutParams
         params.setMargins(
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.topMargin,
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.bottomMargin
         )
         layoutParams = params
-        button_selector.normalText()
-        DKUtils.setBackgroundDrawableColor(button_selector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+        text_view_selector.normalText()
+        DKUtils.setBackgroundDrawableColor(text_view_selector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
     }
 
     fun setRankingSelectorSelected(selected: Boolean) {
         if (selected) {
             DKUtils.setBackgroundDrawableColor(
-                button_selector.background as GradientDrawable,
+                text_view_selector.background as GradientDrawable,
                 DriveKitUI.colors.secondaryColor()
             )
-            button_selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            text_view_selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         } else {
             DKUtils.setBackgroundDrawableColor(
-                button_selector.background as GradientDrawable,
+                text_view_selector.background as GradientDrawable,
                 DriveKitUI.colors.neutralColor()
             )
-            button_selector.normalText()
+            text_view_selector.normalText()
         }
     }
 }

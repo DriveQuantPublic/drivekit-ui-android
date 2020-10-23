@@ -29,11 +29,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    //noinspection GradleCompatible
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     //noinspection GradleCompatible
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta4'
     //noinspection GradleCompatible
@@ -45,8 +40,8 @@ dependencies {
     //noinspection GradleCompatible
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.6.1-beta1"
-    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.6.1-beta1"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:1.7.0"
+    implementation "com.drivequant.drivekit:drivekit-trip-analysis:1.7.0"
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"

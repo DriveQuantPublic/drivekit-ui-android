@@ -2,10 +2,12 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -140,7 +142,11 @@ class TripDetailFragment : Fragment() {
                         getString(R.string.dk_common_ok),
                         DialogInterface.OnClickListener { dialog, _ ->
                             dialog.dismiss()
-                            activity?.onBackPressed()
+                            val data = Intent()
+                            requireActivity().apply {
+                                setResult(RESULT_OK, data)
+                                finish()
+                            }
                         })
                     .cancelable(false)
                     .show()
