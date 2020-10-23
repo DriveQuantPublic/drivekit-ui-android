@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".permissions.activity.BackgroundTaskPermissionActivity">
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
-    <ImageView
-        android:id="@+id/image_view_permission_background_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin"
-        android:padding="@dimen/dk_margin"
-        android:src="@drawable/dk_perm_utils_background_task_permission"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/text_view_background_task_permission_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:gravity="center"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_background_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view_permission_background_task" />
-
-    <TextView
-        android:id="@+id/text_view_background_task_permission_text1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_background_text1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_title" />
-
-    <TextView
-        android:id="@+id/text_view_background_task_permission_text2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        android:paddingBottom="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_background_text2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text1" />
-
-    <Button
-        android:id="@+id/button_request_background_permission"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:onClick="onRequestPermissionClicked"
-        android:padding="@dimen/dk_margin"
-        android:text="@string/dk_perm_utils_permissions_phone_settings_background_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text2" />
-</android.support.constraint.ConstraintLayout>
-</ScrollView>
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_view_permission_background_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin"
+                android:padding="@dimen/dk_margin"
+                android:src="@drawable/dk_perm_utils_background_task_permission"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"  />
+
+            <TextView
+                android:id="@+id/text_view_background_task_permission_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:gravity="center"
+                android:padding="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_background_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_permission_background_task" />
+
+            <TextView
+                android:id="@+id/text_view_background_task_permission_text1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:padding="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_background_text1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_title" />
+
+            <TextView
+                android:id="@+id/text_view_background_task_permission_text2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:paddingBottom="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_background_text2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text1" />
+
+            <Button
+                android:id="@+id/button_request_background_permission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onRequestPermissionClicked"
+                android:padding="@dimen/dk_margin"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_background_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_background_task_permission_text2" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
