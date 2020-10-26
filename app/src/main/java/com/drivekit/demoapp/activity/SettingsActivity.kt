@@ -8,8 +8,12 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.tripanalysis.exception.DriveKitTripAnalysisNotInitialized
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -79,7 +83,10 @@ class SettingsActivity : AppCompatActivity() {
         private fun reconfigureDriveKit(userId: String){
             val apiKey = DriveKit.config.apiKey
             DriveKit.reset()
+            DriveKitTripAnalysis.reset()
             DriveKitDriverData.reset()
+            DriveKitVehicle.reset()
+            DriveKitDriverAchievement.reset()
             apiKey?.let {
                 DriveKit.setApiKey(it)
             }
