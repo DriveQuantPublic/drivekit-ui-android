@@ -31,7 +31,7 @@
    <string name="location_permission">Autoriser l\'accès à la localisation.</string>
    <string name="notification_permission">Notifications</string>
    <string name="permission_utils_diagnosis_button">Diagnostic de l\'app</string>
-   <string name="permission_utils_permissions_button">Recueil des permssions</string>
+   <string name="permission_utils_permissions_button">Recueil des permissions</string>
    <string name="permissions_utils_explanation">Exemple d\'implémentation de DriveKit Permissions Utils comprenant le parcours utilisateur de recueil des permissions et l\écran de diagnostic de l\'application.</string>
    <string name="sandbox_mode_off">DriveKit est rattaché à l\'environnement de production de DriveQuant</string>
    <string name="sandbox_mode_on">DriveKit est rattaché à l\'environnement d\'intégration de DriveQuant</string>

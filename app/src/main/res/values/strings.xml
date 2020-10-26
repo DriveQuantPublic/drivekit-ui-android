@@ -54,4 +54,8 @@
     <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
+
+    <!-- TRANSLATE -->
+    <string name="trip_simulator_start">Simulate a trip</string>
+    <string name="trip_simulator_stop">Turn off trip simulation mode</string>
 </resources>

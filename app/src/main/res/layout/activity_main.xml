@@ -116,6 +116,34 @@
                 android:onClick="buttonTripClicked"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/trip_simulator_buttons_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trip_buttons_container">
+            <Button
+                android:id="@+id/button_trip_simulator_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/trip_simulator_start"
+                android:textSize="12sp"
+                android:onClick="buttonTripSimulatorClicked"/>
+            <Button
+                android:id="@+id/button_trip_simulator_stop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/trip_simulator_stop"
+                android:textSize="12sp"
+                android:onClick="buttonTripSimulatorClicked"/>
+        </LinearLayout>
+
         <View
             android:id="@+id/separator_trips"
             android:layout_width="match_parent"
@@ -125,7 +153,7 @@
             android:background="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trip_buttons_container"/>
+            app:layout_constraintTop_toBottomOf="@id/trip_simulator_buttons_container"/>
 
         <TextView
             android:id="@+id/permissions_utils_title"
@@ -138,7 +166,7 @@
             android:paddingTop="8dp"
             android:text="PermissionsUtils"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trip_buttons_container"/>
+            app:layout_constraintTop_toBottomOf="@id/separator_trips"/>
 
         <TextView
             android:id="@+id/permissions_utils_text"

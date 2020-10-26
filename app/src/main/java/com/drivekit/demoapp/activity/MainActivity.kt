@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -16,6 +18,8 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator
+import com.drivequant.drivekit.tripsimulator.PresetTrip
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -99,6 +103,25 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.button_trip_cancel -> {
                     DriveKitTripAnalysis.cancelTrip()
+                }
+            }
+        }
+    }
+
+    fun buttonTripSimulatorClicked(view : View) {
+        if (DriveKitTripAnalysis.isConfigured()){
+            when (view.id){
+                R.id.button_trip_simulator_start -> {
+                    val alertDialogBuilder = AlertDialog.Builder(this)
+                    val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice)
+                    arrayAdapter.addAll(PresetTrip.values().map { it.name })
+                    alertDialogBuilder.setNegativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+                    alertDialogBuilder.setAdapter(arrayAdapter) { _, which -> DriveKitTripSimulator.start(
+                        PresetTrip.values()[which]) }
+                    alertDialogBuilder.show()
+                }
+                R.id.button_trip_simulator_stop -> {
+                    DriveKitTripSimulator.stop()
                 }
             }
         }
