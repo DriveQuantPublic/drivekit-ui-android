@@ -11,9 +11,7 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.tripanalysis.exception.DriveKitTripAnalysisNotInitialized
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 
 
 class SettingsActivity : AppCompatActivity() {
