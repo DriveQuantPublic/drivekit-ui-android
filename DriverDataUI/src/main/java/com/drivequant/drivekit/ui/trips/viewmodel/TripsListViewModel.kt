@@ -109,6 +109,7 @@ class TripsListViewModel : ViewModel() {
             }).toSpannable()
     }
 
-    fun getVehicleFilterVisibility(): Boolean =
-        filterItems.size != 2 && filterItems[0].itemId == null
+    fun getVehicleFilterVisibility(): Boolean {
+        return filterItems.isNotEmpty() && filterItems.size != 2 && filterItems[0].itemId == null
+    }
 }
