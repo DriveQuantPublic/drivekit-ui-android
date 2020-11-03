@@ -18,9 +18,7 @@ import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -266,14 +264,14 @@ class TripDetailFragment : Fragment() {
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
                 disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
-                disagreeText.setTextColor(DriveKitUI.colors.primaryColor())
+                disagreeText.headLine2(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
 
                 agreeText.text = context?.getString(R.string.dk_driverdata_advice_agree)
-                agreeText.setTextColor(DriveKitUI.colors.primaryColor())
+                agreeText.headLine2(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
                 agreeButton.setOnClickListener {
                     showProgressCircular()
@@ -291,12 +289,12 @@ class TripDetailFragment : Fragment() {
 
     private fun displayAdviceFeedback(mapItem: MapItem){
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
+        FontUtils.overrideFonts(context,feedbackView)
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
-        FontUtils.overrideFonts(context,feedbackView)
+        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)?.capitalize()
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)

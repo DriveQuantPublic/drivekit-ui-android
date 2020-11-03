@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dk_margin_half">
+    android:paddingStart="@dimen/dk_margin_half"
+    android:paddingTop="@dimen/dk_margin_half"
+    android:paddingBottom="@dimen/dk_margin_half">
 
     <TextView
         android:id="@+id/line_separator"
