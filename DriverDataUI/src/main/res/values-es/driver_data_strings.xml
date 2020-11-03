@@ -26,7 +26,7 @@
    <string name="dk_driverdata_low_accel">Aceleración demasiado débil</string>
    <string name="dk_driverdata_low_decel">Frenado demasiado débil</string>
    <string name="dk_driverdata_night">Excursión nocturna</string>
-   <string name="dk_driverdata_no_trips_recorded">Sin viajes registrados</string>
+   <string name="dk_driverdata_no_trips_recorded">Aún no has viajado.</string>
    <string name="dk_driverdata_safety_accel">Aceleraciones bruscas</string>
    <string name="dk_driverdata_safety_adherence">Límites de adherencia</string>
    <string name="dk_driverdata_safety_decel">Frenadas fuertes</string>

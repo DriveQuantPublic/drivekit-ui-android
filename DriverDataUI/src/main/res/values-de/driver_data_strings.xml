@@ -26,7 +26,7 @@
    <string name="dk_driverdata_low_accel">Beschleunigung zu schwach</string>
    <string name="dk_driverdata_low_decel">Bremsen zu schwach</string>
    <string name="dk_driverdata_night">Nachtfahrt</string>
-   <string name="dk_driverdata_no_trips_recorded">Keine aufgezeichneten Fahrten</string>
+   <string name="dk_driverdata_no_trips_recorded">Sie sind noch nicht gefahren.</string>
    <string name="dk_driverdata_safety_accel">Starke Beschleunigung</string>
    <string name="dk_driverdata_safety_adherence">Adhäsionsgrenze</string>
    <string name="dk_driverdata_safety_decel">Starkes Bremsen</string>

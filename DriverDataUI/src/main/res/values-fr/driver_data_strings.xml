@@ -26,7 +26,7 @@
    <string name="dk_driverdata_low_accel">Accélération trop faible</string>
    <string name="dk_driverdata_low_decel">Freinage trop faible</string>
    <string name="dk_driverdata_night">Trajet de nuit</string>
-   <string name="dk_driverdata_no_trips_recorded">Aucun trajet enregistré</string>
+   <string name="dk_driverdata_no_trips_recorded">Vous n\'avez pas encore réalisé de trajet.</string>
    <string name="dk_driverdata_safety_accel">Accélérations fortes</string>
    <string name="dk_driverdata_safety_adherence">Limites d\'adhérence</string>
    <string name="dk_driverdata_safety_decel">Freinages forts</string>
