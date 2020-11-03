@@ -18,6 +18,7 @@ class TripSynthesisItem: LinearLayout {
 
     private var textViewTitle: TextView? = null
     private var textViewValue:TextView? = null
+    private var separator:TextView? = null
 
     constructor(context: Context): super(context){
         init(null)
@@ -31,9 +32,11 @@ class TripSynthesisItem: LinearLayout {
         val view = View.inflate(context, R.layout.trip_synthesis_item, null)
         textViewTitle = view.findViewById(R.id.text_view_trip_synthesis_title)
         textViewValue = view.findViewById(R.id.text_view_trip_synthesis_value)
+        separator = view.findViewById(R.id.line_separator)
 
         textViewValue?.headLine2(DriveKitUI.colors.primaryColor())
         textViewTitle?.smallText(DriveKitUI.colors.complementaryFontColor())
+        separator?.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
         if (attrs != null) {
             val a: TypedArray = context.theme.obtainStyledAttributes(
