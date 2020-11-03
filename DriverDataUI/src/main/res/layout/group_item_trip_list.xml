@@ -20,16 +20,12 @@
             android:maxLines="1"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:paddingBottom="@dimen/dk_margin_quarter"
-            android:paddingLeft="@dimen/dk_margin"
-            android:paddingRight="@dimen/dk_margin_half"
             android:textColor="@android:color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_view_informations"
             android:gravity="end"
-            android:paddingLeft="@dimen/dk_margin_half"
-            android:paddingRight="@dimen/dk_margin"
             android:paddingTop="@dimen/dk_margin_quarter"
             android:paddingBottom="@dimen/dk_margin_quarter"
             android:textColor="@android:color/black"
