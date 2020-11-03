@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.ui.trips.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +50,8 @@ class TripsListAdapter(
 
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
-        holder.background.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        holder.background.background = ContextCompat.getDrawable(context!!, R.drawable.dk_background_header_trip_list)
+        DrawableCompat.setTint(holder.background.background, DriveKitUI.colors.neutralColor())
 
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
