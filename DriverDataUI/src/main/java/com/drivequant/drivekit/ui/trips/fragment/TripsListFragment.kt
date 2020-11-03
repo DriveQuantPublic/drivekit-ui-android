@@ -14,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
@@ -119,9 +120,10 @@ class TripsListFragment : Fragment() {
         view.visibility = View.VISIBLE
         text_view_trips_synthesis.visibility = View.GONE
         trips_list.emptyView = view
-        no_trips_recorded_text.text =
-            DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
-        no_trips_recorded_text.setTextColor(DriveKitUI.colors.primaryColor())
+        no_trips_recorded_text.apply {
+            text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
+            headLine1()
+        }
         image_view_no_trips.setImageDrawable(
             ContextCompat.getDrawable(
                 requireContext(),
