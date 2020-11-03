@@ -40,7 +40,7 @@ class TripEvent(val type: TripEventType,
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_map_unlock
         }
     }
-    //TODO Verify
+
     fun getTitle(context: Context) : String {
         return context.getString(when(type){
             TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_safety_list_brake_critical

@@ -9,7 +9,6 @@
     <TextView
         android:id="@+id/line_separator"
         style="@style/Separator.Vertical"
-        android:layout_marginEnd="@dimen/dk_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,4 +30,3 @@
         app:layout_constraintStart_toEndOf="@+id/line_separator"
         app:layout_constraintTop_toBottomOf="@+id/text_view_trip_synthesis_title" />
 </android.support.constraint.ConstraintLayout>
-
