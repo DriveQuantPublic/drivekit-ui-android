@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.arch.lifecycle.Observer
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -91,8 +92,8 @@ class TripGoogleMapViewHolder(
             if (mapItem != null && (mapItem == MapItem.DISTRACTION || (mapItem == MapItem.INTERACTIVE_MAP && viewModel.configurableMapItems.contains(
                     MapItem.INTERACTIVE_MAP)))){
                 var unlock: Boolean
-                val unlockColor = DriverDataUI.mapTraceWarningColor
-                val lockColor = DriverDataUI.mapTraceMainColor
+                val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
+                val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
                 route.screenLockedIndex?.let { screenLockedIndex ->
                     for(i in 1 until screenLockedIndex.size){
                         unlock = route.screenStatus!![i -1] == 1
@@ -107,7 +108,7 @@ class TripGoogleMapViewHolder(
                     route,
                     0,
                     route.latitude.size - 1,
-                    DriverDataUI.mapTraceMainColor)
+                    ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor))
             }
             drawMarker(mapItem)
         }
