@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.arch.lifecycle.Observer
+import android.content.res.ColorStateList
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
@@ -60,6 +61,7 @@ class TripGoogleMapViewHolder(
     
     private fun configureAdviceButton(mapItem: MapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
+        adviceFabButton.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         var shouldDisplayAdvice = false
         viewModel.trip?.tripAdvices?.let { tripAdvices ->
             val tripAdvice: TripAdvice? = mapItem.getAdvice(tripAdvices)
