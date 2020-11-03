@@ -48,8 +48,8 @@ class TripEvent(val type: TripEventType,
             TripEventType.FINISH -> R.string.dk_driverdata_end_event
             TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
             TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_safety_list_acceleration_critical
-            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_lock_event
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_unlock_event
         })
     }
 
