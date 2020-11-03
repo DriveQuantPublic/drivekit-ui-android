@@ -94,9 +94,9 @@ class TripEvent(val type: TripEventType,
             TripEventType.SAFETY_BRAKE, TripEventType.SAFETY_ADHERENCE,TripEventType. SAFETY_ACCEL -> {
 
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
-                    color(DriveKitUI.colors.warningColor())
-                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
+                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
+                    color(DriveKitUI.colors.warningColor())
                 }).toSpannable()
 
             }
