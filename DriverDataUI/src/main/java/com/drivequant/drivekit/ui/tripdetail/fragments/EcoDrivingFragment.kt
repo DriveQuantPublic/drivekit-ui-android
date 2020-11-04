@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
@@ -58,9 +58,9 @@ class EcoDrivingFragment : Fragment() {
         image_decel_advice.setColorFilter(mainFontColor)
         image_main_advice.setColorFilter(mainFontColor)
 
-        accelAdvice.bigText(mainFontColor)
-        mainAdvice.bigText(mainFontColor)
-        decelAdvice.bigText(mainFontColor)
-        gauge_type_title.bigText(mainFontColor)
+        accelAdvice.normalText(mainFontColor)
+        mainAdvice.normalText(mainFontColor)
+        decelAdvice.normalText(mainFontColor)
+        gauge_type_title.normalText(mainFontColor)
     }
 }

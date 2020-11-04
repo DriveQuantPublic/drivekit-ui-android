@@ -15,7 +15,9 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -96,6 +98,7 @@ class TripsListFragment : Fragment() {
             }
             false
         }
+        FontUtils.overrideFonts(context, text_view_trips_synthesis)
     }
 
     private fun initFilterView() {

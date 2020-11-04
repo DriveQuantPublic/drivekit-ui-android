@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
@@ -65,10 +65,10 @@ class SafetyFragment : Fragment() {
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val primaryColor = DriveKitUI.colors.primaryColor()
 
-        gauge_type_title.bigText(mainFontColor)
-        accel_description.bigText(mainFontColor)
-        brake_description.bigText(mainFontColor)
-        adherence_description.bigText(mainFontColor)
+        gauge_type_title.normalText(mainFontColor)
+        accel_description.normalText(mainFontColor)
+        brake_description.normalText(mainFontColor)
+        adherence_description.normalText(mainFontColor)
 
         accel_image.setColorFilter(mainFontColor)
         decel_image.setColorFilter(mainFontColor)

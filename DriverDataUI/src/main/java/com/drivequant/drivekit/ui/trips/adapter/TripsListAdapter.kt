@@ -90,7 +90,6 @@ class TripsListAdapter(
         trip?.let {
             holder.bind(trip, isLastChild)
         }
-        FontUtils.overrideFonts(context,view)
         return view
     }
 

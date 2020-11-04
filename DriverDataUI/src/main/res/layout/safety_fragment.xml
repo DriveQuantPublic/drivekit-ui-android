@@ -1,105 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    tools:context=".driverdata.ui.tripdetail.fragments.SafetyFragment">
+    android:orientation="horizontal"
+    android:padding="@dimen/dk_margin_half"
+    android:baselineAligned="false">
 
-    <com.drivequant.drivekit.common.ui.component.GaugeIndicator
-        android:id="@+id/score_gauge"
-        style="@style/GaugeTripDetail"
-        android:layout_width="96dp"
-        android:layout_height="120dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/gauge_type_title"
-        android:layout_width="96dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_gauge"
-        tools:text="Safety" />
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
+            android:id="@+id/score_gauge"
+            style="@style/GaugeTripDetail"
+            android:layout_width="96dp"
+            android:layout_height="120dp"
+            android:paddingTop="@dimen/dk_margin_medium"
+            android:paddingBottom="@dimen/dk_margin_medium" />
 
-    <TextView
-        android:id="@+id/accel_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/gauge_type_title"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Safety" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/brake_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accel_number_event" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/adherence_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/brake_number_event" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/accel_description"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/accel_image"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/accel_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="start|center" />
 
-    <ImageView
-        android:id="@+id/accel_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_safety_accel"
-        app:layout_constraintEnd_toStartOf="@id/accel_number_event"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/brake_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="start|center" />
 
-    <TextView
-        android:id="@+id/brake_description"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/decel_image"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/accel_description" />
+            <TextView
+                android:id="@+id/adherence_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="start|center" />
 
-    <ImageView
-        android:id="@+id/decel_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_safety_decel"
-        app:layout_constraintEnd_toStartOf="@id/brake_number_event"
-        app:layout_constraintTop_toBottomOf="@id/accel_image" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/adherence_description"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/adherence_image"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/brake_description" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/adherence_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:gravity="start"
-        android:src="@drawable/dk_common_safety_adherence"
-        app:layout_constraintEnd_toStartOf="@id/adherence_number_event"
-        app:layout_constraintTop_toBottomOf="@id/decel_image" />
-</android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/accel_image"
+                android:layout_width="@dimen/dk_ic_xbig"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/dk_common_safety_accel" />
+
+            <ImageView
+                android:id="@+id/decel_image"
+                android:layout_width="@dimen/dk_ic_xbig"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/dk_common_safety_decel" />
+
+            <ImageView
+                android:id="@+id/adherence_image"
+                android:layout_width="@dimen/dk_ic_xbig"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/dk_common_safety_adherence" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/accel_number_event"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/brake_number_event"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/adherence_number_event"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
