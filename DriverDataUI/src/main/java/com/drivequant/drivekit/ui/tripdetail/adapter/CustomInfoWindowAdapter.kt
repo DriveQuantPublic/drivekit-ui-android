@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -40,6 +41,7 @@ class CustomInfoWindowAdapter(
             bubbleTitle.headLine2(DriveKitUI.colors.primaryColor())
 
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
+            descriptionTextView.smallText()
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
                 descriptionTextView.visibility  = View.VISIBLE
                 descriptionTextView.text = description
