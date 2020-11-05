@@ -33,7 +33,6 @@
         android:layout_width="96dp"
         android:layout_height="56dp"
         android:gravity="start|center_vertical"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Test" />
@@ -44,7 +43,6 @@
         android:layout_width="96dp"
         android:layout_height="56dp"
         android:gravity="start|center_vertical"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/unlockNumberEvent"
         tools:text="Test" />
@@ -55,7 +53,6 @@
         android:layout_width="96dp"
         android:layout_height="56dp"
         android:gravity="start|center_vertical"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/durationUnlocked"
         tools:text="Test" />
