@@ -50,5 +50,5 @@ class FilterAdapter(
 data class FilterItem(
     val itemId: Any?,
     val image: Drawable?,
-    val title: String
+    var title: String?
 )

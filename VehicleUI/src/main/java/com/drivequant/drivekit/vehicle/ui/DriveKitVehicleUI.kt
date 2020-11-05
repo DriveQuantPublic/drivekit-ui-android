@@ -165,7 +165,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         val vehiclesFilterItems = mutableListOf<FilterItem>()
         val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
         val newVehicleList = mutableListOf<Vehicle?>()
-        if (vehicles.size != 1) {
+        if (vehicles.isNotEmpty()) {
             newVehicleList.add(0, null)
             for ((index, vehicle) in vehicles.withIndex()) {
                 newVehicleList.add(index + 1, vehicle)
@@ -175,9 +175,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
         if (newVehicleList.isNotEmpty()) {
             for (vehicle in newVehicleList) {
-                val title = vehicle?.buildFormattedName(context) ?: kotlin.run {
-                    DKResource.convertToString(context, "dk_driverdata_default_filter_item")
-                }
+                val title = vehicle?.buildFormattedName(context)
                 vehiclesFilterItems.add(
                     FilterItem(
                         vehicle?.vehicleId,
