@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
@@ -65,8 +66,8 @@ class DriverDistractionFragment : Fragment() {
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
 
-        unlockNumberEvent.headLine1(DriveKitUI.colors.primaryColor())
-        distanceUnlocked.headLine1(DriveKitUI.colors.primaryColor())
-        durationUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+        unlockNumberEvent.highlightSmall(DriveKitUI.colors.primaryColor())
+        distanceUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
+        durationUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
     }
 }

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Safety
@@ -74,9 +74,9 @@ class SafetyFragment : Fragment() {
         decel_image.setColorFilter(mainFontColor)
         adherence_image.setColorFilter(mainFontColor)
 
-        accel_number_event.headLine1(primaryColor)
-        brake_number_event.headLine1(primaryColor)
-        adherence_number_event.headLine1(primaryColor)
+        accel_number_event.highlightSmall(primaryColor)
+        brake_number_event.highlightSmall(primaryColor)
+        adherence_number_event.highlightSmall(primaryColor)
 
         score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY)
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
