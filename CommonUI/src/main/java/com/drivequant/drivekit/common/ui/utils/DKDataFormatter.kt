@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
+import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.formatLeadingZero
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import kotlin.math.ceil
@@ -60,10 +61,18 @@ object DKDataFormatter {
         R.string.dk_common_unit_g_per_km)}"
 
     fun formatCO2Mass(context: Context, co2mass: Double): String {
-        return if (co2mass < 1) {
-            "${(co2mass * 1000).toInt()} ${context.getString(R.string.dk_common_unit_g)}"
-        } else {
-            "$co2mass ${context.getString(R.string.dk_common_unit_kg)}"
+        return when {
+            co2mass < 1 -> {
+                val unit = DKResource.convertToString(context, "dk_common_unit_g")
+                "${(co2mass * 1000).roundToInt()} $unit"
+            }
+            co2mass > 1000 -> {
+                formatMassInTon(context, co2mass)
+            }
+            else -> {
+                val unit = DKResource.convertToString(context, "dk_common_unit_kg")
+                "${co2mass.format(2)} $unit"
+            }
         }
     }
 
