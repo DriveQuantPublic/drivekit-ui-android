@@ -326,11 +326,13 @@ class TripDetailFragment : Fragment() {
 
         feedbackAlertDialog = builder.show()
         feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+        feedbackAlertDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
     }
 
     private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View){
         if (checkedId == R.id.radio_button_choice_05){
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = true
+            feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
             feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
