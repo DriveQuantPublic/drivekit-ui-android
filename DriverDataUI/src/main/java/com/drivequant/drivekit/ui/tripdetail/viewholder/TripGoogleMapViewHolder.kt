@@ -137,6 +137,12 @@ class TripGoogleMapViewHolder(
                 MapItem.INTERACTIVE_MAP -> {
                     viewModel.displayEvents = viewModel.events
                 }
+
+                MapItem.SYNTHESIS -> {
+                    viewModel.displayEvents = viewModel.events.filter {
+                        it.type == TripEventType.START || it.type == TripEventType.FINISH
+                    }
+                }
             }
         } ?: kotlin.run {
             viewModel.displayEvents = viewModel.events.filter {
