@@ -18,7 +18,10 @@ import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -295,7 +298,7 @@ class TripDetailFragment : Fragment() {
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
         header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)?.toUpperCase()
-        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
+        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_03).text = context?.getString(R.string.dk_driverdata_advice_feedback_03)
@@ -303,14 +306,26 @@ class TripDetailFragment : Fragment() {
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = context?.getString(R.string.dk_driverdata_advice_feedback_05)
         feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
 
-        radioGroup.setOnCheckedChangeListener { _, checkedId -> handleClassicFeedbackAnswer(checkedId, feedbackView) }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            this.feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+               handleClassicFeedbackAnswer(checkedId, feedbackView)
+        }
 
         val builder = AlertDialog.Builder(context)
             .setView(feedbackView)
             .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ -> buildFeedbackData(mapItem, feedbackView, radioGroup) }
+            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ ->
+                if (feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isNotEmpty()) {
+                    buildFeedbackData(mapItem, feedbackView, radioGroup)
+                } else {
+                    val emptyFiledText =
+                        DKResource.convertToString(context!!, "dk_common_error_empty_field")
+                    Toast.makeText(context, emptyFiledText, Toast.LENGTH_SHORT).show()
+                }
+            }
 
         feedbackAlertDialog = builder.show()
+        feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
     }
 
     private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View){
@@ -333,7 +348,7 @@ class TripDetailFragment : Fragment() {
             R.id.radio_button_choice_05 -> 5
             else -> 0
         }
-        if (feedback == 5){
+        if (feedback == 5) {
             comment = feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.toString()
         }
 
