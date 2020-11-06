@@ -95,8 +95,10 @@ class TripEvent(val type: TripEventType,
 
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_small)
                 }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
                     color(DriveKitUI.colors.warningColor())
+                    size(R.dimen.dk_text_small)
                 }).toSpannable()
 
             }
