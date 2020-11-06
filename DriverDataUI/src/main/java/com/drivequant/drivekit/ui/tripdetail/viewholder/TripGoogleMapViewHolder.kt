@@ -88,37 +88,43 @@ class TripGoogleMapViewHolder(
         }
     }
 
-    fun traceRoute(mapItem: MapItem?){
+    fun traceRoute(mapItem: MapItem?) {
         clearMap()
         viewModel.route?.let { route ->
+            val unlockColor =
+                ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
+            val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             if (mapItem != null && (mapItem == MapItem.DISTRACTION || (mapItem == MapItem.INTERACTIVE_MAP && viewModel.configurableMapItems.contains(
-                    MapItem.INTERACTIVE_MAP)))){
+                    MapItem.INTERACTIVE_MAP
+                )))
+            ) {
                 var unlock: Boolean
-                val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
-                val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
+
                 route.screenLockedIndex?.let { screenLockedIndex ->
-                    for(i in 1 until screenLockedIndex.size){
-                        unlock = route.screenStatus!![i -1] == 1
+                    for (i in 1 until screenLockedIndex.size) {
+                        unlock = route.screenStatus!![i - 1] == 1
                         drawRoute(
                             route,
                             screenLockedIndex[i - 1], screenLockedIndex[i],
-                            if(unlock) unlockColor else lockColor)
+                            if (unlock) unlockColor else lockColor
+                        )
                     }
                 }
-            }else{
+            } else {
                 drawRoute(
                     route,
                     0,
                     route.latitude.size - 1,
-                    ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor))
+                    lockColor
+                )
             }
             drawMarker(mapItem)
         }
     }
 
-    private fun drawMarker(mapItem: MapItem?){
+    private fun drawMarker(mapItem: MapItem?) {
         mapItem?.let {
-            when (mapItem){
+            when (mapItem) {
                 MapItem.ECO_DRIVING -> {
                     viewModel.displayEvents = viewModel.events.filter {
                         it.type == TripEventType.START || it.type == TripEventType.FINISH
@@ -153,8 +159,8 @@ class TripGoogleMapViewHolder(
         googleMap.setOnMarkerClickListener(this)
     }
 
-    private fun drawEvents(events : List<TripEvent>){
-        for ((i, event) in events.withIndex()){
+    private fun drawEvents(events: List<TripEvent>) {
+        for ((i, event) in events.withIndex()) {
             val location = LatLng(event.latitude, event.longitude)
             val marker = googleMap.addMarker(
                 MarkerOptions().position(location)
@@ -169,7 +175,7 @@ class TripGoogleMapViewHolder(
         }
     }
 
-    private fun clearMap(){
+    private fun clearMap() {
         computedPolyline?.remove()
         googleMap.clear()
         googleMarkerList.clear()

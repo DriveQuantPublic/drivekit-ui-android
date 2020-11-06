@@ -13,9 +13,9 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
 
 class TripTimelineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
 
-    val eventHour : TextView = itemView.findViewById(R.id.event_hour)
-    val eventDescription : TextView = itemView.findViewById(R.id.event_description)
-    val eventImage : ImageView = itemView.findViewById(R.id.event_image)
+    private val eventHour : TextView = itemView.findViewById(R.id.event_hour)
+    private val eventDescription : TextView = itemView.findViewById(R.id.event_description)
+    private val eventImage : ImageView = itemView.findViewById(R.id.event_image)
     private val lineTop: View = itemView.findViewById(R.id.line_top)
     private val lineBottom: View = itemView.findViewById(R.id.line_bottom)
 

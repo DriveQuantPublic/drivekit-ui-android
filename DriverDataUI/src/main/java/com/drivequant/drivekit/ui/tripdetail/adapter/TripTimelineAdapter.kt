@@ -38,15 +38,15 @@ class TripTimelineAdapter(
 
     override fun onBindViewHolder(viewHolder: TripTimelineItemViewHolder, position: Int) {
         viewHolder.bind(items[position], position == 0, position == itemCount - 1, listener)
-        if (selectedPosition == position){
-            viewHolder.itemView.setBackgroundColor(ColorUtils.setAlphaComponent(selectedBackgroundColor, 127))
-            viewHolder.itemView.event_hour.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-            viewHolder.itemView.event_description.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-            viewHolder.itemView.event_image.drawable.tintDrawable(DriveKitUI.colors.fontColorOnSecondaryColor())
-        }else{
+        if (selectedPosition == position) {
+            viewHolder.itemView.setBackgroundColor(
+                ColorUtils.setAlphaComponent(
+                    selectedBackgroundColor,
+                    127
+                )
+            )
+        } else {
             viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT)
-            viewHolder.itemView.event_image.drawable.tintDrawable(DriveKitUI.colors.mainFontColor())
         }
     }
-
 }
