@@ -34,7 +34,8 @@ class TripSynthesisItem: LinearLayout {
         textViewValue = view.findViewById(R.id.text_view_trip_synthesis_value)
         separator = view.findViewById(R.id.line_separator)
 
-        textViewValue.headLine2(DriveKitUI.colors.primaryColor())
+        textViewValue.smallText(DriveKitUI.colors.primaryColor())
+        textViewValue.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
         textViewTitle.smallText(DriveKitUI.colors.complementaryFontColor())
         separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
