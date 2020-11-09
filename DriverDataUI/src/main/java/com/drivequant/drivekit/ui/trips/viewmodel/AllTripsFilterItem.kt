@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
-class AllTripsFilterItem : FilterItem {
+internal class AllTripsFilterItem : FilterItem {
     override fun getItemId(): Any? {
         return null
     }
