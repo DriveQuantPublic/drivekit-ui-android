@@ -6,7 +6,6 @@
     <dimen name="dk_margin_medium">12dp</dimen>
     <dimen name="dk_margin">16dp</dimen>
 
-    <dimen name="dk_text_xsmall">10sp</dimen>
     <dimen name="dk_text_small">12sp</dimen>
     <dimen name="dk_text_normal">14sp</dimen>
     <dimen name="dk_text_medium">18sp</dimen>
