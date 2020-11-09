@@ -24,7 +24,7 @@ import java.util.*
 
 class TripsListViewModel : ViewModel() {
     var tripsByDate: MutableList<TripsByDate> = mutableListOf()
-    var filterItems: List<FilterItem> = listOf()
+    var filterItems: MutableList<FilterItem> = mutableListOf()
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
@@ -53,10 +53,14 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun filterTrips(dayTripDescendingOrder: Boolean) {
-        val trips = filterItems[currentFilterItemPosition].itemId?.let {
-            allTrips.filter { it1 -> it1.vehicleId == it as String }
-        } ?: kotlin.run {
+        val trips = if (filterItems[currentFilterItemPosition] is AllTripsFilterItem) {
             allTrips
+        } else {
+            filterItems[currentFilterItemPosition].getItemId()?.let {
+                allTrips.filter { it1 -> it1.vehicleId == it as String }
+            } ?: kotlin.run {
+                allTrips
+            }
         }
         tripsByDate.clear()
         computeTrips(trips, dayTripDescendingOrder)
@@ -83,7 +87,8 @@ class TripsListViewModel : ViewModel() {
             context,
             object : GetVehiclesFilterItems {
                 override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                    filterItems = vehiclesFilterItems
+                    filterItems.add(AllTripsFilterItem())
+                    filterItems.addAll(vehiclesFilterItems)
                     filterData.postValue(filterItems)
                 }
             })
@@ -110,6 +115,6 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun getVehicleFilterVisibility(): Boolean {
-        return filterItems.isNotEmpty() && filterItems.size != 2 && filterItems[0].itemId == null
+        return filterItems.size > 1
     }
 }
