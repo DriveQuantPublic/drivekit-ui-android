@@ -65,7 +65,7 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         DriveKitConfig.configureDriverAchievement()
         DriveKitConfig.configurePermissionsUtils(this)
 
-        DriverDataUI.initialize()
+        DriverDataUI.initialize(this)
         DriveKitVehicleUI.initialize()
 
         PermissionsUtilsUI.initialize()
