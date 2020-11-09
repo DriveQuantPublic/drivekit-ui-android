@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -99,6 +100,7 @@ class TripEvent(val type: TripEventType,
                 }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
                     color(DriveKitUI.colors.warningColor())
                     size(R.dimen.dk_text_small)
+                    typeface(Typeface.BOLD)
                 }).toSpannable()
 
             }

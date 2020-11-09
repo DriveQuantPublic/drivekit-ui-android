@@ -80,6 +80,7 @@ class TripsListAdapter(
 
         if (convertView == null){
             view = View.inflate(context, R.layout.item_trip_list, null)
+            view.setBackgroundColor(DriveKitUI.colors.transparentColor())
             holder = TripViewHolder(view)
             view.tag = holder
         } else {

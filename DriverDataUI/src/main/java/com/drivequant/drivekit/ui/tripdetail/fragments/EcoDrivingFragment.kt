@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -46,7 +47,7 @@ class EcoDrivingFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING)
+        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING, Typeface.BOLD)
         accelAdvice.text = context?.getString(viewModel.getAccelMessage())
         mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
         decelAdvice.text = context?.getString(viewModel.getDecelMessage())

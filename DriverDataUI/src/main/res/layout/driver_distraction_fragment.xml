@@ -20,9 +20,8 @@
     <TextView
         android:id="@+id/gauge_type_title"
         android:layout_width="96dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_gauge"
         tools:text="Distraction" />

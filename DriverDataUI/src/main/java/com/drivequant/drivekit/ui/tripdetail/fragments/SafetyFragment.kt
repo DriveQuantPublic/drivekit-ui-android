@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +11,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
@@ -37,7 +37,6 @@ class SafetyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.safety_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
         view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
@@ -78,7 +77,7 @@ class SafetyFragment : Fragment() {
         brake_number_event.highlightSmall(primaryColor)
         adherence_number_event.highlightSmall(primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY)
+        score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY, Typeface.BOLD)
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
         adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()

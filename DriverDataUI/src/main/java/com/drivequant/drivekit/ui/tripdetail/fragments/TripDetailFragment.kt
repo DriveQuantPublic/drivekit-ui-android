@@ -18,10 +18,7 @@ import android.support.v7.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -66,10 +63,8 @@ class TripDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
+        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false).setDKStyle()
         viewContentTrip = view.findViewById(R.id.container_trip)
-        FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 
@@ -120,6 +115,8 @@ class TripDetailFragment : Fragment() {
         progress_circular.visibility = View.VISIBLE
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
         container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        center_button.setColorFilter(DriveKitUI.colors.primaryColor())
+
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (DriverDataUI.enableDeleteTrip) {
             setHasOptionsMenu(true)

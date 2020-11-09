@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -60,7 +61,7 @@ class DriverDistractionFragment : Fragment() {
         unlockDistanceDescription.normalText()
         unlockDurationDescription.normalText()
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext())

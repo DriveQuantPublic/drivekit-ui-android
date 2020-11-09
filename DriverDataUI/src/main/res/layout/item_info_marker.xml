@@ -48,8 +48,8 @@
 
     <ImageView
         android:id="@+id/bubble_more_info"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/dk_ic_big"
+        android:layout_height="@dimen/dk_ic_big"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/dk_margin_half"
         android:layout_marginRight="@dimen/dk_margin_half"
