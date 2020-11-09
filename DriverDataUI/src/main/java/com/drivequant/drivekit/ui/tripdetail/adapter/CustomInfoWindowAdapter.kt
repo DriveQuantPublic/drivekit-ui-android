@@ -2,14 +2,12 @@ package com.drivequant.drivekit.ui.tripdetail.adapter
 
 import android.app.AlertDialog
 import android.content.Context
-import android.support.v7.widget.AppCompatButton
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils

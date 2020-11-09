@@ -266,16 +266,18 @@ class TripDetailFragment : Fragment() {
                 val agreeText = adviceView.findViewById<TextView>(R.id.advice_agree_textview)
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
-                disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
+                adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
                 disagreeText.headLine2(DriveKitUI.colors.primaryColor())
+                agreeText.headLine2(DriveKitUI.colors.primaryColor())
+                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
+
+                disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
                 DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
 
                 agreeText.text = context?.getString(R.string.dk_driverdata_advice_agree)
-                agreeText.headLine2(DriveKitUI.colors.primaryColor())
-                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
                 agreeButton.setOnClickListener {
                     showProgressCircular()
                     sendTripAdviceFeedback(mapItem, true, 0)
@@ -290,7 +292,7 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    private fun displayAdviceFeedback(mapItem: MapItem){
+    private fun displayAdviceFeedback(mapItem: MapItem) {
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
         FontUtils.overrideFonts(context,feedbackView)
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
@@ -329,10 +331,11 @@ class TripDetailFragment : Fragment() {
         feedbackAlertDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
     }
 
-    private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View){
-        if (checkedId == R.id.radio_button_choice_05){
+    private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View) {
+        if (checkedId == R.id.radio_button_choice_05) {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = true
-            feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
+            feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
+                ?.setTextColor(DriveKitUI.colors.secondaryColor())
             feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false

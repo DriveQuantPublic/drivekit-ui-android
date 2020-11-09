@@ -103,9 +103,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
             val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
             val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-            textView.apply {
-                setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-            }
+            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
             DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
 
             tripInfo.imageResId(trip)?.let {
