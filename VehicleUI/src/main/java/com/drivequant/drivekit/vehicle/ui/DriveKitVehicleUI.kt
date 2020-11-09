@@ -8,7 +8,6 @@ import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
-import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -160,7 +159,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
+    override fun getVehiclesFilterItems(context: Context): List<FilterItem> {
         val vehiclesFilterItems = mutableListOf<FilterItem>()
         val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
         for (vehicle in vehicles) {
@@ -179,6 +178,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
             }
             vehiclesFilterItems.add(vehicleItem)
         }
-        listener.onFilterItemsReceived(vehiclesFilterItems)
+        return vehiclesFilterItems
     }
 }
