@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -84,14 +83,6 @@ class TripsListViewModel : ViewModel() {
             context,
             object : GetVehiclesFilterItems {
                 override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                    vehiclesFilterItems.forEach {
-                        if (it.title == null) {
-                            it.title = DKResource.convertToString(
-                                context,
-                                "dk_driverdata_default_filter_item"
-                            )
-                        }
-                    }
                     filterItems = vehiclesFilterItems
                     filterData.postValue(filterItems)
                 }
@@ -119,6 +110,6 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun getVehicleFilterVisibility(): Boolean {
-        return filterItems.isNotEmpty() && filterItems.size >= 2 && filterItems[0].itemId == null
+        return filterItems.isNotEmpty() && filterItems.size != 2 && filterItems[0].itemId == null
     }
 }
