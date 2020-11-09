@@ -91,15 +91,17 @@ object DriverDataUI : DriverDataUIEntryPoint {
         TripDetailFragment.newInstance(tripId)
 
     private fun checkGoogleApiKey(){
-        try {
-            val bundle= DriveKit.applicationContext!!.packageManager.getApplicationInfo(DriveKit.applicationContext!!.packageName, PackageManager.GET_META_DATA).metaData
-            val apiKey = bundle.getString("com.google.android.geo.API_KEY")
-            if (apiKey.isNullOrBlank()) {
-                DriveKitLog.e(TAG, "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation.")
-            }
-        } catch (e: Exception){
-            e.localizedMessage?.let {
-                DriveKitLog.e(TAG, "Error while checking the Google API key : $it" )
+        DriveKit.applicationContext?.also { context ->
+            try {
+                val bundle= context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA).metaData
+                val apiKey = bundle.getString("com.google.android.geo.API_KEY")
+                if (apiKey.isNullOrBlank()) {
+                    DriveKitLog.e(TAG, "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation.")
+                }
+            } catch (e: Exception){
+                e.localizedMessage?.let {
+                    DriveKitLog.e(TAG, "Error while checking the Google API key : $it" )
+                }
             }
         }
     }
