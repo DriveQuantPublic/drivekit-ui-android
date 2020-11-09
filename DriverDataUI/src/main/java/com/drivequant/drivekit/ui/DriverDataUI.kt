@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
@@ -39,7 +40,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded
 
     @JvmOverloads
-    fun initialize(context: Context, tripData: TripData = TripData.SAFETY, mapItems: List<MapItem> = listOf(
+    fun initialize(tripData: TripData = TripData.SAFETY, mapItems: List<MapItem> = listOf(
             MapItem.SAFETY,
             MapItem.ECO_DRIVING,
             MapItem.DISTRACTION,
@@ -49,7 +50,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.mapItems = mapItems
         DriveKitNavigationController.driverDataUIEntryPoint = this
 
-        checkGoogleApiKey(context)
+        checkGoogleApiKey()
     }
 
     fun enableAdviceFeedback(enableAdviceFeedback: Boolean) {
@@ -89,22 +90,16 @@ object DriverDataUI : DriverDataUIEntryPoint {
     override fun createTripDetailFragment(tripId: String): Fragment =
         TripDetailFragment.newInstance(tripId)
 
-    private fun checkGoogleApiKey(context: Context){
+    private fun checkGoogleApiKey(){
         try {
-            val bundle = context.packageManager.getApplicationInfo(
-                context.packageName,
-                PackageManager.GET_META_DATA
-            ).metaData
+            val bundle= DriveKit.applicationContext!!.packageManager.getApplicationInfo(DriveKit.applicationContext!!.packageName, PackageManager.GET_META_DATA).metaData
             val apiKey = bundle.getString("com.google.android.geo.API_KEY")
             if (apiKey.isNullOrBlank()) {
-                DriveKitLog.e(
-                    TAG,
-                    "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation."
-                )
+                DriveKitLog.e(TAG, "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation.")
             }
-        } catch (e: Exception) {
+        } catch (e: Exception){
             e.localizedMessage?.let {
-                DriveKitLog.e(TAG, "Error while checking the Google API key : $it")
+                DriveKitLog.e(TAG, "Error while checking the Google API key : $it" )
             }
         }
     }
