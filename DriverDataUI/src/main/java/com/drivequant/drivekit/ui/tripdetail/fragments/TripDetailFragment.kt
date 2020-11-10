@@ -330,10 +330,16 @@ class TripDetailFragment : Fragment() {
 
     private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View) {
         if (checkedId == R.id.radio_button_choice_05) {
-            feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = true
+            feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            val scrollView = feedbackView.findViewById<ScrollView>(R.id.scrollView_feedback)
+            val editText = feedbackView.findViewById<EditText>(R.id.edit_text_feedback)
+            editText.isEnabled = true
+            editText.requestFocus()
+            editText.setOnClickListener {
+                scrollView.smoothScrollTo(0, scrollView.bottom)
+            }
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
                 ?.setTextColor(DriveKitUI.colors.secondaryColor())
-            feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
         }
