@@ -32,6 +32,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
+import java.util.*
 
 class TripDetailFragment : Fragment() {
 
@@ -296,7 +297,8 @@ class TripDetailFragment : Fragment() {
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)?.toUpperCase()
+        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
+            ?.toUpperCase(Locale.getDefault())
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
