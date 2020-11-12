@@ -15,9 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -37,7 +35,41 @@ class TripsListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
-        initFilterView()
+
+        if (DriverDataUI.enableVehicleFilter) {
+            viewModel.getVehiclesFilterItems(requireContext())
+            viewModel.filterData.observe(this, Observer {
+                filter_view_vehicle.setItems(viewModel.filterItems)
+            })
+        }
+
+        viewModel.tripsData.observe(this, Observer {
+            if (viewModel.syncStatus == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
+                Toast.makeText(
+                    context,
+                    context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            if (viewModel.tripsByDate.isNullOrEmpty()) {
+                displayNoTrips()
+                adapter?.notifyDataSetChanged()
+            } else {
+                if (DriverDataUI.enableVehicleFilter) {
+                    initFilter()
+                }
+                displayTripsList()
+                adapter?.notifyDataSetChanged() ?: run {
+                    adapter = TripsListAdapter(view?.context, viewModel)
+                    trips_list.setAdapter(adapter)
+                }
+            }
+            updateProgressVisibility(false)
+        })
+        updateTrips()
+    }
+
+    private fun initFilter() {
         filter_view_vehicle.spinner.post {
             filter_view_vehicle.spinner.onItemSelectedListener = object :
                 OnItemSelectedListener {
@@ -52,31 +84,12 @@ class TripsListFragment : Fragment() {
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}
             }
         }
-        viewModel.tripsData.observe(this, Observer {
-            if (viewModel.syncStatus == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
-                Toast.makeText(
-                    context,
-                    context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            if (viewModel.tripsByDate.isNullOrEmpty()) {
-                displayNoTrips()
-                adapter?.notifyDataSetChanged()
-            } else {
-                if (DriverDataUI.enableVehicleFilter) {
-                    text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
-                    displayFilterVehicle()
-                }
-                displayTripsList()
-                adapter?.notifyDataSetChanged() ?: run {
-                    adapter = TripsListAdapter(view?.context, viewModel)
-                    trips_list.setAdapter(adapter)
-                }
-            }
-            updateProgressVisibility(false)
-        })
-        updateTrips()
+        text_view_trips_synthesis.text =
+            viewModel.getTripSynthesisText(requireContext())
+        if (viewModel.getVehicleFilterVisibility()) {
+            text_view_trips_synthesis.visibility = View.VISIBLE
+            filter_view_vehicle.visibility = View.VISIBLE
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,14 +111,6 @@ class TripsListFragment : Fragment() {
             }
             false
         }
-        FontUtils.overrideFonts(context, text_view_trips_synthesis)
-    }
-
-    private fun initFilterView() {
-        viewModel.filterData.observe(this, Observer {
-            filter_view_vehicle.setItems(viewModel.filterItems)
-        })
-        viewModel.getVehiclesFilterItems(requireContext())
     }
 
     fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
@@ -134,13 +139,6 @@ class TripsListFragment : Fragment() {
             )
         )
         hideProgressCircular()
-    }
-
-    private fun displayFilterVehicle() {
-        if (viewModel.getVehicleFilterVisibility()) {
-            text_view_trips_synthesis.visibility = View.VISIBLE
-            filter_view_vehicle.visibility = View.VISIBLE
-        }
     }
 
     private fun displayTripsList() {

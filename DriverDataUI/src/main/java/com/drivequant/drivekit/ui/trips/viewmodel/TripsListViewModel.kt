@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
@@ -78,11 +79,13 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun getVehiclesFilterItems(context: Context) {
-        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
-            filterItems.add(AllTripsFilterItem())
-            filterItems.addAll(it)
-        }
-        filterData.postValue(filterItems)
+        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context, object : GetVehiclesFilterItems{
+            override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
+                filterItems.add(AllTripsFilterItem())
+                filterItems.addAll(vehiclesFilterItems)
+                filterData.postValue(filterItems)
+            }
+        })
     }
 
     fun getTripSynthesisText(context: Context): SpannableString {
