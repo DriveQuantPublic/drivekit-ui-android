@@ -170,7 +170,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
                     VehicleSyncStatus.NO_ERROR,
                     VehicleSyncStatus.CACHE_DATA_ONLY,
                     VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY -> {
-                        listener.onFilterItemsReceived(buildFilterItem(vehicles))
+                        listener.onFilterItemsReceived(buildFilterItems(vehicles))
                     }
                     VehicleSyncStatus.SYNC_ALREADY_IN_PROGRESS -> { /* do nothing */ }
                 }
@@ -178,7 +178,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         })
     }
 
-    private fun buildFilterItem(vehicles: List<Vehicle>) : List<FilterItem> {
+    private fun buildFilterItems(vehicles: List<Vehicle>) : List<FilterItem> {
         val filterItems = mutableListOf<FilterItem>()
         for (vehicle in vehicles) {
             val filterItem = object : FilterItem {
