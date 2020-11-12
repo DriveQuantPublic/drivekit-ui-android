@@ -82,7 +82,7 @@ class TripDetailFragment : Fragment() {
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
                         .positiveButton(getString(R.string.dk_common_ok),
-                            DialogInterface.OnClickListener { dialog, _ ->
+                            DialogInterface.OnClickListener { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
                         .negativeButton(getString(R.string.dk_common_cancel),
@@ -133,35 +133,37 @@ class TripDetailFragment : Fragment() {
     private fun deleteTrip(){
         viewModel.deleteTripObserver.observe(this, Observer {
             hideProgressCircular()
-            if (it != null){
-                val alert = DKAlertDialog.LayoutBuilder()
-                    .init(context!!)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(
-                        getString(R.string.dk_common_ok),
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.dismiss()
-                            val data = Intent()
-                            requireActivity().apply {
-                                setResult(RESULT_OK, data)
-                                finish()
-                            }
-                        })
-                    .cancelable(false)
-                    .show()
+            context?.let { context ->
+                if (it != null){
+                    val alert = DKAlertDialog.LayoutBuilder()
+                        .init(context)
+                        .layout(R.layout.template_alert_dialog_layout)
+                        .positiveButton(
+                            getString(R.string.dk_common_ok),
+                            DialogInterface.OnClickListener { dialog, _ ->
+                                dialog.dismiss()
+                                val data = Intent()
+                                requireActivity().apply {
+                                    setResult(RESULT_OK, data)
+                                    finish()
+                                }
+                            })
+                        .cancelable(false)
+                        .show()
 
-                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-                title?.text = getString(R.string.app_name)
+                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+                    val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                    title?.text = getString(R.string.app_name)
 
-                if (it){
-                    description?.text = getString(R.string.dk_driverdata_trip_deleted)
-                    title?.headLine1()
-                    description?.normalText()
-                } else {
-                    description?.text = getString(R.string.dk_driverdata_failed_to_delete_trip)
-                    title?.headLine1()
-                    description?.normalText()
+                    if (it){
+                        description?.text = getString(R.string.dk_driverdata_trip_deleted)
+                        title?.headLine1()
+                        description?.normalText()
+                    } else {
+                        description?.text = getString(R.string.dk_driverdata_failed_to_delete_trip)
+                        title?.headLine1()
+                        description?.normalText()
+                    }
                 }
             }
         })
@@ -319,9 +321,10 @@ class TripDetailFragment : Fragment() {
                 if (feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isNotEmpty()) {
                     buildFeedbackData(mapItem, feedbackView, radioGroup)
                 } else {
-                    val emptyFiledText =
-                        DKResource.convertToString(context!!, "dk_common_error_empty_field")
-                    Toast.makeText(context, emptyFiledText, Toast.LENGTH_SHORT).show()
+                    context?.let {
+                        val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")
+                        Toast.makeText(it, emptyFieldText, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -366,21 +369,19 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setMapController(){
-        if (mapFragment != null) {
-            mapFragment!!.getMapAsync {
-                    googleMap -> mapFragment
-                tripMapViewHolder =
-                    TripGoogleMapViewHolder(
-                        this,
-                        viewContentTrip,
-                        viewModel,
-                        googleMap
-                    )
-                tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
-                tripMapViewHolder.updateCamera()
-                displayAdviceFromTripInfo()
-                hideProgressCircular()
-            }
+        mapFragment?.getMapAsync {
+                googleMap -> mapFragment
+            tripMapViewHolder =
+                TripGoogleMapViewHolder(
+                    this,
+                    viewContentTrip,
+                    viewModel,
+                    googleMap
+                )
+            tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
+            tripMapViewHolder.updateCamera()
+            displayAdviceFromTripInfo()
+            hideProgressCircular()
         }
         center_button.setOnClickListener {
             tripMapViewHolder.updateCamera()
