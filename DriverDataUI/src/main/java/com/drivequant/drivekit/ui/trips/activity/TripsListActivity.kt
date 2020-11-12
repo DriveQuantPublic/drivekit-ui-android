@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -17,6 +18,7 @@ class TripsListActivity : AppCompatActivity() {
 
     lateinit var fragment: TripsListFragment
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trips_list)

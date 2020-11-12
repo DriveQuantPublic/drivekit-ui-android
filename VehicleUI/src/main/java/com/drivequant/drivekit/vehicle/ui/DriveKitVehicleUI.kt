@@ -164,34 +164,41 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
-        val vehiclesFilterItems = mutableListOf<FilterItem>()
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                if (status == VehicleSyncStatus.NO_ERROR || status == VehicleSyncStatus.CACHE_DATA_ONLY) {
-                    if (vehicles.isNotEmpty()) {
-                        for (vehicle in vehicles) {
-                            val vehicleItem = object : FilterItem {
-                                override fun getItemId(): Any? {
-                                    return vehicle.vehicleId
-                                }
-
-                                override fun getImage(context: Context): Drawable? {
-                                    return VehicleUtils().getVehicleDrawable(
-                                        context,
-                                        vehicle.vehicleId
-                                    )
-                                }
-
-                                override fun getTitle(context: Context): String {
-                                    return vehicle.buildFormattedName(context)
-                                }
-                            }
-                            vehiclesFilterItems.add(vehicleItem)
-                        }
-                        listener.onFilterItemsReceived(vehiclesFilterItems)
+                when (status) {
+                    VehicleSyncStatus.NO_ERROR,
+                    VehicleSyncStatus.CACHE_DATA_ONLY,
+                    VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY -> {
+                        listener.onFilterItemsReceived(buildFilterItem(vehicles))
                     }
+                    VehicleSyncStatus.SYNC_ALREADY_IN_PROGRESS -> { /* do nothing */ }
                 }
             }
         })
+    }
+
+    private fun buildFilterItem(vehicles: List<Vehicle>) : List<FilterItem> {
+        val filterItems = mutableListOf<FilterItem>()
+        for (vehicle in vehicles) {
+            val filterItem = object : FilterItem {
+                override fun getItemId(): Any? {
+                    return vehicle.vehicleId
+                }
+
+                override fun getImage(context: Context): Drawable? {
+                    return VehicleUtils().getVehicleDrawable(
+                        context,
+                        vehicle.vehicleId
+                    )
+                }
+
+                override fun getTitle(context: Context): String {
+                    return vehicle.buildFormattedName(context)
+                }
+            }
+            filterItems.add(filterItem)
+        }
+        return filterItems
     }
 }
