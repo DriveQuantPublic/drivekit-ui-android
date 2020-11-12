@@ -44,13 +44,6 @@ class TripsListFragment : Fragment() {
         }
 
         viewModel.tripsData.observe(this, Observer {
-            if (viewModel.syncStatus == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
-                Toast.makeText(
-                    context,
-                    context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
             if (viewModel.tripsByDate.isNullOrEmpty()) {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
@@ -65,6 +58,16 @@ class TripsListFragment : Fragment() {
                 }
             }
             updateProgressVisibility(false)
+        })
+
+        viewModel.syncTripsError.observe(this, Observer {
+            it?.let {
+                Toast.makeText(
+                    context,
+                    context?.getString(R.string.dk_driverdata_failed_to_sync_trips),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         })
         updateTrips()
     }

@@ -27,6 +27,7 @@ class TripsListViewModel : ViewModel() {
     var filterItems: MutableList<FilterItem> = mutableListOf()
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
+    var syncTripsError: MutableLiveData<Any> = MutableLiveData()
     var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
     var currentFilterItemPosition = 0
     private lateinit var computedSynthesis: Pair<Int, Double>
@@ -36,6 +37,9 @@ class TripsListViewModel : ViewModel() {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
+                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY){
+                        syncTripsError.postValue(Any())
+                    }
                     syncStatus = status
                     allTrips = trips
                     computeTrips(trips, dayTripDescendingOrder)
