@@ -50,15 +50,15 @@ object DKDataFormatter {
 
         return when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                "${checkDistanceValue(distanceInMile)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
+                "${formatDistanceValue(distanceInMile)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
             }
             DistanceUnit.KM -> {
-                "${checkDistanceValue(distanceInKm)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
+                "${formatDistanceValue(distanceInKm)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
             }
         }
     }
 
-    private fun checkDistanceValue(distance: Double?): String? {
+    private fun formatDistanceValue(distance: Double?): String? {
         return if (distance != null && distance > 1000) {
             distance.format(0)
         } else {

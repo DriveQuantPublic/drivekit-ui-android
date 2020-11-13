@@ -48,9 +48,7 @@ class TripsListFragment : Fragment() {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
             } else {
-                if (DriverDataUI.enableVehicleFilter) {
-                    initFilter()
-                }
+                initFilter()
                 displayTripsList()
                 adapter?.notifyDataSetChanged() ?: run {
                     adapter = TripsListAdapter(view?.context, viewModel)
@@ -73,23 +71,21 @@ class TripsListFragment : Fragment() {
     }
 
     private fun initFilter() {
-        filter_view_vehicle.spinner.post {
-            filter_view_vehicle.spinner.onItemSelectedListener = object :
-                OnItemSelectedListener {
-                override fun onItemSelected(
-                    adapterView: AdapterView<*>?,
-                    view: View,
-                    position: Int,
-                    l: Long) {
-                    viewModel.currentFilterItemPosition = position
-                    viewModel.filterTrips(DriverDataUI.dayTripDescendingOrder)
+        if (DriverDataUI.enableVehicleFilter && viewModel.getVehicleFilterVisibility()) {
+            filter_view_vehicle.spinner.post {
+                filter_view_vehicle.spinner.onItemSelectedListener = object : OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapterView: AdapterView<*>?,
+                        view: View,
+                        position: Int,
+                        l: Long) {
+                        viewModel.currentFilterItemPosition = position
+                        viewModel.filterTrips(DriverDataUI.dayTripDescendingOrder)
+                    }
+                    override fun onNothingSelected(adapterView: AdapterView<*>?) {}
                 }
-                override fun onNothingSelected(adapterView: AdapterView<*>?) {}
             }
-        }
-        text_view_trips_synthesis.text =
-            viewModel.getTripSynthesisText(requireContext())
-        if (viewModel.getVehicleFilterVisibility()) {
+            text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
             text_view_trips_synthesis.visibility = View.VISIBLE
             filter_view_vehicle.visibility = View.VISIBLE
         }
