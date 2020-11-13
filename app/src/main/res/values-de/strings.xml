@@ -51,6 +51,8 @@
    <string name="trip_cancelled_user">Reise storniert durch den Benutzer</string>
    <string name="trip_finished">Eine neue Fahrt wurde gerade analysiert</string>
    <string name="trip_save_for_repost">Die Fahrt konnte nicht analysiert werden, da die Internetverbindung zu langsam ist. Diese wird später analysiert werden.</string>
+   <string name="trip_simulator_start">Eine Reise simulieren</string>
+   <string name="trip_simulator_stop">Ausschalten des Fahrtsimulationsmodus</string>
    <string name="trip_started">Eine Fahrt wird aufgezeichnet</string>
    <string name="user_id_description">Klicken Sie hier, um Ihre Benutzerkennung einzugeben.</string>
    <string name="user_id_title">Identificador de usuario</string>

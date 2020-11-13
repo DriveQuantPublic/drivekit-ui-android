@@ -52,6 +52,8 @@
    <string name="trip_cancelled_user">Viaggio annullato dall\'utente</string>
    <string name="trip_finished">È stato appena analizzato un nuovo viaggio</string>
    <string name="trip_save_for_repost">Il viaggio non può essere analizzato perché la connessione internet è troppo lenta. Sarà analizzato in seguito.</string>
+   <string name="trip_simulator_start">Simulare un viaggio</string>
+   <string name="trip_simulator_stop">Disattivare la modalità di simulazione del viaggio</string>
    <string name="trip_started">È in corso la registrazione di un viaggio</string>
    <string name="user_id_description">Clicca per riempire il tuo identificativo utente</string>
    <string name="user_id_title">Identificatore utente</string>

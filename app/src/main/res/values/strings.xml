@@ -20,6 +20,9 @@
     <string name="driver_data_button">Launch DriverData</string>
     <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
     <string name="driver_streaks_button">Streak of hits</string>
+    <string name="enable_logging_pref_off">Enable this setting to write log on the device</string>
+    <string name="enable_logging_pref_on">Log files will be available in directory \"DriveKit\" on the device</string>
+    <string name="enable_logging_title">Logging</string>
     <string name="enable_share_position_off">Enable this setting to share your position during the trip</string>
     <string name="enable_share_position_on">Disable this setting no to share your position during the trip</string>
     <string name="enable_share_position_title">Share position ?</string>
@@ -48,14 +51,12 @@
     <string name="trip_cancelled_user">Trip cancelled by the user</string>
     <string name="trip_finished">A new trip has just been analyzed</string>
     <string name="trip_save_for_repost">The trip could not be analyzed because the internet connection is too slow. It will be analyzed later.</string>
+    <string name="trip_simulator_start">Simulate a trip</string>
+    <string name="trip_simulator_stop">Turn off trip simulation mode</string>
     <string name="trip_started">A trip is recording</string>
     <string name="user_id_description">Tap to fill your user id</string>
     <string name="user_id_title">User id</string>
     <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
-
-    <!-- TRANSLATE -->
-    <string name="trip_simulator_start">Simulate a trip</string>
-    <string name="trip_simulator_stop">Turn off trip simulation mode</string>
 </resources>

@@ -51,6 +51,8 @@
    <string name="trip_cancelled_user">Le trajet a été annulé par l\'utilisateur</string>
    <string name="trip_finished">Un nouveau trajet vient d\'être analysé</string>
    <string name="trip_save_for_repost">Le trajet n\'a pas pu être analysé car la connexion Internet est trop lente. Il sera analysé ultérieurement.</string>
+   <string name="trip_simulator_start">Simuler un trajet</string>
+   <string name="trip_simulator_stop">Stopper le mode simulation</string>
    <string name="trip_started">Un trajet est en cours d\'analyse</string>
    <string name="user_id_description">Cliquez pour renseigner votre identifiant</string>
    <string name="user_id_title">Identifiant</string>
