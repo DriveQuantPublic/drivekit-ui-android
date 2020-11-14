@@ -4,6 +4,7 @@
 
 The **DriveKit** is a flexible software suite for creating mobile applications to engage, coach and improve drivers.
 
+**DriveKit** installation guidelines are available online: [docs.drivequant.com](https://docs.drivequant.com)
 
 ## Why use the demo application?
 
