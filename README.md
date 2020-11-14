@@ -32,6 +32,18 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 
 * The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get an **DriveKit API key**, contact us at: <contact@drivequant.com>.
 * In `configureDriveKit` of the `DriveKitDemoApplication.kt`, set your **DriveKit API Key** where the method `DriveKit.setApiKey(<DRIVEKIT_API_KEY>)` is called.
-* Build and run the sample app on your phone
+* Build and run the sample app on your phone.
+
+### Configure the demo app
+
+
+### Test the sample app
+
+The application is now configured and ready to run! 
+
+The best way to become familiar with smartphone telematics is to carry out tests in real conditions when travelling by car or public transport.
+
+Alternatively, you can carry out tests in the office using the simulation mode, which allows you to reproduce pre-recorded data from real trips.
+
 
 
