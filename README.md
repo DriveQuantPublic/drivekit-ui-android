@@ -4,7 +4,7 @@
 
 The **DriveKit** is a flexible software suite for creating mobile applications to engage, coach and improve drivers.
 
-To integrate the **DriveKit SDK** in your application, follow the installation guidelines available online: [docs.drivequant.com](https://docs.drivequant.com)
+To integrate the **DriveKit SDK** in your application, follow the installation guidelines: [docs.drivequant.com](https://docs.drivequant.com)
 
 # Why use the demo application?
 
