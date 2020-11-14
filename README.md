@@ -23,3 +23,15 @@ This is why you need to use the application before you start coding:
 * To get the code as an example for integrating the **DriveKit SDK** into your application.
 * To test the open-source graphic components in order to choose the ones you wish to integrate in your application.
 * To validate that the behaviour of the **DriveKit SDK** in your application is perfectly similar to that of the demo application.
+
+# How to use the demo application?
+
+You can follow the steps below to install, run and experiment the DriveKit sample app.
+
+### Install and run the demo app
+
+* The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get an **DriveKit API key**, contact us at: <contact@drivequant.com>.
+* In `configureDriveKit` of the `DriveKitDemoApplication.kt`, set your **DriveKit API Key** where the method `DriveKit.setApiKey(<DRIVEKIT_API_KEY>)` is called.
+* Build and run the sample app on your phone
+
+
