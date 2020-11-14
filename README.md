@@ -41,9 +41,9 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 
 The application is now configured and ready to run! 
 
-The best way to become familiar with smartphone telematics is to carry out tests in real conditions when travelling by car or public transport.
+The best way to become familiar with smartphone telematics is to try the app in real conditions when travelling by car or public transport.
 
-Alternatively, you can carry out tests in the office using the simulation mode, which allows you to reproduce pre-recorded data from real trips.
+Alternatively, you can perform some tests in the office using the trip simulator which allows you to reproduce pre-recorded data from real trips.
 
 
 
