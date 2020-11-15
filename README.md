@@ -36,6 +36,14 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 
 ### Configure the demo app
 
+* Click on the **gear icon** to open the app settings.
+* In the app settings, set a unique user identifier. The **User id** can be an email or any strings.
+* Make sure that the **Auto start** is enabled.
+* Click on **LAUNCH PERMISSIONS**, to grant the required permissions to allow the application to access the smartphone's sensors.
+* Click on **ADD A VEHICLE** to add a vehicle to your account.
+
+![Test Image 1](Android Sample App.png)
+
 
 ### Test the sample app
 
