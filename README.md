@@ -42,7 +42,7 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 * Click on **LAUNCH PERMISSIONS**, to grant the required permissions to allow the application to access the smartphone's sensors.
 * Click on **ADD A VEHICLE** to add a vehicle to your account.
 
-![Test Image 1](Android Sample App.png)
+![Test Image 1](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/master/Android%20Sample%20App.png)
 
 
 ### Test the sample app
