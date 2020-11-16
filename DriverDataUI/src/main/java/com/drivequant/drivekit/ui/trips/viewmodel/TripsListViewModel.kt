@@ -30,7 +30,7 @@ class TripsListViewModel : ViewModel() {
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
     var currentFilterItemPosition = 0
     private lateinit var computedSynthesis: Pair<Int, Double>
-    var allTrips = listOf<Trip>()
+    private var allTrips = listOf<Trip>()
 
     fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKitDriverData.isConfigured()) {
