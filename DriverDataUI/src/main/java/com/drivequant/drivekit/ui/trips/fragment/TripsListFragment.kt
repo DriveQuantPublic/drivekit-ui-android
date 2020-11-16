@@ -35,13 +35,11 @@ class TripsListFragment : Fragment() {
         progress_circular.visibility = View.VISIBLE
         viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
 
-        if (DriverDataUI.enableVehicleFilter) {
-            viewModel.getVehiclesFilterItems(requireContext())
-            viewModel.filterData.observe(this, Observer {
-                filter_view_vehicle.setItems(viewModel.filterItems)
-            })
-        }
-
+        viewModel.getVehiclesFilterItems(requireContext())
+        viewModel.filterData.observe(this, Observer {
+            filter_view_vehicle.setItems(viewModel.filterItems)
+        })
+        
         viewModel.tripsData.observe(this, Observer {
             if (viewModel.tripsByDate.isNullOrEmpty()) {
                 displayNoTrips()
