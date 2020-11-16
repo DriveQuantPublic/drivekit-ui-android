@@ -28,7 +28,6 @@ class TripsListViewModel : ViewModel() {
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
-    var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
     var currentFilterItemPosition = 0
     private lateinit var computedSynthesis: Pair<Int, Double>
     var allTrips = listOf<Trip>()
@@ -37,16 +36,15 @@ class TripsListViewModel : ViewModel() {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
-                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY){
+                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                         syncTripsError.postValue(Any())
                     }
-                    syncStatus = status
                     allTrips = trips
                     computeTrips(trips, dayTripDescendingOrder)
                 }
             }, synchronizationType)
         } else {
-            tripsData.postValue(mutableListOf())
+            syncTripsError.postValue(Any())
         }
     }
 
@@ -84,10 +82,14 @@ class TripsListViewModel : ViewModel() {
 
     fun getVehiclesFilterItems(context: Context) {
         DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context, object : GetVehiclesFilterItems{
-            override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                filterItems.add(AllTripsFilterItem())
-                filterItems.addAll(vehiclesFilterItems)
-                filterData.postValue(filterItems)
+            override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>?) {
+                vehiclesFilterItems?.let {
+                    filterItems.add(AllTripsFilterItem())
+                    filterItems.addAll(vehiclesFilterItems)
+                    filterData.postValue(filterItems)
+                } ?: run {
+                    syncTripsError.postValue(Any())
+                }
             }
         })
     }

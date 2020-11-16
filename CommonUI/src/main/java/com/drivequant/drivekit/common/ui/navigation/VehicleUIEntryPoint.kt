@@ -12,7 +12,7 @@ interface VehicleUIEntryPoint {
 }
 
 interface GetVehiclesFilterItems {
-    fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>)
+    fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>?)
 }
 
 interface GetVehicleInfoByVehicleIdListener {

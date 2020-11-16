@@ -10,6 +10,8 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -164,25 +166,31 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
-        DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
-            override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                when (status) {
-                    VehicleSyncStatus.NO_ERROR,
-                    VehicleSyncStatus.CACHE_DATA_ONLY,
-                    VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY -> {
-                        listener.onFilterItemsReceived(buildFilterItems(vehicles))
+        if (DriveKit.isConfigured()) {
+            DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
+                override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
+                    when (status) {
+                        VehicleSyncStatus.NO_ERROR,
+                        VehicleSyncStatus.CACHE_DATA_ONLY,
+                        VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY -> {
+                            listener.onFilterItemsReceived(buildFilterItems(vehicles))
+                        }
+                        VehicleSyncStatus.SYNC_ALREADY_IN_PROGRESS -> { /* do nothing */
+                        }
                     }
-                    VehicleSyncStatus.SYNC_ALREADY_IN_PROGRESS -> { /* do nothing */ }
                 }
-            }
-        })
+            })
+        } else {
+            listener.onFilterItemsReceived(null)
+        }
     }
+
 
     override fun reset() {
         DriveKitVehicle.reset()
     }
 
-    private fun buildFilterItems(vehicles: List<Vehicle>) : List<FilterItem> {
+    private fun buildFilterItems(vehicles: List<Vehicle>): List<FilterItem> {
         val filterItems = mutableListOf<FilterItem>()
         for (vehicle in vehicles) {
             val filterItem = object : FilterItem {

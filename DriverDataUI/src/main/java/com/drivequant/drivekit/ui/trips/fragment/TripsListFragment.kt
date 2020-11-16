@@ -39,9 +39,10 @@ class TripsListFragment : Fragment() {
         viewModel.filterData.observe(this, Observer {
             filter_view_vehicle.setItems(viewModel.filterItems)
         })
-        
+
+        updateTrips()
         viewModel.tripsData.observe(this, Observer {
-            if (viewModel.tripsByDate.isNullOrEmpty()) {
+            if (viewModel.tripsByDate.isEmpty()) {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
             } else {
@@ -63,8 +64,8 @@ class TripsListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+            updateProgressVisibility(false)
         })
-        updateTrips()
     }
 
     private fun initFilter() {
