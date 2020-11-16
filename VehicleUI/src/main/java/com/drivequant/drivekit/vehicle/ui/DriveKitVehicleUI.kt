@@ -178,6 +178,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         })
     }
 
+    override fun reset() {
+        DriveKitVehicle.reset()
+    }
+
     private fun buildFilterItems(vehicles: List<Vehicle>) : List<FilterItem> {
         val filterItems = mutableListOf<FilterItem>()
         for (vehicle in vehicles) {

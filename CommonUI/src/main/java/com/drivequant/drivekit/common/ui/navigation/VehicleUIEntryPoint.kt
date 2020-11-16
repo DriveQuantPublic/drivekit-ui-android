@@ -8,6 +8,7 @@ interface VehicleUIEntryPoint {
     fun startVehicleDetailActivity(context: Context, vehicleId: String) : Boolean
     fun getVehicleInfoById(context: Context, vehicleId: String, listener : GetVehicleInfoByVehicleIdListener)
     fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems)
+    fun reset()
 }
 
 interface GetVehiclesFilterItems {

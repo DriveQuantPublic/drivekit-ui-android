@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceFragmentCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -80,6 +81,7 @@ class SettingsActivity : AppCompatActivity() {
             val apiKey = DriveKit.config.apiKey
             DriveKit.reset()
             DriveKitDriverData.reset()
+            DriveKitNavigationController.vehicleUIEntryPoint?.reset()
             apiKey?.let {
                 DriveKit.setApiKey(it)
             }
