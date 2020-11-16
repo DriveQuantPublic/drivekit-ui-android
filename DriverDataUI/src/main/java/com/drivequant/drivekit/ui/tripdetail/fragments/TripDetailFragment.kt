@@ -266,7 +266,6 @@ class TripDetailFragment : Fragment() {
                 val agreeText = adviceView.findViewById<TextView>(R.id.advice_agree_textview)
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
-                adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
                 disagreeText.headLine2(DriveKitUI.colors.primaryColor())
                 agreeText.headLine2(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
@@ -288,6 +287,7 @@ class TripDetailFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
+            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
             adviceAlertDialog = builder.show()
         }
     }
