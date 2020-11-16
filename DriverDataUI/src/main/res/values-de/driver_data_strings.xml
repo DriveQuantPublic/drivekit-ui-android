@@ -14,6 +14,7 @@
    <string name="dk_driverdata_bad_maintain">Sehr unregel- mäßige Geschwindigkeit</string>
    <string name="dk_driverdata_confirm_delete_trip">Löschen Sie die Reise?</string>
    <string name="dk_driverdata_day">Tagesausflug</string>
+   <string name="dk_driverdata_default_filter_item">Alle meine Reisen</string>
    <string name="dk_driverdata_end_event">Ende der Fahrt</string>
    <string name="dk_driverdata_failed_to_delete_trip">Die Fahrt konnte nicht gelöscht werden, versuchen Sie es später noch einmal.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Die Synchronisation von Fahrten ist fehlgeschlagen, bitte versuchen Sie es später erneut.</string>
@@ -26,6 +27,7 @@
    <string name="dk_driverdata_low_accel">Beschleunigung zu schwach</string>
    <string name="dk_driverdata_low_decel">Bremsen zu schwach</string>
    <string name="dk_driverdata_night">Nachtfahrt</string>
+   <string name="dk_driverdata_no_trip_placeholder">Du hast noch keine Fahrten mit diesem Fahrzeug gemacht.</string>
    <string name="dk_driverdata_no_trips_recorded">Sie sind noch nicht gefahren.</string>
    <string name="dk_driverdata_safety_accel">Starke Beschleunigung</string>
    <string name="dk_driverdata_safety_adherence">Adhäsionsgrenze</string>
@@ -75,6 +77,4 @@
    <string name="dk_driverdata_weather_rain">bei regnerischem Wetter</string>
    <string name="dk_driverdata_weather_snow">bei Schneefall</string>
    <string name="dk_driverdata_weather_sun">bei klarem Wetter</string>
-   <string name="dk_driverdata_default_filter_item">Alle meine Reisen</string>
-   <string name="dk_driverdata_no_trip_placeholder">Du hast noch keine Fahrten mit diesem Fahrzeug gemacht.</string>
 </resources>

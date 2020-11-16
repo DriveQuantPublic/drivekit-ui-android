@@ -14,6 +14,7 @@
    <string name="dk_driverdata_bad_maintain">Vitesse très irrégulière</string>
    <string name="dk_driverdata_confirm_delete_trip">Supprimer le trajet ?</string>
    <string name="dk_driverdata_day">Temps de jour</string>
+   <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
    <string name="dk_driverdata_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossible de synchroniser les trajets, veuillez réessayer plus tard.</string>
@@ -26,6 +27,7 @@
    <string name="dk_driverdata_low_accel">Accélération trop faible</string>
    <string name="dk_driverdata_low_decel">Freinage trop faible</string>
    <string name="dk_driverdata_night">Trajet de nuit</string>
+   <string name="dk_driverdata_no_trip_placeholder">Vous n\'avez pas encore réalisé de trajets avec ce véhicule.</string>
    <string name="dk_driverdata_no_trips_recorded">Vous n\'avez pas encore réalisé de trajet.</string>
    <string name="dk_driverdata_safety_accel">Accélérations fortes</string>
    <string name="dk_driverdata_safety_adherence">Limites d\'adhérence</string>
@@ -75,6 +77,4 @@
    <string name="dk_driverdata_weather_rain">Temps pluvieux</string>
    <string name="dk_driverdata_weather_snow">Temps neigeux</string>
    <string name="dk_driverdata_weather_sun">Temps clair</string>
-   <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
-   <string name="dk_driverdata_no_trip_placeholder">Vous n\'avez pas encore réalisé de trajets avec ce véhicule.</string>
 </resources>

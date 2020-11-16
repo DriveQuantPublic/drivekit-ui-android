@@ -14,6 +14,7 @@
    <string name="dk_driverdata_bad_maintain">Very fluctuating speed</string>
    <string name="dk_driverdata_confirm_delete_trip">Delete the trip ?</string>
    <string name="dk_driverdata_day">Day trip</string>
+   <string name="dk_driverdata_default_filter_item">All my trips</string>
    <string name="dk_driverdata_end_event">End of trip</string>
    <string name="dk_driverdata_failed_to_delete_trip">The trip could not be deleted, try again later.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Failed to synchronize trips, please retry later.</string>
@@ -26,6 +27,7 @@
    <string name="dk_driverdata_low_accel">Acceleration is too low</string>
    <string name="dk_driverdata_low_decel">Deceleration is too low</string>
    <string name="dk_driverdata_night">Night trip</string>
+   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
    <string name="dk_driverdata_no_trips_recorded">Make your first trip to fill this list</string>
    <string name="dk_driverdata_safety_accel">Harsh accelerations</string>
    <string name="dk_driverdata_safety_adherence">Adherence limits</string>
@@ -75,6 +77,4 @@
    <string name="dk_driverdata_weather_rain">Rainy weather</string>
    <string name="dk_driverdata_weather_snow">Snowy weather</string>
    <string name="dk_driverdata_weather_sun">Clear weather</string>
-   <string name="dk_driverdata_default_filter_item">All my trips</string>
-   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
 </resources>
