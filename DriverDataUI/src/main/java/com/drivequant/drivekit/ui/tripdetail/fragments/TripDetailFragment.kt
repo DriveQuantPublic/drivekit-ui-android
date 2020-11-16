@@ -329,8 +329,10 @@ class TripDetailFragment : Fragment() {
             }
 
         feedbackAlertDialog = builder.show()
-        feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-        feedbackAlertDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
+        feedbackAlertDialog?.apply {
+            getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
+        }
     }
 
     private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View) {
@@ -338,10 +340,12 @@ class TripDetailFragment : Fragment() {
             feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             val scrollView = feedbackView.findViewById<ScrollView>(R.id.scrollView_feedback)
             val editText = feedbackView.findViewById<EditText>(R.id.edit_text_feedback)
-            editText.isEnabled = true
-            editText.requestFocus()
-            editText.setOnClickListener {
-                scrollView.smoothScrollTo(0, scrollView.bottom)
+            editText.apply {
+                isEnabled = true
+                requestFocus()
+                setOnClickListener {
+                    scrollView.smoothScrollTo(0, scrollView.bottom)
+                }
             }
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
                 ?.setTextColor(DriveKitUI.colors.secondaryColor())
