@@ -130,11 +130,11 @@ class TripDetailFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    private fun deleteTrip(){
+    private fun deleteTrip() {
         viewModel.deleteTripObserver.observe(this, Observer {
             hideProgressCircular()
             context?.let { context ->
-                if (it != null){
+                if (it != null) {
                     val alert = DKAlertDialog.LayoutBuilder()
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
@@ -154,16 +154,13 @@ class TripDetailFragment : Fragment() {
                     val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                     val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
                     title?.text = getString(R.string.app_name)
-
-                    if (it){
-                        description?.text = getString(R.string.dk_driverdata_trip_deleted)
-                        title?.headLine1()
-                        description?.normalText()
+                    description?.text = if (it) {
+                        getString(R.string.dk_driverdata_trip_deleted)
                     } else {
-                        description?.text = getString(R.string.dk_driverdata_failed_to_delete_trip)
-                        title?.headLine1()
-                        description?.normalText()
+                        getString(R.string.dk_driverdata_failed_to_delete_trip)
                     }
+                    title?.headLine1()
+                    description?.normalText()
                 }
             }
         })
