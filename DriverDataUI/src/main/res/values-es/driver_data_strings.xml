@@ -14,6 +14,7 @@
    <string name="dk_driverdata_bad_maintain">Velocidad muy irregular</string>
    <string name="dk_driverdata_confirm_delete_trip">Eliminar el viaje?</string>
    <string name="dk_driverdata_day">Excursión de un día</string>
+   <string name="dk_driverdata_default_filter_item">Todos mis viajes</string>
    <string name="dk_driverdata_end_event">Fin del viaje</string>
    <string name="dk_driverdata_failed_to_delete_trip">El viaje no pudo ser borrado, intente de nuevo más tarde.</string>
    <string name="dk_driverdata_failed_to_sync_trips">No se sincronizaron los disparos, inténtelo de nuevo más tarde.</string>
@@ -26,7 +27,8 @@
    <string name="dk_driverdata_low_accel">Aceleración demasiado débil</string>
    <string name="dk_driverdata_low_decel">Frenado demasiado débil</string>
    <string name="dk_driverdata_night">Excursión nocturna</string>
-   <string name="dk_driverdata_no_trips_recorded">Sin viajes registrados</string>
+   <string name="dk_driverdata_no_trip_placeholder">Aún no has hecho ningún viaje con este vehículo.</string>
+   <string name="dk_driverdata_no_trips_recorded">Aún no has viajado.</string>
    <string name="dk_driverdata_safety_accel">Aceleraciones bruscas</string>
    <string name="dk_driverdata_safety_adherence">Límites de adherencia</string>
    <string name="dk_driverdata_safety_decel">Frenadas fuertes</string>
@@ -75,6 +77,4 @@
    <string name="dk_driverdata_weather_rain">con tiempo lluvioso</string>
    <string name="dk_driverdata_weather_snow">in nevicata</string>
    <string name="dk_driverdata_weather_sun">En tiempo despejado</string>
-   <string name="dk_driverdata_default_filter_item">Todos mis viajes</string>
-   <string name="dk_driverdata_no_trip_placeholder">Aún no has hecho ningún viaje con este vehículo.</string>
 </resources>

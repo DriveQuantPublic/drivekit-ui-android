@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.highlightMedium
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -51,6 +53,7 @@ class UnscoredTripFragment : Fragment() {
         trip_message.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         trip_message.setBackgroundColor(DriveKitUI.colors.warningColor())
         trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
-        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
+        trip_duration.highlightMedium(DriveKitUI.colors.primaryColor())
+        image_view_unscored_trip_info.background.tintDrawable(DriveKitUI.colors.warningColor())
     }
 }
