@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -81,7 +82,7 @@ class SettingsActivity : AppCompatActivity() {
             val apiKey = DriveKit.config.apiKey
             DriveKit.reset()
             DriveKitDriverData.reset()
-            DriveKitNavigationController.vehicleUIEntryPoint?.reset()
+            DriveKitVehicle.reset()
             apiKey?.let {
                 DriveKit.setApiKey(it)
             }
