@@ -8,18 +8,12 @@ import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
-import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
-import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
-import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
-import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
@@ -165,47 +159,25 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
-        if (DriveKit.isConfigured()) {
-            DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
-                override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                    when (status) {
-                        VehicleSyncStatus.NO_ERROR,
-                        VehicleSyncStatus.CACHE_DATA_ONLY,
-                        VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY -> {
-                            listener.onFilterItemsReceived(buildFilterItems(vehicles))
-                        }
-                        VehicleSyncStatus.SYNC_ALREADY_IN_PROGRESS -> { /* do nothing */
-                        }
-                    }
-                }
-            })
-        } else {
-            listener.onFilterItemsReceived(null)
-        }
-    }
-
-    private fun buildFilterItems(vehicles: List<Vehicle>): List<FilterItem> {
-        val filterItems = mutableListOf<FilterItem>()
+    override fun getVehiclesFilterItems(context: Context): List<FilterItem> {
+        val vehiclesFilterItems = mutableListOf<FilterItem>()
+        val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
         for (vehicle in vehicles) {
-            val filterItem = object : FilterItem {
+            val vehicleItem = object : FilterItem{
                 override fun getItemId(): Any? {
                     return vehicle.vehicleId
                 }
 
                 override fun getImage(context: Context): Drawable? {
-                    return VehicleUtils().getVehicleDrawable(
-                        context,
-                        vehicle.vehicleId
-                    )
+                    return VehicleUtils().getVehicleDrawable(context, vehicle.vehicleId)
                 }
 
                 override fun getTitle(context: Context): String {
                     return vehicle.buildFormattedName(context)
                 }
             }
-            filterItems.add(filterItem)
+            vehiclesFilterItems.add(vehicleItem)
         }
-        return filterItems
+        return vehiclesFilterItems
     }
 }
