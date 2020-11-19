@@ -14,7 +14,7 @@ The available components are:
 * **Trip Analysis** does not have a graphical user interface. It is the heart of the reactor that allows access to the phone's sensors and contains autostart mechanisms to analyse trips while your app runs in background.
 * **Permissions Utils** is used to get user's permissions that allow the SDK to access the smartphone's sensors while running in background.
 * **Driver Data** manages the driver trips display (list and details) and ensures the synchronisation of driver data.
-* **Vehicle** is made to select one or more vehicles and to choose the autostart mode for each ot them.
+* **Vehicle** is made to select one or more vehicles and to choose the autostart mode for each of them.
 * **Driver Achievement** contains gaming features that measure driver performance and stimulate driver improvement.
 
 Before installing the **DriveKit SDK** in your mobile application we recommend that you do some tests with the demo application. It's fast and it will save you time. 
@@ -43,7 +43,7 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 * Click on **ADD A VEHICLE** to add a vehicle to your account.
 
 ![Android Sample App Screenshots](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/master/Android%20Sample%20App.png)
-
+* For the app to work properly, it is recommended to disable the battery optimization functions for the application. This is especially important for some Android smartphone models such as Huawei, Samsung, OnePlus, Asus and Xiaomi. You can find more information about it in [our FAQ](https://drivequant.zendesk.com/hc/en-gb/articles/360007407020-How-to-disable-battery-optimization-on-your-smartphone-).
 
 ### Test the demo app
 
