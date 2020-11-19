@@ -12,7 +12,7 @@ fun List<RankingType>.sanitize(): List<RankingType> {
             iterator.remove()
         }
     }
-    return newItems.distinct().toList()
+    return newItems.distinct()
 }
 
 fun RankingType.hasAccess(): Boolean {
