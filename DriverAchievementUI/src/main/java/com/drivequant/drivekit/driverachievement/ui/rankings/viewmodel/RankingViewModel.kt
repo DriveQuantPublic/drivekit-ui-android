@@ -26,7 +26,7 @@ class RankingViewModel : ViewModel() {
     lateinit var synchronizationType: SynchronizationType
 
     init {
-        for (rankingType in DriverAchievementUI.rankingTypes.distinct()) {
+        for (rankingType in DriverAchievementUI.rankingTypes) {
             val iconId = when (rankingType) {
                 RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
                 RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"

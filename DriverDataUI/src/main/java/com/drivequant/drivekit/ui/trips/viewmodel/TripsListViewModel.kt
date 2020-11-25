@@ -9,7 +9,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
@@ -24,25 +23,27 @@ import java.util.*
 
 class TripsListViewModel : ViewModel() {
     var tripsByDate: MutableList<TripsByDate> = mutableListOf()
-    var filterItems: List<FilterItem> = listOf()
+    var filterItems: MutableList<FilterItem> = mutableListOf()
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
-    var syncStatus: TripsSyncStatus = TripsSyncStatus.NO_ERROR
+    var syncTripsError: MutableLiveData<Any> = MutableLiveData()
     var currentFilterItemPosition = 0
-    lateinit var computedSynthesis: Pair<Int, Double>
-    var allTrips = listOf<Trip>()
+    private lateinit var computedSynthesis: Pair<Int, Double>
+    private var allTrips = listOf<Trip>()
 
     fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
-                    syncStatus = status
+                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
+                        syncTripsError.postValue(Any())
+                    }
                     allTrips = trips
                     computeTrips(trips, dayTripDescendingOrder)
                 }
             }, synchronizationType)
         } else {
-            tripsData.postValue(mutableListOf())
+            syncTripsError.postValue(Any())
         }
     }
 
@@ -53,7 +54,7 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun filterTrips(dayTripDescendingOrder: Boolean) {
-        val trips = filterItems[currentFilterItemPosition].itemId?.let {
+        val trips = filterItems[currentFilterItemPosition].getItemId()?.let {
             allTrips.filter { it1 -> it1.vehicleId == it as String }
         } ?: kotlin.run {
             allTrips
@@ -79,14 +80,11 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun getVehiclesFilterItems(context: Context) {
-        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(
-            context,
-            object : GetVehiclesFilterItems {
-                override fun onFilterItemsReceived(vehiclesFilterItems: List<FilterItem>) {
-                    filterItems = vehiclesFilterItems
-                    filterData.postValue(filterItems)
-                }
-            })
+        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
+            filterItems.add(AllTripsFilterItem())
+            filterItems.addAll(it)
+        }
+        filterData.postValue(filterItems)
     }
 
     fun getTripSynthesisText(context: Context): SpannableString {
@@ -110,6 +108,6 @@ class TripsListViewModel : ViewModel() {
     }
 
     fun getVehicleFilterVisibility(): Boolean {
-        return filterItems.isNotEmpty() && filterItems.size != 2 && filterItems[0].itemId == null
+        return filterItems.size > 1
     }
 }

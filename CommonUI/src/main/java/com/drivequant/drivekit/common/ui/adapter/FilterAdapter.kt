@@ -34,12 +34,12 @@ class FilterAdapter(
         val imageViewItem = view.findViewById<ImageView>(R.id.image_view_item)
         val textViewItem = view.findViewById<TextView>(R.id.text_view_display_name_item)
         val item = filterItemList[position]
-        textViewItem.text = item.title
-        item.image?.let {
+        textViewItem.text = item.getTitle(context)
+        item.getImage(context)?.let {
             Glide.with(view)
-                .load(item.image)
+                .load(item.getImage(context))
                 .apply(RequestOptions.circleCropTransform())
-                .placeholder(item.image)
+                .placeholder(item.getImage(context))
                 .into(imageViewItem)
         }
         FontUtils.overrideFonts(context, view)
@@ -47,8 +47,8 @@ class FilterAdapter(
     }
 }
 
-data class FilterItem(
-    val itemId: Any?,
-    val image: Drawable?,
-    val title: String
-)
+interface FilterItem {
+    fun getItemId(): Any?
+    fun getImage(context: Context): Drawable?
+    fun getTitle(context: Context): String
+}

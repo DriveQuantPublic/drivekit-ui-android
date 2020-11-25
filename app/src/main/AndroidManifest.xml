@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
+
         <activity android:name="com.drivekit.demoapp.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

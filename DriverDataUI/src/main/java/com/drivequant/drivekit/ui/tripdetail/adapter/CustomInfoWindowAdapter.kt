@@ -2,13 +2,13 @@ package com.drivequant.drivekit.ui.tripdetail.adapter
 
 import android.app.AlertDialog
 import android.content.Context
-import android.support.v7.widget.AppCompatButton
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -27,17 +27,19 @@ class CustomInfoWindowAdapter(
     }
 
     override fun getInfoWindow(marker: Marker?): View {
+        FontUtils.overrideFonts(context, view)
         marker?.let{
             val event = tripDetailViewModel.displayEvents[it.tag as Int]
             val eventHour = view.findViewById<TextView>(R.id.text_view_time)
-            eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE)
+            eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
             val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
             bubbleTitle.text = event.getTitle(context)
-            bubbleTitle.normalText(DriveKitUI.colors.primaryColor())
+            bubbleTitle.headLine2(DriveKitUI.colors.primaryColor())
 
             val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
+            descriptionTextView.smallText()
             event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
                 descriptionTextView.visibility  = View.VISIBLE
                 descriptionTextView.text = description
@@ -53,7 +55,6 @@ class CustomInfoWindowAdapter(
                 bubbleInfo.visibility = View.INVISIBLE
             }
         }
-        FontUtils.overrideFonts(context, view)
         return view
     }
 

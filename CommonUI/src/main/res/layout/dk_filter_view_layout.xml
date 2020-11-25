@@ -6,6 +6,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/border_filter"
         android:layout_margin="@dimen/dk_margin_half"
+        android:paddingStart="@dimen/dk_margin_half"
+        android:paddingEnd="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Spinner

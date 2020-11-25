@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -7,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
@@ -55,18 +56,18 @@ class DriverDistractionFragment : Fragment() {
         unlockDistanceDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_distance)
         unlockDurationDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_duration)
 
-        gauge_type_title.bigText()
-        unlockNumberDescription.bigText()
-        unlockDistanceDescription.bigText()
-        unlockDurationDescription.bigText()
+        gauge_type_title.normalText()
+        unlockNumberDescription.normalText()
+        unlockDistanceDescription.normalText()
+        unlockDurationDescription.normalText()
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
 
-        unlockNumberEvent.headLine1(DriveKitUI.colors.primaryColor())
-        distanceUnlocked.headLine1(DriveKitUI.colors.primaryColor())
-        durationUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+        unlockNumberEvent.highlightSmall(DriveKitUI.colors.primaryColor())
+        distanceUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
+        durationUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
     }
 }
