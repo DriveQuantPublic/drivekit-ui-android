@@ -45,7 +45,7 @@ dependencies {
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 
-    implementation "com.drivequant.drivekit:drivekit-driver-data:1.8-beta3"
+    implementation "com.drivequant.drivekit:drivekit-driver-data:1.8.0"
 }
 
 uploadArchives {
