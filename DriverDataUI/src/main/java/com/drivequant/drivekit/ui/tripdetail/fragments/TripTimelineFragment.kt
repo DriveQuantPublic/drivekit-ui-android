@@ -18,14 +18,14 @@ import kotlinx.android.synthetic.main.trip_timeline_fragment.*
 class TripTimelineFragment : Fragment() {
 
     companion object {
-        fun newInstance(dkTripDetailViewModel: DKTripDetailViewModel) : TripTimelineFragment {
+        fun newInstance(tripDetailViewModel: DKTripDetailViewModel) : TripTimelineFragment {
             val fragment = TripTimelineFragment()
-            fragment.dkTripDetailViewModel = dkTripDetailViewModel
+            fragment.tripDetailViewModel = tripDetailViewModel
             return fragment
         }
     }
 
-    private lateinit var dkTripDetailViewModel: DKTripDetailViewModel
+    private lateinit var tripDetailViewModel: DKTripDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +41,12 @@ class TripTimelineFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         timeline_list.layoutManager = LinearLayoutManager(requireContext())
-        timeline_list.adapter = TripTimelineAdapter(dkTripDetailViewModel.getTripEvents(), object : OnItemClickListener {
+        timeline_list.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
-                dkTripDetailViewModel.setSelectedEvent(position)
+                tripDetailViewModel.setSelectedEvent(position)
             }
         }, DriveKitUI.colors.secondaryColor())
-        dkTripDetailViewModel.getSelectedEvent().observe(this, Observer {
+        tripDetailViewModel.getSelectedEvent().observe(this, Observer {
             it?.let {position ->
                 (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
                 timeline_list.smoothScrollToPosition(position)

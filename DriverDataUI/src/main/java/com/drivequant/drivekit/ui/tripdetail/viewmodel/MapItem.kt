@@ -13,15 +13,15 @@ enum class MapItem : DKMapItem {
     DISTRACTION,
     SYNTHESIS;
 
-    override fun getImageResource(): Int {
-        return when (this) {
+    override fun getImageResource(): Int =
+        when (this) {
             ECO_DRIVING -> R.drawable.dk_leaf_tab_icon
             SAFETY -> R.drawable.dk_shield_tab_icon
             INTERACTIVE_MAP -> R.drawable.dk_trip_timeline_tab_icon
             DISTRACTION -> R.drawable.dk_distraction_tab_icon
             SYNTHESIS -> R.drawable.dk_synthesis_tab_icon
         }
-    }
+
 
     override fun getAdvice(trip: Trip): TripAdvice? {
         for (advice in trip.tripAdvices) {
@@ -34,41 +34,37 @@ enum class MapItem : DKMapItem {
         return null
     }
 
-    override fun getFragment(trip: Trip, dkTripDetailViewModel: DKTripDetailViewModel): Fragment {
-        return when (this) {
+    override fun getFragment(trip: Trip, tripDetailViewModel: DKTripDetailViewModel): Fragment =
+        when (this) {
             SAFETY -> SafetyFragment.newInstance(trip.safety!!)
             ECO_DRIVING -> EcoDrivingFragment.newInstance(trip.ecoDriving!!)
             DISTRACTION -> DriverDistractionFragment.newInstance(trip.driverDistraction!!)
-            INTERACTIVE_MAP -> TripTimelineFragment.newInstance(dkTripDetailViewModel)
+            INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel)
             SYNTHESIS -> SynthesisFragment.newInstance(trip)
         }
-    }
 
-    override fun canShowMapItem(trip: Trip): Boolean {
-        return when (this) {
+    override fun canShowMapItem(trip: Trip): Boolean =
+        when (this) {
             ECO_DRIVING -> trip.ecoDriving?.let { it.score <= 10 }!!
             SAFETY -> trip.safety?.let { it.safetyScore <= 10 }!!
             INTERACTIVE_MAP, SYNTHESIS -> true
             DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }!!
         }
-    }
 
-    override fun getAdviceImageResource(): Int {
-        return when (this) {
+    override fun getAdviceImageResource(): Int =
+        when (this) {
             SAFETY -> R.drawable.dk_safety_advice
             ECO_DRIVING -> R.drawable.dk_eco_advice
             INTERACTIVE_MAP, SYNTHESIS, DISTRACTION -> -1
         }
-    }
 
-    override fun displayedMarkers(): List<DKMarkerType> {
-        return when (this) {
+    override fun displayedMarkers(): List<DKMarkerType> =
+        when (this) {
             SAFETY -> listOf(DKMarkerType.SAFETY)
             DISTRACTION -> listOf(DKMarkerType.DISTRACTION)
             INTERACTIVE_MAP -> DKMarkerType.values().toList()
             else -> listOf()
         }
-    }
 
     override fun shouldShowDistractionArea(): Boolean =
         this == DISTRACTION || this == INTERACTIVE_MAP
@@ -77,7 +73,7 @@ enum class MapItem : DKMapItem {
 interface DKMapItem {
     fun getImageResource(): Int
     fun getAdvice(trip: Trip): TripAdvice?
-    fun getFragment(trip: Trip, dkTripDetailViewModel: DKTripDetailViewModel): Fragment
+    fun getFragment(trip: Trip, tripDetailViewModel: DKTripDetailViewModel): Fragment
     fun canShowMapItem(trip: Trip): Boolean
     fun displayedMarkers(): List<DKMarkerType>
     fun shouldShowDistractionArea(): Boolean
