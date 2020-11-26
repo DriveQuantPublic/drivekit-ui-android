@@ -12,28 +12,21 @@ import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import java.util.*
 
-class TripDetailViewModel(private val itinId: String, private val mapItems: List<MapItem>): ViewModel() {
+class TripDetailViewModel(private val itinId: String, private val mapItems: List<DKMapItem>): ViewModel(), DKTripDetailViewModel {
 
     var trip: Trip? = null
         set(value) {
             field = value
-            field?.let {trip ->
-                if (!trip.unscored){
-                    for (item in mapItems){
-                        when (item){
-                            MapItem.ECO_DRIVING -> trip.ecoDriving?.let {
-
-                                if(it.score <= 10) configurableMapItems.add(item)
-                            }
-                            MapItem.SAFETY -> trip.safety?.let {
-                                if(it.safetyScore <= 10) configurableMapItems.add(item)
-                            }
-                            MapItem.INTERACTIVE_MAP -> configurableMapItems.add(item)
-                            MapItem.DISTRACTION -> trip.driverDistraction?.let {
-                                if(it.score <= 10) configurableMapItems.add(item)
-                            }
-                            MapItem.SYNTHESIS -> configurableMapItems.add(item)
+            field?.let { trip ->
+                if (!trip.unscored) {
+                    for (item in mapItems) {
+                        if (item.canShowMapItem(trip)) {
+                            configurableMapItems.add(item)
                         }
+                    }
+                    DriverDataUI.customMapItem?.let {
+                        if (it.canShowMapItem(trip))
+                            configurableMapItems.add(it)
                     }
                     displayMapItem.value = configurableMapItems[0]
                 }
@@ -47,20 +40,20 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
 
     var events: MutableList<TripEvent> = mutableListOf()
     var displayEvents: List<TripEvent> = mutableListOf()
-    var configurableMapItems = mutableListOf<MapItem>()
-    var displayMapItem : MutableLiveData<MapItem> = MutableLiveData()
+    var configurableMapItems = mutableListOf<DKMapItem>()
+    var displayMapItem: MutableLiveData<DKMapItem> = MutableLiveData()
 
     var tripEventsObserver: MutableLiveData<List<TripEvent>> = MutableLiveData()
     var selection: MutableLiveData<Int> = MutableLiveData()
-    var unScoredTrip : MutableLiveData<Boolean> = MutableLiveData()
+    var unScoredTrip: MutableLiveData<Boolean> = MutableLiveData()
     var noRoute: MutableLiveData<Boolean> = MutableLiveData()
     var noData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
     var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun fetchTripData(context: Context){
-        if (DriveKitDriverData.isConfigured()){
-            DriveKitDriverData.getTrip(itinId, object: TripQueryListener {
+    fun fetchTripData(context: Context) {
+        if (DriveKitDriverData.isConfigured()) {
+            DriveKitDriverData.getTrip(itinId, object : TripQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trip: Trip?) {
                     tripSyncStatus = status
                     trip?.let {
@@ -70,7 +63,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                 }
             })
 
-            DriveKitDriverData.getRoute(itinId, object: RouteQueryListener {
+            DriveKitDriverData.getRoute(itinId, object : RouteQueryListener {
                 override fun onResponse(status: RouteStatus, route: Route?) {
                     routeSyncStatus = status
                     route?.let {
@@ -82,11 +75,16 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
     }
 
-    private fun updateTripAdvice(adviceId: String, evaluation: Int, feedback: Int, comment: String?){
-        if (DriveKitDriverData.isConfigured()){
+    private fun updateTripAdvice(
+        adviceId: String,
+        evaluation: Int,
+        feedback: Int,
+        comment: String?
+    ) {
+        if (DriveKitDriverData.isConfigured()) {
             trip?.let {
-                for (tripAdvice in it.tripAdvices){
-                    if (tripAdvice.id == adviceId){
+                for (tripAdvice in it.tripAdvices) {
+                    if (tripAdvice.id == adviceId) {
                         tripAdvice.evaluation = evaluation
                         tripAdvice.feedback = feedback
                         tripAdvice.comment = comment
@@ -101,9 +99,9 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
     }
 
     fun getFirstMapItemIndexWithAdvice(): Int {
-        for ((loopIndex, value) in configurableMapItems.withIndex()){
+        for ((loopIndex, value) in configurableMapItems.withIndex()) {
             trip?.let {
-                val advice = value.getAdvice(it.tripAdvices)
+                val advice = value.getAdvice(it)
                 if (advice != null) {
                     return loopIndex
                 }
@@ -112,24 +110,24 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         return -1
     }
 
-    private fun computeTripEvents(context: Context){
-        if (routeSyncStatus != null && tripSyncStatus != null){
+    private fun computeTripEvents(context: Context) {
+        if (routeSyncStatus != null && tripSyncStatus != null) {
             if (trip != null && route != null) {
                 DriveKitDriverData.checkReverseGeocode(context, trip, route)
                 computeTripEvent(trip!!, route!!)
-                if (trip!!.unscored){
+                if (trip!!.unscored) {
                     unScoredTrip.postValue(true)
-                }else{
+                } else {
                     tripEventsObserver.postValue(events)
                 }
-            }else{
-                if (trip != null){
-                    if (trip!!.unscored){
+            } else {
+                if (trip != null) {
+                    if (trip!!.unscored) {
                         unScoredTrip.postValue(false)
-                    }else{
+                    } else {
                         noRoute.postValue(true)
                     }
-                }else{
+                } else {
                     noData.postValue(true)
                 }
 
@@ -137,7 +135,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
     }
 
-    private fun computeTripEvent(trip: Trip, route: Route){
+    private fun computeTripEvent(trip: Trip, route: Route) {
         val startTripEvent = TripEvent(
             TripEventType.START,
             Date(trip.endDate.time - (trip.tripStatistics?.duration!!.toLong() * 1000)),
@@ -153,8 +151,8 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         events.add(startTripEvent)
         events.add(endTripEvent)
         trip.safetyEvents?.let {
-            for (event in it){
-                when (event.type){
+            for (event in it) {
+                when (event.type) {
                     1 -> events.add(
                         TripEvent(
                             TripEventType.SAFETY_ADHERENCE,
@@ -189,7 +187,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
             }
         }
         route.screenLockedIndex?.let {
-            for ((index, indexScreenLocked) in it.withIndex()){
+            for ((index, indexScreenLocked) in it.withIndex()) {
                 if (indexScreenLocked == 0 || indexScreenLocked == route.latitude.size - 1) continue
                 if (route.screenStatus!![index] == 1) {
                     events.add(
@@ -200,7 +198,7 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
                             route.longitude[it[index]]
                         )
                     )
-                }else{
+                } else {
                     events.add(
                         TripEvent(
                             TripEventType.PHONE_DISTRACTION_LOCK,
@@ -213,12 +211,12 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
             }
         }
 
-        events = events.sortedWith(compareBy {it.time}).toMutableList()
+        events = events.sortedWith(compareBy { it.time }).toMutableList()
     }
 
-    fun deleteTrip(){
-        if (DriveKitDriverData.isConfigured()){
-            DriveKitDriverData.deleteTrip(itinId, object: TripDeleteQueryListener {
+    fun deleteTrip() {
+        if (DriveKitDriverData.isConfigured()) {
+            DriveKitDriverData.deleteTrip(itinId, object : TripDeleteQueryListener {
                 override fun onResponse(status: Boolean) {
                     deleteTripObserver.postValue(status)
                 }
@@ -226,49 +224,69 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
         }
     }
 
-    fun shouldDisplayAdvice(mapItem: MapItem): Boolean {
+    fun shouldDisplayAdvice(mapItem: DKMapItem): Boolean {
         return getAdviceByMapItem(mapItem) != null
     }
 
-    private fun getAdviceByMapItem(mapItem: MapItem): TripAdvice? {
+    private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? {
         return trip?.let {
-            return mapItem.getAdvice(it.tripAdvices)
+            return mapItem.getAdvice(it)
         }?.let {
             null
         }
     }
 
-    fun getAdviceTitle(mapItem: MapItem): String? {
+    fun getAdviceTitle(mapItem: DKMapItem): String? {
         return getAdviceByMapItem(mapItem)?.title
     }
 
-    fun getAdviceMessage(mapItem: MapItem): String? {
+    fun getAdviceMessage(mapItem: DKMapItem): String? {
         return getAdviceByMapItem(mapItem)?.message
     }
 
-    fun shouldDisplayFeedbackButtons(mapItem: MapItem): Boolean {
+    fun shouldDisplayFeedbackButtons(mapItem: DKMapItem): Boolean {
         return getAdviceByMapItem(mapItem)?.evaluation == 0 && DriverDataUI.enableAdviceFeedback
     }
 
-    fun sendTripAdviceFeedback(mapItem: MapItem, isPositive: Boolean, feedback: Int, comment: String? = null){
+    fun sendTripAdviceFeedback(
+        mapItem: DKMapItem,
+        isPositive: Boolean,
+        feedback: Int,
+        comment: String? = null
+    ) {
         val evaluation = if (isPositive) 1 else 2
         trip?.let {
-            mapItem.getAdvice(it.tripAdvices)?.id?.let { adviceId ->
-                DriveKitDriverData.sendTripAdviceFeedback(it.itinId, adviceId, evaluation, feedback, comment, listener = object: TripAdviceFeedbackQueryListener {
-                    override fun onResponse(status: Boolean) {
-                        if (status){
-                            updateTripAdvice(adviceId, evaluation, feedback, comment)
+            mapItem.getAdvice(it)?.id?.let { adviceId ->
+                DriveKitDriverData.sendTripAdviceFeedback(
+                    it.itinId,
+                    adviceId,
+                    evaluation,
+                    feedback,
+                    comment,
+                    listener = object : TripAdviceFeedbackQueryListener {
+                        override fun onResponse(status: Boolean) {
+                            if (status) {
+                                updateTripAdvice(adviceId, evaluation, feedback, comment)
+                            }
+                            sendAdviceFeedbackObserver.postValue(status)
                         }
-                        sendAdviceFeedbackObserver.postValue(status)
-                    }
-                })
+                    })
             }
         }
     }
-}
 
-class TripDetailViewModelFactory(private val itinId: String,
-                                 private val mapItems: List<MapItem>) : ViewModelProvider.NewInstanceFactory() {
+    override fun setSelectedEvent(position: Int) {
+        selection.postValue(position)
+    }
+
+    override fun getTripEvents(): List<TripEvent> = events
+
+    override fun getSelectedEvent(): MutableLiveData<Int> = selection
+}
+class TripDetailViewModelFactory(
+    private val itinId: String,
+    private val mapItems: List<MapItem>
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return TripDetailViewModel(itinId, mapItems) as T
     }

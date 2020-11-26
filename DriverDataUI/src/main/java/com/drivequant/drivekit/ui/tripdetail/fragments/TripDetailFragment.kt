@@ -27,7 +27,7 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.google.android.gms.maps.SupportMapFragment
@@ -167,7 +167,7 @@ class TripDetailFragment : Fragment() {
         viewModel.deleteTrip()
     }
 
-    private fun sendTripAdviceFeedback(mapItem: MapItem, evaluation: Boolean, feedback: Int, comment: String? = null ){
+    private fun sendTripAdviceFeedback(mapItem: DKMapItem, evaluation: Boolean, feedback: Int, comment: String? = null ){
         viewModel.sendAdviceFeedbackObserver.observe(this, Observer { status ->
             hideProgressCircular()
             if (status != null){
@@ -228,7 +228,7 @@ class TripDetailFragment : Fragment() {
             .show()
     }
 
-    private fun displayAdviceFromTripInfo(){
+    private fun displayAdviceFromTripInfo() {
         if (openAdvice){
             val index = viewModel.getFirstMapItemIndexWithAdvice()
             if (index > -1) {
@@ -240,7 +240,7 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    fun displayAdvice(mapItem: MapItem){
+    fun displayAdvice(mapItem: DKMapItem) {
         if (viewModel.shouldDisplayAdvice(mapItem)){
             val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
             val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
@@ -289,7 +289,7 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    private fun displayAdviceFeedback(mapItem: MapItem) {
+    private fun displayAdviceFeedback(mapItem: DKMapItem) {
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
         FontUtils.overrideFonts(context,feedbackView)
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
@@ -351,7 +351,7 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    private fun buildFeedbackData(mapItem: MapItem, feedbackView: View, radioGroup: RadioGroup){
+    private fun buildFeedbackData(mapItem: DKMapItem, feedbackView: View, radioGroup: RadioGroup){
         showProgressCircular()
         var comment: String? = null
         val feedback = when (radioGroup.checkedRadioButtonId){
