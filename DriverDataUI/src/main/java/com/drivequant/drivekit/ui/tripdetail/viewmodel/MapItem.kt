@@ -13,7 +13,7 @@ enum class MapItem : DKMapItem {
     DISTRACTION,
     SYNTHESIS;
 
-    override fun getImageResource() : Int {
+    override fun getImageResource(): Int {
         return when (this) {
             ECO_DRIVING -> R.drawable.dk_leaf_tab_icon
             SAFETY -> R.drawable.dk_shield_tab_icon
@@ -24,7 +24,7 @@ enum class MapItem : DKMapItem {
     }
 
     override fun getAdvice(trip: Trip): TripAdvice? {
-        for (advice in trip.tripAdvices){
+        for (advice in trip.tripAdvices) {
             if (this == SAFETY && advice.theme.equals("SAFETY")) {
                 return advice
             } else if (this == ECO_DRIVING && advice.theme.equals("ECODRIVING")) {
@@ -35,8 +35,7 @@ enum class MapItem : DKMapItem {
     }
 
     override fun getFragment(trip: Trip, dkTripDetailViewModel: DKTripDetailViewModel): Fragment {
-      return when(this) {
-           //TODO set trip object to the fragment
+        return when (this) {
             SAFETY -> SafetyFragment.newInstance(trip.safety!!)
             ECO_DRIVING -> EcoDrivingFragment.newInstance(trip.ecoDriving!!)
             DISTRACTION -> DriverDistractionFragment.newInstance(trip.driverDistraction!!)
@@ -63,7 +62,7 @@ enum class MapItem : DKMapItem {
     }
 
     override fun displayedMarkers(): List<DKMarkerType> {
-       return when (this) {
+        return when (this) {
             SAFETY -> listOf(DKMarkerType.SAFETY)
             DISTRACTION -> listOf(DKMarkerType.DISTRACTION)
             INTERACTIVE_MAP -> DKMarkerType.values().toList()
@@ -71,7 +70,8 @@ enum class MapItem : DKMapItem {
         }
     }
 
-    override fun shouldShowDistractionArea(): Boolean = this == DISTRACTION || this == INTERACTIVE_MAP
+    override fun shouldShowDistractionArea(): Boolean =
+        this == DISTRACTION || this == INTERACTIVE_MAP
 }
 
 interface DKMapItem {

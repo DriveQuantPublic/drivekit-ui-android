@@ -23,11 +23,11 @@ class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
-    var googleMap: GoogleMap)
-    : GoogleMap.OnInfoWindowClickListener,
-    GoogleMap.OnMarkerClickListener{
+    var googleMap: GoogleMap
+) : GoogleMap.OnInfoWindowClickListener,
+    GoogleMap.OnMarkerClickListener {
 
-    private val googleMarkerList : MutableList<Marker> = mutableListOf()
+    private val googleMarkerList: MutableList<Marker> = mutableListOf()
     private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
@@ -50,7 +50,6 @@ class TripGoogleMapViewHolder(
                 )
                 googleMap.animateCamera(cameraUpdate)
             }
-
         })
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
@@ -58,7 +57,8 @@ class TripGoogleMapViewHolder(
     
     private fun configureAdviceButton(mapItem: DKMapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
-        adviceFabButton.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+        adviceFabButton.backgroundTintList =
+            ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         var shouldDisplayAdvice = false
         viewModel.trip?.let { trip ->
             val tripAdvice: TripAdvice? = mapItem.getAdvice(trip)
@@ -79,7 +79,6 @@ class TripGoogleMapViewHolder(
                     } else if (mapItem == MapItem.ECO_DRIVING){
                         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_efficiency"), javaClass.simpleName)
                     }
-
                 }
             }
         }
@@ -91,7 +90,7 @@ class TripGoogleMapViewHolder(
             val unlockColor =
                 ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
-            if (mapItem != null && mapItem.shouldShowDistractionArea()) {
+            if (mapItem != null && mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(MapItem.INTERACTIVE_MAP)) {
                 var unlock: Boolean
                 route.screenLockedIndex?.let { screenLockedIndex ->
                     for (i in 1 until screenLockedIndex.size) {
@@ -115,9 +114,9 @@ class TripGoogleMapViewHolder(
         }
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int){
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int) {
         val options = PolylineOptions()
-        for (i in startIndex..endIndex){
+        for (i in startIndex..endIndex) {
             val routeSeg = LatLng(route.latitude[i], route.longitude[i])
             builder.include(routeSeg)
             options.color(color)
@@ -127,10 +126,10 @@ class TripGoogleMapViewHolder(
     }
 
     private fun drawMarker(mapItem: DKMapItem?) {
-        mapItem?.let { dkMapItem ->
-            if (dkMapItem.displayedMarkers().isNotEmpty()) {
-                dkMapItem.displayedMarkers().forEach {
-                    when (it) {
+        mapItem?.let { it ->
+            if (it.displayedMarkers().isNotEmpty()) {
+                it.displayedMarkers().forEach { type ->
+                    when (type) {
                         DKMarkerType.SAFETY -> viewModel.displayEvents =
                             viewModel.events.filterNot {
                                 it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
@@ -179,7 +178,7 @@ class TripGoogleMapViewHolder(
         googleMarkerList.clear()
     }
 
-    fun updateCamera(){
+    fun updateCamera() {
         val paddingPx = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             100f,
@@ -192,10 +191,9 @@ class TripGoogleMapViewHolder(
             googleMap.setInfoWindowAdapter(customInfoWindowAdapter)
             try {
                 googleMap.animateCamera(cameraUpdate)
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 // catch exception if there is not enough space for map display
             }
-
         }
     }
 
