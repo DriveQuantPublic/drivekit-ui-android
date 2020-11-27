@@ -189,6 +189,7 @@ class TripDetailFragment : Fragment() {
                 displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
         })
+
         viewModel.unScoredTrip.observe(this, Observer{ routeAvailable ->
             routeAvailable?.let {
                 if (it){
@@ -389,13 +390,19 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    private fun setUnScoredTripFragment(){
+    private fun setUnScoredTripFragment() {
         view_pager.visibility = View.INVISIBLE
         unscored_fragment.visibility = View.VISIBLE
+        val fragment = DriverDataUI.customMapItem?.let {
+            if (it.overrideShortTrip()) {
+                it.getFragment(viewModel.trip!!, viewModel)
+            } else {
+                UnscoredTripFragment.newInstance(
+                    viewModel.trip)
+            }
+        }
         childFragmentManager.beginTransaction()
-            .replace(R.id.unscored_fragment, UnscoredTripFragment.newInstance(
-                viewModel.trip
-            ))
+            .replace(R.id.unscored_fragment, fragment!!)
             .commit()
     }
 

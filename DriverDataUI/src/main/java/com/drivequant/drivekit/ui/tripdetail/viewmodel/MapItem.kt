@@ -68,6 +68,8 @@ enum class MapItem : DKMapItem {
 
     override fun shouldShowDistractionArea(): Boolean =
         this == DISTRACTION || this == INTERACTIVE_MAP
+
+    override fun overrideShortTrip(): Boolean = false
 }
 
 interface DKMapItem {
@@ -78,4 +80,5 @@ interface DKMapItem {
     fun displayedMarkers(): List<DKMarkerType>
     fun shouldShowDistractionArea(): Boolean
     fun getAdviceImageResource(): Int
+    fun overrideShortTrip(): Boolean
 }

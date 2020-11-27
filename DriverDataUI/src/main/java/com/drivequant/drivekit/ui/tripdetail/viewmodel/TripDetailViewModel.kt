@@ -20,18 +20,18 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
             field?.let { trip ->
                 if (!trip.unscored) {
                     for (item in mapItems) {
-                        if (item.canShowMapItem(trip)) {
+                        if (item.canShowMapItem(trip))
                             configurableMapItems.add(item)
-                        }
                     }
                     DriverDataUI.customMapItem?.let {
                         if (it.canShowMapItem(trip))
                             configurableMapItems.add(it)
                     }
+                }
+                if (configurableMapItems.isNotEmpty()) {
                     displayMapItem.value = configurableMapItems[0]
                 }
             }
-
         }
     var route: Route? = null
 
