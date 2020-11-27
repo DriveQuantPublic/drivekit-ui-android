@@ -13,7 +13,7 @@ class TripDetailFragmentPagerAdapter(
 
     override fun getItem(position: Int): Fragment {
         return tripDetailViewModel.trip?.let { trip ->
-            val hasTrip = tripDetailViewModel.configurableMapItems.lastIndex != position - 1
+            val hasTrip = tripDetailViewModel.configurableMapItems.size -1 != position
             tripDetailViewModel.configurableMapItems[position].getFragment(
                 trip,
                 tripDetailViewModel).also {

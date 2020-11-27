@@ -291,3 +291,9 @@ class TripDetailViewModelFactory(
         return TripDetailViewModel(itinId, mapItems) as T
     }
 }
+
+interface DKTripDetailViewModel {
+    fun setSelectedEvent(position: Int)
+    fun getTripEvents(): List<TripEvent>
+    fun getSelectedEvent(): MutableLiveData<Int>
+}

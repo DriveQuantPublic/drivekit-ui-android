@@ -19,6 +19,7 @@ import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
+import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
 class TripsListAdapter(
     var context: Context?,
@@ -46,8 +47,17 @@ class TripsListAdapter(
         }
 
         holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
-        holder.tvInformations.text = DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)
 
+        val headerValue =
+            DriverDataUI.customHeader?.customTripListHeader(holder.itemView.context, trips?.trips)
+                ?: run {
+                    DriverDataUI.customHeader!!.tripListHeader()
+                        .text(holder.itemView.context, trips?.trips)
+                }
+
+        holder.tvInformations.text = headerValue ?: run {
+            DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)
+        }
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.background.background = ContextCompat.getDrawable(context!!, R.drawable.dk_background_header_trip_list)

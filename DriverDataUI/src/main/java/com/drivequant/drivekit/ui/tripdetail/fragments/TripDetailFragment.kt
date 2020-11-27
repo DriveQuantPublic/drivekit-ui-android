@@ -425,11 +425,21 @@ class TripDetailFragment : Fragment() {
         )
     }
 
-    private fun setHeaderSummary(){
+    private fun setHeaderSummary() {
         trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalize()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-        trip_distance.text = DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
-        trip_distance.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+
+        val headerValue =
+            DriverDataUI.customHeader?.customTripDetailHeader(requireContext(), viewModel.trip!!)
+                ?: run {
+                    DriverDataUI.customHeader!!.tripDetailHeader()
+                        .text(requireContext(), viewModel.trip!!)
+                }
+
+        trip_header.text = headerValue ?: run {
+            DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
+        }
+        trip_header.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     private fun showProgressCircular() {
