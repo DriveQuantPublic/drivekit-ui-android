@@ -127,23 +127,22 @@ class TripGoogleMapViewHolder(
 
     private fun drawMarker(mapItem: DKMapItem?) {
         mapItem?.let { it ->
-            if (it.displayedMarkers().isNotEmpty()) {
-                it.displayedMarkers().forEach { type ->
-                    when (type) {
-                        DKMarkerType.SAFETY -> viewModel.displayEvents =
-                            viewModel.events.filterNot {
-                                it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
-                            }
-
-                        DKMarkerType.DISTRACTION -> viewModel.displayEvents =
-                            viewModel.events.filterNot {
-                                it.type == TripEventType.SAFETY_BRAKE || it.type == TripEventType.SAFETY_ACCEL || it.type == TripEventType.SAFETY_ADHERENCE
-                            }
-                    }
-                }
+            if (it.displayedMarkers().contains(DKMarkerType.ALL)) {
+                viewModel.displayEvents = viewModel.events
             } else {
-                viewModel.displayEvents = viewModel.events.filter {
-                    it.type == TripEventType.START || it.type == TripEventType.FINISH
+                if (it.displayedMarkers().isNotEmpty()) {
+                    it.displayedMarkers().forEach { type ->
+                        when (type) {
+                            DKMarkerType.SAFETY -> viewModel.displayEvents =
+                                viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
+                            DKMarkerType.DISTRACTION -> viewModel.displayEvents =
+                                viewModel.events.filterNot { it.type == TripEventType.SAFETY_BRAKE || it.type == TripEventType.SAFETY_ACCEL || it.type == TripEventType.SAFETY_ADHERENCE }
+                        }
+                    }
+                } else {
+                    viewModel.displayEvents = viewModel.events.filter {
+                        it.type == TripEventType.START || it.type == TripEventType.FINISH
+                    }
                 }
             }
         } ?: kotlin.run {
