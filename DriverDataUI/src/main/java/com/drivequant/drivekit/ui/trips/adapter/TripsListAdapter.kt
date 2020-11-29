@@ -50,10 +50,6 @@ class TripsListAdapter(
 
         val headerValue =
             DriverDataUI.customHeader?.customTripListHeader(holder.itemView.context, trips?.trips)
-                ?: run {
-                    DriverDataUI.customHeader!!.tripListHeader()
-                        .text(holder.itemView.context, trips?.trips)
-                }
 
         holder.tvInformations.text = headerValue ?: run {
             DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)

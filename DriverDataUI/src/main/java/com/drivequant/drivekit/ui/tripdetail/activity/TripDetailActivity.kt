@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.ColorDrawable

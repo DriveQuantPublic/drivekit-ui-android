@@ -393,16 +393,26 @@ class TripDetailFragment : Fragment() {
     private fun setUnScoredTripFragment() {
         view_pager.visibility = View.INVISIBLE
         unscored_fragment.visibility = View.VISIBLE
+
         val fragment = DriverDataUI.customMapItem?.let {
             if (it.overrideShortTrip()) {
-                it.getFragment(viewModel.trip!!, viewModel)
+                it.getFragment(viewModel.trip!!, viewModel).apply {
+                    val bundle = Bundle()
+                    bundle.putSerializable("trip", viewModel.trip!!)
+                    this.arguments = bundle
+                }
             } else {
                 UnscoredTripFragment.newInstance(
-                    viewModel.trip)
+                    viewModel.trip
+                )
             }
+        } ?: run {
+            UnscoredTripFragment.newInstance(
+                viewModel.trip
+            )
         }
         childFragmentManager.beginTransaction()
-            .replace(R.id.unscored_fragment, fragment!!)
+            .replace(R.id.unscored_fragment, fragment)
             .commit()
     }
 
@@ -438,10 +448,6 @@ class TripDetailFragment : Fragment() {
 
         val headerValue =
             DriverDataUI.customHeader?.customTripDetailHeader(requireContext(), viewModel.trip!!)
-                ?: run {
-                    DriverDataUI.customHeader!!.tripDetailHeader()
-                        .text(requireContext(), viewModel.trip!!)
-                }
 
         trip_header.text = headerValue ?: run {
             DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
