@@ -43,7 +43,7 @@ class TripTimelineFragment : Fragment() {
         timeline_list.layoutManager = LinearLayoutManager(requireContext())
         timeline_list.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
-                tripDetailViewModel.setSelectedEvent(position)
+                tripDetailViewModel.getSelectedEvent().postValue(position)
             }
         }, DriveKitUI.colors.secondaryColor())
         tripDetailViewModel.getSelectedEvent().observe(this, Observer {

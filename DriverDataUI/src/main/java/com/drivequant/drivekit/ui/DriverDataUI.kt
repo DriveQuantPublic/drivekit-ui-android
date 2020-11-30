@@ -32,7 +32,9 @@ object DriverDataUI : DriverDataUIEntryPoint {
     )
 
     internal var customMapItem: DKMapItem? = null
+        private set
     internal var customHeader: DKHeader? = null
+        private set
 
     internal var enableDeleteTrip: Boolean = true
     internal var dayTripDescendingOrder: Boolean = false

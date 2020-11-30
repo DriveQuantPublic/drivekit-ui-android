@@ -447,8 +447,11 @@ class TripDetailFragment : Fragment() {
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =
-            DriverDataUI.customHeader?.customTripDetailHeader(requireContext(), viewModel.trip!!)
-
+            DriverDataUI.customHeader?.let {
+                it.customTripDetailHeader(requireContext(), viewModel.trip!!) ?: run {
+                    it.tripDetailHeader().text(requireContext(), viewModel.trip!!)
+                }
+            }
         trip_header.text = headerValue ?: run {
             DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
         }

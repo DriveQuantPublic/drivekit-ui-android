@@ -34,10 +34,8 @@ class TripDetailActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
         title = DKResource.convertToString(this, "dk_driverdata_trip_detail_title")
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String

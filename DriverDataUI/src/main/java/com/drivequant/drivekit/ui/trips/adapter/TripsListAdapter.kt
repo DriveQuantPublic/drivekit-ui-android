@@ -48,8 +48,11 @@ class TripsListAdapter(
 
         holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
 
-        val headerValue =
-            DriverDataUI.customHeader?.customTripListHeader(holder.itemView.context, trips?.trips)
+        val headerValue = DriverDataUI.customHeader?.let {
+            it.customTripListHeader(holder.itemView.context, trips?.trips) ?: run {
+                it.tripListHeader().text(holder.itemView.context, trips?.trips)
+            }
+        }
 
         holder.tvInformations.text = headerValue ?: run {
             DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)

@@ -23,11 +23,11 @@ class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
-    var googleMap: GoogleMap
-) : GoogleMap.OnInfoWindowClickListener,
-    GoogleMap.OnMarkerClickListener {
+    var googleMap: GoogleMap)
+    : GoogleMap.OnInfoWindowClickListener,
+    GoogleMap.OnMarkerClickListener{
 
-    private val googleMarkerList: MutableList<Marker> = mutableListOf()
+    private val googleMarkerList : MutableList<Marker> = mutableListOf()
     private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
@@ -67,13 +67,12 @@ class TripGoogleMapViewHolder(
             }
             adviceFabButton.hide()
             if (shouldDisplayAdvice) {
-                if (mapItem.getAdviceImageResource() != -1) {
-                    adviceFabButton.setImageResource(mapItem.getAdviceImageResource())
+                mapItem.getAdviceImageResource()?.let {
+                    adviceFabButton.setImageResource(it)
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
                     fragment.displayAdvice(mapItem)
-                    //TODO create a new method in DKMapItem
                     if (mapItem == MapItem.SAFETY){
                         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(itemView.context, "dk_tag_trips_detail_advice_safety"), javaClass.simpleName)
                     } else if (mapItem == MapItem.ECO_DRIVING){

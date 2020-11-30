@@ -51,18 +51,18 @@ enum class MapItem : DKMapItem {
             DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }!!
         }
 
-    override fun getAdviceImageResource(): Int =
+    override fun getAdviceImageResource(): Int? =
         when (this) {
             SAFETY -> R.drawable.dk_safety_advice
             ECO_DRIVING -> R.drawable.dk_eco_advice
-            INTERACTIVE_MAP, SYNTHESIS, DISTRACTION -> -1
+            INTERACTIVE_MAP, SYNTHESIS, DISTRACTION -> null
         }
 
     override fun displayedMarkers(): List<DKMarkerType> =
         when (this) {
             SAFETY -> listOf(DKMarkerType.SAFETY)
             DISTRACTION -> listOf(DKMarkerType.DISTRACTION)
-            INTERACTIVE_MAP -> DKMarkerType.values().toList()
+            INTERACTIVE_MAP -> listOf(DKMarkerType.ALL)
             else -> listOf()
         }
 
@@ -79,6 +79,6 @@ interface DKMapItem {
     fun canShowMapItem(trip: Trip): Boolean
     fun displayedMarkers(): List<DKMarkerType>
     fun shouldShowDistractionArea(): Boolean
-    fun getAdviceImageResource(): Int
+    fun getAdviceImageResource(): Int?
     fun overrideShortTrip(): Boolean
 }
