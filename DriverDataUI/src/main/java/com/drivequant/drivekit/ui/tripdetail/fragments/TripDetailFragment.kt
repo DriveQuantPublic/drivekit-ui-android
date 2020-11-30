@@ -189,7 +189,6 @@ class TripDetailFragment : Fragment() {
                 displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
         })
-
         viewModel.unScoredTrip.observe(this, Observer{ routeAvailable ->
             routeAvailable?.let {
                 if (it){
