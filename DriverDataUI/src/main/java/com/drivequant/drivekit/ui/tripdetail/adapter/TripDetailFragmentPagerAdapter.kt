@@ -12,17 +12,17 @@ class TripDetailFragmentPagerAdapter(
     private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return tripDetailViewModel.trip?.let { trip ->
-            val hasTrip = tripDetailViewModel.configurableMapItems.size - 1 != position
-            tripDetailViewModel.configurableMapItems[position].getFragment(
-                trip,
-                tripDetailViewModel).also {
-                if (!hasTrip) {
-                    val bundle = Bundle()
-                    bundle.putSerializable("trip", trip)
-                    it.arguments = bundle
-                }
+        val hasTrip = tripDetailViewModel.configurableMapItems.size - 1 != position
+        return tripDetailViewModel.configurableMapItems[position].getFragment(
+            tripDetailViewModel.trip,
+            tripDetailViewModel
+        )?.let {
+            if (hasTrip) {
+                val bundle = Bundle()
+                bundle.putSerializable("trip", tripDetailViewModel.trip)
+                it.arguments = bundle
             }
+            it
         } ?: run {
             UnscoredTripFragment.newInstance(tripDetailViewModel.trip)
         }

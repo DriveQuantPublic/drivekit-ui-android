@@ -89,18 +89,19 @@ class TripGoogleMapViewHolder(
             val unlockColor =
                 ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
-            if (mapItem != null && mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(MapItem.INTERACTIVE_MAP)) {
+            if (mapItem != null && mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(
+                    MapItem.INTERACTIVE_MAP
+                ) && route.screenLockedIndex != null) {
                 var unlock: Boolean
-                route.screenLockedIndex?.let { screenLockedIndex ->
-                    for (i in 1 until screenLockedIndex.size) {
+                    for (i in 1 until route.screenLockedIndex!!.size) {
                         unlock = route.screenStatus!![i - 1] == 1
                         drawRoute(
                             route,
-                            screenLockedIndex[i - 1], screenLockedIndex[i],
+                            route.screenLockedIndex!![i - 1], route.screenLockedIndex!![i],
                             if (unlock) unlockColor else lockColor
                         )
                     }
-                }
+
             } else {
                 drawRoute(
                     route,
@@ -125,12 +126,12 @@ class TripGoogleMapViewHolder(
     }
 
     private fun drawMarker(mapItem: DKMapItem?) {
-        mapItem?.let { it ->
-            if (it.displayedMarkers().contains(DKMarkerType.ALL)) {
+        mapItem?.let { item ->
+            if (item.displayedMarkers().contains(DKMarkerType.ALL)) {
                 viewModel.displayEvents = viewModel.events
             } else {
-                if (it.displayedMarkers().isNotEmpty()) {
-                    it.displayedMarkers().forEach { type ->
+                if (item.displayedMarkers().isNotEmpty()) {
+                    item.displayedMarkers().forEach { type ->
                         when (type) {
                             DKMarkerType.SAFETY -> viewModel.displayEvents =
                                 viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
@@ -144,12 +145,11 @@ class TripGoogleMapViewHolder(
                     }
                 }
             }
-        } ?: kotlin.run {
+        } ?: run {
             viewModel.displayEvents = viewModel.events.filter {
                 it.type == TripEventType.START || it.type == TripEventType.FINISH
             }
         }
-
         drawEvents(viewModel.displayEvents)
         googleMap.setOnMarkerClickListener(this)
     }

@@ -9,10 +9,7 @@ import com.drivequant.drivekit.ui.extension.computeTotalDuration
 enum class HeaderDay {
     NONE, DISTANCE, DURATION, DURATION_DISTANCE, DISTANCE_DURATION;
 
-    fun text(context: Context, trip: Trip): String? {
-        val list = mutableListOf(trip)
-        return text(context, list)
-    }
+    fun text(context: Context, trip: Trip): String? = text(context, listOf(trip))
 
     fun text(context: Context, trips: List<Trip>?): String? {
         val separator = " | "

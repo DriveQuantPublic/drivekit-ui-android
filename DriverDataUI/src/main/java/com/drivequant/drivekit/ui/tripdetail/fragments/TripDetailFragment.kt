@@ -394,12 +394,13 @@ class TripDetailFragment : Fragment() {
         view_pager.visibility = View.INVISIBLE
         unscored_fragment.visibility = View.VISIBLE
 
-        val fragment = DriverDataUI.customMapItem?.let {
-            if (it.overrideShortTrip()) {
-                it.getFragment(viewModel.trip!!, viewModel).apply {
+        val fragment = DriverDataUI.customMapItem?.let { item ->
+            if (item.overrideShortTrip()) {
+                item.getFragment(viewModel.trip, viewModel)?.let {
                     val bundle = Bundle()
-                    bundle.putSerializable("trip", viewModel.trip!!)
-                    this.arguments = bundle
+                    bundle.putSerializable("trip", viewModel.trip)
+                    it.arguments = bundle
+                    it
                 }
             } else {
                 UnscoredTripFragment.newInstance(

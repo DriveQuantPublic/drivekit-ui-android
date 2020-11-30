@@ -34,21 +34,23 @@ enum class MapItem : DKMapItem {
         return null
     }
 
-    override fun getFragment(trip: Trip, tripDetailViewModel: DKTripDetailViewModel): Fragment =
-        when (this) {
-            SAFETY -> SafetyFragment.newInstance(trip.safety!!)
-            ECO_DRIVING -> EcoDrivingFragment.newInstance(trip.ecoDriving!!)
-            DISTRACTION -> DriverDistractionFragment.newInstance(trip.driverDistraction!!)
-            INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel)
-            SYNTHESIS -> SynthesisFragment.newInstance(trip)
+    override fun getFragment(trip: Trip?, tripDetailViewModel: DKTripDetailViewModel): Fragment? =
+        trip?.let {
+            when (this) {
+                SAFETY -> SafetyFragment.newInstance(it.safety!!)
+                ECO_DRIVING -> EcoDrivingFragment.newInstance(it.ecoDriving!!)
+                DISTRACTION -> DriverDistractionFragment.newInstance(it.driverDistraction!!)
+                INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel)
+                SYNTHESIS -> SynthesisFragment.newInstance(trip)
+            }
         }
 
-    override fun canShowMapItem(trip: Trip): Boolean =
+    override fun canShowMapItem(trip: Trip): Boolean? =
         when (this) {
-            ECO_DRIVING -> trip.ecoDriving?.let { it.score <= 10 }!!
-            SAFETY -> trip.safety?.let { it.safetyScore <= 10 }!!
+            ECO_DRIVING -> trip.ecoDriving?.let { it.score <= 10 }
+            SAFETY -> trip.safety?.let { it.safetyScore <= 10 }
             INTERACTIVE_MAP, SYNTHESIS -> true
-            DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }!!
+            DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }
         }
 
     override fun getAdviceImageResource(): Int? =
@@ -75,8 +77,8 @@ enum class MapItem : DKMapItem {
 interface DKMapItem {
     fun getImageResource(): Int
     fun getAdvice(trip: Trip): TripAdvice?
-    fun getFragment(trip: Trip, tripDetailViewModel: DKTripDetailViewModel): Fragment
-    fun canShowMapItem(trip: Trip): Boolean
+    fun getFragment(trip: Trip?, tripDetailViewModel: DKTripDetailViewModel): Fragment?
+    fun canShowMapItem(trip: Trip): Boolean?
     fun displayedMarkers(): List<DKMarkerType>
     fun shouldShowDistractionArea(): Boolean
     fun getAdviceImageResource(): Int?
