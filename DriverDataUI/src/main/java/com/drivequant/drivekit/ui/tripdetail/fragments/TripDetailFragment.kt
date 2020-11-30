@@ -229,7 +229,7 @@ class TripDetailFragment : Fragment() {
             .show()
     }
 
-    private fun displayAdviceFromTripInfo() {
+    private fun displayAdviceFromTripInfo(){
         if (openAdvice){
             val index = viewModel.getFirstMapItemIndexWithAdvice()
             if (index > -1) {

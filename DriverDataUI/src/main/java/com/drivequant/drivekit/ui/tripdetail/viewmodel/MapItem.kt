@@ -82,3 +82,7 @@ interface DKMapItem {
     fun getAdviceImageResource(): Int?
     fun overrideShortTrip(): Boolean
 }
+
+enum class DKMarkerType {
+    SAFETY, DISTRACTION, ALL
+}
