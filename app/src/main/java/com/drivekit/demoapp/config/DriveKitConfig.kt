@@ -78,11 +78,11 @@ object DriveKitConfig {
     }
 
     fun configureDriverData() {
-        DriverDataUI.initialize(TripData.SAFETY,listOf(MapItem.SAFETY))
-        DriverDataUI.setCustomMapScreen(DemoCustomMapItem())
+        DriverDataUI.initialize()
+        //DriverDataUI.setCustomMapScreen(DemoCustomMapItem())
 
-        DriverDataUI.customizeHeader(object : DKHeader {
+        /*DriverDataUI.customizeHeader(object : DKHeader {
             override fun customTripDetailHeader(context: Context, trip: Trip): String? = ""
-        })
+        })*/
     }
 }

@@ -13,11 +13,11 @@ class TripDetailFragmentPagerAdapter(
     private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        val shouldSetFragmentArgument = tripDetailViewModel.configurableMapItems[position] !is MapItem
         return tripDetailViewModel.configurableMapItems[position].getFragment(
             tripDetailViewModel.trip,
             tripDetailViewModel
         )?.let {
+            val shouldSetFragmentArgument = tripDetailViewModel.configurableMapItems[position] !is MapItem
             if (shouldSetFragmentArgument) {
                 val bundle = Bundle()
                 bundle.putSerializable("trip", tripDetailViewModel.trip)
