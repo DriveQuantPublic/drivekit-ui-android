@@ -1,17 +1,21 @@
 package com.drivekit.demoapp.config
 
 import android.content.Context
+import android.support.v4.app.Fragment
+import com.drivekit.demoapp.driverdata.DemoCustomMapItem
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
-import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
-import com.drivequant.drivekit.databaseutils.entity.RankingType
+import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
+import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 /**
  * Created by Mohamed on 2020-05-14.
@@ -71,5 +75,14 @@ object DriveKitConfig {
             override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
+    }
+
+    fun configureDriverData() {
+        DriverDataUI.initialize(TripData.SAFETY,listOf(MapItem.SAFETY))
+        DriverDataUI.setCustomMapScreen(DemoCustomMapItem())
+
+        DriverDataUI.customizeHeader(object : DKHeader {
+            override fun customTripDetailHeader(context: Context, trip: Trip): String? = ""
+        })
     }
 }
