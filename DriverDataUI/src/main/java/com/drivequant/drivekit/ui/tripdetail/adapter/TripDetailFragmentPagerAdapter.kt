@@ -1,11 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.adapter
 
-import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.*
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 
 class TripDetailFragmentPagerAdapter(
@@ -16,15 +14,7 @@ class TripDetailFragmentPagerAdapter(
         return tripDetailViewModel.configurableMapItems[position].getFragment(
             tripDetailViewModel.trip,
             tripDetailViewModel
-        )?.let {
-            val shouldSetFragmentArgument = tripDetailViewModel.configurableMapItems[position] !is MapItem
-            if (shouldSetFragmentArgument) {
-                val bundle = Bundle()
-                bundle.putSerializable("trip", tripDetailViewModel.trip)
-                it.arguments = bundle
-            }
-            it
-        } ?: run {
+        ) ?: run {
             UnscoredTripFragment.newInstance(tripDetailViewModel.trip)
         }
     }

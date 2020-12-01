@@ -395,12 +395,7 @@ class TripDetailFragment : Fragment() {
 
         val fragment = DriverDataUI.customMapItem?.let { item ->
             if (item.overrideShortTrip()) {
-                item.getFragment(viewModel.trip, viewModel)?.let {
-                    val bundle = Bundle()
-                    bundle.putSerializable("trip", viewModel.trip)
-                    it.arguments = bundle
-                    it
-                }
+                item.getFragment(viewModel.trip, viewModel)
             } else {
                 UnscoredTripFragment.newInstance(
                     viewModel.trip
