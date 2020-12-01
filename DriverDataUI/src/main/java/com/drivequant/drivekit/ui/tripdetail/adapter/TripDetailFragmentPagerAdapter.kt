@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 
 class TripDetailFragmentPagerAdapter(
@@ -12,12 +13,12 @@ class TripDetailFragmentPagerAdapter(
     private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        val hasTrip = tripDetailViewModel.configurableMapItems.size - 1 != position
+        val shouldSetFragmentArgument = tripDetailViewModel.configurableMapItems[position] !is MapItem
         return tripDetailViewModel.configurableMapItems[position].getFragment(
             tripDetailViewModel.trip,
             tripDetailViewModel
         )?.let {
-            if (hasTrip) {
+            if (shouldSetFragmentArgument) {
                 val bundle = Bundle()
                 bundle.putSerializable("trip", tripDetailViewModel.trip)
                 it.arguments = bundle
