@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
+import android.app.Activity
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
@@ -98,28 +100,34 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo) {
-            val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
-            val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
-            val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-            DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
+        val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
+        val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
+        val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
+        textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+        DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
 
-            if (tripInfo.shouldDisplay(trip)) {
-                tripInfo.getImageResource(trip)?.let {
-                    imageView.setImageResource(it)
-                }
-                tripInfo.text(trip)?.let {
-                    textView.visibility = View.VISIBLE
-                    textView.text = it
-                } ?: run {
-                    textView.visibility = View.GONE
-                }
-
-                tripInfoItem.setOnClickListener {
-                    tripInfo.onClickAction(itemView.context, trip)
-                }
-                tripInfoContainer.addView(tripInfoItem)
-                tripInfoContainer.visibility = View.VISIBLE
+        if (tripInfo.isDisplayable(trip)) {
+            tripInfo.getImageResource(trip)?.let {
+                imageView.setImageResource(it)
             }
+            tripInfo.text(trip)?.let {
+                textView.visibility = View.VISIBLE
+                textView.text = it
+            } ?: run {
+                textView.visibility = View.GONE
+            }
+
+            tripInfoItem.setOnClickListener {
+                if (tripInfo.hasActionConfigured(trip)) {
+                    tripInfo.onClickAction(itemView.context, trip)
+                } else {
+                    TripDetailActivity.launchActivity(itemView.context as Activity, trip.itinId)
+                }
+            }
+            tripInfoContainer.addView(tripInfoItem)
+            tripInfoContainer.visibility = View.VISIBLE
+        } else {
+            tripInfoContainer.visibility = View.GONE
+        }
     }
 }
