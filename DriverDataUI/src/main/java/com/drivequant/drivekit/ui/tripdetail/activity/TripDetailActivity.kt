@@ -1,13 +1,12 @@
 package com.drivequant.drivekit.ui.tripdetail.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import android.support.v7.widget.Toolbar
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 
@@ -32,9 +31,12 @@ class TripDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
+
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        title = DKResource.convertToString(this, "dk_driverdata_trip_detail_title")
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
         val openAdvice = intent.getBooleanExtra(OPEN_ADVICE_EXTRA, false)

@@ -3,6 +3,7 @@
     <application>
         <activity
             android:name=".tripdetail.activity.TripDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".trips.activity.TripsListActivity"
