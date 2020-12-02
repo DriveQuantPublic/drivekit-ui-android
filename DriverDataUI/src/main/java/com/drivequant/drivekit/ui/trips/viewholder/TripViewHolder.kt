@@ -100,13 +100,12 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo) {
-        val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
-        val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
-        val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-        textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-        DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
-
         if (tripInfo.isDisplayable(trip)) {
+            val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
+            val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
+            val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
+            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+            DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
             tripInfo.getImageResource(trip)?.let {
                 imageView.setImageResource(it)
             }
@@ -116,7 +115,6 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             } ?: run {
                 textView.visibility = View.GONE
             }
-
             tripInfoItem.setOnClickListener {
                 if (tripInfo.hasActionConfigured(trip)) {
                     tripInfo.onClickAction(itemView.context, trip)
