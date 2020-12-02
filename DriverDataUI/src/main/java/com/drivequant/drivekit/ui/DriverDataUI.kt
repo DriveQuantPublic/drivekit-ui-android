@@ -83,15 +83,15 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.enableVehicleFilter = enableVehicleFilter
     }
 
-    fun setCustomMapScreen(customMapItem: DKMapItem) {
+    fun setCustomMapScreen(customMapItem: DKMapItem?) {
         this.customMapItem = customMapItem
     }
 
-    fun customizeHeader(header: DKHeader) {
+    fun customizeHeader(header: DKHeader?) {
         this.customHeader = header
     }
 
-    fun setCustomTripInfo(tripInfo: DKTripInfo) {
+    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
         this.customTripInfo = tripInfo
     }
 
