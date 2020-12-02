@@ -411,22 +411,22 @@ class TripDetailFragment : Fragment() {
             .commit()
     }
 
-    private fun setViewPager(){
+    private fun setViewPager() {
         view_pager.adapter =
             TripDetailFragmentPagerAdapter(
                 childFragmentManager,
                 viewModel)
         tab_layout.setupWithViewPager(view_pager)
-        for ((index, mapItem) in viewModel.configurableMapItems.withIndex()){
+        for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
             tab_layout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
                 ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                it.customView = icon
                 val sizePx = (it.parent.height * 0.66).toInt()
-                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx,sizePx)
+                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                it.customView = icon
             }
         }
         DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())
