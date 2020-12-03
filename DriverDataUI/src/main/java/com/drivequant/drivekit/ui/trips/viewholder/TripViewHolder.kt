@@ -102,6 +102,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             tripInfoContainer.addView(TripInfoView(itemView.context, trip, tripInfo))
             tripInfoContainer.visibility = View.VISIBLE
         } else {
+            tripInfoContainer.removeAllViews()
             tripInfoContainer.visibility = View.GONE
         }
     }
