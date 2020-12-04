@@ -17,6 +17,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
+import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 
@@ -34,6 +35,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var customMapItem: DKMapItem? = null
         private set
     internal var customHeader: DKHeader? = null
+        private set
+    internal var customTripInfo: DKTripInfo? = null
         private set
 
     internal var enableDeleteTrip: Boolean = true
@@ -80,12 +83,16 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.enableVehicleFilter = enableVehicleFilter
     }
 
-    fun setCustomMapScreen(customMapItem: DKMapItem) {
+    fun setCustomMapScreen(customMapItem: DKMapItem?) {
         this.customMapItem = customMapItem
     }
 
-    fun customizeHeader(header: DKHeader) {
+    fun customizeHeader(header: DKHeader?) {
         this.customHeader = header
+    }
+
+    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
+        this.customTripInfo = tripInfo
     }
 
     override fun startTripListActivity(context: Context) {

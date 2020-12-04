@@ -1,9 +1,7 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
-import android.app.Activity
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -18,11 +16,12 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.commons.views.TripInfoView
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
-import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
+import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
-import com.drivequant.drivekit.ui.trips.viewmodel.TripInfo
 
 class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
@@ -58,7 +57,8 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
 
         computeTripData(trip, DriverDataUI.tripData)
-        computeTripInfo(trip)
+        val tripInfo = DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
+        computeTripInfo(trip, tripInfo)
     }
 
     private fun computeTripData(trip: Trip, tripData: TripData){
@@ -97,32 +97,12 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textIndicator.visibility = View.VISIBLE
     }
 
-    private fun computeTripInfo(trip: Trip){
-        if (!trip.tripAdvices.isNullOrEmpty()){
-            val tripInfo = TripInfo.COUNT
-            val tripInfoItem = LayoutInflater.from(itemView.context).inflate(R.layout.trip_info_item, null)
-            val imageView = tripInfoItem.findViewById<ImageView>(R.id.image_view_trip_info)
-            val textView = tripInfoItem.findViewById<TextView>(R.id.text_view_trip_info)
-            textView.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-            DrawableCompat.setTint(tripInfoItem.background, DriveKitUI.colors.secondaryColor())
-
-            tripInfo.imageResId(trip)?.let {
-                imageView.setImageResource(it)
-            }
-            tripInfo.text(trip)?.let {
-                textView.visibility = View.VISIBLE
-                textView.text = tripInfo.text(trip)
-            } ?: run {
-                textView.visibility = View.GONE
-            }
-            tripInfoItem.setOnClickListener {
-                TripDetailActivity.launchActivity(itemView.context as Activity,
-                    trip.itinId,
-                    openAdvice = true)
-            }
-            tripInfoContainer.addView(tripInfoItem)
+    private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo) {
+        if (tripInfo.isDisplayable(trip)) {
+            tripInfoContainer.addView(TripInfoView(itemView.context, trip, tripInfo))
             tripInfoContainer.visibility = View.VISIBLE
         } else {
+            tripInfoContainer.removeAllViews()
             tripInfoContainer.visibility = View.GONE
         }
     }
