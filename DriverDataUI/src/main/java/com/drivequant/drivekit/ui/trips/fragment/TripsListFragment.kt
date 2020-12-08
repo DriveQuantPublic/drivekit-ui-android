@@ -21,6 +21,7 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.adapter.TripsListAdapter
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
 import kotlinx.android.synthetic.main.fragment_trips_list.*
@@ -33,16 +34,18 @@ class TripsListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
-        viewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            TripsListViewModel.TripsListViewModelFactory(tripListConfiguration = TripListConfiguration.MOTORIZED))
+            .get(TripsListViewModel::class.java)
 
-        viewModel.getVehiclesFilterItems(requireContext())
+        viewModel.getFilterItems(requireContext())
         viewModel.filterData.observe(this, Observer {
-            filter_view_vehicle.setItems(viewModel.filterItems)
+            filter_view.setItems(viewModel.filterItems)
         })
 
         updateTrips()
         viewModel.tripsData.observe(this, Observer {
-            if (viewModel.tripsByDate.isEmpty()) {
+            if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
             } else {
@@ -70,22 +73,28 @@ class TripsListFragment : Fragment() {
 
     private fun initFilter() {
         if (DriverDataUI.enableVehicleFilter && viewModel.getVehicleFilterVisibility()) {
-            filter_view_vehicle.spinner.post {
-                filter_view_vehicle.spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            filter_view.spinner.post {
+                filter_view.spinner.onItemSelectedListener = object : OnItemSelectedListener {
                     override fun onItemSelected(
                         adapterView: AdapterView<*>?,
                         view: View,
                         position: Int,
                         l: Long) {
-                        viewModel.currentFilterItemPosition = position
-                        viewModel.filterTrips(DriverDataUI.dayTripDescendingOrder)
+                        viewModel.filterItems[position].getItemId()?.let {
+                            if (it is String) {
+                                viewModel.vehicleId = it
+                            }
+                        }?: run {
+                            viewModel.vehicleId = null
+                        }
+                        viewModel.fetchTrips(SynchronizationType.CACHE)
                     }
                     override fun onNothingSelected(adapterView: AdapterView<*>?) {}
                 }
             }
             text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
             text_view_trips_synthesis.visibility = View.VISIBLE
-            filter_view_vehicle.visibility = View.VISIBLE
+            filter_view.visibility = View.VISIBLE
         }
     }
 
@@ -99,7 +108,7 @@ class TripsListFragment : Fragment() {
         )
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
         refresh_trips.setOnRefreshListener {
-            filter_view_vehicle.spinner.setSelection(0)
+            filter_view.spinner.setSelection(0)
             updateTrips()
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
@@ -112,7 +121,7 @@ class TripsListFragment : Fragment() {
 
     fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         updateProgressVisibility(true)
-        viewModel.fetchTrips(DriverDataUI.dayTripDescendingOrder, synchronizationType)
+        viewModel.fetchTrips(synchronizationType)
     }
 
     private fun displayNoTrips() {

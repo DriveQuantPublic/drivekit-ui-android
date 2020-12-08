@@ -21,13 +21,13 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
-class TripsListAdapter(
+internal class TripsListAdapter(
     var context: Context?,
-    var tripsListViewModel: TripsListViewModel)
+    private var tripsListViewModel: TripsListViewModel)
     : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): TripsByDate {
-        return tripsListViewModel.tripsByDate[position]
+        return tripsListViewModel.filteredTrips[position]
     }
 
     override fun getGroupView(position: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
@@ -73,7 +73,7 @@ class TripsListAdapter(
     }
 
     override fun getGroupCount(): Int {
-        return tripsListViewModel.tripsByDate.size
+        return tripsListViewModel.filteredTrips.size
     }
 
     override fun getChild(position: Int, expandedListPosition: Int): Trip? {

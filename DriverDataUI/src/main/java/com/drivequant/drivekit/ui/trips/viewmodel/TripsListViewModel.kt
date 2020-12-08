@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.trips.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
@@ -16,30 +17,33 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.orderByDay
 import java.util.*
 
-class TripsListViewModel : ViewModel() {
-    var tripsByDate: MutableList<TripsByDate> = mutableListOf()
+internal class TripsListViewModel(
+    private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED
+) : ViewModel() {
+    private var trips = listOf<TripsByDate>()
+    var filteredTrips = mutableListOf<TripsByDate>()
     var filterItems: MutableList<FilterItem> = mutableListOf()
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
-    var currentFilterItemPosition = 0
-    private lateinit var computedSynthesis: Pair<Int, Double>
-    private var allTrips = listOf<Trip>()
+    var vehicleId: String? = null
 
-    fun fetchTrips(dayTripDescendingOrder: Boolean, synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
+    fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                         syncTripsError.postValue(Any())
                     }
-                    allTrips = trips
-                    computeTrips(trips, dayTripDescendingOrder)
+                    this@TripsListViewModel.trips = sortTrips(trips)
+                    filterTrips()
+                    tripsData.postValue(filteredTrips)
                 }
             }, synchronizationType)
         } else {
@@ -47,31 +51,33 @@ class TripsListViewModel : ViewModel() {
         }
     }
 
-    private fun computeTrips(trips: List<Trip>, dayTripDescendingOrder: Boolean) {
-        computedSynthesis = Pair(trips.size, trips.computeTotalDistance())
-        tripsByDate = sortTrips(trips, dayTripDescendingOrder)
-        tripsData.postValue(tripsByDate)
+    fun filterTrips() {
+        when (tripListConfiguration){
+            TripListConfiguration.MOTORIZED -> {
+                vehicleId?.let { vehicleId ->
+                    filteredTrips.clear()
+                    this@TripsListViewModel.trips.forEach { tripsByDate ->
+                        val dayFilteredTrips = tripsByDate.trips.filter { it.vehicleId == vehicleId }
+                        if (!dayFilteredTrips.isNullOrEmpty()){
+                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
+                        }
+                    }
+                }?: run {
+                    filteredTrips = trips.toMutableList()
+                }
+            }
+            TripListConfiguration.ALTERNATIVE -> {
+                // TODO
+            }
+        }
     }
 
-    fun filterTrips(dayTripDescendingOrder: Boolean) {
-        val trips = filterItems[currentFilterItemPosition].getItemId()?.let {
-            allTrips.filter { it1 -> it1.vehicleId == it as String }
-        } ?: kotlin.run {
-            allTrips
-        }
-        tripsByDate.clear()
-        computeTrips(trips, dayTripDescendingOrder)
-    }
-
-    private fun sortTrips(fetchedTrips: List<Trip>, dayTripDescendingOrder: Boolean): MutableList<TripsByDate> {
-        if (fetchedTrips.isNotEmpty()) {
-            tripsByDate = fetchedTrips.orderByDay(dayTripDescendingOrder)
-        }
-        return tripsByDate
+    private fun sortTrips(fetchedTrips: List<Trip>): List<TripsByDate> {
+        return fetchedTrips.orderByDay(DriverDataUI.dayTripDescendingOrder)
     }
 
     fun getTripsByDate(date: Date): TripsByDate? {
-        for (currentTripsByDate in tripsByDate) {
+        for (currentTripsByDate in filteredTrips) {
             if (currentTripsByDate.date == date) {
                 return currentTripsByDate
             }
@@ -79,17 +85,24 @@ class TripsListViewModel : ViewModel() {
         return null
     }
 
-    fun getVehiclesFilterItems(context: Context) {
-        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
-            filterItems.add(AllTripsFilterItem())
-            filterItems.addAll(it)
+    fun getFilterItems(context: Context) {
+        when (tripListConfiguration){
+            TripListConfiguration.MOTORIZED -> {
+                DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
+                    filterItems.add(AllTripsFilterItem())
+                    filterItems.addAll(it)
+                }
+            }
+            TripListConfiguration.ALTERNATIVE -> {
+                // TODO
+            }
         }
         filterData.postValue(filterItems)
     }
 
     fun getTripSynthesisText(context: Context): SpannableString {
-        val tripsNumber = computedSynthesis.first
-        val tripsDistance = computedSynthesis.second
+        val tripsNumber = filteredTrips.map { it.trips }.size
+        val tripsDistance = filteredTrips.map { it.trips.computeTotalDistance() }.sum()
         val trip =
             context.resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
         return DKSpannable().append("$tripsNumber", context.resSpans {
@@ -109,5 +122,13 @@ class TripsListViewModel : ViewModel() {
 
     fun getVehicleFilterVisibility(): Boolean {
         return filterItems.size > 1
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
+        : ViewModelProvider.NewInstanceFactory() {
+        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
+            return TripsListViewModel(tripListConfiguration) as T
+        }
     }
 }
