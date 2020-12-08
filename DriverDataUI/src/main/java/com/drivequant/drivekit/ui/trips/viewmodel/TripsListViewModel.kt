@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
@@ -86,18 +87,41 @@ internal class TripsListViewModel(
     }
 
     fun getFilterItems(context: Context) {
+        filterItems.clear()
         when (tripListConfiguration){
             TripListConfiguration.MOTORIZED -> {
                 DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
-                    filterItems.add(AllTripsFilterItem())
+                    filterItems.add(AllTripsVehicleFilterItem())
                     filterItems.addAll(it)
                 }
             }
             TripListConfiguration.ALTERNATIVE -> {
-                // TODO
+                filterItems.add(AllTripsVehicleFilterItem())
+
             }
         }
         filterData.postValue(filterItems)
+    }
+
+    fun changeConfiguration(tripListConfiguration: TripListConfiguration){
+        TripsListViewModel@this.tripListConfiguration = tripListConfiguration
+    }
+
+    fun getTripInfo(): DKTripInfo? {
+        return when (tripListConfiguration){
+            TripListConfiguration.MOTORIZED -> DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
+            TripListConfiguration.ALTERNATIVE -> null
+        }
+    }
+
+    private fun getTransportationModeFilterItems(): List<FilterItem> {
+
+
+        return listOf()
+    }
+
+    fun shouldDisplayAlternativeTrips(): Boolean {
+        return getTransportationModeFilterItems().size > 1
     }
 
     fun getTripSynthesisText(context: Context): SpannableString {

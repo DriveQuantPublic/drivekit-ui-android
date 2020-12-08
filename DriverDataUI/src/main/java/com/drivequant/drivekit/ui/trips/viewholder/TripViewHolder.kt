@@ -18,12 +18,10 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripInfoView
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
-import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
-import com.drivequant.drivekit.ui.trips.viewmodel.TripData
+import com.drivequant.drivekit.ui.trips.viewmodel.*
+import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 
-class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class TripViewHolder(itemView: View, private val viewModel: TripsListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
     private val textViewDepartureCity = itemView.findViewById<TextView>(R.id.text_view_departure_city)
     private val textViewArrivalTime = itemView.findViewById<TextView>(R.id.text_view_arrival_time)
@@ -36,8 +34,6 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val circleTop = itemView.findViewById<ImageView>(R.id.image_circle_top)
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
-
-
 
     fun bind(trip: Trip, isLastChild: Boolean){
         textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
@@ -57,8 +53,7 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
 
         computeTripData(trip, DriverDataUI.tripData)
-        val tripInfo = DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
-        computeTripInfo(trip, tripInfo)
+        computeTripInfo(trip, viewModel.getTripInfo())
     }
 
     private fun computeTripData(trip: Trip, tripData: TripData){
@@ -97,8 +92,8 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textIndicator.visibility = View.VISIBLE
     }
 
-    private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo) {
-        if (tripInfo.isDisplayable(trip)) {
+    private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo?) {
+        if (tripInfo != null && tripInfo.isDisplayable(trip)) {
             tripInfoContainer.addView(TripInfoView(itemView.context, trip, tripInfo))
             tripInfoContainer.visibility = View.VISIBLE
         } else {
