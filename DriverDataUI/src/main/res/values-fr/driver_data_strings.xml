@@ -11,10 +11,16 @@
    <string name="dk_driverdata_advice_feedback_disagree_title">Votre avis</string>
    <string name="dk_driverdata_advice_feedback_error">Une erreur est survenue, merci de réessayer ultérieurement.</string>
    <string name="dk_driverdata_advice_feedback_success">Votre avis a bien été pris en compte. Merci !</string>
+   <string name="dk_driverdata_alternative_transportation_remark">💡 Ce trajet n\'a pas de score car l’application ne mesure pas votre conduite lorsque vous n\'êtes pas dans votre véhicule.</string>
+   <string name="dk_driverdata_alternative_transportation_thanks">❤️ Merci d\'avoir déclaré ce trajet et de nous aider à améliorer l\'identification automatique du mode de transport.</string>
+   <string name="dk_driverdata_alternative_trips">Transports alternatifs</string>
    <string name="dk_driverdata_bad_maintain">Vitesse très irrégulière</string>
+   <string name="dk_driverdata_change_transportation_mode">Changer ?</string>
    <string name="dk_driverdata_confirm_delete_trip">Supprimer le trajet ?</string>
    <string name="dk_driverdata_day">Temps de jour</string>
+   <string name="dk_driverdata_declared_transportation_mode">Mode déclaré :</string>
    <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
+   <string name="dk_driverdata_detected_transportation_mode">Mode détecté :</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
    <string name="dk_driverdata_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossible de synchroniser les trajets, veuillez réessayer plus tard.</string>
@@ -56,6 +62,21 @@
    <string name="dk_driverdata_synthesis_stop_time">Temps à l\'arrêt</string>
    <string name="dk_driverdata_synthesis_vehicle">Véhicule utilisé</string>
    <string name="dk_driverdata_synthesis_weather">Météo</string>
+   <string name="dk_driverdata_transportation_mode_all">Tous les trajets</string>
+   <string name="dk_driverdata_transportation_mode_bike">Vélo</string>
+   <string name="dk_driverdata_transportation_mode_boat">Bateau</string>
+   <string name="dk_driverdata_transportation_mode_bus">Bus</string>
+   <string name="dk_driverdata_transportation_mode_car">Voiture</string>
+   <string name="dk_driverdata_transportation_mode_flight">Avion</string>
+   <string name="dk_driverdata_transportation_mode_idle">Statique</string>
+   <string name="dk_driverdata_transportation_mode_motorcycle">Moto</string>
+   <string name="dk_driverdata_transportation_mode_on_foot">À pied</string>
+   <string name="dk_driverdata_transportation_mode_other">Autre</string>
+   <string name="dk_driverdata_transportation_mode_skiing">Ski</string>
+   <string name="dk_driverdata_transportation_mode_train">Train</string>
+   <string name="dk_driverdata_transportation_mode_truck">Poids-lourd</string>
+   <string name="dk_driverdata_transportation_profile_driver">Conducteur</string>
+   <string name="dk_driverdata_transportation_profile_passenger">Passager</string>
    <string name="dk_driverdata_trip_deleted">Votre trajet a été supprimé.</string>
    <string name="dk_driverdata_trip_detail_data_error">Les données du trajet n\'ont pas pu être récupérées</string>
    <string name="dk_driverdata_trip_detail_get_road_failed">La route n\'a pas pu être récupérée. Assurez vous d\'être connecté au réseau.</string>
@@ -68,6 +89,7 @@
    <string name="dk_driverdata_unlock_event">Déverrouillage de l\'écran</string>
    <string name="dk_driverdata_unlock_number">Nombre de déverrouillages</string>
    <string name="dk_driverdata_value">Valeur =</string>
+   <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
    <string name="dk_driverdata_weak_accel">Freinage faible</string>
    <string name="dk_driverdata_weak_decel">Freinage faible</string>
    <string name="dk_driverdata_weak_maintain">Vitesse irrégulière</string>
