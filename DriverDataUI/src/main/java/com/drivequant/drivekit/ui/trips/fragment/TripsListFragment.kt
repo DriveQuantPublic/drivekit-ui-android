@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
@@ -36,13 +37,14 @@ class TripsListFragment : Fragment() {
         progress_circular.visibility = View.VISIBLE
         // TODO
         viewModel = ViewModelProviders.of(this,
-            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.ALTERNATIVE))
+            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.ALTERNATIVE()))
             .get(TripsListViewModel::class.java)
 
         viewModel.filterData.observe(this, Observer {
-            filter_view.setItems(viewModel.filterItems)
+            configureFilter()
         })
 
+        initFilter()
         updateTrips()
         viewModel.tripsData.observe(this, Observer {
             viewModel.getFilterItems(requireContext())
@@ -50,7 +52,6 @@ class TripsListFragment : Fragment() {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
             } else {
-                initFilter()
                 displayTripsList()
                 adapter?.notifyDataSetChanged() ?: run {
                     adapter = TripsListAdapter(view?.context, viewModel)
@@ -73,29 +74,38 @@ class TripsListFragment : Fragment() {
     }
 
     private fun initFilter() {
-        if (DriverDataUI.enableVehicleFilter && viewModel.getVehicleFilterVisibility()) {
-            filter_view.spinner.post {
-                filter_view.spinner.onItemSelectedListener = object : OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>?,
-                        view: View,
-                        position: Int,
-                        l: Long) {
-                        viewModel.filterItems[position].getItemId()?.let {
-                            if (it is String) {
-                                viewModel.vehicleId = it
-                            }
-                        }?: run {
-                            viewModel.vehicleId = null
-                        }
-                        viewModel.fetchTrips(SynchronizationType.CACHE)
+        filter_view.spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View,
+                position: Int,
+                l: Long) {
+                val itemId = viewModel.filterItems[position].getItemId()
+                when (viewModel.tripListConfiguration){
+                    is TripListConfiguration.MOTORIZED -> {
+                        viewModel.filterTrips(TripListConfiguration.MOTORIZED(itemId as String?))
                     }
-                    override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+                    is TripListConfiguration.ALTERNATIVE -> {
+                        viewModel.filterTrips(TripListConfiguration.ALTERNATIVE(itemId as TransportationMode?))
+                    }
                 }
             }
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun configureFilter() {
+        val ret = DriverDataUI.enableVehicleFilter && viewModel.getVehicleFilterVisibility()
+        if (ret) {
+            filter_view.setItems(viewModel.filterItems)
+
             text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
             text_view_trips_synthesis.visibility = View.VISIBLE
             filter_view.visibility = View.VISIBLE
+
+        } else {
+            text_view_trips_synthesis.visibility = View.GONE
+            filter_view.visibility = View.GONE
         }
     }
 

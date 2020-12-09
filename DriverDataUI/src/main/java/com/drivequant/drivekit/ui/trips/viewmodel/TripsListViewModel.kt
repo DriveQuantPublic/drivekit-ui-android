@@ -12,12 +12,10 @@ import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
@@ -27,7 +25,7 @@ import com.drivequant.drivekit.ui.extension.*
 import java.util.*
 
 internal class TripsListViewModel(
-    private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED
+    var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
 ) : ViewModel() {
     private var trips = listOf<TripsByDate>()
     var filteredTrips = mutableListOf<TripsByDate>()
@@ -36,6 +34,7 @@ internal class TripsListViewModel(
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
     var vehicleId: String? = null
+    var transportationMode: TransportationMode? = null
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
@@ -45,8 +44,7 @@ internal class TripsListViewModel(
                         syncTripsError.postValue(Any())
                     }
                     this@TripsListViewModel.trips = sortTrips(trips)
-                    filterTrips()
-                    tripsData.postValue(filteredTrips)
+                    filterTrips(tripListConfiguration)
                 }
             }, synchronizationType, TransportationMode.values().asList()) // TODO manage with tripListConfiguration
         } else {
@@ -54,11 +52,13 @@ internal class TripsListViewModel(
         }
     }
 
-    fun filterTrips() {
-        when (tripListConfiguration){
-            TripListConfiguration.MOTORIZED -> {
-                vehicleId?.let { vehicleId ->
-                    filteredTrips.clear()
+    fun filterTrips(configuration: TripListConfiguration) {
+        tripListConfiguration = configuration
+        filteredTrips.clear()
+        when (configuration){
+            is TripListConfiguration.MOTORIZED -> {
+                // TODO vehicleId = configuration.vehicleId
+                configuration.vehicleId?.let { vehicleId ->
                     trips.forEach { tripsByDate ->
                         val dayFilteredTrips = tripsByDate.trips.filter { it.vehicleId == vehicleId }
                         if (!dayFilteredTrips.isNullOrEmpty()){
@@ -69,12 +69,21 @@ internal class TripsListViewModel(
                     filteredTrips = trips.toMutableList()
                 }
             }
-            TripListConfiguration.ALTERNATIVE -> {
-                // TODO
-                filteredTrips = trips.toMutableList()
-
+            is TripListConfiguration.ALTERNATIVE -> {
+                // TODO transportationModes = configuration.transportationModes
+                configuration.transportationMode?.let { transportationMode ->
+                    trips.forEach { tripsByDate ->
+                        val dayFilteredTrips = tripsByDate.trips.filter { it.transportationMode == transportationMode }
+                        if (!dayFilteredTrips.isNullOrEmpty()){
+                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
+                        }
+                    }
+                }?: run {
+                    filteredTrips = trips.toMutableList()
+                }
             }
         }
+        tripsData.postValue(filteredTrips)
     }
 
     private fun sortTrips(fetchedTrips: List<Trip>): List<TripsByDate> {
@@ -93,27 +102,27 @@ internal class TripsListViewModel(
     fun getFilterItems(context: Context) {
         filterItems.clear()
         when (tripListConfiguration){
-            TripListConfiguration.MOTORIZED -> {
+            is TripListConfiguration.MOTORIZED -> {
                 DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
                     filterItems.add(AllTripsVehicleFilterItem())
                     filterItems.addAll(it)
                 }
             }
-            TripListConfiguration.ALTERNATIVE -> {
+            is TripListConfiguration.ALTERNATIVE -> {
                 filterItems.addAll(getTransportationModeFilterItems())
             }
         }
         filterData.postValue(filterItems)
     }
 
-    fun changeConfiguration(tripListConfiguration: TripListConfiguration){
-        TripsListViewModel@this.tripListConfiguration = tripListConfiguration
+    fun changeConfiguration(configuration: TripListConfiguration){
+        tripListConfiguration = configuration
     }
 
     fun getTripInfo(): DKTripInfo? {
         return when (tripListConfiguration){
-            TripListConfiguration.MOTORIZED -> DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
-            TripListConfiguration.ALTERNATIVE -> null
+            is TripListConfiguration.MOTORIZED -> DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
+            is TripListConfiguration.ALTERNATIVE -> null
         }
     }
 
