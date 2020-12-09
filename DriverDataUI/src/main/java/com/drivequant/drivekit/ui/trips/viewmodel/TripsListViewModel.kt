@@ -100,7 +100,6 @@ internal class TripsListViewModel(
                 }
             }
             TripListConfiguration.ALTERNATIVE -> {
-                filterItems.add(AllTripsVehicleFilterItem())
                 filterItems.addAll(getTransportationModeFilterItems())
             }
         }
@@ -120,6 +119,7 @@ internal class TripsListViewModel(
 
     private fun getTransportationModeFilterItems(): List<FilterItem> {
         val transportationModeFilterItems = mutableListOf<FilterItem>()
+        transportationModeFilterItems.add(AllTripsTransportationModeFilterItem())
         computeFilterTransportationModes().forEach { mode ->
             val modeFilterItem = object : FilterItem {
                 override fun getItemId(): Any? {
@@ -127,11 +127,11 @@ internal class TripsListViewModel(
                 }
 
                 override fun getImage(context: Context): Drawable? {
-                    return DKResource.convertToDrawable(context, mode.image())
+                    return mode.image(context)
                 }
 
                 override fun getTitle(context: Context): String {
-                    return DKResource.convertToString(context, mode.text())
+                    return mode.text(context)
                 }
             }
             transportationModeFilterItems.add(modeFilterItem)
@@ -143,15 +143,22 @@ internal class TripsListViewModel(
         val flatTrips = trips.flatMap { it.trips }
         val transportationModes = mutableSetOf<TransportationMode>()
         val noDeclared = flatTrips
+            .asSequence()
             .filter { !it.transportationMode.isAlternative() }
             .filter { it.declaredTransportationMode == null }
-            .distinctBy { it.transportationMode }.map { it.transportationMode }
+            .filter { it.transportationMode != TransportationMode.UNKNOWN }
+            .distinctBy { it.transportationMode }
+            .map { it.transportationMode }
+            .toList()
 
         val declared = flatTrips
+            .asSequence()
             .filter { it.transportationMode.isAlternative() }
+            .filter { it.transportationMode != TransportationMode.UNKNOWN }
             .filter { it.declaredTransportationMode != null }
             .distinctBy { it.declaredTransportationMode?.transportationMode }
             .map { it.declaredTransportationMode?.transportationMode }
+            .toList()
 
         transportationModes.addAll(noDeclared)
         declared.forEach {
@@ -159,7 +166,7 @@ internal class TripsListViewModel(
                 transportationModes.add(it)
             }
         }
-        return transportationModes
+        return transportationModes.toSortedSet()
     }
 
     fun shouldDisplayAlternativeTrips(): Boolean {

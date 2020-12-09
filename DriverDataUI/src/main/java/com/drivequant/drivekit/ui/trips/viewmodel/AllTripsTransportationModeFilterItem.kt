@@ -11,10 +11,10 @@ internal class AllTripsTransportationModeFilterItem : FilterItem {
     }
 
     override fun getImage(context: Context): Drawable? {
-        return DKResource.convertToDrawable(context, "dk_my_trips")
+        return DKResource.convertToDrawable(context, "dk_transportation_all")
     }
 
     override fun getTitle(context: Context): String {
-        return DKResource.convertToString(context, "dk_driverdata_default_filter_item")
+        return DKResource.convertToString(context, "dk_driverdata_transportation_mode_all")
     }
 }
