@@ -34,17 +34,18 @@ class TripsListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
+        // TODO
         viewModel = ViewModelProviders.of(this,
-            TripsListViewModel.TripsListViewModelFactory(tripListConfiguration = TripListConfiguration.MOTORIZED))
+            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.ALTERNATIVE))
             .get(TripsListViewModel::class.java)
 
-        viewModel.getFilterItems(requireContext())
         viewModel.filterData.observe(this, Observer {
             filter_view.setItems(viewModel.filterItems)
         })
 
         updateTrips()
         viewModel.tripsData.observe(this, Observer {
+            viewModel.getFilterItems(requireContext())
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()

@@ -6,8 +6,8 @@ fun TransportationMode.isAlternative(): Boolean{
     return when (this){
         TransportationMode.UNKNOWN,
         TransportationMode.CAR,
-        TransportationMode.MOTO -> false
-        TransportationMode.TRUCK ,
+        TransportationMode.MOTO,
+        TransportationMode.TRUCK -> false
         TransportationMode.BUS,
         TransportationMode.TRAIN,
         TransportationMode.BOAT,
@@ -18,4 +18,14 @@ fun TransportationMode.isAlternative(): Boolean{
         TransportationMode.IDLE,
         TransportationMode.OTHER -> true
     }
+}
+
+// TODO
+fun TransportationMode.image(): String {
+    return "dk_common_distraction_filled"
+}
+
+// TODO
+fun TransportationMode.text(): String {
+    return this.name
 }
