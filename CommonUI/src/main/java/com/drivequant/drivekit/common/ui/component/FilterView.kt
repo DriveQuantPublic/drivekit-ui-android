@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 class FilterView : LinearLayout {
 
     lateinit var spinner: Spinner
+    lateinit var adapter: FilterAdapter
 
     constructor(context: Context) : super(context) {
         init()
@@ -32,8 +33,13 @@ class FilterView : LinearLayout {
     }
 
     fun setItems(filterItems: List<FilterItem>) {
-        val adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
-        spinner.adapter = adapter
-        spinner.setSelection(0, false)
+        if (!this::adapter.isInitialized) {
+            adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
+            spinner.adapter = adapter
+            spinner.setSelection(0, false)
+        } else {
+            adapter.setItems(filterItems)
+            adapter.notifyDataSetChanged()
+        }
     }
 }
