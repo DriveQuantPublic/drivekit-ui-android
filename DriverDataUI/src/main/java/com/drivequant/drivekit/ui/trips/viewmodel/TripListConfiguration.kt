@@ -5,7 +5,8 @@ import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
 sealed class TripListConfiguration {
     data class MOTORIZED(val vehicleId: String? = null) : TripListConfiguration()
-    data class ALTERNATIVE(val transportationMode: TransportationMode? = null) : TripListConfiguration()
+    data class ALTERNATIVE(val transportationMode: TransportationMode? = null) :
+        TripListConfiguration()
 
     fun getTransportationModes(): List<TransportationMode> {
         return when (this) {
@@ -44,8 +45,8 @@ enum class TripListConfigurationType {
         }
     }
 
-    fun getTripListConfiguration() : TripListConfiguration{
-        return when (this){
+    fun getTripListConfiguration(): TripListConfiguration {
+        return when (this) {
             MOTORIZED -> TripListConfiguration.MOTORIZED()
             ALTERNATIVE -> TripListConfiguration.ALTERNATIVE()
         }

@@ -8,18 +8,14 @@ import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.extension.text
 
 internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
 
-    var detectedTransportationMode = trip.transportationMode
-        private set
-    var declaredTransportationMode: TransportationMode? =
-        trip.declaredTransportationMode?.transportationMode
-        private set
+    private val detectedTransportationMode = trip.transportationMode
+    private val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
 
     fun getAnalyzedTransportationModeTitle(context: Context): Spannable? {
         return if (declaredTransportationMode != null) {
@@ -48,7 +44,7 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 DKResource.convertToString(context, "dk_driverdata_declared_transportation_mode"),
-                " ${declaredTransportationMode!!.text(context)}"
+                " ${declaredTransportationMode.text(context)}"
             )
         } else {
             null

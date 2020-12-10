@@ -66,4 +66,6 @@ internal class AlternativeTripFragment : Fragment() {
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
         meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
     }
+
+    // TODO updateContent on onActivityResult()
 }
