@@ -70,24 +70,19 @@ internal class TripsListViewModel(
                 }
             }
             is TripListConfiguration.ALTERNATIVE -> {
-                configuration.transportationMode?.let { transportationMode ->
-                    trips.forEach { tripsByDate ->
-                        val dayFilteredTrips = if (!transportationMode.isAlternative()){
-                            tripsByDate.trips.filter { it.declaredTransportationMode?.transportationMode == transportationMode }
+                trips.forEach { tripsByDate ->
+                    val mode = configuration.transportationMode
+                    val dayFilteredTrips = if (mode == null){
+                        tripsByDate.trips.filter { it.transportationMode.isAlternative() }
+                    } else {
+                        if (!configuration.transportationMode.isAlternative()){
+                            tripsByDate.trips.filter { it.declaredTransportationMode?.transportationMode == mode }
                         } else {
-                            tripsByDate.trips.filter { it.transportationMode == transportationMode }
-                        }
-                        if (!dayFilteredTrips.isNullOrEmpty()){
-                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
+                            tripsByDate.trips.filter { it.transportationMode == mode }
                         }
                     }
-                } ?: run {
-                    trips.forEach { tripsByDate ->
-                        val dayFilteredTrips =
-                            tripsByDate.trips.filter { it.transportationMode.isAlternative() }
-                        if (!dayFilteredTrips.isNullOrEmpty()) {
-                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
-                        }
+                    if (!dayFilteredTrips.isNullOrEmpty()){
+                        filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
                     }
                 }
             }

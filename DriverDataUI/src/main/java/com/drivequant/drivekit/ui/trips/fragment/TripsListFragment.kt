@@ -81,10 +81,12 @@ class TripsListFragment : Fragment() {
         return when (item!!.itemId) {
             R.id.trips_vehicle -> {
                 viewModel.filterTrips(TripListConfiguration.MOTORIZED())
+                filter_view.spinner.setSelection(0, false)
                 true
             }
             R.id.trips_alternative -> {
                 viewModel.filterTrips(TripListConfiguration.ALTERNATIVE())
+                filter_view.spinner.setSelection(0, false)
                 true
             }
             else -> super.onOptionsItemSelected(item)
