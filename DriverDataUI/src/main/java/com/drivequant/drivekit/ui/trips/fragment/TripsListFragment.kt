@@ -21,6 +21,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.adapter.TripsListAdapter
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
 import kotlinx.android.synthetic.main.fragment_trips_list.*
@@ -141,7 +142,7 @@ class TripsListFragment : Fragment() {
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let {
-                TripDetailActivity.launchActivity(requireActivity(), it.itinId)
+                TripDetailActivity.launchActivity(requireActivity(), it.itinId, tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration))
             }
             false
         }

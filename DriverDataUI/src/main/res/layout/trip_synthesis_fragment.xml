@@ -16,7 +16,7 @@
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_vehicle" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
-        android:id="@+id/item_speed_mean"
+        android:id="@+id/item_mean_speed"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_columnWeight="1"

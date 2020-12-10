@@ -33,6 +33,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         MapItem.INTERACTIVE_MAP,
         MapItem.SYNTHESIS
     )
+        private set
 
     internal var customMapItem: DKMapItem? = null
         private set

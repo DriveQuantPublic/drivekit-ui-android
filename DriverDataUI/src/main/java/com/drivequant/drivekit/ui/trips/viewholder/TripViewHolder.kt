@@ -21,7 +21,6 @@ import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.trips.viewmodel.*
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
-import kotlin.coroutines.coroutineContext
 
 internal class TripViewHolder(itemView: View, private val viewModel: TripsListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)

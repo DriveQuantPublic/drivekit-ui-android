@@ -10,9 +10,29 @@ import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import java.util.*
 
-class TripDetailViewModel(private val itinId: String, private val mapItems: List<DKMapItem>): ViewModel(), DKTripDetailViewModel {
+internal class TripDetailViewModel(
+    private val itinId: String,
+    tripListConfiguration: TripListConfiguration
+) : ViewModel(), DKTripDetailViewModel {
+
+    private var mapItems: MutableList<DKMapItem> = mutableListOf()
+
+    init {
+        when (tripListConfiguration){
+            is TripListConfiguration.MOTORIZED -> {
+                mapItems.addAll(DriverDataUI.mapItems)
+                DriverDataUI.customMapItem?.let {
+                    mapItems.add(it)
+                }
+            }
+            is TripListConfiguration.ALTERNATIVE -> {
+                mapItems.add(AlternativeTripMapItem())
+            }
+        }
+    }
 
     var trip: Trip? = null
         set(value) {
@@ -274,12 +294,14 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
 
     override fun getSelectedEvent(): MutableLiveData<Int> = selection
 }
+
+@Suppress("UNCHECKED_CAST")
 class TripDetailViewModelFactory(
     private val itinId: String,
-    private val mapItems: List<MapItem>
+    private val tripListConfiguration: TripListConfiguration
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return TripDetailViewModel(itinId, mapItems) as T
+        return TripDetailViewModel(itinId, tripListConfiguration) as T
     }
 }
 

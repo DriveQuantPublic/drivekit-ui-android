@@ -1,8 +1,9 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
+import android.support.annotation.Keep
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
-internal sealed class TripListConfiguration {
+sealed class TripListConfiguration {
     data class MOTORIZED(val vehicleId: String? = null) : TripListConfiguration()
     data class ALTERNATIVE(val transportationMode: TransportationMode? = null) : TripListConfiguration()
 
@@ -25,6 +26,28 @@ internal sealed class TripListConfiguration {
                 TransportationMode.IDLE,
                 TransportationMode.OTHER
             )
+        }
+    }
+}
+
+@Keep
+enum class TripListConfigurationType {
+    MOTORIZED,
+    ALTERNATIVE;
+
+    companion object {
+        fun getType(tripListConfiguration: TripListConfiguration): TripListConfigurationType {
+            return when (tripListConfiguration) {
+                is TripListConfiguration.MOTORIZED -> MOTORIZED
+                is TripListConfiguration.ALTERNATIVE -> ALTERNATIVE
+            }
+        }
+    }
+
+    fun getTripListConfiguration() : TripListConfiguration{
+        return when (this){
+            MOTORIZED -> TripListConfiguration.MOTORIZED()
+            ALTERNATIVE -> TripListConfiguration.ALTERNATIVE()
         }
     }
 }
