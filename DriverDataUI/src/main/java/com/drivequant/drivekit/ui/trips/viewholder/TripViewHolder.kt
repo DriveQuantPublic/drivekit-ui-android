@@ -18,8 +18,10 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripInfoView
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
+import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.trips.viewmodel.*
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
+import kotlin.coroutines.coroutineContext
 
 internal class TripViewHolder(itemView: View, private val viewModel: TripsListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
@@ -30,7 +32,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
     private val tripInfoContainer = itemView.findViewById<ViewGroup>(R.id.container_trip_info)
     private val gaugeIndicator = itemView.findViewById<GaugeIndicator>(R.id.gauge_indicator_view)
     private val textIndicator = itemView.findViewById<TextView>(R.id.text_view_value)
-    private val noScoreView = itemView.findViewById<ImageView>(R.id.no_score_view)
+    private val imageView = itemView.findViewById<ImageView>(R.id.no_score_view)
     private val circleTop = itemView.findViewById<ImageView>(R.id.image_circle_top)
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
@@ -52,43 +54,68 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
         textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
         textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        computeTripData(trip, DriverDataUI.tripData)
+        computeTripData(trip, viewModel.tripListConfiguration)
         computeTripInfo(trip, viewModel.getTripInfo())
     }
 
-    private fun computeTripData(trip: Trip, tripData: TripData){
-        when (tripData.displayType()){
+    private fun computeTripData(trip: Trip, tripListConfiguration: TripListConfiguration) {
+        when (tripListConfiguration) {
+            is TripListConfiguration.MOTORIZED -> configureMotorizedTripData(trip)
+            is TripListConfiguration.ALTERNATIVE -> configureAlternativeTripData(trip)
+        }
+    }
+
+    private fun configureMotorizedTripData(trip: Trip) {
+        val tripData = DriverDataUI.tripData
+        when (tripData.displayType()) {
             DisplayType.GAUGE -> {
-                if (tripData.isScored(trip)){
+                if (tripData.isScored(trip)) {
                     showGaugeIndicator()
                     gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
                 } else {
-                    showNoScoreIndicator()
+                    showImageIndicator()
                 }
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
                 textIndicator.headLine2(DriveKitUI.colors.primaryColor())
-                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip))) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
+                textIndicator.text =
+                    if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(
+                        itemView.context,
+                        tripData.rawValue(trip)
+                    )) else (DKDataFormatter.formatDistance(
+                        itemView.context,
+                        tripData.rawValue(trip)
+                    ))
             }
         }
     }
 
+    private fun configureAlternativeTripData(trip: Trip) {
+        showImageIndicator()
+        val mode = trip.declaredTransportationMode?.transportationMode?.let {
+            it
+        }?: run {
+            trip.transportationMode
+        }
+        imageView.setImageDrawable(mode.image(itemView.context))
+    }
+
     private fun showGaugeIndicator() {
         gaugeIndicator.visibility = View.VISIBLE
-        noScoreView.visibility = View.GONE
+        imageView.visibility = View.GONE
         textIndicator.visibility = View.GONE
     }
 
-    private fun showNoScoreIndicator() {
+    private fun showImageIndicator() {
         gaugeIndicator.visibility = View.GONE
-        noScoreView.visibility = View.VISIBLE
+        imageView.visibility = View.VISIBLE
         textIndicator.visibility = View.GONE
     }
 
     private fun showTextIndicator(){
         gaugeIndicator.visibility = View.GONE
-        noScoreView.visibility = View.GONE
+        imageView.visibility = View.GONE
         textIndicator.visibility = View.VISIBLE
     }
 

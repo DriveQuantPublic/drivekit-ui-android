@@ -25,7 +25,7 @@ fun TransportationMode.isAlternative(): Boolean{
 
 fun TransportationMode.image(context: Context): Drawable? {
     when (this) {
-        TransportationMode.UNKNOWN -> "unknown"
+        TransportationMode.UNKNOWN,
         TransportationMode.CAR -> "dk_transportation_car"
         TransportationMode.MOTO -> "dk_transportation_motorcycle"
         TransportationMode.TRUCK -> "dk_transportation_truck"

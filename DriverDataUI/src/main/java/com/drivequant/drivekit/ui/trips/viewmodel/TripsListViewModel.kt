@@ -115,10 +115,6 @@ internal class TripsListViewModel(
         filterData.postValue(filterItems)
     }
 
-    fun changeConfiguration(configuration: TripListConfiguration){
-        tripListConfiguration = configuration
-    }
-
     fun getTripInfo(): DKTripInfo? {
         return when (tripListConfiguration){
             is TripListConfiguration.MOTORIZED -> DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
