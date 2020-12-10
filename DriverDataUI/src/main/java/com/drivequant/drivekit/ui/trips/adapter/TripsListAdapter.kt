@@ -19,7 +19,6 @@ import com.drivequant.drivekit.ui.trips.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.ui.trips.viewholder.TripViewHolder
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
-import kotlinx.android.synthetic.main.fragment_trip_detail.*
 
 internal class TripsListAdapter(
     var context: Context?,

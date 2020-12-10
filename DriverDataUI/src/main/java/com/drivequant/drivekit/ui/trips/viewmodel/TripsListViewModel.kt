@@ -33,8 +33,6 @@ internal class TripsListViewModel(
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
-    var vehicleId: String? = null
-    var transportationMode: TransportationMode? = null
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
@@ -46,7 +44,7 @@ internal class TripsListViewModel(
                     this@TripsListViewModel.trips = sortTrips(trips)
                     filterTrips(tripListConfiguration)
                 }
-            }, synchronizationType, TransportationMode.values().asList()) // TODO manage with tripListConfiguration
+            }, synchronizationType, tripListConfiguration.getTransportationModes())
         } else {
             syncTripsError.postValue(Any())
         }
@@ -57,7 +55,6 @@ internal class TripsListViewModel(
         filteredTrips.clear()
         when (configuration){
             is TripListConfiguration.MOTORIZED -> {
-                // TODO vehicleId = configuration.vehicleId
                 configuration.vehicleId?.let { vehicleId ->
                     trips.forEach { tripsByDate ->
                         val dayFilteredTrips = tripsByDate.trips.filter { it.vehicleId == vehicleId }
@@ -70,7 +67,6 @@ internal class TripsListViewModel(
                 }
             }
             is TripListConfiguration.ALTERNATIVE -> {
-                // TODO transportationModes = configuration.transportationModes
                 configuration.transportationMode?.let { transportationMode ->
                     trips.forEach { tripsByDate ->
                         val dayFilteredTrips = tripsByDate.trips.filter { it.transportationMode == transportationMode }
@@ -145,37 +141,27 @@ internal class TripsListViewModel(
     }
 
     private fun computeFilterTransportationModes(): Set<TransportationMode> {
-        val flatTrips = trips.flatMap { it.trips }
         val transportationModes = mutableSetOf<TransportationMode>()
-        val noDeclared = flatTrips
-            .asSequence()
-            .filter { !it.transportationMode.isAlternative() }
-            .filter { it.declaredTransportationMode == null }
-            .filter { it.transportationMode != TransportationMode.UNKNOWN }
-            .distinctBy { it.transportationMode }
-            .map { it.transportationMode }
-            .toList()
+        TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
+            if (DriveKitDriverData.tripsQuery()
+                    .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
+                    .query().execute().isNotEmpty()
+            ) {
+                transportationModes.add(it)
+            }
+        }
 
-        val declared = flatTrips
-            .asSequence()
-            .filter { it.transportationMode.isAlternative() }
-            .filter { it.transportationMode != TransportationMode.UNKNOWN }
-            .filter { it.declaredTransportationMode != null }
-            .distinctBy { it.declaredTransportationMode?.transportationMode }
-            .map { it.declaredTransportationMode?.transportationMode }
-            .toList()
-
-        transportationModes.addAll(noDeclared)
-        declared.forEach {
-            it?.let {
+        TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach {
+            if (DriveKitDriverData.tripsQuery()
+                    .whereEqualTo("transportationMode", it.value)
+                    .or()
+                    .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
+                    .query().execute().isNotEmpty()
+            ) {
                 transportationModes.add(it)
             }
         }
         return transportationModes.toSortedSet()
-    }
-
-    fun shouldDisplayAlternativeTrips(): Boolean {
-        return getTransportationModeFilterItems().size > 1
     }
 
     fun getTripSynthesisText(context: Context): SpannableString {
@@ -204,7 +190,7 @@ internal class TripsListViewModel(
     }
 
     @Suppress("UNCHECKED_CAST")
-    class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
+    class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED())
         : ViewModelProvider.NewInstanceFactory() {
         override fun <T: ViewModel?> create(modelClass: Class<T>): T {
             return TripsListViewModel(tripListConfiguration) as T

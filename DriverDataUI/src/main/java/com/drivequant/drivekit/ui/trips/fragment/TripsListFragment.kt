@@ -37,7 +37,7 @@ class TripsListFragment : Fragment() {
         progress_circular.visibility = View.VISIBLE
         // TODO
         viewModel = ViewModelProviders.of(this,
-            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.ALTERNATIVE()))
+            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED()))
             .get(TripsListViewModel::class.java)
 
         viewModel.filterData.observe(this, Observer {
