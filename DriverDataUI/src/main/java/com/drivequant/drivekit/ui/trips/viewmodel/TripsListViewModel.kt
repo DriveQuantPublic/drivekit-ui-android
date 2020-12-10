@@ -29,13 +29,20 @@ internal class TripsListViewModel(
 ) : ViewModel() {
     private var trips = listOf<TripsByDate>()
     var filteredTrips = mutableListOf<TripsByDate>()
+        private set
     var filterItems: MutableList<FilterItem> = mutableListOf()
+        private set
     val tripsData: MutableLiveData<List<TripsByDate>> = MutableLiveData()
     val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
+        private set
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
+            val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
+            if (DriverDataUI.enableAlternativeTrips){
+                transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
+            }
             DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                     if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
@@ -44,7 +51,7 @@ internal class TripsListViewModel(
                     this@TripsListViewModel.trips = sortTrips(trips)
                     filterTrips(tripListConfiguration)
                 }
-            }, synchronizationType, tripListConfiguration.getTransportationModes())
+            }, synchronizationType, transportationModes)
         } else {
             syncTripsError.postValue(Any())
         }
@@ -55,27 +62,33 @@ internal class TripsListViewModel(
         filteredTrips.clear()
         when (configuration){
             is TripListConfiguration.MOTORIZED -> {
-                configuration.vehicleId?.let { vehicleId ->
-                    trips.forEach { tripsByDate ->
-                        val dayFilteredTrips = tripsByDate.trips.filter { it.vehicleId == vehicleId }
-                        if (!dayFilteredTrips.isNullOrEmpty()){
-                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
-                        }
+                trips.forEach { tripsByDate ->
+                    val dayFilteredTrips = tripsByDate.trips.filter { configuration.vehicleId?.let { vehicleId -> it.vehicleId == vehicleId }?:run { !it.transportationMode.isAlternative() } }
+                    if (!dayFilteredTrips.isNullOrEmpty()){
+                        filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
                     }
-                }?: run {
-                    filteredTrips = trips.toMutableList()
                 }
             }
             is TripListConfiguration.ALTERNATIVE -> {
                 configuration.transportationMode?.let { transportationMode ->
                     trips.forEach { tripsByDate ->
-                        val dayFilteredTrips = tripsByDate.trips.filter { it.transportationMode == transportationMode }
+                        val dayFilteredTrips = if (!transportationMode.isAlternative()){
+                            tripsByDate.trips.filter { it.declaredTransportationMode?.transportationMode == transportationMode }
+                        } else {
+                            tripsByDate.trips.filter { it.transportationMode == transportationMode }
+                        }
                         if (!dayFilteredTrips.isNullOrEmpty()){
                             filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
                         }
                     }
-                }?: run {
-                    filteredTrips = trips.toMutableList()
+                } ?: run {
+                    trips.forEach { tripsByDate ->
+                        val dayFilteredTrips =
+                            tripsByDate.trips.filter { it.transportationMode.isAlternative() }
+                        if (!dayFilteredTrips.isNullOrEmpty()) {
+                            filteredTrips.add(TripsByDate(tripsByDate.date, dayFilteredTrips))
+                        }
+                    }
                 }
             }
         }
@@ -140,7 +153,7 @@ internal class TripsListViewModel(
         return transportationModeFilterItems
     }
 
-    private fun computeFilterTransportationModes(): Set<TransportationMode> {
+    fun computeFilterTransportationModes(): Set<TransportationMode> {
         val transportationModes = mutableSetOf<TransportationMode>()
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
@@ -185,12 +198,12 @@ internal class TripsListViewModel(
             }).toSpannable()
     }
 
-    fun getVehicleFilterVisibility(): Boolean {
-        return filterItems.size > 1
+    fun getFilterVisibility(): Boolean {
+        return (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
     }
 
     @Suppress("UNCHECKED_CAST")
-    class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED())
+    class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
         : ViewModelProvider.NewInstanceFactory() {
         override fun <T: ViewModel?> create(modelClass: Class<T>): T {
             return TripsListViewModel(tripListConfiguration) as T

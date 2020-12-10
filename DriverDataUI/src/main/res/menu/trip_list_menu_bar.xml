@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/transportation_mode"
+        android:icon="@drawable/dk_filter"
+        android:title="@string/dk_driverdata_transportation_mode_title"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/trips_vehicle"
+                android:title="@string/dk_driverdata_vehicle_trips"
+                app:showAsAction="ifRoom" />
+            <item
+                android:id="@+id/trips_alternative"
+                android:title="@string/dk_driverdata_alternative_trips"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+</menu>

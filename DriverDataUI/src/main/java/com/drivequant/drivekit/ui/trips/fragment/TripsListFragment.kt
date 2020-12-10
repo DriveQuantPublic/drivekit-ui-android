@@ -7,9 +7,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
@@ -48,6 +46,7 @@ class TripsListFragment : Fragment() {
         updateTrips()
         viewModel.tripsData.observe(this, Observer {
             viewModel.getFilterItems(requireContext())
+            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
                 adapter?.notifyDataSetChanged()
@@ -73,6 +72,25 @@ class TripsListFragment : Fragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.trip_list_menu_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item!!.itemId) {
+            R.id.trips_vehicle -> {
+                viewModel.filterTrips(TripListConfiguration.MOTORIZED())
+                true
+            }
+            R.id.trips_alternative -> {
+                viewModel.filterTrips(TripListConfiguration.ALTERNATIVE())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initFilter() {
         filter_view.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -95,14 +113,11 @@ class TripsListFragment : Fragment() {
     }
 
     private fun configureFilter() {
-        val ret = DriverDataUI.enableVehicleFilter && viewModel.getVehicleFilterVisibility()
-        if (ret) {
+        if (viewModel.getFilterVisibility()) {
             filter_view.setItems(viewModel.filterItems)
-
             text_view_trips_synthesis.text = viewModel.getTripSynthesisText(requireContext())
             text_view_trips_synthesis.visibility = View.VISIBLE
             filter_view.visibility = View.VISIBLE
-
         } else {
             text_view_trips_synthesis.visibility = View.GONE
             filter_view.visibility = View.GONE
