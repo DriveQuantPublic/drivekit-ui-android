@@ -45,7 +45,8 @@
         <Button
             android:id="@+id/button_change"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_height="@dimen/dk_ic_xbig"
+            android:textSize="@dimen/dk_text_small"
             android:layout_gravity="center"
             android:gravity="center"
             android:textAllCaps="false"

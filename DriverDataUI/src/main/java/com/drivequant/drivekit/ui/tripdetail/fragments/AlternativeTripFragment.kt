@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
@@ -61,7 +63,12 @@ internal class AlternativeTripFragment : Fragment() {
             transportation_mode_declared_text.visibility = View.VISIBLE
         }
 
+        button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+
         transportation_mode_description.text = viewModel.getDescription(requireContext())
+        transportation_mode_description.setTextColor(DriveKitUI.colors.mainFontColor())
+
         conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
         meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))

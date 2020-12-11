@@ -4,7 +4,9 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.support.v4.text.HtmlCompat
 import android.text.Spannable
+import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -18,7 +20,7 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
     private val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
 
     fun getAnalyzedTransportationModeTitle(context: Context): Spannable? {
-        return if (declaredTransportationMode != null) {
+        return if (declaredTransportationMode == null) {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
@@ -27,12 +29,11 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
                 " ${detectedTransportationMode.text(context)}"
             )
         } else {
-            DKResource.buildString(
-                context,
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
-                DKResource.convertToString(context, "dk_driverdata_detected_transportation_mode"),
-                " ${detectedTransportationMode.text(context)}"
+            SpannableString(
+                DKResource.convertToString(
+                    context,
+                    "dk_driverdata_detected_transportation_mode"
+                ) + " " + HtmlCompat.fromHtml(detectedTransportationMode.text(context), HtmlCompat.FROM_HTML_MODE_LEGACY)
             )
         }
     }
@@ -42,7 +43,7 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.primaryColor(),
+                DriveKitUI.colors.mainFontColor(),
                 DKResource.convertToString(context, "dk_driverdata_declared_transportation_mode"),
                 " ${declaredTransportationMode.text(context)}"
             )
@@ -53,9 +54,9 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
 
     fun getDescription(context: Context): String {
         val identifier = declaredTransportationMode?.let {
-            "dk_driverdata_alternative_transportation_remark"
-        } ?: run {
             "dk_driverdata_alternative_transportation_thanks"
+        } ?: run {
+            "dk_driverdata_alternative_transportation_remark"
         }
         return DKResource.convertToString(context, identifier)
     }
