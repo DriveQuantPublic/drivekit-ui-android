@@ -6,11 +6,14 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
+import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationModeFragment
 
 internal class TransportationModeActivity : AppCompatActivity() {
+
+    private val FRAGMENT_TAG = "transport-mode-fragment-tag"
 
     companion object {
         private const val ITINID_EXTRA = "itinId-extra"
@@ -39,13 +42,37 @@ internal class TransportationModeActivity : AppCompatActivity() {
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container,
-                TripDetailFragment.newInstance(itinId, openAdvice, tripListConfigurationType))
+            .replace(
+                R.id.container,
+                TransportationModeFragment.newInstance(itinId),
+                FRAGMENT_TAG
+            )
             .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    fun onTransportationModeItemClicked(view: View) {
+        getFragment()?.onTransportationModeClicked(view)
+    }
+
+    fun onTransportationProfileItemClicked(view: View) {
+        getFragment()?.onTransportationProfileClicked(view)
+    }
+
+    fun onValidateClicked(view: View) {
+        getFragment()?.onValidate()
+    }
+
+    private fun getFragment(): TransportationModeFragment? {
+        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+        return if (fragment != null && fragment is TransportationModeFragment){
+            fragment
+        } else {
+            null
+        }
     }
 }

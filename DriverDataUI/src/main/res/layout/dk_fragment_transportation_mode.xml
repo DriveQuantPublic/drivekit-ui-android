@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/content_trip"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".transportationmode.activity.TransportationModeActivity"
+    tools:showIn="@layout/dk_transportation_mode_activity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dk_margin"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dk_rounded_edges"
+            android:padding="@dimen/dk_margin_half" />
+
+        <TextView
+            android:id="@+id/transportation_mode_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin_half" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="3"
+            android:layout_gravity="center">
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_car"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_car"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_car"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_motorcycle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_motorcycle"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_motorcycle"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_truck"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_truck"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_truck"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_bus"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_bus"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_bus"
+                android:onClick="onTransportationModeItemClicked" />
+
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_train"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_train"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_train"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_bike"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_bike"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_bicycle"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_boat"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_boat"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_boat"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_flight"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_flight"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_plane"
+                android:onClick="onTransportationModeItemClicked" />
+
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_on_foot"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_on_foot"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_on_foot"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_skiing"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_skiing"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_skiing"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_idle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_idle"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_idle"
+                android:onClick="onTransportationModeItemClicked" />
+            <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                android:id="@+id/transportation_mode_other"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_mode_other"
+                app:dkCircularButtonItemDrawable="@drawable/dk_transportation_other"
+                android:onClick="onTransportationModeItemClicked" />
+        </GridLayout>
+
+        <LinearLayout
+            android:id="@+id/container_transportation_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:text="@string/dk_driverdata_transportation_mode_passenger_driver" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                    android:id="@+id/transportation_profile_driver"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/dk_margin_half"
+                    app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_profile_driver"
+                    app:dkCircularButtonItemDrawable="@drawable/dk_transportation_driver"
+                    android:onClick="onTransportationProfileItemClicked" />
+                <com.drivequant.drivekit.common.ui.component.CircularButtonItemView
+                    android:id="@+id/transportation_profile_passenger"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/dk_margin_half"
+                    app:dkCircularButtonItemTitle="@string/dk_driverdata_transportation_profile_passenger"
+                    app:dkCircularButtonItemDrawable="@drawable/dk_transportation_passenger"
+                    android:onClick="onTransportationProfileItemClicked" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dk_driverdata_transportation_mode_declaration_comment" />
+            <EditText
+                android:id="@+id/edit_text_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:inputType="textMultiLine"
+                android:textSize="@dimen/dk_text_normal"
+                android:lines="3"
+                android:maxLines="3"
+                android:gravity="top|start"
+                android:scrollbars="vertical"
+                android:padding="15dp"
+                android:background="@drawable/dk_rounded_edges"
+                android:longClickable="false"/>
+            <TextView
+                android:id="@+id/text_comment_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dk_text_small"
+                android:text="@string/dk_driverdata_transportation_mode_declaration_comment_error"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_validate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/dk_common_validate"
+            android:textSize="@dimen/dk_text_medium"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onValidateClicked"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin"
+            tools:ignore="UnusedAttribute" />
+    </LinearLayout>
+</ScrollView>

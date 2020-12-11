@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,8 @@ import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
+import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.AlternativeTripViewModel
 import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.*
 
@@ -47,17 +51,15 @@ internal class AlternativeTripFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(
-            this,
-            AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
-        ).get(AlternativeTripViewModel::class.java)
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(
+                this,
+                AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
+            ).get(AlternativeTripViewModel::class.java)
+        }
         button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        button_change.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                launchTransportationMode()
-            }
-        })
+        button_change.setOnClickListener { launchTransportationMode() }
         conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
         meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
@@ -78,7 +80,7 @@ internal class AlternativeTripFragment : Fragment() {
     }
 
     private fun launchTransportationMode(){
-
+        TransportationModeActivity.launchActivity(context as Activity, trip.itinId)
     }
 
     // TODO updateContent on onActivityResult()
