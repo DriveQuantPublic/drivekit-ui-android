@@ -51,6 +51,16 @@ internal class AlternativeTripFragment : Fragment() {
             this,
             AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
         ).get(AlternativeTripViewModel::class.java)
+        button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        button_change.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                launchTransportationMode()
+            }
+        })
+        conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
+        weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
+        meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
         updateContent()
     }
 
@@ -63,15 +73,12 @@ internal class AlternativeTripFragment : Fragment() {
             transportation_mode_declared_text.visibility = View.VISIBLE
         }
 
-        button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-        button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-
         transportation_mode_description.text = viewModel.getDescription(requireContext())
         transportation_mode_description.setTextColor(DriveKitUI.colors.mainFontColor())
+    }
 
-        conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
-        weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
-        meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
+    private fun launchTransportationMode(){
+
     }
 
     // TODO updateContent on onActivityResult()
