@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
+import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -13,6 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -72,7 +74,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                     showGaugeIndicator()
                     gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
                 } else {
-                    showImageIndicator()
+                    showImageIndicator(trip)
                 }
             }
             DisplayType.TEXT -> {
@@ -91,13 +93,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
     }
 
     private fun configureAlternativeTripData(trip: Trip) {
-        showImageIndicator()
-        val mode = trip.declaredTransportationMode?.transportationMode?.let {
-            it
-        }?: run {
-            trip.transportationMode
-        }
-        imageView.setImageDrawable(mode.image(itemView.context))
+        showImageIndicator(trip)
     }
 
     private fun showGaugeIndicator() {
@@ -106,10 +102,21 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
         textIndicator.visibility = View.GONE
     }
 
-    private fun showImageIndicator() {
+    private fun showImageIndicator(trip: Trip) {
         gaugeIndicator.visibility = View.GONE
         imageView.visibility = View.VISIBLE
         textIndicator.visibility = View.GONE
+
+        if (viewModel.tripListConfiguration == TripListConfiguration.ALTERNATIVE()) {
+            val mode = trip.declaredTransportationMode?.transportationMode?.let {
+                it
+            } ?: run {
+                trip.transportationMode
+            }
+            imageView.setImageDrawable(mode.image(itemView.context))
+        } else {
+            imageView.setImageDrawable(DKResource.convertToDrawable(imageView.context, "dk_no_score"))
+        }
     }
 
     private fun showTextIndicator(){
