@@ -270,7 +270,13 @@ class TripDetailViewModel(private val itinId: String, private val mapItems: List
             }
         }
     }
-    override fun getTripEvents(): List<TripEvent> = events
+    override fun getTripEvents(): List<TripEvent> {
+        return if (configurableMapItems.contains(MapItem.DISTRACTION)) {
+            events
+        } else {
+            displayEvents
+        }
+    }
 
     override fun getSelectedEvent(): MutableLiveData<Int> = selection
 }
