@@ -2,11 +2,11 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frame_layout_container"
-    android:layout_width="@dimen/dk_ic_xbig"
-    android:layout_height="@dimen/dk_ic_xbig"
+    android:layout_width="@dimen/dk_ic_xxbig"
+    android:layout_height="@dimen/dk_ic_xxbig"
     android:layout_margin="@dimen/dk_margin_half">
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="@dimen/dk_ic_xbig"
-        android:layout_height="@dimen/dk_ic_xbig" />
+        android:layout_width="@dimen/dk_ic_xxbig"
+        android:layout_height="@dimen/dk_ic_xxbig" />
 </FrameLayout>

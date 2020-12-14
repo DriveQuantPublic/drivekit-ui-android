@@ -154,10 +154,10 @@
                 android:orientation="vertical"
                 android:visibility="gone">
                 <TextView
+                    android:id="@+id/transportation_profile_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dk_margin_half"
-                    android:text="@string/dk_driverdata_transportation_mode_passenger_driver" />
+                    android:layout_marginBottom="@dimen/dk_margin_half" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,9 +187,9 @@
                 android:layout_marginTop="@dimen/dk_margin"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/comment_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dk_driverdata_transportation_mode_declaration_comment" />
+                    android:layout_height="wrap_content" />
                 <EditText
                     android:id="@+id/edit_text_comment"
                     android:layout_width="match_parent"
@@ -208,8 +208,6 @@
                     android:id="@+id/text_comment_error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dk_text_small"
-                    android:text="@string/dk_driverdata_transportation_mode_declaration_comment_error"
                     android:visibility="gone" />
             </LinearLayout>
 
@@ -217,7 +215,6 @@
                 android:id="@+id/button_validate"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/dk_common_validate"
                 android:textSize="@dimen/dk_text_medium"
                 android:gravity="center"
                 android:textAllCaps="true"

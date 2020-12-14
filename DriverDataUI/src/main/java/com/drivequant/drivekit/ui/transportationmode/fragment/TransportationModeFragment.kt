@@ -69,6 +69,12 @@ internal class TransportationModeFragment : Fragment(){
         description_title.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         description_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
 
+        transportation_profile_title.normalText()
+        transportation_profile_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_passenger_driver")
+
+        comment_title.normalText()
+        comment_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
+
         edit_text_comment.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -82,9 +88,13 @@ internal class TransportationModeFragment : Fragment(){
                 }
             }
         })
+        text_comment_error.normalText(DriveKitUI.colors.criticalColor())
+
         DKUtils.setBackgroundDrawableColor(edit_text_comment.background as GradientDrawable, DriveKitUI.colors.neutralColor())
 
         button_validate.button()
+        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
+
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()

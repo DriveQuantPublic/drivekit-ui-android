@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
@@ -56,6 +57,7 @@ internal class AlternativeTripFragment : Fragment() {
         }
         button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        button_change.text = DKResource.convertToString(requireContext(), "dk_driverdata_change_transportation_mode")
         button_change.setOnClickListener { launchTransportationMode() }
         conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
@@ -81,7 +83,7 @@ internal class AlternativeTripFragment : Fragment() {
         transportation_mode_description.setTextColor(DriveKitUI.colors.mainFontColor())
     }
 
-    private fun launchTransportationMode(){
+    private fun launchTransportationMode() {
         TransportationModeActivity.launchActivity(context as Activity, trip.itinId)
     }
 }

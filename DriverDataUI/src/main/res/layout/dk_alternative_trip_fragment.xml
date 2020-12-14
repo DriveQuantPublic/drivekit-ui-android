@@ -49,8 +49,7 @@
             android:textSize="@dimen/dk_text_small"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textAllCaps="false"
-            android:text="@string/dk_driverdata_change_transportation_mode" />
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <TextView

@@ -22,7 +22,7 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
-    const val TAG = "DriveKit DriverData UI"
+    private const val TAG = "DriveKit DriverData UI"
     internal var tripData: TripData = TripData.SAFETY
     internal var enableAlternativeTrips: Boolean = false
         private set

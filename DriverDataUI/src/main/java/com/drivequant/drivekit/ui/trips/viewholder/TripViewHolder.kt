@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
-import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -107,15 +106,18 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
         imageView.visibility = View.VISIBLE
         textIndicator.visibility = View.GONE
 
-        if (viewModel.tripListConfiguration == TripListConfiguration.ALTERNATIVE()) {
-            val mode = trip.declaredTransportationMode?.transportationMode?.let {
-                it
-            } ?: run {
-                trip.transportationMode
+        when (viewModel.tripListConfiguration){
+            is TripListConfiguration.MOTORIZED -> {
+                imageView.setImageDrawable(DKResource.convertToDrawable(imageView.context, "dk_no_score"))
             }
-            imageView.setImageDrawable(mode.image(itemView.context))
-        } else {
-            imageView.setImageDrawable(DKResource.convertToDrawable(imageView.context, "dk_no_score"))
+            is TripListConfiguration.ALTERNATIVE -> {
+                val mode = trip.declaredTransportationMode?.transportationMode?.let {
+                    it
+                } ?: run {
+                    trip.transportationMode
+                }
+                imageView.setImageDrawable(mode.image(itemView.context))
+            }
         }
     }
 
