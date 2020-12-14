@@ -19,6 +19,7 @@ import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -75,6 +76,7 @@ internal class TransportationModeFragment : Fragment(){
         comment_title.normalText()
         comment_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
 
+        DKUtils.setBackgroundDrawableColor(edit_text_comment.background as GradientDrawable, DriveKitUI.colors.neutralColor())
         edit_text_comment.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -88,9 +90,8 @@ internal class TransportationModeFragment : Fragment(){
                 }
             }
         })
-        text_comment_error.normalText(DriveKitUI.colors.criticalColor())
-
-        DKUtils.setBackgroundDrawableColor(edit_text_comment.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+        text_comment_error.smallText(DriveKitUI.colors.criticalColor())
+        text_comment_error.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error")
 
         button_validate.button()
         button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")

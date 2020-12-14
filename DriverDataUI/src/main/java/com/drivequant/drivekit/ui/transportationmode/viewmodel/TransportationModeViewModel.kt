@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.text.Spanned
-import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -41,15 +40,15 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
     }
 
     fun isCommentValid(comment: String): Boolean {
-        return TextUtils.isEmpty(comment) || comment.length <= 120
+        return comment.length <= 120
     }
 
     fun updateInformations() {
         selectedTransportationMode?.let {
-            val passenger = if (selectedProfileDriver == null){
+            val passenger = if (selectedProfileDriver == null) {
                 false
             } else {
-                selectedProfileDriver == TransportationProfile.DRIVER
+                selectedProfileDriver == TransportationProfile.PASSENGER
             }
             DriveKitDriverData.declareTransportationMode(
                 itinId,

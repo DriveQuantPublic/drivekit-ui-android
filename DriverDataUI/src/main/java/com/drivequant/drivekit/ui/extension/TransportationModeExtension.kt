@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
-fun TransportationMode.isAlternative(): Boolean{
-    return when (this){
+fun TransportationMode.isAlternative(): Boolean {
+    return when (this) {
         TransportationMode.UNKNOWN,
         TransportationMode.CAR,
         TransportationMode.MOTO,
