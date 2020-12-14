@@ -32,8 +32,8 @@
             style="@style/GaugeTripList"/>
         <TextView
             android:id="@+id/text_view_value"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
             android:gravity="center"
             android:singleLine="true"
             android:visibility="gone"
