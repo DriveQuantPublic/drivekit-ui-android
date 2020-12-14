@@ -15,7 +15,7 @@ import java.util.*
 
 internal class TripDetailViewModel(
     private val itinId: String,
-    tripListConfiguration: TripListConfiguration
+    private val tripListConfiguration: TripListConfiguration
 ) : ViewModel(), DKTripDetailViewModel {
 
     private var mapItems: MutableList<DKMapItem> = mutableListOf()
@@ -45,6 +45,12 @@ internal class TripDetailViewModel(
                         }
                     }
                     DriverDataUI.customMapItem?.let { item ->
+                        item.canShowMapItem(trip)?.let {
+                            if (it) configurableMapItems.add(item)
+                        }
+                    }
+                } else {
+                    for (item in mapItems){
                         item.canShowMapItem(trip)?.let {
                             if (it) configurableMapItems.add(item)
                         }
@@ -132,7 +138,7 @@ internal class TripDetailViewModel(
             if (trip != null && route != null) {
                 DriveKitDriverData.checkReverseGeocode(context, trip, route)
                 computeTripEvent(trip!!, route!!)
-                if (trip!!.unscored){
+                if (trip!!.unscored && tripListConfiguration != TripListConfiguration.ALTERNATIVE()){
                     unScoredTrip.postValue(true)
                 }else{
                     tripEventsObserver.postValue(events)
