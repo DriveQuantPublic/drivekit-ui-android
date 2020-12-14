@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 
 class TripDetailActivity : AppCompatActivity() {
+
+    private var shouldRefreshTrips = false
 
     companion object {
         private const val ITINID_EXTRA = "itinId-extra"
@@ -56,5 +59,21 @@ class TripDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        if (shouldRefreshTrips){
+            setResult(Activity.RESULT_OK)
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE){
+            shouldRefreshTrips = true
+        }
     }
 }

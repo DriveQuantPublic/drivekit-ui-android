@@ -34,7 +34,6 @@ class TripsListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
-        // TODO
         viewModel = ViewModelProviders.of(this,
             TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED()))
             .get(TripsListViewModel::class.java)

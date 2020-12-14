@@ -43,7 +43,7 @@ fun TransportationMode.image(context: Context): Drawable? {
     }
 }
 
-fun TransportationMode.text(context: Context): String {
+fun TransportationMode?.text(context: Context): String {
     when (this) {
         TransportationMode.UNKNOWN -> ""
         TransportationMode.CAR -> "dk_driverdata_transportation_mode_car"
@@ -58,6 +58,7 @@ fun TransportationMode.text(context: Context): String {
         TransportationMode.ON_FOOT -> "dk_driverdata_transportation_mode_on_foot"
         TransportationMode.IDLE -> "dk_driverdata_transportation_mode_idle"
         TransportationMode.OTHER -> "dk_driverdata_transportation_mode_other"
+        else -> return ""
     }.let {
         return DKResource.convertToString(context, it)
     }

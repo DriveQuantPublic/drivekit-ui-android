@@ -9,16 +9,24 @@ import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
+import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TransportationModeQueryListener
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.extension.text
 
 internal class TransportationModeViewModel(private val itinId: String) : ViewModel() {
+    var trip: Trip?
+        private set
     val updateObserver: MutableLiveData<TransportationModeUpdateStatus> = MutableLiveData()
     var selectedTransportationMode: TransportationMode? = null
     var selectedProfileDriver: TransportationProfile? = null
     var comment: String = ""
+
+    init {
+        trip = DbTripAccess.findTrip(itinId).executeOne()
+    }
 
     fun displayPassengerOption(): Boolean {
         return selectedTransportationMode == TransportationMode.CAR
@@ -70,7 +78,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
         return DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
             "dk_driverdata_transportation_mode",
-            " ${selectedTransportationMode?.text(context)}"
+            " ${selectedTransportationMode.text(context)}"
         )
     }
 

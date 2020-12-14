@@ -42,12 +42,10 @@ class TripsListActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
-                fragment.apply {
-                    updateTrips(SynchronizationType.CACHE)
-                    filter_view.spinner.setSelection(0, false)
-                }
+        if (resultCode == RESULT_OK && requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
+            fragment.apply {
+                updateTrips(SynchronizationType.CACHE)
+                filter_view.spinner.setSelection(0, false)
             }
         }
     }

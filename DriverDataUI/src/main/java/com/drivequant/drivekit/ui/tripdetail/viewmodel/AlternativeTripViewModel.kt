@@ -11,41 +11,45 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.extension.text
 
-internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
+internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
 
-    private val detectedTransportationMode = trip.transportationMode
-    private val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
+    fun updateTrip(){
+        DbTripAccess.findTrip(trip.itinId).executeOne()?.let {
+            trip = it
+        }
+    }
 
     fun getAnalyzedTransportationModeTitle(context: Context): Spannable? {
-        return if (declaredTransportationMode == null) {
+        return if (trip.declaredTransportationMode?.transportationMode == null) {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
                 DKResource.convertToString(context, "dk_driverdata_detected_transportation_mode"),
-                " ${detectedTransportationMode.text(context)}"
+                " ${trip.transportationMode.text(context)}"
             )
         } else {
             SpannableString(
                 DKResource.convertToString(
                     context,
                     "dk_driverdata_detected_transportation_mode"
-                ) + " " + HtmlCompat.fromHtml(detectedTransportationMode.text(context), HtmlCompat.FROM_HTML_MODE_LEGACY)
+                ) + " " + HtmlCompat.fromHtml(trip.transportationMode.text(context), HtmlCompat.FROM_HTML_MODE_LEGACY)
             )
         }
     }
 
     fun getDeclaredTransportationModeTitle(context: Context): Spannable? {
-        return if (declaredTransportationMode != null) {
+        return if (trip.declaredTransportationMode?.transportationMode != null) {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
                 DKResource.convertToString(context, "dk_driverdata_declared_transportation_mode"),
-                " ${declaredTransportationMode.text(context)}"
+                " ${trip.declaredTransportationMode?.transportationMode.text(context)}"
             )
         } else {
             null
@@ -53,7 +57,7 @@ internal class AlternativeTripViewModel(private val trip: Trip) : ViewModel() {
     }
 
     fun getDescription(context: Context): String {
-        val identifier = declaredTransportationMode?.let {
+        val identifier = trip.declaredTransportationMode?.transportationMode?.let {
             "dk_driverdata_alternative_transportation_thanks"
         } ?: run {
             "dk_driverdata_alternative_transportation_remark"

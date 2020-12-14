@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.transportationmode.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.GradientDrawable
@@ -54,7 +55,6 @@ internal class TransportationModeFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO declare in GSheets
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail_transportation_mode"), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it
@@ -89,14 +89,31 @@ internal class TransportationModeFragment : Fragment(){
         bindTransportationModeItems()
         bindTransportationProfileItems()
         viewModel.updateObserver.observe(this, Observer { status ->
+            hideProgressCircular()
             when (status){
-                TransportationModeUpdateStatus.NO_ERROR -> { }
-                TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> { }
-                TransportationModeUpdateStatus.COMMENT_TOO_LONG -> { }
+                TransportationModeUpdateStatus.NO_ERROR -> {
+                    requireActivity().apply {
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                }
+                TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
+                    Toast.makeText(
+                        requireContext(),
+                        DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
+                    Toast.makeText(
+                        requireContext(),
+                        DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
-        // TODO
-        //initDefaultValues()
+        initDefaultValues()
     }
 
     private fun updateTransportationProfileVisibility() {
@@ -178,14 +195,49 @@ internal class TransportationModeFragment : Fragment(){
     fun onValidate(){
         viewModel.comment = edit_text_comment.text.toString()
         if (viewModel.checkFieldsValidity()) {
-            //showProgressDialog(getString(R.string.loading))
+            showProgressCircular()
             viewModel.updateInformations()
         } else {
-            /*Toast.makeText(
-                getApplicationContext(),
-                R.string.all_fields_not_valid,
+            Toast.makeText(
+                requireContext(),
+                DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
                 Toast.LENGTH_SHORT
-            ).show()*/
+            ).show()
+        }
+    }
+
+    private fun initDefaultValues() {
+        viewModel.trip?.let { trip ->
+            val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
+            if (declaredTransportationMode != null) {
+                for (transportationViewItem in transportationModesViews) {
+                    if (declaredTransportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
+                        viewModel.selectedTransportationMode = declaredTransportationMode
+                        transportationViewItem.setItemSelectedState(true)
+                    } else {
+                        transportationViewItem.setItemSelectedState(false)
+                    }
+                }
+                if (viewModel.displayPassengerOption()) {
+                    updateTransportationProfileVisibility()
+                    trip.declaredTransportationMode?.passenger?.let {
+                        val transportationProfile = if (it) TransportationProfile.PASSENGER else TransportationProfile.DRIVER
+                        for (declaredTransportationProfileItem in transportationProfilesViews) {
+                            if (transportationProfile == getTransportationProfileByItemId(declaredTransportationProfileItem.id)) {
+                                viewModel.selectedProfileDriver = transportationProfile
+                                declaredTransportationProfileItem.setItemSelectedState(true)
+                            } else {
+                                declaredTransportationProfileItem.setItemSelectedState(false)
+                            }
+                        }
+                    }
+                }
+
+                trip.declaredTransportationMode?.comment?.let {
+                    edit_text_comment.setText(it)
+                }
+            }
+            transportation_mode_title.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
         }
     }
 
@@ -238,6 +290,28 @@ internal class TransportationModeFragment : Fragment(){
             R.id.transportation_profile_driver -> return TransportationProfile.DRIVER
         }
         return null
+    }
+
+    private fun showProgressCircular() {
+        progress_circular.animate()
+            .alpha(255f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.VISIBLE
+                }
+            })
+    }
+
+    private fun hideProgressCircular() {
+        progress_circular.animate()
+            .alpha(0f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    progress_circular?.visibility = View.GONE
+                }
+            })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

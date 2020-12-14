@@ -13,11 +13,11 @@ import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationMode
 
 internal class TransportationModeActivity : AppCompatActivity() {
 
-    private val FRAGMENT_TAG = "transport-mode-fragment-tag"
+    private val FRAGMENT_TAG = "transportation-mode-fragment-tag"
 
     companion object {
         private const val ITINID_EXTRA = "itinId-extra"
-        const val UPDATE_TRIP_DECLARATION_MODE = 104
+        const val UPDATE_TRIP_TRANSPORTATION_MODE = 104
 
         fun launchActivity(
             activity: Activity,
@@ -25,7 +25,7 @@ internal class TransportationModeActivity : AppCompatActivity() {
         ) {
             val intent = Intent(activity, TransportationModeActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
-            activity.startActivityForResult(intent, UPDATE_TRIP_DECLARATION_MODE)
+            activity.startActivityForResult(intent, UPDATE_TRIP_TRANSPORTATION_MODE)
         }
     }
 
