@@ -24,6 +24,7 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 object DriverDataUI : DriverDataUIEntryPoint {
     private const val TAG = "DriveKit DriverData UI"
     internal var tripData: TripData = TripData.SAFETY
+        private set
     internal var enableAlternativeTrips: Boolean = false
         private set
     internal var mapItems: List<MapItem> = listOf(
@@ -76,6 +77,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun dayTripDescendingOrder(dayTripDescendingOrder: Boolean) {
         this.dayTripDescendingOrder = dayTripDescendingOrder
+    }
+
+    fun configureTripData(tripData: TripData) {
+        this.tripData = tripData
     }
 
     fun configureHeaderDay(headerDay: HeaderDay) {
