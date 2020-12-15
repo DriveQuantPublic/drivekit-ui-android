@@ -21,7 +21,6 @@
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:padding="4dp"
-            android:src="@drawable/dk_no_score"
             android:visibility="gone"/>
         <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/gauge_indicator_view"

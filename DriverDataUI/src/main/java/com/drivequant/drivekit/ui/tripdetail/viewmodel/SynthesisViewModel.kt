@@ -42,8 +42,8 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         return when (trip.tripStatistics?.meteo) {
             1 -> context.getString(R.string.dk_driverdata_weather_sun)
             2 -> context.getString(R.string.dk_driverdata_weather_cloud)
-            3 -> context.getString(R.string.dk_driverdata_weather_fog)
-            4 -> context.getString(R.string.dk_driverdata_weather_rain)
+            3 -> context.getString(R.string.dk_driverdata_weather_rain)
+            4 -> context.getString(R.string.dk_driverdata_weather_fog)
             5 -> context.getString(R.string.dk_driverdata_weather_snow)
             6 -> context.getString(R.string.dk_driverdata_weather_hail)
             else -> context.getString(R.string.dk_driverdata_unknown)

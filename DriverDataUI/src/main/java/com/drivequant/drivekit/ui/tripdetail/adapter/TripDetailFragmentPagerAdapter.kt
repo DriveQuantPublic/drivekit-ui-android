@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.*
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 
-class TripDetailFragmentPagerAdapter(
+internal class TripDetailFragmentPagerAdapter(
     fragmentManager: FragmentManager,
     private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager) {
 

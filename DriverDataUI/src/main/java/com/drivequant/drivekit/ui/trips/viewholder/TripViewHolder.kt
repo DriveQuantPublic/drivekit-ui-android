@@ -13,17 +13,17 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripInfoView
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
-import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.DisplayType
-import com.drivequant.drivekit.ui.trips.viewmodel.TripData
+import com.drivequant.drivekit.ui.extension.image
+import com.drivequant.drivekit.ui.trips.viewmodel.*
+import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 
-class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class TripViewHolder(itemView: View, private val viewModel: TripsListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime = itemView.findViewById<TextView>(R.id.text_view_departure_time)
     private val textViewDepartureCity = itemView.findViewById<TextView>(R.id.text_view_departure_city)
     private val textViewArrivalTime = itemView.findViewById<TextView>(R.id.text_view_arrival_time)
@@ -32,12 +32,10 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tripInfoContainer = itemView.findViewById<ViewGroup>(R.id.container_trip_info)
     private val gaugeIndicator = itemView.findViewById<GaugeIndicator>(R.id.gauge_indicator_view)
     private val textIndicator = itemView.findViewById<TextView>(R.id.text_view_value)
-    private val noScoreView = itemView.findViewById<ImageView>(R.id.no_score_view)
+    private val imageView = itemView.findViewById<ImageView>(R.id.no_score_view)
     private val circleTop = itemView.findViewById<ImageView>(R.id.image_circle_top)
     private val circleBottom = itemView.findViewById<ImageView>(R.id.image_circle_bottom)
     private val circleSeparator = itemView.findViewById<View>(R.id.view_circle_separator)
-
-
 
     fun bind(trip: Trip, isLastChild: Boolean){
         textViewDepartureTime.text = trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
@@ -56,49 +54,81 @@ class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
         textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        computeTripData(trip, DriverDataUI.tripData)
-        val tripInfo = DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
-        computeTripInfo(trip, tripInfo)
+        computeTripData(trip, viewModel.tripListConfiguration)
+        computeTripInfo(trip, viewModel.getTripInfo())
     }
 
-    private fun computeTripData(trip: Trip, tripData: TripData){
-        when (tripData.displayType()){
+    private fun computeTripData(trip: Trip, tripListConfiguration: TripListConfiguration) {
+        when (tripListConfiguration) {
+            is TripListConfiguration.MOTORIZED -> configureMotorizedTripData(trip)
+            is TripListConfiguration.ALTERNATIVE -> configureAlternativeTripData(trip)
+        }
+    }
+
+    private fun configureMotorizedTripData(trip: Trip) {
+        val tripData = DriverDataUI.tripData
+        when (tripData.displayType()) {
             DisplayType.GAUGE -> {
-                if (tripData.isScored(trip)){
+                if (tripData.isScored(trip)) {
                     showGaugeIndicator()
                     gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
                 } else {
-                    showNoScoreIndicator()
+                    showImageIndicator(trip)
                 }
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
                 textIndicator.headLine2(DriveKitUI.colors.primaryColor())
-                textIndicator.text = if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(itemView.context, tripData.rawValue(trip))) else (DKDataFormatter.formatDistance(itemView.context, tripData.rawValue(trip)))
+                textIndicator.text =
+                    if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(
+                        itemView.context,
+                        tripData.rawValue(trip)
+                    )) else (DKDataFormatter.formatDistance(
+                        itemView.context,
+                        tripData.rawValue(trip)
+                    ))
             }
         }
     }
 
+    private fun configureAlternativeTripData(trip: Trip) {
+        showImageIndicator(trip)
+    }
+
     private fun showGaugeIndicator() {
         gaugeIndicator.visibility = View.VISIBLE
-        noScoreView.visibility = View.GONE
+        imageView.visibility = View.GONE
         textIndicator.visibility = View.GONE
     }
 
-    private fun showNoScoreIndicator() {
+    private fun showImageIndicator(trip: Trip) {
         gaugeIndicator.visibility = View.GONE
-        noScoreView.visibility = View.VISIBLE
+        imageView.visibility = View.VISIBLE
         textIndicator.visibility = View.GONE
+
+        when (viewModel.tripListConfiguration){
+            is TripListConfiguration.MOTORIZED -> {
+                imageView.setImageDrawable(DKResource.convertToDrawable(imageView.context, "dk_no_score"))
+            }
+            is TripListConfiguration.ALTERNATIVE -> {
+                val mode = trip.declaredTransportationMode?.transportationMode?.let {
+                    it
+                } ?: run {
+                    trip.transportationMode
+                }
+                imageView.setImageDrawable(mode.image(itemView.context))
+            }
+        }
     }
 
     private fun showTextIndicator(){
         gaugeIndicator.visibility = View.GONE
-        noScoreView.visibility = View.GONE
+        imageView.visibility = View.GONE
         textIndicator.visibility = View.VISIBLE
     }
 
-    private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo) {
-        if (tripInfo.isDisplayable(trip)) {
+    private fun computeTripInfo(trip: Trip, tripInfo: DKTripInfo?) {
+        if (tripInfo != null && tripInfo.isDisplayable(trip)) {
             tripInfoContainer.addView(TripInfoView(itemView.context, trip, tripInfo))
             tripInfoContainer.visibility = View.VISIBLE
         } else {

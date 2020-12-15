@@ -19,7 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
-class TripGoogleMapViewHolder(
+internal class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
