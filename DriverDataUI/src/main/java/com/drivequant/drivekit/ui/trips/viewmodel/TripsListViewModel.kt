@@ -78,7 +78,7 @@ internal class TripsListViewModel(
                         if (!configuration.transportationMode.isAlternative()){
                             tripsByDate.trips.filter { it.declaredTransportationMode?.transportationMode == mode }
                         } else {
-                            tripsByDate.trips.filter { it.transportationMode == mode }
+                            tripsByDate.trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
                         }
                     }
                     if (!dayFilteredTrips.isNullOrEmpty()){
