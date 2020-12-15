@@ -24,6 +24,8 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 object DriverDataUI : DriverDataUIEntryPoint {
     private const val TAG = "DriveKit DriverData UI"
     internal var tripData: TripData = TripData.SAFETY
+    internal var enableAlternativeTrips: Boolean = false
+        private set
     internal var mapItems: List<MapItem> = listOf(
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
@@ -31,6 +33,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         MapItem.INTERACTIVE_MAP,
         MapItem.SYNTHESIS
     )
+        private set
 
     internal var customMapItem: DKMapItem? = null
         private set
@@ -81,6 +84,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun enableVehicleFilter(enableVehicleFilter: Boolean) {
         this.enableVehicleFilter = enableVehicleFilter
+    }
+
+    fun enableAlternativeTrips(enableAlternativeTrips: Boolean) {
+        this.enableAlternativeTrips = enableAlternativeTrips
     }
 
     fun setCustomMapScreen(customMapItem: DKMapItem?) {

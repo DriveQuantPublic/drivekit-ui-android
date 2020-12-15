@@ -30,6 +30,8 @@ import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 import java.util.*
@@ -39,6 +41,7 @@ class TripDetailFragment : Fragment() {
     private lateinit var viewModel : TripDetailViewModel
 
     private lateinit var itinId: String
+    private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
     private var openAdvice: Boolean = false
 
     private var adviceAlertDialog: AlertDialog? = null
@@ -50,11 +53,15 @@ class TripDetailFragment : Fragment() {
     private lateinit var viewContentTrip: View
 
     companion object {
-        fun newInstance(itinId: String,
-                        openAdvice: Boolean = false): TripDetailFragment {
+        fun newInstance(
+            itinId: String,
+            openAdvice: Boolean = false,
+            tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED
+        ): TripDetailFragment {
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
             fragment.openAdvice = openAdvice
+            fragment.tripListConfiguration = tripListConfigurationType.getTripListConfiguration()
             return fragment
         }
     }
@@ -110,7 +117,7 @@ class TripDetailFragment : Fragment() {
         }
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this,
-                TripDetailViewModelFactory(itinId, DriverDataUI.mapItems)
+                TripDetailViewModelFactory(itinId, tripListConfiguration)
             ).get(TripDetailViewModel::class.java)
         }
         progress_circular.visibility = View.VISIBLE

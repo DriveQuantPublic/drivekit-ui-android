@@ -65,7 +65,7 @@ class SynthesisFragment : Fragment() {
             }
         }
 
-        item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
+        item_mean_speed.setValueItem(viewModel.getMeanSpeed(requireContext()))
         item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
 
         item_fuel_consumption.setValueItem(viewModel.getFuelConsumption(requireContext()))

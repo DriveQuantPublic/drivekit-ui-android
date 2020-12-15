@@ -9,5 +9,9 @@
             android:name=".trips.activity.TripsListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".transportationmode.activity.TransportationModeActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

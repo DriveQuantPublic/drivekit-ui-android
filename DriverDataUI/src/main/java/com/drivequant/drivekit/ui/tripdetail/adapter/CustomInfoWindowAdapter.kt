@@ -16,7 +16,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-class CustomInfoWindowAdapter(
+internal class CustomInfoWindowAdapter(
     var context: Context,
     private val tripDetailViewModel: TripDetailViewModel) : GoogleMap.InfoWindowAdapter {
 
