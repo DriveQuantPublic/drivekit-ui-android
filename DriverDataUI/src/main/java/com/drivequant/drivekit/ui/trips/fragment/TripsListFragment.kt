@@ -40,6 +40,7 @@ class TripsListFragment : Fragment() {
 
         viewModel.filterData.observe(this, Observer {
             configureFilter()
+            updateProgressVisibility(false)
         })
 
         initFilter()
@@ -57,7 +58,6 @@ class TripsListFragment : Fragment() {
                     trips_list.setAdapter(adapter)
                 }
             }
-            updateProgressVisibility(false)
         })
 
         viewModel.syncTripsError.observe(this, Observer {
