@@ -17,9 +17,9 @@ class TripDetailActivity : AppCompatActivity() {
     private var shouldRefreshTrips = false
 
     companion object {
-        private const val ITINID_EXTRA = "itinId-extra"
-        private const val OPEN_ADVICE_EXTRA = "openAdvice-extra"
-        private const val TRIP_LIST_CONFIGURATION_TYPE_EXTRA = "tripListConfiguration-extra"
+        const val ITINID_EXTRA = "itinId-extra"
+        const val OPEN_ADVICE_EXTRA = "openAdvice-extra"
+        const val TRIP_LIST_CONFIGURATION_TYPE_EXTRA = "tripListConfiguration-extra"
         const val UPDATE_TRIPS_REQUEST_CODE = 103
 
         fun launchActivity(
