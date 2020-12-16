@@ -24,9 +24,6 @@ internal class TripDetailViewModel(
         when (tripListConfiguration){
             is TripListConfiguration.MOTORIZED -> {
                 mapItems.addAll(DriverDataUI.mapItems)
-                DriverDataUI.customMapItem?.let {
-                    mapItems.add(it)
-                }
             }
             is TripListConfiguration.ALTERNATIVE -> {
                 mapItems.add(AlternativeTripMapItem())
