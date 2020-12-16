@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 import kotlinx.android.synthetic.main.trip_info_item.view.*
 
@@ -24,14 +26,21 @@ class TripInfoView : LinearLayout {
 
     private fun init(trip: Trip, tripInfo: DKTripInfo) {
         val view = View.inflate(context, R.layout.trip_info_item, null)
-        view.text_view_trip_info.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+
+
         DrawableCompat.setTint(view.background, DriveKitUI.colors.secondaryColor())
         tripInfo.getImageResource(trip)?.let {
             view.image_view_trip_info.setImageResource(it)
         }
         tripInfo.text(trip)?.let {
-            view.text_view_trip_info.visibility = View.VISIBLE
-            view.text_view_trip_info.text = it
+            view.text_view_trip_info.apply {
+                setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+                visibility = View.VISIBLE
+                text = it
+                if (tripInfo !is AdviceTripInfo) {
+                    this.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+                }
+            }
         } ?: run {
             view.text_view_trip_info.visibility = View.GONE
         }
