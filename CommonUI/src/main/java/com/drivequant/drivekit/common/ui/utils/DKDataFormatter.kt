@@ -59,7 +59,7 @@ object DKDataFormatter {
     }
 
     private fun formatDistanceValue(distance: Double?): String? {
-        return if (distance != null && distance > 1000) {
+        return if (distance != null && distance >= 100) {
             distance.format(0)
         } else {
             distance?.removeZeroDecimal()
