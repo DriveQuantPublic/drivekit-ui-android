@@ -18,12 +18,7 @@ object DKDataFormatter {
         val nbDay: Int
 
         if (durationInSeconds != null) {
-            if (durationInSeconds >= 60) {
-                nbMinute = ceil(durationInSeconds.div(60)).toInt()
-            } else {
-                return "${durationInSeconds.toInt()} ${context.getString(R.string.dk_common_unit_second)}"
-            }
-
+            nbMinute = ceil(durationInSeconds.div(60)).toInt()
             return if (nbMinute > 59) {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
