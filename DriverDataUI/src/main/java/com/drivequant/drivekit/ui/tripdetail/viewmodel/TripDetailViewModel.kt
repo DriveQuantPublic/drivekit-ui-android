@@ -23,7 +23,12 @@ internal class TripDetailViewModel(
     init {
         when (tripListConfiguration){
             is TripListConfiguration.MOTORIZED -> {
-                mapItems.addAll(DriverDataUI.mapItems)
+                val items : MutableList<DKMapItem> = mutableListOf()
+                items.addAll(DriverDataUI.mapItems)
+                DriverDataUI.customMapItem?.let { item ->
+                    items.add(item)
+                }
+                mapItems = items
             }
             is TripListConfiguration.ALTERNATIVE -> {
                 mapItems.add(AlternativeTripMapItem())
@@ -41,15 +46,10 @@ internal class TripDetailViewModel(
                             if (it) configurableMapItems.add(item)
                         }
                     }
-                    DriverDataUI.customMapItem?.let { item ->
-                        item.canShowMapItem(trip)?.let {
-                            if (it) configurableMapItems.add(item)
-                        }
-                    }
                 } else {
-                    for (item in mapItems){
-                        item.canShowMapItem(trip)?.let {
-                            if (it) configurableMapItems.add(item)
+                    for (item in mapItems) {
+                        if (item.overrideShortTrip()) {
+                            configurableMapItems.add(item)
                         }
                     }
                 }

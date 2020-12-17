@@ -402,6 +402,7 @@ class TripDetailFragment : Fragment() {
 
         val fragment = DriverDataUI.customMapItem?.let { item ->
             if (item.overrideShortTrip()) {
+                setViewPager()
                 item.getFragment(viewModel.trip, viewModel)
             } else {
                 UnscoredTripFragment.newInstance(
