@@ -322,13 +322,13 @@ class TripDetailFragment : Fragment() {
             .setView(feedbackView)
             .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
             .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ ->
-                if (feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isNotEmpty()) {
-                    buildFeedbackData(mapItem, feedbackView, radioGroup)
-                } else {
+                if (radioGroup.checkedRadioButtonId == R.id.radio_button_choice_05 && feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isEmpty()) {
                     context?.let {
                         val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")
                         Toast.makeText(it, emptyFieldText, Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    buildFeedbackData(mapItem, feedbackView, radioGroup)
                 }
             }
 
