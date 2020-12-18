@@ -150,6 +150,7 @@ internal class TripsListViewModel(
 
     fun computeFilterTransportationModes(): Set<TransportationMode> {
         val transportationModes = mutableSetOf<TransportationMode>()
+        val flatTrips = trips.flatMap { it.trips }
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
                     .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
@@ -159,14 +160,10 @@ internal class TripsListViewModel(
             }
         }
 
-        TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach {
-            if (DriveKitDriverData.tripsQuery()
-                    .whereEqualTo("transportationMode", it.value)
-                    .or()
-                    .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
-                    .query().execute().isNotEmpty()
-            ) {
-                transportationModes.add(it)
+        TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach { mode ->
+            val count = flatTrips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }.size
+            if (count > 0) {
+                transportationModes.add(mode)
             }
         }
         return transportationModes.toSortedSet()
