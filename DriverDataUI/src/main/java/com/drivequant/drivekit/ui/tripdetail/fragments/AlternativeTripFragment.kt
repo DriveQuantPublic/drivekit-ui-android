@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -39,7 +40,7 @@ internal class AlternativeTripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.dk_alternative_trip_fragment, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         conditionItem = view.findViewById(R.id.item_condition)
         weatherItem = view.findViewById(R.id.item_weather)
         meanSpeedItem = view.findViewById(R.id.item_mean_speed)
@@ -62,6 +63,10 @@ internal class AlternativeTripFragment : Fragment() {
         conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
         meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
+
+        conditionItem.setValueTypeFace()
+        meanSpeedItem.setValueTypeFace()
+        weatherItem.setValueTypeFace()
     }
 
     override fun onResume() {
