@@ -30,7 +30,7 @@ object DKDataFormatter {
                         R.string.dk_common_unit_hour
                     )}"
                 } else {
-                    "$nbHour ${context.getString(R.string.dk_common_unit_hour)} ${nbMinute.formatLeadingZero()}"
+                    "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
                 }
             } else {
                 "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
