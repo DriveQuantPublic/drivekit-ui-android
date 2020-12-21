@@ -54,6 +54,6 @@
    <string name="dk_common_unit_second">s</string>
    <string name="dk_common_unit_ton">t</string>
    <string name="dk_common_update_photo_title">Cambiare l\'immagine</string>
-   <string name="dk_common_validate">Valido</string>
+   <string name="dk_common_validate">Convalidare</string>
    <string name="dk_common_yes">Sì</string>
 </resources>
