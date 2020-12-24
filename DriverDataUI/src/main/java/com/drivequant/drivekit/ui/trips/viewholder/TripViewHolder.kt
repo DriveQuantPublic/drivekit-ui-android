@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
+import android.graphics.Color
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -51,8 +52,8 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
 
         textViewDepartureCity.normalText(DriveKitUI.colors.mainFontColor())
         textViewArrivalCity.normalText(DriveKitUI.colors.mainFontColor())
-        textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
-        textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
+        textViewDepartureTime.normalText(Color.parseColor("#9E9E9E"))
+        textViewArrivalTime.normalText(Color.parseColor("#9E9E9E"))
 
         computeTripData(trip, viewModel.tripListConfiguration)
         computeTripInfo(trip, viewModel.getTripInfo())

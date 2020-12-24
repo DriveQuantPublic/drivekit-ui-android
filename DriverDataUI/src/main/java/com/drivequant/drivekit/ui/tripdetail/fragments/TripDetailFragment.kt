@@ -8,6 +8,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -71,8 +72,9 @@ class TripDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false).setDKStyle()
+        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
