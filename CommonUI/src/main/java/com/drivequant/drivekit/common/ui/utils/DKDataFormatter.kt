@@ -39,16 +39,18 @@ object DKDataFormatter {
         return "-"
     }
 
-    fun formatDistance(context: Context, distance: Double?): String {
+    fun formatDistance(context: Context, distance: Double?, unit: Boolean = true): String {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
         return when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                "${formatDistanceValue(distanceInMile)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
+                if (unit) "${formatDistanceValue(distanceInMile)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
+                else "${formatDistanceValue(distanceInMile)}"
             }
             DistanceUnit.KM -> {
-                "${formatDistanceValue(distanceInKm)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
+                if (unit) "${formatDistanceValue(distanceInKm)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
+                else "${formatDistanceValue(distanceInKm)}"
             }
         }
     }

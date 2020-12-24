@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -182,12 +183,15 @@ internal class TripsListViewModel(
         }).append(" $trip - ", context.resSpans {
 
         }).append(
-            DKDataFormatter.formatDistance(context, tripsDistance),
+            DKDataFormatter.formatDistance(context, tripsDistance, false),
             context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 size(R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
-            }).toSpannable()
+            }
+        ). append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
+
+        }).toSpannable()
     }
 
     fun getFilterVisibility(): Boolean {
