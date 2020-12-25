@@ -43,7 +43,7 @@ dependencies {
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 
-    implementation "com.drivequant.drivekit:drivekit-vehicle:1.9-beta4"
+    implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
 }
 
