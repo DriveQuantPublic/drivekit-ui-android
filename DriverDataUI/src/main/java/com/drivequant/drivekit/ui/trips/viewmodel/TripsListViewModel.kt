@@ -24,6 +24,7 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.*
 import java.util.*
+import java.util.logging.Handler
 
 internal class TripsListViewModel(
     var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -40,19 +41,22 @@ internal class TripsListViewModel(
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
-            val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
-            if (DriverDataUI.enableAlternativeTrips){
-                transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
-            }
-            DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
-                override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
-                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
-                        syncTripsError.postValue(Any())
-                    }
-                    this@TripsListViewModel.trips = sortTrips(trips)
-                    filterTrips(tripListConfiguration)
+            val handler = android.os.Handler()
+            handler.post {
+                val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
+                if (DriverDataUI.enableAlternativeTrips){
+                    transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
                 }
-            }, synchronizationType, transportationModes)
+                DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
+                    override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
+                        if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
+                            syncTripsError.postValue(Any())
+                        }
+                        this@TripsListViewModel.trips = sortTrips(trips)
+                        filterTrips(tripListConfiguration)
+                    }
+                }, synchronizationType, transportationModes)
+            }
         } else {
             syncTripsError.postValue(Any())
         }

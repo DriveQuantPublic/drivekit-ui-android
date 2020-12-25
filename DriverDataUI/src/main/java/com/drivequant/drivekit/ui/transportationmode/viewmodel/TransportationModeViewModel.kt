@@ -24,7 +24,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
     var comment: String = ""
 
     init {
-        trip = DbTripAccess.findTrip(itinId).executeOne()
+        trip = DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()
     }
 
     fun displayPassengerOption(): Boolean {

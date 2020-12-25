@@ -18,7 +18,7 @@ import com.drivequant.drivekit.ui.extension.text
 internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
 
     fun updateTrip(){
-        DbTripAccess.findTrip(trip.itinId).executeOne()?.let {
+        DbTripAccess.findTrip(trip.itinId).executeOneTrip()?.toTrip()?.let {
             trip = it
         }
     }
