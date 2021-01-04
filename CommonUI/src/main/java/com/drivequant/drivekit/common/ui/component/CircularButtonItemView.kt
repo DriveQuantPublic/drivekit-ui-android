@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
+import android.support.v4.graphics.ColorUtils
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
@@ -79,7 +80,7 @@ class CircularButtonItemView : FrameLayout {
             if (itemSelected) DriveKitUI.colors.mainFontColor() else DriveKitUI.colors.complementaryFontColor()
         val circle = ContextCompat.getDrawable(context, R.drawable.dk_circle_accent)
         val bgColor = if (selected) {
-            DriveKitUI.colors.secondaryColor()
+            ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102)
         } else {
             DriveKitUI.colors.transparentColor()
         }
