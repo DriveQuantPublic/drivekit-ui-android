@@ -75,7 +75,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
 
     fun buildSelectedTransportationModeTitle(context: Context): Spanned {
         return DKResource.buildString(
-            context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
+            context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.primaryColor(),
             "dk_driverdata_transportation_mode",
             " ${selectedTransportationMode.text(context)}"
         )
