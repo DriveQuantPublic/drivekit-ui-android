@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -26,13 +27,18 @@ class TripDetailActivity : AppCompatActivity() {
             activity: Activity,
             itinId: String,
             openAdvice: Boolean = false,
-            tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED
+            tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED,
+            parentFragment: Fragment? = null
         ) {
             val intent = Intent(activity, TripDetailActivity::class.java)
             intent.putExtra(ITINID_EXTRA, itinId)
             intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
             intent.putExtra(TRIP_LIST_CONFIGURATION_TYPE_EXTRA, tripListConfigurationType)
-            activity.startActivityForResult(intent, UPDATE_TRIPS_REQUEST_CODE)
+            parentFragment?.let {
+                parentFragment.startActivityForResult(intent, UPDATE_TRIPS_REQUEST_CODE)
+            }?: run {
+                activity.startActivityForResult(intent, UPDATE_TRIPS_REQUEST_CODE)
+            }
         }
     }
 

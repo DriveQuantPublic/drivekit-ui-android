@@ -4,10 +4,12 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -142,13 +144,13 @@ class TripsListFragment : Fragment() {
         }
         trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let {
-                TripDetailActivity.launchActivity(requireActivity(), it.itinId, tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration))
+                TripDetailActivity.launchActivity(requireActivity(), it.itinId, tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration), parentFragment = this)
             }
             false
         }
     }
 
-    fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
+    private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         updateProgressVisibility(true)
         viewModel.fetchTrips(synchronizationType)
     }
@@ -211,6 +213,14 @@ class TripsListFragment : Fragment() {
             progress_circular.visibility = View.GONE
             refresh_trips.visibility = View.VISIBLE
             refresh_trips.isRefreshing = false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
+            updateTrips(SynchronizationType.CACHE)
+            filter_view.spinner.setSelection(0, false)
         }
     }
 }
