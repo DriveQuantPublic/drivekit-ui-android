@@ -81,7 +81,7 @@ class TripsListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item!!.itemId) {
+        return when (item?.itemId) {
             R.id.trips_vehicle -> {
                 viewModel.filterTrips(TripListConfiguration.MOTORIZED())
                 filter_view.spinner.setSelection(0, false)
