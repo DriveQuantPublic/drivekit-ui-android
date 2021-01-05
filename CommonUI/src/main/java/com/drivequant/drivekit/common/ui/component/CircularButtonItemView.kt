@@ -14,10 +14,10 @@ import android.widget.ImageView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.utils.DKUtils
+import kotlinx.android.synthetic.main.dk_layout_circular_button_item_view.view.*
 
 class CircularButtonItemView : FrameLayout {
     private var itemSelected = false
-    private lateinit var container: FrameLayout
     private lateinit var imageView: ImageView
 
     constructor(context: Context) : super(context) {
@@ -40,7 +40,6 @@ class CircularButtonItemView : FrameLayout {
 
     private fun init(attrs: AttributeSet?) {
         val view = View.inflate(context, R.layout.dk_layout_circular_button_item_view, null)
-        container = view.findViewById(R.id.frame_layout_container)
         imageView = view.findViewById(R.id.image_view)
         if (attrs != null) {
             val typedArray = context.theme.obtainStyledAttributes(
@@ -86,8 +85,8 @@ class CircularButtonItemView : FrameLayout {
         }
         DKUtils.setBackgroundDrawableColor(circle as GradientDrawable, bgColor)
         DrawableCompat.setTint(wrapped, tintColor)
-        imageView.setImageDrawable(wrapped)
-        container.background = circle
+        image_view.setImageDrawable(wrapped)
+        circle_view.background = circle
     }
 
     private fun setItemDrawable(resDrawableId: Int) {
