@@ -185,7 +185,7 @@ internal class TripsListViewModel(
             size(R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
         }).append(" $trip - ", context.resSpans {
-
+            color(DriveKitUI.colors.complementaryFontColor())
         }).append(
             DKDataFormatter.formatDistance(context, tripsDistance, false),
             context.resSpans {
@@ -193,8 +193,8 @@ internal class TripsListViewModel(
                 size(R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
             }
-        ). append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
-
+        ).append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
+            color(DriveKitUI.colors.complementaryFontColor())
         }).toSpannable()
     }
 
