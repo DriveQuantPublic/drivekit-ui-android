@@ -44,10 +44,10 @@ class TripEvent(val type: TripEventType,
 
     fun getTitle(context: Context) : String {
         return context.getString(when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_safety_decel
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_strong_decel
             TripEventType.START -> R.string.dk_driverdata_start_event
             TripEventType.FINISH -> R.string.dk_driverdata_end_event
-            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_strong_decel
+            TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
             TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_strong_accel
             TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_lock_event
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_unlock_event
