@@ -15,15 +15,15 @@ enum class HeaderDay {
         val separator = " | "
         return trips?.let {
             when (this) {
-                DISTANCE -> DKDataFormatter.formatDistance(context, it.computeTotalDistance())
+                DISTANCE -> DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance())
                 DURATION -> DKDataFormatter.formatDuration(context, it.computeCeilDuration())
                 DURATION_DISTANCE -> DKDataFormatter.formatDuration(
                     context,
                     it.computeCeilDuration()
                 )
                     .plus(separator)
-                    .plus(DKDataFormatter.formatDistance(context, it.computeTotalDistance()))
-                DISTANCE_DURATION -> DKDataFormatter.formatDistance(
+                    .plus(DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance()))
+                DISTANCE_DURATION -> DKDataFormatter.formatMeterDistanceInKm(
                     context,
                     it.computeTotalDistance()
                 )

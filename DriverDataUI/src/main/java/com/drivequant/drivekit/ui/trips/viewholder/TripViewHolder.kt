@@ -84,7 +84,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                     if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(
                         itemView.context,
                         tripData.rawValue(trip)
-                    )) else (DKDataFormatter.formatDistance(
+                    )) else (DKDataFormatter.formatMeterDistanceInKm(
                         itemView.context,
                         tripData.rawValue(trip)
                     ))

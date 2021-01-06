@@ -24,7 +24,6 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.*
 import java.util.*
-import java.util.logging.Handler
 
 internal class TripsListViewModel(
     var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -187,7 +186,7 @@ internal class TripsListViewModel(
         }).append(" $trip - ", context.resSpans {
             color(DriveKitUI.colors.complementaryFontColor())
         }).append(
-            DKDataFormatter.formatDistance(context, tripsDistance, false),
+            DKDataFormatter.formatMeterDistanceInKm(context, tripsDistance, false),
             context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 size(R.dimen.dk_text_medium)

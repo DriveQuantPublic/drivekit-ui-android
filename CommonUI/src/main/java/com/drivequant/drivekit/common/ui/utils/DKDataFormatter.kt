@@ -18,7 +18,11 @@ object DKDataFormatter {
         val nbDay: Int
 
         if (durationInSeconds != null) {
-            nbMinute = ceil(durationInSeconds.div(60)).toInt()
+            if (durationInSeconds > 59) {
+                nbMinute = ceil(durationInSeconds.div(60)).toInt()
+            } else {
+                return "${durationInSeconds.toInt()} ${context.getString(R.string.dk_common_unit_second)}"
+            }
             return if (nbMinute > 59) {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
@@ -33,13 +37,18 @@ object DKDataFormatter {
                     "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
                 }
             } else {
-                "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
+                val nbSecond = (durationInSeconds - 60 * ((durationInSeconds/60).toInt()).toDouble()).toInt()
+                return if (nbSecond > 0) {
+                    "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)} $nbSecond"
+                } else {
+                    "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
+                }
             }
         }
         return "-"
     }
 
-    fun formatDistance(context: Context, distance: Double?, unit: Boolean = true): String {
+    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): String {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
@@ -53,6 +62,27 @@ object DKDataFormatter {
                 else "${formatDistanceValue(distanceInKm)}"
             }
         }
+    }
+
+    fun formatMeterDistance(context: Context, distance: Double?, unit: Boolean = true): String {
+       distance?.let {
+           return when {
+               it == 0.0 -> {
+                   " ${it.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_meter)} "
+               }
+               it < 10 -> {
+                   " ${it.format(2)} ${context.getString(R.string.dk_common_unit_meter)} "
+               }
+               it < 1000 -> {
+                   " ${it.format(0)} ${context.getString(R.string.dk_common_unit_meter)} "
+               }
+               else -> {
+                   formatMeterDistanceInKm(context, distance, unit)
+               }
+           }
+       } ?: run {
+           return "-"
+       }
     }
 
     private fun formatDistanceValue(distance: Double?): String? {
