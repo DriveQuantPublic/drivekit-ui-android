@@ -426,7 +426,6 @@ class TripDetailFragment : Fragment() {
             TripDetailFragmentPagerAdapter(
                 childFragmentManager,
                 viewModel)
-        view_pager.offscreenPageLimit = viewModel.configurableMapItems.size
         tab_layout.setupWithViewPager(view_pager)
         for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
             tab_layout.getTabAt(index)?.let {

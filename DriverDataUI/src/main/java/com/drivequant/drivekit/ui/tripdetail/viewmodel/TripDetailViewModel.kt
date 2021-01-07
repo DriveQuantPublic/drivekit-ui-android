@@ -297,7 +297,7 @@ internal class TripDetailViewModel(
         return if (configurableMapItems.contains(MapItem.DISTRACTION)) {
             events
         } else {
-            displayEvents
+            events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
         }
     }
 
