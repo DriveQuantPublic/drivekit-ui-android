@@ -28,7 +28,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.primaryColor(),
                 DKResource.convertToString(context, "dk_driverdata_detected_transportation_mode"),
                 " ${trip.transportationMode.text(context)}"
             )
@@ -47,7 +47,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
             DKResource.buildString(
                 context,
                 DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.primaryColor(),
                 DKResource.convertToString(context, "dk_driverdata_declared_transportation_mode"),
                 " ${trip.declaredTransportationMode?.transportationMode.text(context)}"
             )
