@@ -19,6 +19,7 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripInfoView
+import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.trips.viewmodel.*
@@ -81,13 +82,14 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                 showTextIndicator()
                 textIndicator.headLine2(DriveKitUI.colors.primaryColor())
                 textIndicator.text =
-                    if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(
-                        itemView.context,
-                        tripData.rawValue(trip)
-                    )) else (DKDataFormatter.formatMeterDistanceInKm(
-                        itemView.context,
-                        tripData.rawValue(trip)
-                    ))
+                    if (tripData == TripData.DURATION) {
+                        DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
+                    } else {
+                        DKDataFormatter.formatMeterDistanceInKm(
+                            itemView.context,
+                            tripData.rawValue(trip)
+                        )
+                    }
             }
         }
     }
