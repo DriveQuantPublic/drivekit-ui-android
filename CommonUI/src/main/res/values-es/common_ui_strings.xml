@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_common_activate">Activar</string>
+   <string name="dk_common_back">Volver</string>
    <string name="dk_common_cancel">Anulador</string>
    <string name="dk_common_close">Cerrar</string>
    <string name="dk_common_confirm">Confirmar</string>
@@ -54,6 +56,6 @@
    <string name="dk_common_unit_second">s</string>
    <string name="dk_common_unit_ton">t</string>
    <string name="dk_common_update_photo_title">Cambiar la imagen</string>
-   <string name="dk_common_validate">Valido</string>
+   <string name="dk_common_validate">Validar</string>
    <string name="dk_common_yes">Sí</string>
 </resources>
