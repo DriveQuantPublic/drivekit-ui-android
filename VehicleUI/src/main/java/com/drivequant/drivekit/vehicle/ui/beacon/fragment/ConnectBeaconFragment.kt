@@ -59,13 +59,13 @@ class ConnectBeaconFragment : Fragment() {
                     .layout(R.layout.template_alert_dialog_layout)
                     .positiveButton(
                         DKResource.convertToString(
-                            requireContext(), "dk_common_ok"), DialogInterface.OnClickListener { _, _ ->
+                            requireContext(), "dk_common_activate"), DialogInterface.OnClickListener { _, _ ->
                             viewModel.apply {
                                 enableBluetoothSensor()
                                 onConnectButtonClicked()
                             }
                         })
-                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_close"),
+                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"),
                         DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                     .show()
 
