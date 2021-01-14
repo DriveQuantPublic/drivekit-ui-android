@@ -55,12 +55,12 @@ class BeaconScannerFragment : Fragment(), ScanState {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_activate"),
+                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_ok"),
                         DialogInterface.OnClickListener { _, _ ->
                             viewModel.enableBluetoothSensor()
                             beaconStep.onImageClicked(viewModel)
                         })
-                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"),
+                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_close"),
                         DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
                     .show()
 
