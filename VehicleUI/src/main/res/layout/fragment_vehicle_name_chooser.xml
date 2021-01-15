@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true"
-    android:clickable="true"
-    android:padding="@dimen/dk_margin_medium">
-
-    <ImageView
-        android:id="@+id/dk_image_view_vehicle_name"
-        android:layout_width="168dp"
-        android:layout_height="168dp"
-        android:layout_margin="@dimen/dk_margin_half"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/text_view_description"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginBottom="@dimen/dk_margin_half"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/dk_image_view_vehicle_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:clickable="true"
+        android:padding="@dimen/dk_margin_medium">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginBottom="@dimen/dk_margin_half"
-        android:padding="@dimen/dk_margin_half"
-        app:layout_constraintTop_toBottomOf="@id/text_view_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/vehicle_name_field"
+        <ImageView
+            android:id="@+id/dk_image_view_vehicle_name"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
+            android:layout_margin="@dimen/dk_margin_half"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_view_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
-    </android.support.design.widget.TextInputLayout>
-    <Button
-        android:id="@+id/button_validate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:paddingTop="@dimen/dk_margin_half"
-        android:paddingBottom="@dimen/dk_margin_half"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintTop_toBottomOf="@id/text_input_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-</android.support.constraint.ConstraintLayout>
+            android:layout_marginTop="@dimen/dk_margin_half"
+            android:layout_marginBottom="@dimen/dk_margin_half"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/dk_image_view_vehicle_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin_half"
+            android:layout_marginBottom="@dimen/dk_margin_half"
+            android:padding="@dimen/dk_margin_half"
+            app:layout_constraintTop_toBottomOf="@id/text_view_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/vehicle_name_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/button_validate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dk_margin_half"
+            android:paddingTop="@dimen/dk_margin_half"
+            android:paddingBottom="@dimen/dk_margin_half"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@id/text_input_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
