@@ -74,7 +74,7 @@ class BeaconActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
                     .addToBackStack(fragment.javaClass.name)
-                    .add(R.id.container, it)
+                    .replace(R.id.container, it)
                     .commit()
             }
         })

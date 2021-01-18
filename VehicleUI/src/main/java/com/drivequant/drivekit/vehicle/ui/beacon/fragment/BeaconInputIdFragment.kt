@@ -50,15 +50,19 @@ class BeaconInputIdFragment : Fragment () {
             manageValidateClick(it)
         }
 
-        viewModel.codeObserver.observe(this, Observer {
-            it?.let { map ->
-                val beaconCode = map.keys.first()
-                when (map[beaconCode]){
-                    VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
-                    VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(beaconCode)
+        if (viewModel.isFirstTime) {
+            viewModel.codeObserver.observe(this, Observer {
+                it?.let { map ->
+                    val beaconCode = map.keys.first()
+                    when (map[beaconCode]) {
+                        VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
+                        VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(
+                            beaconCode
+                        )
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun displayError(vararg args: String) {
@@ -103,6 +107,7 @@ class BeaconInputIdFragment : Fragment () {
         } else {
             code_wrapper.isErrorEnabled = false
             viewModel.checkCode(codeValue)
+            viewModel.isFirstTime = true
         }
     }
 }

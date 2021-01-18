@@ -38,6 +38,7 @@ class BeaconViewModel(
     val beaconChangeObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconDetailObserver = MutableLiveData<Any>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
+    var isFirstTime = true
 
     fun init(context: Context){
         vehicleId?.let { vehicleId ->
@@ -87,6 +88,7 @@ class BeaconViewModel(
                 val map = HashMap<String, VehicleBeaconInfoStatus>()
                 map[codeValue] = status
                 codeObserver.postValue(map)
+                isFirstTime = false
             }
         })
     }
