@@ -99,7 +99,7 @@ class BeaconInputIdFragment : Fragment () {
     private fun manageValidateClick(view: View){
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-
+        viewModel.isFirstTime = true
         val codeValue: String = code_field.text.toString().trim()
         if (codeValue.isEmpty()){
             code_wrapper.isErrorEnabled = true
@@ -107,7 +107,6 @@ class BeaconInputIdFragment : Fragment () {
         } else {
             code_wrapper.isErrorEnabled = false
             viewModel.checkCode(codeValue)
-            viewModel.isFirstTime = true
         }
     }
 }
