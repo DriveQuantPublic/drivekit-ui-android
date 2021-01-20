@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_common_activate">Activer</string>
+   <string name="dk_common_back">Retour</string>
    <string name="dk_common_cancel">Annuler</string>
    <string name="dk_common_close">Fermer</string>
    <string name="dk_common_confirm">Confirmer</string>

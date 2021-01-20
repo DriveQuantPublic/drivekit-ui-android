@@ -49,6 +49,8 @@
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">Esta beacon ya está emparejada con este vehículo.</string>
    <string name="dk_vehicle_beacon_deactivate_alert">La baliza %s se disociará del vehículo %s. \n ¿Estás seguro de que quieres continuar?</string>
    <string name="dk_vehicle_beacon_diagnostic_alert">Aún no has configurado una baliza.</string>
+   <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Debes activar el sensor de Bluetooth del teléfono para verificar la presencia de la caja de Bluetooth.</string>
+   <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Sensor Bluetooth</string>
    <string name="dk_vehicle_beacon_major">Major</string>
    <string name="dk_vehicle_beacon_minor">Minor</string>
    <string name="dk_vehicle_beacon_scan_retry">Toca la pantalla para volver a intentarlo</string>

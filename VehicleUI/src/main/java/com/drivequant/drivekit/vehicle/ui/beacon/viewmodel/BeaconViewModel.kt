@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.support.v4.app.Fragment
 import com.drivequant.beaconutils.BeaconInfo
@@ -31,7 +32,7 @@ class BeaconViewModel(
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
     var listener: ScanState? = null
-
+    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     val progressBarObserver = MutableLiveData<Boolean>()
     val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
     val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
@@ -210,6 +211,10 @@ class BeaconViewModel(
         }
         return isBeaconValid
     }
+
+    fun enableBluetoothSensor() = bluetoothAdapter?.enable()
+
+    fun isBluetoothSensorEnabled(): Boolean = bluetoothAdapter?.isEnabled ?: false
 
     @Suppress("UNCHECKED_CAST")
     class BeaconViewModelFactory(
