@@ -86,9 +86,7 @@ class BeaconViewModel(
             override fun onResponse(status: VehicleBeaconInfoStatus, beacon: Beacon) {
                 progressBarObserver.postValue(false)
                 this@BeaconViewModel.beacon = beacon
-                val map = HashMap<String, VehicleBeaconInfoStatus>()
-                map[codeValue] = status
-                beaconInfoStatusListener?.onBeaconStatusReceived(map)
+                beaconInfoStatusListener?.onBeaconStatusReceived(codeValue, status)
             }
         })
     }
@@ -233,6 +231,6 @@ class BeaconViewModel(
     }
 
     interface BeaconInfoStatusListener {
-        fun onBeaconStatusReceived(map : HashMap<String, VehicleBeaconInfoStatus>)
+        fun onBeaconStatusReceived(beaconCode: String, status: VehicleBeaconInfoStatus)
     }
 }

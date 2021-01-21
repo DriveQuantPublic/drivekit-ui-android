@@ -96,9 +96,8 @@ class BeaconInputIdFragment : Fragment (), BeaconViewModel.BeaconInfoStatusListe
         }
     }
 
-    override fun onBeaconStatusReceived(map: HashMap<String, VehicleBeaconInfoStatus>) {
-        val beaconCode = map.keys.first()
-        when (map[beaconCode]) {
+    override fun onBeaconStatusReceived(beaconCode: String, status: VehicleBeaconInfoStatus) {
+        when (status) {
             VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
             VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(
                 beaconCode
