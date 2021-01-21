@@ -49,6 +49,8 @@
     <string name="dk_vehicle_beacon_already_paired_to_vehicle">Diese beacon ist bereits an dieses Fahrzeug gekoppelt.</string>
     <string name="dk_vehicle_beacon_deactivate_alert">Das %s Bake wird vom %s Fahrzeug getrennt. \n Bist du sicher, dass du weitermachen willst?</string>
     <string name="dk_vehicle_beacon_diagnostic_alert">Du hast noch kein Bake konfiguriert.</string>
+    <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Sie müssen den Bluetooth-Sensor auf Ihrem Telefon aktivieren, um das Vorhandensein der Bluetooth-Box zu überprüfen.</string>
+    <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Bluetooth-Sensor</string>
     <string name="dk_vehicle_beacon_major">Major</string>
     <string name="dk_vehicle_beacon_minor">Minor</string>
     <string name="dk_vehicle_beacon_scan_retry">Tippen Sie auf den Bildschirm, um es erneut zu versuchen</string>

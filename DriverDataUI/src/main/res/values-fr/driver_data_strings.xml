@@ -17,7 +17,7 @@
    <string name="dk_driverdata_bad_maintain">Vitesse très irrégulière</string>
    <string name="dk_driverdata_change_transportation_mode">Changer ?</string>
    <string name="dk_driverdata_confirm_delete_trip">Supprimer le trajet ?</string>
-   <string name="dk_driverdata_day">Trajet de jour</string>
+   <string name="dk_driverdata_day">Trajet de jour</string
    <string name="dk_driverdata_declared_transportation_mode">Mode déclaré :</string>
    <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
    <string name="dk_driverdata_detected_transportation_mode">Mode détecté :</string>

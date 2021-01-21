@@ -63,7 +63,6 @@ internal class AlternativeTripFragment : Fragment() {
         conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
         weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
         meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
-
         conditionItem.setValueTypeFace()
         meanSpeedItem.setValueTypeFace()
         weatherItem.setValueTypeFace()

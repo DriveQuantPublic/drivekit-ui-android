@@ -59,7 +59,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
         computeTripData(trip, viewModel.tripListConfiguration)
         computeTripInfo(trip, viewModel.getTripInfo())
     }
-
+  
     private fun computeTripData(trip: Trip, tripListConfiguration: TripListConfiguration) {
         when (tripListConfiguration) {
             is TripListConfiguration.MOTORIZED -> configureMotorizedTripData(trip)
