@@ -18,7 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
 
-class BeaconInputIdFragment : Fragment (), BeaconInfoStatusListener {
+class BeaconInputIdFragment : Fragment (), BeaconViewModel.BeaconInfoStatusListener {
 
     companion object {
         fun newInstance(viewModel: BeaconViewModel) : BeaconInputIdFragment {
@@ -105,8 +105,4 @@ class BeaconInputIdFragment : Fragment (), BeaconInfoStatusListener {
             )
         }
     }
-}
-
-interface BeaconInfoStatusListener {
-    fun onBeaconStatusReceived(map : HashMap<String, VehicleBeaconInfoStatus>)
 }

@@ -13,7 +13,6 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.*
-import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInfoStatusListener
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
@@ -225,5 +224,9 @@ class BeaconViewModel(
 
     interface ServiceListeners {
         fun onCheckVehiclePaired(isSameVehicle: Boolean)
+    }
+
+    interface BeaconInfoStatusListener {
+        fun onBeaconStatusReceived(map : HashMap<String, VehicleBeaconInfoStatus>)
     }
 }
