@@ -19,7 +19,7 @@ class RankingDriverData(
     val driverId: String) {
 
     fun getFormattedDistance(context: Context): String =
-        DKDataFormatter.formatDistance(context, driverDistance * 1000)
+        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000)
 
     fun getFormattedScore(context: Context, textColor: Int): SpannableString {
         val preFormattedScore = if (driverScore == 10.0) {

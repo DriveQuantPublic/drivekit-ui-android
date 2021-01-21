@@ -76,7 +76,8 @@ internal class TransportationModeFragment : Fragment(){
         comment_title.normalText()
         comment_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
 
-        DKUtils.setBackgroundDrawableColor(edit_text_comment.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+        val editTextBackground = edit_text_comment.background as GradientDrawable
+        editTextBackground.setStroke(4, DriveKitUI.colors.neutralColor())
         edit_text_comment.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 

@@ -49,6 +49,8 @@
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">This beacon is already paired to this vehicle.</string>
    <string name="dk_vehicle_beacon_deactivate_alert">The %s beacon will be dissociated from the %s vehicle. \n Would you like to continue?</string>
    <string name="dk_vehicle_beacon_diagnostic_alert">You haven\'t configured a beacon yet.</string>
+   <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">You have to enable the phone\'s Bluetooth sensor to check the beacon.</string>
+   <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Bluetooth sensor</string>
    <string name="dk_vehicle_beacon_major">Major</string>
    <string name="dk_vehicle_beacon_minor">Minor</string>
    <string name="dk_vehicle_beacon_scan_retry">Tap on the screen to try again</string>

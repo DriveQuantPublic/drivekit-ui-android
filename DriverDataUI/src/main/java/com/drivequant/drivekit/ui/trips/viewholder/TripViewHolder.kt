@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
+import android.graphics.Color
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -18,6 +19,7 @@ import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripInfoView
+import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.getOrComputeStartDate
 import com.drivequant.drivekit.ui.extension.image
 import com.drivequant.drivekit.ui.trips.viewmodel.*
@@ -51,13 +53,13 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
 
         textViewDepartureCity.normalText(DriveKitUI.colors.mainFontColor())
         textViewArrivalCity.normalText(DriveKitUI.colors.mainFontColor())
-        textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
-        textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
+        textViewDepartureTime.normalText(Color.parseColor("#9E9E9E"))
+        textViewArrivalTime.normalText(Color.parseColor("#9E9E9E"))
 
         computeTripData(trip, viewModel.tripListConfiguration)
         computeTripInfo(trip, viewModel.getTripInfo())
     }
-
+  
     private fun computeTripData(trip: Trip, tripListConfiguration: TripListConfiguration) {
         when (tripListConfiguration) {
             is TripListConfiguration.MOTORIZED -> configureMotorizedTripData(trip)
@@ -80,13 +82,14 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                 showTextIndicator()
                 textIndicator.headLine2(DriveKitUI.colors.primaryColor())
                 textIndicator.text =
-                    if (tripData == TripData.DURATION) (DKDataFormatter.formatDuration(
-                        itemView.context,
-                        tripData.rawValue(trip)
-                    )) else (DKDataFormatter.formatDistance(
-                        itemView.context,
-                        tripData.rawValue(trip)
-                    ))
+                    if (tripData == TripData.DURATION) {
+                        DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
+                    } else {
+                        DKDataFormatter.formatMeterDistanceInKm(
+                            itemView.context,
+                            tripData.rawValue(trip)
+                        )
+                    }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -37,7 +39,7 @@ class DriverDistractionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -66,8 +68,8 @@ class DriverDistractionFragment : Fragment() {
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
 
-        unlockNumberEvent.highlightSmall(DriveKitUI.colors.primaryColor())
-        distanceUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
-        durationUnlocked.highlightSmall(DriveKitUI.colors.primaryColor())
+        unlockNumberEvent.headLine1(DriveKitUI.colors.primaryColor())
+        distanceUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+        durationUnlocked.headLine1(DriveKitUI.colors.primaryColor())
     }
 }

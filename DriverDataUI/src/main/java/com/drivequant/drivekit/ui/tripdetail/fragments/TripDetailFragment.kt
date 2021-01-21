@@ -8,6 +8,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -71,8 +72,9 @@ class TripDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false).setDKStyle()
+        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -322,13 +324,13 @@ class TripDetailFragment : Fragment() {
             .setView(feedbackView)
             .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
             .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ ->
-                if (feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isNotEmpty()) {
-                    buildFeedbackData(mapItem, feedbackView, radioGroup)
-                } else {
+                if (radioGroup.checkedRadioButtonId == R.id.radio_button_choice_05 && feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isEmpty()) {
                     context?.let {
                         val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")
                         Toast.makeText(it, emptyFieldText, Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    buildFeedbackData(mapItem, feedbackView, radioGroup)
                 }
             }
 
@@ -402,6 +404,7 @@ class TripDetailFragment : Fragment() {
 
         val fragment = DriverDataUI.customMapItem?.let { item ->
             if (item.overrideShortTrip()) {
+                setViewPager()
                 item.getFragment(viewModel.trip, viewModel)
             } else {
                 UnscoredTripFragment.newInstance(

@@ -202,7 +202,7 @@
                     android:gravity="top|start"
                     android:scrollbars="vertical"
                     android:padding="15dp"
-                    android:background="@drawable/dk_rounded_edges"
+                    android:background="@drawable/background_rounded_corners"
                     android:longClickable="false"/>
                 <TextView
                     android:id="@+id/text_comment_error"

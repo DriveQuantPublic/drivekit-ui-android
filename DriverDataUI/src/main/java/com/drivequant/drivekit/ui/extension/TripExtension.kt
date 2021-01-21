@@ -31,6 +31,29 @@ fun List<Trip>.computeTotalDuration(): Double {
     return totalDuration
 }
 
+fun List<Trip>.computeCeilDuration(): Double {
+    val iterator = this.listIterator()
+    var totalDuration: Double = 0.toDouble()
+    for (currentTrip in iterator) {
+        totalDuration += currentTrip.computeCeilDuration().toInt()
+    }
+    return totalDuration
+}
+
+fun Trip.computeCeilDuration(): Double {
+    this.tripStatistics?.duration?.let {
+        var computedDuration = it
+        computedDuration = if (computedDuration % 60 > 0) {
+            (computedDuration / 60).toInt() * 60 + 60.toDouble()
+        } else {
+            ((computedDuration / 60).toInt() * 60).toDouble()
+        }
+        return computedDuration
+    } ?: run {
+        return 0.0
+    }
+}
+
 fun Trip.getOrComputeStartDate(): Date? {
     if (this.startDate != null) {
         return this.startDate

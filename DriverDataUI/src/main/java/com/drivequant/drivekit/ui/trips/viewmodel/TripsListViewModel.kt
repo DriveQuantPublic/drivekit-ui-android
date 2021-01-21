@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -39,19 +40,22 @@ internal class TripsListViewModel(
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
-            val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
-            if (DriverDataUI.enableAlternativeTrips){
-                transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
-            }
-            DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
-                override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
-                    if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
-                        syncTripsError.postValue(Any())
-                    }
-                    this@TripsListViewModel.trips = sortTrips(trips)
-                    filterTrips(tripListConfiguration)
+            val handler = android.os.Handler()
+            handler.post {
+                val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
+                if (DriverDataUI.enableAlternativeTrips){
+                    transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
                 }
-            }, synchronizationType, transportationModes)
+                DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
+                    override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
+                        if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
+                            syncTripsError.postValue(Any())
+                        }
+                        this@TripsListViewModel.trips = sortTrips(trips)
+                        filterTrips(tripListConfiguration)
+                    }
+                }, synchronizationType, transportationModes)
+            }
         } else {
             syncTripsError.postValue(Any())
         }
@@ -150,6 +154,7 @@ internal class TripsListViewModel(
 
     fun computeFilterTransportationModes(): Set<TransportationMode> {
         val transportationModes = mutableSetOf<TransportationMode>()
+        val flatTrips = trips.flatMap { it.trips }
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
                     .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
@@ -159,14 +164,10 @@ internal class TripsListViewModel(
             }
         }
 
-        TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach {
-            if (DriveKitDriverData.tripsQuery()
-                    .whereEqualTo("transportationMode", it.value)
-                    .or()
-                    .whereEqualTo("DeclaredTransportationMode_transportationMode", it.value)
-                    .query().execute().isNotEmpty()
-            ) {
-                transportationModes.add(it)
+        TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach { mode ->
+            val count = flatTrips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }.size
+            if (count > 0) {
+                transportationModes.add(mode)
             }
         }
         return transportationModes.toSortedSet()
@@ -183,14 +184,17 @@ internal class TripsListViewModel(
             size(R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
         }).append(" $trip - ", context.resSpans {
-
+            color(DriveKitUI.colors.complementaryFontColor())
         }).append(
-            DKDataFormatter.formatDistance(context, tripsDistance),
+            DKDataFormatter.formatMeterDistanceInKm(context, tripsDistance, false),
             context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 size(R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
-            }).toSpannable()
+            }
+        ).append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {
+            color(DriveKitUI.colors.complementaryFontColor())
+        }).toSpannable()
     }
 
     fun getFilterVisibility(): Boolean {

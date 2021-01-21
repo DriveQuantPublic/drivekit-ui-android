@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class FilterView : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_filter_view_layout, null).setDKStyle()
         spinner = view.findViewById(R.id.spinner_filter)
+        view.setBackgroundColor(Color.WHITE)
         addView(view, ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT))
