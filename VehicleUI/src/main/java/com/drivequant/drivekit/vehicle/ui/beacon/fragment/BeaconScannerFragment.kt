@@ -85,7 +85,7 @@ class BeaconScannerFragment : Fragment(), ScanState {
             beaconStep.getChildFragment(viewModel)?.let { fragment ->
                 fragmentManager.beginTransaction()
                     .replace(R.id.container_child, fragment)
-                    .commit()
+                    .commitAllowingStateLoss()
             }
         }
     }

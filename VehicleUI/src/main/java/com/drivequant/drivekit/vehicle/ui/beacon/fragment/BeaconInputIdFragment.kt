@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -19,7 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
 
-class BeaconInputIdFragment : Fragment () {
+class BeaconInputIdFragment : Fragment (), BeaconViewModel.BeaconInfoStatusListener {
 
     companion object {
         fun newInstance(viewModel: BeaconViewModel) : BeaconInputIdFragment {
@@ -37,28 +36,20 @@ class BeaconInputIdFragment : Fragment () {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
+        viewModel.beaconInfoStatusListener = this
 
-        text_view_beacon_code_text.bigText(mainFontColor)
-        text_view_beacon_code_text.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
-
-        code_wrapper.hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
-
-        button_validate.button()
-        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
-        button_validate.setOnClickListener {
-            manageValidateClick(it)
+        text_view_beacon_code_text.apply {
+            bigText(DriveKitUI.colors.mainFontColor())
+            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
         }
-
-        viewModel.codeObserver.observe(this, Observer {
-            it?.let { map ->
-                val beaconCode = map.keys.first()
-                when (map[beaconCode]){
-                    VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
-                    VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(beaconCode)
-                }
+        code_wrapper.hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
+        button_validate.apply {
+            button()
+            text = DKResource.convertToString(requireContext(), "dk_common_validate")
+            setOnClickListener {
+                manageValidateClick(it)
             }
-        })
+        }
     }
 
     private fun displayError(vararg args: String) {
@@ -95,7 +86,6 @@ class BeaconInputIdFragment : Fragment () {
     private fun manageValidateClick(view: View){
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-
         val codeValue: String = code_field.text.toString().trim()
         if (codeValue.isEmpty()){
             code_wrapper.isErrorEnabled = true
@@ -103,6 +93,15 @@ class BeaconInputIdFragment : Fragment () {
         } else {
             code_wrapper.isErrorEnabled = false
             viewModel.checkCode(codeValue)
+        }
+    }
+
+    override fun onBeaconStatusReceived(beaconCode: String, status: VehicleBeaconInfoStatus) {
+        when (status) {
+            VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
+            VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(
+                beaconCode
+            )
         }
     }
 }

@@ -32,9 +32,10 @@ class BeaconViewModel(
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
     var listener: ScanState? = null
+    var beaconInfoStatusListener: BeaconInfoStatusListener? = null
+
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     val progressBarObserver = MutableLiveData<Boolean>()
-    val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
     val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconChangeObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconDetailObserver = MutableLiveData<Any>()
@@ -85,9 +86,7 @@ class BeaconViewModel(
             override fun onResponse(status: VehicleBeaconInfoStatus, beacon: Beacon) {
                 progressBarObserver.postValue(false)
                 this@BeaconViewModel.beacon = beacon
-                val map = HashMap<String, VehicleBeaconInfoStatus>()
-                map[codeValue] = status
-                codeObserver.postValue(map)
+                beaconInfoStatusListener?.onBeaconStatusReceived(codeValue, status)
             }
         })
     }
@@ -229,5 +228,9 @@ class BeaconViewModel(
 
     interface ServiceListeners {
         fun onCheckVehiclePaired(isSameVehicle: Boolean)
+    }
+
+    interface BeaconInfoStatusListener {
+        fun onBeaconStatusReceived(beaconCode: String, status: VehicleBeaconInfoStatus)
     }
 }

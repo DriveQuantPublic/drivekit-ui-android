@@ -66,7 +66,9 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
             activity?.runOnUiThread {
                 if (!isBeaconFound) {
                     stopBeaconScan()
-                    viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
+                    if (this.isVisible) {
+                        viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
+                    }
                 }
             }
         })

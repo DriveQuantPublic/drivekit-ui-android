@@ -18,8 +18,8 @@
             android:gravity="center" />
         <ImageView
             android:id="@id/image_view"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dk_margin" />
     </LinearLayout>
@@ -27,7 +27,5 @@
         android:id="@+id/container_child"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:layout_marginBottom="@dimen/dk_margin"/>
+        android:layout_weight="0.5" />
 </LinearLayout>
