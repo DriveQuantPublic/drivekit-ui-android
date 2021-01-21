@@ -13,6 +13,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.manager.beacon.*
+import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInfoStatusListener
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconInputIdFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
@@ -31,14 +32,13 @@ class BeaconViewModel(
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
     var listener: ScanState? = null
+    var beaconInfoStatusListener: BeaconInfoStatusListener? = null
 
     val progressBarObserver = MutableLiveData<Boolean>()
-    val codeObserver = MutableLiveData<HashMap<String, VehicleBeaconInfoStatus>>()
     val beaconAddObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconChangeObserver = MutableLiveData<VehicleBeaconStatus>()
     val beaconDetailObserver = MutableLiveData<Any>()
     var fragmentDispatcher = MutableLiveData<Fragment>()
-    var isFirstTime = true
 
     fun init(context: Context){
         vehicleId?.let { vehicleId ->
@@ -87,8 +87,7 @@ class BeaconViewModel(
                 this@BeaconViewModel.beacon = beacon
                 val map = HashMap<String, VehicleBeaconInfoStatus>()
                 map[codeValue] = status
-                codeObserver.postValue(map)
-                isFirstTime = false
+                beaconInfoStatusListener?.onBeaconStatusReceived(map)
             }
         })
     }
