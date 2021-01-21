@@ -23,10 +23,12 @@ internal class TripDetailViewModel(
     init {
         when (tripListConfiguration){
             is TripListConfiguration.MOTORIZED -> {
-                mapItems.addAll(DriverDataUI.mapItems)
-                DriverDataUI.customMapItem?.let {
-                    mapItems.add(it)
+                val items : MutableList<DKMapItem> = mutableListOf()
+                items.addAll(DriverDataUI.mapItems)
+                DriverDataUI.customMapItem?.let { item ->
+                    items.add(item)
                 }
+                mapItems = items
             }
             is TripListConfiguration.ALTERNATIVE -> {
                 mapItems.add(AlternativeTripMapItem())
@@ -44,18 +46,13 @@ internal class TripDetailViewModel(
                             if (it) configurableMapItems.add(item)
                         }
                     }
-                    DriverDataUI.customMapItem?.let { item ->
-                        item.canShowMapItem(trip)?.let {
-                            if (it) configurableMapItems.add(item)
-                        }
-                    }
                 } else {
-                    for (item in mapItems){
-                        item.canShowMapItem(trip)?.let {
-                            if (it) configurableMapItems.add(item)
+                    for (item in mapItems) {
+                        if (item.overrideShortTrip()) {
+                            configurableMapItems.add(item)
                         }
                     }
-                }
+                } 
                 if (configurableMapItems.isNotEmpty()) {
                     displayMapItem.value = configurableMapItems[0]
                 }
@@ -300,7 +297,7 @@ internal class TripDetailViewModel(
         return if (configurableMapItems.contains(MapItem.DISTRACTION)) {
             events
         } else {
-            displayEvents
+            events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
         }
     }
 

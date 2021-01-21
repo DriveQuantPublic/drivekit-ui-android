@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -37,7 +38,7 @@ class SafetyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.safety_fragment, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 

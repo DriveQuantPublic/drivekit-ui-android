@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -31,7 +32,7 @@ class SynthesisFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 

@@ -15,6 +15,6 @@ internal class AllTripsTransportationModeFilterItem : FilterItem {
     }
 
     override fun getTitle(context: Context): String {
-        return DKResource.convertToString(context, "dk_driverdata_transportation_mode_all")
+        return DKResource.convertToString(context, "dk_driverdata_default_filter_item")
     }
 }

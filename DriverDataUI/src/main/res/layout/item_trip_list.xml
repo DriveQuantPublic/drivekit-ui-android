@@ -31,8 +31,8 @@
             style="@style/GaugeTripList"/>
         <TextView
             android:id="@+id/text_view_value"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:gravity="center"
             android:singleLine="true"
             android:visibility="gone"
@@ -50,16 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <FrameLayout
-        android:id="@+id/container_trip_info"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginStart="@dimen/dk_margin_quarter"
-        android:layout_marginEnd="@dimen/dk_margin_quarter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/image_circle_top"
@@ -118,6 +108,16 @@
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"
         tools:text="Departure city"
         />
+
+    <FrameLayout
+        android:id="@+id/container_trip_info"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginStart="@dimen/dk_margin_quarter"
+        android:layout_marginEnd="@dimen/dk_margin_quarter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_departure_city"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_arrival_city" />
 
     <TextView
         android:id="@+id/text_view_arrival_time"
