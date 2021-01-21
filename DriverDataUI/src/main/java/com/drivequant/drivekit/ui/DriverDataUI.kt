@@ -11,16 +11,22 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKHeader
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
+import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
     private const val TAG = "DriveKit DriverData UI"
     internal var tripData: TripData = TripData.SAFETY
+        private set
+    internal var enableAlternativeTrips: Boolean = false
+        private set
     internal var mapItems: List<MapItem> = listOf(
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
@@ -28,6 +34,14 @@ object DriverDataUI : DriverDataUIEntryPoint {
         MapItem.INTERACTIVE_MAP,
         MapItem.SYNTHESIS
     )
+        private set
+
+    internal var customMapItem: DKMapItem? = null
+        private set
+    internal var customHeader: DKHeader? = null
+        private set
+    internal var customTripInfo: DKTripInfo? = null
+        private set
 
     internal var enableDeleteTrip: Boolean = true
     internal var dayTripDescendingOrder: Boolean = false
@@ -65,12 +79,32 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.dayTripDescendingOrder = dayTripDescendingOrder
     }
 
+    fun configureTripData(tripData: TripData) {
+        this.tripData = tripData
+    }
+
     fun configureHeaderDay(headerDay: HeaderDay) {
         this.headerDay = headerDay
     }
 
     fun enableVehicleFilter(enableVehicleFilter: Boolean) {
         this.enableVehicleFilter = enableVehicleFilter
+    }
+
+    fun enableAlternativeTrips(enableAlternativeTrips: Boolean) {
+        this.enableAlternativeTrips = enableAlternativeTrips
+    }
+
+    fun setCustomMapScreen(customMapItem: DKMapItem?) {
+        this.customMapItem = customMapItem
+    }
+
+    fun customizeHeader(header: DKHeader?) {
+        this.customHeader = header
+    }
+
+    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
+        this.customTripInfo = tripInfo
     }
 
     override fun startTripListActivity(context: Context) {

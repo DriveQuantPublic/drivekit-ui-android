@@ -51,6 +51,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
                 resources.getDimensionPixelSize(R.dimen.dk_text_normal)
             ).toFloat()
         )
+        textView.setTextColor(DriveKitUI.colors.complementaryFontColor())
         attributes.recycle()
     }
 
@@ -58,7 +59,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         gaugeView.setOpenAngle(128F)
         gaugeView.setStartAngle(38F)
         textView.text = score.removeZeroDecimal()
-        textView.setTypeface(textView.typeface, scoreStyle)
+        textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))

@@ -16,7 +16,7 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 class FilterAdapter(
     context: Context,
     resource: Int,
-    private val filterItemList: List<FilterItem>
+    private var filterItemList: List<FilterItem>
 ) : ArrayAdapter<FilterItem>(context, resource, filterItemList) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -44,6 +44,10 @@ class FilterAdapter(
         }
         FontUtils.overrideFonts(context, view)
         return view
+    }
+
+    fun setItems(items: List<FilterItem>){
+        filterItemList = items
     }
 }
 

@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@id/container_header_trip"
         tools:text="Lundi 14 octobre 2019"/>
     <TextView
-        android:id="@+id/trip_distance"
+        android:id="@+id/trip_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"

@@ -12,10 +12,10 @@ fun Date.formatDate(pattern: DKDatePattern): String {
 
 fun Date.isSameDay(date: Date): Boolean {
     val tripCal: Calendar = Calendar.getInstance()
-    tripCal.set(this.year, this.month, this.day)
+    tripCal.time = this
 
     val currentDateCal: Calendar = Calendar.getInstance()
-    currentDateCal.set(date.year, date.month, date.day)
+    currentDateCal.time = date
 
     return (tripCal.get(Calendar.DAY_OF_YEAR) == currentDateCal.get(Calendar.DAY_OF_YEAR)
             && tripCal.get(Calendar.YEAR) == currentDateCal.get(Calendar.YEAR))

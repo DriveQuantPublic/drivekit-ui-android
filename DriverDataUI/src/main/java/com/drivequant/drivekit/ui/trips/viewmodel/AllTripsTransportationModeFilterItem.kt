@@ -5,13 +5,13 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
-internal class AllTripsFilterItem : FilterItem {
+internal class AllTripsTransportationModeFilterItem : FilterItem {
     override fun getItemId(): Any? {
         return null
     }
 
     override fun getImage(context: Context): Drawable? {
-        return DKResource.convertToDrawable(context, "dk_my_trips")
+        return DKResource.convertToDrawable(context, "dk_transportation_all")
     }
 
     override fun getTitle(context: Context): String {

@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,20 +13,20 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripTimelineAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.OnItemClickListener
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import kotlinx.android.synthetic.main.trip_timeline_fragment.*
 
 class TripTimelineFragment : Fragment() {
 
     companion object {
-        fun newInstance(viewModel: TripDetailViewModel  ) : TripTimelineFragment {
+        fun newInstance(tripDetailViewModel: DKTripDetailViewModel) : TripTimelineFragment {
             val fragment = TripTimelineFragment()
-            fragment.viewModel = viewModel
+            fragment.tripDetailViewModel = tripDetailViewModel
             return fragment
         }
     }
 
-    private lateinit var viewModel: TripDetailViewModel
+    private lateinit var tripDetailViewModel: DKTripDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,24 +34,20 @@ class TripTimelineFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.trip_timeline_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if(!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(TripDetailViewModel::class.java)
-        }
-
         timeline_list.layoutManager = LinearLayoutManager(requireContext())
-        timeline_list.adapter = TripTimelineAdapter(viewModel.events, object : OnItemClickListener {
+        timeline_list.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
-                viewModel.selection.postValue(position)
+                tripDetailViewModel.getSelectedEvent().postValue(position)
             }
         }, DriveKitUI.colors.secondaryColor())
-        viewModel.selection.observe(this, Observer {
+        tripDetailViewModel.getSelectedEvent().observe(this, Observer {
             it?.let {position ->
                 (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
                 timeline_list.smoothScrollToPosition(position)
