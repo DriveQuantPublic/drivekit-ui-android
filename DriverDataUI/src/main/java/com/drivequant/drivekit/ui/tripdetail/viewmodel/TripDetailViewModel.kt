@@ -52,13 +52,7 @@ internal class TripDetailViewModel(
                             configurableMapItems.add(item)
                         }
                     }
-                } else {
-                    for (item in mapItems){
-                        item.canShowMapItem(trip)?.let {
-                            if (it) configurableMapItems.add(item)
-                        }
-                    }
-                }
+                } 
                 if (configurableMapItems.isNotEmpty()) {
                     displayMapItem.value = configurableMapItems[0]
                 }
