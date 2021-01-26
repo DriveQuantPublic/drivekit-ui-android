@@ -15,7 +15,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
@@ -145,9 +144,13 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconList(): List<BeaconData> {
-        val beaconsToCheck = TripAnalysisConfig.getAllBeacons().toMutableList()
+        val beaconsToCheck = mutableListOf<BeaconData>()
         viewModel.beacon?.let {
-            beaconsToCheck.add(BeaconData(it.proximityUuid))
+            val beaconData = when (viewModel.scanType){
+                PAIRING -> BeaconData(it.proximityUuid, it.major, it.minor)
+                DIAGNOSTIC, VERIFY -> BeaconData(it.proximityUuid)
+            }
+            beaconsToCheck.add(beaconData)
         }
         return beaconsToCheck
     }
