@@ -11,12 +11,13 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
+import java.io.Serializable
 import java.util.*
 
-internal class TripDetailViewModel(
+class TripDetailViewModel(
     private val itinId: String,
     private val tripListConfiguration: TripListConfiguration
-) : ViewModel(), DKTripDetailViewModel {
+) : ViewModel(), DKTripDetailViewModel, Serializable {
 
     private var mapItems: MutableList<DKMapItem> = mutableListOf()
 
@@ -293,6 +294,7 @@ internal class TripDetailViewModel(
             }
         }
     }
+
     override fun getTripEvents(): List<TripEvent> {
         return if (configurableMapItems.contains(MapItem.DISTRACTION)) {
             events
@@ -302,6 +304,28 @@ internal class TripDetailViewModel(
     }
 
     override fun getSelectedEvent(): MutableLiveData<Int> = selection
+
+    override fun getScore() = trip?.driverDistraction?.score
+
+    override fun getUnlockNumberEvent() = trip?.driverDistraction?.nbUnlock.toString()
+
+    override fun getUnlockDuration(context: Context) = DKDataFormatter.formatDuration(context,trip?.driverDistraction?.durationUnlock)
+
+    override fun getUnlockDistance(context: Context) = DKDataFormatter.formatMeterDistance(context,trip?.driverDistraction?.distanceUnlock)
+
+    override fun getSelectedTraceType(): MutableLiveData<MapTraceType> = selectedMapTraceType
+
+    override fun getPhoneCallsDistance(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPhoneCallsNumber(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPhoneCallsDuration(): String {
+        TODO("Not yet implemented")
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -314,7 +338,15 @@ class TripDetailViewModelFactory(
     }
 }
 
-interface DKTripDetailViewModel {
+interface DKTripDetailViewModel : Serializable {
     fun getTripEvents(): List<TripEvent>
     fun getSelectedEvent(): MutableLiveData<Int>
+    fun getScore(): Double?
+    fun getUnlockNumberEvent(): String
+    fun getUnlockDuration(context: Context): String
+    fun getUnlockDistance(context: Context): String
+    fun getSelectedTraceType(): MutableLiveData<MapTraceType>
+    fun getPhoneCallsDistance(): String
+    fun getPhoneCallsNumber(): String
+    fun getPhoneCallsDuration(): String
 }

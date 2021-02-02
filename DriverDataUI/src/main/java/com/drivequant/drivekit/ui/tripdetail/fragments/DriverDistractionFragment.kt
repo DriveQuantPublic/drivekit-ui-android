@@ -15,23 +15,23 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
 class DriverDistractionFragment : Fragment() {
 
     companion object {
-        fun newInstance(driverDistraction: DriverDistraction) : DriverDistractionFragment {
+        fun newInstance(tripDetailViewModel: DKTripDetailViewModel): DriverDistractionFragment {
             val fragment = DriverDistractionFragment()
-            fragment.viewModel =
-                DriverDistractionViewModel(
-                    driverDistraction
-                )
+            fragment.viewModel = tripDetailViewModel
             return fragment
         }
     }
 
-    private lateinit var viewModel: DriverDistractionViewModel
+    private lateinit var viewModel: DKTripDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

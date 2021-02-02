@@ -28,4 +28,8 @@ internal class AlternativeTripMapItem : DKMapItem {
     override fun getAdviceImageResource(): Int? = null
 
     override fun overrideShortTrip(): Boolean = true
+
+    override fun shouldShowPhoneDistractionArea(): Boolean {
+        return true
+    }
 }
