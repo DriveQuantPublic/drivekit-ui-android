@@ -50,7 +50,7 @@ class DriverDistractionFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as DriverDistractionViewModel?)?.let{
+        (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let {
             viewModel = it
         }
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
