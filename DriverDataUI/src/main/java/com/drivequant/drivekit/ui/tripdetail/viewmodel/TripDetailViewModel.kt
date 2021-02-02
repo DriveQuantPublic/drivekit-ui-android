@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
@@ -76,6 +77,7 @@ class TripDetailViewModel(
     var noData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
     var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
+    var selectedMapTraceType: MutableLiveData<MapTraceType> = MutableLiveData()
 
     fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
@@ -231,7 +233,47 @@ class TripDetailViewModel(
             }
         }
 
+        route.callIndex?.let {
+            for ((index, indexCall) in it.withIndex()) {
+                if (indexCall == 0 || indexCall == route.latitude.size - 1) continue
+                if (index % 2 == 0) {
+                    getCallIndexStatus(index)?.let { isForbidden ->
+                        events.add(
+                            TripEvent(
+                                TripEventType.PHONE_DISTRACTION_PICK_UP,
+                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
+                                route.latitude[it[index]],
+                                route.longitude[it[index]],
+                                isForbidden = isForbidden
+                            )
+                        )
+                    }
+                } else {
+                    getCallIndexStatus(index)?.let { isForbidden ->
+                        events.add(
+                            TripEvent(
+                                TripEventType.PHONE_DISTRACTION_HANG_UP,
+                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
+                                route.latitude[it[index]],
+                                route.longitude[it[index]],
+                                isForbidden = isForbidden
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
         events = events.sortedWith(compareBy {it.time}).toMutableList()
+    }
+
+    fun getCallIndexStatus(position: Int): Boolean? {
+        if (trip != null) {
+            if (!trip!!.calls.isNullOrEmpty()) {
+              return trip!!.calls!![position % 2].isForbidden
+            }
+        }
+        return null
     }
 
     fun deleteTrip(){
