@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
 import android.graphics.Typeface
+import android.text.Spannable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup

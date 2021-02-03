@@ -4,13 +4,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import java.io.Serializable
 import java.util.*
@@ -357,16 +360,40 @@ class TripDetailViewModel(
 
     override fun getSelectedTraceType(): MutableLiveData<MapTraceType> = selectedMapTraceType
 
-    override fun getPhoneCallsDistance(): String {
-        TODO("Not yet implemented")
+    override fun getPhoneCallsDistance(context: Context): String {
+        val distance = "${trip?.calls?.map {
+            it.distance
+        }?.sum()}"
+       return DKDataFormatter.formatMeterDistance(context, distance.toDouble())
     }
 
-    override fun getPhoneCallsNumber(): String {
-        TODO("Not yet implemented")
+    override fun getPhoneCallsNumber(context: Context): Pair<String, String> {
+        val phoneCallNumber = trip?.calls?.size
+        return if (phoneCallNumber == 0) {
+            val textPhoneHaut0 =
+                DKResource.convertToString(context, "dk_driverdata_no_call_congrats")
+            val textPhoneBas0 = DKResource.convertToString(context, "dk_driverdata_no_call_content")
+            Pair(textPhoneHaut0, textPhoneBas0)
+        } else {
+            val textBasPhone = DKResource.buildString(
+                context,
+                DriveKitUI.colors.secondaryColor(),
+                DriveKitUI.colors.secondaryColor(),
+                "dk_driverdata_distance_travelled", "$phoneCallNumber"
+            )
+            val textHautPhone = context.resources.getQuantityString(
+                R.plurals.phone_call_plural,
+                phoneCallNumber!!,
+                phoneCallNumber
+            )
+            Pair(textHautPhone, textBasPhone.toString())
+        }
     }
 
-    override fun getPhoneCallsDuration(): String {
-        TODO("Not yet implemented")
+    override fun getPhoneCallsDuration(context: Context): String {
+        return "${trip?.calls?.map {
+            it.duration
+        }?.sum()}"
     }
 }
 
@@ -388,7 +415,7 @@ interface DKTripDetailViewModel : Serializable {
     fun getUnlockDuration(context: Context): String
     fun getUnlockDistance(context: Context): String
     fun getSelectedTraceType(): MutableLiveData<MapTraceType>
-    fun getPhoneCallsDistance(): String
-    fun getPhoneCallsNumber(): String
-    fun getPhoneCallsDuration(): String
+    fun getPhoneCallsDistance(context: Context): String
+    fun getPhoneCallsNumber(context: Context): Pair<String,String>
+    fun getPhoneCallsDuration(context: Context): String
 }

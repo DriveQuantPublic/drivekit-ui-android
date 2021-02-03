@@ -27,7 +27,7 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_declared_transportation_mode">Mode déclaré :</string>
    <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
    <string name="dk_driverdata_detected_transportation_mode">Mode détecté :</string>
-   <string name="dk_driverdata_distance_travelled">%sparcourus</string>
+   <string name="dk_driverdata_distance_travelled">%s parcourus</string>
    <string name="dk_driverdata_end_authorized_call">Fin d\'appel autorisé</string>
    <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
