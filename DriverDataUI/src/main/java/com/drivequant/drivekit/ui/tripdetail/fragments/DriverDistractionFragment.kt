@@ -56,6 +56,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         }
         phoneCallDurationBackground = phone_call_duration.background as GradientDrawable
         unlockNumberEventBackground = unlock_number_event.background as GradientDrawable
+        setSelectedDistractionType(unlockNumberEventBackground, true)
 
         phone_call_duration.apply {
             setOnClickListener(this@DriverDistractionFragment)
@@ -70,7 +71,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         }
 
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
-        
+
         val textBasUnlock = DKResource.buildString(
             requireContext(),
             DriveKitUI.colors.secondaryColor(),
@@ -105,7 +106,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         val drawable = gradientDrawable.mutate()
         DrawableCompat.setTint(
             drawable,
-            if (selected) DriveKitUI.colors.secondaryColor() else DriveKitUI.colors.complementaryFontColor()
+            if (selected) DriveKitUI.colors.secondaryColor() else Color.parseColor("#9E9E9E")
         )
     }
 
