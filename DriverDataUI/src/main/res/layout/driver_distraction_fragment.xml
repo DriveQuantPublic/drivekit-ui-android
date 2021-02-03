@@ -1,100 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="8dp"
     tools:context=".tripdetail.activity.TripDetailActivity">
 
-    <com.drivequant.drivekit.common.ui.component.GaugeIndicator
-        android:id="@+id/score_gauge"
-        style="@style/GaugeTripDetail"
-        android:layout_width="96dp"
-        android:layout_height="120dp"
-        android:paddingTop="@dimen/dk_margin_medium"
-        android:paddingBottom="@dimen/dk_margin_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/gauge_type_title"
-        android:layout_width="96dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_gauge" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/unlockNumberEvent"
-        style="@style/EventNumberText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/unlockNumberDescription"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/durationUnlocked" />
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
+            android:id="@+id/score_gauge"
+            style="@style/GaugeTripDetail"
+            android:layout_width="96dp"
+            android:layout_height="120dp"
+            android:paddingTop="@dimen/dk_margin_medium"
+            android:paddingBottom="@dimen/dk_margin_medium" />
 
-    <TextView
-        android:id="@+id/durationUnlocked"
-        style="@style/EventNumberText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/unlockDurationDescription"
-        app:layout_constraintTop_toBottomOf="@id/unlockNumberEvent"
-        app:layout_constraintBottom_toTopOf="@+id/distanceUnlocked" />
+        <TextView
+            android:id="@+id/gauge_type_title"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/distanceUnlocked"
-        style="@style/EventNumberText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/durationUnlocked"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/unlockDistanceDescription" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/unlockNumberDescription"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintEnd_toStartOf="@id/unlockNumberEvent"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintBottom_toTopOf="@+id/unlockDurationDescription"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/unlockDurationDescription"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintEnd_toStartOf="@id/durationUnlocked"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/unlockNumberDescription"
-        app:layout_constraintBottom_toTopOf="@+id/unlockDistanceDescription"/>
+            <com.drivequant.drivekit.ui.commons.views.DistractionItem
+                android:id="@+id/distraction_unlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true" />
 
-    <TextView
-        android:id="@+id/unlockDistanceDescription"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintEnd_toStartOf="@id/distanceUnlocked"
-        app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/unlockDurationDescription"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/unlock_number_event"
+                style="@style/DistractionSelector"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:paddingTop="@dimen/dk_margin_half"
+                android:paddingBottom="@dimen/dk_margin_half"
+                tools:text="345" />
+        </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.drivequant.drivekit.ui.commons.views.DistractionItem
+                android:id="@+id/distraction_phone_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/phone_call_duration"
+                style="@style/DistractionSelector"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:paddingTop="@dimen/dk_margin_half"
+                android:paddingBottom="@dimen/dk_margin_half"
+                tools:text="345" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dk_margin_half">
+
+    <TextView
+        android:id="@+id/line_separator"
+        style="@style/Separator.Vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_distraction_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        app:layout_constraintStart_toEndOf="@+id/line_separator"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_distraction_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/line_separator"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_distraction_event" />
+</android.support.constraint.ConstraintLayout>
