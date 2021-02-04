@@ -75,14 +75,14 @@ class VehicleDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putSerializable("vehicleDetailTag", vehicleId)
         super.onSaveInstanceState(outState)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         val menuInflater = activity?.menuInflater
         menuInflater?.inflate(R.menu.vehicle_menu_bar, menu)

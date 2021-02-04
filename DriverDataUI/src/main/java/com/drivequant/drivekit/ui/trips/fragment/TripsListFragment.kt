@@ -75,13 +75,13 @@ class TripsListFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.trip_list_menu_bar, menu)
+        inflater.inflate(R.menu.trip_list_menu_bar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.trips_vehicle -> {
                 viewModel.filterTrips(TripListConfiguration.MOTORIZED())
                 filter_view.spinner.setSelection(0, false)

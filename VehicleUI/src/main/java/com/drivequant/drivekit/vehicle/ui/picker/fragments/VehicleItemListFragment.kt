@@ -79,7 +79,7 @@ class VehicleItemListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_item_list, container,false)
         textViewDescription = view.findViewById(R.id.text_view_description) as TextView
         textViewDescription.bigText()
@@ -135,7 +135,7 @@ class VehicleItemListFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
             listener = context

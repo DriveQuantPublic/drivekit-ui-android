@@ -78,13 +78,13 @@ class TripDetailFragment : Fragment() {
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.trip_menu_bar, menu)
+        inflater.inflate(R.menu.trip_menu_bar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
             R.id.trip_delete -> {
                 context?.let {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
@@ -434,9 +434,11 @@ class TripDetailFragment : Fragment() {
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                val sizePx = (it.parent.height * 0.66).toInt()
-                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
-                it.customView = icon
+                it.parent?.let { tabLayout ->
+                    val sizePx = (tabLayout.height * 0.66).toInt()
+                    it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                    it.customView = icon
+                }
             }
         }
         DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())

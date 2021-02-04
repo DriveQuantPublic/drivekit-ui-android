@@ -26,7 +26,7 @@ class BeaconDetailFragment : Fragment() {
 
     private lateinit var viewModel: BeaconDetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         DriveKitVehicleUI.beaconDiagnosticMail?.let {
             setHasOptionsMenu(true)
         }
@@ -42,20 +42,20 @@ class BeaconDetailFragment : Fragment() {
         recycler_view_container.adapter = BeaconDetailAdapter(requireContext(), viewModel)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
             val menuInflater = activity?.menuInflater
             menuInflater?.inflate(R.menu.beacon_detail_menu_bar, menu)
 
-            val item = menu?.findItem(R.id.action_mail)
+            val item = menu.findItem(R.id.action_mail)
             item?.let {
                 val wrapped = DrawableCompat.wrap(it.icon)
                 DrawableCompat.setTint(wrapped, Color.WHITE)
             }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_mail){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_mail){
             sendMail()
         }
         return super.onOptionsItemSelected(item)

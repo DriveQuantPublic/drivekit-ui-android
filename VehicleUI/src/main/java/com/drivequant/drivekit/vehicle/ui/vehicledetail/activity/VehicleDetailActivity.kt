@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus.*
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
