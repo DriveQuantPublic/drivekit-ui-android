@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +41,8 @@ class TripTimelineFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        timeline_list.layoutManager = LinearLayoutManager(requireContext())
+        timeline_list.layoutManager =
+            LinearLayoutManager(requireContext())
         timeline_list.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
                 tripDetailViewModel.getSelectedEvent().postValue(position)

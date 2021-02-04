@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle

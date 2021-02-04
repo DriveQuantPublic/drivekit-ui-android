@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DriverRanked
 import com.drivequant.drivekit.databaseutils.entity.Ranking

@@ -3,7 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
 
-class BeaconInputIdFragment : Fragment (), BeaconViewModel.BeaconInfoStatusListener {
+class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListener {
 
     companion object {
         fun newInstance(viewModel: BeaconViewModel) : BeaconInputIdFragment {

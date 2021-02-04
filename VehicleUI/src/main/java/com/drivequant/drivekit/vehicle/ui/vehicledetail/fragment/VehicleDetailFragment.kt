@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,14 +11,14 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
@@ -149,7 +149,8 @@ class VehicleDetailFragment : Fragment() {
                 .into(it)
         }
 
-        val linearLayoutManager = LinearLayoutManager(view.context)
+        val linearLayoutManager =
+            LinearLayoutManager(view.context)
         vehicle_fields.layoutManager = linearLayoutManager
 
         viewModel.newEditableFieldObserver.observe(this, Observer {

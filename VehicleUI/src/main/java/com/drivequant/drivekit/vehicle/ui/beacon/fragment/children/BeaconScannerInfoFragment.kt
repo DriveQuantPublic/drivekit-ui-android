@@ -4,8 +4,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
+import androidx.core.graphics.drawable.DrawableCompat
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View

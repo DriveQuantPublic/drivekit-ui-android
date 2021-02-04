@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R

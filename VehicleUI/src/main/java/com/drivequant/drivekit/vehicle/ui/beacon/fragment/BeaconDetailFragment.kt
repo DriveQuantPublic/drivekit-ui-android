@@ -3,9 +3,9 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -36,7 +36,8 @@ class BeaconDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.buildListData(requireContext())
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager =
+            LinearLayoutManager(requireContext())
         recycler_view_container.layoutManager = layoutManager
         recycler_view_container.adapter = BeaconDetailAdapter(requireContext(), viewModel)
     }

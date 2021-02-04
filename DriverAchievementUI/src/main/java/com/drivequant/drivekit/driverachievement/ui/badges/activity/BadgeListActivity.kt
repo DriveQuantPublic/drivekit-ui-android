@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.activity
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.fragment.BadgesListFragment
