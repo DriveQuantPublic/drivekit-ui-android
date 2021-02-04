@@ -47,13 +47,11 @@
 
             <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/screen_unlock_selector"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
+                android:layout_width="59dp"
+                android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_quarter"
-                android:paddingTop="@dimen/dk_margin_half"
-                android:paddingBottom="@dimen/dk_margin_half" />
+                android:layout_marginEnd="@dimen/dk_margin_quarter" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -70,13 +68,11 @@
 
             <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/phone_call_selector"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content"
+                android:layout_width="59dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_quarter"
-                android:paddingTop="@dimen/dk_margin_half"
-                android:paddingBottom="@dimen/dk_margin_half" />
+                android:layout_marginEnd="@dimen/dk_margin_quarter" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

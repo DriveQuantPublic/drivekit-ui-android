@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.support.v4.graphics.ColorUtils
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -28,7 +29,10 @@ class DistractionSelectorItem : LinearLayout {
 
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_selector_item, null)
-        view.distraction_selector.smallText()
+        view.distraction_selector.smallText(
+            textColor = DriveKitUI.colors.primaryColor(),
+            isTypeFaceBold = true
+        )
         selectorBackground = view.distraction_selector.background as GradientDrawable
         selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
         addView(

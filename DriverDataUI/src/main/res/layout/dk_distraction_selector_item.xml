@@ -7,6 +7,7 @@
         android:id="@+id/distraction_selector"
         style="@style/DistractionSelector"
         android:layout_width="match_parent"
-        android:padding="@dimen/dk_margin_half"
+        android:paddingTop="@dimen/dk_margin_half"
+        android:paddingBottom="@dimen/dk_margin_half"
         android:layout_height="match_parent" />
 </LinearLayout>
