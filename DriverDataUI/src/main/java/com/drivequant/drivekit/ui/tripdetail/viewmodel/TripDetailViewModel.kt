@@ -57,7 +57,7 @@ class TripDetailViewModel(
                             configurableMapItems.add(item)
                         }
                     }
-                } 
+                }
                 if (configurableMapItems.isNotEmpty()) {
                     displayMapItem.value = configurableMapItems[0]
                 }
@@ -350,50 +350,79 @@ class TripDetailViewModel(
 
     override fun getSelectedEvent(): MutableLiveData<Int> = selection
 
-    override fun getScore() = trip?.driverDistraction?.score
+    override fun getScore(): Double {
+        trip?.driverDistraction?.score?.let {
+            return it
+        }
+        return 0.toDouble()
+    }
 
-    override fun getUnlockNumberEvent() = trip?.driverDistraction?.nbUnlock.toString()
+    override fun getUnlockNumberEvent(): Int {
+        trip?.driverDistraction?.nbUnlock?.let {
+            return it
+        }
+        return 0
+    }
 
-    override fun getUnlockDuration(context: Context) = DKDataFormatter.formatDuration(context,trip?.driverDistraction?.durationUnlock)
+    override fun getUnlockDuration(context: Context) =
+        DKDataFormatter.formatDuration(context, trip?.driverDistraction?.durationUnlock)
 
-    override fun getUnlockDistance(context: Context) = DKDataFormatter.formatMeterDistance(context,trip?.driverDistraction?.distanceUnlock)
+    override fun getUnlockDistance(context: Context) =
+        DKDataFormatter.formatMeterDistance(context, trip?.driverDistraction?.distanceUnlock)
 
     override fun getSelectedTraceType(): MutableLiveData<MapTraceType> = selectedMapTraceType
 
     override fun getPhoneCallsDistance(context: Context): String {
-        val distance = "${trip?.calls?.map {
-            it.distance
-        }?.sum()}"
-       return DKDataFormatter.formatMeterDistance(context, distance.toDouble())
+        var distance = 0
+        trip?.let { trip ->
+            trip.calls?.let { calls ->
+                distance = calls.map { call ->
+                    call.distance
+                }.sum()
+            }
+        }
+        return DKDataFormatter.formatMeterDistance(context, distance.toDouble())
     }
 
     override fun getPhoneCallsNumber(context: Context): Pair<String, String> {
-        val phoneCallNumber = trip?.calls?.size
+        var phoneCallNumber = 0
+        trip?.let {
+            it.calls?.let { calls ->
+                phoneCallNumber = calls.size
+            }
+        }
         return if (phoneCallNumber == 0) {
-            val textPhoneHaut0 =
+            val phoneCallCongrats =
                 DKResource.convertToString(context, "dk_driverdata_no_call_congrats")
-            val textPhoneBas0 = DKResource.convertToString(context, "dk_driverdata_no_call_content")
-            Pair(textPhoneHaut0, textPhoneBas0)
+            val phoneCallContentCongrats =
+                DKResource.convertToString(context, "dk_driverdata_no_call_content")
+            Pair(phoneCallCongrats, phoneCallContentCongrats)
         } else {
-            val textBasPhone = DKResource.buildString(
+            val phoneCallContent = DKResource.buildString(
                 context,
                 DriveKitUI.colors.secondaryColor(),
                 DriveKitUI.colors.secondaryColor(),
-                "dk_driverdata_distance_travelled", "$phoneCallNumber"
+                "dk_driverdata_distance_travelled", getPhoneCallsDistance(context)
             )
-            val textHautPhone = context.resources.getQuantityString(
+            val phoneCallEvent = context.resources.getQuantityString(
                 R.plurals.phone_call_plural,
-                phoneCallNumber!!,
+                phoneCallNumber,
                 phoneCallNumber
             )
-            Pair(textHautPhone, textBasPhone.toString())
+            Pair(phoneCallEvent, phoneCallContent.toString())
         }
     }
 
     override fun getPhoneCallsDuration(context: Context): String {
-        return "${trip?.calls?.map {
-            it.duration
-        }?.sum()}"
+        var duration = 0
+        trip?.let { trip ->
+            trip.calls?.let { calls ->
+                duration = calls.map { call ->
+                    call.duration
+                }.sum()
+            }
+        }
+        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble())
     }
 }
 
@@ -410,8 +439,8 @@ class TripDetailViewModelFactory(
 interface DKTripDetailViewModel : Serializable {
     fun getTripEvents(): List<TripEvent>
     fun getSelectedEvent(): MutableLiveData<Int>
-    fun getScore(): Double?
-    fun getUnlockNumberEvent(): String
+    fun getScore(): Double
+    fun getUnlockNumberEvent(): Int
     fun getUnlockDuration(context: Context): String
     fun getUnlockDistance(context: Context): String
     fun getSelectedTraceType(): MutableLiveData<MapTraceType>
