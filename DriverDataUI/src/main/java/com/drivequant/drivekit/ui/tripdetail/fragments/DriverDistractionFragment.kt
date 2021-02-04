@@ -48,15 +48,15 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let {
             viewModel = it
         }
-        phone_call_selector.setSelection(true)
-
         phone_call_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
+            setSelection(false)
         }
         screen_unlock_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent("${viewModel.getUnlockNumberEvent()}")
+            setSelection(true)
         }
 
         score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
@@ -69,22 +69,27 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
                 viewModel.getPhoneCallsNumber(requireContext()).second
             )
         }
-        val unlockEventId =
-            if (viewModel.getUnlockNumberEvent() == 0) "dk_driverdata_no_screen_unlocking" else "dk_driverdata_unlock_event"
-        val unlockEvent = DKResource.convertToString(requireContext(), unlockEventId)
-        val unlockContent = DKResource.buildString(
-            requireContext(),
-            DriveKitUI.colors.secondaryColor(),
-            DriveKitUI.colors.secondaryColor(),
-            "dk_driverdata_unlock_screen_content",
-            viewModel.getUnlockDuration(requireContext()),
-            viewModel.getUnlockDistance(requireContext())
-        )
+
+        val unlockEvent = DKResource.convertToString(requireContext(), "dk_driverdata_unlock_event")
+        val unlockContent =
+            if (viewModel.getUnlockNumberEvent() == 0) {
+                DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
+            } else {
+                DKResource.buildString(
+                    requireContext(),
+                    DriveKitUI.colors.secondaryColor(),
+                    DriveKitUI.colors.secondaryColor(),
+                    "dk_driverdata_unlock_screen_content",
+                    viewModel.getUnlockDuration(requireContext()),
+                    viewModel.getUnlockDistance(requireContext())
+                )
+            }
         screen_unlock_item.apply {
             setDistractionEventContent(
                 unlockEvent,
                 unlockContent.toString()
             )
+            setDistractionContentColor(true)
         }
     }
 
@@ -95,11 +100,15 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.UNLOCK_SCREEN)
                     screen_unlock_selector.setSelection(true)
                     phone_call_selector.setSelection(false)
+                    screen_unlock_item.setDistractionContentColor(true)
+                    phone_call_item.setDistractionContentColor(false)
                 }
                 R.id.phone_call_selector -> {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.PHONE_CALL)
-                    screen_unlock_selector.setSelection(true)
-                    phone_call_selector.setSelection(false)
+                    phone_call_selector.setSelection(true)
+                    screen_unlock_selector.setSelection(false)
+                    screen_unlock_item.setDistractionContentColor(false)
+                    phone_call_item.setDistractionContentColor(true)
                 }
             }
         }

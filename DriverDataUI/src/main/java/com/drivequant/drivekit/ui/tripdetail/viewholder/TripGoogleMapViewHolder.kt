@@ -118,8 +118,8 @@ internal class TripGoogleMapViewHolder(
                                 add(route.latitude.size - 1)
                             }
                             for (i in 1 until fullCallIndex.size) {
-                                viewModel.getCallIndexStatus(i - 1)?.let {
-                                    val phoneCallColor = if (it) unlockColor else authorizedColor
+                                viewModel.getCallFromIndex(i - 1)?.let {
+                                    val phoneCallColor = if (it.isForbidden) unlockColor else authorizedColor
                                     drawRoute(
                                         route,
                                         fullCallIndex[i - 1], fullCallIndex[i],

@@ -7,6 +7,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.Call
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
@@ -235,48 +236,35 @@ class TripDetailViewModel(
                 }
             }
         }
-
+        var chucked = listOf<List<Int>>()
         route.callIndex?.let {
-            for ((index, indexCall) in it.withIndex()) {
-                if (indexCall == 0 || indexCall == route.latitude.size - 1) continue
-                if (index % 2 == 0) {
-                    getCallIndexStatus(index)?.let { isForbidden ->
-                        events.add(
-                            TripEvent(
-                                TripEventType.PHONE_DISTRACTION_PICK_UP,
-                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
-                                route.latitude[it[index]],
-                                route.longitude[it[index]],
-                                isForbidden = isForbidden
-                            )
-                        )
-                    }
-                } else {
-                    getCallIndexStatus(index)?.let { isForbidden ->
-                        events.add(
-                            TripEvent(
-                                TripEventType.PHONE_DISTRACTION_HANG_UP,
-                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
-                                route.latitude[it[index]],
-                                route.longitude[it[index]],
-                                isForbidden = isForbidden
-                            )
-                        )
-                    }
-                }
-            }
+            chucked = it.chunked(2)
         }
-
-        events = events.sortedWith(compareBy {it.time}).toMutableList()
+        trip.calls?.let { calls ->
+            for ((indexPhoneCall, call) in calls.withIndex())
+                for ((index, indexCall) in chucked[indexPhoneCall].withIndex()) {
+                    if (indexCall == 0 || indexCall == route.latitude.size - 1) continue
+                    events.add(
+                        TripEvent(
+                            if (indexCall % 2 == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
+                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
+                            route.latitude[chucked[indexPhoneCall][index]],
+                            route.longitude[chucked[indexPhoneCall][index]],
+                            isForbidden = call.isForbidden,
+                            callDuration = call.duration.toDouble()
+                        )
+                    )
+                }
+        }
+        events = events.sortedWith(compareBy { it.time }).toMutableList()
     }
 
-    fun getCallIndexStatus(position: Int): Boolean? {
-        if (trip != null) {
-            if (!trip!!.calls.isNullOrEmpty()) {
-              return trip!!.calls!![position % 2].isForbidden
+    fun getCallFromIndex(position: Int): Call? {
+        return trip?.let { trip ->
+            trip.calls?.let { calls ->
+                calls[position % 2]
             }
         }
-        return null
     }
 
     fun deleteTrip(){

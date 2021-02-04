@@ -48,7 +48,8 @@ class DistractionSelectorItem : LinearLayout {
         val drawable = selectorBackground.mutate()
         DrawableCompat.setTint(
             drawable,
-            if (selected) ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102) else Color.parseColor("#F3F3F3")
+            if (selected) ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102)
+            else Color.parseColor("#F3F3F3")
         )
     }
 }

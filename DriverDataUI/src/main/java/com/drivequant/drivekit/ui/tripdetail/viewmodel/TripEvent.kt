@@ -6,6 +6,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -18,7 +19,8 @@ class TripEvent(val type: TripEventType,
                 val longitude: Double,
                 private val isHigh: Boolean = false,
                 val value: Double = 0.0,
-                private val isForbidden:Boolean = false){
+                private val isForbidden: Boolean = false,
+                private val callDuration: Double = 0.0) {
 
     fun getEventImageResource() : Int {
         return when(type){
@@ -135,9 +137,19 @@ class TripEvent(val type: TripEventType,
 
             PHONE_DISTRACTION_LOCK -> null
             PHONE_DISTRACTION_UNLOCK -> null
-            PHONE_DISTRACTION_PICK_UP -> null
-            PHONE_DISTRACTION_HANG_UP -> null
-            //TODO Add phone call distraction info bulle data
+            PHONE_DISTRACTION_PICK_UP, PHONE_DISTRACTION_HANG_UP -> {
+                val duration = DKDataFormatter.formatDuration(context, callDuration)
+                DKSpannable().append(
+                    context.getString(R.string.dk_driverdata_value),
+                    context.resSpans {
+                        color(DriveKitUI.colors.mainFontColor())
+                        size(R.dimen.dk_text_small)
+                    }).append(" ${duration}", context.resSpans {
+                    color(DriveKitUI.colors.warningColor())
+                    size(R.dimen.dk_text_small)
+                    typeface(Typeface.BOLD)
+                }).toSpannable()
+            }
         }
     }
 

@@ -45,7 +45,10 @@ class DistractionItem : LinearLayout {
     }
 
     fun setDistractionContentColor(selected: Boolean) {
-        val color = if (selected)  DriveKitUI.colors.secondaryColor() else Color.parseColor("#F3F3F3")
-        text_view_distraction_content.setTextColor(color)
+        text_view_distraction_content.setTextColor(
+            if (selected) DriveKitUI.colors.secondaryColor() else Color.parseColor(
+                "#9E9E9E"
+            )
+        )
     }
 }
