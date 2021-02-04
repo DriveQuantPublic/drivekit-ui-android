@@ -38,16 +38,8 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let {
-            viewModel = it
-        }
         phone_call_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))

@@ -111,29 +111,21 @@ internal class TripGoogleMapViewHolder(
                     }
                     MapTraceType.PHONE_CALL -> {
                         if (mapItem.shouldShowPhoneDistractionArea() && route.callIndex != null) {
-                            val fullCallIndex = mutableListOf<Int>()
-                            fullCallIndex.apply {
-                                add(0)
-                                addAll(route.callIndex!!)
-                                add(route.latitude.size - 1)
-                            }
-                            for (i in 1 until fullCallIndex.size) {
+                            drawRoute(route, 0, route.callIndex!!.first(), lockColor)
+                            for (i in 1 until route.callIndex!!.size) {
                                 viewModel.getCallFromIndex(i - 1)?.let {
                                     val phoneCallColor = if (it.isForbidden) unlockColor else authorizedColor
                                     drawRoute(
                                         route,
-                                        fullCallIndex[i - 1], fullCallIndex[i],
-                                        if (i % 2 == 0) phoneCallColor else lockColor
+                                        route.callIndex!![i - 1], route.callIndex!![i],
+                                        if (i % 2 != 0) phoneCallColor else lockColor
                                     )
                                 }
                             }
-                        } else {
-                            drawRoute(
-                                route,
-                                0,
-                                route.latitude.size - 1,
-                                lockColor
+                            drawRoute(route, route.callIndex!!.last(),route.latitude.size - 1, lockColor
                             )
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }
                 }

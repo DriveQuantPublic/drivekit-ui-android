@@ -140,7 +140,7 @@ class TripEvent(val type: TripEventType,
             PHONE_DISTRACTION_PICK_UP, PHONE_DISTRACTION_HANG_UP -> {
                 val duration = DKDataFormatter.formatDuration(context, callDuration)
                 DKSpannable().append(
-                    context.getString(R.string.dk_driverdata_value),
+                    context.getString(R.string.dk_driverdata_calling_time),
                     context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
                         size(R.dimen.dk_text_small)

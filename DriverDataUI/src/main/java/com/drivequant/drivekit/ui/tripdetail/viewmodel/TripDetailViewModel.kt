@@ -22,7 +22,7 @@ import java.util.*
 class TripDetailViewModel(
     private val itinId: String,
     private val tripListConfiguration: TripListConfiguration
-) : ViewModel(), DKTripDetailViewModel, Serializable {
+) : ViewModel(), DKTripDetailViewModel {
 
     private var mapItems: MutableList<DKMapItem> = mutableListOf()
 
@@ -246,7 +246,7 @@ class TripDetailViewModel(
                     if (indexCall == 0 || indexCall == route.latitude.size - 1) continue
                     events.add(
                         TripEvent(
-                            if (indexCall % 2 == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
+                            if (index % 2 == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
                             Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
                             route.latitude[chucked[indexPhoneCall][index]],
                             route.longitude[chucked[indexPhoneCall][index]],
@@ -255,7 +255,7 @@ class TripDetailViewModel(
                         )
                     )
                 }
-        }
+            }
         events = events.sortedWith(compareBy { it.time }).toMutableList()
     }
 
@@ -424,7 +424,7 @@ class TripDetailViewModelFactory(
     }
 }
 
-interface DKTripDetailViewModel : Serializable {
+interface DKTripDetailViewModel {
     fun getTripEvents(): List<TripEvent>
     fun getSelectedEvent(): MutableLiveData<Int>
     fun getScore(): Double

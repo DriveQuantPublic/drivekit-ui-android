@@ -2,16 +2,12 @@ package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Typeface
-import android.text.Spannable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_distraction_item.view.*
