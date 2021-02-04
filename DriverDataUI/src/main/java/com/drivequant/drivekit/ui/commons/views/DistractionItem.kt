@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import android.util.AttributeSet
@@ -28,7 +29,7 @@ class DistractionItem : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_item, null)
         view.text_view_distraction_event.headLine2()
-        view.text_view_distraction_content.smallText(DriveKitUI.colors.complementaryFontColor())
+        view.text_view_distraction_content.smallText(Color.parseColor("#9E9E9E"))
         view.line_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         addView(
             view, ViewGroup.LayoutParams(
@@ -38,11 +39,13 @@ class DistractionItem : LinearLayout {
         )
     }
 
-    fun setDistractionEvent(value: String) {
-        text_view_distraction_event.text = value
+    fun setDistractionEventContent(title: String, content: String) {
+        text_view_distraction_event.text = title
+        text_view_distraction_content.text = content
     }
 
-    fun setDistractionContent(value: String) {
-        text_view_distraction_content.text = value
+    fun setDistractionContentColor(selected: Boolean) {
+        val color = if (selected)  DriveKitUI.colors.secondaryColor() else Color.parseColor("#F3F3F3")
+        text_view_distraction_content.setTextColor(color)
     }
 }

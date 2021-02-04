@@ -44,17 +44,15 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true" />
 
-            <TextView
+            <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/unlock_number_event"
-                style="@style/DistractionSelector"
-                android:layout_width="50dp"
+                android:layout_width="55dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:layout_marginEnd="@dimen/dk_margin_half"
                 android:paddingTop="@dimen/dk_margin_half"
-                android:paddingBottom="@dimen/dk_margin_half"
-                tools:text="345" />
+                android:paddingBottom="@dimen/dk_margin_half" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -69,17 +67,15 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true" />
 
-            <TextView
+            <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/phone_call_duration"
-                style="@style/DistractionSelector"
-                android:layout_width="50dp"
+                android:layout_width="55dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:layout_marginEnd="@dimen/dk_margin_half"
                 android:paddingTop="@dimen/dk_margin_half"
-                android:paddingBottom="@dimen/dk_margin_half"
-                tools:text="345" />
+                android:paddingBottom="@dimen/dk_margin_half" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.graphics.ColorUtils
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
@@ -21,7 +23,6 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
 class DriverDistractionFragment : Fragment(), View.OnClickListener {
-
 
     companion object {
         fun newInstance(tripDetailViewModel: DKTripDetailViewModel): DriverDistractionFragment {
@@ -32,8 +33,6 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
     }
 
     private lateinit var viewModel: DKTripDetailViewModel
-    private lateinit var phoneCallDurationBackground: GradientDrawable
-    private lateinit var unlockNumberEventBackground: GradientDrawable
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,25 +53,31 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let {
             viewModel = it
         }
-        phoneCallDurationBackground = phone_call_duration.background as GradientDrawable
-        unlockNumberEventBackground = unlock_number_event.background as GradientDrawable
-        setSelectedDistractionType(unlockNumberEventBackground, true)
+        phone_call_duration.setSelection(true)
 
         phone_call_duration.apply {
             setOnClickListener(this@DriverDistractionFragment)
-            text = viewModel.getPhoneCallsDuration(requireContext())
+            setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
         }
         unlock_number_event.apply {
             setOnClickListener(this@DriverDistractionFragment)
-            text = viewModel.getUnlockNumberEvent()
-        }
-        viewModel.getScore()?.let {
-            score_gauge.configure(it, GaugeType.DISTRACTION, Typeface.BOLD)
+            setSelectorContent("${viewModel.getUnlockNumberEvent()}")
         }
 
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
+        gauge_type_title.normalText()
 
-        val textBasUnlock = DKResource.buildString(
+        distraction_phone_call.apply {
+            setDistractionEventContent(
+                viewModel.getPhoneCallsNumber(requireContext()).first,
+                viewModel.getPhoneCallsNumber(requireContext()).second
+            )
+        }
+        val unlockEventId =
+            if (viewModel.getUnlockNumberEvent() == 0) "dk_driverdata_no_screen_unlocking" else "dk_driverdata_unlock_event"
+        val unlockEvent = DKResource.convertToString(requireContext(), unlockEventId)
+        val unlockContent = DKResource.buildString(
             requireContext(),
             DriveKitUI.colors.secondaryColor(),
             DriveKitUI.colors.secondaryColor(),
@@ -80,34 +85,12 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
             viewModel.getUnlockDuration(requireContext()),
             viewModel.getUnlockDistance(requireContext())
         )
-
-        distraction_phone_call.apply {
-            setDistractionEvent(viewModel.getPhoneCallsNumber(requireContext()).first)
-            setDistractionContent(viewModel.getPhoneCallsNumber(requireContext()).second)
-        }
         distraction_unlock.apply {
-            setDistractionContent(textBasUnlock.toString())
-            setDistractionEvent(DKResource.convertToString(context, "dk_driverdata_unlock_event"))
+            setDistractionEventContent(
+                unlockEvent,
+                unlockContent.toString()
+            )
         }
-        phoneCallDurationBackground.setStroke(2, DriveKitUI.colors.complementaryFontColor())
-        unlockNumberEventBackground.setStroke(2, DriveKitUI.colors.complementaryFontColor())
-
-        setStyle()
-    }
-
-
-    private fun setStyle() {
-        gauge_type_title.normalText()
-        phone_call_duration.headLine2(DriveKitUI.colors.primaryColor())
-        unlock_number_event.headLine2(DriveKitUI.colors.primaryColor())
-    }
-
-    private fun setSelectedDistractionType(gradientDrawable: GradientDrawable, selected: Boolean) {
-        val drawable = gradientDrawable.mutate()
-        DrawableCompat.setTint(
-            drawable,
-            if (selected) DriveKitUI.colors.secondaryColor() else Color.parseColor("#9E9E9E")
-        )
     }
 
     override fun onClick(v: View?) {
@@ -115,25 +98,14 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
             when (it.id) {
                 R.id.unlock_number_event -> {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.UNLOCK_SCREEN)
-                    setSelectedDistractionType(
-                        unlockNumberEventBackground,
-                        true
-                    )
-                    setSelectedDistractionType(
-                        phoneCallDurationBackground,
-                        false
-                    )
+                    unlock_number_event.setSelection(true)
+                    phone_call_duration.setSelection(false)
                 }
                 R.id.phone_call_duration -> {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.PHONE_CALL)
-                    setSelectedDistractionType(
-                        phoneCallDurationBackground,
-                        true
-                    )
-                    setSelectedDistractionType(
-                        unlockNumberEventBackground,
-                        false
-                    )
+                    phone_call_duration.setSelection(true)
+                    unlock_number_event.setSelection(false)
+
                 }
             }
         }
