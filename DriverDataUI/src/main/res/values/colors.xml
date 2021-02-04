@@ -2,5 +2,5 @@
 <resources>
     <color name="dkMapTraceMainColor">#116EA9</color>
     <color name="dkMapTraceWarningColor">#ED4F3B</color>
-    <color name="dkMapTraceAuthorizedColor">#096A09</color>
+    <color name="dkMapTraceAuthorizedColor">#93C47D</color>
 </resources>
