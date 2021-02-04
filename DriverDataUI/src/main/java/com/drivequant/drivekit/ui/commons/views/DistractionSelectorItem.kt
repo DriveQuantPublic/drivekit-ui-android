@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.dk_distraction_selector_item.view.*
 
 class DistractionSelectorItem : LinearLayout {
 
+    private lateinit var selectorBackground: GradientDrawable
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -27,10 +29,8 @@ class DistractionSelectorItem : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_selector_item, null)
         view.distraction_selector.smallText()
-        (view.distraction_selector.background as GradientDrawable).setStroke(
-            3,
-            DriveKitUI.colors.complementaryFontColor()
-        )
+        selectorBackground = view.distraction_selector.background as GradientDrawable
+        selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -44,12 +44,11 @@ class DistractionSelectorItem : LinearLayout {
     }
 
     fun setSelection(selected: Boolean) {
-       val selectorBackground = distraction_selector.background as GradientDrawable
+        selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
         val drawable = selectorBackground.mutate()
         DrawableCompat.setTint(
             drawable,
             if (selected) ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102) else Color.parseColor("#F3F3F3")
         )
-        selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
     }
 }

@@ -2,19 +2,14 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.graphics.ColorUtils
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
@@ -53,13 +48,13 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         (savedInstanceState?.getSerializable("viewModel") as TripDetailViewModel?)?.let {
             viewModel = it
         }
-        phone_call_duration.setSelection(true)
+        phone_call_selector.setSelection(true)
 
-        phone_call_duration.apply {
+        phone_call_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
         }
-        unlock_number_event.apply {
+        screen_unlock_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent("${viewModel.getUnlockNumberEvent()}")
         }
@@ -68,7 +63,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 
-        distraction_phone_call.apply {
+        phone_call_item.apply {
             setDistractionEventContent(
                 viewModel.getPhoneCallsNumber(requireContext()).first,
                 viewModel.getPhoneCallsNumber(requireContext()).second
@@ -85,7 +80,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
             viewModel.getUnlockDuration(requireContext()),
             viewModel.getUnlockDistance(requireContext())
         )
-        distraction_unlock.apply {
+        screen_unlock_item.apply {
             setDistractionEventContent(
                 unlockEvent,
                 unlockContent.toString()
@@ -96,16 +91,15 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         v?.let {
             when (it.id) {
-                R.id.unlock_number_event -> {
+                R.id.screen_unlock_selector -> {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.UNLOCK_SCREEN)
-                    unlock_number_event.setSelection(true)
-                    phone_call_duration.setSelection(false)
+                    screen_unlock_selector.setSelection(true)
+                    phone_call_selector.setSelection(false)
                 }
-                R.id.phone_call_duration -> {
+                R.id.phone_call_selector -> {
                     viewModel.getSelectedTraceType().postValue(MapTraceType.PHONE_CALL)
-                    phone_call_duration.setSelection(true)
-                    unlock_number_event.setSelection(false)
-
+                    screen_unlock_selector.setSelection(true)
+                    phone_call_selector.setSelection(false)
                 }
             }
         }
