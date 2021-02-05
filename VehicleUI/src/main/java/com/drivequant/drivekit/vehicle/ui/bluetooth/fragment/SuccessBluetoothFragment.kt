@@ -30,14 +30,14 @@ class SuccessBluetoothFragment: Fragment() {
     private lateinit var viewModel : BluetoothViewModel
     private lateinit var vehicle: Vehicle
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_bluetooth_success, container, false).setDKStyle()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val btDeviceName = vehicle.bluetooth?.name?.let { it }?: run { "" }
+        val btDeviceName = vehicle.bluetooth?.name ?: ""
 
         text_view_congrats_title.headLine1(mainFontColor)
         text_view_congrats_title.text = DKResource.convertToString(view.context, "dk_vehicle_bluetooth_congrats_title")

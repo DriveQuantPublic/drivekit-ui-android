@@ -38,8 +38,8 @@ class BeaconScannerSuccessFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val vehicleName = viewModel.vehicleName?.let { it }?:run { "" }
-        val beaconCode = viewModel.beacon?.code?.let { it }?:run { "" }
+        val vehicleName = viewModel.vehicleName ?: ""
+        val beaconCode = viewModel.beacon?.code ?: ""
 
         text_view_description.normalText()
         text_view_description.text = DKResource.buildString(

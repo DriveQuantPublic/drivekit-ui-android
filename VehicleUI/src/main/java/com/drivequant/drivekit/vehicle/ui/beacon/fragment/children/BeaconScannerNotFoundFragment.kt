@@ -29,7 +29,7 @@ class BeaconScannerNotFoundFragment : Fragment() {
 
     private lateinit var viewModel: BeaconViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_not_found, container, false).setDKStyle()
     }
 

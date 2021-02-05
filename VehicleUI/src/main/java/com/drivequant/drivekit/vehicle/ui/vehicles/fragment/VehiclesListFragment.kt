@@ -32,7 +32,7 @@ class VehiclesListFragment : Fragment() {
     private var adapter: VehiclesListAdapter? = null
     private var isInit: Boolean = true
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

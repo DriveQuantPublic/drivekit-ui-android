@@ -36,7 +36,7 @@ class VehicleNameChooserFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_vehicle_name_chooser, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_vehicle_name_chooser, container, false).setDKStyle()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -50,7 +50,7 @@ internal class TransportationModeFragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.dk_fragment_transportation_mode, container, false).setDKStyle()
     }
 

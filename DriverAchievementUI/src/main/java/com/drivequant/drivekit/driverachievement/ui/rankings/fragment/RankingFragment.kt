@@ -63,7 +63,7 @@ class RankingFragment : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? =
+        savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
 
 

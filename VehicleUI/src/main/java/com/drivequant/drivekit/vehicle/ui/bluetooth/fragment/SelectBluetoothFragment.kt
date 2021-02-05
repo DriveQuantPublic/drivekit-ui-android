@@ -35,7 +35,7 @@ class SelectBluetoothFragment: Fragment() {
     private lateinit var globalView: View
     private lateinit var adapter: BluetoothItemRecyclerViewAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         globalView = inflater.inflate(R.layout.fragment_bluetooth_select, container, false).setDKStyle()
         return globalView
     }
