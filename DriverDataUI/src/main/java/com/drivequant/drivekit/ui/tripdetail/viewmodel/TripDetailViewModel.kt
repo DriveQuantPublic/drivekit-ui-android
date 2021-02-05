@@ -82,6 +82,8 @@ class TripDetailViewModel(
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
     var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
     var selectedMapTraceType: MutableLiveData<MapTraceType> = MutableLiveData()
+    var chuckedCallIndex = listOf<List<Int>>()
+    var chuckedCallTime = listOf<List<Int>>()
 
     fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
@@ -236,20 +238,25 @@ class TripDetailViewModel(
                 }
             }
         }
-        var chucked = listOf<List<Int>>()
         route.callIndex?.let {
-            chucked = it.chunked(2)
+            chuckedCallIndex = it.chunked(2)
+        }
+        route.callTime?.let {
+            chuckedCallTime = it.chunked(2)
         }
         trip.calls?.let { calls ->
             for ((indexPhoneCall, call) in calls.withIndex())
-                for ((index, indexCall) in chucked[indexPhoneCall].withIndex()) {
-                    if (indexCall == 0 || indexCall == route.latitude.size - 1) continue
+                for ((index, indexCall) in chuckedCallIndex[indexPhoneCall].withIndex()) {
+                    if ((route.latitude[indexCall]  == route.latitude.first() &&
+                         route.longitude[indexCall] == route.longitude.first()) ||
+                        (route.latitude[indexCall]  == route.latitude.last() &&
+                         route.longitude[indexCall] == route.longitude.last())) continue
                     events.add(
                         TripEvent(
                             if (index % 2 == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
-                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.callTime!![index] * 1000))),
-                            route.latitude[chucked[indexPhoneCall][index]],
-                            route.longitude[chucked[indexPhoneCall][index]],
+                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (chuckedCallTime[indexPhoneCall][index] * 1000))),
+                            route.latitude[chuckedCallIndex[indexPhoneCall][index]],
+                            route.longitude[chuckedCallIndex[indexPhoneCall][index]],
                             isForbidden = call.isForbidden,
                             callDuration = call.duration.toDouble()
                         )
