@@ -17,10 +17,10 @@ class TripEvent(val type: TripEventType,
                 val time: Date,
                 val latitude: Double,
                 val longitude: Double,
-                private val isHigh: Boolean = false,
+                val isHigh: Boolean = false,
                 val value: Double = 0.0,
-                private val isForbidden: Boolean = false,
-                private val callDuration: Double = 0.0) {
+                val isForbidden: Boolean = false,
+                val callDuration: Double = 0.0) {
 
     fun getEventImageResource() : Int {
         return when(type){

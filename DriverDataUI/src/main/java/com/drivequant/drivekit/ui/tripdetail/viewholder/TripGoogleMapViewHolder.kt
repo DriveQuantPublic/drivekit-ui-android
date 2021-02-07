@@ -93,7 +93,7 @@ internal class TripGoogleMapViewHolder(
         viewModel.route?.let { route ->
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
-            val authorizedColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedColor)
+            val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
             if (mapItem != null && mapItem == MapItem.DISTRACTION) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
@@ -114,7 +114,7 @@ internal class TripGoogleMapViewHolder(
                             drawRoute(route, 0, route.callIndex!!.first(), lockColor)
                             for (i in 1 until route.callIndex!!.size) {
                                 viewModel.getCallFromIndex(i - 1)?.let {
-                                    val phoneCallColor = if (it.isForbidden) unlockColor else authorizedColor
+                                    val phoneCallColor = if (it.isForbidden) unlockColor else authorizedCallColor
                                     drawRoute(
                                         route,
                                         route.callIndex!![i - 1], route.callIndex!![i],
@@ -122,8 +122,7 @@ internal class TripGoogleMapViewHolder(
                                     )
                                 }
                             }
-                            drawRoute(route, route.callIndex!!.last(),route.latitude.size - 1, lockColor
-                            )
+                            drawRoute(route, route.callIndex!!.last(),route.latitude.size - 1, lockColor)
                         } else {
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }

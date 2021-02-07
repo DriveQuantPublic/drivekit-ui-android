@@ -16,10 +16,9 @@ import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
-import java.io.Serializable
 import java.util.*
 
-class TripDetailViewModel(
+internal class TripDetailViewModel(
     private val itinId: String,
     private val tripListConfiguration: TripListConfiguration
 ) : ViewModel(), DKTripDetailViewModel {
@@ -244,18 +243,17 @@ class TripDetailViewModel(
         route.callTime?.let {
             chunkedCallTime = it.chunked(2)
         }
-
         trip.calls?.let { calls ->
             if (chunkedCallIndex.isNotEmpty()) {
-                for ((indexPhoneCall, call) in calls.withIndex())
+                for ((indexPhoneCall, call) in calls.withIndex()) {
                     for ((index, indexCall) in chunkedCallIndex[indexPhoneCall].withIndex()) {
-                        if ((route.latitude[indexCall] == route.latitude.first() &&
-                                    route.longitude[indexCall] == route.longitude.first()) ||
-                            (route.latitude[indexCall] == route.latitude.last() &&
-                                    route.longitude[indexCall] == route.longitude.last())) continue
+                        if ((route.latitude[indexCall]  == route.latitude.first() &&
+                             route.longitude[indexCall] == route.longitude.first()) ||
+                            (route.latitude[indexCall]  == route.latitude.last() &&
+                             route.longitude[indexCall] == route.longitude.last())) continue
                         events.add(
                             TripEvent(
-                                if (index % 2 == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
+                                if (index.rem(2) == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
                                 Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (chunkedCallTime[indexPhoneCall][index] * 1000))),
                                 route.latitude[chunkedCallIndex[indexPhoneCall][index]],
                                 route.longitude[chunkedCallIndex[indexPhoneCall][index]],
@@ -264,6 +262,7 @@ class TripDetailViewModel(
                             )
                         )
                     }
+                }
             }
         }
         events = events.sortedWith(compareBy { it.time }).toMutableList()
@@ -272,7 +271,7 @@ class TripDetailViewModel(
     fun getCallFromIndex(position: Int): Call? {
         return trip?.let { trip ->
             trip.calls?.let { calls ->
-                calls[position % 2]
+                calls[position.rem(2)]
             }
         }
     }

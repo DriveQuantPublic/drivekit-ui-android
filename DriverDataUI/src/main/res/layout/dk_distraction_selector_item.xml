@@ -5,7 +5,8 @@
 
     <TextView
         android:id="@+id/distraction_selector"
-        style="@style/DistractionSelector"
+        android:gravity="center"
+        android:background="@drawable/dk_distraction_rounded_edges"
         android:layout_width="match_parent"
         android:paddingTop="@dimen/dk_margin_half"
         android:paddingBottom="@dimen/dk_margin_half"

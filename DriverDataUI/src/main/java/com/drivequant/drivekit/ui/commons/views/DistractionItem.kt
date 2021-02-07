@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
-import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_distraction_item.view.*
 
@@ -25,7 +26,7 @@ class DistractionItem : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_item, null)
         view.text_view_distraction_event.headLine2()
-        view.text_view_distraction_content.smallText(Color.parseColor("#9E9E9E"))
+        view.text_view_distraction_content.smallText(R.color.dkDistractionContentCallColor)
         view.line_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         addView(
             view, ViewGroup.LayoutParams(
@@ -42,8 +43,9 @@ class DistractionItem : LinearLayout {
 
     fun setDistractionContentColor(selected: Boolean) {
         text_view_distraction_content.setTextColor(
-            if (selected) DriveKitUI.colors.secondaryColor() else Color.parseColor(
-                "#9E9E9E"
+            if (selected) DriveKitUI.colors.secondaryColor() else ContextCompat.getColor(
+                context,
+                R.color.dkDistractionContentCallColor
             )
         )
     }

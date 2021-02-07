@@ -1,9 +1,8 @@
 package com.drivequant.drivekit.ui.commons.views
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.ColorUtils
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
@@ -16,8 +15,6 @@ import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_distraction_selector_item.view.*
 
 class DistractionSelectorItem : LinearLayout {
-
-    private lateinit var selectorBackground: GradientDrawable
 
     constructor(context: Context) : super(context) {
         init()
@@ -33,8 +30,6 @@ class DistractionSelectorItem : LinearLayout {
             textColor = DriveKitUI.colors.primaryColor(),
             isTypeFaceBold = true
         )
-        selectorBackground = view.distraction_selector.background as GradientDrawable
-        selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -48,12 +43,11 @@ class DistractionSelectorItem : LinearLayout {
     }
 
     fun setSelection(selected: Boolean) {
-        selectorBackground.setStroke(3, DriveKitUI.colors.complementaryFontColor())
-        val drawable = selectorBackground.mutate()
+        val drawable = (distraction_selector.background as GradientDrawable).mutate()
         DrawableCompat.setTint(
             drawable,
             if (selected) ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102)
-            else Color.parseColor("#F3F3F3")
+            else ContextCompat.getColor(context, R.color.dkDistractionSelectorColor)
         )
     }
 }

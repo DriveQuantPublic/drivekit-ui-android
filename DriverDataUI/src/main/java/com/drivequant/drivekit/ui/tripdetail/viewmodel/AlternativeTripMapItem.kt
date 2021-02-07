@@ -29,7 +29,5 @@ internal class AlternativeTripMapItem : DKMapItem {
 
     override fun overrideShortTrip(): Boolean = true
 
-    override fun shouldShowPhoneDistractionArea(): Boolean {
-        return true
-    }
+    override fun shouldShowPhoneDistractionArea(): Boolean = false
 }

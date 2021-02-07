@@ -14,7 +14,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
 class DriverDistractionFragment : Fragment(), View.OnClickListener {
