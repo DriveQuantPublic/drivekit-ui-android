@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.DialogInterface
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +36,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(
             R.layout.fragment_beacon_child_scanner_already_paired,
             container,
@@ -47,8 +47,8 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val beaconCode = viewModel.beacon?.code?.let { it } ?: run { "" }
-        val vehicleName = viewModel.vehicleName?.let { it } ?: run { "" }
+        val beaconCode = viewModel.beacon?.code ?: ""
+        val vehicleName = viewModel.vehicleName ?: ""
 
         viewModel.vehiclePaired?.let {
             val vehiclePairedName = it.buildFormattedName(requireContext())

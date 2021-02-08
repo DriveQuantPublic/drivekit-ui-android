@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI

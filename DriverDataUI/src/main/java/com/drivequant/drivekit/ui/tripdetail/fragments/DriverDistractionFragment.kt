@@ -3,14 +3,13 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction

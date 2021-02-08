@@ -1,13 +1,12 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel

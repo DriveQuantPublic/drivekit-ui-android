@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +38,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     private lateinit var progressBar: ProgressBar
     private var isBeaconFound = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_progress, container, false).setDKStyle()
     }
 
@@ -52,13 +52,14 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     private fun runUpdateProgressBarThread() {
-        updateProgressBar = Thread(Runnable {
+        updateProgressBar = Thread {
             var progressStatus = 0
             while (progressStatus < 100) {
                 progressStatus++
                 try {
                     Thread.sleep(100)
-                } catch (e: InterruptedException) { }
+                } catch (e: InterruptedException) {
+                }
                 val finalProgressStatus = progressStatus
                 progressBar.progress = finalProgressStatus
             }
@@ -70,7 +71,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                     }
                 }
             }
-        })
+        }
         updateProgressBar.start()
     }
 

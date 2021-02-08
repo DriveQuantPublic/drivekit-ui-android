@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

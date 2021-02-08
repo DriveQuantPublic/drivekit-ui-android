@@ -2,7 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
 import android.content.DialogInterface
 import android.graphics.drawable.GradientDrawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar

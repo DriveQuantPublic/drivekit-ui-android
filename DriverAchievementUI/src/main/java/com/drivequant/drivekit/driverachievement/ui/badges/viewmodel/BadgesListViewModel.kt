@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Badge
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus

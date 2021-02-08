@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.fragment
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 import kotlinx.android.synthetic.main.dk_fragment_streaks_list.*
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
@@ -43,7 +43,8 @@ class StreaksListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_streaks"), javaClass.simpleName)
 
-        val layoutManager = LinearLayoutManager(view.context)
+        val layoutManager =
+            LinearLayoutManager(view.context)
         recycler_view_streaks.layoutManager = layoutManager
 
         refresh_streaks.setOnRefreshListener {

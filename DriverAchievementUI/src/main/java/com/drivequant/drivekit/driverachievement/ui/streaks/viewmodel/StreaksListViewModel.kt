@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Streak
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement

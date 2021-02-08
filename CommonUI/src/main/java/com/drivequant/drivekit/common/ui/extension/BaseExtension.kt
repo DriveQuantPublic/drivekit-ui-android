@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.v4.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import android.view.View
 import com.drivequant.drivekit.common.ui.utils.FontUtils

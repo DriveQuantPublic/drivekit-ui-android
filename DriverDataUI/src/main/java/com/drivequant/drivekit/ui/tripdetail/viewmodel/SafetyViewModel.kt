@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.databaseutils.entity.Safety
 
 class SafetyViewModel(private val safety : Safety) : ViewModel() {
