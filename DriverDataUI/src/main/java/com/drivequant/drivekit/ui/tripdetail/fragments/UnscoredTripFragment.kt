@@ -42,8 +42,17 @@ class UnscoredTripFragment : Fragment() {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("viewModel", viewModel)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        (savedInstanceState?.getSerializable("viewModel") as UnscoredTripViewModel?)?.let {
+            viewModel = it
+        }
 
         trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
         trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
