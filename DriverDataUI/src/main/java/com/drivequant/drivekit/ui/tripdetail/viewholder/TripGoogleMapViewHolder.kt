@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -94,7 +94,7 @@ internal class TripGoogleMapViewHolder(
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
-            if (mapItem != null && mapItem == MapItem.DISTRACTION) {
+            if (mapItem != null && (mapItem == MapItem.DISTRACTION || mapItem == MapItem.INTERACTIVE_MAP)) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
                         if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {

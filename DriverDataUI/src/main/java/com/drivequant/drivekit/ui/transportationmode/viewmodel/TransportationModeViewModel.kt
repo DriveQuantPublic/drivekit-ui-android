@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.ui.transportationmode.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.text.Spanned
 import com.drivequant.drivekit.common.ui.DriveKitUI

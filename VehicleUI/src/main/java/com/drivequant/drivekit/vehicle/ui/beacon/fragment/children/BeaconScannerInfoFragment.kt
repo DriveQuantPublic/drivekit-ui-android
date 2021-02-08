@@ -4,8 +4,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
+import androidx.core.graphics.drawable.DrawableCompat
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +39,7 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
     private lateinit var viewModel: BeaconViewModel
     private var isValid: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
     }
 
@@ -58,9 +58,7 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
         if (isValid){
             view_border.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            text_view_connected_vehicle_name.text = viewModel.vehicleName?.let {
-                it
-            }?:run {
+            text_view_connected_vehicle_name.text = viewModel.vehicleName ?:run {
                 DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
             }
         } else {

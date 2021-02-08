@@ -1,11 +1,11 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.fragment
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +36,8 @@ class RankingFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_rankings"), javaClass.simpleName)
         rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
-        recycler_view_ranking.layoutManager = LinearLayoutManager(requireContext())
+        recycler_view_ranking.layoutManager =
+            LinearLayoutManager(requireContext())
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
@@ -62,7 +63,7 @@ class RankingFragment : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? =
+        savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
 
 

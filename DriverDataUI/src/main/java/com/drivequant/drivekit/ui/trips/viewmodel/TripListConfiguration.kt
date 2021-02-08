@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
 sealed class TripListConfiguration {

@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.viewholder
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI

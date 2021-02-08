@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource

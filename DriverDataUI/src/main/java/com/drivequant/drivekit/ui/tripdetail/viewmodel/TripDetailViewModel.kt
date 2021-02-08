@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -81,8 +81,6 @@ internal class TripDetailViewModel(
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
     var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
     var selectedMapTraceType: MutableLiveData<MapTraceType> = MutableLiveData()
-    private var chunkedCallIndex = listOf<List<Int>>()
-    private var chunkedCallTime = listOf<List<Int>>()
 
     fun fetchTripData(context: Context){
         if (DriveKitDriverData.isConfigured()){
@@ -237,6 +235,8 @@ internal class TripDetailViewModel(
                 }
             }
         }
+        var chunkedCallIndex = listOf<List<Int>>()
+        var chunkedCallTime = listOf<List<Int>>()
         route.callIndex?.let {
             chunkedCallIndex = it.chunked(2)
         }

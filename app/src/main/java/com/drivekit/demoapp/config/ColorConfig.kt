@@ -2,7 +2,7 @@ package com.drivekit.demoapp.config
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 
