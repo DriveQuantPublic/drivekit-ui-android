@@ -362,10 +362,21 @@ internal class TripDetailViewModel(
     }
 
     override fun getUnlockDuration(context: Context) =
-        DKDataFormatter.formatDuration(context, trip?.driverDistraction?.durationUnlock)
+        DKDataFormatter.formatDuration(context, trip?.driverDistraction?.durationUnlock, 10)
 
-    override fun getUnlockDistance(context: Context) =
-        DKDataFormatter.formatMeterDistance(context, trip?.driverDistraction?.distanceUnlock)
+    override fun getUnlockDistance(context: Context): String {
+        trip?.driverDistraction?.distanceUnlock?.let {
+            return if (it >= 1000) {
+                DKDataFormatter.formatMeterDistanceInKm(context, it, unit = true, distanceMax = 10)
+            } else {
+                DKDataFormatter.formatMeterDistance(
+                    context,
+                    trip?.driverDistraction?.distanceUnlock
+                )
+            }
+        }
+        return "-"
+    }
 
     override fun getSelectedTraceType(): MutableLiveData<MapTraceType> = selectedMapTraceType
 
@@ -419,7 +430,7 @@ internal class TripDetailViewModel(
                 }.sum()
             }
         }
-        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble(), isCallDuration = true)
+        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble(), maxNbMinute = 10)
     }
 }
 

@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginStart="@dimen/dk_margin_quarter"
+        android:layout_marginStart="@dimen/dk_margin_eigth"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -47,7 +47,7 @@
 
             <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/screen_unlock_selector"
-                android:layout_width="59dp"
+                android:layout_width="57dp"
                 android:layout_height="45dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
@@ -68,7 +68,7 @@
 
             <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
                 android:id="@+id/phone_call_selector"
-                android:layout_width="59dp"
+                android:layout_width="57dp"
                 android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"

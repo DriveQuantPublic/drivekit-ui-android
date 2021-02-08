@@ -14,7 +14,7 @@ object DKDataFormatter {
 
     fun formatDuration(
         context: Context, durationInSeconds: Double?,
-        isCallDuration: Boolean = false): String {
+        maxNbMinute: Int = 0): String {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
@@ -39,12 +39,12 @@ object DKDataFormatter {
                     "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
                 }
             } else {
-                val nbSecond = (durationInSeconds - 60 * ((durationInSeconds/60).toInt()).toDouble()).toInt()
+                val nbSecond = (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
                 return if (nbSecond > 0) {
-                    return if (isCallDuration && nbMinute - 1 >= 10) {
-                       "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)}"
+                    return if (nbMinute - 1 >= maxNbMinute) {
+                        "${nbMinute - 1} ${context.getString(R.string.dk_common_unit_minute)}"
                     } else {
-                       "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)} ${nbSecond.formatLeadingZero()}"
+                        "${nbMinute - 1} ${context.getString(R.string.dk_common_unit_minute)} ${nbSecond.formatLeadingZero()}"
                     }
                 } else {
                     "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
@@ -54,18 +54,18 @@ object DKDataFormatter {
         return "-"
     }
 
-    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): String {
+    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true, distanceMax: Int = 100): String {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
         return when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                if (unit) "${formatDistanceValue(distanceInMile)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
-                else "${formatDistanceValue(distanceInMile)}"
+                if (unit) "${formatDistanceValue(distanceInMile, distanceMax)} ${context.resources.getString(R.string.dk_common_unit_mile)}"
+                else "${formatDistanceValue(distanceInMile, distanceMax)}"
             }
             DistanceUnit.KM -> {
-                if (unit) "${formatDistanceValue(distanceInKm)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
-                else "${formatDistanceValue(distanceInKm)}"
+                if (unit) "${formatDistanceValue(distanceInKm, distanceMax)} ${context.resources.getString(R.string.dk_common_unit_kilometer)}"
+                else "${formatDistanceValue(distanceInKm, distanceMax)}"
             }
         }
     }
@@ -91,8 +91,8 @@ object DKDataFormatter {
        }
     }
 
-    private fun formatDistanceValue(distance: Double?): String? {
-        return if (distance != null && distance >= 100) {
+    private fun formatDistanceValue(distance: Double?, distanceMax: Int): String? {
+        return if (distance != null && distance >= distanceMax) {
             distance.format(0)
         } else {
             distance?.removeZeroDecimal()
