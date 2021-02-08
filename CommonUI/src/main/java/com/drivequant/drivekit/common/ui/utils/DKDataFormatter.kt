@@ -12,7 +12,9 @@ import kotlin.math.roundToInt
 
 object DKDataFormatter {
 
-    fun formatDuration(context: Context, durationInSeconds: Double?) : String {
+    fun formatDuration(
+        context: Context, durationInSeconds: Double?,
+        isCallDuration: Boolean = false): String {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
@@ -39,7 +41,11 @@ object DKDataFormatter {
             } else {
                 val nbSecond = (durationInSeconds - 60 * ((durationInSeconds/60).toInt()).toDouble()).toInt()
                 return if (nbSecond > 0) {
-                    "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)} ${nbSecond.formatLeadingZero()}"
+                    return if (isCallDuration && nbMinute-1 >= 10) {
+                       "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)}"
+                    } else {
+                       "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)} ${nbSecond.formatLeadingZero()}"
+                    }
                 } else {
                     "$nbMinute ${context.getString(R.string.dk_common_unit_minute)}"
                 }

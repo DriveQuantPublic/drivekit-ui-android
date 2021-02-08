@@ -419,7 +419,7 @@ internal class TripDetailViewModel(
                 }.sum()
             }
         }
-        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble())
+        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble(), isCallDuration = true)
     }
 }
 
