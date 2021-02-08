@@ -25,7 +25,10 @@ class DistractionItem : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_item, null)
         view.text_view_distraction_event.headLine2()
-        view.text_view_distraction_content.smallText(R.color.dkDistractionContentCallColor)
+        view.text_view_distraction_content.smallText(ContextCompat.getColor(
+            context,
+            R.color.dkDistractionContentCallColor
+        ))
         view.line_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         addView(
             view, ViewGroup.LayoutParams(

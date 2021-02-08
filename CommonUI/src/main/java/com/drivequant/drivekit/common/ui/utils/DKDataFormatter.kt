@@ -41,7 +41,7 @@ object DKDataFormatter {
             } else {
                 val nbSecond = (durationInSeconds - 60 * ((durationInSeconds/60).toInt()).toDouble()).toInt()
                 return if (nbSecond > 0) {
-                    return if (isCallDuration && nbMinute-1 >= 10) {
+                    return if (isCallDuration && nbMinute - 1 >= 10) {
                        "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)}"
                     } else {
                        "${nbMinute-1} ${context.getString(R.string.dk_common_unit_minute)} ${nbSecond.formatLeadingZero()}"
