@@ -74,13 +74,13 @@ object DKDataFormatter {
        distance?.let {
            return when {
                it == 0.0 -> {
-                   " ${it.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_meter)} "
+                   "${it.removeZeroDecimal()} ${context.getString(R.string.dk_common_unit_meter)} "
                }
                it < 10 -> {
-                   " ${it.format(2)} ${context.getString(R.string.dk_common_unit_meter)} "
+                   "${it.format(2)} ${context.getString(R.string.dk_common_unit_meter)} "
                }
                it < 1000 -> {
-                   " ${it.format(0)} ${context.getString(R.string.dk_common_unit_meter)} "
+                   "${it.format(0)} ${context.getString(R.string.dk_common_unit_meter)} "
                }
                else -> {
                    formatMeterDistanceInKm(context, distance, unit)

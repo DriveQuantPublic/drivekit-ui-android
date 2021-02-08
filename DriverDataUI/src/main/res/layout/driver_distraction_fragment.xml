@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:padding="8dp"
     tools:context=".tripdetail.activity.TripDetailActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <com.drivequant.drivekit.common.ui.component.GaugeIndicator
+        android:id="@+id/score_gauge"
+        style="@style/GaugeTripDetail"
+        android:layout_width="96dp"
+        android:layout_height="120dp"
+        android:paddingTop="@dimen/dk_margin_medium"
+        android:paddingBottom="@dimen/dk_margin_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gauge_type_title"
+        android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_gauge" />
 
-        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
-            android:id="@+id/score_gauge"
-            style="@style/GaugeTripDetail"
-            android:layout_width="96dp"
-            android:layout_height="120dp"
-            android:paddingTop="@dimen/dk_margin_medium"
-            android:paddingBottom="@dimen/dk_margin_medium" />
 
-        <TextView
-            android:id="@+id/gauge_type_title"
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-    </LinearLayout>
+    <com.drivequant.drivekit.ui.commons.views.DistractionItem
+        android:id="@+id/screen_unlock_item"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="@dimen/dk_ic_xxbig"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        app:layout_constraintBottom_toTopOf="@+id/phone_call_item"
+        app:layout_constraintEnd_toStartOf="@+id/screen_unlock_selector"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@+id/score_gauge"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
-    <LinearLayout
-        android:layout_marginStart="@dimen/dk_margin_eigth"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <com.drivequant.drivekit.ui.commons.views.DistractionItem
+        android:id="@+id/phone_call_item"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="@dimen/dk_ic_xxbig"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/screen_unlock_selector"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintStart_toEndOf="@+id/score_gauge"
+        app:layout_constraintTop_toBottomOf="@+id/screen_unlock_item"
+        app:layout_constraintVertical_weight="2" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
 
-            <com.drivequant.drivekit.ui.commons.views.DistractionItem
-                android:id="@+id/screen_unlock_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true" />
+    <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
+        android:id="@+id/screen_unlock_selector"
+        android:layout_width="58dp"
+        android:layout_height="@dimen/dk_ic_xxbig"
+        android:layout_marginEnd="@dimen/dk_margin_eigth"
+        app:layout_constraintBottom_toTopOf="@+id/phone_call_selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@+id/screen_unlock_item"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
-            <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
-                android:id="@+id/screen_unlock_selector"
-                android:layout_width="57dp"
-                android:layout_height="45dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_eigth" />
-        </RelativeLayout>
+    <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
+        android:id="@+id/phone_call_selector"
+        android:layout_width="58dp"
+        android:layout_height="@dimen/dk_ic_xxbig"
+        android:layout_marginEnd="@dimen/dk_margin_eigth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/phone_call_item"
+        app:layout_constraintTop_toBottomOf="@+id/screen_unlock_selector" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <com.drivequant.drivekit.ui.commons.views.DistractionItem
-                android:id="@+id/phone_call_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true" />
-
-            <com.drivequant.drivekit.ui.commons.views.DistractionSelectorItem
-                android:id="@+id/phone_call_selector"
-                android:layout_width="57dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="@dimen/dk_margin_eigth" />
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
