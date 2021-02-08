@@ -48,7 +48,6 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_night">Trajet de nuit</string>
    <string name="dk_driverdata_no_call_congrats">Félicitations !</string>
    <string name="dk_driverdata_no_call_content">Aucun appels</string>
-   <string name="dk_driverdata_no_call_title">Appels téléphoniques</string>
    <string name="dk_driverdata_no_screen_unlocking">Pas de déverrouillage</string>
    <string name="dk_driverdata_no_trip_placeholder">Vous n\'avez pas encore réalisé de trajets avec ce véhicule.</string>
    <string name="dk_driverdata_no_trips_recorded">Vous n\'avez pas encore réalisé de trajet.</string>
