@@ -389,7 +389,14 @@ internal class TripDetailViewModel(
                 }.sum()
             }
         }
-        return DKDataFormatter.formatMeterDistance(context, distance.toDouble())
+        return if (distance >= 1000) {
+            DKDataFormatter.formatMeterDistanceInKm(context, distance.toDouble(), distanceMax = 10)
+        } else {
+            DKDataFormatter.formatMeterDistance(
+                context,
+                trip?.driverDistraction?.distanceUnlock
+            )
+        }
     }
 
     override fun getPhoneCallsNumber(context: Context): Pair<String, String> {
@@ -404,7 +411,7 @@ internal class TripDetailViewModel(
                 DKResource.convertToString(context, "dk_driverdata_no_call_congrats")
             val phoneCallContentCongrats =
                 DKResource.convertToString(context, "dk_driverdata_no_call_content")
-            Pair(phoneCallCongrats, phoneCallContentCongrats)
+            Pair(phoneCallContentCongrats, phoneCallCongrats)
         } else {
             val phoneCallContent = DKResource.buildString(
                 context,

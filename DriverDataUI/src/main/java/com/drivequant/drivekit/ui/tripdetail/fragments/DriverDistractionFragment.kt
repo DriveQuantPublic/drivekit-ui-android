@@ -72,7 +72,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
                     DriveKitUI.colors.secondaryColor(),
                     "dk_driverdata_unlock_screen_content",
                     viewModel.getUnlockDuration(requireContext()),
-                    viewModel.getUnlockDistance(requireContext())
+                    viewModel.getUnlockDistance(requireContext()).replace(" ","\u00A0")
                 )
             }
         screen_unlock_item.apply {
