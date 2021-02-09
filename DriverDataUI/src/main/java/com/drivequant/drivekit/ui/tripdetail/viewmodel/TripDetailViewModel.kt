@@ -367,7 +367,7 @@ internal class TripDetailViewModel(
     override fun getUnlockDistance(context: Context): String {
         trip?.driverDistraction?.distanceUnlock?.let {
             return if (it >= 1000) {
-                DKDataFormatter.formatMeterDistanceInKm(context, it, unit = true, distanceMax = 10)
+                DKDataFormatter.formatMeterDistanceInKm(context, it, distanceMax = 10)
             } else {
                 DKDataFormatter.formatMeterDistance(
                     context,
@@ -437,7 +437,7 @@ internal class TripDetailViewModel(
                 }.sum()
             }
         }
-        return DKDataFormatter.formatDuration(context, durationInSeconds = duration.toDouble(), maxNbMinute = 10)
+        return DKDataFormatter.formatDuration(context, duration.toDouble(), 10)
     }
 }
 
