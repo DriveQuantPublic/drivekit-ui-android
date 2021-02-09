@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
@@ -75,6 +76,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun startTripDetailActivity(context: Context, tripId: String) {
         val intent = Intent(context, TripDetailActivity::class.java)
+        intent.putExtra(ITINID_EXTRA, tripId)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }

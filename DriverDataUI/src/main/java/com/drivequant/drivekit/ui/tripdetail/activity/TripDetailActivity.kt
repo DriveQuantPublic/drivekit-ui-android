@@ -14,7 +14,7 @@ import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 class TripDetailActivity : AppCompatActivity() {
 
     companion object {
-        private const val ITINID_EXTRA = "itinId-extra"
+        const val ITINID_EXTRA = "itinId-extra"
         private const val OPEN_ADVICE_EXTRA = "openAdvice-extra"
         const val UPDATE_TRIPS_REQUEST_CODE = 103
 
