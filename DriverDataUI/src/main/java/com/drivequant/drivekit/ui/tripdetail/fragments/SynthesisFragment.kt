@@ -1,17 +1,16 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
-import kotlinx.android.synthetic.main.item_trip_list.view.*
 import kotlinx.android.synthetic.main.trip_synthesis_fragment.*
 
 class SynthesisFragment : Fragment() {
@@ -33,8 +32,7 @@ class SynthesisFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -68,7 +66,7 @@ class SynthesisFragment : Fragment() {
             }
         }
 
-        item_speed_mean.setValueItem(viewModel.getMeanSpeed(requireContext()))
+        item_mean_speed.setValueItem(viewModel.getMeanSpeed(requireContext()))
         item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
 
         item_fuel_consumption.setValueItem(viewModel.getFuelConsumption(requireContext()))

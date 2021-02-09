@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -7,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
 import com.drivequant.drivekit.ui.R
@@ -36,7 +39,7 @@ class DriverDistractionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -55,12 +58,12 @@ class DriverDistractionFragment : Fragment() {
         unlockDistanceDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_distance)
         unlockDurationDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_duration)
 
-        gauge_type_title.bigText()
-        unlockNumberDescription.bigText()
-        unlockDistanceDescription.bigText()
-        unlockDurationDescription.bigText()
+        gauge_type_title.normalText()
+        unlockNumberDescription.normalText()
+        unlockDistanceDescription.normalText()
+        unlockDurationDescription.normalText()
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION)
+        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
         distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
         durationUnlocked.text = viewModel.getUnlockDuration(requireContext())

@@ -21,7 +21,7 @@
             android:id="@+id/text_view_alert_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center|start" />
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
     <TextView
         android:id="@+id/text_view_alert_description"

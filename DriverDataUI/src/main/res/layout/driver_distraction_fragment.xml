@@ -12,79 +12,89 @@
         style="@style/GaugeTripDetail"
         android:layout_width="96dp"
         android:layout_height="120dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
+        android:paddingTop="@dimen/dk_margin_medium"
+        android:paddingBottom="@dimen/dk_margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gauge_type_title"
         android:layout_width="96dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_gauge"
-        tools:text="Distraction" />
+        app:layout_constraintTop_toBottomOf="@+id/score_gauge" />
 
     <TextView
         android:id="@+id/unlockNumberEvent"
         style="@style/EventNumberText"
-        android:layout_width="96dp"
-        android:layout_height="56dp"
-        android:gravity="start|center_vertical"
-        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unlockNumberDescription"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Test" />
+        app:layout_constraintBottom_toTopOf="@+id/durationUnlocked" />
 
     <TextView
         android:id="@+id/durationUnlocked"
         style="@style/EventNumberText"
-        android:layout_width="96dp"
-        android:layout_height="56dp"
-        android:gravity="start|center_vertical"
-        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unlockDurationDescription"
         app:layout_constraintTop_toBottomOf="@id/unlockNumberEvent"
-        tools:text="Test" />
+        app:layout_constraintBottom_toTopOf="@+id/distanceUnlocked" />
 
     <TextView
         android:id="@+id/distanceUnlocked"
         style="@style/EventNumberText"
-        android:layout_width="96dp"
-        android:layout_height="56dp"
-        android:gravity="start|center_vertical"
-        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/durationUnlocked"
-        tools:text="Test" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/unlockDistanceDescription" />
 
     <TextView
         android:id="@+id/unlockNumberDescription"
         style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintEnd_toStartOf="@id/unlockNumberEvent"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
+        app:layout_constraintBottom_toTopOf="@+id/unlockDurationDescription"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/unlockDurationDescription"
         style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintEnd_toStartOf="@id/durationUnlocked"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/unlockNumberDescription" />
+        app:layout_constraintTop_toBottomOf="@id/unlockNumberDescription"
+        app:layout_constraintBottom_toTopOf="@+id/unlockDistanceDescription"/>
 
     <TextView
         android:id="@+id/unlockDistanceDescription"
         style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintEnd_toStartOf="@id/distanceUnlocked"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/unlockDurationDescription" />
+        app:layout_constraintTop_toBottomOf="@id/unlockDurationDescription"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
+import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -40,16 +41,16 @@ class TripEvent(val type: TripEventType,
             TripEventType.PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_map_unlock
         }
     }
-    //TODO Verify
+
     fun getTitle(context: Context) : String {
         return context.getString(when(type){
-            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_safety_list_brake_critical
+            TripEventType.SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_driverdata_strong_decel
             TripEventType.START -> R.string.dk_driverdata_start_event
             TripEventType.FINISH -> R.string.dk_driverdata_end_event
             TripEventType.SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
-            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_safety_list_acceleration_critical
-            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
-            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_screen_unlock_text
+            TripEventType.SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_driverdata_strong_accel
+            TripEventType.PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_lock_event
+            TripEventType.PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_unlock_event
         })
     }
 
@@ -94,9 +95,12 @@ class TripEvent(val type: TripEventType,
             TripEventType.SAFETY_BRAKE, TripEventType.SAFETY_ADHERENCE,TripEventType. SAFETY_ACCEL -> {
 
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
-                    color(DriveKitUI.colors.warningColor())
-                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_small)
+                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
+                    color(DriveKitUI.colors.warningColor())
+                    size(R.dimen.dk_text_small)
+                    typeface(Typeface.BOLD)
                 }).toSpannable()
 
             }

@@ -66,6 +66,7 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         DriveKitConfig.configurePermissionsUtils(this)
 
         DriverDataUI.initialize()
+        DriverDataUI.enableAlternativeTrips(true)
         DriveKitVehicleUI.initialize()
 
         PermissionsUtilsUI.initialize()

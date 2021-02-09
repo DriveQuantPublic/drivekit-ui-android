@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DKCircularButtonItemView">
+        <attr name="dkCircularButtonItemTitle" format="string" />
+        <attr name="dkCircularButtonItemDrawable" format="integer" />
+    </declare-styleable>
+</resources>

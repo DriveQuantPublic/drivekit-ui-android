@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_layout_container"
+    android:layout_width="@dimen/dk_ic_xxbig"
+    android:layout_height="@dimen/dk_ic_xxbig"
+    android:layout_margin="@dimen/dk_margin_half">
+    <FrameLayout
+        android:id="@+id/circle_view"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="@dimen/dk_ic_xxbig"
+        android:layout_height="@dimen/dk_ic_xxbig" />
+</FrameLayout>

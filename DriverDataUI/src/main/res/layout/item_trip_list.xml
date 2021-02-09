@@ -21,7 +21,6 @@
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:padding="4dp"
-            android:src="@drawable/dk_no_score"
             android:visibility="gone"/>
         <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/gauge_indicator_view"
@@ -51,16 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <FrameLayout
-        android:id="@+id/container_trip_info"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_marginStart="@dimen/dk_margin_quarter"
-        android:layout_marginEnd="@dimen/dk_margin_quarter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/image_circle_top"
@@ -119,6 +108,16 @@
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"
         tools:text="Departure city"
         />
+
+    <FrameLayout
+        android:id="@+id/container_trip_info"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginStart="@dimen/dk_margin_quarter"
+        android:layout_marginEnd="@dimen/dk_margin_quarter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_view_departure_city"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_arrival_city" />
 
     <TextView
         android:id="@+id/text_view_arrival_time"

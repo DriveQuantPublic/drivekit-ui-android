@@ -73,6 +73,7 @@
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:lines="5"
+                    android:textSize="@dimen/dk_text_normal"
                     android:longClickable="false"
                     android:maxLines="10"
                     android:padding="5dp"

@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@id/container_header_trip"
         tools:text="Lundi 14 octobre 2019"/>
     <TextView
-        android:id="@+id/trip_distance"
+        android:id="@+id/trip_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         tools:src="@drawable/dk_safety_advice"
         android:scaleType="center"
-        app:maxImageSize="@dimen/dk_ic_medium"
+        app:maxImageSize="@dimen/dk_ic_big"
         android:visibility="gone"
         tools:visibility="visible"
         android:layout_marginEnd="@dimen/dk_margin"

@@ -36,10 +36,9 @@ class TripTimelineAdapter(
     override fun onBindViewHolder(viewHolder: TripTimelineItemViewHolder, position: Int) {
         viewHolder.bind(items[position], position == 0, position == itemCount - 1, listener)
         if (selectedPosition == position){
-            viewHolder.itemView.setBackgroundColor(ColorUtils.setAlphaComponent(selectedBackgroundColor, 127))
+            viewHolder.itemView.setBackgroundColor(ColorUtils.setAlphaComponent(selectedBackgroundColor, 75))
         }else{
             viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT)
         }
     }
-
 }

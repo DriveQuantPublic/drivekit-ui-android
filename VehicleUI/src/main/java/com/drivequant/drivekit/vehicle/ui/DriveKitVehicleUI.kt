@@ -2,16 +2,14 @@ package com.drivequant.drivekit.vehicle.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.util.Log
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
-import com.drivequant.drivekit.common.ui.navigation.GetVehiclesFilterItems
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
-import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
@@ -161,32 +159,25 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
     }
 
-    override fun getVehiclesFilterItems(context: Context, listener: GetVehiclesFilterItems) {
+    override fun getVehiclesFilterItems(context: Context): List<FilterItem> {
         val vehiclesFilterItems = mutableListOf<FilterItem>()
         val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
-        val newVehicleList = mutableListOf<Vehicle?>()
-        if (vehicles.size != 1) {
-            newVehicleList.add(0, null)
-            for ((index, vehicle) in vehicles.withIndex()) {
-                newVehicleList.add(index + 1, vehicle)
-            }
-        } else {
-            newVehicleList.addAll(vehicles)
-        }
-        if (newVehicleList.isNotEmpty()) {
-            for (vehicle in newVehicleList) {
-                val title = vehicle?.buildFormattedName(context) ?: kotlin.run {
-                    DKResource.convertToString(context, "dk_driverdata_default_filter_item")
+        for (vehicle in vehicles) {
+            val vehicleItem = object : FilterItem{
+                override fun getItemId(): Any? {
+                    return vehicle.vehicleId
                 }
-                vehiclesFilterItems.add(
-                    FilterItem(
-                        vehicle?.vehicleId,
-                        VehicleUtils().getVehicleDrawable(context, vehicle?.vehicleId),
-                        title
-                    )
-                )
+
+                override fun getImage(context: Context): Drawable? {
+                    return VehicleUtils().getVehicleDrawable(context, vehicle.vehicleId)
+                }
+
+                override fun getTitle(context: Context): String {
+                    return vehicle.buildFormattedName(context)
+                }
             }
-            listener.onFilterItemsReceived(vehiclesFilterItems)
+            vehiclesFilterItems.add(vehicleItem)
         }
+        return vehiclesFilterItems
     }
 }

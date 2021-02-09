@@ -8,7 +8,6 @@
         android:id="@+id/trip_list_header"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@drawable/dk_background_header_trip_list"
         android:layout_marginBottom="@dimen/dk_margin_half"
         android:layout_marginTop="@dimen/dk_margin_half"
         android:paddingStart="@dimen/dk_margin"

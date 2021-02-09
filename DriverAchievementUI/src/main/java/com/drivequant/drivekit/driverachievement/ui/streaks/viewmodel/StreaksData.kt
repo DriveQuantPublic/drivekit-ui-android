@@ -89,7 +89,7 @@ class StreaksData(
     }
 
     fun getCurrentStreakData(context: Context) : SpannableString {
-        val currentDistance = DKDataFormatter.formatDistance(context, current.distance)
+        val currentDistance = DKDataFormatter.formatMeterDistanceInKm(context, current.distance)
         val currentDuration = DKDataFormatter.formatDuration(context, current.duration)
         val trip = context.resources.getQuantityString(R.plurals.trip_plural, currentTripsCount)
 
@@ -106,7 +106,7 @@ class StreaksData(
     }
 
     fun getBestStreakData(context: Context): SpannableString {
-        val bestDistance = DKDataFormatter.formatDistance(context, best.distance)
+        val bestDistance = DKDataFormatter.formatMeterDistanceInKm(context, best.distance)
         val bestDuration = DKDataFormatter.formatDuration(context, best.duration)
         val trip = context.resources.getQuantityString(R.plurals.trip_plural, bestTripsCount)
 

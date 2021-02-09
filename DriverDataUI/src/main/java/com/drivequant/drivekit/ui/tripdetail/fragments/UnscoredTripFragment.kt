@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.highlightMedium
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -35,7 +38,7 @@ class UnscoredTripFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.unscored_trip_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -51,6 +54,7 @@ class UnscoredTripFragment : Fragment() {
         trip_message.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         trip_message.setBackgroundColor(DriveKitUI.colors.warningColor())
         trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
-        trip_duration.setTextColor(DriveKitUI.colors.primaryColor())
+        trip_duration.highlightMedium(DriveKitUI.colors.primaryColor())
+        image_view_unscored_trip_info.background.tintDrawable(DriveKitUI.colors.warningColor())
     }
 }

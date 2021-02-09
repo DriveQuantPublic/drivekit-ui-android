@@ -5,101 +5,138 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    tools:context=".driverdata.ui.tripdetail.fragments.SafetyFragment">
+    tools:context=".tripdetail.activity.TripDetailActivity">
+
 
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
         style="@style/GaugeTripDetail"
         android:layout_width="96dp"
         android:layout_height="120dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
+        android:paddingTop="@dimen/dk_margin_medium"
+        android:paddingBottom="@dimen/dk_margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gauge_type_title"
         android:layout_width="96dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_gauge"
         tools:text="Safety" />
 
     <TextView
-        android:id="@+id/accel_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/brake_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accel_number_event" />
-
-    <TextView
-        android:id="@+id/adherence_number_event"
-        style="@style/EventNumberText"
-        android:layout_width="48dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/brake_number_event" />
-
-    <TextView
         android:id="@+id/accel_description"
-        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/accel_image"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/brake_description"
+        app:layout_constraintEnd_toStartOf="@+id/accel_image"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/accel_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_safety_accel"
-        app:layout_constraintEnd_toStartOf="@id/accel_number_event"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
 
     <TextView
         android:id="@+id/brake_description"
-        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/decel_image"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/adherence_description"
+        app:layout_constraintEnd_toStartOf="@+id/decel_image"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/accel_description" />
-
-    <ImageView
-        android:id="@+id/decel_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_safety_decel"
-        app:layout_constraintEnd_toStartOf="@id/brake_number_event"
-        app:layout_constraintTop_toBottomOf="@id/accel_image" />
+        app:layout_constraintTop_toBottomOf="@+id/accel_description"
+        app:layout_constraintVertical_weight="1" />
 
     <TextView
         android:id="@+id/adherence_description"
-        style="@style/TripDetailDescriptionText"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toStartOf="@id/adherence_image"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/adherence_image"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/brake_description" />
+        app:layout_constraintTop_toBottomOf="@+id/brake_description"
+        app:layout_constraintVertical_weight="1" />
+
+    <ImageView
+        android:id="@+id/accel_image"
+        android:layout_width="@dimen/dk_ic_xbig"
+        android:layout_height="0dp"
+        android:src="@drawable/dk_common_safety_accel"
+        app:layout_constraintBottom_toTopOf="@+id/decel_image"
+        app:layout_constraintEnd_toStartOf="@+id/accel_number_event"
+        app:layout_constraintStart_toEndOf="@+id/accel_description"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
+
+    <ImageView
+        android:id="@+id/decel_image"
+        android:layout_width="@dimen/dk_ic_xbig"
+        android:layout_height="0dp"
+        android:src="@drawable/dk_common_safety_decel"
+        app:layout_constraintBottom_toTopOf="@+id/adherence_image"
+        app:layout_constraintEnd_toStartOf="@+id/brake_number_event"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/brake_description"
+        app:layout_constraintTop_toBottomOf="@+id/accel_image"
+        app:layout_constraintVertical_weight="1" />
 
     <ImageView
         android:id="@+id/adherence_image"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:gravity="start"
+        android:layout_width="@dimen/dk_ic_xbig"
+        android:layout_height="0dp"
         android:src="@drawable/dk_common_safety_adherence"
-        app:layout_constraintEnd_toStartOf="@id/adherence_number_event"
-        app:layout_constraintTop_toBottomOf="@id/decel_image" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/adherence_number_event"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/adherence_description"
+        app:layout_constraintTop_toBottomOf="@+id/decel_image"
+        app:layout_constraintVertical_weight="1" />
+
+
+    <TextView
+        android:id="@+id/accel_number_event"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/brake_number_event"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/accel_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/brake_number_event"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/adherence_number_event"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/decel_image"
+        app:layout_constraintTop_toBottomOf="@+id/accel_number_event"
+        app:layout_constraintVertical_weight="1" />
+
+    <TextView
+        android:id="@+id/adherence_number_event"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/adherence_image"
+        app:layout_constraintTop_toBottomOf="@+id/brake_number_event"
+        app:layout_constraintVertical_weight="1" />
+
 </android.support.constraint.ConstraintLayout>
