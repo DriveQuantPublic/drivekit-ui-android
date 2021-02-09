@@ -2,8 +2,8 @@ package com.drivequant.drivekit.vehicle.ui.bluetooth.adapter
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,7 +85,7 @@ class BluetoothItemRecyclerViewAdapter(
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
-        val btDeviceName = bluetoothDevice.name?.let { it } ?:run { bluetoothDevice.macAddress }
+        val btDeviceName = bluetoothDevice.name ?: bluetoothDevice.macAddress
 
         title?.text = DKResource.convertToString(context, "app_name")
         val text = DKResource.buildString(

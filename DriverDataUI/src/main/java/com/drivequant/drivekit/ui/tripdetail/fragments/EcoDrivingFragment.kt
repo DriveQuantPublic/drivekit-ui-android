@@ -1,13 +1,15 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
@@ -32,7 +34,7 @@ class EcoDrivingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.eco_driving_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
@@ -46,7 +48,7 @@ class EcoDrivingFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING)
+        score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING, Typeface.BOLD)
         accelAdvice.text = context?.getString(viewModel.getAccelMessage())
         mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
         decelAdvice.text = context?.getString(viewModel.getDecelMessage())
@@ -58,9 +60,9 @@ class EcoDrivingFragment : Fragment() {
         image_decel_advice.setColorFilter(mainFontColor)
         image_main_advice.setColorFilter(mainFontColor)
 
-        accelAdvice.bigText(mainFontColor)
-        mainAdvice.bigText(mainFontColor)
-        decelAdvice.bigText(mainFontColor)
-        gauge_type_title.bigText(mainFontColor)
+        accelAdvice.normalText(mainFontColor)
+        mainAdvice.normalText(mainFontColor)
+        decelAdvice.normalText(mainFontColor)
+        gauge_type_title.normalText(mainFontColor)
     }
 }

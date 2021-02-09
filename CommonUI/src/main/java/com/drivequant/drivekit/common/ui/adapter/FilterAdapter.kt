@@ -16,7 +16,7 @@ import com.drivequant.drivekit.common.ui.utils.FontUtils
 class FilterAdapter(
     context: Context,
     resource: Int,
-    private val filterItemList: List<FilterItem>
+    private var filterItemList: List<FilterItem>
 ) : ArrayAdapter<FilterItem>(context, resource, filterItemList) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -34,21 +34,25 @@ class FilterAdapter(
         val imageViewItem = view.findViewById<ImageView>(R.id.image_view_item)
         val textViewItem = view.findViewById<TextView>(R.id.text_view_display_name_item)
         val item = filterItemList[position]
-        textViewItem.text = item.title
-        item.image?.let {
+        textViewItem.text = item.getTitle(context)
+        item.getImage(context)?.let {
             Glide.with(view)
-                .load(item.image)
+                .load(item.getImage(context))
                 .apply(RequestOptions.circleCropTransform())
-                .placeholder(item.image)
+                .placeholder(item.getImage(context))
                 .into(imageViewItem)
         }
         FontUtils.overrideFonts(context, view)
         return view
     }
+
+    fun setItems(items: List<FilterItem>){
+        filterItemList = items
+    }
 }
 
-data class FilterItem(
-    val itemId: Any?,
-    val image: Drawable?,
-    val title: String
-)
+interface FilterItem {
+    fun getItemId(): Any?
+    fun getImage(context: Context): Drawable?
+    fun getTitle(context: Context): String
+}

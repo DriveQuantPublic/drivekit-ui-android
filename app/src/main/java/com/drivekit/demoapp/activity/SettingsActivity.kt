@@ -3,13 +3,15 @@ package com.drivekit.demoapp.activity
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceFragmentCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -80,6 +82,7 @@ class SettingsActivity : AppCompatActivity() {
             val apiKey = DriveKit.config.apiKey
             DriveKit.reset()
             DriveKitDriverData.reset()
+            DriveKitVehicle.reset()
             apiKey?.let {
                 DriveKit.setApiKey(it)
             }

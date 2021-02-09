@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/border_filter"
         android:layout_margin="@dimen/dk_margin_half"
+        android:paddingStart="@dimen/dk_margin_half"
+        android:paddingEnd="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Spinner
             android:id="@+id/spinner_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

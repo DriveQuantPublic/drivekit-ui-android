@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI

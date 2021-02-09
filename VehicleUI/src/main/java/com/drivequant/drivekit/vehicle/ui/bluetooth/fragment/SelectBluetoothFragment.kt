@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +35,7 @@ class SelectBluetoothFragment: Fragment() {
     private lateinit var globalView: View
     private lateinit var adapter: BluetoothItemRecyclerViewAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         globalView = inflater.inflate(R.layout.fragment_bluetooth_select, container, false).setDKStyle()
         return globalView
     }
@@ -62,7 +62,8 @@ class SelectBluetoothFragment: Fragment() {
     private fun setupRecyclerView() {
         val recyclerView: RecyclerView? = globalView.findViewById(R.id.recycler_view)
         recyclerView?.let {
-            it.layoutManager = LinearLayoutManager(context)
+            it.layoutManager =
+                LinearLayoutManager(context)
             adapter = BluetoothItemRecyclerViewAdapter(requireContext(), viewModel)
             recyclerView.adapter = adapter
         }

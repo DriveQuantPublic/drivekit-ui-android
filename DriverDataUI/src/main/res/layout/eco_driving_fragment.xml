@@ -1,89 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:padding="@dimen/dk_margin_half"
     tools:context=".tripdetail.activity.TripDetailActivity">
 
-    <com.drivequant.drivekit.common.ui.component.GaugeIndicator
-        android:id="@+id/score_gauge"
-        style="@style/GaugeTripDetail"
-        android:layout_width="96dp"
-        android:layout_height="120dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/gauge_type_title"
-        android:layout_width="96dp"
-        android:layout_height="48dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Eco-driving" />
-
-    <ImageView
-        android:id="@+id/image_accel_advice"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_accel"
-        app:layout_constraintEnd_toStartOf="@+id/accelAdvice"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image_main_advice"
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
+            android:id="@+id/score_gauge"
+            style="@style/GaugeTripDetail"
+            android:layout_width="96dp"
+            android:layout_height="120dp"
+            android:paddingTop="@dimen/dk_margin_medium"
+            android:paddingBottom="@dimen/dk_margin_medium" />
+
+        <TextView
+            android:id="@+id/gauge_type_title"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="Eco-driving" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_maintain"
-        app:layout_constraintEnd_toStartOf="@+id/mainAdvice"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/image_accel_advice" />
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image_decel_advice"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:src="@drawable/dk_common_eco_decel"
-        app:layout_constraintEnd_toStartOf="@id/decelAdvice"
-        app:layout_constraintStart_toEndOf="@id/score_gauge"
-        app:layout_constraintTop_toBottomOf="@id/image_main_advice" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/accelAdvice"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:maxLines="1"
-        android:gravity="start|center_vertical"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/image_accel_advice"
+                android:layout_width="@dimen/dk_ic_big"
+                android:layout_height="@dimen/dk_ic_big"
+                android:src="@drawable/dk_common_eco_accel" />
 
-    <TextView
-        android:id="@+id/mainAdvice"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:maxLines="1"
-        android:gravity="start|center_vertical"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accelAdvice" />
+            <TextView
+                android:id="@+id/accelAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_half" />
 
-    <TextView
-        android:id="@+id/decelAdvice"
-        style="@style/TripDetailDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:maxLines="1"
-        android:gravity="start|center_vertical"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mainAdvice" />
+        </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image_main_advice"
+                android:layout_width="@dimen/dk_ic_big"
+                android:layout_height="@dimen/dk_ic_big"
+                android:src="@drawable/dk_common_eco_maintain" />
+
+            <TextView
+                android:id="@+id/mainAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_half" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image_decel_advice"
+                android:layout_width="@dimen/dk_ic_big"
+                android:layout_height="@dimen/dk_ic_big"
+                android:src="@drawable/dk_common_eco_decel" />
+
+            <TextView
+                android:id="@+id/decelAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_half" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,8 +1,9 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat
+import android.graphics.Typeface
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -50,13 +51,15 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
                 resources.getDimensionPixelSize(R.dimen.dk_text_normal)
             ).toFloat()
         )
+        textView.setTextColor(DriveKitUI.colors.complementaryFontColor())
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: GaugeType) {
+    fun configure(score: Double, type: GaugeType, scoreStyle: Int = Typeface.NORMAL) {
         gaugeView.setOpenAngle(128F)
         gaugeView.setStartAngle(38F)
         textView.text = score.removeZeroDecimal()
+        textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))

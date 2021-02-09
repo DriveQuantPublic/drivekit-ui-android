@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +29,7 @@ class BeaconScannerNotFoundFragment : Fragment() {
 
     private lateinit var viewModel: BeaconViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_not_found, container, false).setDKStyle()
     }
 

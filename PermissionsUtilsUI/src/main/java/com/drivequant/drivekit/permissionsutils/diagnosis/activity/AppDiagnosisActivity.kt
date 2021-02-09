@@ -21,7 +21,7 @@ import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.View

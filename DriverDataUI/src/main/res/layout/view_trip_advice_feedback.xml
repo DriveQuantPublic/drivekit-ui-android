@@ -39,27 +39,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radio_button_choice_01"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radio_button_choice_02"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radio_button_choice_03"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radio_button_choice_04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radio_button_choice_05"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -73,6 +73,7 @@
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:lines="5"
+                    android:textSize="@dimen/dk_text_normal"
                     android:longClickable="false"
                     android:maxLines="10"
                     android:padding="5dp"

@@ -1,7 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.arch.lifecycle.Observer
-import android.support.design.widget.FloatingActionButton
+import androidx.lifecycle.Observer
+import android.content.res.ColorStateList
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -12,15 +14,12 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.CustomInfoWindowAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
-class TripGoogleMapViewHolder(
+internal class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
     var itemView: View,
     var viewModel: TripDetailViewModel,
@@ -51,26 +50,25 @@ class TripGoogleMapViewHolder(
                 )
                 googleMap.animateCamera(cameraUpdate)
             }
-
         })
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
     }
     
-    private fun configureAdviceButton(mapItem: MapItem){
+    private fun configureAdviceButton(mapItem: DKMapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
+        adviceFabButton.backgroundTintList =
+            ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         var shouldDisplayAdvice = false
-        viewModel.trip?.tripAdvices?.let { tripAdvices ->
-            val tripAdvice: TripAdvice? = mapItem.getAdvice(tripAdvices)
+        viewModel.trip?.let { trip ->
+            val tripAdvice: TripAdvice? = mapItem.getAdvice(trip)
             if (tripAdvice != null) {
                 shouldDisplayAdvice = true
             }
             adviceFabButton.hide()
-            if (shouldDisplayAdvice){
-                if (mapItem == MapItem.SAFETY) {
-                    adviceFabButton.setImageResource(R.drawable.dk_safety_advice)
-                } else if (mapItem == MapItem.ECO_DRIVING) {
-                    adviceFabButton.setImageResource(R.drawable.dk_eco_advice)
+            if (shouldDisplayAdvice) {
+                mapItem.getAdviceImageResource()?.let {
+                    adviceFabButton.setImageResource(it)
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {
@@ -85,57 +83,72 @@ class TripGoogleMapViewHolder(
         }
     }
 
-    fun traceRoute(mapItem: MapItem?){
+    fun traceRoute(mapItem: DKMapItem?) {
         clearMap()
         viewModel.route?.let { route ->
-            if (mapItem != null && (mapItem == MapItem.DISTRACTION || (mapItem == MapItem.INTERACTIVE_MAP && viewModel.configurableMapItems.contains(
-                    MapItem.INTERACTIVE_MAP)))){
+            val unlockColor =
+                ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
+            val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
+            if (mapItem != null && mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(
+                    MapItem.DISTRACTION
+                ) && route.screenLockedIndex != null) {
                 var unlock: Boolean
-                val unlockColor = DriverDataUI.mapTraceWarningColor
-                val lockColor = DriverDataUI.mapTraceMainColor
-                route.screenLockedIndex?.let { screenLockedIndex ->
-                    for(i in 1 until screenLockedIndex.size){
-                        unlock = route.screenStatus!![i -1] == 1
+                    for (i in 1 until route.screenLockedIndex!!.size) {
+                        unlock = route.screenStatus!![i - 1] == 1
                         drawRoute(
                             route,
-                            screenLockedIndex[i - 1], screenLockedIndex[i],
-                            if(unlock) unlockColor else lockColor)
+                            route.screenLockedIndex!![i - 1], route.screenLockedIndex!![i],
+                            if (unlock) unlockColor else lockColor
+                        )
                     }
-                }
-            }else{
+
+            } else {
                 drawRoute(
                     route,
                     0,
                     route.latitude.size - 1,
-                    DriverDataUI.mapTraceMainColor)
+                    lockColor
+                )
             }
             drawMarker(mapItem)
         }
     }
 
-    private fun drawMarker(mapItem: MapItem?){
-        mapItem?.let {
-            when (mapItem){
-                MapItem.ECO_DRIVING -> {
-                    viewModel.displayEvents = viewModel.events.filter {
-                        it.type == TripEventType.START || it.type == TripEventType.FINISH
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int) {
+        val options = PolylineOptions()
+        for (i in startIndex..endIndex) {
+            val routeSeg = LatLng(route.latitude[i], route.longitude[i])
+            builder.include(routeSeg)
+            options.color(color)
+            options.add(routeSeg)
+        }
+        computedPolyline = googleMap.addPolyline(options)
+    }
+
+    private fun drawMarker(mapItem: DKMapItem?) {
+        mapItem?.let { item ->
+            if (item.displayedMarkers().isNotEmpty()) {
+                item.displayedMarkers().forEach { type ->
+                    when (type) {
+                        DKMarkerType.SAFETY -> viewModel.displayEvents =
+                            viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
+                        DKMarkerType.DISTRACTION -> viewModel.displayEvents =
+                            viewModel.events.filterNot { it.type == TripEventType.SAFETY_BRAKE || it.type == TripEventType.SAFETY_ACCEL || it.type == TripEventType.SAFETY_ADHERENCE }
+                        DKMarkerType.ALL -> {
+                            if (viewModel.configurableMapItems.contains(MapItem.DISTRACTION)) {
+                                viewModel.displayEvents = viewModel.events
+                            } else {
+                                viewModel.displayEvents = viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
+                            }
+                        }
                     }
                 }
-                MapItem.SAFETY -> {
-                    viewModel.displayEvents = viewModel.events.filterNot {
-                        it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
-                    }
-                }
-                MapItem.DISTRACTION -> {
-                    viewModel.displayEvents = viewModel.events.filterNot {
-                        it.type == TripEventType.SAFETY_BRAKE || it.type == TripEventType.SAFETY_ACCEL || it.type == TripEventType.SAFETY_ADHERENCE
-                    }
-                }
-                MapItem.INTERACTIVE_MAP -> {
-                    viewModel.displayEvents = viewModel.events
+            } else {
+                viewModel.displayEvents = viewModel.events.filter {
+                    it.type == TripEventType.START || it.type == TripEventType.FINISH
                 }
             }
-        } ?: kotlin.run {
+        } ?: run {
             viewModel.displayEvents = viewModel.events.filter {
                 it.type == TripEventType.START || it.type == TripEventType.FINISH
             }
@@ -144,8 +157,8 @@ class TripGoogleMapViewHolder(
         googleMap.setOnMarkerClickListener(this)
     }
 
-    private fun drawEvents(events : List<TripEvent>){
-        for ((i, event) in events.withIndex()){
+    private fun drawEvents(events: List<TripEvent>) {
+        for ((i, event) in events.withIndex()) {
             val location = LatLng(event.latitude, event.longitude)
             val marker = googleMap.addMarker(
                 MarkerOptions().position(location)
@@ -160,24 +173,13 @@ class TripGoogleMapViewHolder(
         }
     }
 
-    private fun clearMap(){
+    private fun clearMap() {
         computedPolyline?.remove()
         googleMap.clear()
         googleMarkerList.clear()
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int){
-        val options = PolylineOptions()
-        for (i in startIndex..endIndex){
-            val routeSeg = LatLng(route.latitude[i], route.longitude[i])
-            builder.include(routeSeg)
-            options.color(color)
-            options.add(routeSeg)
-        }
-        computedPolyline = googleMap.addPolyline(options)
-    }
-
-    fun updateCamera(){
+    fun updateCamera() {
         val paddingPx = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             100f,
@@ -190,10 +192,9 @@ class TripGoogleMapViewHolder(
             googleMap.setInfoWindowAdapter(customInfoWindowAdapter)
             try {
                 googleMap.animateCamera(cameraUpdate)
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 // catch exception if there is not enough space for map display
             }
-
         }
     }
 

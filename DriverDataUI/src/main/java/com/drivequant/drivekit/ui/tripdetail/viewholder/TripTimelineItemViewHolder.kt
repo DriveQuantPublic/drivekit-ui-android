@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,9 +20,10 @@ class TripTimelineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     private val lineBottom: View = itemView.findViewById(R.id.line_bottom)
 
     fun bind(tripEvent : TripEvent, isFirst: Boolean, isLast: Boolean, listener :OnItemClickListener){
-        eventHour.text = tripEvent.time.formatDate(DKDatePattern.HOUR_MINUTE)
+        eventHour.text = tripEvent.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
         eventDescription.text = tripEvent.getTitle(itemView.context)
-        eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
+        eventHour.setTextColor(DriveKitUI.colors.mainFontColor())
+        eventDescription.setTextColor(DriveKitUI.colors.mainFontColor())
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE
         if (isLast) lineBottom.visibility = View.INVISIBLE else lineBottom.visibility = View.VISIBLE

@@ -13,5 +13,5 @@ class DriverDistractionViewModel(private val distraction: DriverDistraction) : S
 
     fun getUnlockDuration(context: Context): String = DKDataFormatter.formatDuration(context,distraction.durationUnlock)
 
-    fun getUnlockDistance(context: Context) : String = DKDataFormatter.formatDistance(context,distraction.distanceUnlock)
+    fun getUnlockDistance(context: Context) : String = DKDataFormatter.formatMeterDistance(context,distraction.distanceUnlock)
 }

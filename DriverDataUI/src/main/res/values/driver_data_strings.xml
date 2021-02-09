@@ -11,10 +11,18 @@
    <string name="dk_driverdata_advice_feedback_disagree_title">Your opinion</string>
    <string name="dk_driverdata_advice_feedback_error">An error occurred, please retry later.</string>
    <string name="dk_driverdata_advice_feedback_success">Your review has been taken into account. Thank you !</string>
+   <string name="dk_driverdata_alternative_transportation_remark">💡 This trip does not have a score because the application does not measure your driving while you are not in your vehicle.</string>
+   <string name="dk_driverdata_alternative_transportation_thanks">❤️ Thank you for reporting this trip and for helping us improve transportation mode automatic recognition.</string>
+   <string name="dk_driverdata_alternative_trips">Alternative transport</string>
    <string name="dk_driverdata_bad_maintain">Very fluctuating speed</string>
+   <string name="dk_driverdata_change_transportation_mode">Change?</string>
    <string name="dk_driverdata_confirm_delete_trip">Delete the trip ?</string>
    <string name="dk_driverdata_day">Day trip</string>
+   <string name="dk_driverdata_declared_transportation_mode">Declared mode:</string>
+   <string name="dk_driverdata_default_filter_item">All my trips</string>
+   <string name="dk_driverdata_detected_transportation_mode">Detected mode:</string>
    <string name="dk_driverdata_end_event">End of trip</string>
+   <string name="dk_driverdata_failed_to_declare_transportation">Transportation mode couldn\'t be updated, please retry later.</string>
    <string name="dk_driverdata_failed_to_delete_trip">The trip could not be deleted, try again later.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Failed to synchronize trips, please retry later.</string>
    <string name="dk_driverdata_good_accel">Good acceleration</string>
@@ -26,7 +34,8 @@
    <string name="dk_driverdata_low_accel">Acceleration is too low</string>
    <string name="dk_driverdata_low_decel">Deceleration is too low</string>
    <string name="dk_driverdata_night">Night trip</string>
-   <string name="dk_driverdata_no_trips_recorded">No recorded trips</string>
+   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
+   <string name="dk_driverdata_no_trips_recorded">Make your first trip to fill this list</string>
    <string name="dk_driverdata_safety_accel">Harsh accelerations</string>
    <string name="dk_driverdata_safety_adherence">Adherence limits</string>
    <string name="dk_driverdata_safety_decel">Hard brakings</string>
@@ -54,6 +63,27 @@
    <string name="dk_driverdata_synthesis_stop_time">Idling duration</string>
    <string name="dk_driverdata_synthesis_vehicle">Vehicle used</string>
    <string name="dk_driverdata_synthesis_weather">Weather</string>
+   <string name="dk_driverdata_transportation_mode">Transportation mode:</string>
+   <string name="dk_driverdata_transportation_mode_all">All trips</string>
+   <string name="dk_driverdata_transportation_mode_bike">Bicycle</string>
+   <string name="dk_driverdata_transportation_mode_boat">Boat</string>
+   <string name="dk_driverdata_transportation_mode_bus">Bus</string>
+   <string name="dk_driverdata_transportation_mode_car">Car</string>
+   <string name="dk_driverdata_transportation_mode_declaration_comment">Do you have a comment? (optional)</string>
+   <string name="dk_driverdata_transportation_mode_declaration_comment_error">Your comment must not exceed 120 characters</string>
+   <string name="dk_driverdata_transportation_mode_declaration_text">Please select the transportation mode if the one detected is wrong.</string>
+   <string name="dk_driverdata_transportation_mode_flight">Plane</string>
+   <string name="dk_driverdata_transportation_mode_idle">Idle</string>
+   <string name="dk_driverdata_transportation_mode_motorcycle">Motorcycle</string>
+   <string name="dk_driverdata_transportation_mode_on_foot">On foot</string>
+   <string name="dk_driverdata_transportation_mode_other">Other</string>
+   <string name="dk_driverdata_transportation_mode_passenger_driver">Were you driver or passenger?</string>
+   <string name="dk_driverdata_transportation_mode_skiing">Skiing</string>
+   <string name="dk_driverdata_transportation_mode_title">Transportation mode</string>
+   <string name="dk_driverdata_transportation_mode_train">Train</string>
+   <string name="dk_driverdata_transportation_mode_truck">Heavy duty</string>
+   <string name="dk_driverdata_transportation_profile_driver">Driver</string>
+   <string name="dk_driverdata_transportation_profile_passenger">Passenger</string>
    <string name="dk_driverdata_trip_deleted">Your trip has been deleted.</string>
    <string name="dk_driverdata_trip_detail_data_error">The trip data could not be retrieved.</string>
    <string name="dk_driverdata_trip_detail_get_road_failed">The road can\'t be retrieve. Make sure you are connected to the network.</string>
@@ -66,6 +96,7 @@
    <string name="dk_driverdata_unlock_event">Screen unlocking</string>
    <string name="dk_driverdata_unlock_number">Number of unlocking</string>
    <string name="dk_driverdata_value">Value =</string>
+   <string name="dk_driverdata_vehicle_trips">Vehicle trips</string>
    <string name="dk_driverdata_weak_accel">Weak acceleration</string>
    <string name="dk_driverdata_weak_decel">Weak deceleration</string>
    <string name="dk_driverdata_weak_maintain">Irregular speed</string>
@@ -75,6 +106,4 @@
    <string name="dk_driverdata_weather_rain">Rainy weather</string>
    <string name="dk_driverdata_weather_snow">Snowy weather</string>
    <string name="dk_driverdata_weather_sun">Clear weather</string>
-   <string name="dk_driverdata_default_filter_item">All my trips</string>
-   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
 </resources>

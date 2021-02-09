@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.common.ui.navigation
 
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 interface DriverDataUIEntryPoint {
     fun startTripListActivity(context: Context)

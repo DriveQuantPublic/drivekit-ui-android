@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 class FilterView : LinearLayout {
 
     lateinit var spinner: Spinner
+    lateinit var adapter: FilterAdapter
 
     constructor(context: Context) : super(context) {
         init()
@@ -26,14 +28,20 @@ class FilterView : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_filter_view_layout, null).setDKStyle()
         spinner = view.findViewById(R.id.spinner_filter)
+        view.setBackgroundColor(Color.WHITE)
         addView(view, ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
     fun setItems(filterItems: List<FilterItem>) {
-        val adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
-        spinner.adapter = adapter
-        spinner.setSelection(0, false)
+        if (!this::adapter.isInitialized) {
+            adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
+            spinner.adapter = adapter
+            spinner.setSelection(0, false)
+        } else {
+            adapter.setItems(filterItems)
+            adapter.notifyDataSetChanged()
+        }
     }
 }

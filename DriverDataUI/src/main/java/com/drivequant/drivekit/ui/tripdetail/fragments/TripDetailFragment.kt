@@ -4,23 +4,22 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.text.HtmlCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.AppCompatRadioButton
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.text.HtmlCompat
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -29,17 +28,21 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
+import java.util.*
 
 class TripDetailFragment : Fragment() {
 
     private lateinit var viewModel : TripDetailViewModel
 
     private lateinit var itinId: String
+    private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
     private var openAdvice: Boolean = false
 
     private var adviceAlertDialog: AlertDialog? = null
@@ -51,11 +54,15 @@ class TripDetailFragment : Fragment() {
     private lateinit var viewContentTrip: View
 
     companion object {
-        fun newInstance(itinId: String,
-                        openAdvice: Boolean = false): TripDetailFragment {
+        fun newInstance(
+            itinId: String,
+            openAdvice: Boolean = false,
+            tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED
+        ): TripDetailFragment {
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
             fragment.openAdvice = openAdvice
+            fragment.tripListConfiguration = tripListConfigurationType.getTripListConfiguration()
             return fragment
         }
     }
@@ -67,25 +74,24 @@ class TripDetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
-        FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(Color.WHITE)
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.trip_menu_bar, menu)
+        inflater.inflate(R.menu.trip_menu_bar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
             R.id.trip_delete -> {
                 context?.let {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
                         .positiveButton(getString(R.string.dk_common_ok),
-                            DialogInterface.OnClickListener { dialog, _ ->
+                            DialogInterface.OnClickListener { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
                         .negativeButton(getString(R.string.dk_common_cancel),
@@ -113,12 +119,14 @@ class TripDetailFragment : Fragment() {
         }
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this,
-                TripDetailViewModelFactory(itinId, DriverDataUI.mapItems)
+                TripDetailViewModelFactory(itinId, tripListConfiguration)
             ).get(TripDetailViewModel::class.java)
         }
         progress_circular.visibility = View.VISIBLE
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
         container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        center_button.setColorFilter(DriveKitUI.colors.primaryColor())
+
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (DriverDataUI.enableDeleteTrip) {
             setHasOptionsMenu(true)
@@ -131,36 +139,35 @@ class TripDetailFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    private fun deleteTrip(){
+    private fun deleteTrip() {
         viewModel.deleteTripObserver.observe(this, Observer {
             hideProgressCircular()
-            if (it != null){
-                val alert = DKAlertDialog.LayoutBuilder()
-                    .init(context!!)
-                    .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(
-                        getString(R.string.dk_common_ok),
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.dismiss()
-                            val data = Intent()
-                            requireActivity().apply {
-                                setResult(RESULT_OK, data)
-                                finish()
-                            }
-                        })
-                    .cancelable(false)
-                    .show()
+            context?.let { context ->
+                if (it != null) {
+                    val alert = DKAlertDialog.LayoutBuilder()
+                        .init(context)
+                        .layout(R.layout.template_alert_dialog_layout)
+                        .positiveButton(
+                            getString(R.string.dk_common_ok),
+                            DialogInterface.OnClickListener { dialog, _ ->
+                                dialog.dismiss()
+                                val data = Intent()
+                                requireActivity().apply {
+                                    setResult(RESULT_OK, data)
+                                    finish()
+                                }
+                            })
+                        .cancelable(false)
+                        .show()
 
-                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-                title?.text = getString(R.string.app_name)
-
-                if (it){
-                    description?.text = getString(R.string.dk_driverdata_trip_deleted)
-                    title?.headLine1()
-                    description?.normalText()
-                } else {
-                    description?.text = getString(R.string.dk_driverdata_failed_to_delete_trip)
+                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+                    val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                    title?.text = getString(R.string.app_name)
+                    description?.text = if (it) {
+                        getString(R.string.dk_driverdata_trip_deleted)
+                    } else {
+                        getString(R.string.dk_driverdata_failed_to_delete_trip)
+                    }
                     title?.headLine1()
                     description?.normalText()
                 }
@@ -169,7 +176,7 @@ class TripDetailFragment : Fragment() {
         viewModel.deleteTrip()
     }
 
-    private fun sendTripAdviceFeedback(mapItem: MapItem, evaluation: Boolean, feedback: Int, comment: String? = null ){
+    private fun sendTripAdviceFeedback(mapItem: DKMapItem, evaluation: Boolean, feedback: Int, comment: String? = null ){
         viewModel.sendAdviceFeedbackObserver.observe(this, Observer { status ->
             hideProgressCircular()
             if (status != null){
@@ -242,7 +249,7 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    fun displayAdvice(mapItem: MapItem){
+    fun displayAdvice(mapItem: DKMapItem) {
         if (viewModel.shouldDisplayAdvice(mapItem)){
             val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
             val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
@@ -265,16 +272,17 @@ class TripDetailFragment : Fragment() {
                 val agreeText = adviceView.findViewById<TextView>(R.id.advice_agree_textview)
                 val agreeImage = adviceView.findViewById<ImageView>(R.id.advice_agree_image)
 
+                disagreeText.headLine2(DriveKitUI.colors.primaryColor())
+                agreeText.headLine2(DriveKitUI.colors.primaryColor())
+                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
+
                 disagreeText.text = context?.getString(R.string.dk_driverdata_advice_disagree)
-                disagreeText.setTextColor(DriveKitUI.colors.primaryColor())
                 DrawableCompat.setTint(disagreeImage.drawable, DriveKitUI.colors.primaryColor())
                 disagreeButton.setOnClickListener {
                     displayAdviceFeedback(mapItem)
                 }
 
                 agreeText.text = context?.getString(R.string.dk_driverdata_advice_agree)
-                agreeText.setTextColor(DriveKitUI.colors.primaryColor())
-                DrawableCompat.setTint(agreeImage.drawable, DriveKitUI.colors.primaryColor())
                 agreeButton.setOnClickListener {
                     showProgressCircular()
                     sendTripAdviceFeedback(mapItem, true, 0)
@@ -285,45 +293,74 @@ class TripDetailFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
+            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
             adviceAlertDialog = builder.show()
         }
     }
 
-    private fun displayAdviceFeedback(mapItem: MapItem){
+    private fun displayAdviceFeedback(mapItem: DKMapItem) {
         val feedbackView = View.inflate(context, R.layout.view_trip_advice_feedback, null)
+        FontUtils.overrideFonts(context,feedbackView)
         val header = feedbackView.findViewById<TextView>(R.id.alert_dialog_trip_feedback_header)
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
         header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
-        FontUtils.overrideFonts(context,feedbackView)
-        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
+            ?.toUpperCase(Locale.getDefault())
+        feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_03).text = context?.getString(R.string.dk_driverdata_advice_feedback_03)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_04).text = context?.getString(R.string.dk_driverdata_advice_feedback_04)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_05).text = context?.getString(R.string.dk_driverdata_advice_feedback_05)
+        feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
 
-        radioGroup.setOnCheckedChangeListener { _, checkedId -> handleClassicFeedbackAnswer(checkedId, feedbackView) }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            this.feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+               handleClassicFeedbackAnswer(checkedId, feedbackView)
+        }
 
         val builder = AlertDialog.Builder(context)
             .setView(feedbackView)
             .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ -> buildFeedbackData(mapItem, feedbackView, radioGroup) }
+            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ ->
+                if (radioGroup.checkedRadioButtonId == R.id.radio_button_choice_05 && feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isEmpty()) {
+                    context?.let {
+                        val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")
+                        Toast.makeText(it, emptyFieldText, Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    buildFeedbackData(mapItem, feedbackView, radioGroup)
+                }
+            }
 
         feedbackAlertDialog = builder.show()
+        feedbackAlertDialog?.apply {
+            getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
+        }
     }
 
-    private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View){
-        if (checkedId == R.id.radio_button_choice_05){
-            feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = true
+    private fun handleClassicFeedbackAnswer(checkedId: Int, feedbackView: View) {
+        if (checkedId == R.id.radio_button_choice_05) {
             feedbackAlertDialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            val scrollView = feedbackView.findViewById<ScrollView>(R.id.scrollView_feedback)
+            val editText = feedbackView.findViewById<EditText>(R.id.edit_text_feedback)
+            editText.apply {
+                isEnabled = true
+                requestFocus()
+                setOnClickListener {
+                    scrollView.smoothScrollTo(0, scrollView.bottom)
+                }
+            }
+            feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
+                ?.setTextColor(DriveKitUI.colors.secondaryColor())
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
         }
     }
 
-    private fun buildFeedbackData(mapItem: MapItem, feedbackView: View, radioGroup: RadioGroup){
+    private fun buildFeedbackData(mapItem: DKMapItem, feedbackView: View, radioGroup: RadioGroup){
         showProgressCircular()
         var comment: String? = null
         val feedback = when (radioGroup.checkedRadioButtonId){
@@ -334,7 +371,7 @@ class TripDetailFragment : Fragment() {
             R.id.radio_button_choice_05 -> 5
             else -> 0
         }
-        if (feedback == 5){
+        if (feedback == 5) {
             comment = feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.toString()
         }
 
@@ -342,53 +379,66 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setMapController(){
-        if (mapFragment != null) {
-            mapFragment!!.getMapAsync {
-                    googleMap -> mapFragment
-                tripMapViewHolder =
-                    TripGoogleMapViewHolder(
-                        this,
-                        viewContentTrip,
-                        viewModel,
-                        googleMap
-                    )
-                tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
-                tripMapViewHolder.updateCamera()
-                displayAdviceFromTripInfo()
-                hideProgressCircular()
-            }
+        mapFragment?.getMapAsync {
+                googleMap -> mapFragment
+            tripMapViewHolder =
+                TripGoogleMapViewHolder(
+                    this,
+                    viewContentTrip,
+                    viewModel,
+                    googleMap
+                )
+            tripMapViewHolder.traceRoute(viewModel.displayMapItem.value)
+            tripMapViewHolder.updateCamera()
+            displayAdviceFromTripInfo()
+            hideProgressCircular()
         }
         center_button.setOnClickListener {
             tripMapViewHolder.updateCamera()
         }
     }
 
-    private fun setUnScoredTripFragment(){
+    private fun setUnScoredTripFragment() {
         view_pager.visibility = View.INVISIBLE
         unscored_fragment.visibility = View.VISIBLE
-        childFragmentManager.beginTransaction()
-            .replace(R.id.unscored_fragment, UnscoredTripFragment.newInstance(
+
+        val fragment = DriverDataUI.customMapItem?.let { item ->
+            if (item.overrideShortTrip()) {
+                setViewPager()
+                item.getFragment(viewModel.trip, viewModel)
+            } else {
+                UnscoredTripFragment.newInstance(
+                    viewModel.trip
+                )
+            }
+        } ?: run {
+            UnscoredTripFragment.newInstance(
                 viewModel.trip
-            ))
+            )
+        }
+        childFragmentManager.beginTransaction()
+            .replace(R.id.unscored_fragment, fragment)
             .commit()
     }
 
-    private fun setViewPager(){
+    private fun setViewPager() {
         view_pager.adapter =
             TripDetailFragmentPagerAdapter(
                 childFragmentManager,
                 viewModel)
         tab_layout.setupWithViewPager(view_pager)
-        for ((index, mapItem) in viewModel.configurableMapItems.withIndex()){
+        for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
             tab_layout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
                 ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                it.customView = icon
-                val sizePx = (it.parent.height * 0.66).toInt()
-                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx,sizePx)
+                it.parent?.let { tabLayout ->
+                    val sizePx = (tabLayout.height * 0.66).toInt()
+                    it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                    it.customView = icon
+                }
             }
         }
         DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())
@@ -399,11 +449,20 @@ class TripDetailFragment : Fragment() {
         )
     }
 
-    private fun setHeaderSummary(){
+    private fun setHeaderSummary() {
         trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalize()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-        trip_distance.text = DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
-        trip_distance.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+
+        val headerValue =
+            DriverDataUI.customHeader?.let {
+                it.customTripDetailHeader(requireContext(), viewModel.trip!!) ?: run {
+                    it.tripDetailHeader().text(requireContext(), viewModel.trip!!)
+                }
+            }
+        trip_header.text = headerValue ?: run {
+            DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
+        }
+        trip_header.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     private fun showProgressCircular() {
