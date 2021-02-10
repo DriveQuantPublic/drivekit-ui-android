@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKHeader
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
@@ -115,6 +116,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun startTripDetailActivity(context: Context, tripId: String) {
         val intent = Intent(context, TripDetailActivity::class.java)
+        intent.putExtra(ITINID_EXTRA, tripId)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
