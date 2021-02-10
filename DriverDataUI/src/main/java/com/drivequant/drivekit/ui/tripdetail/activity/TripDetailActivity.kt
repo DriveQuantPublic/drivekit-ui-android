@@ -55,7 +55,7 @@ class TripDetailActivity : AppCompatActivity() {
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
         val openAdvice = intent.getBooleanExtra(OPEN_ADVICE_EXTRA, false)
-        val tripListConfigurationType = intent.getSerializableExtra(TRIP_LIST_CONFIGURATION_TYPE_EXTRA) as TripListConfigurationType
+        val tripListConfigurationType = intent.getSerializableExtra(TRIP_LIST_CONFIGURATION_TYPE_EXTRA) as TripListConfigurationType? ?: TripListConfigurationType.MOTORIZED
         supportFragmentManager.beginTransaction()
             .replace(R.id.container,
                 TripDetailFragment.newInstance(itinId, openAdvice, tripListConfigurationType))
