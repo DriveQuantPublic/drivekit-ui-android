@@ -14,7 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_distraction_selector_item.view.*
 
-class DistractionSelectorItem : LinearLayout {
+internal class DistractionSelectorItem : LinearLayout {
 
     constructor(context: Context) : super(context) {
         init()

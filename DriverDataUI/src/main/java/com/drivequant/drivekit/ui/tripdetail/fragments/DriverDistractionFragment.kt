@@ -16,7 +16,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
-class DriverDistractionFragment : Fragment(), View.OnClickListener {
+internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance(tripDetailViewModel: DKTripDetailViewModel): DriverDistractionFragment {
@@ -50,7 +50,7 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
             setSelection(true)
         }
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
+        score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 
@@ -73,12 +73,12 @@ class DriverDistractionFragment : Fragment(), View.OnClickListener {
                     "dk_driverdata_unlock_screen_content",
                     viewModel.getUnlockDuration(requireContext()),
                     viewModel.getUnlockDistance(requireContext()).replace(" ","\u00A0")
-                )
+                ).toString()
             }
         screen_unlock_item.apply {
             setDistractionEventContent(
                 unlockEvent,
-                unlockContent.toString()
+                unlockContent
             )
             setDistractionContentColor(true)
         }
