@@ -337,17 +337,22 @@ internal class TripDetailViewModel(
     override fun getUnlockNumberEvent(): Int = trip?.driverDistraction?.nbUnlock ?: 0
 
     override fun getUnlockDuration(context: Context) =
-        DKDataFormatter.formatDuration(context, trip?.driverDistraction?.durationUnlock, 10)
+        DKDataFormatter.formatDuration(
+            context,
+            DKDataFormatter.ceilDuration(trip?.driverDistraction?.durationUnlock, 600)
+        )
 
     override fun getUnlockDistance(context: Context): String {
         trip?.driverDistraction?.distanceUnlock?.let {
-            return if (it >= 1000) {
-                DKDataFormatter.formatMeterDistanceInKm(context, it, distanceMax = 10)
-            } else {
-                DKDataFormatter.formatMeterDistance(
-                    context,
-                    trip?.driverDistraction?.distanceUnlock
-                )
+            DKDataFormatter.apply {
+                return if (it >= 1000) {
+                    formatMeterDistanceInKm(context, ceilDistance(it, 10000))
+                } else {
+                    formatMeterDistance(
+                        context,
+                        trip?.driverDistraction?.distanceUnlock
+                    )
+                }
             }
         }
         return "-"
@@ -357,13 +362,15 @@ internal class TripDetailViewModel(
 
     override fun getPhoneCallsDistance(context: Context): String {
         val distance = trip?.calls?.map { call -> call.distance }?.sum() ?: 0
-        return if (distance >= 1000) {
-            DKDataFormatter.formatMeterDistanceInKm(context, distance.toDouble(), distanceMax = 10)
-        } else {
-            DKDataFormatter.formatMeterDistance(
-                context,
-                trip?.driverDistraction?.distanceUnlock
-            )
+        DKDataFormatter.apply {
+            return if (distance >= 1000) {
+                formatMeterDistanceInKm(context, ceilDistance(distance.toDouble(), 10000))
+            } else {
+                formatMeterDistance(
+                    context,
+                    distance.toDouble()
+                )
+            }
         }
     }
 
@@ -393,7 +400,9 @@ internal class TripDetailViewModel(
 
     override fun getPhoneCallsDuration(context: Context): String {
         val duration = trip?.calls?.map { call -> call.duration }?.sum() ?: 0
-        return DKDataFormatter.formatDuration(context, duration.toDouble(), 10)
+        DKDataFormatter.apply {
+            return formatDuration(context, ceilDuration(duration.toDouble(), 600))
+        }
     }
 }
 

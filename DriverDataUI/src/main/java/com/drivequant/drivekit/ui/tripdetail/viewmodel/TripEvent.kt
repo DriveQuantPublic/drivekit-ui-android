@@ -138,7 +138,10 @@ class TripEvent(val type: TripEventType,
             PHONE_DISTRACTION_LOCK -> null
             PHONE_DISTRACTION_UNLOCK -> null
             PHONE_DISTRACTION_PICK_UP, PHONE_DISTRACTION_HANG_UP -> {
-                val duration = DKDataFormatter.formatDuration(context, callDuration)
+                val duration = DKDataFormatter.formatDuration(
+                    context,
+                    DKDataFormatter.ceilDuration(callDuration, 600)
+                )
                 DKSpannable().append(
                     context.getString(R.string.dk_driverdata_calling_time),
                     context.resSpans {
