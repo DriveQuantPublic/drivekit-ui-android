@@ -235,28 +235,19 @@ internal class TripDetailViewModel(
                 }
             }
         }
-        var chunkedCallIndex = listOf<List<Int>>()
-        var chunkedCallTime = listOf<List<Int>>()
-        route.callIndex?.let {
-            chunkedCallIndex = it.chunked(2)
-        }
-        route.callTime?.let {
-            chunkedCallTime = it.chunked(2)
-        }
-        trip.calls?.let { calls ->
-            if (chunkedCallIndex.isNotEmpty()) {
-                for ((indexPhoneCall, call) in calls.withIndex()) {
-                    for ((index, indexCall) in chunkedCallIndex[indexPhoneCall].withIndex()) {
-                        if ((route.latitude[indexCall]  == route.latitude.first() &&
-                             route.longitude[indexCall] == route.longitude.first()) ||
-                            (route.latitude[indexCall]  == route.latitude.last() &&
-                             route.longitude[indexCall] == route.longitude.last())) continue
+
+        if (!route.callIndex.isNullOrEmpty() && !route.callTime.isNullOrEmpty()) {
+            route.callIndex!!.forEachIndexed { index, routeCallIndex ->
+                if (!(route.latitude[routeCallIndex] == route.latitude.first() &&
+                            route.longitude[routeCallIndex] == route.longitude.first()) && !(route.latitude[routeCallIndex] == route.latitude.last() &&
+                            route.longitude[routeCallIndex] == route.longitude.last())) {
+                    getCallFromIndex(index)?.let { call ->
                         events.add(
                             TripEvent(
                                 if (index.rem(2) == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
-                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (chunkedCallTime[indexPhoneCall][index] * 1000))),
-                                route.latitude[chunkedCallIndex[indexPhoneCall][index]],
-                                route.longitude[chunkedCallIndex[indexPhoneCall][index]],
+                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - route.callTime!![index] * 1000)),
+                                route.latitude[routeCallIndex],
+                                route.longitude[routeCallIndex],
                                 isForbidden = call.isForbidden,
                                 callDuration = call.duration.toDouble()
                             )
@@ -268,7 +259,7 @@ internal class TripDetailViewModel(
         events = events.sortedWith(compareBy { it.time }).toMutableList()
     }
 
-    fun getCallFromIndex(position: Int): Call? = trip?.calls?.get(position.rem(2))
+    fun getCallFromIndex(position: Int): Call? = trip?.calls?.get((position / 2))
 
     fun deleteTrip(){
         if (DriveKitDriverData.isConfigured()){
