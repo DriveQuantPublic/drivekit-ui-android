@@ -19,8 +19,7 @@ class TripEvent(val type: TripEventType,
                 val longitude: Double,
                 val isHigh: Boolean = false,
                 val value: Double = 0.0,
-                val isForbidden: Boolean = false,
-                val callDuration: Double = 0.0) {
+                val isForbidden: Boolean = false) {
 
     fun getEventImageResource() : Int {
         return when(type){
@@ -140,7 +139,7 @@ class TripEvent(val type: TripEventType,
             PHONE_DISTRACTION_PICK_UP, PHONE_DISTRACTION_HANG_UP -> {
                 val duration = DKDataFormatter.formatDuration(
                     context,
-                    DKDataFormatter.ceilDuration(callDuration, 600)
+                    DKDataFormatter.ceilDuration(value, 600)
                 )
                 DKSpannable().append(
                     context.getString(R.string.dk_driverdata_calling_time),

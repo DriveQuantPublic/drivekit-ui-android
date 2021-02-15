@@ -249,7 +249,7 @@ internal class TripDetailViewModel(
                                 route.latitude[routeCallIndex],
                                 route.longitude[routeCallIndex],
                                 isForbidden = call.isForbidden,
-                                callDuration = call.duration.toDouble()
+                                value = call.duration.toDouble()
                             )
                         )
                     }
