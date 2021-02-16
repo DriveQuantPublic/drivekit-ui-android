@@ -94,10 +94,10 @@ internal class TripGoogleMapViewHolder(
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
-            if (mapItem != null && (mapItem == MapItem.DISTRACTION || mapItem == MapItem.INTERACTIVE_MAP)) {
+            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea())) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
-                        if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {
+                        route.screenLockedIndex?.let {
                             var unlock: Boolean
                             for (i in 1 until route.screenLockedIndex!!.size) {
                                 unlock = route.screenStatus!![i - 1] == 1
@@ -110,7 +110,7 @@ internal class TripGoogleMapViewHolder(
                         }
                     }
                     MapTraceType.PHONE_CALL -> {
-                        if (mapItem.shouldShowPhoneDistractionArea() && route.callIndex != null) {
+                        route.callIndex?.let {
                             drawRoute(route, 0, route.callIndex!!.first(), lockColor)
                             for (i in 1 until route.callIndex!!.size) {
                                 viewModel.getCallFromIndex(i - 1)?.let {
@@ -118,12 +118,12 @@ internal class TripGoogleMapViewHolder(
                                     drawRoute(
                                         route,
                                         route.callIndex!![i - 1], route.callIndex!![i],
-                                        if (i % 2 != 0) phoneCallColor else lockColor
+                                        if (i.rem(2) != 0) phoneCallColor else lockColor
                                     )
                                 }
                             }
-                            drawRoute(route, route.callIndex!!.last(),route.latitude.size - 1, lockColor)
-                        } else {
+                            drawRoute(route, route.callIndex!!.last(), route.latitude.size - 1, lockColor)
+                        } ?: run {
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }

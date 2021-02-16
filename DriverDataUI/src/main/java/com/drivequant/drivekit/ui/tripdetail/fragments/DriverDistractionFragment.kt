@@ -63,9 +63,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
         val unlockEvent = DKResource.convertToString(requireContext(), "dk_driverdata_unlock_event")
         val unlockContent =
-            if (viewModel.getUnlockNumberEvent() == 0) {
-                DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
-            } else {
+            if (viewModel.hasScreenUnlocking()) {
                 DKResource.buildString(
                     requireContext(),
                     DriveKitUI.colors.secondaryColor(),
@@ -74,6 +72,8 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
                     viewModel.getUnlockDuration(requireContext()),
                     viewModel.getUnlockDistance(requireContext())
                 ).toString()
+            } else {
+                DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
             }
         screen_unlock_item.apply {
             setDistractionEventContent(

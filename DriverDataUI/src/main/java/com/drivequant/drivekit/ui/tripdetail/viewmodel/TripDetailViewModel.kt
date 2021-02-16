@@ -397,6 +397,10 @@ internal class TripDetailViewModel(
             return formatDuration(context, ceilDuration(duration.toDouble(), 600))
         }
     }
+
+    override fun hasScreenUnlocking(): Boolean =
+        (trip?.driverDistraction?.distanceUnlock
+            ?: 0.0) > 0.0 && (trip?.driverDistraction?.durationUnlock ?: 0.0) > 0.0
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -420,4 +424,5 @@ interface DKTripDetailViewModel {
     fun getPhoneCallsDistance(context: Context): String
     fun getPhoneCallsNumber(context: Context): Pair<String,String>
     fun getPhoneCallsDuration(context: Context): String
+    fun hasScreenUnlocking(): Boolean
 }
