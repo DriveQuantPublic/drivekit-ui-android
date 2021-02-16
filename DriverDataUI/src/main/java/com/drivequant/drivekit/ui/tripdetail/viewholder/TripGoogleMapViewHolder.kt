@@ -99,11 +99,11 @@ internal class TripGoogleMapViewHolder(
                     MapTraceType.UNLOCK_SCREEN -> {
                         route.screenLockedIndex?.let {
                             var unlock: Boolean
-                            for (i in 1 until route.screenLockedIndex!!.size) {
+                            for (i in 1 until it.size) {
                                 unlock = route.screenStatus!![i - 1] == 1
                                 drawRoute(
                                     route,
-                                    route.screenLockedIndex!![i - 1], route.screenLockedIndex!![i],
+                                    it[i - 1], it[i],
                                     if (unlock) unlockColor else lockColor
                                 )
                             }
@@ -111,18 +111,18 @@ internal class TripGoogleMapViewHolder(
                     }
                     MapTraceType.PHONE_CALL -> {
                         route.callIndex?.let {
-                            drawRoute(route, 0, route.callIndex!!.first(), lockColor)
-                            for (i in 1 until route.callIndex!!.size) {
-                                viewModel.getCallFromIndex(i - 1)?.let {
-                                    val phoneCallColor = if (it.isForbidden) unlockColor else authorizedCallColor
+                            drawRoute(route, 0, it.first(), lockColor)
+                            for (i in 1 until it.size) {
+                                viewModel.getCallFromIndex(i - 1)?.let { call ->
+                                    val phoneCallColor = if (call.isForbidden) unlockColor else authorizedCallColor
                                     drawRoute(
                                         route,
-                                        route.callIndex!![i - 1], route.callIndex!![i],
+                                        it[i - 1], it[i],
                                         if (i.rem(2) != 0) phoneCallColor else lockColor
                                     )
                                 }
                             }
-                            drawRoute(route, route.callIndex!!.last(), route.latitude.size - 1, lockColor)
+                            drawRoute(route, it.last(), route.latitude.size - 1, lockColor)
                         } ?: run {
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
