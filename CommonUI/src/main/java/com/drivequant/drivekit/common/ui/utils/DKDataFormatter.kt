@@ -34,11 +34,10 @@ object DKDataFormatter {
                 if (nbHour > 23) {
                     nbDay = nbHour.div(24)
                     nbHour -= nbHour - (24 * nbDay)
-                    "$nbDay".plus(NON_BREAKING_SPACE)
+                    "$nbDay"
                         .plus(context.getString(R.string.dk_common_unit_day))
                         .plus(NON_BREAKING_SPACE)
                         .plus(nbHour)
-                        .plus(NON_BREAKING_SPACE)
                         .plus(context.getString(R.string.dk_common_unit_hour))
                 } else {
                     "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
@@ -47,12 +46,11 @@ object DKDataFormatter {
                 val nbSecond = (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
                 return if (nbSecond > 0) {
                     "${nbMinute - 1}"
-                        .plus(NON_BREAKING_SPACE)
                         .plus(context.getString(R.string.dk_common_unit_minute))
-                        .plus(NON_BREAKING_SPACE)
                         .plus(nbSecond.formatLeadingZero())
                 } else {
-                    "$nbMinute".plus(NON_BREAKING_SPACE)
+                    "$nbMinute"
+                        .plus(NON_BREAKING_SPACE)
                         .plus(context.getString(R.string.dk_common_unit_minute))
                 }
             }
