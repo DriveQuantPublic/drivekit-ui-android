@@ -36,7 +36,6 @@ object DKDataFormatter {
                     nbHour -= nbHour - (24 * nbDay)
                     "$nbDay"
                         .plus(context.getString(R.string.dk_common_unit_day))
-                        .plus(NON_BREAKING_SPACE)
                         .plus(nbHour)
                         .plus(context.getString(R.string.dk_common_unit_hour))
                 } else {
