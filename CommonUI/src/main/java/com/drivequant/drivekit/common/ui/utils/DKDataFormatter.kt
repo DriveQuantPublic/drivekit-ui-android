@@ -23,7 +23,7 @@ object DKDataFormatter {
             if (durationInSeconds > 59) {
                 nbMinute = ceil(durationInSeconds.div(60)).toInt()
             } else {
-                return "${durationInSeconds.toInt()}"
+                return durationInSeconds.toInt().toString()
                     .plus(NON_BREAKING_SPACE)
                     .plus(context.getString(R.string.dk_common_unit_second))
             }

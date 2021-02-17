@@ -7,13 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
 internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
@@ -37,8 +39,27 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("itinId", viewModel.getItindId())
+            outState.putSerializable("tripListConfigurationType", viewModel.getTripListConfigurationType())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val itinId = savedInstanceState?.getSerializable("itinId") as String?
+        val tripListConfigurationType = savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
+
+        if (itinId != null && tripListConfigurationType != null) {
+            viewModel = ViewModelProviders.of(
+                this,
+                TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
+            ).get(TripDetailViewModel::class.java)
+        }
+
         phone_call_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))

@@ -29,6 +29,13 @@ sealed class TripListConfiguration {
             )
         }
     }
+
+    fun getTripListConfigurationType(): TripListConfigurationType {
+        return when (this){
+            is MOTORIZED -> TripListConfigurationType.MOTORIZED
+            is ALTERNATIVE -> TripListConfigurationType.ALTERNATIVE
+        }
+    }
 }
 
 @Keep

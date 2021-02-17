@@ -16,6 +16,7 @@ import com.drivequant.drivekit.driverdata.trip.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.*
 
 internal class TripDetailViewModel(
@@ -401,6 +402,10 @@ internal class TripDetailViewModel(
     override fun hasScreenUnlocking(): Boolean =
         (trip?.driverDistraction?.distanceUnlock
             ?: 0.0) > 0.0 && (trip?.driverDistraction?.durationUnlock ?: 0.0) > 0.0
+
+    override fun getItindId() = itinId
+
+    override fun getTripListConfigurationType() = tripListConfiguration.getTripListConfigurationType()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -414,6 +419,8 @@ class TripDetailViewModelFactory(
 }
 
 interface DKTripDetailViewModel {
+    fun getItindId(): String
+    fun getTripListConfigurationType(): TripListConfigurationType
     fun getTripEvents(): List<TripEvent>
     fun getSelectedEvent(): MutableLiveData<Int>
     fun getDistractionScore(): Double
