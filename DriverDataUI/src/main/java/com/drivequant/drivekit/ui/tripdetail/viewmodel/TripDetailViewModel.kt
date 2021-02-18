@@ -214,39 +214,33 @@ internal class TripDetailViewModel(
         }
 
         route.screenLockedIndex?.let {
-            it.forEachIndexed { index, indexScreenLocked ->
-                if (!(route.latitude[indexScreenLocked] == route.latitude.first() &&
-                            route.longitude[indexScreenLocked] == route.longitude.first()) && !(route.latitude[indexScreenLocked] == route.latitude.last() &&
-                            route.longitude[indexScreenLocked] == route.longitude.last())) {
-                    events.add(
-                        TripEvent(
-                            if (route.screenStatus!![index] == 1) TripEventType.PHONE_DISTRACTION_UNLOCK else TripEventType.PHONE_DISTRACTION_LOCK,
-                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.screenLockedTime!![index] * 1000))),
-                            route.latitude[it[index]],
-                            route.longitude[it[index]]
-                        )
+            for ((index, indexScreenLocked) in it.withIndex()) {
+                if (indexScreenLocked == 0 || indexScreenLocked == route.latitude.size - 1) continue
+                events.add(
+                    TripEvent(
+                        if (route.screenStatus!![index] == 1) TripEventType.PHONE_DISTRACTION_UNLOCK else TripEventType.PHONE_DISTRACTION_LOCK,
+                        Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - (route.screenLockedTime!![index] * 1000))),
+                        route.latitude[it[index]],
+                        route.longitude[it[index]]
                     )
-                }
+                )
             }
         }
 
         if (!route.callIndex.isNullOrEmpty() && !route.callTime.isNullOrEmpty()) {
-            route.callIndex!!.forEachIndexed { index, routeCallIndex ->
-                if (!(route.latitude[routeCallIndex] == route.latitude.first() &&
-                            route.longitude[routeCallIndex] == route.longitude.first()) && !(route.latitude[routeCallIndex] == route.latitude.last() &&
-                            route.longitude[routeCallIndex] == route.longitude.last())) {
-                    getCallFromIndex(index)?.let { call ->
-                        events.add(
-                            TripEvent(
-                                if (index.rem(2) == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
-                                Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - route.callTime!![index] * 1000)),
-                                route.latitude[routeCallIndex],
-                                route.longitude[routeCallIndex],
-                                isForbidden = call.isForbidden,
-                                value = call.duration.toDouble()
-                            )
+            for ((index, routeCallIndex) in route.callIndex!!.withIndex()) {
+                if (routeCallIndex == 0 || routeCallIndex == route.latitude.lastIndex) continue
+                getCallFromIndex(index)?.let { call ->
+                    events.add(
+                        TripEvent(
+                            if (index.rem(2) == 0) TripEventType.PHONE_DISTRACTION_PICK_UP else TripEventType.PHONE_DISTRACTION_HANG_UP,
+                            Date(trip.endDate.time - ((trip.tripStatistics?.duration!!.toLong() * 1000) - route.callTime!![index] * 1000)),
+                            route.latitude[routeCallIndex],
+                            route.longitude[routeCallIndex],
+                            isForbidden = call.isForbidden,
+                            value = call.duration.toDouble()
                         )
-                    }
+                    )
                 }
             }
         }
