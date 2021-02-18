@@ -15,13 +15,25 @@
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Merci d\'avoir déclaré ce trajet et de nous aider à améliorer l\'identification automatique du mode de transport.</string>
    <string name="dk_driverdata_alternative_trips">Transports alternatifs</string>
    <string name="dk_driverdata_bad_maintain">Vitesse très irrégulière</string>
+   <string name="dk_driverdata_beginning_authorized_call">Début d\'un appel autorisé</string>
+   <string name="dk_driverdata_beginning_authorized_call_info_content">L\'application a détecté le début d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call">Début d\'appel non-autorisé</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">L\'application a détecté le début d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre.
+Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
+   <string name="dk_driverdata_calling_time">Temps d\'appel =</string>
    <string name="dk_driverdata_change_transportation_mode">Changer ?</string>
    <string name="dk_driverdata_confirm_delete_trip">Supprimer le trajet ?</string>
    <string name="dk_driverdata_day">Trajet de jour</string>
    <string name="dk_driverdata_declared_transportation_mode">Mode déclaré :</string>
    <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
    <string name="dk_driverdata_detected_transportation_mode">Mode détecté :</string>
+   <string name="dk_driverdata_distance_travelled">%s parcourus</string>
+   <string name="dk_driverdata_end_authorized_call">Fin d\'appel autorisé</string>
+   <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
+   <string name="dk_driverdata_end_unauthorized_call">Fin d\'appel non-autorisé</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">L\'application a détecté la fin d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre.
+Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Le mode de transport n\'a pas pu être mis à jour, veuillez réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossible de synchroniser les trajets, veuillez réessayer plus tard.</string>
@@ -34,8 +46,13 @@
    <string name="dk_driverdata_low_accel">Accélération trop faible</string>
    <string name="dk_driverdata_low_decel">Freinage trop faible</string>
    <string name="dk_driverdata_night">Trajet de nuit</string>
+   <string name="dk_driverdata_no_call_congrats">Félicitations !</string>
+   <string name="dk_driverdata_no_call_content">Aucun appels</string>
+   <string name="dk_driverdata_no_screen_unlocking">Pas de déverrouillage</string>
    <string name="dk_driverdata_no_trip_placeholder">Vous n\'avez pas encore réalisé de trajets avec ce véhicule.</string>
    <string name="dk_driverdata_no_trips_recorded">Vous n\'avez pas encore réalisé de trajet.</string>
+   <string name="dk_driverdata_phone_call_plur">%s appels téléphoniques</string>
+   <string name="dk_driverdata_phone_call_sing">%s appel téléphonique</string>
    <string name="dk_driverdata_safety_accel">Accélérations fortes</string>
    <string name="dk_driverdata_safety_adherence">Limites d\'adhérence</string>
    <string name="dk_driverdata_safety_decel">Freinages forts</string>
@@ -94,7 +111,9 @@
    <string name="dk_driverdata_unlock_distance">Distance écran allumé</string>
    <string name="dk_driverdata_unlock_duration">Durée écran allumé</string>
    <string name="dk_driverdata_unlock_event">Déverrouillage de l\'écran</string>
+   <string name="dk_driverdata_unlock_events">Déverrouillages de l\'écran</string>
    <string name="dk_driverdata_unlock_number">Nombre de déverrouillages</string>
+   <string name="dk_driverdata_unlock_screen_content">écran allumé %s et %s</string>
    <string name="dk_driverdata_value">Valeur =</string>
    <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
    <string name="dk_driverdata_weak_accel">Freinage faible</string>

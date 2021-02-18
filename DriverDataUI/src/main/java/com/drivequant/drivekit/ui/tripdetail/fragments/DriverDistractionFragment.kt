@@ -7,68 +7,122 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.databaseutils.entity.DriverDistraction
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.DriverDistractionViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 
-class DriverDistractionFragment : Fragment() {
+internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
     companion object {
-        fun newInstance(driverDistraction: DriverDistraction) : DriverDistractionFragment {
+        fun newInstance(tripDetailViewModel: DKTripDetailViewModel): DriverDistractionFragment {
             val fragment = DriverDistractionFragment()
-            fragment.viewModel =
-                DriverDistractionViewModel(
-                    driverDistraction
-                )
+            fragment.viewModel = tripDetailViewModel
             return fragment
         }
     }
 
-    private lateinit var viewModel: DriverDistractionViewModel
+    private lateinit var viewModel: DKTripDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
         view.setBackgroundColor(Color.WHITE)
         return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("viewModel", viewModel)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("itinId", viewModel.getItindId())
+            outState.putSerializable("tripListConfigurationType", viewModel.getTripListConfigurationType())
+        }
         super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as DriverDistractionViewModel?)?.let{
-            viewModel = it
+
+        val itinId = savedInstanceState?.getSerializable("itinId") as String?
+        val tripListConfigurationType = savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
+
+        if (itinId != null && tripListConfigurationType != null) {
+            viewModel = ViewModelProviders.of(
+                this,
+                TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
+            ).get(TripDetailViewModel::class.java)
         }
+
+        phone_call_selector.apply {
+            setOnClickListener(this@DriverDistractionFragment)
+            setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
+            setSelection(false)
+        }
+        screen_unlock_selector.apply {
+            setOnClickListener(this@DriverDistractionFragment)
+            setSelectorContent("${viewModel.getUnlockNumberEvent()}")
+            setSelection(true)
+        }
+
+        score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
-        unlockNumberDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_number)
-        unlockDistanceDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_distance)
-        unlockDurationDescription.text = requireContext().getString(R.string.dk_driverdata_unlock_duration)
-
         gauge_type_title.normalText()
-        unlockNumberDescription.normalText()
-        unlockDistanceDescription.normalText()
-        unlockDurationDescription.normalText()
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.DISTRACTION, Typeface.BOLD)
-        unlockNumberEvent.text = viewModel.getUnlockNumberEvent()
-        distanceUnlocked.text = viewModel.getUnlockDistance(requireContext())
-        durationUnlocked.text = viewModel.getUnlockDuration(requireContext())
+        phone_call_item.apply {
+            setDistractionEventContent(
+                viewModel.getPhoneCallsNumber(requireContext()).first,
+                viewModel.getPhoneCallsNumber(requireContext()).second
+            )
+        }
 
-        unlockNumberEvent.headLine1(DriveKitUI.colors.primaryColor())
-        distanceUnlocked.headLine1(DriveKitUI.colors.primaryColor())
-        durationUnlocked.headLine1(DriveKitUI.colors.primaryColor())
+        val unlockEvent = DKResource.convertToString(requireContext(), "dk_driverdata_unlock_event")
+        val unlockContent =
+            if (viewModel.hasScreenUnlocking()) {
+                DKResource.buildString(
+                    requireContext(),
+                    DriveKitUI.colors.secondaryColor(),
+                    DriveKitUI.colors.secondaryColor(),
+                    "dk_driverdata_unlock_screen_content",
+                    viewModel.getUnlockDuration(requireContext()),
+                    viewModel.getUnlockDistance(requireContext())
+                ).toString()
+            } else {
+                DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
+            }
+        screen_unlock_item.apply {
+            setDistractionEventContent(
+                unlockEvent,
+                unlockContent
+            )
+            setDistractionContentColor(true)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        v?.let {
+            when (it.id) {
+                R.id.screen_unlock_selector -> {
+                    viewModel.getSelectedTraceType().postValue(MapTraceType.UNLOCK_SCREEN)
+                    screen_unlock_selector.setSelection(true)
+                    phone_call_selector.setSelection(false)
+                    screen_unlock_item.setDistractionContentColor(true)
+                    phone_call_item.setDistractionContentColor(false)
+                }
+                R.id.phone_call_selector -> {
+                    viewModel.getSelectedTraceType().postValue(MapTraceType.PHONE_CALL)
+                    phone_call_selector.setSelection(true)
+                    screen_unlock_selector.setSelection(false)
+                    screen_unlock_item.setDistractionContentColor(false)
+                    phone_call_item.setDistractionContentColor(true)
+                }
+            }
+        }
     }
 }

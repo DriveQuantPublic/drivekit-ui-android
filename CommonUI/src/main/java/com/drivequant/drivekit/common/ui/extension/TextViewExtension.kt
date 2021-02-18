@@ -39,10 +39,14 @@ fun TextView.normalText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
 }
 
 @JvmOverloads
-fun TextView.smallText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
+fun TextView.smallText(textColor: Int = DriveKitUI.colors.mainFontColor(), isTypeFaceBold: Boolean = false) {
     this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_small))
     this.setTextColor(textColor)
-    this.typeface = DriveKitUI.primaryFont(context)
+    if (isTypeFaceBold) {
+        this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    } else {
+        this.typeface = DriveKitUI.primaryFont(context)
+    }
 }
 
 @JvmOverloads
