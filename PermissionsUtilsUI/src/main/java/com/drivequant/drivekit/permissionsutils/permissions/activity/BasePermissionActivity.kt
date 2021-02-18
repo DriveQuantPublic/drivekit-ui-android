@@ -40,7 +40,9 @@ open class BasePermissionActivity : RequestPermissionActivity() {
     }
 
     protected fun next() {
-        nextPermissionViews.remove(nextPermissionViews.first())
+        if (nextPermissionViews.isNotEmpty()){
+            nextPermissionViews.remove(nextPermissionViews.first())
+        }
         if (nextPermissionViews.isEmpty()) {
             PermissionsUtilsUI.permissionViewListener?.onFinish()
         } else {
