@@ -82,7 +82,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             )
         }
 
-        val unlockEvent = DKResource.convertToString(requireContext(), "dk_driverdata_unlock_event")
+        val unlockEvent = DKResource.convertToString(requireContext(), "dk_driverdata_unlock_events")
         val unlockContent =
             if (viewModel.hasScreenUnlocking()) {
                 DKResource.buildString(
