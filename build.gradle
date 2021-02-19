@@ -10,7 +10,7 @@ buildscript {
     ext.play_services_version = '16.0.0'
     ext.appcompat = '1.2.0'
     ext.constraint_layout = '2.0.4'
-    ext.material = '1.2.1'
+    ext.material = '1.0.0'
     ext.legacy_preference = '1.0.0'
     ext.recycler_view = '1.1.0'
     ext.swipe_refresh_layout = '1.1.0'

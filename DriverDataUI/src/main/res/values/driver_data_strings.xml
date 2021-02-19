@@ -113,7 +113,7 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_unlock_event">Screen unlocking</string>
    <string name="dk_driverdata_unlock_events">Screen unlocks</string>
    <string name="dk_driverdata_unlock_number">Number of unlocking</string>
-   <string name="dk_driverdata_unlock_screen_content">screen on during %s and %s</string>
+   <string name="dk_driverdata_unlock_screen_content">screen on during %1$s and %2$s</string>
    <string name="dk_driverdata_value">Value =</string>
    <string name="dk_driverdata_vehicle_trips">Vehicle trips</string>
    <string name="dk_driverdata_weak_accel">Weak acceleration</string>
