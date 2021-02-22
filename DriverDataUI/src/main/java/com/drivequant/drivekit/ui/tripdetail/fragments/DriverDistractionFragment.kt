@@ -63,12 +63,17 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         phone_call_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
-            setSelection(false)
         }
         screen_unlock_selector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent("${viewModel.getUnlockNumberEvent()}")
-            setSelection(true)
+        }
+
+        viewModel.getSelectedTraceType().value?.let {
+            onSelectorChanged(it)
+        } ?: run {
+            onSelectorChanged(MapTraceType.UNLOCK_SCREEN)
+
         }
 
         score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)
@@ -96,12 +101,26 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             } else {
                 DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
             }
-        screen_unlock_item.apply {
-            setDistractionEventContent(
-                unlockEvent,
-                unlockContent
-            )
-            setDistractionContentColor(true)
+        screen_unlock_item.setDistractionEventContent(
+            unlockEvent,
+            unlockContent
+        )
+    }
+
+    private fun onSelectorChanged(mapTraceType: MapTraceType) {
+        when(mapTraceType) {
+            MapTraceType.UNLOCK_SCREEN -> {
+                screen_unlock_selector.setSelection(true)
+                phone_call_selector.setSelection(false)
+                screen_unlock_item.setDistractionContentColor(true)
+                phone_call_item.setDistractionContentColor(false)
+            }
+            MapTraceType.PHONE_CALL ->{
+                phone_call_selector.setSelection(true)
+                screen_unlock_selector.setSelection(false)
+                screen_unlock_item.setDistractionContentColor(false)
+                phone_call_item.setDistractionContentColor(true)
+            }
         }
     }
 
@@ -109,18 +128,16 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         v?.let {
             when (it.id) {
                 R.id.screen_unlock_selector -> {
-                    viewModel.getSelectedTraceType().postValue(MapTraceType.UNLOCK_SCREEN)
-                    screen_unlock_selector.setSelection(true)
-                    phone_call_selector.setSelection(false)
-                    screen_unlock_item.setDistractionContentColor(true)
-                    phone_call_item.setDistractionContentColor(false)
+                    MapTraceType.UNLOCK_SCREEN.let { mapTraceType ->
+                        viewModel.getSelectedTraceType().postValue(mapTraceType)
+                        onSelectorChanged(mapTraceType)
+                    }
                 }
                 R.id.phone_call_selector -> {
-                    viewModel.getSelectedTraceType().postValue(MapTraceType.PHONE_CALL)
-                    phone_call_selector.setSelection(true)
-                    screen_unlock_selector.setSelection(false)
-                    screen_unlock_item.setDistractionContentColor(false)
-                    phone_call_item.setDistractionContentColor(true)
+                    MapTraceType.PHONE_CALL.let { mapTraceType ->
+                        viewModel.getSelectedTraceType().postValue(mapTraceType)
+                        onSelectorChanged(mapTraceType)
+                    }
                 }
             }
         }
