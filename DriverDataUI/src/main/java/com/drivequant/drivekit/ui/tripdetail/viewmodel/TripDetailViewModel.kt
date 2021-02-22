@@ -214,7 +214,7 @@ internal class TripDetailViewModel(
         }
 
         route.screenLockedIndex?.let {
-            for ((index, indexScreenLocked) in it.withIndex()){
+            for ((index, indexScreenLocked) in it.withIndex()) {
                 if (indexScreenLocked == 0 || indexScreenLocked == route.latitude.size - 1) continue
                 if (route.screenStatus!![index] == 1) {
                     events.add(
@@ -225,7 +225,7 @@ internal class TripDetailViewModel(
                             route.longitude[it[index]]
                         )
                     )
-                }else{
+                } else {
                     events.add(
                         TripEvent(
                             TripEventType.PHONE_DISTRACTION_LOCK,
