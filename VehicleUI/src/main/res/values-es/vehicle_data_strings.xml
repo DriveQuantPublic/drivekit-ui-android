@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string name="dk_beacon_battery">Nivel de batería (%)</string>
+   <string name="dk_beacon_battery">Nivel de batería (%%)</string>
    <string name="dk_beacon_code">Identificador del beacon</string>
    <string name="dk_beacon_diagnostic_title">Diagnóstico de mi baliza</string>
    <string name="dk_beacon_distance">Distancia (m)</string>
@@ -47,7 +47,7 @@
    <string name="dk_vehicle_add">Añadir un vehículo</string>
    <string name="dk_vehicle_beacon_already_paired">La beacon no está disponible. Ya está acoplada a otro vehículo.</string>
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">Esta beacon ya está emparejada con este vehículo.</string>
-   <string name="dk_vehicle_beacon_deactivate_alert">La baliza %s se disociará del vehículo %s. \n ¿Estás seguro de que quieres continuar?</string>
+   <string name="dk_vehicle_beacon_deactivate_alert">La baliza %1$s se disociará del vehículo %2$s. \n ¿Estás seguro de que quieres continuar?</string>
    <string name="dk_vehicle_beacon_diagnostic_alert">Aún no has configurado una baliza.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Debes activar el sensor de Bluetooth del teléfono para verificar la presencia de la caja de Bluetooth.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Sensor Bluetooth</string>
@@ -59,27 +59,27 @@
    <string name="dk_vehicle_beacon_setup_code_not_matched">El identificador %s es válido pero no se ha detectado el beacon correspondiente. \n\n Asegúrate de que esta baliza esté encendida y cerca del teléfono</string>
    <string name="dk_vehicle_beacon_setup_code_retry_title">Vuelva a introducir el ID del beacon</string>
    <string name="dk_vehicle_beacon_setup_code_success_message">El beacon ha sido comprobada y funciona normalmente</string>
-   <string name="dk_vehicle_beacon_setup_code_success_recap">¿ Confirma la asignación del beacon %s al vehículo %s ?</string>
+   <string name="dk_vehicle_beacon_setup_code_success_recap">¿ Confirma la asignación del beacon %1$s al vehículo %2$s ?</string>
    <string name="dk_vehicle_beacon_setup_code_title">Por favor, introduzca la identificación que aparece en la baliza</string>
    <string name="dk_vehicle_beacon_setup_code_unavailable_id">El identificador del beacon %s no está disponible</string>
    <string name="dk_vehicle_beacon_setup_guide_desc1">Súbete a tu vehículo</string>
    <string name="dk_vehicle_beacon_setup_guide_desc2">Asegúrese de que el número de identificación del beacon sea legible</string>
    <string name="dk_vehicle_beacon_setup_guide_desc3">Retire la lengüeta que protege la batería del beacon</string>
    <string name="dk_vehicle_beacon_setup_guide_title">Antes de empezar</string>
-   <string name="dk_vehicle_beacon_setup_replace_description">Si confirma su elección, el beacon %s estará asociada al vehículo %s.\n\n El %s de su vehículo ya no estará asociado a este beacon.</string>
+   <string name="dk_vehicle_beacon_setup_replace_description">Si confirma su elección, el beacon %1$s estará asociada al vehículo %2$s.\n\n El %3$s de su vehículo ya no estará asociado a este beacon.</string>
    <string name="dk_vehicle_beacon_setup_scan_title">La aplicación recupera la información de la baliza y comprueba que funciona correctamente</string>
    <string name="dk_vehicle_beacon_setup_store_notice">Le invitamos a colocar el beacon en la guantera de su vehículo</string>
-   <string name="dk_vehicle_beacon_setup_successlink_message">Felicitaciones! \n\n El beacon %s está ahora asociada con el vehículo %s</string>
+   <string name="dk_vehicle_beacon_setup_successlink_message">Felicitaciones! \n\n El beacon %1$s está ahora asociada con el vehículo %2$s</string>
    <string name="dk_vehicle_beacon_start_scan">Coloque su beacon cerca de su teléfono y toque en la pantalla</string>
    <string name="dk_vehicle_beacon_verify_wrong_vehicle">La baliza detectada no está asociada a este vehículo.</string>
-   <string name="dk_vehicle_beacon_wait_scan">Espera unos 10 segundos ...</string>
+   <string name="dk_vehicle_beacon_wait_scan">Espera unos 10 segundos...</string>
    <string name="dk_vehicle_begin">Comenzar</string>
-   <string name="dk_vehicle_bluetooth_already_paired">El dispositivo Bluetooth %s ya está conectado a otro vehículo. Primero debe liberar este dispositivo antes de emparejarlo con %s.</string>
+   <string name="dk_vehicle_bluetooth_already_paired">El dispositivo Bluetooth %1$s ya está conectado a otro vehículo. Primero debe liberar este dispositivo antes de emparejarlo con %2$s.</string>
    <string name="dk_vehicle_bluetooth_combination_view_title">Enlazar un dispositivo Bluetooth</string>
-   <string name="dk_vehicle_bluetooth_congrats_desc">El dispositivo Bluetooth %s está ahora conectado al vehículo %s</string>
+   <string name="dk_vehicle_bluetooth_congrats_desc">El dispositivo Bluetooth %1$s está ahora conectado al vehículo %2$s</string>
    <string name="dk_vehicle_bluetooth_congrats_notice">A partir de ahora, la grabación de sus viajes se iniciará automáticamente tan pronto como su teléfono se conecte al dispositivo Bluetooth %s</string>
    <string name="dk_vehicle_bluetooth_congrats_title">Felicitaciones!</string>
-   <string name="dk_vehicle_bluetooth_deactivate_alert">El dispositivo %s se disociará del vehículo %s. \n ¿Estás seguro de que quieres seguir con esto?</string>
+   <string name="dk_vehicle_bluetooth_deactivate_alert">El dispositivo %1$s se disociará del vehículo %2$s. \n ¿Estás seguro de que quieres seguir con esto?</string>
    <string name="dk_vehicle_bluetooth_devices_list_title">Dispositivos Bluetooth :</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_android">Asegúrese de que el sistema Bluetooth de su vehículo ya esté emparejado con su teléfono antes de comenzar.</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_ios">Compruebe que el dispositivo Bluetooth ya ha sido emparejado con su iPhone. Esta información está disponible en el menú Bluetooth de la configuración del teléfono.</string>
@@ -136,7 +136,7 @@
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">Las características del vehículo no pudieron ser recuperadas.</string>
    <string name="dk_vehicle_failed_to_sync">Error al recuperar datos del vehículo, vuelva a intentarlo más tarde.</string>
    <string name="dk_vehicle_field_name_error">El nombre de su vehículo no debe exceder los 50 caracteres.</string>
-   <string name="dk_vehicle_gps_already_exists_confirm">¿Desea configurar el modo de detección %s para el vehículo %s? \n\nEl modo de detección del vehículo %s será cambiado a %s.</string>
+   <string name="dk_vehicle_gps_already_exists_confirm">¿Desea configurar el modo de detección %1$s para el vehículo %2$s? \n\nEl modo de detección del vehículo %3$s será cambiado a %4$s.</string>
    <string name="dk_vehicle_list_empty">Por favor, añada al menos un vehículo</string>
    <string name="dk_vehicle_model_description">¿Modelo de vehículo?</string>
    <string name="dk_vehicle_my_vehicle">Mi vehículo</string>

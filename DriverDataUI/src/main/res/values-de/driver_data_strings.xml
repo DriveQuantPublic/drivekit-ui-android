@@ -115,7 +115,7 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_unlock_event">Bildschirm entsperren</string>
    <string name="dk_driverdata_unlock_events">Bildschirm entriegelt</string>
    <string name="dk_driverdata_unlock_number">Anzahl der Entsperrungen</string>
-   <string name="dk_driverdata_unlock_screen_content">Anzeige auf %s und %s</string>
+   <string name="dk_driverdata_unlock_screen_content">Anzeige auf %1$s und %2$s</string>
    <string name="dk_driverdata_value">Wert =</string>
    <string name="dk_driverdata_vehicle_trips">Fahrzeug-Fahrten</string>
    <string name="dk_driverdata_weak_accel">Niedrige Beschleunigung</string>

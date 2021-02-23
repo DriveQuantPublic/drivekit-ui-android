@@ -73,7 +73,6 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             onSelectorChanged(it)
         } ?: run {
             onSelectorChanged(MapTraceType.UNLOCK_SCREEN)
-
         }
 
         score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)

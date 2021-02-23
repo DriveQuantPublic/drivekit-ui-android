@@ -113,7 +113,7 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_unlock_event">Déverrouillage de l\'écran</string>
    <string name="dk_driverdata_unlock_events">Déverrouillages de l\'écran</string>
    <string name="dk_driverdata_unlock_number">Nombre de déverrouillages</string>
-   <string name="dk_driverdata_unlock_screen_content">écran allumé %s et %s</string>
+   <string name="dk_driverdata_unlock_screen_content">écran allumé %1$s et %2$s</string>
    <string name="dk_driverdata_value">Valeur =</string>
    <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
    <string name="dk_driverdata_weak_accel">Freinage faible</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string name="dk_beacon_battery">Battery level (%)</string>
+   <string name="dk_beacon_battery">Battery level (%%)</string>
    <string name="dk_beacon_code">Beacon identifier</string>
    <string name="dk_beacon_diagnostic_title">Checking my beacon</string>
    <string name="dk_beacon_distance">Distance (m)</string>
@@ -136,7 +136,7 @@
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">Vehicle characteristics could not be recovered.</string>
    <string name="dk_vehicle_failed_to_sync">Failed to retrieve vehicle data, please retry later</string>
    <string name="dk_vehicle_field_name_error">The name of your vehicle must not exceed 50 characters.</string>
-   <string name="dk_vehicle_gps_already_exists_confirm">Do you want to set the detection mode %1$s for the vehicle %2$s? \n\nThe vehicle detection mode %3$s will be switched to %4$s.</string>
+   <string name="dk_vehicle_gps_already_exists_confirm">Do you want to set the detection mode %1$s for the vehicle %2$s \n\nThe vehicle detection mode %3$s will be switched to %4$s.</string>
    <string name="dk_vehicle_list_empty">Please add at least one vehicle</string>
    <string name="dk_vehicle_model_description">Vehicle model?</string>
    <string name="dk_vehicle_my_vehicle">My vehicle</string>
