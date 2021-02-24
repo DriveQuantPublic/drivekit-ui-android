@@ -23,7 +23,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
         }
     }
 
-    fun getAnalyzedTransportationModeTitle(context: Context): Spannable? {
+    fun getAnalyzedTransportationModeTitle(context: Context): Spannable {
         return if (trip.declaredTransportationMode?.transportationMode == null) {
             DKResource.buildString(
                 context,

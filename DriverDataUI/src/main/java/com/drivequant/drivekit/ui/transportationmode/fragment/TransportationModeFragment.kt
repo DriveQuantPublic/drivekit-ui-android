@@ -102,26 +102,28 @@ internal class TransportationModeFragment : Fragment(){
         bindTransportationProfileItems()
         viewModel.updateObserver.observe(this, Observer { status ->
             hideProgressCircular()
-            when (status){
-                TransportationModeUpdateStatus.NO_ERROR -> {
-                    requireActivity().apply {
-                        setResult(Activity.RESULT_OK)
-                        finish()
+            if (status != null){
+                when (status){
+                    TransportationModeUpdateStatus.NO_ERROR -> {
+                        requireActivity().apply {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
                     }
-                }
-                TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
-                    Toast.makeText(
-                        requireContext(),
-                        DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
-                    Toast.makeText(
-                        requireContext(),
-                        DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
+                        Toast.makeText(
+                            requireContext(),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
+                        Toast.makeText(
+                            requireContext(),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         })
