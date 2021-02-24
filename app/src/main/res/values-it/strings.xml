@@ -20,9 +20,6 @@
    <string name="driver_data_button">Avviare DriverData</string>
    <string name="driver_data_explanation">Un esempio di implementazione di DriveKit DriverData con la sua interfaccia utente per l\'elenco dei viaggi e il dettaglio del viaggio.</string>
    <string name="driver_streaks_button">Vena di successi</string>
-   <string name="enable_logging_pref_off">Attivare questa impostazione per scrivere il log sul dispositivo.</string>
-   <string name="enable_logging_pref_on">I file di log saranno disponibili nella cartella \"DriveKit\" del telefono.</string>
-   <string name="enable_logging_title">Logging</string>
    <string name="enable_share_position_off">Attivare questa impostazione per condividere la propria posizione durante il viaggio.</string>
    <string name="enable_share_position_on">Disattivare questa impostazione per non condividere la propria posizione durante il viaggio.</string>
    <string name="enable_share_position_title">La condivisione della posizione è abilitata?</string>

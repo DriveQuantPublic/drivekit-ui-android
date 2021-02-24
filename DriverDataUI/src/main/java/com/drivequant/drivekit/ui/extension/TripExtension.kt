@@ -102,7 +102,7 @@ fun List<Trip>.orderByDay(orderDesc: Boolean): MutableList<TripsByDate> {
 fun Trip.computeRoadContext(): Int {
     var biggestDistance = 0.0
     var majorRoadContext = 0
-    for (i in 0 until this.safetyContexts.size) {
+    for (i in this.safetyContexts.indices) {
         if (this.safetyContexts[i].distance > biggestDistance) {
             biggestDistance = this.safetyContexts[i].distance
             majorRoadContext = this.safetyContexts[i].contextId

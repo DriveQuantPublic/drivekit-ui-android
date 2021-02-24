@@ -8,11 +8,11 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedLi
 
 class DemoCustomField : Field {
 
-    override fun getTitle(context: Context, vehicle: Vehicle): String? {
+    override fun getTitle(context: Context, vehicle: Vehicle): String {
         return "DemoCustomField example"
     }
 
-    override fun getValue(context: Context, vehicle: Vehicle): String? {
+    override fun getValue(context: Context, vehicle: Vehicle): String {
         return "1234"
     }
 
@@ -20,7 +20,7 @@ class DemoCustomField : Field {
         return true
     }
 
-    override fun getKeyboardType(): Int? {
+    override fun getKeyboardType(): Int {
         return InputType.TYPE_CLASS_NUMBER
     }
 
@@ -32,7 +32,7 @@ class DemoCustomField : Field {
         return (value.toLongOrNull() != null && value.toLong() <= 9999)
     }
 
-    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String? {
+    override fun getErrorDescription(context: Context, value: String, vehicle: Vehicle): String {
         return "Value must be below 999"
     }
 
