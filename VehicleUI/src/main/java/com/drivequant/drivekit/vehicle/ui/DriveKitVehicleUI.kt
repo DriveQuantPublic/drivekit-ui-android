@@ -164,7 +164,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         val vehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
         for (vehicle in vehicles) {
             val vehicleItem = object : FilterItem{
-                override fun getItemId(): Any? {
+                override fun getItemId(): Any {
                     return vehicle.vehicleId
                 }
 

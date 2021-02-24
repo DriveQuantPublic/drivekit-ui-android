@@ -55,7 +55,7 @@ open class VehicleUtils {
     private fun buildFormattedNameByPosition(context: Context, vehicle: Vehicle, vehicles: List<Vehicle>): String {
         val pos = vehicles.indexOf(vehicle)
         return if (!TextUtils.isEmpty(vehicle.name) && !isNameEqualsDefaultName(vehicle)) {
-            vehicle.name?.let { it }?:run { " " }
+            vehicle.name ?: " "
         } else {
             val vehicleNumber: Int = pos + 1
             val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")

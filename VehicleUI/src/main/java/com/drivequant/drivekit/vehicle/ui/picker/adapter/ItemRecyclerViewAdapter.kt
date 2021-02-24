@@ -74,6 +74,9 @@ class ItemRecyclerViewAdapter(
                     holder.textView.visibility = View.GONE
                 }
             }
+            TRUCK_TYPE_ITEM -> {
+                // do nothing
+            }
         }
     }
 

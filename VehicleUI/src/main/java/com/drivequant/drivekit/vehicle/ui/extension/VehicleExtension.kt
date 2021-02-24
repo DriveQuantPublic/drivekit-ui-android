@@ -15,7 +15,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 fun Vehicle.buildFormattedName(context: Context) : String {
     val sortedVehicles = VehicleUtils().fetchVehiclesOrderedByDisplayName(context)
     return if (!TextUtils.isEmpty(name) && !VehicleUtils().isNameEqualsDefaultName(this)) {
-        name?.let { it }?:run { " " }
+        name ?: " "
     } else {
         val vehiclePositionInList = sortedVehicles.indexOf(this) + 1
         val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
@@ -54,7 +54,7 @@ fun Vehicle.getDeviceDisplayIdentifier(): String {
     }
 }
 
-fun Vehicle.getCategoryName(context: Context): String? {
+fun Vehicle.getCategoryName(context: Context): String {
     VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
         return VehicleCategory.getEnumByTypeIndex(typeIndex)?.let { vehicleCategory ->
             val categories = VehicleTypeItem.getEnumByVehicleType(vehicleType).getCategories(context)
@@ -80,7 +80,7 @@ fun Vehicle.getEngineTypeName(context: Context): String? {
     }
 }
 
-fun Vehicle.getGearBoxName(context: Context): String? {
+fun Vehicle.getGearBoxName(context: Context): String {
     val identifier = when (gearboxIndex){
         1 -> "dk_gearbox_automatic"
         2 -> "dk_gearbox_manual_5"

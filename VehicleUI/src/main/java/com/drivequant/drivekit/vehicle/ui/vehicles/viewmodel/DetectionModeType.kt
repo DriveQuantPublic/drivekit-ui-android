@@ -74,7 +74,7 @@ enum class DetectionModeType(
        return DKResource.convertToString(context, this.title)
     }
 
-    fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
+    fun getDescription(context: Context, vehicle: Vehicle): SpannableString {
         var configured = true
         val parameter = vehicle.getDeviceDisplayIdentifier()
         val stringIdentifier = when (this){
