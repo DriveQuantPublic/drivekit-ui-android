@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.picker.adapter
 
-import android.graphics.PorterDuff
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -61,7 +61,7 @@ class ItemRecyclerViewAdapter(
             TEXT_ITEM,
             TEXT_ITEM_PADDING -> {
                 holder.textView.bigText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                holder.textView.background?.setColorFilter(DriveKitUI.colors.secondaryColor(), PorterDuff.Mode.SRC_ATOP)
+                holder.textView.background?.tintDrawable(DriveKitUI.colors.secondaryColor())
             }
             TEXT_IMAGE_ITEM -> {
                 holder.textView.normalText(DriveKitUI.colors.complementaryFontColor())

@@ -88,7 +88,7 @@ open class VehicleUtils {
 
             val b = BitmapFactory.decodeStream(stream)
             b.density = Bitmap.DENSITY_NONE
-            BitmapDrawable(b)
+            BitmapDrawable(context.resources, b)
         } else {
             defaultVehicleDrawable
         }
