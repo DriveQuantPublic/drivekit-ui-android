@@ -143,7 +143,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
 
         //TODO: Push your api key here
         DriveKit.setApiKey("Your API key here")
-        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
 
         initFirstLaunch()
     }
