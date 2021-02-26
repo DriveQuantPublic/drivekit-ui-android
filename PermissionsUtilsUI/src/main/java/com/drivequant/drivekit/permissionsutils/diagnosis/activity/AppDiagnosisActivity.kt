@@ -17,7 +17,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
@@ -26,6 +25,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
@@ -573,9 +573,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
         if (switch_enable_logging.isChecked) {
-            switch_enable_logging.thumbDrawable.setColorFilter(
-                DriveKitUI.colors.secondaryColor(),
-                PorterDuff.Mode.SRC_IN
+            switch_enable_logging.thumbDrawable.tintDrawable(
+                DriveKitUI.colors.secondaryColor()
             )
         }
         switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())

@@ -38,7 +38,7 @@ object DKResource {
         val delimiter = "%s"
         val dkSpannable = DKSpannable()
         var currentArgPosition = 0
-        convertToString(context, identifier)?.let { rawString ->
+        convertToString(context, identifier).let { rawString ->
             val array = rawString.split(delimiter)
 
             for ((index, value) in array.withIndex()) {

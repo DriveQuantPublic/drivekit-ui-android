@@ -63,7 +63,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getCO2Mass(context: Context): String? {
+    fun getCO2Mass(context: Context): String {
         val co2mass = trip.fuelEstimation?.co2Mass
         return co2mass?.let {
             DKDataFormatter.formatCO2Mass(context, it)
@@ -72,7 +72,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getCo2Emission(context: Context): String? {
+    fun getCo2Emission(context: Context): String {
         val co2emission = trip.fuelEstimation?.co2Emission
         return co2emission?.let {
             DKDataFormatter.formatCO2Emission(context, it)
@@ -81,7 +81,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getFuelConsumption(context: Context): String? {
+    fun getFuelConsumption(context: Context): String {
         val fuelConsumption = trip.fuelEstimation?.fuelConsumption
         return fuelConsumption?.let {
             DKDataFormatter.formatConsumption(context, it)
@@ -98,7 +98,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getMeanSpeed(context: Context): String? {
+    fun getMeanSpeed(context: Context): String {
         return trip.tripStatistics?.let {
             DKDataFormatter.formatSpeedMean(context, it.speedMean)
         } ?: run {
@@ -111,11 +111,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
     }
 
     fun getVehicleDisplayName() : String {
-        return vehicleName?.let {
-            it
-        }?:run {
-            notAvailableText
-        }
+        return vehicleName ?: notAvailableText
     }
 
     @Suppress("UNCHECKED_CAST")

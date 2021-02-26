@@ -19,7 +19,7 @@ internal class AlternativeTripMapItem : DKMapItem {
         }
     }
 
-    override fun canShowMapItem(trip: Trip): Boolean? = true
+    override fun canShowMapItem(trip: Trip): Boolean = true
 
     override fun displayedMarkers(): List<DKMarkerType> = listOf()
 

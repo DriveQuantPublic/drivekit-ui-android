@@ -8,7 +8,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
@@ -40,21 +39,15 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
         )
         layoutParams = params
         text_view_selector.normalText()
-        DKUtils.setBackgroundDrawableColor(text_view_selector.background as GradientDrawable, DriveKitUI.colors.neutralColor())
+        (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
     }
 
     fun setRankingSelectorSelected(selected: Boolean) {
         if (selected) {
-            DKUtils.setBackgroundDrawableColor(
-                text_view_selector.background as GradientDrawable,
-                DriveKitUI.colors.secondaryColor()
-            )
+            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
             text_view_selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         } else {
-            DKUtils.setBackgroundDrawableColor(
-                text_view_selector.background as GradientDrawable,
-                DriveKitUI.colors.neutralColor()
-            )
+            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
             text_view_selector.normalText()
         }
     }

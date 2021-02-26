@@ -21,9 +21,9 @@ import com.google.android.gms.maps.model.*
 
 internal class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
-    var itemView: View,
+    private var itemView: View,
     var viewModel: TripDetailViewModel,
-    var googleMap: GoogleMap)
+    private var googleMap: GoogleMap)
     : GoogleMap.OnInfoWindowClickListener,
     GoogleMap.OnMarkerClickListener{
 

@@ -21,8 +21,8 @@ enum class BeaconStep {
     BEACON_NOT_CONFIGURED;
 
     fun getTitle(context: Context, viewModel: BeaconViewModel): Spannable {
-        val beaconCode = viewModel.beacon?.code?.let { it }?: run { "" }
-        val vehicleName = viewModel.vehicleName?.let { it }?: run { "" }
+        val beaconCode = viewModel.beacon?.code ?: ""
+        val vehicleName = viewModel.vehicleName ?: ""
         val mainFontColor = DriveKitUI.colors.mainFontColor()
 
         return when (this) {

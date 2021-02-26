@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingDriverData
@@ -38,13 +37,12 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
            imageViewJump.visibility = View.GONE
            if (it.driverId == DriveKit.config.userId) {
                currentDriverColor = DriveKitUI.colors.fontColorOnSecondaryColor()
-               DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.secondaryColor())
-               DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.secondaryColor())
-
+               driverPositionBackground.setColor(DriveKitUI.colors.secondaryColor())
+               driverScoreBackground.setColor(DriveKitUI.colors.secondaryColor())
            } else {
                currentDriverColor = DriveKitUI.colors.mainFontColor()
-               DKUtils.setBackgroundDrawableColor(driverScoreBackground, DriveKitUI.colors.neutralColor())
-               DKUtils.setBackgroundDrawableColor(driverPositionBackground, DriveKitUI.colors.transparentColor())
+               driverScoreBackground.setColor(DriveKitUI.colors.neutralColor())
+               driverPositionBackground.setColor(DriveKitUI.colors.transparentColor())
            }
 
            textViewDriverDistance.text = it.getFormattedDistance(itemView.context)

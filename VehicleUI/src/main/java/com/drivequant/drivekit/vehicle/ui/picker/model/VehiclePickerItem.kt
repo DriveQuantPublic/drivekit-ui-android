@@ -3,7 +3,6 @@ package com.drivequant.drivekit.vehicle.ui.picker.model
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
-import com.drivequant.drivekit.vehicle.enums.VehicleType
 import java.io.Serializable
 
 data class VehiclePickerItem(
