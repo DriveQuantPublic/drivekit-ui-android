@@ -401,9 +401,8 @@ internal class TripDetailViewModel(
 
     override fun getTripListConfigurationType() = tripListConfiguration.getTripListConfigurationType()
 
-    override fun getSpeedingScore(): Double {
-        TODO("Not yet implemented")
-    }
+    override fun getSpeedingScore(): Double = trip?.speedingStatistics?.score ?: 0.0
+
 
     override fun getSpeedingDistanceAndPercent(): Pair<String, String> {
         TODO("Not yet implemented")
