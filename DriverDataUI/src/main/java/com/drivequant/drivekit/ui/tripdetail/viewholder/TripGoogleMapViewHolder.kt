@@ -6,6 +6,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
+import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
@@ -69,6 +70,10 @@ internal class TripGoogleMapViewHolder(
         })
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
+
+        googleMap.setOnPolylineClickListener { _ ->
+            Toast.makeText(itemView.context,"show speeding popup",Toast.LENGTH_LONG).show()
+        }
     }
     
     private fun configureAdviceButton(mapItem: DKMapItem){
@@ -105,7 +110,7 @@ internal class TripGoogleMapViewHolder(
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
-            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea())) {
+            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea() || mapItem.shouldShowSpeedingArea())) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
                         if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {
@@ -144,7 +149,31 @@ internal class TripGoogleMapViewHolder(
                         }
                     }
                     MapTraceType.SPEEDING -> {
-                        //TODO trace speeding route
+                        if (mapItem.shouldShowSpeedingArea()) {
+                            route.speedingIndex?.let { speedingIndex ->
+                                if (!speedingIndex.isNullOrEmpty()) {
+                                    drawRoute(route, 0, speedingIndex.first(), lockColor)
+                                    for (i in 1 until speedingIndex.size) {
+                                        drawRoute(
+                                            route,
+                                            speedingIndex[i - 1], speedingIndex[i],
+                                            unlockColor,
+                                            "speeding-tag"
+                                        )
+                                    }
+                                    drawRoute(
+                                        route,
+                                        speedingIndex.last(),
+                                        route.latitude.size - 1,
+                                        lockColor
+                                    )
+                                } else {
+                                    drawRoute(route, 0, route.latitude.size - 1, lockColor)
+                                }
+                            }
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
+                        }
                     }
                 }
             } else {

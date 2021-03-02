@@ -403,14 +403,15 @@ internal class TripDetailViewModel(
 
     override fun getSpeedingScore(): Double = trip?.speedingStatistics?.score ?: 0.0
 
+    override fun getSpeedingDistance(context: Context): Pair<Int, Int> = Pair(
+        trip?.speedingStatistics?.speedingDistance ?: 0,
+        trip?.speedingStatistics?.distance ?: 0
+    )
 
-    override fun getSpeedingDistanceAndPercent(): Pair<String, String> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getSpeedingDurationAndPercent(): Pair<String, String> {
-        TODO("Not yet implemented")
-    }
+    override fun getSpeedingDuration(context: Context): Pair<Int, Int> = Pair(
+        trip?.speedingStatistics?.speedingDuration ?: 0,
+        trip?.speedingStatistics?.duration ?: 0
+    )
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -438,6 +439,6 @@ interface DKTripDetailViewModel {
     fun getPhoneCallsDuration(context: Context): String
     fun hasScreenUnlocking(): Boolean
     fun getSpeedingScore(): Double
-    fun getSpeedingDistanceAndPercent(): Pair<String, String>
-    fun getSpeedingDurationAndPercent(): Pair<String, String>
+    fun getSpeedingDistance(context: Context): Pair<Int, Int>
+    fun getSpeedingDuration(context: Context): Pair<Int, Int>
 }
