@@ -36,10 +36,17 @@ internal class TripGoogleMapViewHolder(
         viewModel.displayMapItem.observe(fragment, Observer {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
-                viewModel.selectedMapTraceType.value?.let { mapTraceType ->
-                    traceRoute(mapItem, mapTraceType)
-                } ?: run {
-                    traceRoute(mapItem)
+                when (mapItem) {
+                    MapItem.SPEEDING -> {
+                        traceRoute(mapItem, MapTraceType.SPEEDING)
+                    }
+                    else -> {
+                        viewModel.selectedMapTraceType.value?.let { mapTraceType ->
+                            traceRoute(mapItem, mapTraceType)
+                        } ?: run {
+                            traceRoute(mapItem)
+                        }
+                    }
                 }
             }
         })
@@ -136,6 +143,9 @@ internal class TripGoogleMapViewHolder(
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }
+                    MapTraceType.SPEEDING -> {
+                        //TODO trace speeding route
+                    }
                 }
             } else {
                 drawRoute(
@@ -149,13 +159,17 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int) {
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = "default-tag") {
         val options = PolylineOptions()
         for (i in startIndex..endIndex) {
             val routeSeg = LatLng(route.latitude[i], route.longitude[i])
             builder.include(routeSeg)
             options.color(color)
             options.add(routeSeg)
+        }
+        if (tag == "speeding-tag") {
+            options.clickable(true)
+            computedPolyline?.tag = tag
         }
         computedPolyline = googleMap.addPolyline(options)
     }
@@ -192,6 +206,9 @@ internal class TripGoogleMapViewHolder(
                                                     it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
                                                     it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
                                         }
+                                }
+                                else -> {
+                                    //DO NOTHING
                                 }
                             }
                         }
