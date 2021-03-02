@@ -29,6 +29,10 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_default_filter_item">Todos mis viajes</string>
    <string name="dk_driverdata_detected_transportation_mode">Modo detectado :</string>
    <string name="dk_driverdata_distance_travelled">%s recorridos</string>
+   <string name="dk_driverdata_distraction_score">Puntuación de distracción</string>
+   <string name="dk_driverdata_distraction_score_info">La puntuación de distracción (uso del teléfono mientras se conduce) mide las interacciones del conductor con el smartphone mientras conduce. Esto incluye tanto el número de veces que se desbloquea el teléfono como la duración de las llamadas telefónicas durante el viaje. El uso del teléfono puede distraer la atención del conductor y aumenta significativamente el riesgo de accidente de tráfico. Las llamadas realizadas con el kit de manos libres de su vehículo están permitidas y no reducirán su puntuación.</string>
+   <string name="dk_driverdata_eco_score">Puntuación de la ecoconducción</string>
+   <string name="dk_driverdata_eco_score_info">La puntuación de la conducción ecológica va de 0 a 10, y se calcula comparando la energía real consumida durante el viaje con la energía que se habría consumido utilizando el perfil de velocidad óptimo. La mejor puntuación de conducción ecológica corresponde a la mayor eficiencia de conducción.</string>
    <string name="dk_driverdata_end_authorized_call">Terminación de una llamada autorizada</string>
    <string name="dk_driverdata_end_authorized_call_info_content">La aplicación ha detectado el final de una llamada autorizada, lo que significa que se ha realizado con tu kit de manos libres. Esta acción no penaliza tu puntuación de uso del teléfono, ya que está legalmente permitida. Sin embargo, sigue siendo una distracción durante la conducción, por su seguridad y la de los demás usuarios de la carretera, se recomienda encarecidamente que espere a que su vehículo esté aparcado antes de hacer una llamada.</string>
    <string name="dk_driverdata_end_event">Fin del viaje</string>
@@ -51,6 +55,9 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_no_call_congrats">¡Felicitación!</string>
    <string name="dk_driverdata_no_call_content">Sin llamadas</string>
    <string name="dk_driverdata_no_screen_unlocking">Sin desbloqueo</string>
+   <string name="dk_driverdata_no_speeding_content_congratulations">Has respetado los límites de velocidad durante todo el trayecto.</string>
+   <string name="dk_driverdata_no_speeding_events">No hay excesos</string>
+   <string name="dk_driverdata_no_speeding_title_congratulations">👍 ¡Bravo y gracias por su cautela!</string>
    <string name="dk_driverdata_no_trip_placeholder">Aún no has hecho ningún viaje con este vehículo.</string>
    <string name="dk_driverdata_no_trips_recorded">Aún no has viajado.</string>
    <string name="dk_driverdata_phone_call_plur">%s llamadas telefónicas</string>
@@ -68,8 +75,17 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_safety_list_adherence">Límite de adherencia</string>
    <string name="dk_driverdata_safety_list_adherence_critical">Límite de adherencia</string>
    <string name="dk_driverdata_safety_list_brake_critical">Frenado crítico</string>
+   <string name="dk_driverdata_safety_score">Puntuación de seguridad</string>
+   <string name="dk_driverdata_safety_score_info">Este puntaje es un reflejo de la seguridad al conducir. Evoluciona de acuerdo con el número de aceleraciones y frenados excesivamente vigorosos, así como el número de veces que se cruzan los umbrales de agarre. Su valor varía entre 0 y 10. Cuanto mayor sea el número de eventos de seguridad registrados en la ruta, menor será la puntuación.</string>
    <string name="dk_driverdata_screen_lock_text">La aplicación ha detectado un bloqueo de pantalla. Manejar su teléfono mientras conduce es muy peligroso. Recuerde siempre protegerse, así como a sus pasajeros y a los demás usuarios de la carretera. Si debe llamar o enviar un mensaje, su vehículo debe estar estacionado en un lugar de estacionamiento con el motor apagado.</string>
    <string name="dk_driverdata_screen_unlock_text">La aplicación ha detectado una apertura de pantalla. Manejar su teléfono mientras conduce es muy peligroso. Recuerde siempre protegerse, así como a sus pasajeros y a los demás usuarios de la carretera. Si debe llamar o enviar un mensaje, su vehículo debe estar estacionado en un lugar de estacionamiento con el motor apagado.</string>
+   <string name="dk_driverdata_speeding_event">Exceso de velocidad</string>
+   <string name="dk_driverdata_speeding_event_info_content">La aplicación ha detectado que se ha superado el límite de velocidad en este tramo de carretera. La velocidad es el factor número uno en los accidentes de tráfico mortales. Por su seguridad y la de sus pasajeros, es esencial respetar los límites de velocidad.</string>
+   <string name="dk_driverdata_speeding_events_distance">Distancia relativa con velocidad superior al límite</string>
+   <string name="dk_driverdata_speeding_events_duration">Tiempo relativo con velocidad superior al límite</string>
+   <string name="dk_driverdata_speeding_events_trip_description">es decir, %s de su viaje</string>
+   <string name="dk_driverdata_speeding_score">Puntaje de velocidad</string>
+   <string name="dk_driverdata_speeding_score_info">Esta puntuación refleja el respeto de los límites de velocidad. Evoluciona de acuerdo con la distancia recorrida por encima del límite legal. Cuanto mayor sea la distancia sobre el límite, menor será la puntuación.</string>
    <string name="dk_driverdata_start_event">Inicio de viaje</string>
    <string name="dk_driverdata_strong_accel">Fuerte Aceleración</string>
    <string name="dk_driverdata_strong_decel">Fuerte frenado</string>
@@ -115,7 +131,7 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_unlock_event">Desbloqueo de pantalla</string>
    <string name="dk_driverdata_unlock_events">Desbloqueo de la pantalla</string>
    <string name="dk_driverdata_unlock_number">Cantidad de desbloqueo</string>
-   <string name="dk_driverdata_unlock_screen_content">visualización en %s y %s</string>
+   <string name="dk_driverdata_unlock_screen_content">visualización en %1$s y %2$s</string>
    <string name="dk_driverdata_value">Valore =</string>
    <string name="dk_driverdata_vehicle_trips">Viajes en vehículos</string>
    <string name="dk_driverdata_weak_accel">Baja aceleración</string>
