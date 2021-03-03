@@ -73,21 +73,22 @@ internal class SpeedingFragment : Fragment() {
         gauge_type_title.text = context?.getString(R.string.dk_common_speed_limit)
         score_gauge.configure(viewModel.getSpeedingScore(), GaugeType.SPEEDING, Typeface.BOLD)
 
+        val speedingDistance = viewModel.getSpeedingDistanceAndPercent(requireContext()).first
+        val totalDistancePercent = viewModel.getSpeedingDistanceAndPercent(requireContext()).second
+        val speedingDuration = viewModel.getSpeedingDurationAndPercent(requireContext()).first
+        val totalDurationPercent = viewModel.getSpeedingDurationAndPercent(requireContext()).second
 
-        val distanceValue = if (viewModel.getSpeedingDistance(requireContext()).first >= 1000) {
+        val distanceValue = if (speedingDistance >= 1000) {
             DKDataFormatter.formatMeterDistanceInKm(
                 requireContext(),
-                DKDataFormatter.ceilDistance(viewModel.getSpeedingDistance(requireContext()).first.toDouble(), 10000)
-            )
+                DKDataFormatter.ceilDistance(speedingDistance.toDouble(), 10000))
         } else {
-            DKDataFormatter.formatMeterDistance(
-                requireContext(),
-                viewModel.getSpeedingDistance(requireContext()).first.toDouble())
+            DKDataFormatter.formatMeterDistance(requireContext(), speedingDistance.toDouble())
         }
 
         val durationValue = DKDataFormatter.formatDuration(
             requireContext(),
-            DKDataFormatter.ceilDuration(viewModel.getSpeedingDistance(requireContext()).first.toDouble(), 600))
+            DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600))
 
         speeding_distance_value.apply {
             setSelectorContent(distanceValue)
@@ -99,44 +100,32 @@ internal class SpeedingFragment : Fragment() {
             setSelection(false)
         }
 
-        //TODO Verify div / 0
-        val durationContent =
-            if (viewModel.getSpeedingDuration(requireContext()).first == 0) {
+        val durationContent = if (speedingDuration == 0) {
                 speeding_duration_value.visibility = View.INVISIBLE
                 DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_content_congratulations")
             } else {
                 DKResource.buildString(
                     requireContext(),
-                    DriveKitUI.colors.secondaryColor(),
-                    DriveKitUI.colors.secondaryColor(),
-                    "dk_driverdata_speeding_events_trip_description",
-                    (viewModel.getSpeedingDuration(requireContext()).first * viewModel.getSpeedingDuration(
-                        requireContext()
-                    ).second).div(100).toString()
-                ).toString()
+                    DriveKitUI.colors.mainFontColor(),
+                    DriveKitUI.colors.mainFontColor(),
+                    "dk_driverdata_speeding_events_trip_description", totalDurationPercent).toString()
             }
 
-        //TODO Verify div / 0
-        val distanceContent = if (viewModel.getSpeedingDistance(requireContext()).first == 0) {
+        val distanceContent = if (speedingDistance == 0) {
             DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_events")
         } else {
             DKResource.buildString(
                 requireContext(),
-                DriveKitUI.colors.secondaryColor(),
-                DriveKitUI.colors.secondaryColor(),
-                "dk_driverdata_speeding_events_trip_description",
-                (viewModel.getSpeedingDistance(requireContext()).first * viewModel.getSpeedingDistance(requireContext()).second).div(100).toString()
-            ).toString()
+                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.mainFontColor(),
+                "dk_driverdata_speeding_events_trip_description", totalDistancePercent).toString()
         }
-        
-        
-        val durationResId =
-            if (viewModel.getSpeedingDuration(requireContext()).first.toDouble() == 0.0) {
-                "dk_driverdata_no_speeding_title_congratulations"
-            } else {
-                "dk_driverdata_speeding_events_duration"
-            }
 
+        val durationResId = if (speedingDuration == 0) {
+            "dk_driverdata_no_speeding_title_congratulations"
+        } else {
+            "dk_driverdata_speeding_events_duration"
+        }
 
         speeding_distance_item.setDistractionEventContent(
             DKResource.convertToString(requireContext(), "dk_driverdata_speeding_events_distance"),
