@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.support.v4.text.HtmlCompat
+import androidx.core.text.HtmlCompat
 import android.text.Spannable
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI

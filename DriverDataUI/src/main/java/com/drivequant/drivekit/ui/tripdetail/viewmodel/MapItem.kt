@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
@@ -39,7 +39,7 @@ enum class MapItem : DKMapItem {
             when (this) {
                 SAFETY -> SafetyFragment.newInstance(it.safety!!)
                 ECO_DRIVING -> EcoDrivingFragment.newInstance(it.ecoDriving!!)
-                DISTRACTION -> DriverDistractionFragment.newInstance(it.driverDistraction!!)
+                DISTRACTION -> DriverDistractionFragment.newInstance(tripDetailViewModel)
                 INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel)
                 SYNTHESIS -> SynthesisFragment.newInstance(trip)
             }
@@ -72,6 +72,8 @@ enum class MapItem : DKMapItem {
         this == DISTRACTION || this == INTERACTIVE_MAP
 
     override fun overrideShortTrip(): Boolean = false
+
+    override fun shouldShowPhoneDistractionArea(): Boolean = this == DISTRACTION
 }
 
 interface DKMapItem {
@@ -83,6 +85,7 @@ interface DKMapItem {
     fun shouldShowDistractionArea(): Boolean
     fun getAdviceImageResource(): Int?
     fun overrideShortTrip(): Boolean
+    fun shouldShowPhoneDistractionArea(): Boolean
 }
 
 enum class DKMarkerType {

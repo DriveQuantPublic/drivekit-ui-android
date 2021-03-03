@@ -33,7 +33,7 @@
             layout="@layout/dk_view_content_no_car_trip"
             android:visibility="gone" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_trips"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,7 +47,7 @@
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp"
                 android:groupIndicator="@null" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 

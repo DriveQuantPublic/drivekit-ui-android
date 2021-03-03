@@ -3,9 +3,9 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -26,7 +26,7 @@ class BeaconDetailFragment : Fragment() {
 
     private lateinit var viewModel: BeaconDetailViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         DriveKitVehicleUI.beaconDiagnosticMail?.let {
             setHasOptionsMenu(true)
         }
@@ -36,25 +36,26 @@ class BeaconDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.buildListData(requireContext())
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager =
+            LinearLayoutManager(requireContext())
         recycler_view_container.layoutManager = layoutManager
         recycler_view_container.adapter = BeaconDetailAdapter(requireContext(), viewModel)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
             val menuInflater = activity?.menuInflater
             menuInflater?.inflate(R.menu.beacon_detail_menu_bar, menu)
 
-            val item = menu?.findItem(R.id.action_mail)
+            val item = menu.findItem(R.id.action_mail)
             item?.let {
                 val wrapped = DrawableCompat.wrap(it.icon)
                 DrawableCompat.setTint(wrapped, Color.WHITE)
             }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_mail){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_mail){
             sendMail()
         }
         return super.onOptionsItemSelected(item)

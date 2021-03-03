@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
 sealed class TripListConfiguration {
@@ -27,6 +27,13 @@ sealed class TripListConfiguration {
                 TransportationMode.IDLE,
                 TransportationMode.OTHER
             )
+        }
+    }
+
+    fun getTripListConfigurationType(): TripListConfigurationType {
+        return when (this){
+            is MOTORIZED -> TripListConfigurationType.MOTORIZED
+            is ALTERNATIVE -> TripListConfigurationType.ALTERNATIVE
         }
     }
 }

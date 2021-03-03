@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         tools:text="Optional Description"
         android:visibility="gone"/>
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/text_view"
         android:layout_width="match_parent"
@@ -32,5 +32,5 @@
             android:paddingEnd="0dp"
             tools:hint="This is hint"
             tools:text="This is a text" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

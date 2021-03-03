@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.ui.trips.viewholder
 
 import android.graphics.Color
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -59,7 +59,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
         computeTripData(trip, viewModel.tripListConfiguration)
         computeTripInfo(trip, viewModel.getTripInfo())
     }
-
+  
     private fun computeTripData(trip: Trip, tripListConfiguration: TripListConfiguration) {
         when (tripListConfiguration) {
             is TripListConfiguration.MOTORIZED -> configureMotorizedTripData(trip)

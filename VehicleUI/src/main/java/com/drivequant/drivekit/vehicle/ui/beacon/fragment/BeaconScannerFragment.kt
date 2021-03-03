@@ -1,14 +1,21 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.ScanState
@@ -28,12 +35,35 @@ class BeaconScannerFragment : Fragment(), ScanState {
     private lateinit var viewModel : BeaconViewModel
     private lateinit var beaconStep : BeaconStep
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_scanner, container, false).setDKStyle()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("scanType", viewModel.scanType)
+            outState.putSerializable("vehicleId", viewModel.vehicleId)
+            outState.putSerializable("beacon", viewModel.beacon)
+        }
+        outState.putSerializable("beaconStep", beaconStep)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        savedInstanceState?.let {
+            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val vehicleId = savedInstanceState.getString("vehicleId")
+            val beacon = savedInstanceState.getSerializable("beacon") as Beacon?
+
+            beaconStep = savedInstanceState.getSerializable("beaconStep") as BeaconStep
+
+            if (scanType != null) {
+                viewModel = BeaconViewModel(scanType, vehicleId, beacon)
+                viewModel.init(requireContext())
+            }
+        }
 
         viewModel.listener = this
         updateStep(beaconStep)
@@ -46,7 +76,32 @@ class BeaconScannerFragment : Fragment(), ScanState {
         text_view_title.normalText(DriveKitUI.colors.mainFontColor())
         image_view.setImageDrawable(beaconStep.getImage(requireContext()))
         image_view.setOnClickListener {
-            beaconStep.onImageClicked(viewModel)
+            if (!viewModel.isBluetoothSensorEnabled()) {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(requireContext())
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_activate"),
+                        DialogInterface.OnClickListener { _, _ ->
+                            viewModel.enableBluetoothSensor()
+                            beaconStep.onImageClicked(viewModel)
+                        })
+                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"),
+                        DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                    .show()
+
+                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                titleTextView?.apply {
+                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_title")
+                    headLine1()
+                }
+                descriptionTextView?.apply {
+                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_message")
+                    normalText()
+                }
+            } else {
+                beaconStep.onImageClicked(viewModel)
+            }
         }
     }
 
@@ -55,7 +110,7 @@ class BeaconScannerFragment : Fragment(), ScanState {
             beaconStep.getChildFragment(viewModel)?.let { fragment ->
                 fragmentManager.beginTransaction()
                     .replace(R.id.container_child, fragment)
-                    .commit()
+                    .commitAllowingStateLoss()
             }
         }
     }

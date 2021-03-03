@@ -2,7 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +42,17 @@ class UnscoredTripFragment : Fragment() {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("viewModel", viewModel)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        (savedInstanceState?.getSerializable("viewModel") as UnscoredTripViewModel?)?.let {
+            viewModel = it
+        }
 
         trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
         trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)

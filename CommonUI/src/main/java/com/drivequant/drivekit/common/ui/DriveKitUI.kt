@@ -2,7 +2,7 @@ package com.drivequant.drivekit.common.ui
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.graphical.DKFonts

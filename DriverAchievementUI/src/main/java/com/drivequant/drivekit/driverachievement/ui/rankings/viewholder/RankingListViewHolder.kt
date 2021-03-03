@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.viewholder
 
 import android.graphics.drawable.GradientDrawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout

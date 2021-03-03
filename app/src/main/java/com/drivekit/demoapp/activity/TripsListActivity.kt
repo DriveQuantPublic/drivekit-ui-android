@@ -2,7 +2,7 @@ package com.drivekit.demoapp.activity
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 

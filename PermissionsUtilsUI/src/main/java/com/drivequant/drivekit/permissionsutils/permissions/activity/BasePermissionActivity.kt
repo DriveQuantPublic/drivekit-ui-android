@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -40,7 +40,9 @@ open class BasePermissionActivity : RequestPermissionActivity() {
     }
 
     protected fun next() {
-        nextPermissionViews.remove(nextPermissionViews.first())
+        if (nextPermissionViews.isNotEmpty()){
+            nextPermissionViews.remove(nextPermissionViews.first())
+        }
         if (nextPermissionViews.isEmpty()) {
             PermissionsUtilsUI.permissionViewListener?.onFinish()
         } else {

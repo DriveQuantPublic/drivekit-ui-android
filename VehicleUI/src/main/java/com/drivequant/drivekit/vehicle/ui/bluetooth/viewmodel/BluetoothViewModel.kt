@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
-import android.support.v4.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.databaseutils.entity.Bluetooth
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis

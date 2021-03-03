@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +14,13 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
-import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -39,37 +40,63 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     private lateinit var progressBar: ProgressBar
     private var isBeaconFound = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_progress, container, false).setDKStyle()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("scanType", viewModel.scanType)
+            outState.putSerializable("vehicleId", viewModel.vehicleId)
+            outState.putSerializable("beacon", viewModel.beacon)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val vehicleId = savedInstanceState.getString("vehicleId")
+            val beacon = savedInstanceState.getSerializable("beacon") as Beacon?
+
+            if (scanType != null) {
+                viewModel = BeaconViewModel(scanType, vehicleId, beacon)
+                viewModel.init(requireContext())
+            }
+        }
+
         text_view_description.normalText()
         text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
-        progressBar = view.findViewById(R.id.progress_bar)
+
+        view?.let {
+            progressBar = it.findViewById(R.id.progress_bar)
+        }
         runUpdateProgressBarThread()
         startBeaconScan()
     }
 
     private fun runUpdateProgressBarThread() {
-        updateProgressBar = Thread(Runnable {
+        updateProgressBar = Thread {
             var progressStatus = 0
             while (progressStatus < 100) {
                 progressStatus++
                 try {
                     Thread.sleep(100)
-                } catch (e: InterruptedException) { }
+                } catch (e: InterruptedException) {
+                }
                 val finalProgressStatus = progressStatus
                 progressBar.progress = finalProgressStatus
             }
             activity?.runOnUiThread {
                 if (!isBeaconFound) {
                     stopBeaconScan()
-                    viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
+                    if (this.isVisible) {
+                        viewModel.updateScanState(BeaconStep.BEACON_NOT_FOUND)
+                    }
                 }
             }
-        })
+        }
         updateProgressBar.start()
     }
 
@@ -143,9 +170,13 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconList(): List<BeaconData> {
-        val beaconsToCheck = TripAnalysisConfig.getAllBeacons().toMutableList()
+        val beaconsToCheck = mutableListOf<BeaconData>()
         viewModel.beacon?.let {
-            beaconsToCheck.add(BeaconData(it.proximityUuid))
+            val beaconData = when (viewModel.scanType){
+                PAIRING -> BeaconData(it.proximityUuid, it.major, it.minor)
+                DIAGNOSTIC, VERIFY -> BeaconData(it.proximityUuid)
+            }
+            beaconsToCheck.add(beaconData)
         }
         return beaconsToCheck
     }

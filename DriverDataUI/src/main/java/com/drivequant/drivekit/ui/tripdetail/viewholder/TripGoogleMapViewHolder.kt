@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -36,7 +36,15 @@ internal class TripGoogleMapViewHolder(
         viewModel.displayMapItem.observe(fragment, Observer {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
-                traceRoute(mapItem)
+                viewModel.selectedMapTraceType.value?.let { selectedMapTraceType ->
+                    val mapTraceType = when (mapItem) {
+                        MapItem.INTERACTIVE_MAP -> MapTraceType.UNLOCK_SCREEN
+                        else -> selectedMapTraceType
+                    }
+                    traceRoute(mapItem, mapTraceType)
+                } ?: run {
+                    traceRoute(mapItem)
+                }
             }
         })
         viewModel.selection.observe(fragment, Observer {
@@ -49,6 +57,11 @@ internal class TripGoogleMapViewHolder(
                     )
                 )
                 googleMap.animateCamera(cameraUpdate)
+            }
+        })
+        viewModel.selectedMapTraceType.observe(fragment, Observer {
+            it?.let {
+                traceRoute(MapItem.DISTRACTION, it)
             }
         })
         googleMap.setOnInfoWindowClickListener(this)
@@ -83,25 +96,51 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    fun traceRoute(mapItem: DKMapItem?) {
+    fun traceRoute(mapItem: DKMapItem?, mapTraceType: MapTraceType = MapTraceType.UNLOCK_SCREEN) {
         clearMap()
         viewModel.route?.let { route ->
-            val unlockColor =
-                ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
+            val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
-            if (mapItem != null && mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(
-                    MapItem.DISTRACTION
-                ) && route.screenLockedIndex != null) {
-                var unlock: Boolean
-                    for (i in 1 until route.screenLockedIndex!!.size) {
-                        unlock = route.screenStatus!![i - 1] == 1
-                        drawRoute(
-                            route,
-                            route.screenLockedIndex!![i - 1], route.screenLockedIndex!![i],
-                            if (unlock) unlockColor else lockColor
-                        )
+            val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
+            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea())) {
+                when (mapTraceType) {
+                    MapTraceType.UNLOCK_SCREEN -> {
+                        if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {
+                                var unlock: Boolean
+                                for (i in 1 until route.screenLockedIndex!!.size) {
+                                    unlock = route.screenStatus!![i - 1] == 1
+                                    drawRoute(
+                                        route,
+                                        route.screenLockedIndex!![i - 1], route.screenLockedIndex!![i],
+                                        if (unlock) unlockColor else lockColor
+                                    )
+                                }
+                        }
                     }
-
+                    MapTraceType.PHONE_CALL -> {
+                        if (mapItem.shouldShowPhoneDistractionArea() && route.callIndex != null) {
+                            drawRoute(route, 0, route.callIndex!!.first(), lockColor)
+                            for (i in 1 until route.callIndex!!.size) {
+                                viewModel.getCallFromIndex(i - 1)?.let { call ->
+                                    val phoneCallColor =
+                                        if (call.isForbidden) unlockColor else authorizedCallColor
+                                    drawRoute(
+                                        route,
+                                        route.callIndex!![i - 1], route.callIndex!![i],
+                                        if (i.rem(2) != 0) phoneCallColor else lockColor
+                                    )
+                                }
+                            }
+                            drawRoute(
+                                route,
+                                route.callIndex!!.last(),
+                                route.latitude.size - 1,
+                                lockColor)
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
+                        }
+                    }
+                }
             } else {
                 drawRoute(
                     route,
@@ -110,7 +149,7 @@ internal class TripGoogleMapViewHolder(
                     lockColor
                 )
             }
-            drawMarker(mapItem)
+            drawMarker(mapItem, mapTraceType)
         }
     }
 
@@ -125,20 +164,52 @@ internal class TripGoogleMapViewHolder(
         computedPolyline = googleMap.addPolyline(options)
     }
 
-    private fun drawMarker(mapItem: DKMapItem?) {
+    private fun drawMarker(mapItem: DKMapItem?, mapTraceType: MapTraceType) {
         mapItem?.let { item ->
             if (item.displayedMarkers().isNotEmpty()) {
                 item.displayedMarkers().forEach { type ->
                     when (type) {
                         DKMarkerType.SAFETY -> viewModel.displayEvents =
-                            viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
-                        DKMarkerType.DISTRACTION -> viewModel.displayEvents =
-                            viewModel.events.filterNot { it.type == TripEventType.SAFETY_BRAKE || it.type == TripEventType.SAFETY_ACCEL || it.type == TripEventType.SAFETY_ADHERENCE }
+                            viewModel.events.filterNot {
+                                it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
+                                        it.type == TripEventType.PHONE_DISTRACTION_UNLOCK ||
+                                        it.type == TripEventType.PHONE_DISTRACTION_HANG_UP ||
+                                        it.type == TripEventType.PHONE_DISTRACTION_PICK_UP
+                            }
+                        DKMarkerType.DISTRACTION -> {
+                            when(mapTraceType) {
+                                MapTraceType.UNLOCK_SCREEN -> {
+                                    viewModel.displayEvents =
+                                        viewModel.events.filterNot {
+                                                    it.type == TripEventType.SAFETY_BRAKE ||
+                                                    it.type == TripEventType.SAFETY_ACCEL ||
+                                                    it.type == TripEventType.SAFETY_ADHERENCE ||
+                                                    it.type == TripEventType.PHONE_DISTRACTION_PICK_UP ||
+                                                    it.type == TripEventType.PHONE_DISTRACTION_HANG_UP }
+                                }
+                                MapTraceType.PHONE_CALL -> {
+                                    viewModel.displayEvents =
+                                        viewModel.events.filterNot {
+                                            it.type == TripEventType.SAFETY_BRAKE ||
+                                                    it.type == TripEventType.SAFETY_ACCEL ||
+                                                    it.type == TripEventType.SAFETY_ADHERENCE ||
+                                                    it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
+                                                    it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
+                                        }
+                                }
+                            }
+                        }
+
                         DKMarkerType.ALL -> {
                             if (viewModel.configurableMapItems.contains(MapItem.DISTRACTION)) {
                                 viewModel.displayEvents = viewModel.events
                             } else {
-                                viewModel.displayEvents = viewModel.events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
+                                viewModel.displayEvents = viewModel.events.filterNot {
+                                    it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
+                                    it.type == TripEventType.PHONE_DISTRACTION_UNLOCK ||
+                                    it.type == TripEventType.PHONE_DISTRACTION_PICK_UP ||
+                                    it.type == TripEventType.PHONE_DISTRACTION_HANG_UP
+                                }
                             }
                         }
                     }

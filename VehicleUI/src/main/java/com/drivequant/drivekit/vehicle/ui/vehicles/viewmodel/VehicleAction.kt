@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
 import android.content.DialogInterface
-import android.support.design.widget.TextInputEditText
+import com.google.android.material.textfield.TextInputEditText
 import android.widget.TextView
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI

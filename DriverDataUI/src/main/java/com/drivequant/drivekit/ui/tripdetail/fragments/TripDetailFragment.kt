@@ -4,18 +4,18 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.text.HtmlCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.AppCompatRadioButton
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.text.HtmlCompat
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -78,13 +78,13 @@ class TripDetailFragment : Fragment() {
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.trip_menu_bar, menu)
+        inflater.inflate(R.menu.trip_menu_bar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
             R.id.trip_delete -> {
                 context?.let {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
@@ -434,9 +434,11 @@ class TripDetailFragment : Fragment() {
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                val sizePx = (it.parent.height * 0.66).toInt()
-                it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
-                it.customView = icon
+                it.parent?.let { tabLayout ->
+                    val sizePx = (tabLayout.height * 0.66).toInt()
+                    it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                    it.customView = icon
+                }
             }
         }
         DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())

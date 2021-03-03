@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
-import android.support.annotation.DimenRes
-import android.support.annotation.DrawableRes
-import android.support.annotation.StyleRes
-import android.support.v7.content.res.AppCompatResources
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StyleRes
+import androidx.appcompat.content.res.AppCompatResources
 import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.TextUtils.concat
