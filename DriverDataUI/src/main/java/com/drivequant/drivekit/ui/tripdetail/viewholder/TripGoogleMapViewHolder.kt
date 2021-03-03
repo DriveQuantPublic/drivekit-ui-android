@@ -1,13 +1,19 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
+import android.content.DialogInterface
 import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
@@ -71,8 +77,29 @@ internal class TripGoogleMapViewHolder(
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
 
-        googleMap.setOnPolylineClickListener { _ ->
-            Toast.makeText(itemView.context,"show speeding popup",Toast.LENGTH_LONG).show()
+        googleMap.setOnPolylineClickListener {
+            val alert = DKAlertDialog.LayoutBuilder()
+                .init(itemView.context)
+                .layout(R.layout.template_alert_dialog_layout)
+                .cancelable(true)
+                .positiveButton(itemView.context.getString(R.string.dk_common_ok),
+                    DialogInterface.OnClickListener
+                    { dialog, _ -> dialog.dismiss() })
+                .show()
+
+            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+            val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+
+            title?.text =
+                DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
+            description?.text = DKResource.convertToString(
+                itemView.context,
+                "dk_driverdata_speeding_event_info_content"
+            )
+            icon?.setImageResource(R.drawable.dk_speeding)
+            title?.headLine1()
+            description?.normalText()
         }
     }
     
