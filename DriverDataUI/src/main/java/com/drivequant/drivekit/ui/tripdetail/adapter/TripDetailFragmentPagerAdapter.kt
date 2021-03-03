@@ -8,7 +8,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 
 internal class TripDetailFragmentPagerAdapter(
     fragmentManager: FragmentManager,
-    private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager) {
+    private val tripDetailViewModel: TripDetailViewModel) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return tripDetailViewModel.configurableMapItems[position].getFragment(

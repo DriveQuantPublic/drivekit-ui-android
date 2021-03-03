@@ -35,8 +35,8 @@ class DKSpannable {
     fun toSpannable() = SpannableString(concat(*elements.toTypedArray())).apply {
         values.forEach {
             val range = it.key
-            it.value.forEach {
-                setSpan(it, range.first, range.last, SPAN_EXCLUSIVE_EXCLUSIVE)
+            it.value.forEach { value ->
+                setSpan(value, range.first, range.last, SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
     }

@@ -10,8 +10,8 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.viewholder.StreakVie
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 
 class StreaksListAdapter(
-    var context: Context?,
-    var streaksListViewModel: StreaksListViewModel) : RecyclerView.Adapter<StreakViewHolder>() {
+    private var context: Context?,
+    private var streaksListViewModel: StreaksListViewModel) : RecyclerView.Adapter<StreakViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): StreakViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.dk_streaks_list_item, parent, false)

@@ -47,7 +47,6 @@ object DKResource {
         }
         convertToString(context, identifier).let { rawString ->
             val array = rawString.split(*delimiters.toTypedArray())
-
             for ((index, value) in array.withIndex()) {
                 if (value.isBlank() && currentArgPosition < args.size) {
                     dkSpannable.append(args[currentArgPosition], context.resSpans {

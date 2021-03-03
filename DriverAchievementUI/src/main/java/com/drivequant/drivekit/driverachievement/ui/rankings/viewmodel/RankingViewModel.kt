@@ -23,7 +23,7 @@ class RankingViewModel : ViewModel() {
     var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
     val useCache: MutableMap<String, Boolean> = mutableMapOf()
-    lateinit var synchronizationType: SynchronizationType
+    private lateinit var synchronizationType: SynchronizationType
 
     init {
         for (rankingType in DriverAchievementUI.rankingTypes) {

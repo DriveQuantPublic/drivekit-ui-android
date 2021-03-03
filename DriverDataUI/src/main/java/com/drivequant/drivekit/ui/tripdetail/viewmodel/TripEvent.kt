@@ -122,14 +122,14 @@ class TripEvent(val type: TripEventType,
 
             START -> {
 
-                if (trip.departureAddress.isNullOrEmpty())
+                if (trip.departureAddress.isEmpty())
                  SpannableString.valueOf(trip.departureCity)
                 else
                     SpannableString.valueOf(trip.departureAddress)
 
             }
             FINISH ->
-                if (trip.arrivalAddress.isNullOrEmpty())
+                if (trip.arrivalAddress.isEmpty())
                     SpannableString.valueOf(trip.arrivalCity)
                 else
                     SpannableString.valueOf(trip.arrivalAddress)

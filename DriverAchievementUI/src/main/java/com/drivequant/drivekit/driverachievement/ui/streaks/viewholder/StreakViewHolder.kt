@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.graphics.drawable.GradientDrawable
 import androidx.recyclerview.widget.RecyclerView
@@ -60,6 +61,7 @@ class StreakViewHolder(itemView: View) :
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupSeekBar(streaksData: StreaksData) {
         seekBar.setPadding(1, 0, 0, 0)
         seekBar.progress = streaksData.computePercentage()
