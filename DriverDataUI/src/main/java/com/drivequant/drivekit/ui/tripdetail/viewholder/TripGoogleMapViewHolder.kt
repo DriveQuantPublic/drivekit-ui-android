@@ -82,7 +82,7 @@ internal class TripGoogleMapViewHolder(
                 .init(itemView.context)
                 .layout(R.layout.template_alert_dialog_layout)
                 .cancelable(true)
-                .positiveButton(itemView.context.getString(R.string.dk_common_ok),
+                .positiveButton(DKResource.convertToString(itemView.context,"dk_common_ok"),
                     DialogInterface.OnClickListener
                     { dialog, _ -> dialog.dismiss() })
                 .show()
@@ -91,12 +91,8 @@ internal class TripGoogleMapViewHolder(
             val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
             val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
 
-            title?.text =
-                DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
-            description?.text = DKResource.convertToString(
-                itemView.context,
-                "dk_driverdata_speeding_event_info_content"
-            )
+            title?.text = DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
+            description?.text = DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event_info_content")
             icon?.setImageResource(R.drawable.dk_speeding)
             title?.headLine1()
             description?.normalText()

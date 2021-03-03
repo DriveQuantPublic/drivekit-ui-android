@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
     tools:context=".tripdetail.activity.TripDetailActivity">
+
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
         style="@style/GaugeTripDetail"
         android:layout_width="96dp"
-        android:layout_height="137dp"
-        android:paddingTop="@dimen/dk_margin_medium"
+        android:layout_height="110dp"
+        android:paddingTop="@dimen/dk_margin_half"
+        android:paddingBottom="@dimen/dk_margin_half"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,15 +23,28 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_gauge"
-        tools:text="Speeding" />
+        app:layout_constraintTop_toBottomOf="@+id/score_gauge" />
+
+    <ImageView
+        android:id="@+id/score_info"
+        android:layout_width="@dimen/dk_ic_medium"
+        android:layout_height="@dimen/dk_ic_medium"
+        android:contentDescription="image"
+        android:gravity="center"
+        android:padding="@dimen/dk_margin_quarter"
+        android:src="@drawable/dk_common_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gauge_type_title" />
 
     <com.drivequant.drivekit.ui.commons.views.DistractionItem
         android:id="@+id/speeding_distance_item"
         android:layout_width="0dp"
-        android:gravity="center"
         android:layout_height="80dp"
         android:layout_marginStart="@dimen/dk_margin_half"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/speeding_duration_item"
         app:layout_constraintEnd_toStartOf="@+id/speeding_distance_value"
         app:layout_constraintHorizontal_weight="3"
@@ -41,9 +55,9 @@
     <com.drivequant.drivekit.ui.commons.views.DistractionItem
         android:id="@+id/speeding_duration_item"
         android:layout_width="0dp"
-        android:gravity="center"
         android:layout_height="80dp"
         android:layout_marginStart="@dimen/dk_margin_half"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/speeding_duration_value"
         app:layout_constraintHorizontal_weight="3"
