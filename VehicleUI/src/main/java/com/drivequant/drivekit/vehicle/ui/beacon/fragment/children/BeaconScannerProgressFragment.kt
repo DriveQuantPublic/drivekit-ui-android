@@ -14,11 +14,13 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -42,11 +44,34 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_progress, container, false).setDKStyle()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("scanType", viewModel.scanType)
+            outState.putSerializable("vehicleId", viewModel.vehicleId)
+            outState.putSerializable("beacon", viewModel.beacon)
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val vehicleId = savedInstanceState.getString("vehicleId")
+            val beacon = savedInstanceState.getSerializable("beacon") as Beacon?
+
+            if (scanType != null) {
+                viewModel = BeaconViewModel(scanType, vehicleId, beacon)
+                viewModel.init(requireContext())
+            }
+        }
+
         text_view_description.normalText()
         text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
-        progressBar = view.findViewById(R.id.progress_bar)
+
+        view?.let {
+            progressBar = it.findViewById(R.id.progress_bar)
+        }
         runUpdateProgressBarThread()
         startBeaconScan()
     }

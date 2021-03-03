@@ -35,12 +35,18 @@ object DKResource {
         identifier: String,
         vararg args: String
     ): Spannable {
-        val delimiter = "%s"
         val dkSpannable = DKSpannable()
         var currentArgPosition = 0
+        val delimiters = mutableListOf<String>()
+        args.forEachIndexed { index, _ ->
+            if (args.size == 1) {
+                delimiters.add("%s")
+            } else {
+                delimiters.add("%${index + 1}\$s")
+            }
+        }
         convertToString(context, identifier).let { rawString ->
-            val array = rawString.split(delimiter)
-
+            val array = rawString.split(*delimiters.toTypedArray())
             for ((index, value) in array.withIndex()) {
                 if (value.isBlank() && currentArgPosition < args.size) {
                     dkSpannable.append(args[currentArgPosition], context.resSpans {

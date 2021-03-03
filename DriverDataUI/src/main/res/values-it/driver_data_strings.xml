@@ -115,7 +115,7 @@ Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di prote
    <string name="dk_driverdata_unlock_event">Sblocco dello schermo</string>
    <string name="dk_driverdata_unlock_events">Lo schermo si sblocca</string>
    <string name="dk_driverdata_unlock_number">Numero di sblocco</string>
-   <string name="dk_driverdata_unlock_screen_content">display su %s e %s</string>
+   <string name="dk_driverdata_unlock_screen_content">display su %1$s e %2$s</string>
    <string name="dk_driverdata_value">Valor =</string>
    <string name="dk_driverdata_vehicle_trips">Viaggi in veicolo</string>
    <string name="dk_driverdata_weak_accel">Basso accelerazione</string>

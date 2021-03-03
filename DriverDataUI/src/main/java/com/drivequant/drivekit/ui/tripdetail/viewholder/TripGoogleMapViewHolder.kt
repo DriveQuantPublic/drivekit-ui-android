@@ -36,7 +36,11 @@ internal class TripGoogleMapViewHolder(
         viewModel.displayMapItem.observe(fragment, Observer {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
-                viewModel.selectedMapTraceType.value?.let { mapTraceType ->
+                viewModel.selectedMapTraceType.value?.let { selectedMapTraceType ->
+                    val mapTraceType = when (mapItem) {
+                        MapItem.INTERACTIVE_MAP -> MapTraceType.UNLOCK_SCREEN
+                        else -> selectedMapTraceType
+                    }
                     traceRoute(mapItem, mapTraceType)
                 } ?: run {
                     traceRoute(mapItem)
