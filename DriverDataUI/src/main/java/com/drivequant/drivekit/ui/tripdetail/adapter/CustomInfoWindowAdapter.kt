@@ -64,7 +64,7 @@ internal class CustomInfoWindowAdapter(
             AlertDialog.Builder(context)
                 .setTitle(marker.title)
                 .setMessage(event.getExplanation(context))
-                .setPositiveButton(R.string.dk_common_yes) { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton(R.string.dk_common_ok) { dialog, _ -> dialog.dismiss() }
                 .show()
         }
     }

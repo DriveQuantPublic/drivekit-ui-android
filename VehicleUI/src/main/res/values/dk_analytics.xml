@@ -6,5 +6,6 @@
     <string name="dk_tag_vehicles_beacon_verify" translatable="false">drivekit-vehicles-beacon-verify</string>
     <string name="dk_tag_vehicles_beacon_add" translatable="false">drivekit-vehicles-beacon-add</string>
     <string name="dk_tag_vehicles_beacon_diagnosis" translatable="false">drivekit-vehicles-beacon-diagnosis</string>
+    <string name="dk_tag_vehicles_beacon_info" translatable="false">drivekit-vehicles-beacon-info</string>
     <string name="dk_tag_vehicles_bluetooth_add" translatable="false">drivekit-vehicles-bluetooth-add</string>
 </resources>

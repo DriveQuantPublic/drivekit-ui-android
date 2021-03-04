@@ -48,15 +48,18 @@ internal class TripGoogleMapViewHolder(
                         traceRoute(mapItem, MapTraceType.SPEEDING)
                     }
                     else -> {
-                        viewModel.selectedMapTraceType.value?.let { mapTraceType ->
+                        viewModel.selectedMapTraceType.value?.let { selectedMapTraceType ->
+                            val mapTraceType = when (mapItem) {
+                                MapItem.INTERACTIVE_MAP -> MapTraceType.UNLOCK_SCREEN
+                                else -> selectedMapTraceType
+                            }
                             traceRoute(mapItem, mapTraceType)
                         } ?: run {
                             traceRoute(mapItem)
                         }
                     }
                 }
-            }
-        })
+            })
         viewModel.selection.observe(fragment, Observer {
             it?.let { position ->
                 val marker = googleMarkerList[position]
