@@ -12,8 +12,8 @@
         style="@style/GaugeTripDetail"
         android:layout_width="96dp"
         android:layout_height="110dp"
-        android:paddingTop="@dimen/dk_margin_half"
-        android:paddingBottom="@dimen/dk_margin_half"
+        android:paddingTop="@dimen/dk_margin_medium"
+        android:paddingBottom="@dimen/dk_margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

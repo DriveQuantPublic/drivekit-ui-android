@@ -7,7 +7,6 @@
     android:padding="8dp"
     tools:context=".tripdetail.activity.TripDetailActivity">
 
-
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
         style="@style/GaugeTripDetail"

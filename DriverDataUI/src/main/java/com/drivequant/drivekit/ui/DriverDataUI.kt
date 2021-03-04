@@ -32,8 +32,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
         MapItem.DISTRACTION,
-        MapItem.INTERACTIVE_MAP,
         MapItem.SPEEDING,
+        MapItem.INTERACTIVE_MAP,
         MapItem.SYNTHESIS
     )
         private set
@@ -61,8 +61,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
             MapItem.SAFETY,
             MapItem.ECO_DRIVING,
             MapItem.DISTRACTION,
-            MapItem.INTERACTIVE_MAP,
             MapItem.SPEEDING,
+            MapItem.INTERACTIVE_MAP,
             MapItem.SYNTHESIS)) {
         this.tripData = tripData
         this.mapItems = mapItems
