@@ -38,6 +38,9 @@ internal class TripGoogleMapViewHolder(
     private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
+    companion object {
+        private const val SPEEDING_POLYLINE_TAG = "polyline-speeding-tag"
+    }
 
     init {
         viewModel.displayMapItem.observe(fragment, Observer {
@@ -59,7 +62,8 @@ internal class TripGoogleMapViewHolder(
                         }
                     }
                 }
-            })
+            }
+        })
         viewModel.selection.observe(fragment, Observer {
             it?.let { position ->
                 val marker = googleMarkerList[position]
@@ -176,26 +180,24 @@ internal class TripGoogleMapViewHolder(
                     }
                     MapTraceType.SPEEDING -> {
                         if (mapItem.shouldShowSpeedingArea()) {
-                            route.speedingIndex?.let { speedingIndex ->
-                                if (!speedingIndex.isNullOrEmpty()) {
-                                    drawRoute(route, 0, speedingIndex.first(), lockColor)
-                                    for (i in 1 until speedingIndex.size) {
-                                        drawRoute(
-                                            route,
-                                            speedingIndex[i - 1], speedingIndex[i],
-                                            unlockColor,
-                                            "speeding-tag"
-                                        )
-                                    }
+                            if (!route.speedingIndex.isNullOrEmpty() && !route.speedingTime.isNullOrEmpty()) {
+                                drawRoute(route, 0, route.speedingIndex!!.first(), lockColor)
+                                for (i in 1 until route.speedingIndex!!.size) {
                                     drawRoute(
                                         route,
-                                        speedingIndex.last(),
-                                        route.latitude.size - 1,
-                                        lockColor
+                                        route.speedingIndex!![i - 1], route.speedingIndex!![i],
+                                        if (i.rem(2) != 0) unlockColor else lockColor,
+                                        SPEEDING_POLYLINE_TAG
                                     )
-                                } else {
-                                    drawRoute(route, 0, route.latitude.size - 1, lockColor)
                                 }
+                                drawRoute(
+                                    route,
+                                    route.speedingIndex!!.last(),
+                                    route.latitude.size - 1,
+                                    lockColor
+                                )
+                            } else {
+                                drawRoute(route, 0, route.latitude.size - 1, lockColor)
                             }
                         } else {
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
@@ -214,7 +216,7 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = "default-tag") {
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = "default-polyline-tag") {
         val options = PolylineOptions()
         for (i in startIndex..endIndex) {
             val routeSeg = LatLng(route.latitude[i], route.longitude[i])
@@ -222,7 +224,7 @@ internal class TripGoogleMapViewHolder(
             options.color(color)
             options.add(routeSeg)
         }
-        if (tag == "speeding-tag") {
+        if (tag == SPEEDING_POLYLINE_TAG) {
             options.clickable(true)
             computedPolyline?.tag = tag
         }

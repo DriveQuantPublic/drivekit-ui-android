@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Call
@@ -19,6 +20,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 internal class TripDetailViewModel(
@@ -420,11 +422,11 @@ internal class TripDetailViewModel(
         val totalDistance = trip?.speedingStatistics?.distance ?: 0
         val speedingDistance = trip?.speedingStatistics?.speedingDistance ?: 0
         val speedingDistancePercent = if (totalDistance != 0) {
-            val percent = (speedingDistance * 100).div(totalDistance).toDouble()
+            val percent = (speedingDistance.toDouble() * 100).div(totalDistance.toDouble())
             if (percent < 0.5) {
                 "${percent.format(2)}%"
             } else {
-                "${percent.roundToInt()}%"
+                "${ceil(percent).removeZeroDecimal()}%"
             }
         } else {
             "-"
@@ -436,11 +438,11 @@ internal class TripDetailViewModel(
         val totalDuration = trip?.speedingStatistics?.duration ?: 0
         val speedingDuration = trip?.speedingStatistics?.speedingDuration ?: 0
         val speedingDurationPercent = if (totalDuration != 0) {
-            val percent = (speedingDuration * 100).div(totalDuration).toDouble()
+            val percent = (speedingDuration.toDouble() * 100).div(totalDuration.toDouble())
             if (percent < 0.5) {
                 "${percent.format(2)}%"
             } else {
-                "${percent.roundToInt()}%"
+                "${ceil(percent).removeZeroDecimal()}%"
             }
         } else {
             "-"
