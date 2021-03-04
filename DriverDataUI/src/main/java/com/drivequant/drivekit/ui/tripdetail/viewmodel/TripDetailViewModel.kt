@@ -21,7 +21,6 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.*
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 
 internal class TripDetailViewModel(
     private val itinId: String,

@@ -36,7 +36,7 @@ enum class TripData {
             SAFETY -> trip.safety?.safetyScore
             ECO_DRIVING -> trip.ecoDriving?.score
             DISTRACTION -> trip.driverDistraction?.score
-            SPEEDING -> TODO() //trip.speedingStatistics.score
+            SPEEDING -> trip.speedingStatistics?.score
             DISTANCE -> trip.tripStatistics?.distance
             DURATION -> trip.tripStatistics?.duration
         }
