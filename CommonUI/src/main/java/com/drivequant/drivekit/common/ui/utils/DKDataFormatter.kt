@@ -46,7 +46,7 @@ object DKDataFormatter {
                 return if (nbSecond > 0) {
                     "${nbMinute - 1}"
                         .plus(context.getString(R.string.dk_common_unit_minute))
-                        .plus(nbSecond.formatLeadingZero())
+                        .plus(nbSecond)
                 } else {
                     "$nbMinute"
                         .plus(NON_BREAKING_SPACE)

@@ -98,24 +98,24 @@ internal class SpeedingFragment : Fragment() {
             DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600))
 
         speeding_distance_value.apply {
-            setSelectorContent(distanceValue)
+            setSelectorContent(totalDistancePercent)
             setSelection(false)
         }
 
         speeding_duration_value.apply {
-            setSelectorContent(durationValue)
+            setSelectorContent(totalDurationPercent)
             setSelection(false)
         }
 
         val durationContent = if (speedingDuration == 0) {
-                speeding_duration_value.visibility = View.INVISIBLE
+                speeding_duration_value.visibility = View.GONE
                 DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_content_congratulations")
             } else {
                 DKResource.buildString(
                     requireContext(),
                     DriveKitUI.colors.mainFontColor(),
                     DriveKitUI.colors.mainFontColor(),
-                    "dk_driverdata_speeding_events_trip_description", totalDurationPercent).toString()
+                    "dk_driverdata_speeding_events_trip_description", durationValue).toString()
             }
 
         val distanceContent = if (speedingDistance == 0) {
@@ -125,7 +125,7 @@ internal class SpeedingFragment : Fragment() {
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
-                "dk_driverdata_speeding_events_trip_description", totalDistancePercent).toString()
+                "dk_driverdata_speeding_events_trip_description", distanceValue).toString()
         }
 
         val durationResId = if (speedingDuration == 0) {

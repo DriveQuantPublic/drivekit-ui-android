@@ -420,7 +420,7 @@ internal class TripDetailViewModel(
     override fun getSpeedingDistanceAndPercent(context: Context): Pair<Int, String> {
         val totalDistance = trip?.speedingStatistics?.distance ?: 0
         val speedingDistance = trip?.speedingStatistics?.speedingDistance ?: 0
-        val speedingDistancePercent = if (totalDistance != 0) {
+        val speedingDistancePercent = if (totalDistance != 0 && speedingDistance != 0) {
             val percent = (speedingDistance.toDouble() * 100).div(totalDistance.toDouble())
             if (percent < 0.5) {
                 "${percent.format(2)}%"
@@ -428,7 +428,7 @@ internal class TripDetailViewModel(
                 "${ceil(percent).removeZeroDecimal()}%"
             }
         } else {
-            "-"
+            "$speedingDistance%"
         }
         return Pair(trip?.speedingStatistics?.speedingDistance ?: 0, speedingDistancePercent)
     }
@@ -436,7 +436,7 @@ internal class TripDetailViewModel(
     override fun getSpeedingDurationAndPercent(context: Context): Pair<Int, String> {
         val totalDuration = trip?.speedingStatistics?.duration ?: 0
         val speedingDuration = trip?.speedingStatistics?.speedingDuration ?: 0
-        val speedingDurationPercent = if (totalDuration != 0) {
+        val speedingDurationPercent = if (totalDuration != 0 && speedingDuration != 0) {
             val percent = (speedingDuration.toDouble() * 100).div(totalDuration.toDouble())
             if (percent < 0.5) {
                 "${percent.format(2)}%"
@@ -444,7 +444,7 @@ internal class TripDetailViewModel(
                 "${ceil(percent).removeZeroDecimal()}%"
             }
         } else {
-            "-"
+            "$speedingDuration%"
         }
         return Pair(trip?.speedingStatistics?.speedingDuration ?: 0, speedingDurationPercent)
     }
