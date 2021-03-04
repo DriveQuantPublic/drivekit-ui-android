@@ -39,6 +39,7 @@ internal class TripGoogleMapViewHolder(
     private var builder = LatLngBounds.Builder()
     companion object {
         private const val SPEEDING_POLYLINE_TAG = "polyline-speeding-tag"
+        private const val DEFAULT_POLYLINE_TAG = "default-polyline-tag"
     }
 
     init {
@@ -84,24 +85,28 @@ internal class TripGoogleMapViewHolder(
         googleMap.uiSettings.isMapToolbarEnabled = false
 
         googleMap.setOnPolylineClickListener {
-            val alert = DKAlertDialog.LayoutBuilder()
-                .init(itemView.context)
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(true)
-                .positiveButton(DKResource.convertToString(itemView.context,"dk_common_ok"),
-                    DialogInterface.OnClickListener
-                    { dialog, _ -> dialog.dismiss() })
-                .show()
+                val alert = DKAlertDialog.LayoutBuilder()
+                    .init(itemView.context)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .cancelable(true)
+                    .positiveButton(DKResource.convertToString(itemView.context, "dk_common_ok"),
+                        DialogInterface.OnClickListener
+                        { dialog, _ -> dialog.dismiss() })
+                    .show()
 
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
 
-            title?.text = DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
-            description?.text = DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event_info_content")
-            icon?.setImageResource(R.drawable.dk_speeding)
-            title?.headLine1()
-            description?.normalText()
+                title?.text =
+                    DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
+                description?.text = DKResource.convertToString(
+                    itemView.context,
+                    "dk_driverdata_speeding_event_info_content"
+                )
+                icon?.setImageResource(R.drawable.dk_speeding)
+                title?.headLine1()
+                description?.normalText()
         }
     }
     
@@ -178,26 +183,24 @@ internal class TripGoogleMapViewHolder(
                         }
                     }
                     MapTraceType.SPEEDING -> {
-                        if (mapItem.shouldShowSpeedingArea()) {
-                            if (!route.speedingIndex.isNullOrEmpty() && !route.speedingTime.isNullOrEmpty()) {
-                                drawRoute(route, 0, route.speedingIndex!!.first(), lockColor)
-                                for (i in 1 until route.speedingIndex!!.size) {
-                                    drawRoute(
-                                        route,
-                                        route.speedingIndex!![i - 1], route.speedingIndex!![i],
-                                        if (i.rem(2) != 0) unlockColor else lockColor,
-                                        SPEEDING_POLYLINE_TAG
-                                    )
-                                }
+                        if (mapItem.shouldShowSpeedingArea() && !route.speedingIndex.isNullOrEmpty() && !route.speedingTime.isNullOrEmpty()) {
+                            drawRoute(route, 0, route.speedingIndex!!.first(), lockColor)
+                            var speeding: Boolean
+                            for (i in 1 until route.speedingIndex!!.size) {
+                                speeding = i.rem(2) != 0
                                 drawRoute(
                                     route,
-                                    route.speedingIndex!!.last(),
-                                    route.latitude.size - 1,
-                                    lockColor
+                                    route.speedingIndex!![i - 1], route.speedingIndex!![i],
+                                    if (speeding) unlockColor else lockColor,
+                                    if (speeding) SPEEDING_POLYLINE_TAG else DEFAULT_POLYLINE_TAG
                                 )
-                            } else {
-                                drawRoute(route, 0, route.latitude.size - 1, lockColor)
                             }
+                            drawRoute(
+                                route,
+                                route.speedingIndex!!.last(),
+                                route.latitude.size - 1,
+                                lockColor
+                            )
                         } else {
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
@@ -215,7 +218,7 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = "default-polyline-tag") {
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = DEFAULT_POLYLINE_TAG) {
         val options = PolylineOptions()
         for (i in startIndex..endIndex) {
             val routeSeg = LatLng(route.latitude[i], route.longitude[i])
