@@ -104,7 +104,7 @@
         app:layout_constraintTop_toTopOf="@id/google_map"
         app:layout_constraintStart_toStartOf="@id/google_map"
         app:layout_constraintEnd_toStartOf="@id/center_button"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:tabIndicatorHeight="0dp"
         app:tabMaxWidth="56dp"
         android:background="#BFFFFFFF"

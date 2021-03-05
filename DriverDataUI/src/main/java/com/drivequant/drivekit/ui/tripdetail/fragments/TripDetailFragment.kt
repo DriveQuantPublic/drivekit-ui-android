@@ -434,9 +434,7 @@ class TripDetailFragment : Fragment() {
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                it.parent?.let { tabLayout ->
-                    val sizePx = (tabLayout.height * 0.66).toInt()
-                    it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                it.parent?.let { _ ->
                     it.customView = icon
                 }
             }
