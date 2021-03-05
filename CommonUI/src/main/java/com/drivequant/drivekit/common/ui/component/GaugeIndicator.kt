@@ -113,7 +113,7 @@ enum class GaugeType {
             }
             SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
             DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
-            SPEEDING -> listOf(0.0, 3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
+            SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
         }
     }
 }
