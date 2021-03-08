@@ -157,6 +157,8 @@ internal class TripGoogleMapViewHolder(
                                         if (unlock) unlockColor else lockColor
                                     )
                                 }
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }
                     MapTraceType.PHONE_CALL -> {
