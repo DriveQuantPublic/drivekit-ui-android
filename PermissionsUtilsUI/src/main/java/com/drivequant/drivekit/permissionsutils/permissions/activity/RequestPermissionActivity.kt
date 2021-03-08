@@ -130,7 +130,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             .init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(getString(R.string.dk_common_ok),
+            .positiveButton(positiveListener =
                 DialogInterface.OnClickListener { _, _ ->
                     callback()
                 })
@@ -158,10 +158,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
                         DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
                     )
                 })
-            .negativeButton(getString(R.string.dk_common_close),
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.cancel()
-                })
+            .negativeButton(getString(R.string.dk_common_close))
             .show()
 
         val titleTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_title)

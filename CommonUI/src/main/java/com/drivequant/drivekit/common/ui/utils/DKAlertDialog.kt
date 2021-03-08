@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
-import android.text.Spannable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.view.WindowManager
 import com.drivequant.drivekit.common.ui.R
 
 object DKAlertDialog {
@@ -19,8 +17,9 @@ object DKAlertDialog {
     data class LayoutBuilder(
         private var alertDialog: AlertDialog? = null,
         private var builder: AlertDialog.Builder? = null,
-        private var layout: LinearLayout? = null,
-        private var context: Context? = null) {
+        private var layout: LinearLayout? = null) {
+
+        private lateinit var context: Context
 
         fun init(context: Context) = apply {
             this.context = context
@@ -45,22 +44,30 @@ object DKAlertDialog {
 
         fun message(message: String) = apply { alertDialog?.setMessage(message) }
 
-        fun negativeButton(negativeText: String, negativeListener: DialogInterface.OnClickListener) = apply {
+        fun negativeButton(
+            negativeText: String = DKResource.convertToString(
+                context,
+                "dk_common_cancel"
+            ), negativeListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener
+            { dialog, _ -> dialog.dismiss() }
+        ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeListener)
         }
 
-        fun positiveButton(positiveText: String, positiveListener: DialogInterface.OnClickListener) = apply {
+        fun positiveButton(
+            positiveText: String = DKResource.convertToString(
+                context,
+                "dk_common_ok"
+            ), positiveListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener
+            { dialog, _ -> dialog.dismiss() }
+        ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener)
-        }
-
-        fun neutralButton(neutralText: String, neutralListener: DialogInterface.OnClickListener) = apply {
-            alertDialog?.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralListener)
         }
 
         fun cancelable(cancelable: Boolean) = apply { alertDialog?.setCancelable(cancelable) }
 
         fun layout(layoutId: Int) = apply {
-            val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val view = inflater.inflate(layoutId, null)
             layout?.addView(view,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -69,7 +76,7 @@ object DKAlertDialog {
 
         fun image(imageResId: Int) = apply {
             val imageView = ImageView(context)
-            imageView.setImageDrawable(ContextCompat.getDrawable(context!!, imageResId))
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, imageResId))
             layout?.addView(
                 imageView,
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -80,60 +87,6 @@ object DKAlertDialog {
         fun show(): AlertDialog {
             alertDialog?.show()
             return alertDialog!!
-        }
-
-        fun dismiss() {
-            alertDialog?.dismiss()
-        }
-    }
-
-    data class AlertBuilder(
-        private var alertDialog: AlertDialog? = null,
-        private var title: String? = null,
-        private var message: String? = null,
-        private var positiveText: String? = null,
-        private var negativeText: String? = null ,
-        private var context: Context? = null) {
-
-        fun init(context: Context) = apply {
-            this.context = context
-            alertDialog = AlertDialog.Builder(context, R.style.ProgressDialogStyle).create()
-        }
-
-        fun title(title: String) = apply {
-            alertDialog?.setTitle(title)
-        }
-
-        fun message(message: Spannable) = apply { alertDialog?.setMessage(message) }
-
-        fun positiveButton(positiveText: String, positiveListener: DialogInterface.OnClickListener) = apply {
-            alertDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener)
-        }
-
-        fun negativeButton(negativeText: String,negativeListener:DialogInterface.OnClickListener) = apply {
-            alertDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeListener)
-        }
-
-        fun neutralButton(neutralText: String, neutralListener: DialogInterface.OnClickListener) = apply {
-            alertDialog?.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralListener)
-        }
-
-        fun iconResId(iconResId: Int) = apply {
-            alertDialog?.setIcon(iconResId)
-        }
-
-        fun cancelable(cancelable: Boolean) = apply { alertDialog?.setCancelable(cancelable) }
-
-        @JvmOverloads
-        fun show(
-            height: Int = WindowManager.LayoutParams.WRAP_CONTENT,
-            width: Int = WindowManager.LayoutParams.MATCH_PARENT) {
-            val layoutParams = WindowManager.LayoutParams()
-            layoutParams.copyFrom(alertDialog?.window?.attributes)
-            layoutParams.width = width
-            layoutParams.height = height
-            alertDialog?.window?.attributes = layoutParams
-            alertDialog?.show()
         }
 
         fun dismiss() {

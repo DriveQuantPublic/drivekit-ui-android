@@ -171,7 +171,7 @@ enum class DetectionModeType(
                 DialogInterface.OnClickListener { _, _ ->
                     updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
                 })
-            .negativeButton(context.getString(R.string.dk_common_cancel),
+            .negativeButton(negativeListener =
                 DialogInterface.OnClickListener { dialog, _ ->
                     viewModel.fetchVehicles(context)
                     dialog.dismiss()

@@ -191,8 +191,7 @@ class VehicleDetailFragment : Fragment() {
                     DialogInterface.OnClickListener { _, _ ->
                         updateInformations(true)
                     })
-                .negativeButton(getString(R.string.dk_common_cancel),
-                    DialogInterface.OnClickListener { dialogInterface, _ ->
+                .negativeButton(negativeListener = DialogInterface.OnClickListener { dialogInterface, _ ->
                         dialogInterface.dismiss()
                         activity?.finish()
                     }
@@ -308,10 +307,7 @@ class VehicleDetailFragment : Fragment() {
                 DialogInterface.OnClickListener { _, _ ->
                     launchSettings()
                 })
-            .negativeButton(DKResource.convertToString(requireContext(), "dk_common_close"),
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                })
+            .negativeButton(DKResource.convertToString(requireContext(), "dk_common_close"))
             .show()
 
         val titleTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_title)

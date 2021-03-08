@@ -69,7 +69,7 @@ enum class VehicleAction(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.alert_dialog_vehicle_rename)
             .cancelable(true)
-            .positiveButton(context.getString(R.string.dk_common_ok),
+            .positiveButton(positiveListener =
                 DialogInterface.OnClickListener { _, _ ->
                     vehicleFieldInputEditText?.let {
                         viewModel.progressBarObserver.postValue(true)
@@ -85,8 +85,7 @@ enum class VehicleAction(
                         })
                     }
                 })
-            .negativeButton(context.getString(R.string.dk_common_cancel),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+            .negativeButton()
             .show()
 
         val titleTextView = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -114,7 +113,7 @@ enum class VehicleAction(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(context.getString(R.string.dk_common_ok),
+            .positiveButton(positiveListener =
                 DialogInterface.OnClickListener { _, _ ->
                     DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
                         override fun onResponse(status: VehicleManagerStatus) {
@@ -126,8 +125,7 @@ enum class VehicleAction(
                         }
                     })
                 })
-            .negativeButton(context.getString(R.string.dk_common_cancel),
-                DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+            .negativeButton()
             .show()
 
         val titleTextView = alert.findViewById<TextView>(R.id.text_view_alert_title)

@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,9 +56,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             .init(requireContext())
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(DKResource.convertToString(requireContext(), "dk_common_ok"),
-                DialogInterface.OnClickListener
-                { dialog, _ -> dialog.dismiss() })
+            .positiveButton()
             .show()
 
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
