@@ -30,8 +30,6 @@
         android:layout_width="@dimen/dk_ic_medium"
         android:layout_height="@dimen/dk_ic_medium"
         android:contentDescription="image"
-        android:gravity="center"
-        android:padding="@dimen/dk_margin_quarter"
         android:src="@drawable/dk_common_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"

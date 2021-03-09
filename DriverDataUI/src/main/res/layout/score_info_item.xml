@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="@dimen/dk_margin_half"
-    android:layout_marginEnd="@dimen/dk_margin_half">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/image_view_score_info"
-        android:layout_width="@dimen/dk_ic_medium"
-        android:layout_height="@dimen/dk_ic_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="image"
-        android:gravity="center"
         android:padding="@dimen/dk_margin_quarter"
         android:src="@drawable/dk_common_info" />
 </LinearLayout>

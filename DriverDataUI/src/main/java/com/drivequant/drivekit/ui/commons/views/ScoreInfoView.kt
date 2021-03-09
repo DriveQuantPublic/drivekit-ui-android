@@ -52,7 +52,7 @@ class ScoreInfoView : LinearLayout {
                 context,
                 gaugeType.getScoreInfoContent()
             )
-            icon?.setImageResource(R.drawable.dk_common_distraction)
+            icon?.setImageResource(gaugeType.getDrawable())
             title?.headLine1()
             description?.normalText()
 
