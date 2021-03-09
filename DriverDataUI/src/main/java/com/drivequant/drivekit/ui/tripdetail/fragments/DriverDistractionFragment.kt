@@ -129,6 +129,9 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
                 screen_unlock_item.setDistractionContentColor(false)
                 phone_call_item.setDistractionContentColor(true)
             }
+            else -> {
+                //DO NOTHING
+            }
         }
 
         score_info.setOnClickListener {
