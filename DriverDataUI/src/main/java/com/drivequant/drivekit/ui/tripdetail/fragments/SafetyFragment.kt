@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.content.DialogInterface
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.graphics.Typeface
@@ -9,15 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
@@ -25,7 +19,6 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModelFactory
 import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
 import kotlinx.android.synthetic.main.safety_fragment.*
 import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
-import kotlinx.android.synthetic.main.speeding_fragment.view.*
 
 class SafetyFragment : Fragment() {
 
@@ -46,7 +39,6 @@ class SafetyFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.safety_fragment, container, false)
         view.setBackgroundColor(Color.WHITE)
-        view.score_info.setColorFilter(DriveKitUI.colors.secondaryColor())
         return view
     }
 
@@ -87,34 +79,10 @@ class SafetyFragment : Fragment() {
         adherence_number_event.highlightSmall(primaryColor)
 
         score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY, Typeface.BOLD)
+        score_info.init(GaugeType.SAFETY)
+
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
         adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()
-
-        score_info.setOnClickListener {
-            val alert = DKAlertDialog.LayoutBuilder()
-                .init(requireContext())
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(true)
-                .positiveButton(
-                    DKResource.convertToString(requireContext(), "dk_common_ok"),
-                    DialogInterface.OnClickListener
-                    { dialog, _ -> dialog.dismiss() })
-                .show()
-
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
-
-            title?.text =
-                DKResource.convertToString(requireContext(), "dk_driverdata_safety_score")
-            description?.text = DKResource.convertToString(
-                requireContext(),
-                "dk_driverdata_safety_score_info"
-            )
-            icon?.setImageResource(R.drawable.dk_common_safety)
-            title?.headLine1()
-            description?.normalText()
-        }
     }
 }

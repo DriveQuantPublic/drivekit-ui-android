@@ -34,7 +34,7 @@
                 android:gravity="center"
                 tools:text="Eco-driving" />
 
-            <ImageView
+            <com.drivequant.drivekit.ui.commons.views.ScoreInfoView
                 android:id="@+id/score_info"
                 android:layout_width="@dimen/dk_ic_medium"
                 android:layout_height="@dimen/dk_ic_medium"

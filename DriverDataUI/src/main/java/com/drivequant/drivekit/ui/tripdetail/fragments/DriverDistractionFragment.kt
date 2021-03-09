@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,14 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
@@ -24,7 +19,7 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 import kotlinx.android.synthetic.main.driver_distraction_fragment.gauge_type_title
 import kotlinx.android.synthetic.main.driver_distraction_fragment.score_gauge
-import kotlinx.android.synthetic.main.speeding_fragment.view.*
+import kotlinx.android.synthetic.main.driver_distraction_fragment.score_info
 
 internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
@@ -44,7 +39,6 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
         view.setBackgroundColor(Color.WHITE)
-        view.score_info.setColorFilter(DriveKitUI.colors.secondaryColor())
         return view
     }
 
@@ -85,6 +79,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         }
 
         score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)
+        score_info.init(GaugeType.DISTRACTION)
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 
@@ -132,31 +127,6 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             else -> {
                 //DO NOTHING
             }
-        }
-
-        score_info.setOnClickListener {
-            val alert = DKAlertDialog.LayoutBuilder()
-                .init(requireContext())
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(true)
-                .positiveButton(DKResource.convertToString(requireContext(), "dk_common_ok"),
-                    DialogInterface.OnClickListener
-                    { dialog, _ -> dialog.dismiss() })
-                .show()
-
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
-
-            title?.text =
-                DKResource.convertToString(requireContext(), "dk_driverdata_distraction_score")
-            description?.text = DKResource.convertToString(
-                requireContext(),
-                "dk_driverdata_distraction_score_info"
-            )
-            icon?.setImageResource(R.drawable.dk_common_distraction)
-            title?.headLine1()
-            description?.normalText()
         }
     }
 
