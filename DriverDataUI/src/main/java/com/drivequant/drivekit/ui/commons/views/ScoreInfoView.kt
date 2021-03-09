@@ -47,10 +47,10 @@ class ScoreInfoView : LinearLayout {
             val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
 
             title?.text =
-                DKResource.convertToString(context, gaugeType.getScoreInfoTitle())
+                DKResource.convertToString(context, gaugeType.getScoreInfoTitle(context))
             description?.text = DKResource.convertToString(
                 context,
-                gaugeType.getScoreInfoContent()
+                gaugeType.getScoreInfoContent(context)
             )
             icon?.setImageResource(gaugeType.getDrawable())
             title?.headLine1()
