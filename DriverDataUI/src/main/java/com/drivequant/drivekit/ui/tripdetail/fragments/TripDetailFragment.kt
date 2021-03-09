@@ -29,11 +29,13 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 import java.util.*
 
@@ -427,6 +429,9 @@ class TripDetailFragment : Fragment() {
                 childFragmentManager,
                 viewModel)
         tab_layout.setupWithViewPager(view_pager)
+        if (viewModel.configurableMapItems.size == MapItem.values().size) {
+            tab_layout.tabMode = TabLayout.MODE_FIXED
+        }
         for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
             tab_layout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
