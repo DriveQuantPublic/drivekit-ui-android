@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.commons.views
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
@@ -128,10 +127,8 @@ class DiagnosisItemView : LinearLayout {
                 .init(context)
                 .layout(R.layout.template_alert_dialog_layout)
                 .cancelable(false)
-                .positiveButton(context.getString(R.string.dk_common_ok),
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.dismiss()
-                    }).show()
+                .positiveButton()
+                .show()
 
             val titleTextView = infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_title)
             val descriptionTextView =

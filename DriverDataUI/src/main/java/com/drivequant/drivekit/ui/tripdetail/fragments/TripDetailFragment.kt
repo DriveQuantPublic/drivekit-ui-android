@@ -90,12 +90,10 @@ class TripDetailFragment : Fragment() {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
-                        .positiveButton(getString(R.string.dk_common_ok),
-                            DialogInterface.OnClickListener { _, _ ->
+                        .positiveButton(positiveListener = DialogInterface.OnClickListener { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
-                        .negativeButton(getString(R.string.dk_common_cancel),
-                            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                        .negativeButton()
                         .show()
 
                     val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -147,8 +145,7 @@ class TripDetailFragment : Fragment() {
                     val alert = DKAlertDialog.LayoutBuilder()
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(
-                            getString(R.string.dk_common_ok),
+                        .positiveButton(positiveListener =
                             DialogInterface.OnClickListener { dialog, _ ->
                                 dialog.dismiss()
                                 val data = Intent()
