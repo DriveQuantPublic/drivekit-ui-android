@@ -7,7 +7,6 @@
     android:padding="8dp"
     tools:context=".tripdetail.activity.TripDetailActivity">
 
-
     <com.drivequant.drivekit.common.ui.component.GaugeIndicator
         android:id="@+id/score_gauge"
         style="@style/GaugeTripDetail"
@@ -26,6 +25,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_gauge"
         tools:text="Safety" />
+
+    <com.drivequant.drivekit.ui.commons.views.ScoreInfoView
+        android:id="@+id/score_info"
+        android:layout_width="@dimen/dk_ic_medium"
+        android:layout_height="@dimen/dk_ic_medium"
+        android:contentDescription="image"
+        android:src="@drawable/dk_common_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gauge_type_title" />
 
     <TextView
         android:id="@+id/accel_description"

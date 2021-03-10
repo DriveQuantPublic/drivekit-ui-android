@@ -1,12 +1,18 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
+import android.content.DialogInterface
 import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
@@ -31,19 +37,30 @@ internal class TripGoogleMapViewHolder(
     private val customInfoWindowAdapter = CustomInfoWindowAdapter(itemView.context, viewModel)
     private var computedPolyline: Polyline? = null
     private var builder = LatLngBounds.Builder()
+    companion object {
+        private const val SPEEDING_POLYLINE_TAG = "polyline-speeding-tag"
+        private const val DEFAULT_POLYLINE_TAG = "default-polyline-tag"
+    }
 
     init {
         viewModel.displayMapItem.observe(fragment, Observer {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
-                viewModel.selectedMapTraceType.value?.let { selectedMapTraceType ->
-                    val mapTraceType = when (mapItem) {
-                        MapItem.INTERACTIVE_MAP -> MapTraceType.UNLOCK_SCREEN
-                        else -> selectedMapTraceType
+                when (mapItem) {
+                    MapItem.SPEEDING -> {
+                        traceRoute(mapItem, MapTraceType.SPEEDING)
                     }
-                    traceRoute(mapItem, mapTraceType)
-                } ?: run {
-                    traceRoute(mapItem)
+                    else -> {
+                        viewModel.selectedMapTraceType.value?.let { selectedMapTraceType ->
+                            val mapTraceType = when (mapItem) {
+                                MapItem.INTERACTIVE_MAP -> MapTraceType.UNLOCK_SCREEN
+                                else -> selectedMapTraceType
+                            }
+                            traceRoute(mapItem, mapTraceType)
+                        } ?: run {
+                            traceRoute(mapItem)
+                        }
+                    }
                 }
             }
         })
@@ -66,6 +83,31 @@ internal class TripGoogleMapViewHolder(
         })
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
+
+        googleMap.setOnPolylineClickListener {
+                val alert = DKAlertDialog.LayoutBuilder()
+                    .init(itemView.context)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .cancelable(true)
+                    .positiveButton(DKResource.convertToString(itemView.context, "dk_common_ok"),
+                        DialogInterface.OnClickListener
+                        { dialog, _ -> dialog.dismiss() })
+                    .show()
+
+                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+
+                title?.text =
+                    DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
+                description?.text = DKResource.convertToString(
+                    itemView.context,
+                    "dk_driverdata_speeding_event_info_content"
+                )
+                icon?.setImageResource(R.drawable.dk_speeding)
+                title?.headLine1()
+                description?.normalText()
+        }
     }
     
     private fun configureAdviceButton(mapItem: DKMapItem){
@@ -102,7 +144,7 @@ internal class TripGoogleMapViewHolder(
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
-            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea())) {
+            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea() || mapItem.shouldShowSpeedingArea())) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
                         if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {
@@ -115,6 +157,8 @@ internal class TripGoogleMapViewHolder(
                                         if (unlock) unlockColor else lockColor
                                     )
                                 }
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }
                     MapTraceType.PHONE_CALL -> {
@@ -140,6 +184,29 @@ internal class TripGoogleMapViewHolder(
                             drawRoute(route, 0, route.latitude.size - 1, lockColor)
                         }
                     }
+                    MapTraceType.SPEEDING -> {
+                        if (mapItem.shouldShowSpeedingArea() && !route.speedingIndex.isNullOrEmpty() && !route.speedingTime.isNullOrEmpty()) {
+                            drawRoute(route, 0, route.speedingIndex!!.first(), lockColor)
+                            var speeding: Boolean
+                            for (i in 1 until route.speedingIndex!!.size) {
+                                speeding = i.rem(2) != 0
+                                drawRoute(
+                                    route,
+                                    route.speedingIndex!![i - 1], route.speedingIndex!![i],
+                                    if (speeding) unlockColor else lockColor,
+                                    if (speeding) SPEEDING_POLYLINE_TAG else DEFAULT_POLYLINE_TAG
+                                )
+                            }
+                            drawRoute(
+                                route,
+                                route.speedingIndex!!.last(),
+                                route.latitude.size - 1,
+                                lockColor
+                            )
+                        } else {
+                            drawRoute(route, 0, route.latitude.size - 1, lockColor)
+                        }
+                    }
                 }
             } else {
                 drawRoute(
@@ -153,13 +220,17 @@ internal class TripGoogleMapViewHolder(
         }
     }
 
-    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int) {
+    private fun drawRoute(route: Route, startIndex: Int, endIndex: Int, color: Int, tag: String = DEFAULT_POLYLINE_TAG) {
         val options = PolylineOptions()
         for (i in startIndex..endIndex) {
             val routeSeg = LatLng(route.latitude[i], route.longitude[i])
             builder.include(routeSeg)
             options.color(color)
             options.add(routeSeg)
+        }
+        if (tag == SPEEDING_POLYLINE_TAG) {
+            options.clickable(true)
+            computedPolyline?.tag = tag
         }
         computedPolyline = googleMap.addPolyline(options)
     }
@@ -196,6 +267,9 @@ internal class TripGoogleMapViewHolder(
                                                     it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
                                                     it.type == TripEventType.PHONE_DISTRACTION_UNLOCK
                                         }
+                                }
+                                else -> {
+                                    //DO NOTHING
                                 }
                             }
                         }

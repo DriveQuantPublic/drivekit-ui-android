@@ -32,6 +32,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         MapItem.SAFETY,
         MapItem.ECO_DRIVING,
         MapItem.DISTRACTION,
+        MapItem.SPEEDING,
         MapItem.INTERACTIVE_MAP,
         MapItem.SYNTHESIS
     )
@@ -60,6 +61,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
             MapItem.SAFETY,
             MapItem.ECO_DRIVING,
             MapItem.DISTRACTION,
+            MapItem.SPEEDING,
             MapItem.INTERACTIVE_MAP,
             MapItem.SYNTHESIS)) {
         this.tripData = tripData

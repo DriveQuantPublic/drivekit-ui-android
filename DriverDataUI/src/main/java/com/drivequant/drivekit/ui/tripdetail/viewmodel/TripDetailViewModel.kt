@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Call
@@ -18,6 +20,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.*
+import kotlin.math.ceil
 
 internal class TripDetailViewModel(
     private val itinId: String,
@@ -411,6 +414,40 @@ internal class TripDetailViewModel(
     override fun getItindId() = itinId
 
     override fun getTripListConfigurationType() = tripListConfiguration.getTripListConfigurationType()
+
+    override fun getSpeedingScore(): Double = trip?.speedingStatistics?.score ?: 0.0
+
+    override fun getSpeedingDistanceAndPercent(context: Context): Pair<Int, String> {
+        val totalDistance = trip?.speedingStatistics?.distance ?: 0
+        val speedingDistance = trip?.speedingStatistics?.speedingDistance ?: 0
+        val speedingDistancePercent = if (totalDistance != 0 && speedingDistance != 0) {
+            val percent = (speedingDistance.toDouble() * 100).div(totalDistance.toDouble())
+            if (percent < 0.5) {
+                "${percent.format(2)}%"
+            } else {
+                "${ceil(percent).removeZeroDecimal()}%"
+            }
+        } else {
+            "$speedingDistance%"
+        }
+        return Pair(trip?.speedingStatistics?.speedingDistance ?: 0, speedingDistancePercent)
+    }
+
+    override fun getSpeedingDurationAndPercent(context: Context): Pair<Int, String> {
+        val totalDuration = trip?.speedingStatistics?.duration ?: 0
+        val speedingDuration = trip?.speedingStatistics?.speedingDuration ?: 0
+        val speedingDurationPercent = if (totalDuration != 0 && speedingDuration != 0) {
+            val percent = (speedingDuration.toDouble() * 100).div(totalDuration.toDouble())
+            if (percent < 0.5) {
+                "${percent.format(2)}%"
+            } else {
+                "${ceil(percent).removeZeroDecimal()}%"
+            }
+        } else {
+            "$speedingDuration%"
+        }
+        return Pair(trip?.speedingStatistics?.speedingDuration ?: 0, speedingDurationPercent)
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -437,4 +474,7 @@ interface DKTripDetailViewModel {
     fun getPhoneCallsNumber(context: Context): Pair<String,String>
     fun getPhoneCallsDuration(context: Context): String
     fun hasScreenUnlocking(): Boolean
+    fun getSpeedingScore(): Double
+    fun getSpeedingDistanceAndPercent(context: Context): Pair<Int, String>
+    fun getSpeedingDurationAndPercent(context: Context): Pair<Int, String>
 }

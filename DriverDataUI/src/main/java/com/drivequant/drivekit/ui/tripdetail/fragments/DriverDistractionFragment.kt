@@ -17,6 +17,9 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.driver_distraction_fragment.*
+import kotlinx.android.synthetic.main.driver_distraction_fragment.gauge_type_title
+import kotlinx.android.synthetic.main.driver_distraction_fragment.score_gauge
+import kotlinx.android.synthetic.main.driver_distraction_fragment.score_info
 
 internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
@@ -76,6 +79,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         }
 
         score_gauge.configure(viewModel.getDistractionScore(), GaugeType.DISTRACTION, Typeface.BOLD)
+        score_info.init(GaugeType.DISTRACTION)
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 
@@ -119,6 +123,9 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
                 screen_unlock_selector.setSelection(false)
                 screen_unlock_item.setDistractionContentColor(false)
                 phone_call_item.setDistractionContentColor(true)
+            }
+            else -> {
+                //DO NOTHING
             }
         }
     }

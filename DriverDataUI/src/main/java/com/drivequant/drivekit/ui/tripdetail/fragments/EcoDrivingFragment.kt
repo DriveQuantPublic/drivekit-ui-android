@@ -3,10 +3,10 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -49,6 +49,8 @@ class EcoDrivingFragment : Fragment() {
             viewModel = it
         }
         score_gauge.configure(viewModel.getScore(), GaugeType.ECO_DRIVING, Typeface.BOLD)
+        score_info.init(GaugeType.ECO_DRIVING)
+
         accelAdvice.text = context?.getString(viewModel.getAccelMessage())
         mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
         decelAdvice.text = context?.getString(viewModel.getDecelMessage())

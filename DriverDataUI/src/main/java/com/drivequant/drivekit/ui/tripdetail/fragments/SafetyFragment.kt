@@ -79,6 +79,8 @@ class SafetyFragment : Fragment() {
         adherence_number_event.highlightSmall(primaryColor)
 
         score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY, Typeface.BOLD)
+        score_info.init(GaugeType.SAFETY)
+
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
         adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()
