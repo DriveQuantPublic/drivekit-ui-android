@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dk_beacon_battery">Livello della batteria (%%)</string>
+    <string name="dk_beacon_battery">Livello della batteria (%)</string>
     <string name="dk_beacon_code">Numero del beacon</string>
     <string name="dk_beacon_diagnostic_title">Diagnosi del mio beacon</string>
     <string name="dk_beacon_distance">Distanza (m)</string>
