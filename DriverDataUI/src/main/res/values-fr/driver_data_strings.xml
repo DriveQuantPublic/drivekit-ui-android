@@ -79,8 +79,8 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_screen_unlock_text">L\'application a détecté une ouverture de l’écran de votre téléphone mobile. Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner ou envoyer un message, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
    <string name="dk_driverdata_speeding_event">Dépassement de vitesse</string>
    <string name="dk_driverdata_speeding_event_info_content">L\’application a détecté un dépassement de la vitesse autorisée sur cette portion de votre trajet. La vitesse est le premier facteur d’accident mortel sur la route. Pour votre sécurité et celle de vos passagers, il est primordial de respecter les limitations.</string>
-   <string name="dk_driverdata_speeding_events_distance">Distance relative avec une vitesse supérieure à la limite</string>
-   <string name="dk_driverdata_speeding_events_duration">Durée relative avec une vitesse supérieure à la limite</string>
+   <string name="dk_driverdata_speeding_events_distance">Distance relative en dépassement</string>
+   <string name="dk_driverdata_speeding_events_duration">Durée relative en dépassement</string>
    <string name="dk_driverdata_speeding_events_trip_description">soit %s de votre trajet</string>
    <string name="dk_driverdata_speeding_score">Score de vitesse</string>
    <string name="dk_driverdata_speeding_score_info">Ce score est le reflet du respect des limitations de vitesse. Il évolue en fonction de la distance parcourue au-dessus de la limite réglementaire. Plus la distance en dépassement augmente et plus le score diminue.</string>

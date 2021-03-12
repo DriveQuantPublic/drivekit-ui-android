@@ -81,8 +81,8 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_screen_unlock_text">Die App hat die Entsperrung Ihres Bildschirms erkannt. Die Bedienung Ihres Telefons während der Fahrt ist sehr gefährlich. Denken Sie immer daran, sich selbst sowie Ihre Fahrgäste und die anderen Verkehrsteilnehmer zu schützen. Wenn Sie anrufen oder eine Nachricht senden möchten muss Ihr Fahrzeug sicher geparkt sein.</string>
    <string name="dk_driverdata_speeding_event">Überdrehzahl</string>
    <string name="dk_driverdata_speeding_event_info_content">Die Anwendung hat festgestellt, dass die Geschwindigkeitsbegrenzung auf diesem Straßenabschnitt überschritten wurde. Geschwindigkeit ist der Faktor Nummer eins bei tödlichen Verkehrsunfällen. Für Ihre Sicherheit und die Ihrer Mitfahrer ist es unerlässlich, die Geschwindigkeitsbegrenzungen einzuhalten.</string>
-   <string name="dk_driverdata_speeding_events_distance">Relativer Abstand bei Geschwindigkeit über dem Grenzwert</string>
-   <string name="dk_driverdata_speeding_events_duration">Relative Zeit mit Geschwindigkeit über dem Limit</string>
+   <string name="dk_driverdata_speeding_events_distance">Überdrehzahl relativer Abstand</string>
+   <string name="dk_driverdata_speeding_events_duration">Überdrehzahl relative Dauer</string>
    <string name="dk_driverdata_speeding_events_trip_description">oder %s Ihrer Fahrt</string>
    <string name="dk_driverdata_speeding_score">Geschwindigkeitswert</string>
    <string name="dk_driverdata_speeding_score_info">Dieses Ergebnis spiegelt die Einhaltung der Geschwindigkeitsbegrenzungen wider. Sie entwickelt sich je nach der über die gesetzliche Grenze hinaus zurückgelegten Strecke. Je größer der Abstand über dem Grenzwert, desto niedriger ist die Punktzahl.</string>
