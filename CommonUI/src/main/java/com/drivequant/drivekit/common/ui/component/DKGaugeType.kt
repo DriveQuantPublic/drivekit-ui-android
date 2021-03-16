@@ -10,12 +10,12 @@ enum class GaugeConfiguration {
     FULL, ICON;
 
     internal fun getStartAngle(): Float = when (this){
-        FULL -> 360F
+        FULL -> 270F
         ICON -> 38F
     }
 
     internal fun getOpenAngle(): Float = when (this){
-        FULL -> 270F
+        FULL -> 360F
         ICON -> 128F
     }
 }

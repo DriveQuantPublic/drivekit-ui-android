@@ -69,17 +69,13 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
 enum class GaugeType : DKGaugeType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
-    override fun getColor(value: Double): Int {
-        return getColorFromValue(value, getSteps())
-    }
+    override fun getColor(value: Double): Int = getColorFromValue(value, getSteps())
 
-    override fun getIcon(): Int {
-        return when (this) {
-            ECO_DRIVING -> R.drawable.dk_common_ecodriving
-            SAFETY -> R.drawable.dk_common_safety
-            DISTRACTION -> R.drawable.dk_common_distraction
-            SPEEDING -> R.drawable.dk_common_eco_accel
-        }
+    override fun getIcon(): Int = when (this) {
+        ECO_DRIVING -> R.drawable.dk_common_ecodriving
+        SAFETY -> R.drawable.dk_common_safety
+        DISTRACTION -> R.drawable.dk_common_distraction
+        SPEEDING -> R.drawable.dk_common_eco_accel
     }
 
     override fun getGaugeConfiguration(): GaugeConfiguration = GaugeConfiguration.FULL
@@ -98,24 +94,22 @@ enum class GaugeType : DKGaugeType {
         return if (value <= steps[5]) R.color.dkGood else R.color.dkExcellent
     }
 
-    private fun getSteps(): List<Double> {
-        return when (this) {
-            ECO_DRIVING -> {
-                val mean = 7.63
-                val sigma = 0.844
-                listOf(
-                    mean - (2 * sigma),
-                    mean - sigma,
-                    mean - (0.25 * sigma),
-                    mean,
-                    mean + (0.25 * sigma),
-                    mean + sigma,
-                    mean + (2 * sigma)
-                )
-            }
-            SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
-            DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
-            SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
+    private fun getSteps(): List<Double> = when (this) {
+        ECO_DRIVING -> {
+            val mean = 7.63
+            val sigma = 0.844
+            listOf(
+                mean - (2 * sigma),
+                mean - sigma,
+                mean - (0.25 * sigma),
+                mean,
+                mean + (0.25 * sigma),
+                mean + sigma,
+                mean + (2 * sigma)
+            )
         }
+        SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
+        DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
+        SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
     }
 }
