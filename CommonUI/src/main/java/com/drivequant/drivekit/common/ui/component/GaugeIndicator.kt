@@ -55,25 +55,25 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: GaugeType, scoreStyle: Int = Typeface.NORMAL) {
-        gaugeView.setOpenAngle(128F)
-        gaugeView.setStartAngle(38F)
+    fun configure(score: Double, type: DKGaugeType, scoreStyle: Int = Typeface.NORMAL) {
+        gaugeView.setOpenAngle(type.getGaugeConfiguration().getOpenAngle())
+        gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
         textView.text = score.removeZeroDecimal()
         textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
         gaugeView.configureScore(score)
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))
+        imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getIcon()!!))
     }
 }
 
-enum class GaugeType {
+enum class GaugeType : DKGaugeType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
-    fun getColor(score: Double): Int {
-        return getColorFromValue(score, getSteps())
+    override fun getColor(value: Double): Int {
+        return getColorFromValue(value, getSteps())
     }
 
-    fun getDrawable(): Int {
+    override fun getIcon(): Int {
         return when (this) {
             ECO_DRIVING -> R.drawable.dk_common_ecodriving
             SAFETY -> R.drawable.dk_common_safety
@@ -81,6 +81,8 @@ enum class GaugeType {
             SPEEDING -> R.drawable.dk_common_eco_accel
         }
     }
+
+    override fun getGaugeConfiguration(): GaugeConfiguration = GaugeConfiguration.FULL
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value <= steps[0])

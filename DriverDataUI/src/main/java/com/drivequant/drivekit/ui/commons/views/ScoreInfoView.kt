@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getScoreInfoContent
 import com.drivequant.drivekit.ui.extension.getScoreInfoTitle
-import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 import kotlinx.android.synthetic.main.score_info_item.view.*
 
 class ScoreInfoView : LinearLayout {
@@ -52,7 +51,7 @@ class ScoreInfoView : LinearLayout {
                 context,
                 gaugeType.getScoreInfoContent(context)
             )
-            icon?.setImageResource(gaugeType.getDrawable())
+            icon?.setImageResource(gaugeType.getIcon())
             title?.headLine1()
             description?.normalText()
 
