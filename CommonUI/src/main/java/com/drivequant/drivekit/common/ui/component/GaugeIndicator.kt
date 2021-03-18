@@ -78,7 +78,7 @@ enum class GaugeType : DKGaugeType {
         SPEEDING -> R.drawable.dk_common_eco_accel
     }
 
-    override fun getGaugeConfiguration(): GaugeConfiguration = GaugeConfiguration.FULL
+    override fun getGaugeConfiguration(): GaugeConfiguration = GaugeConfiguration.ICON
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value <= steps[0])

@@ -4,48 +4,63 @@ import android.content.Context
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.component.DKGaugeType
 import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 
 interface DKTripCard {
-    val context: Context
     val trips: List<Trip>
-    fun getTitle(): String
-    fun getExplanationContent(): String?
+    fun getTitle(context: Context): String
+    fun getExplanationContent(context: Context): String?
     fun getGaugeType(): DKGaugeType
-    fun getTripCardInfo(): Set<DKTripCardInfo>
-    fun getBottomText(): SpannableString?
+    fun getTripCardInfo(context: Context): Set<DKTripCardInfo>
+    fun getBottomText(context: Context): SpannableString?
 }
 
-sealed class TripCard(override val context: Context, override val trips: List<Trip>) : DKTripCard {
-    data class SAFETY(override val context: Context, override val trips: List<Trip>) : TripCard(context, trips)
-    data class ECODRIVING(override val context: Context, override val trips: List<Trip>) : TripCard(context, trips)
+sealed class TripCard(override val trips: List<Trip>) : DKTripCard {
+    data class SAFETY(override val trips: List<Trip> = listOf()) : TripCard(trips)
+    data class ECODRIVING(override val trips: List<Trip> = listOf()) : TripCard(trips)
+    data class DISTRACTION(override val trips: List<Trip> = listOf()) : TripCard(trips)
+    data class SPEEDING(override val trips: List<Trip> = listOf()) : TripCard(trips)
 
-    override fun getTitle(): String {
-        return when (this) {
-            is SAFETY -> "mon score hebdo / sécu" // TODO WIP
-            is ECODRIVING -> "mon score hebdo / écodriving"
+    private var internalTrips: List<Trip>
+
+    init {
+        internalTrips = when (this){
+            is SAFETY -> listOf()
+            is ECODRIVING -> listOf()
+            is DISTRACTION -> listOf()
+            is SPEEDING -> listOf()
         }
     }
 
-    override fun getExplanationContent(): String? {
-        return when (this) {
-            is SAFETY -> "Explanation safety" // TODO WIP
-            is ECODRIVING -> "Explanation ecodriving"
+    override fun getTitle(context: Context): String {
+        val identifier = when (this) {
+            is SAFETY -> "dk_driverdata_my_weekly_score_safety"
+            is ECODRIVING -> "dk_driverdata_my_weekly_score_ecodriving"
+            is DISTRACTION -> "dk_driverdata_my_weekly_score_distraction"
+            is SPEEDING -> "dk_driverdata_my_weekly_score_speeding"
         }
+        return DKResource.convertToString(context, identifier)
+    }
+
+    override fun getExplanationContent(context: Context): String? {
+        return DKResource.convertToString(context, "dk_driverdata_synthesis_card_explanation")
     }
 
     override fun getGaugeType(): DKGaugeType {
         return when (this){
             is SAFETY -> GaugeType.SAFETY
             is ECODRIVING -> GaugeType.ECO_DRIVING
+            is DISTRACTION -> GaugeType.DISTRACTION
+            is SPEEDING -> GaugeType.SPEEDING
         }
     }
 
-    override fun getTripCardInfo(): Set<DKTripCardInfo> {
+    override fun getTripCardInfo(context: Context): Set<DKTripCardInfo> {
         return setOf() // TODO WIP
     }
 
-    override fun getBottomText(): SpannableString? {
+    override fun getBottomText(context: Context): SpannableString? {
         return null // TODO WIP
     }
 }
