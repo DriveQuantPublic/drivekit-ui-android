@@ -6,16 +6,17 @@ interface DKGaugeType {
     fun getGaugeConfiguration(): GaugeConfiguration
 }
 
-enum class GaugeConfiguration {
-    FULL, ICON;
+sealed class GaugeConfiguration {
+    data class ICON(val icon: Int) : GaugeConfiguration()
+    object FULL: GaugeConfiguration()
 
     internal fun getStartAngle(): Float = when (this){
-        FULL -> 270F
-        ICON -> 38F
+        is ICON -> 38F
+        is FULL -> 270F
     }
 
     internal fun getOpenAngle(): Float = when (this){
-        FULL -> 360F
-        ICON -> 128F
+        is FULL -> 360F
+        is ICON -> 128F
     }
 }
