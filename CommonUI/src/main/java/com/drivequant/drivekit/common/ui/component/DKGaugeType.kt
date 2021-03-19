@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 interface DKGaugeType {
+    fun getMaxScore(): Double
     fun getColor(value: Double): Int
     fun getIcon(): Int?
     fun getGaugeConfiguration(): GaugeConfiguration

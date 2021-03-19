@@ -69,6 +69,8 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
 enum class GaugeType : DKGaugeType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
+    override fun getMaxScore(): Double = 10.0
+
     override fun getColor(value: Double): Int = getColorFromValue(value, getSteps())
 
     override fun getIcon(): Int = when (this) {

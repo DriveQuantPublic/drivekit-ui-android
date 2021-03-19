@@ -12,6 +12,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var drawingArea: RectF = RectF()
     private var score: Double = 0.0
+    private var maxScore: Double = 10.0
     private var openAngle: Float = 0F
     private var startAngle: Float = 0F
     private var strokeSize = 0F
@@ -68,6 +69,11 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         invalidate()
     }
 
+    fun configureMaxScore(score: Double) {
+        this.maxScore = maxScore
+        invalidate()
+    }
+
     fun setOpenAngle(openAngle: Float) {
         this.openAngle = openAngle
         invalidate()
@@ -104,7 +110,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun computePercent(): Float {
-        return ((360 - openAngle) * score / 10F).toFloat()
+        return ((360 - openAngle) * score / maxScore).toFloat()
     }
 
     private fun createPaint(color: Int): Paint {
