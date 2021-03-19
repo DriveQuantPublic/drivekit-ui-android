@@ -12,7 +12,7 @@ interface DKTripCard {
     fun getTitle(context: Context): String
     fun getExplanationContent(context: Context): String?
     fun getGaugeType(): DKGaugeType
-    fun getTripCardInfo(context: Context): Set<DKTripCardInfo>
+    fun getTripCardInfo(context: Context): List<DKTripCardInfo>
     fun getBottomText(context: Context): SpannableString?
 }
 
@@ -56,8 +56,8 @@ sealed class TripCard(override val trips: List<Trip>) : DKTripCard {
         }
     }
 
-    override fun getTripCardInfo(context: Context): Set<DKTripCardInfo> {
-        return setOf() // TODO WIP
+    override fun getTripCardInfo(context: Context): List<DKTripCardInfo> {
+        return listOf() // TODO WIP
     }
 
     override fun getBottomText(context: Context): SpannableString? {
