@@ -69,7 +69,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         invalidate()
     }
 
-    fun configureMaxScore(score: Double) {
+    fun configureMaxScore(maxScore: Double) {
         this.maxScore = maxScore
         invalidate()
     }
