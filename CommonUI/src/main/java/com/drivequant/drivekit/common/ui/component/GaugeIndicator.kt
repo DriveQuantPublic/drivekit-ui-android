@@ -55,13 +55,13 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: DKGaugeType, scoreStyle: Int = Typeface.NORMAL) {
+    fun configure(value: Double, type: DKGaugeType, scoreStyle: Int = Typeface.NORMAL) {
         gaugeView.setOpenAngle(type.getGaugeConfiguration().getOpenAngle())
         gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
-        textView.text = score.removeZeroDecimal()
+        textView.text = value.removeZeroDecimal()
         textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
-        gaugeView.configureScore(score)
-        gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
+        gaugeView.configureScore(value)
+        gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(value)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getIcon()!!))
     }
 }

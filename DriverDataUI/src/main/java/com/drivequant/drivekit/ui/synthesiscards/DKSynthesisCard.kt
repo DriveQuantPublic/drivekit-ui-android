@@ -7,31 +7,21 @@ import com.drivequant.drivekit.common.ui.component.GaugeType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 
-interface DKTripCard {
-    val trips: List<Trip>
+interface DKSynthesisCard {
     fun getTitle(context: Context): String
     fun getExplanationContent(context: Context): String?
     fun getGaugeType(): DKGaugeType
-    fun getTripCardInfo(context: Context): List<DKTripCardInfo>
+    fun getTopSynthesisCardInfo(context: Context): DKSynthesisCardInfo
+    fun getMiddleSynthesisCardInfo(context: Context): DKSynthesisCardInfo
+    fun getBottomSynthesisCardInfo(context: Context): DKSynthesisCardInfo
     fun getBottomText(context: Context): SpannableString?
 }
 
-sealed class TripCard(override val trips: List<Trip>) : DKTripCard {
-    data class SAFETY(override val trips: List<Trip> = listOf()) : TripCard(trips)
-    data class ECODRIVING(override val trips: List<Trip> = listOf()) : TripCard(trips)
-    data class DISTRACTION(override val trips: List<Trip> = listOf()) : TripCard(trips)
-    data class SPEEDING(override val trips: List<Trip> = listOf()) : TripCard(trips)
-
-    private var internalTrips: List<Trip>
-
-    init {
-        internalTrips = when (this){
-            is SAFETY -> listOf()
-            is ECODRIVING -> listOf()
-            is DISTRACTION -> listOf()
-            is SPEEDING -> listOf()
-        }
-    }
+sealed class SynthesisCard : DKSynthesisCard {
+    data class SAFETY(val trips: List<Trip> = listOf()) : SynthesisCard()
+    data class ECODRIVING(val trips: List<Trip> = listOf()) : SynthesisCard()
+    data class DISTRACTION(val trips: List<Trip> = listOf()) : SynthesisCard()
+    data class SPEEDING(val trips: List<Trip> = listOf()) : SynthesisCard()
 
     override fun getTitle(context: Context): String {
         val identifier = when (this) {
@@ -48,7 +38,7 @@ sealed class TripCard(override val trips: List<Trip>) : DKTripCard {
     }
 
     override fun getGaugeType(): DKGaugeType {
-        return when (this){
+        return when (this) {
             is SAFETY -> GaugeType.SAFETY
             is ECODRIVING -> GaugeType.ECO_DRIVING
             is DISTRACTION -> GaugeType.DISTRACTION
@@ -56,9 +46,11 @@ sealed class TripCard(override val trips: List<Trip>) : DKTripCard {
         }
     }
 
-    override fun getTripCardInfo(context: Context): List<DKTripCardInfo> {
-        return listOf() // TODO WIP
-    }
+    override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(context)
+
+    override fun getMiddleSynthesisCardInfo(context: Context) = SynthesisCardInfo.DISTANCE(context)
+
+    override fun getBottomSynthesisCardInfo(context: Context) = SynthesisCardInfo.DURATION(context)
 
     override fun getBottomText(context: Context): SpannableString? {
         return null // TODO WIP

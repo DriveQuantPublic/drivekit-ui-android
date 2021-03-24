@@ -1,13 +1,13 @@
 package com.drivequant.drivekit.ui
 
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.ui.synthesiscards.DKTripCard
+import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 
 object DriverDataSynthesisCardsUI {
-    internal var cards: Set<DKTripCard> = setOf()
+    internal var cards: Set<DKSynthesisCard> = setOf()
         private set
 
-    fun configure(cards: Set<DKTripCard>) {
+    fun configure(cards: Set<DKSynthesisCard>) {
         this.cards = cards
     }
 

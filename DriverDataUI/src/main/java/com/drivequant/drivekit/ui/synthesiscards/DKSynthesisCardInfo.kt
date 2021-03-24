@@ -3,26 +3,24 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Spannable
-import android.text.SpannableString
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 
-interface DKTripCardInfo {
-    val context: Context
+interface DKSynthesisCardInfo {
     fun getIcon(context: Context): Drawable?
     fun getText(context: Context): Spannable
 }
 
-sealed class TripCardInfo(override val context: Context) : DKTripCardInfo{
-    data class COUNT(override val context: Context) : TripCardInfo(context)
-    data class DISTANCE(override val context: Context) : TripCardInfo(context)
-    data class DURATION(override val context: Context) : TripCardInfo(context)
+sealed class SynthesisCardInfo : DKSynthesisCardInfo {
+    data class TRIPS(val context: Context) : SynthesisCardInfo()
+    data class DISTANCE(val context: Context) : SynthesisCardInfo()
+    data class DURATION(val context: Context) : SynthesisCardInfo()
 
     override fun getIcon(context: Context): Drawable? {
-        val identifier = when (this){
-            is COUNT -> R.drawable.dk_common_trip
+        val identifier = when (this) {
+            is TRIPS -> R.drawable.dk_common_trip
             is DISTANCE -> R.drawable.dk_common_road
             is DURATION -> R.drawable.dk_common_clock
         }
@@ -36,8 +34,8 @@ sealed class TripCardInfo(override val context: Context) : DKTripCardInfo{
         lateinit var textIdentifier: String
 
 
-        when (this){
-            is COUNT -> {
+        when (this) {
+            is TRIPS -> {
                 value = 12
                 textIdentifier = "dk_common_trip_singular"
             }
@@ -50,6 +48,12 @@ sealed class TripCardInfo(override val context: Context) : DKTripCardInfo{
                 textIdentifier = "dk_common_trip_singular"
             }
         }
-        return DKResource.buildString(context, textColor, highlightColor, textIdentifier, value.toString())
+        return DKResource.buildString(
+            context,
+            textColor,
+            highlightColor,
+            textIdentifier,
+            value.toString()
+        )
     }
 }
