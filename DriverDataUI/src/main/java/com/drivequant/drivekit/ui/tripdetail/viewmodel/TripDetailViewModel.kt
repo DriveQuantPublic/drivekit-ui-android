@@ -178,7 +178,6 @@ internal class TripDetailViewModel(
             route.longitude.last()
         )
         events.add(startTripEvent)
-        events.add(endTripEvent)
         trip.safetyEvents?.let {
             for (event in it){
                 when (event.type){
@@ -258,7 +257,8 @@ internal class TripDetailViewModel(
                 }
             }
         }
-        events = events.sortedWith(compareBy { it.time }).toMutableList()
+        events = events.sortedWith(compareBy { event -> event.time }).toMutableList()
+        events.add(endTripEvent)
     }
 
     fun getCallFromIndex(position: Int): Call? = trip?.calls?.get((position / 2))
@@ -328,7 +328,12 @@ internal class TripDetailViewModel(
         return if (configurableMapItems.contains(MapItem.DISTRACTION)) {
             events
         } else {
-            events.filterNot { it.type == TripEventType.PHONE_DISTRACTION_LOCK || it.type == TripEventType.PHONE_DISTRACTION_UNLOCK }
+            events.filterNot {
+                it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
+                        it.type == TripEventType.PHONE_DISTRACTION_UNLOCK ||
+                        it.type == TripEventType.PHONE_DISTRACTION_HANG_UP ||
+                        it.type == TripEventType.PHONE_DISTRACTION_PICK_UP
+            }
         }
     }
 
