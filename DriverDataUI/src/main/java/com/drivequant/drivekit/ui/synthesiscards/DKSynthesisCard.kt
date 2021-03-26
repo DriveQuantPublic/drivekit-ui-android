@@ -2,15 +2,15 @@ package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
 import android.text.SpannableString
-import com.drivequant.drivekit.common.ui.component.DKGaugeType
-import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 
 interface DKSynthesisCard {
     fun getTitle(context: Context): String
     fun getExplanationContent(context: Context): String?
-    fun getGaugeType(): DKGaugeType
+    fun getGaugeConfiguration(): DKGaugeConfiguration
     fun getTopSynthesisCardInfo(context: Context): DKSynthesisCardInfo
     fun getMiddleSynthesisCardInfo(context: Context): DKSynthesisCardInfo
     fun getBottomSynthesisCardInfo(context: Context): DKSynthesisCardInfo
@@ -34,15 +34,21 @@ sealed class SynthesisCard : DKSynthesisCard {
     }
 
     override fun getExplanationContent(context: Context): String? {
-        return DKResource.convertToString(context, "dk_driverdata_synthesis_card_explanation")
+        val identifier = when (this) {
+            is DISTRACTION -> "dk_driverdata_synthesis_info_distraction"
+            is ECODRIVING -> "dk_driverdata_synthesis_info_ecodriving"
+            is SAFETY -> "dk_driverdata_synthesis_info_safety"
+            is SPEEDING -> "dk_driverdata_synthesis_info_speeding"
+        }
+        return DKResource.convertToString(context, identifier)
     }
 
-    override fun getGaugeType(): DKGaugeType {
+    override fun getGaugeConfiguration(): DKGaugeConfiguration {
         return when (this) {
-            is SAFETY -> GaugeType.SAFETY
-            is ECODRIVING -> GaugeType.ECO_DRIVING
-            is DISTRACTION -> GaugeType.DISTRACTION
-            is SPEEDING -> GaugeType.SPEEDING
+            is SAFETY -> GaugeConfiguration.SAFETY
+            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING
+            is DISTRACTION -> GaugeConfiguration.DISTRACTION
+            is SPEEDING -> GaugeConfiguration.SPEEDING
         }
     }
 

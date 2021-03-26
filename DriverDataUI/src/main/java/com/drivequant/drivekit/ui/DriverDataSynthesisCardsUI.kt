@@ -4,10 +4,10 @@ import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 
 object DriverDataSynthesisCardsUI {
-    internal var cards: Set<DKSynthesisCard> = setOf()
+    internal var cards: List<DKSynthesisCard> = listOf()
         private set
 
-    fun configure(cards: Set<DKSynthesisCard>) {
+    fun configure(cards: List<DKSynthesisCard>) {
         this.cards = cards
     }
 

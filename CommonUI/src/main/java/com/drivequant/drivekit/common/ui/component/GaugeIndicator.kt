@@ -55,7 +55,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         attributes.recycle()
     }
 
-    fun configure(value: Double, type: DKGaugeType, scoreStyle: Int = Typeface.NORMAL) {
+    fun configure(value: Double, type: DKGaugeConfiguration, scoreStyle: Int = Typeface.NORMAL) {
         gaugeView.setOpenAngle(type.getGaugeConfiguration().getOpenAngle())
         gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
         textView.text = value.removeZeroDecimal()
@@ -66,8 +66,12 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     }
 }
 
-enum class GaugeType : DKGaugeType {
+enum class GaugeConfiguration : DKGaugeConfiguration {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
+
+    override fun getTitle(context: Context): String {
+        return "WIP"
+    }
 
     override fun getMaxScore(): Double = 10.0
 
@@ -80,7 +84,7 @@ enum class GaugeType : DKGaugeType {
         SPEEDING -> R.drawable.dk_common_eco_accel
     }
 
-    override fun getGaugeConfiguration(): GaugeConfiguration = GaugeConfiguration.ICON(getIcon())
+    override fun getGaugeConfiguration(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value <= steps[0])

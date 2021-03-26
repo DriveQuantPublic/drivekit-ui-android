@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
-import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.databaseutils.entity.Trip
 
 enum class TripData {
@@ -18,12 +18,12 @@ enum class TripData {
         DURATION, DISTANCE -> DisplayType.TEXT
     }
 
-    fun getGaugeType(): GaugeType = when (this) {
-        ECO_DRIVING -> GaugeType.ECO_DRIVING
-        SAFETY -> GaugeType.SAFETY
-        DISTRACTION -> GaugeType.DISTRACTION
-        SPEEDING -> GaugeType.SPEEDING
-        else -> GaugeType.SAFETY
+    fun getGaugeType(): GaugeConfiguration = when (this) {
+        ECO_DRIVING -> GaugeConfiguration.ECO_DRIVING
+        SAFETY -> GaugeConfiguration.SAFETY
+        DISTRACTION -> GaugeConfiguration.DISTRACTION
+        SPEEDING -> GaugeConfiguration.SPEEDING
+        else -> GaugeConfiguration.SAFETY
     }
 
     fun rawValue(trip: Trip): Double? = when (this) {
