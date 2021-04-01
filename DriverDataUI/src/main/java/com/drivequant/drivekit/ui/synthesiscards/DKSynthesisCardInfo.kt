@@ -14,15 +14,17 @@ interface DKSynthesisCardInfo {
 }
 
 sealed class SynthesisCardInfo : DKSynthesisCardInfo {
-    data class TRIPS(val context: Context) : SynthesisCardInfo()
+    data class ACTIVE_DAYS(val context: Context) : SynthesisCardInfo()
     data class DISTANCE(val context: Context) : SynthesisCardInfo()
     data class DURATION(val context: Context) : SynthesisCardInfo()
+    data class TRIPS(val context: Context) : SynthesisCardInfo()
 
     override fun getIcon(context: Context): Drawable? {
         val identifier = when (this) {
-            is TRIPS -> R.drawable.dk_common_trip
+            is ACTIVE_DAYS -> R.drawable.dk_common_calendar
             is DISTANCE -> R.drawable.dk_common_road
             is DURATION -> R.drawable.dk_common_clock
+            is TRIPS -> R.drawable.dk_common_trip
         }
         return ContextCompat.getDrawable(context, identifier)
     }
@@ -33,9 +35,8 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
         val value: Int
         lateinit var textIdentifier: String
 
-
         when (this) {
-            is TRIPS -> {
+            is ACTIVE_DAYS -> {
                 value = 12
                 textIdentifier = "dk_common_trip_singular"
             }
@@ -44,6 +45,10 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 textIdentifier = "dk_common_trip_singular"
             }
             is DURATION -> {
+                value = 12
+                textIdentifier = "dk_common_trip_singular"
+            }
+            is TRIPS -> {
                 value = 12
                 textIdentifier = "dk_common_trip_singular"
             }
