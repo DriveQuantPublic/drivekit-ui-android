@@ -67,7 +67,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
 }
 
 enum class GaugeType {
-    SAFETY, ECO_DRIVING, DISTRACTION;
+    SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
     fun getColor(score: Double): Int {
         return getColorFromValue(score, getSteps())
@@ -78,6 +78,7 @@ enum class GaugeType {
             ECO_DRIVING -> R.drawable.dk_common_ecodriving
             SAFETY -> R.drawable.dk_common_safety
             DISTRACTION -> R.drawable.dk_common_distraction
+            SPEEDING -> R.drawable.dk_common_eco_accel
         }
     }
 
@@ -112,6 +113,7 @@ enum class GaugeType {
             }
             SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
             DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
+            SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
         }
     }
 }

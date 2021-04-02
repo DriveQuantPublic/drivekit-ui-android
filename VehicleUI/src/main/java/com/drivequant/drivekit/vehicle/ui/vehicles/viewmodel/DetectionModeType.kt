@@ -74,7 +74,7 @@ enum class DetectionModeType(
        return DKResource.convertToString(context, this.title)
     }
 
-    fun getDescription(context: Context, vehicle: Vehicle): SpannableString? {
+    fun getDescription(context: Context, vehicle: Vehicle): SpannableString {
         var configured = true
         val parameter = vehicle.getDeviceDisplayIdentifier()
         val stringIdentifier = when (this){
@@ -171,7 +171,7 @@ enum class DetectionModeType(
                 DialogInterface.OnClickListener { _, _ ->
                     updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
                 })
-            .negativeButton(context.getString(R.string.dk_common_cancel),
+            .negativeButton(negativeListener =
                 DialogInterface.OnClickListener { dialog, _ ->
                     viewModel.fetchVehicles(context)
                     dialog.dismiss()

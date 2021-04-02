@@ -116,7 +116,7 @@
    <string name="badge_efficiency_extra_urban_congrats_1">Enhorabuena, has alcanzado tu objetivo!</string>
    <string name="badge_efficiency_extra_urban_congrats_2">Enhorabuena, has alcanzado tu objetivo!</string>
    <string name="badge_efficiency_extra_urban_congrats_3">Enhorabuena, has alcanzado tu objetivo!</string>
-   <string name="badge_efficiency_extra_urban_description_1">Para ganar esta insignia debes recorrer 100 kilómetros en una zona extraurbana con una puntuación de conducción ecológica de más de 8,5 sobre 10. Practicando la conducción ecológica y siguiendo los consejos de la aplicación, usted puede reducir su consumo de combustible entre un 10%% y un 15%%.</string>
+   <string name="badge_efficiency_extra_urban_description_1">Para ganar esta insignia debes recorrer 100 kilómetros en una zona extraurbana con una puntuación de conducción ecológica de más de 8,5 sobre 10. Practicando la conducción ecológica y siguiendo los consejos de la aplicación, usted puede reducir su consumo de combustible entre un 10% y un 15%.</string>
    <string name="badge_efficiency_extra_urban_description_2">Para ganar esta insignia debes recorrer 300 kilómetros en zonas extra-urbanas con una puntuación de conducción ecológica de más de 8,5 sobre 10. Un buen hábito es reducir la velocidad del vehículo utilizando el freno motor. Es mejor reducir la marcha que poner el motor en punto muerto usando sólo el freno mecánico para reducir la velocidad del vehículo.</string>
    <string name="badge_efficiency_extra_urban_description_3">Para ganar esta insignia debes viajar 1000 kilómetros en áreas extra-urbanas con una puntuación de eco-conducción superior a 8,5 sobre 10.</string>
    <string name="badge_efficiency_extra_urban_name_1">Aficionado</string>
@@ -260,7 +260,7 @@
    <string name="badge_range_short_congrats_1">Enhorabuena, has alcanzado tu objetivo!</string>
    <string name="badge_range_short_congrats_2">Enhorabuena, has alcanzado tu objetivo!</string>
    <string name="badge_range_short_congrats_3">Enhorabuena, has alcanzado tu objetivo!</string>
-   <string name="badge_range_short_description_1">Para ganar esta insignia, sólo es necesario hacer al menos 10 viajes cortos (menos de 15 km). Manténgase alerta, los viajes cortos que se realizan todos los días son los más peligrosos: el 70%% de los accidentes de tráfico se producen cerca de casa.</string>
+   <string name="badge_range_short_description_1">Para ganar esta insignia, sólo es necesario hacer al menos 10 viajes cortos (menos de 15 km). Manténgase alerta, los viajes cortos que se realizan todos los días son los más peligrosos: el 70% de los accidentes de tráfico se producen cerca de casa.</string>
    <string name="badge_range_short_description_2">Para ganar esta insignia, sólo es necesario hacer al menos 20 viajes cortos (menos de 15 km). Incluso si su viaje es muy corto, nunca olvide usar el cinturón de seguridad.</string>
    <string name="badge_range_short_description_3">Para ganar esta insignia, sólo es necesario hacer al menos 50 viajes cortos (menos de 15 km). Tenga cuidado porque es fácil dejar de prestar atención durante viajes cortos y conocidos.</string>
    <string name="badge_range_short_name_1">Ocasionalmente</string>

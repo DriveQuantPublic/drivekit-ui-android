@@ -29,11 +29,13 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_trip_detail.*
 import java.util.*
 
@@ -90,12 +92,10 @@ class TripDetailFragment : Fragment() {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
-                        .positiveButton(getString(R.string.dk_common_ok),
-                            DialogInterface.OnClickListener { _, _ ->
+                        .positiveButton(positiveListener = DialogInterface.OnClickListener { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
-                        .negativeButton(getString(R.string.dk_common_cancel),
-                            DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                        .negativeButton()
                         .show()
 
                     val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -147,8 +147,7 @@ class TripDetailFragment : Fragment() {
                     val alert = DKAlertDialog.LayoutBuilder()
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(
-                            getString(R.string.dk_common_ok),
+                        .positiveButton(positiveListener =
                             DialogInterface.OnClickListener { dialog, _ ->
                                 dialog.dismiss()
                                 val data = Intent()
@@ -427,6 +426,9 @@ class TripDetailFragment : Fragment() {
                 childFragmentManager,
                 viewModel)
         tab_layout.setupWithViewPager(view_pager)
+        if (viewModel.configurableMapItems.size == MapItem.values().size) {
+            tab_layout.tabMode = TabLayout.MODE_FIXED
+        }
         for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
             tab_layout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
@@ -434,9 +436,7 @@ class TripDetailFragment : Fragment() {
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
                     icon.setImageDrawable(drawable)
                 }
-                it.parent?.let { tabLayout ->
-                    val sizePx = (tabLayout.height * 0.66).toInt()
-                    it.customView?.layoutParams = LinearLayout.LayoutParams(sizePx, sizePx)
+                it.parent?.let { _ ->
                     it.customView = icon
                 }
             }

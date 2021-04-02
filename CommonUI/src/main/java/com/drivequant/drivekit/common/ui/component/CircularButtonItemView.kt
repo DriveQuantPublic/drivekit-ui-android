@@ -13,7 +13,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.utils.DKUtils
 import kotlinx.android.synthetic.main.dk_layout_circular_button_item_view.view.*
 
 class CircularButtonItemView : FrameLayout {
@@ -83,7 +82,7 @@ class CircularButtonItemView : FrameLayout {
         } else {
             DriveKitUI.colors.transparentColor()
         }
-        DKUtils.setBackgroundDrawableColor(circle as GradientDrawable, bgColor)
+        (circle as GradientDrawable).setColor(bgColor)
         DrawableCompat.setTint(wrapped, tintColor)
         image_view.setImageDrawable(wrapped)
         circle_view.background = circle

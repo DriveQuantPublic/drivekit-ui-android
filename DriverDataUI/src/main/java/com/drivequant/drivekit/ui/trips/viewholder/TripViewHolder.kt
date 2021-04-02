@@ -114,11 +114,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                 imageView.setImageDrawable(DKResource.convertToDrawable(imageView.context, "dk_no_score"))
             }
             is TripListConfiguration.ALTERNATIVE -> {
-                val mode = trip.declaredTransportationMode?.transportationMode?.let {
-                    it
-                } ?: run {
-                    trip.transportationMode
-                }
+                val mode = trip.declaredTransportationMode?.transportationMode ?: trip.transportationMode
                 imageView.setImageDrawable(mode.image(itemView.context))
             }
         }

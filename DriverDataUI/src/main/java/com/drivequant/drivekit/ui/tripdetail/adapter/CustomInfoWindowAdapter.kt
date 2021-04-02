@@ -1,14 +1,12 @@
 package com.drivequant.drivekit.ui.tripdetail.adapter
 
-import android.app.AlertDialog
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -61,11 +59,20 @@ internal class CustomInfoWindowAdapter(
     fun displayInfo(marker: Marker){
         val event = tripDetailViewModel.displayEvents[marker.tag as Int]
         if (event.showInfoIcon()) {
-            AlertDialog.Builder(context)
-                .setTitle(marker.title)
-                .setMessage(event.getExplanation(context))
-                .setPositiveButton(R.string.dk_common_ok) { dialog, _ -> dialog.dismiss() }
+            val alert = DKAlertDialog.LayoutBuilder()
+                .init(context)
+                .layout(R.layout.template_alert_dialog_layout)
+                .positiveButton()
                 .show()
+
+            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+
+            title?.text = marker.title
+            description?.text = event.getExplanation(context)
+
+            title?.headLine1()
+            description?.normalText()
         }
     }
 }

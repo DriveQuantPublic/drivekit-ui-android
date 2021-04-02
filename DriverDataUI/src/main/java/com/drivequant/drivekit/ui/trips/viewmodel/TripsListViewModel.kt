@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
@@ -40,8 +42,11 @@ internal class TripsListViewModel(
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
-            val handler = android.os.Handler()
-            handler.post {
+            var handler: Handler? = null
+            Looper.myLooper()?.let {
+                handler = Handler(it)
+            }
+            handler?.post {
                 val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
                 if (DriverDataUI.enableAlternativeTrips){
                     transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
@@ -135,7 +140,7 @@ internal class TripsListViewModel(
         transportationModeFilterItems.add(AllTripsTransportationModeFilterItem())
         computeFilterTransportationModes().forEach { mode ->
             val modeFilterItem = object : FilterItem {
-                override fun getItemId(): Any? {
+                override fun getItemId(): Any {
                     return mode
                 }
 

@@ -11,13 +11,11 @@ object FontUtils {
     fun overrideFonts(context: Context?, v: View) {
         try {
             if (v is ViewGroup) {
-                val vg = v
-                for (i in 0 until vg.childCount) {
-                    val child = vg.getChildAt(i)
+                for (i in 0 until v.childCount) {
+                    val child = v.getChildAt(i)
                     overrideFonts(context, child)
                 }
             } else if (v is TextView) {
-
                 context?.let {
                     v.typeface = DriveKitUI.primaryFont(it)
                 }

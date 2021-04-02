@@ -19,7 +19,7 @@ internal class AlternativeTripMapItem : DKMapItem {
         }
     }
 
-    override fun canShowMapItem(trip: Trip): Boolean? = true
+    override fun canShowMapItem(trip: Trip): Boolean = true
 
     override fun displayedMarkers(): List<DKMarkerType> = listOf()
 
@@ -30,4 +30,6 @@ internal class AlternativeTripMapItem : DKMapItem {
     override fun overrideShortTrip(): Boolean = true
 
     override fun shouldShowPhoneDistractionArea(): Boolean = false
+
+    override fun shouldShowSpeedingArea(): Boolean = false
 }

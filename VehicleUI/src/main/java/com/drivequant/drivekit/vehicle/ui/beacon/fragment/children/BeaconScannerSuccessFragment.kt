@@ -1,12 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import androidx.lifecycle.Observer
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -70,11 +70,14 @@ class BeaconScannerSuccessFragment : Fragment() {
     }
 
     private fun displayErrorAlert(identifier: String){
-         DKAlertDialog.LayoutBuilder().init(requireContext())
+         val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(DKResource.convertToString(requireContext(), identifier),
-                DialogInterface.OnClickListener { dialogInterface, _ ->  dialogInterface.dismiss() })
+            .positiveButton()
             .show()
+
+         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+         description?.text = DKResource.convertToString(requireContext(), identifier)
+         description?.normalText()
     }
 }

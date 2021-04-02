@@ -65,8 +65,7 @@ class ConnectBeaconFragment : Fragment() {
                                 onConnectButtonClicked()
                             }
                         })
-                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"),
-                        DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() })
+                    .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)

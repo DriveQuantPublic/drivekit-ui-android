@@ -21,7 +21,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKUtils
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
@@ -66,7 +65,7 @@ internal class TransportationModeFragment : Fragment(){
             ).get(TransportationModeViewModel::class.java)
         }
 
-        DKUtils.setBackgroundDrawableColor(description_title.background as GradientDrawable, DriveKitUI.colors.warningColor())
+        (description_title.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
         description_title.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         description_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
 
@@ -102,26 +101,28 @@ internal class TransportationModeFragment : Fragment(){
         bindTransportationProfileItems()
         viewModel.updateObserver.observe(this, Observer { status ->
             hideProgressCircular()
-            when (status){
-                TransportationModeUpdateStatus.NO_ERROR -> {
-                    requireActivity().apply {
-                        setResult(Activity.RESULT_OK)
-                        finish()
+            if (status != null){
+                when (status){
+                    TransportationModeUpdateStatus.NO_ERROR -> {
+                        requireActivity().apply {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
                     }
-                }
-                TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
-                    Toast.makeText(
-                        requireContext(),
-                        DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
-                    Toast.makeText(
-                        requireContext(),
-                        DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
+                        Toast.makeText(
+                            requireContext(),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
+                        Toast.makeText(
+                            requireContext(),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         })

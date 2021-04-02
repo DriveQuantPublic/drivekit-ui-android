@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.commons.views
 
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -85,10 +84,8 @@ class BadgeItemView : LinearLayout {
             .init(context)
             .layout(R.layout.dk_layout_badge_details)
             .cancelable(true)
-            .negativeButton(context.getString(R.string.dk_common_close),
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                }).show()
+            .negativeButton(context.getString(R.string.dk_common_close))
+            .show()
 
         val badgeTitle = badgeDetails.findViewById<TextView>(R.id.text_view_badge_title)
         val badgeDescription = badgeDetails.findViewById<TextView>(R.id.text_view_badge_goal)

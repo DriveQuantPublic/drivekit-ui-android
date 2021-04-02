@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
-import android.content.DialogInterface
+import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
@@ -60,6 +60,7 @@ class StreakViewHolder(itemView: View) :
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupSeekBar(streaksData: StreaksData) {
         seekBar.setPadding(1, 0, 0, 0)
         seekBar.progress = streaksData.computePercentage()
@@ -94,8 +95,7 @@ class StreakViewHolder(itemView: View) :
            .init(context)
            .layout(R.layout.template_alert_dialog_layout)
            .cancelable(true)
-           .positiveButton(context.getString(R.string.dk_common_ok),DialogInterface.OnClickListener
-           { dialog, _ ->  dialog.dismiss() })
+           .positiveButton()
            .show()
 
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)

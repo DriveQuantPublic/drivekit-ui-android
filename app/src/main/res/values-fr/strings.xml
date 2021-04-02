@@ -20,9 +20,6 @@
    <string name="driver_data_button">Lancer DriverData</string>
    <string name="driver_data_explanation">Exemple d\'implémentation du SDK Driver Data avec la liste des trajets et le détail d\'un trajet</string>
    <string name="driver_streaks_button">Séquences de succès</string>
-   <string name="enable_logging_pref_off">Activer ce réglage pour écrire les logs sur le téléphone</string>
-   <string name="enable_logging_pref_on">Les fichiers de log seront disponibles dans le dossier \"DriveKit\" du téléphone</string>
-   <string name="enable_logging_title">Logging</string>
    <string name="enable_share_position_off">Activer ce réglage pour partager votre position durant le trajet</string>
    <string name="enable_share_position_on">Désactiver ce réglage pour ne pas partager votre position durant le trajet</string>
    <string name="enable_share_position_title">Partage de position ?</string>

@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.core.access.AccessType
+import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
@@ -11,7 +13,8 @@ enum class MapItem : DKMapItem {
     SAFETY,
     INTERACTIVE_MAP,
     DISTRACTION,
-    SYNTHESIS;
+    SYNTHESIS,
+    SPEEDING;
 
     override fun getImageResource(): Int =
         when (this) {
@@ -20,6 +23,7 @@ enum class MapItem : DKMapItem {
             INTERACTIVE_MAP -> R.drawable.dk_trip_timeline_tab_icon
             DISTRACTION -> R.drawable.dk_distraction_tab_icon
             SYNTHESIS -> R.drawable.dk_synthesis_tab_icon
+            SPEEDING -> R.drawable.dk_speeding_tab_icon
         }
 
 
@@ -42,6 +46,7 @@ enum class MapItem : DKMapItem {
                 DISTRACTION -> DriverDistractionFragment.newInstance(tripDetailViewModel)
                 INTERACTIVE_MAP -> TripTimelineFragment.newInstance(tripDetailViewModel)
                 SYNTHESIS -> SynthesisFragment.newInstance(trip)
+                SPEEDING -> SpeedingFragment.newInstance(tripDetailViewModel)
             }
         }
 
@@ -51,13 +56,18 @@ enum class MapItem : DKMapItem {
             SAFETY -> trip.safety?.let { it.safetyScore <= 10 }
             INTERACTIVE_MAP, SYNTHESIS -> true
             DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }
+            SPEEDING -> trip.speedingStatistics?.let {
+                it.score <= 10 && DriveKitAccess.hasAccess(
+                    AccessType.SPEEDING
+                )
+            }
         }
 
     override fun getAdviceImageResource(): Int? =
         when (this) {
             SAFETY -> R.drawable.dk_safety_advice
             ECO_DRIVING -> R.drawable.dk_eco_advice
-            INTERACTIVE_MAP, SYNTHESIS, DISTRACTION -> null
+            INTERACTIVE_MAP, SYNTHESIS, DISTRACTION, SPEEDING -> null
         }
 
     override fun displayedMarkers(): List<DKMarkerType> =
@@ -74,6 +84,8 @@ enum class MapItem : DKMapItem {
     override fun overrideShortTrip(): Boolean = false
 
     override fun shouldShowPhoneDistractionArea(): Boolean = this == DISTRACTION
+
+    override fun shouldShowSpeedingArea(): Boolean = this == SPEEDING
 }
 
 interface DKMapItem {
@@ -86,6 +98,7 @@ interface DKMapItem {
     fun getAdviceImageResource(): Int?
     fun overrideShortTrip(): Boolean
     fun shouldShowPhoneDistractionArea(): Boolean
+    fun shouldShowSpeedingArea() : Boolean
 }
 
 enum class DKMarkerType {
