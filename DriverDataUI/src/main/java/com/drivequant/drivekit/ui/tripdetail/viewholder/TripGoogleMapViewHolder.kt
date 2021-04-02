@@ -144,7 +144,7 @@ internal class TripGoogleMapViewHolder(
             val unlockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceWarningColor)
             val lockColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceMainColor)
             val authorizedCallColor = ContextCompat.getColor(itemView.context, DriverDataUI.mapTraceAuthorizedCallColor)
-            if (mapItem != null && (mapItem.shouldShowDistractionArea() || mapItem.shouldShowPhoneDistractionArea() || mapItem.shouldShowSpeedingArea())) {
+            if (mapItem != null && ((mapItem.shouldShowDistractionArea() && viewModel.configurableMapItems.contains(MapItem.DISTRACTION)) || mapItem.shouldShowPhoneDistractionArea() || mapItem.shouldShowSpeedingArea())) {
                 when (mapTraceType) {
                     MapTraceType.UNLOCK_SCREEN -> {
                         if (mapItem.shouldShowDistractionArea() && route.screenLockedIndex != null) {
@@ -278,12 +278,13 @@ internal class TripGoogleMapViewHolder(
                             if (viewModel.configurableMapItems.contains(MapItem.DISTRACTION)) {
                                 viewModel.displayEvents = viewModel.events
                             } else {
-                                viewModel.displayEvents = viewModel.events.filterNot {
-                                    it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
-                                    it.type == TripEventType.PHONE_DISTRACTION_UNLOCK ||
-                                    it.type == TripEventType.PHONE_DISTRACTION_PICK_UP ||
-                                    it.type == TripEventType.PHONE_DISTRACTION_HANG_UP
-                                }
+                                viewModel.displayEvents =
+                                    viewModel.events.filterNot {
+                                        it.type == TripEventType.PHONE_DISTRACTION_LOCK ||
+                                                it.type == TripEventType.PHONE_DISTRACTION_UNLOCK ||
+                                                it.type == TripEventType.PHONE_DISTRACTION_HANG_UP ||
+                                                it.type == TripEventType.PHONE_DISTRACTION_PICK_UP
+                                    }
                             }
                         }
                     }

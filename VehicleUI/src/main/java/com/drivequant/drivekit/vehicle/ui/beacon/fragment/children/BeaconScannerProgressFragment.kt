@@ -140,13 +140,17 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
             DIAGNOSTIC -> {
                 DriveKitVehicle.getVehiclesOrderByNameAsc(object: VehicleListQueryListener {
                     override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
-                        viewModel.fetchVehicleFromBeacon(vehicles)?.let {
-                            viewModel.vehicle = it
-                            viewModel.vehicleId = it.vehicleId
-                            viewModel.computeVehicleName(requireContext())
+                        if (vehicles.isEmpty()){
                             viewModel.updateScanState(BeaconStep.VERIFIED)
-                        }?:run  {
-                            viewModel.updateScanState(BeaconStep.WRONG_BEACON)
+                        } else {
+                            viewModel.fetchVehicleFromBeacon(vehicles)?.let {
+                                viewModel.vehicle = it
+                                viewModel.vehicleId = it.vehicleId
+                                viewModel.computeVehicleName(requireContext())
+                                viewModel.updateScanState(BeaconStep.VERIFIED)
+                            } ?: run {
+                                viewModel.updateScanState(BeaconStep.WRONG_BEACON)
+                            }
                         }
                     }
                 }, SynchronizationType.CACHE)
