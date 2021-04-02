@@ -5,7 +5,7 @@ import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
 
 interface DKSynthesisCard {
     fun getTitle(context: Context): String
@@ -17,11 +17,11 @@ interface DKSynthesisCard {
     fun getBottomText(context: Context): SpannableString?
 }
 
-sealed class SynthesisCard : DKSynthesisCard {
-    data class SAFETY(val trips: List<Trip> = listOf()) : SynthesisCard()
-    data class ECODRIVING(val trips: List<Trip> = listOf()) : SynthesisCard()
-    data class DISTRACTION(val trips: List<Trip> = listOf()) : SynthesisCard()
-    data class SPEEDING(val trips: List<Trip> = listOf()) : SynthesisCard()
+sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesisCard {
+    data class SAFETY(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
+    data class ECODRIVING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
+    data class DISTRACTION(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
+    data class SPEEDING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
 
     override fun getTitle(context: Context): String {
         val identifier = when (this) {
@@ -52,11 +52,11 @@ sealed class SynthesisCard : DKSynthesisCard {
         }
     }
 
-    override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(context)
+    override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(context, trips)
 
-    override fun getMiddleSynthesisCardInfo(context: Context) = SynthesisCardInfo.DISTANCE(context)
+    override fun getMiddleSynthesisCardInfo(context: Context) = SynthesisCardInfo.DISTANCE(context, trips)
 
-    override fun getBottomSynthesisCardInfo(context: Context) = SynthesisCardInfo.DURATION(context)
+    override fun getBottomSynthesisCardInfo(context: Context) = SynthesisCardInfo.DURATION(context, trips)
 
     override fun getBottomText(context: Context): SpannableString? {
         return null // TODO WIP

@@ -6,18 +6,20 @@ import android.text.Spannable
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
 import com.drivequant.drivekit.ui.R
 
 interface DKSynthesisCardInfo {
+    val trips: List<TripWithRelations>
     fun getIcon(context: Context): Drawable?
     fun getText(context: Context): Spannable
 }
 
 sealed class SynthesisCardInfo : DKSynthesisCardInfo {
-    data class ACTIVE_DAYS(val context: Context) : SynthesisCardInfo()
-    data class DISTANCE(val context: Context) : SynthesisCardInfo()
-    data class DURATION(val context: Context) : SynthesisCardInfo()
-    data class TRIPS(val context: Context) : SynthesisCardInfo()
+    data class ACTIVE_DAYS(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
+    data class DISTANCE(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
+    data class DURATION(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
+    data class TRIPS(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
 
     override fun getIcon(context: Context): Drawable? {
         val identifier = when (this) {
@@ -49,7 +51,7 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 textIdentifier = "dk_common_trip_singular"
             }
             is TRIPS -> {
-                value = 12
+                value = trips.size
                 textIdentifier = "dk_common_trip_singular"
             }
         }
