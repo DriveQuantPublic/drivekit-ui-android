@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.synthesiscards.SynthesisCard
+import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
 import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_item.*
 
-class DKSynthesisCardFragment : Fragment() {
+class DKSynthesisCardFragment(val synthesisCard: DKSynthesisCard) : Fragment() {
 
     private lateinit var viewModel: DKSynthesisCardViewModel
 
@@ -27,13 +27,15 @@ class DKSynthesisCardFragment : Fragment() {
         return inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
     }
 
+    // TODO restore state
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(
                 this,
-                DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(SynthesisCard.SAFETY())
-            ) // TODO WIP
+                DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(synthesisCard)
+            )
                 .get(DKSynthesisCardViewModel::class.java)
         }
 
@@ -60,28 +62,28 @@ class DKSynthesisCardFragment : Fragment() {
 
         // GAUGE
         // TODO add title for gauge, change value with "progress"
-        score_gauge.configure(9.9, SynthesisCard.SAFETY().getGaugeConfiguration())
+        score_gauge.configure(9.9, synthesisCard.getGaugeConfiguration())
 
         // TOP CARDINFO
-        val icon = SynthesisCard.SAFETY().getTopSynthesisCardInfo(requireContext()).getIcon(requireContext())
-        val text = SynthesisCard.SAFETY().getTopSynthesisCardInfo(requireContext()).getText(requireContext())
+        val icon = synthesisCard.getTopSynthesisCardInfo(requireContext()).getIcon(requireContext())
+        val text = synthesisCard.getTopSynthesisCardInfo(requireContext()).getText(requireContext())
         if (icon != null && text.isNotEmpty()) {
             top_card_info.init(icon, text)
         }
 
         // MIDDLE CARDINFO
-        val middleIcon = SynthesisCard.SAFETY().getMiddleSynthesisCardInfo(requireContext())
+        val middleIcon = synthesisCard.getMiddleSynthesisCardInfo(requireContext())
             .getIcon(requireContext())
-        val middleText = SynthesisCard.SAFETY().getMiddleSynthesisCardInfo(requireContext())
+        val middleText = synthesisCard.getMiddleSynthesisCardInfo(requireContext())
             .getText(requireContext())
         if (middleIcon != null && middleText.isNotEmpty()) {
             middle_card_info.init(middleIcon, middleText)
         }
 
         // BOTTOM CARDINFO
-        val bottomIcon = SynthesisCard.SAFETY().getBottomSynthesisCardInfo(requireContext())
+        val bottomIcon = synthesisCard.getBottomSynthesisCardInfo(requireContext())
             .getIcon(requireContext())
-        val bottomText = SynthesisCard.SAFETY().getBottomSynthesisCardInfo(requireContext())
+        val bottomText = synthesisCard.getBottomSynthesisCardInfo(requireContext())
             .getText(requireContext())
         if (bottomIcon != null && bottomText.isNotEmpty()) {
             bottom_card_info.init(bottomIcon, bottomText)

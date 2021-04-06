@@ -7,8 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.graphics.drawable.DrawableCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_synthesis_card_infoview_item.view.*
 
@@ -17,7 +15,6 @@ class DKSynthesisCardInfoView(context: Context, attrs: AttributeSet) :
 
     fun init(icon: Drawable, text: Spannable) {
         val view = View.inflate(context, R.layout.dk_synthesis_card_infoview_item, null)
-        //DrawableCompat.setTint(icon, DriveKitUI.colors.secondaryColor())
         view.imageview.setImageDrawable(icon)
 
         view.textview.text = text

@@ -65,7 +65,7 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
         }
         val spannable = DKSpannable()
             .append("$value ", context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
+                color(DriveKitUI.colors.primaryColor())
                 typeface(Typeface.BOLD)
                 size(R.dimen.dk_text_big)
             })
