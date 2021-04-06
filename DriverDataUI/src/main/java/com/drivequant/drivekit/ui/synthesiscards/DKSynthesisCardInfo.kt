@@ -1,13 +1,21 @@
 package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.clickableSpan
 import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
+import com.drivequant.drivekit.databaseutils.entity.toTrips
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.computeTotalDistance
+import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 interface DKSynthesisCardInfo {
     val trips: List<TripWithRelations>
@@ -32,8 +40,6 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
     }
 
     override fun getText(context: Context): Spannable {
-        val textColor = DriveKitUI.colors.neutralColor()
-        val highlightColor = DriveKitUI.colors.primaryColor()
         val value: Int
         lateinit var textIdentifier: String
 
@@ -43,24 +49,28 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 textIdentifier = "dk_common_trip_singular"
             }
             is DISTANCE -> {
-                value = 12
+                val test = DKDataFormatter.formatMeterDistanceInKm(context, trips.toTrips().computeTotalDistance())
+                value = 11
                 textIdentifier = "dk_common_trip_singular"
             }
             is DURATION -> {
+                val test = DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
                 value = 12
                 textIdentifier = "dk_common_trip_singular"
             }
             is TRIPS -> {
                 value = trips.size
-                textIdentifier = "dk_common_trip_singular"
+                textIdentifier = context.resources.getQuantityString(R.plurals.trip_plural, value)
             }
         }
-        return DKResource.buildString(
-            context,
-            textColor,
-            highlightColor,
-            textIdentifier,
-            value.toString()
-        )
+        val spannable = DKSpannable()
+            .append("$value ", context.resSpans {
+                color(DriveKitUI.colors.secondaryColor())
+                typeface(Typeface.BOLD)
+                size(R.dimen.dk_text_big)
+            })
+            .appendSpace(DKResource.convertToString(context, textIdentifier))
+
+        return spannable.toSpannable()
     }
 }

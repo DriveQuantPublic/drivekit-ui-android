@@ -61,6 +61,12 @@
         <item name="textSize">20sp</item>
     </style>
 
+    <style name="GaugeSynthesisCard" >
+        <item name="strokeSize">16dp</item>
+        <item name="backColor">@color/dkGaugeBackColor</item>
+        <item name="textSize">24sp</item>
+    </style>
+
     <style name="GaugeTripList">
         <item name="android:layout_height">@dimen/dk_ic_big</item>
         <item name="android:layout_width">@dimen/dk_ic_big</item>
