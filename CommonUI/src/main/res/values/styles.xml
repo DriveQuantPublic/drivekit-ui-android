@@ -64,7 +64,16 @@
     <style name="GaugeSynthesisCard" >
         <item name="strokeSize">16dp</item>
         <item name="backColor">@color/dkGaugeBackColor</item>
-        <item name="textSize">24sp</item>
+        <item name="textSize">@dimen/dk_text_xxbig</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SynthesisCardInfo" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/dk_margin</item>
+        <item name="android:layout_marginStart">@dimen/dk_margin</item>
+        <item name="textSize">@dimen/dk_text_normal</item>
     </style>
 
     <style name="GaugeTripList">

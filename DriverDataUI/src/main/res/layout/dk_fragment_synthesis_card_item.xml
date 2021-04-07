@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/DKCard"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/dk_margin_half">
 
         <TextView
             android:id="@+id/title"
@@ -22,8 +24,8 @@
             android:id="@+id/explanation_content"
             android:layout_width="@dimen/dk_ic_small"
             android:layout_height="@dimen/dk_ic_small"
-            android:layout_marginStart="@dimen/dk_margin_quarter"
-            android:layout_marginEnd="@dimen/dk_margin_quarter"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintStart_toEndOf="@id/title"
@@ -32,32 +34,43 @@
         <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/score_gauge"
             style="@style/GaugeSynthesisCard"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="140dp"
+            android:layout_height="160dp"
             android:paddingTop="@dimen/dk_margin_medium"
             android:paddingBottom="@dimen/dk_margin_medium"
+            android:layout_marginHorizontal="@dimen/dk_margin"
+            android:layout_marginVertical="@dimen/dk_margin_half"
             app:layout_constraintStart_toStartOf="@id/container"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-            android:id="@+id/top_card_info"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toTopOf="@id/score_gauge"
+            app:layout_constraintBottom_toBottomOf="@id/score_gauge" >
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/top_card_info"
+                style="@style/SynthesisCardInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-            android:id="@+id/middle_card_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_card_info" />
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/middle_card_info"
+                style="@style/SynthesisCardInfo"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/top_card_info" />
 
-        <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-            android:id="@+id/bottom_card_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/middle_card_info" />
+            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                android:id="@+id/bottom_card_info"
+                style="@style/SynthesisCardInfo"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/middle_card_info" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
