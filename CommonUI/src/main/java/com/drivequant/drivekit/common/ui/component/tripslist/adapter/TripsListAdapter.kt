@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.tripslist.TripData
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -87,7 +88,8 @@ internal class TripsListAdapter(
         }
 
         trip?.let {
-            holder.bind(trip, isLastChild)
+            //TODO change it
+            holder.bind(trip, TripData.SAFETY, isLastChild)
         }
         return view
     }

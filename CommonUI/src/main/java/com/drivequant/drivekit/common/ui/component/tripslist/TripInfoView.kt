@@ -1,6 +1,5 @@
-package com.drivequant.drivekit.ui.commons.views
+package com.drivequant.drivekit.common.ui.component.tripslist
 
-import android.app.Activity
 import android.content.Context
 import androidx.core.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
@@ -8,47 +7,41 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
-import com.drivequant.drivekit.ui.trips.viewmodel.AdviceTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
+import com.drivequant.drivekit.common.ui.R
 import kotlinx.android.synthetic.main.trip_info_item.view.*
 
 class TripInfoView : LinearLayout {
 
-    constructor(context: Context, trip: Trip, tripInfo: DKTripInfo) : super(context) {
-        init(trip, tripInfo)
+    constructor(context: Context, trip: DKTripListItem, tripData: TripData) : super(context) {
+        init(trip, tripData)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    private fun init(trip: Trip, tripInfo: DKTripInfo) {
+    private fun init(trip: DKTripListItem, tripData: TripData) {
         val view = View.inflate(context, R.layout.trip_info_item, null)
 
-
         DrawableCompat.setTint(view.background, DriveKitUI.colors.secondaryColor())
-        tripInfo.getImageResource(trip)?.let {
+        trip.infoImageResource()?.let {
             view.image_view_trip_info.setImageResource(it)
         }
-        tripInfo.text(trip)?.let {
+        trip.infoText()?.let {
             view.text_view_trip_info.apply {
                 setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
                 visibility = View.VISIBLE
                 text = it
-                if (tripInfo !is AdviceTripInfo) {
+                /*if (trip !is AdviceTripInfo) {
                     this.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                }
+                }*/ //TODO check
             }
         } ?: run {
             view.text_view_trip_info.visibility = View.GONE
         }
         view.setOnClickListener {
-            if (tripInfo.hasActionConfigured(trip)) {
-                tripInfo.onClickAction(context, trip)
+            if (trip.hasInfoActionConfigured()) {
+                trip.infoClickAction(context)
             } else {
-                TripDetailActivity.launchActivity(context as Activity, trip.itinId)
+                //TripDetailActivity.launchActivity(context as Activity, trip.itinId)
             }
         }
         addView(

@@ -17,6 +17,7 @@ interface DKTripListItem : Serializable {
     fun getDuration(): Double?
     fun getDistance(): Double?
     fun getEndDate(): Date
+    fun getStartDate(): Date?
     fun getDepartureCity(): String
     fun getArrivalCity(): String
     fun isScored(tripData: TripData): Boolean

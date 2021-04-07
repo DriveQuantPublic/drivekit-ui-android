@@ -11,7 +11,6 @@ import android.os.Looper
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -116,18 +115,6 @@ internal class TripsListViewModel(
             }
         }
         filterData.postValue(filterItems)
-    }
-
-    fun getTripInfo() {
-        return when (tripListConfiguration){
-            is TripListConfiguration.MOTORIZED -> {
-                //DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
-                //TODO
-            }
-            is TripListConfiguration.ALTERNATIVE -> {
-
-            }
-        }
     }
 
     private fun getTransportationModeFilterItems(): List<FilterItem> {

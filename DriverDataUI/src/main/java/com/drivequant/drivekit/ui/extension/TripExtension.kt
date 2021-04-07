@@ -7,11 +7,9 @@ import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
 import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
-import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import java.util.*
 
 fun List<Trip>.computeTotalDistance(): Double {
@@ -25,19 +23,6 @@ fun List<Trip>.computeTotalDistance(): Double {
         }
     }
     return totalDistance
-}
-
-fun List<Trip>.computeTotalDuration(): Double {
-    val iterator = this.listIterator()
-    var totalDuration: Double = 0.toDouble()
-    for (currentTrip in iterator) {
-        currentTrip.tripStatistics?.duration.let {
-            if (it != null) {
-                totalDuration += it
-            }
-        }
-    }
-    return totalDuration
 }
 
 fun List<Trip>.computeCeilDuration(): Double {
@@ -119,12 +104,13 @@ fun Trip.computeRoadContext(): Int {
     }
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
-
+//TODO check if we can separate this implementation in a diffrent class
 fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
     override fun getDistance(): Double? = trip.tripStatistics?.distance
+    override fun getStartDate(): Date? = trip.startDate
     override fun getEndDate(): Date = trip.endDate
     override fun getDepartureCity(): String = trip.departureCity
     override fun getArrivalCity(): String = trip.arrivalCity
