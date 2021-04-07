@@ -4,6 +4,7 @@ import android.content.Context
 
 interface DKGaugeConfiguration {
     fun getTitle(context: Context): String
+    fun getScore(): Double
     fun getColor(value: Double): Int
     fun getMaxScore(): Double
     fun getIcon(): Int?

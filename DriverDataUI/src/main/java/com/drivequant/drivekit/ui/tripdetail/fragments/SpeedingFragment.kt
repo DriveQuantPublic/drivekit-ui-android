@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
@@ -72,8 +72,8 @@ internal class SpeedingFragment : Fragment() {
         }
 
         gauge_type_title.text = DKResource.convertToString(requireContext(), "dk_common_speed")
-        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING, Typeface.BOLD)
-        score_info.init(GaugeConfiguration.SPEEDING)
+        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.SPEEDING())
 
         val speedingDistance = viewModel.getSpeedingDistanceAndPercent(requireContext()).first
         val totalDistancePercent = viewModel.getSpeedingDistanceAndPercent(requireContext()).second

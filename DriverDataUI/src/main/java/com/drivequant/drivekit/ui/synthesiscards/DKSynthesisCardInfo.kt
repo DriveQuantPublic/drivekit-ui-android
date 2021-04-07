@@ -10,10 +10,10 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.utils.clickableSpan
 import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
 import com.drivequant.drivekit.databaseutils.entity.toTrips
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.computeActiveDays
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
@@ -45,32 +45,43 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
 
         when (this) {
             is ACTIVE_DAYS -> {
-                value = 12
-                textIdentifier = "dk_common_trip_singular"
+                val activeDays = trips.toTrips().computeActiveDays()
+                return DKSpannable().append(activeDays.toString(), context.resSpans {
+                    color(DriveKitUI.colors.primaryColor())
+                    typeface(Typeface.BOLD)
+                    size(R.dimen.dk_text_medium)
+                }).toSpannable()
             }
             is DISTANCE -> {
-                val test = DKDataFormatter.formatMeterDistanceInKm(context, trips.toTrips().computeTotalDistance())
-                value = 11
-                textIdentifier = "dk_common_trip_singular"
+                val distance = DKDataFormatter.formatMeterDistanceInKm(context, trips.toTrips().computeTotalDistance())
+                return DKSpannable().append(distance, context.resSpans {
+                    color(DriveKitUI.colors.primaryColor())
+                    typeface(Typeface.BOLD)
+                    size(R.dimen.dk_text_medium)
+                }).toSpannable()
             }
             is DURATION -> {
-                val test = DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
-                value = 12
-                textIdentifier = "dk_common_trip_singular"
+                val duration = DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
+                return DKSpannable().append(duration, context.resSpans {
+                    color(DriveKitUI.colors.primaryColor())
+                    typeface(Typeface.BOLD)
+                    size(R.dimen.dk_text_medium)
+                }).toSpannable()
             }
             is TRIPS -> {
                 value = trips.size
                 textIdentifier = context.resources.getQuantityString(R.plurals.trip_plural, value)
+
+                val spannable = DKSpannable()
+                    .append("$value ", context.resSpans {
+                        color(DriveKitUI.colors.primaryColor())
+                        typeface(Typeface.BOLD)
+                        size(R.dimen.dk_text_medium)
+                    })
+                    .appendSpace(DKResource.convertToString(context, textIdentifier))
+
+                return spannable.toSpannable()
             }
         }
-        val spannable = DKSpannable()
-            .append("$value ", context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
-                typeface(Typeface.BOLD)
-                size(R.dimen.dk_text_big)
-            })
-            .appendSpace(DKResource.convertToString(context, textIdentifier))
-
-        return spannable.toSpannable()
     }
 }

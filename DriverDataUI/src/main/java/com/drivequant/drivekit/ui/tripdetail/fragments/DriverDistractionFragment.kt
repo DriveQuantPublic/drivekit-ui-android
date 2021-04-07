@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
@@ -78,8 +78,8 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             onSelectorChanged(MapTraceType.UNLOCK_SCREEN)
         }
 
-        score_gauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION, Typeface.BOLD)
-        score_info.init(GaugeConfiguration.DISTRACTION)
+        score_gauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.DISTRACTION())
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 

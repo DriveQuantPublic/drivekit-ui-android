@@ -1,9 +1,38 @@
 package com.drivequant.drivekit.ui.extension
 
+import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.isSameDay
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import java.util.*
+
+fun List<Trip>.computeSafetyScoreAverage(): Double {
+    val scoredTrips = this.filter { !it.unscored }
+    val sumScore = scoredTrips.mapNotNull { it.safety?.safetyScore }.sum()
+    return sumScore/scoredTrips.size
+}
+
+fun List<Trip>.computeEcodrivingScoreAverage(): Double {
+    val scoredTrips = this.filter { !it.unscored }
+    val sumScore = scoredTrips.mapNotNull { it.ecoDriving?.score }.sum()
+    return sumScore/scoredTrips.size
+}
+
+fun List<Trip>.computeDistractionScoreAverage(): Double {
+    val scoredTrips = this.filter { !it.unscored }
+    val sumScore = scoredTrips.mapNotNull { it.driverDistraction?.score }.sum()
+    return sumScore/scoredTrips.size
+}
+
+fun List<Trip>.computeSpeedingScoreAverage(): Double {
+    val scoredTrips = this.filter { !it.unscored }
+    val sumScore = scoredTrips.mapNotNull { it.speedingStatistics?.score }.sum()
+    return sumScore/scoredTrips.size
+}
+
+fun List<Trip>.computeActiveDays(): Int =
+    this.distinctBy { it.endDate.formatDate(DKDatePattern.STANDARD_DATE) }.size
 
 fun List<Trip>.computeTotalDistance(): Double {
     val iterator = this.listIterator()

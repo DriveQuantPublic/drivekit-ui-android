@@ -1,22 +1,27 @@
 package com.drivequant.drivekit.ui.synthesiscards.fragment
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
 import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_item.*
 
-class DKSynthesisCardFragment(private val synthesisCard: DKSynthesisCard) : Fragment() {
+class DKSynthesisCardFragment(
+    private val synthesisCard: DKSynthesisCard
+) : Fragment() {
 
     private lateinit var viewModel: DKSynthesisCardViewModel
 
@@ -51,15 +56,27 @@ class DKSynthesisCardFragment(private val synthesisCard: DKSynthesisCard) : Frag
             }
 
             explanation_content.setOnClickListener {
-                // TODO AlertDialog
-                Toast.makeText(requireContext(), explanation, Toast.LENGTH_SHORT).show()
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(requireContext())
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton()
+                    .show()
+
+                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+                titleTextView?.text = DKResource.convertToString(requireContext(), "app_name")
+                descriptionTextView?.text = explanation
+
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
             }
         } ?: run {
             explanation_content.visibility = View.GONE
         }
 
         // GAUGE
-        score_gauge.configure(9.9, synthesisCard.getGaugeConfiguration())
+        score_gauge.configure(viewModel.getScore(), synthesisCard.getGaugeConfiguration(), Typeface.BOLD)
 
         // TOP CARDINFO
         val icon = synthesisCard.getTopSynthesisCardInfo(requireContext()).getIcon(requireContext())

@@ -3,7 +3,7 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
-import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
 
@@ -45,10 +45,10 @@ sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesi
 
     override fun getGaugeConfiguration(): DKGaugeConfiguration {
         return when (this) {
-            is SAFETY -> GaugeConfiguration.SAFETY
-            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING
-            is DISTRACTION -> GaugeConfiguration.DISTRACTION
-            is SPEEDING -> GaugeConfiguration.SPEEDING
+            is SAFETY -> GaugeConfiguration.SAFETY(trips)
+            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips)
+            is DISTRACTION -> GaugeConfiguration.DISTRACTION(trips)
+            is SPEEDING -> GaugeConfiguration.SPEEDING(trips)
         }
     }
 

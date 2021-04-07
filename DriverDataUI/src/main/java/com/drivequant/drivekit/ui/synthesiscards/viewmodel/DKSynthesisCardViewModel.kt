@@ -13,6 +13,8 @@ internal class DKSynthesisCardViewModel(
 
     fun getExplanationContent(context: Context) = synthesisCard.getExplanationContent(context)
 
+    fun getScore() = synthesisCard.getGaugeConfiguration().getScore()
+
     @Suppress("UNCHECKED_CAST")
     class DKSynthesisCardViewModelFactory(
         private val synthesisCard: DKSynthesisCard
