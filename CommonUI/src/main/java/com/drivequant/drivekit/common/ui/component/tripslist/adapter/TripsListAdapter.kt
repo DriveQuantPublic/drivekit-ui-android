@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist
+package com.drivequant.drivekit.common.ui.component.tripslist.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils

@@ -15,6 +15,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
+import com.drivequant.drivekit.common.ui.component.tripslist.TripData
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -22,17 +26,16 @@ import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
-import com.drivequant.drivekit.ui.trips.adapter.TripsListAdapter
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
+import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
 import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
-class TripsListFragment : Fragment() {
+class TripsListFragment : Fragment(), DKTripsList {
     private lateinit var viewModel: TripsListViewModel
-    private var adapter: TripsListAdapter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -48,20 +51,6 @@ class TripsListFragment : Fragment() {
 
         initFilter()
         updateTrips()
-        viewModel.tripsData.observe(this, Observer {
-            viewModel.getFilterItems(requireContext())
-            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
-            if (viewModel.filteredTrips.isEmpty()) {
-                displayNoTrips()
-                adapter?.notifyDataSetChanged()
-            } else {
-                displayTripsList()
-                adapter?.notifyDataSetChanged() ?: run {
-                    adapter = TripsListAdapter(view?.context, viewModel)
-                    trips_list.setAdapter(adapter)
-                }
-            }
-        })
 
         viewModel.syncTripsError.observe(this, Observer {
             it?.let {
@@ -142,12 +131,6 @@ class TripsListFragment : Fragment() {
             filter_view.spinner.setSelection(0)
             updateTrips()
         }
-        trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            adapter?.getChild(groupPosition, childPosition)?.let {
-                TripDetailActivity.launchActivity(requireActivity(), it.itinId, tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration), parentFragment = this)
-            }
-            false
-        }
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
@@ -156,7 +139,8 @@ class TripsListFragment : Fragment() {
     }
 
     private fun displayNoTrips() {
-        val view = if (adapter != null) {
+        //TODO check if list is empty
+        /*val view = if (adapter != null) {
             text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
@@ -175,12 +159,12 @@ class TripsListFragment : Fragment() {
                 DriverDataUI.noTripsRecordedDrawable
             )
         )
-        hideProgressCircular()
+        hideProgressCircular()*/
     }
 
     private fun displayTripsList() {
         no_trips.visibility = View.GONE
-        trips_list.visibility = View.VISIBLE
+        trips_list_container.visibility = View.VISIBLE
         hideProgressCircular()
     }
 
@@ -222,5 +206,41 @@ class TripsListFragment : Fragment() {
             updateTrips(SynchronizationType.CACHE)
             filter_view.spinner.setSelection(0, false)
         }
+    }
+
+    override fun onTripClickListener(itinId: String) {
+        TripDetailActivity.launchActivity(
+            requireActivity(),
+            itinId,
+            tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
+            parentFragment = this
+        )
+    }
+
+    override fun getTripData(): TripData = DriverDataUI.tripData
+
+    override fun getTripsList(): List<DKTripsByDate> {
+        viewModel.tripsData.observe(this, Observer {
+            viewModel.getFilterItems(requireContext())
+            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
+            if (viewModel.filteredTrips.isEmpty()) {
+                displayNoTrips()
+                //Call
+                //adapter?.notifyDataSetChanged()
+            } else {
+                displayTripsList()
+                /*adapter?.notifyDataSetChanged() ?: run {
+                    adapter =
+                        TripsListAdapter(
+                            view?.context,
+                            viewModel
+                        )
+                    trips_list.setAdapter(adapter)
+                }
+                 */
+            }
+        })
+        //TODO
+        return listOf()
     }
 }

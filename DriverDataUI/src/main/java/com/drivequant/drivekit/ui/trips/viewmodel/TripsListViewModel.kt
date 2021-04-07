@@ -11,6 +11,7 @@ import android.os.Looper
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -25,7 +26,6 @@ import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.*
-import java.util.*
 
 internal class TripsListViewModel(
     var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -99,18 +99,8 @@ internal class TripsListViewModel(
         tripsData.postValue(filteredTrips)
     }
 
-    private fun sortTrips(fetchedTrips: List<Trip>): List<TripsByDate> {
-        return fetchedTrips.orderByDay(DriverDataUI.dayTripDescendingOrder)
-    }
-
-    fun getTripsByDate(date: Date): TripsByDate? {
-        for (currentTripsByDate in filteredTrips) {
-            if (currentTripsByDate.date == date) {
-                return currentTripsByDate
-            }
-        }
-        return null
-    }
+    private fun sortTrips(fetchedTrips: List<Trip>): List<TripsByDate> =
+        fetchedTrips.orderByDay(DriverDataUI.dayTripDescendingOrder)
 
     fun getFilterItems(context: Context) {
         filterItems.clear()
@@ -128,10 +118,15 @@ internal class TripsListViewModel(
         filterData.postValue(filterItems)
     }
 
-    fun getTripInfo(): DKTripInfo? {
+    fun getTripInfo() {
         return when (tripListConfiguration){
-            is TripListConfiguration.MOTORIZED -> DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
-            is TripListConfiguration.ALTERNATIVE -> null
+            is TripListConfiguration.MOTORIZED -> {
+                //DriverDataUI.customTripInfo ?: run { AdviceTripInfo() }
+                //TODO
+            }
+            is TripListConfiguration.ALTERNATIVE -> {
+
+            }
         }
     }
 

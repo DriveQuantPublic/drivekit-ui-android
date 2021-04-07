@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.ui.trips.viewholder
+package com.drivequant.drivekit.common.ui.component.tripslist.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
