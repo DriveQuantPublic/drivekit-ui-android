@@ -15,10 +15,12 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
 import com.drivequant.drivekit.common.ui.component.tripslist.fragment.DKTripsListFragment
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -74,9 +76,16 @@ class TripsListFragment : Fragment() {
 
                     override fun getTripsList(): List<DKTripsByDate> {
                         return it.map { tripsByDate ->
-                            DKTripsByDate(tripsByDate.date, tripsByDate.trips.toDKTripsList())
+                            DKTripsByDate(
+                                tripsByDate.date,
+                                tripsByDate.trips.toDKTripsList()
+                            )
                         }
                     }
+
+                  override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
+
+                  override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
                 })
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.trips_list_container, tripListComponent)

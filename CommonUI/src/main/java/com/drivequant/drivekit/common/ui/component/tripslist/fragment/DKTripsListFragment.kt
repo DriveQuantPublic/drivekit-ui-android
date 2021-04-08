@@ -36,7 +36,7 @@ class DKTripsListFragment : Fragment() {
             adapter?.notifyDataSetChanged()
         } else {
             adapter?.notifyDataSetChanged() ?: run {
-                adapter = TripsListAdapter(context, DKTripsListViewModel(tripsList.getTripsList()))
+                adapter = TripsListAdapter(context, DKTripsListViewModel(tripsList))
                 dk_trips_list.setAdapter(adapter)
             }
         }

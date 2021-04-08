@@ -2,7 +2,9 @@ package com.drivequant.drivekit.common.ui.component.tripslist
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import java.io.Serializable
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
 import java.util.*
 
 
@@ -10,6 +12,8 @@ interface DKTripsList {
     fun onTripClickListener(itinId: String)
     fun getTripData(): TripData
     fun getTripsList(): List<DKTripsByDate>
+    fun getCustomHeader(): DKHeader?
+    fun getHeaderDay() : HeaderDay
 }
 
 interface DKTripListItem {

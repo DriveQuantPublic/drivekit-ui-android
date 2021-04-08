@@ -49,3 +49,16 @@ fun DKTripListItem.computeCeilDuration(): Double {
         return 0.0
     }
 }
+
+fun List<DKTripListItem>.computeTotalDistance(): Double {
+    val iterator = this.listIterator()
+    var totalDistance: Double = 0.toDouble()
+    for (currentTrip in iterator) {
+        currentTrip.getDistance().let {
+            if (it != null) {
+                totalDistance += it
+            }
+        }
+    }
+    return totalDistance
+}

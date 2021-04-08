@@ -56,9 +56,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         textViewArrivalCity.normalText(DriveKitUI.colors.mainFontColor())
         textViewDepartureTime.normalText(Color.parseColor("#9E9E9E"))
         textViewArrivalTime.normalText(Color.parseColor("#9E9E9E"))
-        //TODO check if we need trip data
+
         computeTripData(trip, tripData)
-        computeTripInfo(trip, tripData)
+        computeTripInfo(trip)
     }
 
     private fun computeTripData(trip: DKTripListItem, tripData: TripData) {
@@ -126,9 +126,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         textIndicator.visibility = View.VISIBLE
     }
 
-    private fun computeTripInfo(trip: DKTripListItem, tripData: TripData) {
+    private fun computeTripInfo(trip: DKTripListItem) {
         trip.isDisplayable()?.let {
-            tripInfoContainer.addView(TripInfoView(itemView.context, trip, tripData))
+            tripInfoContainer.addView(TripInfoView(itemView.context, trip))
             tripInfoContainer.visibility = View.VISIBLE
         } ?: run {
             tripInfoContainer.removeAllViews()

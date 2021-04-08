@@ -8,17 +8,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import kotlinx.android.synthetic.main.trip_info_item.view.*
 
 class TripInfoView : LinearLayout {
 
-    constructor(context: Context, trip: DKTripListItem, tripData: TripData) : super(context) {
-        init(trip, tripData)
+    constructor(context: Context, trip: DKTripListItem) : super(context) {
+        init(trip)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    private fun init(trip: DKTripListItem, tripData: TripData) {
+    private fun init(trip: DKTripListItem) {
         val view = View.inflate(context, R.layout.trip_info_item, null)
 
         DrawableCompat.setTint(view.background, DriveKitUI.colors.secondaryColor())
@@ -30,9 +31,10 @@ class TripInfoView : LinearLayout {
                 setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
                 visibility = View.VISIBLE
                 text = it
+                //TODO how do check if this is the default implementation
                 /*if (trip !is AdviceTripInfo) {
                     this.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                }*/ //TODO check
+                }*/
             }
         } ?: run {
             view.text_view_trip_info.visibility = View.GONE
@@ -41,7 +43,7 @@ class TripInfoView : LinearLayout {
             if (trip.hasInfoActionConfigured()) {
                 trip.infoClickAction(context)
             } else {
-                //TripDetailActivity.launchActivity(context as Activity, trip.itinId)
+                DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(context, trip.getItinId())
             }
         }
         addView(

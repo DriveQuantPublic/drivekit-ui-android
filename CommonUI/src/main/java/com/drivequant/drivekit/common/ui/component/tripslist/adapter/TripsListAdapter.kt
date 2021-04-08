@@ -11,8 +11,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
-import com.drivequant.drivekit.common.ui.component.tripslist.TripData
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -23,7 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 internal class TripsListAdapter(
     var context: Context?, val viewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
 
-    override fun getGroup(position: Int): DKTripsByDate = viewModel.tripsList[position]
+    override fun getGroup(position: Int): DKTripsByDate = viewModel.tripsList.getTripsList()[position]
 
     override fun getGroupView(position: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         lateinit var holder: HeaderDayViewHolder
@@ -43,16 +42,15 @@ internal class TripsListAdapter(
 
         holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
 
-        /*
-        val headerValue = DriverDataUI.customHeader?.let {
+
+        val headerValue = viewModel.getCustomHeader()?.let {
               it.customTripListHeader(holder.itemView.context, trips?.trips) ?: run {
                   it.tripListHeader().text(holder.itemView.context, trips?.trips)
               }
           }
           holder.tvInformations.text = headerValue ?: run {
-              DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)
+              viewModel.getHeaderDay().text(holder.itemView.context, trips?.trips)
           }
-        */
 
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
         holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
@@ -67,7 +65,7 @@ internal class TripsListAdapter(
 
     override fun getGroupId(position: Int): Long = position.toLong()
 
-    override fun getGroupCount(): Int = viewModel.tripsList.size
+    override fun getGroupCount(): Int = viewModel.tripsList.getTripsList().size
 
     override fun getChild(position: Int, expandedListPosition: Int): DKTripListItem? {
         val date = getGroup(position).date
@@ -91,8 +89,7 @@ internal class TripsListAdapter(
         }
 
         trip?.let {
-            //TODO change it
-            holder.bind(trip, TripData.SAFETY, isLastChild)
+            holder.bind(trip, viewModel.getTripData(), isLastChild)
         }
         return view
     }
