@@ -6,6 +6,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.access.AccessType
+import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
 import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
@@ -89,5 +91,15 @@ sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
             identifier,
             "${pair.second.toInt()}%"
         )
+    }
+
+    internal fun hasAccess(): Boolean {
+        val accessType = when (this){
+            is SAFETY -> AccessType.SAFETY
+            is ECODRIVING -> AccessType.ECODRIVING
+            is DISTRACTION -> AccessType.PHONE_DISTRACTION
+            is SPEEDING -> AccessType.SPEEDING
+        }
+        return DriveKitAccess.hasAccess(accessType)
     }
 }
