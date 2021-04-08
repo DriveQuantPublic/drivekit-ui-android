@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/view_pager"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dk_margin_half"/>
+    android:orientation="vertical">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:padding="@dimen/dk_margin_half"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDotsScore"
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        app:tabBackground="@drawable/dk_tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dk_margin_half"/>
+</LinearLayout>
