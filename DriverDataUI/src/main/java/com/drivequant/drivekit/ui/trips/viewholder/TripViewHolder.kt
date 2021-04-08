@@ -73,7 +73,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
             DisplayType.GAUGE -> {
                 if (tripData.isScored(trip)) {
                     showGaugeIndicator()
-                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
+                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType(trip))
                 } else {
                     showImageIndicator(trip)
                 }

@@ -72,8 +72,8 @@ internal class SpeedingFragment : Fragment() {
         }
 
         gauge_type_title.text = DKResource.convertToString(requireContext(), "dk_common_speed")
-        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.SPEEDING())
+        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()))
 
         val speedingDistance = viewModel.getSpeedingDistanceAndPercent(requireContext()).first
         val totalDistancePercent = viewModel.getSpeedingDistanceAndPercent(requireContext()).second

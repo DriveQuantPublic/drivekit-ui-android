@@ -24,10 +24,17 @@ interface DKSynthesisCardInfo {
 }
 
 sealed class SynthesisCardInfo : DKSynthesisCardInfo {
-    data class ACTIVE_DAYS(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
-    data class DISTANCE(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
-    data class DURATION(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
-    data class TRIPS(val context: Context, override val trips: List<TripWithRelations>) : SynthesisCardInfo()
+    data class ACTIVE_DAYS(val context: Context, override val trips: List<TripWithRelations>) :
+        SynthesisCardInfo()
+
+    data class DISTANCE(val context: Context, override val trips: List<TripWithRelations>) :
+        SynthesisCardInfo()
+
+    data class DURATION(val context: Context, override val trips: List<TripWithRelations>) :
+        SynthesisCardInfo()
+
+    data class TRIPS(val context: Context, override val trips: List<TripWithRelations>) :
+        SynthesisCardInfo()
 
     override fun getIcon(context: Context): Drawable? {
         val identifier = when (this) {
@@ -53,7 +60,10 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 }).toSpannable()
             }
             is DISTANCE -> {
-                val distance = DKDataFormatter.formatMeterDistanceInKm(context, trips.toTrips().computeTotalDistance())
+                val distance = DKDataFormatter.formatMeterDistanceInKm(
+                    context,
+                    trips.toTrips().computeTotalDistance()
+                )
                 return DKSpannable().append(distance, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)
@@ -61,7 +71,8 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 }).toSpannable()
             }
             is DURATION -> {
-                val duration = DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
+                val duration =
+                    DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
                 return DKSpannable().append(duration, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)

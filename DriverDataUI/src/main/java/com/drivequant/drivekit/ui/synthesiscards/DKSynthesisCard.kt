@@ -6,6 +6,11 @@ import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
+import com.drivequant.drivekit.databaseutils.entity.toTrips
+import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
+import com.drivequant.drivekit.ui.extension.computeEcodrivingScoreAverage
+import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
+import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
 
 interface DKSynthesisCard {
     fun getTitle(context: Context): String
@@ -17,11 +22,19 @@ interface DKSynthesisCard {
     fun getBottomText(context: Context): SpannableString?
 }
 
+// TODO check if Trip is sufficient
 sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesisCard {
-    data class SAFETY(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
-    data class ECODRIVING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
-    data class DISTRACTION(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
-    data class SPEEDING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) : SynthesisCard(trips)
+    data class SAFETY(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+        SynthesisCard(trips)
+
+    data class ECODRIVING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+        SynthesisCard(trips)
+
+    data class DISTRACTION(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+        SynthesisCard(trips)
+
+    data class SPEEDING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+        SynthesisCard(trips)
 
     override fun getTitle(context: Context): String {
         val identifier = when (this) {
@@ -44,19 +57,22 @@ sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesi
     }
 
     override fun getGaugeConfiguration(): DKGaugeConfiguration {
+        val trips = trips.toTrips()
         return when (this) {
-            is SAFETY -> GaugeConfiguration.SAFETY(trips)
-            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips)
-            is DISTRACTION -> GaugeConfiguration.DISTRACTION(trips)
-            is SPEEDING -> GaugeConfiguration.SPEEDING(trips)
+            is SAFETY -> GaugeConfiguration.SAFETY(trips.computeSafetyScoreAverage())
+            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips.computeEcodrivingScoreAverage())
+            is DISTRACTION -> GaugeConfiguration.DISTRACTION(trips.computeDistractionScoreAverage())
+            is SPEEDING -> GaugeConfiguration.SPEEDING(trips.computeSpeedingScoreAverage())
         }
     }
 
     override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(context, trips)
 
-    override fun getMiddleSynthesisCardInfo(context: Context) = SynthesisCardInfo.DISTANCE(context, trips)
+    override fun getMiddleSynthesisCardInfo(context: Context) =
+        SynthesisCardInfo.DISTANCE(context, trips)
 
-    override fun getBottomSynthesisCardInfo(context: Context) = SynthesisCardInfo.DURATION(context, trips)
+    override fun getBottomSynthesisCardInfo(context: Context) =
+        SynthesisCardInfo.DURATION(context, trips)
 
     override fun getBottomText(context: Context): SpannableString? {
         return null // TODO WIP

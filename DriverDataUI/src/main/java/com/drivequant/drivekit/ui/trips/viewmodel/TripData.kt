@@ -18,12 +18,12 @@ enum class TripData {
         DURATION, DISTANCE -> DisplayType.TEXT
     }
 
-    fun getGaugeType(): GaugeConfiguration = when (this) {
-        ECO_DRIVING -> GaugeConfiguration.ECO_DRIVING()
-        SAFETY -> GaugeConfiguration.SAFETY()
-        DISTRACTION -> GaugeConfiguration.DISTRACTION()
-        SPEEDING -> GaugeConfiguration.SPEEDING()
-        else -> GaugeConfiguration.SAFETY()
+    fun getGaugeType(trip: Trip): GaugeConfiguration = when (this) {
+        ECO_DRIVING -> GaugeConfiguration.ECO_DRIVING(rawValue(trip)!!)
+        SAFETY -> GaugeConfiguration.SAFETY(rawValue(trip)!!)
+        DISTRACTION -> GaugeConfiguration.DISTRACTION(rawValue(trip)!!)
+        SPEEDING -> GaugeConfiguration.SPEEDING(rawValue(trip)!!)
+        else -> GaugeConfiguration.SAFETY(rawValue(trip)!!)
     }
 
     fun rawValue(trip: Trip): Double? = when (this) {

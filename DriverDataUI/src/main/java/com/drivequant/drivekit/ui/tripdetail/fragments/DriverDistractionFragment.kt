@@ -78,8 +78,8 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             onSelectorChanged(MapTraceType.UNLOCK_SCREEN)
         }
 
-        score_gauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.DISTRACTION())
+        score_gauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()))
         gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
         gauge_type_title.normalText()
 

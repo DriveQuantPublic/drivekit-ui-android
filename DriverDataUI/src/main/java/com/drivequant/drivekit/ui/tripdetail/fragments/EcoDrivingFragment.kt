@@ -48,8 +48,8 @@ class EcoDrivingFragment : Fragment() {
         (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.ECO_DRIVING())
+        score_gauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.ECO_DRIVING(viewModel.getScore()))
 
         accelAdvice.text = context?.getString(viewModel.getAccelMessage())
         mainAdvice.text = context?.getString(viewModel.getMaintainMessage())

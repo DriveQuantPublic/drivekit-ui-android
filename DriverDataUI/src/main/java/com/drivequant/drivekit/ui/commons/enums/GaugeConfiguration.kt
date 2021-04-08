@@ -4,28 +4,17 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.common.ui.component.DKGaugeType
-import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
-import com.drivequant.drivekit.databaseutils.entity.toTrips
-import com.drivequant.drivekit.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 
-sealed class GaugeConfiguration(open val trips: List<TripWithRelations> = listOf()) : DKGaugeConfiguration {
-    data class SAFETY(override val trips: List<TripWithRelations> = listOf()) : GaugeConfiguration(trips)
-    data class ECO_DRIVING(override val trips: List<TripWithRelations> = listOf()) : GaugeConfiguration(trips)
-    data class DISTRACTION(override val trips: List<TripWithRelations> = listOf()) : GaugeConfiguration(trips)
-    data class SPEEDING(override val trips: List<TripWithRelations> = listOf()) : GaugeConfiguration(trips)
+sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
+    data class SAFETY(override val value: Double) : GaugeConfiguration(value)
+    data class ECO_DRIVING(override val value: Double) : GaugeConfiguration(value)
+    data class DISTRACTION(override val value: Double) : GaugeConfiguration(value)
+    data class SPEEDING(override val value: Double) : GaugeConfiguration(value)
 
-    override fun getTitle(context: Context): String {
-        return ""
-    }
+    override fun getTitle(context: Context) = value.removeZeroDecimal().toString()
 
-    override fun getScore(): Double {
-        return when (this) {
-            is SAFETY -> trips.toTrips().computeSafetyScoreAverage()
-            is ECO_DRIVING -> trips.toTrips().computeEcodrivingScoreAverage()
-            is DISTRACTION -> trips.toTrips().computeDistractionScoreAverage()
-            is SPEEDING -> trips.toTrips().computeSpeedingScoreAverage()
-        }
-    }
+    override fun getScore() = value
 
     override fun getMaxScore(): Double = 10.0
 
