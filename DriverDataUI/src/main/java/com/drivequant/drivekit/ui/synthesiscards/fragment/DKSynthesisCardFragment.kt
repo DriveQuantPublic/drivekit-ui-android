@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.synthesiscards.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,11 @@ class DKSynthesisCardFragment(
             )
                 .get(DKSynthesisCardViewModel::class.java)
         }
+        updateContent()
 
+    }
+
+    private fun updateContent(){
         // TITLE
         title.text = viewModel.getTitle(requireContext())
         title.headLine2(DriveKitUI.colors.complementaryFontColor())
@@ -76,7 +81,11 @@ class DKSynthesisCardFragment(
         }
 
         // GAUGE
-        score_gauge.configure(viewModel.getScore(), synthesisCard.getGaugeConfiguration(), Typeface.BOLD)
+        score_gauge.configure(
+            viewModel.getScore(),
+            synthesisCard.getGaugeConfiguration(),
+            Typeface.BOLD
+        )
 
         // TOP CARDINFO
         val icon = synthesisCard.getTopSynthesisCardInfo(requireContext()).getIcon(requireContext())
@@ -86,17 +95,32 @@ class DKSynthesisCardFragment(
         }
 
         // MIDDLE CARDINFO
-        val middleIcon = synthesisCard.getMiddleSynthesisCardInfo(requireContext()).getIcon(requireContext())
-        val middleText = synthesisCard.getMiddleSynthesisCardInfo(requireContext()).getText(requireContext())
+        val middleIcon = synthesisCard.getMiddleSynthesisCardInfo(requireContext()).getIcon(
+            requireContext()
+        )
+        val middleText = synthesisCard.getMiddleSynthesisCardInfo(requireContext()).getText(
+            requireContext()
+        )
         if (middleIcon != null && middleText.isNotEmpty()) {
             middle_card_info.init(middleIcon, middleText)
         }
 
         // BOTTOM CARDINFO
-        val bottomIcon = synthesisCard.getBottomSynthesisCardInfo(requireContext()).getIcon(requireContext())
-        val bottomText = synthesisCard.getBottomSynthesisCardInfo(requireContext()).getText(requireContext())
+        val bottomIcon = synthesisCard.getBottomSynthesisCardInfo(requireContext()).getIcon(
+            requireContext()
+        )
+        val bottomText = synthesisCard.getBottomSynthesisCardInfo(requireContext()).getText(
+            requireContext()
+        )
         if (bottomIcon != null && bottomText.isNotEmpty()) {
             bottom_card_info.init(bottomIcon, bottomText)
+        }
+
+        // BOTTOM TEXT
+        val bottomTextValue = viewModel.getBottomText(requireContext())
+        if (bottomTextValue != null) {
+            bottomTextValue.setSpan(AbsoluteSizeSpan(18, true), 0, bottomTextValue.length, 0)
+            bottom_text.text = bottomTextValue
         }
     }
 }

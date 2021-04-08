@@ -1,24 +1,12 @@
 package com.drivequant.drivekit.ui.synthesiscards
 
-import com.drivequant.drivekit.databaseutils.entity.TransportationMode
-import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
+import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
+import com.drivequant.drivekit.ui.commons.model.RoadConditionStats
 import java.util.*
 
-
 object SynthesisCardsUtils {
-
-    @JvmOverloads
-    fun getLastTrip(
-        transportationModes: List<TransportationMode> = listOf(
-            TransportationMode.UNKNOWN,
-            TransportationMode.CAR,
-            TransportationMode.MOTO,
-            TransportationMode.TRUCK
-        )
-    ): TripWithRelations? {
-        return DbTripAccess.findTripsOrderByDateDesc(transportationModes).executeTrips().firstOrNull()
-    }
 
     @JvmOverloads
     fun getLastWeekTrips(
@@ -28,15 +16,25 @@ object SynthesisCardsUtils {
             TransportationMode.MOTO,
             TransportationMode.TRUCK
         )
-    ): List<TripWithRelations> {
-        val trips = DbTripAccess.findTripsOrderByDateDesc(transportationModes).executeTrips()
+    ): List<Trip> {
+        val trips = DbTripAccess.findTripsOrderByDateDesc(transportationModes).executeTrips().toTrips()
         return if (trips.isNotEmpty()) {
             val cal = Calendar.getInstance()
-            cal.time = trips.first().trip.endDate
+            cal.time = trips.first().endDate
             cal.add(Calendar.HOUR, -24 * 7)
-            trips.filter { it.trip.endDate.after(cal.time)}
+            trips.filter { it.endDate.after(cal.time)}
         } else {
             listOf()
         }
+    }
+
+    fun getMainRoadCondition(trips: List<Trip>, type: RoadConditionType) : Pair<DKRoadCondition, Double> {
+        val roadConditionStats = RoadConditionStats(type, trips).compute()
+        return Pair(roadConditionStats.first, roadConditionStats.second)
+    }
+
+    enum class RoadConditionType {
+        SAFETY,
+        ECO_DRIVING
     }
 }

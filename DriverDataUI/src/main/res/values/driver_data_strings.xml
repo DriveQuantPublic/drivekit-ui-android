@@ -148,5 +148,10 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_my_weekly_score_ecodriving">Mon score hebdomadaire | Eco-conduite</string>
    <string name="dk_driverdata_my_weekly_score_distraction">Mon score hebdomadaire | Distraction</string>
    <string name="dk_driverdata_my_weekly_score_speeding">Mon score hebdomadaire | Vitesse</string>
-   <string name="dk_driverdata_synthesis_card_explanation">Cette carte affiche des indicateurs correspondant aux trajets réalisés sur 7 jours glissants depuis la date du dernier trajet : moyenne des scores, sommes des distances, des durées et du nombre de trajets.</string>
+   <string name="dk_driverdata_synthesis_info_safety">Cette carte affiche des indicateurs correspondant aux trajets réalisés sur 7 jours glissants depuis la date du dernier trajet : moyenne des scores, sommes des distances, des durées et du nombre de trajets.</string>
+
+   <string name="dk_driverdata_dense_urban">%s dans un trafic dense</string>
+   <string name="dk_driverdata_urban">%s en zone urbaine</string>
+   <string name="dk_driverdata_extra_urban">%s en zone extra-urbaine</string>
+   <string name="dk_driverdata_expressway">%s sur des voies rapides</string>
 </resources>

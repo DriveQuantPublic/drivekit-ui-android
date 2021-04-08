@@ -1,12 +1,13 @@
 package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
-import android.text.SpannableString
+import android.text.Spannable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
-import com.drivequant.drivekit.databaseutils.entity.toTrips
+import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
 import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
 import com.drivequant.drivekit.ui.extension.computeEcodrivingScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
@@ -19,21 +20,20 @@ interface DKSynthesisCard {
     fun getTopSynthesisCardInfo(context: Context): DKSynthesisCardInfo
     fun getMiddleSynthesisCardInfo(context: Context): DKSynthesisCardInfo
     fun getBottomSynthesisCardInfo(context: Context): DKSynthesisCardInfo
-    fun getBottomText(context: Context): SpannableString?
+    fun getBottomText(context: Context): Spannable?
 }
 
-// TODO check if Trip is sufficient
-sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesisCard {
-    data class SAFETY(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
+    data class SAFETY(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
         SynthesisCard(trips)
 
-    data class ECODRIVING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+    data class ECODRIVING(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
         SynthesisCard(trips)
 
-    data class DISTRACTION(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+    data class DISTRACTION(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
         SynthesisCard(trips)
 
-    data class SPEEDING(override val trips: List<TripWithRelations> = SynthesisCardsUtils.getLastWeekTrips()) :
+    data class SPEEDING(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
         SynthesisCard(trips)
 
     override fun getTitle(context: Context): String {
@@ -57,7 +57,6 @@ sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesi
     }
 
     override fun getGaugeConfiguration(): DKGaugeConfiguration {
-        val trips = trips.toTrips()
         return when (this) {
             is SAFETY -> GaugeConfiguration.SAFETY(trips.computeSafetyScoreAverage())
             is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips.computeEcodrivingScoreAverage())
@@ -66,15 +65,29 @@ sealed class SynthesisCard(open val trips: List<TripWithRelations>) : DKSynthesi
         }
     }
 
-    override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(context, trips)
+    override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(trips)
 
     override fun getMiddleSynthesisCardInfo(context: Context) =
-        SynthesisCardInfo.DISTANCE(context, trips)
+        SynthesisCardInfo.DISTANCE(trips)
 
     override fun getBottomSynthesisCardInfo(context: Context) =
-        SynthesisCardInfo.DURATION(context, trips)
+        SynthesisCardInfo.DURATION(trips)
 
-    override fun getBottomText(context: Context): SpannableString? {
-        return null // TODO WIP
+    override fun getBottomText(context: Context): Spannable? {
+        val pair = SynthesisCardsUtils.getMainRoadCondition(trips, SynthesisCardsUtils.RoadConditionType.SAFETY)
+        val identifier = when (pair.first) {
+            DKRoadCondition.TRAFFIC_JAM -> "" // should not happen
+            DKRoadCondition.HEAVY_URBAN_TRAFFIC -> "dk_driverdata_dense_urban"
+            DKRoadCondition.CITY -> "dk_driverdata_urban"
+            DKRoadCondition.SUBURBAN -> "dk_driverdata_extra_urban"
+            DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
+        }
+
+        return DKResource.buildString(context,
+            DriveKitUI.colors.complementaryFontColor(),
+            DriveKitUI.colors.primaryColor(),
+            identifier,
+            "${pair.second.toInt()}%"
+        )
     }
 }

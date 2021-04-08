@@ -10,35 +10,34 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.databaseutils.entity.TripWithRelations
-import com.drivequant.drivekit.databaseutils.entity.toTrips
+import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeActiveDays
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 interface DKSynthesisCardInfo {
-    val trips: List<TripWithRelations>
+    val trips: List<Trip>
     fun getIcon(context: Context): Drawable?
     fun getText(context: Context): Spannable
 }
 
 sealed class SynthesisCardInfo : DKSynthesisCardInfo {
-    data class ACTIVE_DAYS(val context: Context, override val trips: List<TripWithRelations>) :
+    data class ACTIVEDAYS(override val trips: List<Trip>) :
         SynthesisCardInfo()
 
-    data class DISTANCE(val context: Context, override val trips: List<TripWithRelations>) :
+    data class DISTANCE(override val trips: List<Trip>) :
         SynthesisCardInfo()
 
-    data class DURATION(val context: Context, override val trips: List<TripWithRelations>) :
+    data class DURATION(override val trips: List<Trip>) :
         SynthesisCardInfo()
 
-    data class TRIPS(val context: Context, override val trips: List<TripWithRelations>) :
+    data class TRIPS(override val trips: List<Trip>) :
         SynthesisCardInfo()
 
     override fun getIcon(context: Context): Drawable? {
         val identifier = when (this) {
-            is ACTIVE_DAYS -> R.drawable.dk_common_calendar
+            is ACTIVEDAYS -> R.drawable.dk_common_calendar
             is DISTANCE -> R.drawable.dk_common_road
             is DURATION -> R.drawable.dk_common_clock
             is TRIPS -> R.drawable.dk_common_trip
@@ -51,8 +50,8 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
         lateinit var textIdentifier: String
 
         when (this) {
-            is ACTIVE_DAYS -> {
-                val activeDays = trips.toTrips().computeActiveDays()
+            is ACTIVEDAYS -> {
+                val activeDays = trips.computeActiveDays()
                 return DKSpannable().append(activeDays.toString(), context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)
@@ -62,7 +61,7 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
             is DISTANCE -> {
                 val distance = DKDataFormatter.formatMeterDistanceInKm(
                     context,
-                    trips.toTrips().computeTotalDistance()
+                    trips.computeTotalDistance()
                 )
                 return DKSpannable().append(distance, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
@@ -72,7 +71,7 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
             }
             is DURATION -> {
                 val duration =
-                    DKDataFormatter.formatDuration(context, trips.toTrips().computeTotalDuration())
+                    DKDataFormatter.formatDuration(context, trips.computeTotalDuration())
                 return DKSpannable().append(duration, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)
