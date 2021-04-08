@@ -3,4 +3,4 @@
     android:id="@+id/view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dk_margin"/>
+    android:padding="@dimen/dk_margin_half"/>
