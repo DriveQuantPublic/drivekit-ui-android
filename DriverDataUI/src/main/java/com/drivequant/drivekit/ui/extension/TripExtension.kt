@@ -5,11 +5,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
-import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import java.util.*
 
 fun List<Trip>.computeTotalDistance(): Double {
@@ -25,29 +23,6 @@ fun List<Trip>.computeTotalDistance(): Double {
     return totalDistance
 }
 
-fun List<Trip>.computeCeilDuration(): Double {
-    val iterator = this.listIterator()
-    var totalDuration: Double = 0.toDouble()
-    for (currentTrip in iterator) {
-        totalDuration += currentTrip.computeCeilDuration().toInt()
-    }
-    return totalDuration
-}
-
-fun Trip.computeCeilDuration(): Double {
-    this.tripStatistics?.duration?.let {
-        var computedDuration = it
-        computedDuration = if (computedDuration % 60 > 0) {
-            (computedDuration / 60).toInt() * 60 + 60.toDouble()
-        } else {
-            ((computedDuration / 60).toInt() * 60).toDouble()
-        }
-        return computedDuration
-    } ?: run {
-        return 0.0
-    }
-}
-
 fun Trip.getOrComputeStartDate(): Date? {
     if (this.startDate != null) {
         return this.startDate
@@ -57,40 +32,6 @@ fun Trip.getOrComputeStartDate(): Date? {
         }
     }
     return null
-}
-
-fun List<Trip>.orderByDay(orderDesc: Boolean): MutableList<TripsByDate> {
-    val tripsSorted: MutableList<TripsByDate> = mutableListOf()
-    if (this.isNotEmpty()) {
-        var dayTrips: MutableList<Trip> = mutableListOf()
-        var currentDay: Date = this.first().endDate
-
-        if (this.size > 1) {
-            for (i in this.indices) {
-                if (this[i].endDate.isSameDay(currentDay)) {
-                    dayTrips.add(this[i])
-                } else {
-                    if (orderDesc) {
-                        dayTrips = dayTrips.asReversed()
-                    }
-                    val tripsByDate = TripsByDate(currentDay, dayTrips)
-                    tripsSorted.add(tripsByDate)
-
-                    currentDay = this[i].endDate
-                    dayTrips = mutableListOf()
-                    dayTrips.add(this[i])
-                }
-                if (i == this.size - 1) {
-                    tripsSorted.add(TripsByDate(currentDay, dayTrips))
-                }
-            }
-        } else {
-            dayTrips.add(this[0])
-            val tripsByDate = TripsByDate(currentDay, dayTrips)
-            tripsSorted.add(tripsByDate)
-        }
-    }
-    return tripsSorted
 }
 
 fun Trip.computeRoadContext(): Int {
@@ -104,7 +45,7 @@ fun Trip.computeRoadContext(): Int {
     }
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
-//TODO check if we can separate this implementation in a diffrent class
+//TODO check if we can separate this implementation in a different class
 fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
     override fun getItinId(): String = trip.itinId

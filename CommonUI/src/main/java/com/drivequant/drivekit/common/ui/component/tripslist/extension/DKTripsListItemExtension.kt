@@ -1,6 +1,8 @@
 package com.drivequant.drivekit.common.ui.component.tripslist.extension
 
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
+import com.drivequant.drivekit.common.ui.extension.isSameDay
 import java.util.*
 
 fun List<DKTripListItem>.computeTotalDuration(): Double {
@@ -61,4 +63,38 @@ fun List<DKTripListItem>.computeTotalDistance(): Double {
         }
     }
     return totalDistance
+}
+
+fun List<DKTripListItem>.orderByDay(orderDesc: Boolean): MutableList<DKTripsByDate> {
+    val tripsSorted: MutableList<DKTripsByDate> = mutableListOf()
+    if (this.isNotEmpty()) {
+        var dayTrips: MutableList<DKTripListItem> = mutableListOf()
+        var currentDay: Date = this.first().getEndDate()
+
+        if (this.size > 1) {
+            for (i in this.indices) {
+                if (this[i].getEndDate().isSameDay(currentDay)) {
+                    dayTrips.add(this[i])
+                } else {
+                    if (orderDesc) {
+                        dayTrips = dayTrips.asReversed()
+                    }
+                    val tripsByDate = DKTripsByDate(currentDay, dayTrips)
+                    tripsSorted.add(tripsByDate)
+
+                    currentDay = this[i].getEndDate()
+                    dayTrips = mutableListOf()
+                    dayTrips.add(this[i])
+                }
+                if (i == this.size - 1) {
+                    tripsSorted.add(DKTripsByDate(currentDay, dayTrips))
+                }
+            }
+        } else {
+            dayTrips.add(this[0])
+            val tripsByDate = DKTripsByDate(currentDay, dayTrips)
+            tripsSorted.add(tripsByDate)
+        }
+    }
+    return tripsSorted
 }

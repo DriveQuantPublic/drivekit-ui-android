@@ -22,7 +22,9 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 internal class TripsListAdapter(
     var context: Context?, val viewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
 
-    override fun getGroup(position: Int): DKTripsByDate = viewModel.tripsList.getTripsList()[position]
+    override fun getGroup(position: Int): DKTripsByDate  {
+        return viewModel.getDKTripsByDate()[position]
+    }
 
     override fun getGroupView(position: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         lateinit var holder: HeaderDayViewHolder
@@ -41,8 +43,6 @@ internal class TripsListAdapter(
         }
 
         holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
-
-
         val headerValue = viewModel.getCustomHeader()?.let {
               it.customTripListHeader(holder.itemView.context, trips?.trips) ?: run {
                   it.tripListHeader().text(holder.itemView.context, trips?.trips)
@@ -65,7 +65,7 @@ internal class TripsListAdapter(
 
     override fun getGroupId(position: Int): Long = position.toLong()
 
-    override fun getGroupCount(): Int = viewModel.tripsList.getTripsList().size
+    override fun getGroupCount(): Int = viewModel.getDKTripsByDate().size
 
     override fun getChild(position: Int, expandedListPosition: Int): DKTripListItem? {
         val date = getGroup(position).date

@@ -1,12 +1,16 @@
 package com.drivequant.drivekit.common.ui.component.tripslist.viewModel
 
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
+import com.drivequant.drivekit.common.ui.component.tripslist.extension.orderByDay
 import java.util.*
 
 class DKTripsListViewModel(val tripsList: DKTripsList) {
 
+    fun getDKTripsByDate() = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
+
     fun getTripsByDate(date: Date): DKTripsByDate? {
-        for (currentDKTripsByDate in tripsList.getTripsList()) {
+        val tripsByDate = getDKTripsByDate()
+        for (currentDKTripsByDate in tripsByDate) {
             if (currentDKTripsByDate.date == date) {
                 return currentDKTripsByDate
             }
