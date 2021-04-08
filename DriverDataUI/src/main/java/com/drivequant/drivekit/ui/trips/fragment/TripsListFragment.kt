@@ -8,33 +8,34 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
+import com.drivequant.drivekit.common.ui.component.tripslist.fragment.DKTripsListFragment
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.toDKTripsList
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
 import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
-class TripsListFragment : Fragment(), DKTripsList {
+
+class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -51,6 +52,37 @@ class TripsListFragment : Fragment(), DKTripsList {
 
         initFilter()
         updateTrips()
+
+        viewModel.tripsData.observe(this, Observer {
+            viewModel.getFilterItems(requireContext())
+            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
+            if (viewModel.filteredTrips.isEmpty()) {
+                displayNoTrips()
+            } else {
+                displayTripsList()
+              val tripListComponent = DKTripsListFragment.newInstance(object : DKTripsList {
+                    override fun onTripClickListener(itinId: String) {
+                        TripDetailActivity.launchActivity(
+                            requireActivity(),
+                            itinId,
+                            tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
+                            parentFragment = this@TripsListFragment
+                        )
+                    }
+
+                    override fun getTripData(): TripData = DriverDataUI.tripData
+
+                    override fun getTripsList(): List<DKTripsByDate> {
+                        return it.map { tripsByDate ->
+                            DKTripsByDate(tripsByDate.date, tripsByDate.trips.toDKTripsList())
+                        }
+                    }
+                })
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.trips_list_container, tripListComponent)
+                    .commit()
+            }
+        })
 
         viewModel.syncTripsError.observe(this, Observer {
             it?.let {
@@ -139,8 +171,7 @@ class TripsListFragment : Fragment(), DKTripsList {
     }
 
     private fun displayNoTrips() {
-        //TODO check if list is empty
-        /*val view = if (adapter != null) {
+        val view = if (false) {
             text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
@@ -148,7 +179,7 @@ class TripsListFragment : Fragment(), DKTripsList {
         }
         view.visibility = View.VISIBLE
         text_view_trips_synthesis.visibility = View.GONE
-        trips_list.emptyView = view
+        //dk_trips_list.emptyView = view
         no_trips_recorded_text.apply {
             text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
             headLine1()
@@ -159,7 +190,7 @@ class TripsListFragment : Fragment(), DKTripsList {
                 DriverDataUI.noTripsRecordedDrawable
             )
         )
-        hideProgressCircular()*/
+        hideProgressCircular()
     }
 
     private fun displayTripsList() {
@@ -182,8 +213,7 @@ class TripsListFragment : Fragment(), DKTripsList {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
         view.setBackgroundColor(Color.WHITE)
         return view
@@ -206,41 +236,5 @@ class TripsListFragment : Fragment(), DKTripsList {
             updateTrips(SynchronizationType.CACHE)
             filter_view.spinner.setSelection(0, false)
         }
-    }
-
-    override fun onTripClickListener(itinId: String) {
-        TripDetailActivity.launchActivity(
-            requireActivity(),
-            itinId,
-            tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
-            parentFragment = this
-        )
-    }
-
-    override fun getTripData(): TripData = DriverDataUI.tripData
-
-    override fun getTripsList(): List<DKTripsByDate> {
-        viewModel.tripsData.observe(this, Observer {
-            viewModel.getFilterItems(requireContext())
-            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
-            if (viewModel.filteredTrips.isEmpty()) {
-                displayNoTrips()
-                //Call
-                //adapter?.notifyDataSetChanged()
-            } else {
-                displayTripsList()
-                /*adapter?.notifyDataSetChanged() ?: run {
-                    adapter =
-                        TripsListAdapter(
-                            view?.context,
-                            viewModel
-                        )
-                    trips_list.setAdapter(adapter)
-                }
-                 */
-            }
-        })
-        //TODO
-        return listOf()
     }
 }

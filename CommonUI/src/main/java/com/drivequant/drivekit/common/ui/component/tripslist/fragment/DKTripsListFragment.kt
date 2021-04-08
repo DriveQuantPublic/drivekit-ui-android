@@ -7,31 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
+import com.drivequant.drivekit.common.ui.component.tripslist.adapter.TripsListAdapter
+import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
 import kotlinx.android.synthetic.main.dk_trips_list_fragment.*
 
 
 class DKTripsListFragment : Fragment() {
 
     lateinit var tripsList: DKTripsList
+    private var adapter: TripsListAdapter? = null
 
     companion object {
-        @JvmStatic
         fun newInstance(tripsList: DKTripsList): DKTripsListFragment {
             val fragment = DKTripsListFragment()
             fragment.tripsList = tripsList
             return fragment
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable("tripsList", tripsList)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("tripsList") as DKTripsList?)?.let {
-            tripsList = it
         }
     }
 
@@ -40,5 +30,21 @@ class DKTripsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_trips_list_fragment, container, false)
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (tripsList.getTripsList().isEmpty()) {
+            adapter?.notifyDataSetChanged()
+        } else {
+            adapter?.notifyDataSetChanged() ?: run {
+                adapter = TripsListAdapter(context, DKTripsListViewModel(tripsList.getTripsList()))
+                dk_trips_list.setAdapter(adapter)
+            }
+        }
+        dk_trips_list.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
+            adapter?.getChild(groupPosition, childPosition)?.let {
+              tripsList.onTripClickListener(it.getItinId())
+            }
+            false
+        }
+    }
 }

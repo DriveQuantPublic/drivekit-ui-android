@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
@@ -47,15 +49,16 @@ internal class TripsListAdapter(
                   it.tripListHeader().text(holder.itemView.context, trips?.trips)
               }
           }
-
           holder.tvInformations.text = headerValue ?: run {
               DriverDataUI.headerDay.text(holder.itemView.context, trips?.trips)
           }
-          holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
-          holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
-          holder.background.background = ContextCompat.getDrawable(context!!, R.drawable.dk_background_header_trip_list)
-          DrawableCompat.setTint(holder.background.background, DriveKitUI.colors.neutralColor())
         */
+
+        holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
+        holder.tvInformations.setTextColor(DriveKitUI.colors.mainFontColor())
+        holder.background.background = ContextCompat.getDrawable(context!!, R.drawable.dk_background_header_trip_list)
+        DrawableCompat.setTint(holder.background.background, DriveKitUI.colors.neutralColor())
+
         val expandableListView = parent as ExpandableListView
         expandableListView.expandGroup(position)
         FontUtils.overrideFonts(context, view)

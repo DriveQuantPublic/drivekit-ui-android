@@ -6,13 +6,13 @@ import java.io.Serializable
 import java.util.*
 
 
-interface DKTripsList : Serializable {
+interface DKTripsList {
     fun onTripClickListener(itinId: String)
     fun getTripData(): TripData
     fun getTripsList(): List<DKTripsByDate>
 }
 
-interface DKTripListItem : Serializable {
+interface DKTripListItem {
     fun getItinId(): String
     fun getDuration(): Double?
     fun getDistance(): Double?
@@ -23,6 +23,7 @@ interface DKTripListItem : Serializable {
     fun isScored(tripData: TripData): Boolean
     fun getScore(tripData: TripData): Double?
     fun getTransportationModeResourceId(context:Context): Drawable?
+    fun isAlternative(): Boolean
     fun infoText(): String?
     fun infoImageResource(): Int?
     fun infoClickAction(context: Context)

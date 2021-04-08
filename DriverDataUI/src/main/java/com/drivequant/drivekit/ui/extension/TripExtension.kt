@@ -135,6 +135,8 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun getTransportationModeResourceId(context: Context): Drawable? =
         trip.transportationMode.image(context)
 
+    override fun isAlternative(): Boolean = trip.transportationMode.isAlternative()
+
     override fun infoText(): String? {
         return if (trip.tripAdvices.size > 1) {
             trip.tripAdvices.size.toString()

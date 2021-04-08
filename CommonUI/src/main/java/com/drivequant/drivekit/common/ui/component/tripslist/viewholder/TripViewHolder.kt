@@ -62,8 +62,11 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     private fun computeTripData(trip: DKTripListItem, tripData: TripData) {
-        configureMotorizedTripData(trip, tripData)
-        configureAlternativeTripData(trip, tripData)
+        if (trip.isAlternative()) {
+            configureAlternativeTripData(trip)
+        } else {
+            configureMotorizedTripData(trip, tripData)
+        }
     }
 
     private fun configureMotorizedTripData(trip: DKTripListItem, tripData: TripData) {
@@ -73,7 +76,13 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                     showGaugeIndicator()
                     gaugeIndicator.configure(trip.getScore(tripData)!!, tripData.getGaugeType())
                 } else {
-                    showImageIndicator(trip, tripData)
+                    showImageIndicator()
+                    imageView.setImageDrawable(
+                        DKResource.convertToDrawable(
+                            imageView.context,
+                            "dk_no_score"
+                        )
+                    )
                 }
             }
             DisplayType.TEXT -> {
@@ -92,8 +101,11 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         }
     }
 
-    private fun configureAlternativeTripData(trip: DKTripListItem, tripData: TripData) {
-        showImageIndicator(trip, tripData)
+    private fun configureAlternativeTripData(trip: DKTripListItem) {
+        trip.getTransportationModeResourceId(itemView.context)?.let {
+             showImageIndicator()
+            imageView.setImageDrawable(it)
+        }
     }
 
     private fun showGaugeIndicator() {
@@ -102,23 +114,10 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         textIndicator.visibility = View.GONE
     }
 
-    private fun showImageIndicator(trip: DKTripListItem, tripData: TripData) {
+    private fun showImageIndicator() {
         gaugeIndicator.visibility = View.GONE
         imageView.visibility = View.VISIBLE
         textIndicator.visibility = View.GONE
-
-        trip.getTransportationModeResourceId(itemView.context)?.let {
-            imageView.setImageDrawable(it)
-        } ?: run {
-            if (trip.isScored(tripData)) {
-                imageView.setImageDrawable(
-                    DKResource.convertToDrawable(
-                        imageView.context,
-                        "dk_no_score"
-                    )
-                )
-            }
-        }
     }
 
     private fun showTextIndicator() {

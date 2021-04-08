@@ -4,4 +4,5 @@ import java.util.*
 
 data class DKTripsByDate(
     val date: Date,
-    val trips: List<DKTripListItem>)
+    val trips: List<DKTripListItem>
+)
