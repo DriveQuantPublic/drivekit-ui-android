@@ -25,6 +25,13 @@ interface DKSynthesisCard {
     fun getBottomText(context: Context): Spannable?
 }
 
+enum class LastTripsSynthesisCard {
+    SAFETY,
+    ECO_DRIVING,
+    DISTRACTION,
+    SPEEDING
+}
+
 sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
     data class SAFETY(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
         SynthesisCard(trips)
