@@ -27,6 +27,7 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_day">Excursión de un día</string>
    <string name="dk_driverdata_declared_transportation_mode">Modo declarado:</string>
    <string name="dk_driverdata_default_filter_item">Todos mis viajes</string>
+   <string name="dk_driverdata_dense_urban">%s en tráfico denso</string>
    <string name="dk_driverdata_detected_transportation_mode">Modo detectado :</string>
    <string name="dk_driverdata_distance_travelled">%s recorridos</string>
    <string name="dk_driverdata_distraction_score">Puntuación de distracción</string>
@@ -40,6 +41,8 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_end_unauthorized_call_info_content">La aplicación detectó el final de una llamada telefónica no autorizada...
 Esto significa que la llamada no se realizó con un kit de manos libres.
 Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe protegerse a sí mismo, a sus pasajeros y a los demás usuarios de la carretera. Si necesitas hacer una llamada, aparca tu vehículo en una plaza de aparcamiento con el motor apagado.</string>
+   <string name="dk_driverdata_expressway">%s en la autopista</string>
+   <string name="dk_driverdata_extra_urban">%s en zonas extraurbanas</string>
    <string name="dk_driverdata_failed_to_declare_transportation">El modo de transporte no pudo ser actualizado, por favor vuelva a intentarlo más tarde.</string>
    <string name="dk_driverdata_failed_to_delete_trip">El viaje no pudo ser borrado, intente de nuevo más tarde.</string>
    <string name="dk_driverdata_failed_to_sync_trips">No se sincronizaron los disparos, inténtelo de nuevo más tarde.</string>
@@ -51,6 +54,10 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_lock_event">Blocco dello schermo</string>
    <string name="dk_driverdata_low_accel">Aceleración demasiado débil</string>
    <string name="dk_driverdata_low_decel">Frenado demasiado débil</string>
+   <string name="dk_driverdata_my_weekly_score_distraction">Mi puntuación semanal | Distracción</string>
+   <string name="dk_driverdata_my_weekly_score_ecodriving">Mi puntuación semanal | Eficiencia</string>
+   <string name="dk_driverdata_my_weekly_score_safety">Mi puntuación semanal | Seguridad</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">Mi puntuación semanal | Velocidad</string>
    <string name="dk_driverdata_night">Excursión nocturna</string>
    <string name="dk_driverdata_no_call_congrats">¡Felicitación!</string>
    <string name="dk_driverdata_no_call_content">Sin llamadas</string>
@@ -81,8 +88,8 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_screen_unlock_text">La aplicación ha detectado una apertura de pantalla. Manejar su teléfono mientras conduce es muy peligroso. Recuerde siempre protegerse, así como a sus pasajeros y a los demás usuarios de la carretera. Si debe llamar o enviar un mensaje, su vehículo debe estar estacionado en un lugar de estacionamiento con el motor apagado.</string>
    <string name="dk_driverdata_speeding_event">Exceso de velocidad</string>
    <string name="dk_driverdata_speeding_event_info_content">La aplicación ha detectado que se ha superado el límite de velocidad en este tramo de carretera. La velocidad es el factor número uno en los accidentes de tráfico mortales. Por su seguridad y la de sus pasajeros, es esencial respetar los límites de velocidad.</string>
-   <string name="dk_driverdata_speeding_events_distance">Distancia relativa con velocidad superior al límite</string>
-   <string name="dk_driverdata_speeding_events_duration">Tiempo relativo con velocidad superior al límite</string>
+   <string name="dk_driverdata_speeding_events_distance">Distancia relativa al exceso de velocidad</string>
+   <string name="dk_driverdata_speeding_events_duration">Duración relativa de la sobrecarga</string>
    <string name="dk_driverdata_speeding_events_trip_description">es decir, %s de su viaje</string>
    <string name="dk_driverdata_speeding_score">Puntaje de velocidad</string>
    <string name="dk_driverdata_speeding_score_info">Esta puntuación refleja el respeto de los límites de velocidad. Evoluciona de acuerdo con la distancia recorrida por encima del límite legal. Cuanto mayor sea la distancia sobre el límite, menor será la puntuación.</string>
@@ -93,6 +100,10 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_synthesis_co2_mass">Masa de CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condición</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Consumo de combustible</string>
+   <string name="dk_driverdata_synthesis_info_distraction">La puntuación que aparece en la tarjeta es la media de los viajes realizados durante 7 días consecutivos desde la fecha del último viaje. Si la puntuación no aparece, significa que no hay suficientes datos para evaluar su conducción.</string>
+   <string name="dk_driverdata_synthesis_info_ecodriving">La puntuación que aparece en la tarjeta es la media de los viajes realizados durante 7 días consecutivos desde la fecha del último viaje. Si la puntuación no aparece, significa que no hay suficientes datos para evaluar su conducción.</string>
+   <string name="dk_driverdata_synthesis_info_safety">La puntuación que aparece en la tarjeta es la media de los viajes realizados durante 7 días consecutivos desde la fecha del último viaje. Si la puntuación no aparece, significa que no hay suficientes datos para evaluar su conducción.</string>
+   <string name="dk_driverdata_synthesis_info_speeding">La puntuación que aparece en la tarjeta es la media de los viajes realizados durante 7 días consecutivos desde la fecha del último viaje. Si la puntuación no aparece, significa que no hay suficientes datos para evaluar su conducción.</string>
    <string name="dk_driverdata_synthesis_mean_speed">Velocidad media</string>
    <string name="dk_driverdata_synthesis_road_context">Contexto de conducción</string>
    <string name="dk_driverdata_synthesis_stop_time">Duración del ralentí</string>
@@ -132,6 +143,7 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_unlock_events">Desbloqueo de la pantalla</string>
    <string name="dk_driverdata_unlock_number">Cantidad de desbloqueo</string>
    <string name="dk_driverdata_unlock_screen_content">visualización en %1$s y %2$s</string>
+   <string name="dk_driverdata_urban">%s en zonas urbanas</string>
    <string name="dk_driverdata_value">Valore =</string>
    <string name="dk_driverdata_vehicle_trips">Viajes en vehículos</string>
    <string name="dk_driverdata_weak_accel">Baja aceleración</string>
