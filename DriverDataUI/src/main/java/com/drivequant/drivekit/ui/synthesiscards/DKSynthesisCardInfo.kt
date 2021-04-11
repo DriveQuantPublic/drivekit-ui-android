@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeActiveDays
+import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
@@ -61,8 +62,9 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
             is DISTANCE -> {
                 val distance = DKDataFormatter.formatMeterDistanceInKm(
                     context,
-                    trips.computeTotalDistance()
+                    trips.computeCeilDuration()
                 )
+                // TODO
                 return DKSpannable().append(distance, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)
@@ -71,7 +73,8 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
             }
             is DURATION -> {
                 val duration =
-                    DKDataFormatter.formatDuration(context, trips.computeTotalDuration())
+                    DKDataFormatter.formatDuration(context, trips.computeCeilDuration())
+                // TODO
                 return DKSpannable().append(duration, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)

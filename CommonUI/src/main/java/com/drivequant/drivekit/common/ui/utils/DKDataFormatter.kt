@@ -7,6 +7,8 @@ import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.formatLeadingZero
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import java.math.BigDecimal
+import java.math.RoundingMode
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -55,6 +57,38 @@ object DKDataFormatter {
             }
         }
         return "-"
+    }
+
+    @JvmOverloads
+    fun getMeterDistanceInKmFormat(
+        context: Context,
+        double: Double?,
+        unit: Boolean = true
+    ): List<FormatType> {
+        return getKilometerDistanceFormat(context, double?.div(1000), unit)
+    }
+
+    @JvmOverloads
+    fun getKilometerDistanceFormat(
+        context: Context,
+        double: Double?,
+        unit: Boolean = true
+    ): List<FormatType> {
+        val formattingTypes = mutableListOf<FormatType>()
+        var formattedDistance: String
+        double?.let {
+            formattedDistance = if (double < 100) {
+                BigDecimal(it).setScale(1, RoundingMode.HALF_EVEN).toDouble().removeZeroDecimal()
+            } else {
+                double.roundToInt().toString()
+            }
+            formattingTypes.add(FormatType.VALUE(formattedDistance))
+            if (unit) {
+                formattingTypes.add(FormatType.SEPARATOR())
+                formattingTypes.add(FormatType.UNIT(context.resources.getString(R.string.dk_common_unit_kilometer)))
+            }
+        }
+        return formattingTypes
     }
 
     fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): String {
