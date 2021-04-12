@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
@@ -29,7 +30,11 @@ class DKSynthesisCardFragment(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
+    ): View {
+        val view =  inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
+        FontUtils.overrideFonts(context, view)
+        return view
+    }
 
     // TODO restore state
 
