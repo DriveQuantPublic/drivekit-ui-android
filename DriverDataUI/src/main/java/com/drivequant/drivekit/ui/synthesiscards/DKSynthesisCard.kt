@@ -14,8 +14,9 @@ import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
 import com.drivequant.drivekit.ui.extension.computeEcodrivingScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
+import java.io.Serializable
 
-interface DKSynthesisCard {
+interface DKSynthesisCard : Serializable {
     fun getTitle(context: Context): String
     fun getExplanationContent(context: Context): String?
     fun getGaugeConfiguration(): DKGaugeConfiguration
@@ -29,7 +30,16 @@ enum class LastTripsSynthesisCard {
     SAFETY,
     ECO_DRIVING,
     DISTRACTION,
-    SPEEDING
+    SPEEDING;
+
+    fun getDKSynthesisCard(trips: List<Trip>) : DKSynthesisCard {
+        return when (this){
+            SAFETY -> SynthesisCard.SAFETY(trips)
+            ECO_DRIVING -> SynthesisCard.ECODRIVING(trips)
+            DISTRACTION -> SynthesisCard.DISTRACTION(trips)
+            SPEEDING -> SynthesisCard.DISTRACTION(trips)
+        }
+    }
 }
 
 sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {

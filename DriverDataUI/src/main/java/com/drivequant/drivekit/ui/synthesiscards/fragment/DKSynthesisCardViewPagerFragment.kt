@@ -1,23 +1,32 @@
 package com.drivequant.drivekit.ui.synthesiscards.fragment
 
-import android.graphics.Color
-import android.graphics.drawable.*
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.adapter.DKSynthesisCardFragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_viewpager.*
 
-class DKSynthesisCardViewPagerFragment(
-    private val cards: List<DKSynthesisCardFragment>
-) : Fragment() {
+
+class DKSynthesisCardViewPagerFragment : Fragment() {
+
+    private var cards = listOf<DKSynthesisCardFragment>()
+
+    companion object {
+        fun newInstance(cards: List<DKSynthesisCardFragment>) : DKSynthesisCardViewPagerFragment{
+            val fragment = DKSynthesisCardViewPagerFragment()
+            fragment.cards = cards
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,33 +45,48 @@ class DKSynthesisCardViewPagerFragment(
 
         if (cards.size > 1) {
             val tabLayout: TabLayout = view.findViewById(R.id.tabDotsScore)
+            tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    val test = tabLayout.getTabAt(tab.position)
+                    if (test != null) {
+                        test.text = DKSpannable().append("·", requireContext().resSpans {
+                            color(DriveKitUI.colors.secondaryColor())
+                            size(R.dimen.dk_text_xxxbig)
+                            typeface(Typeface.BOLD)
+                        }).toSpannable()
+                    }
+                }
 
-            val background = ContextCompat.getDrawable(requireContext(), R.drawable.dk_tab_selector) as StateListDrawable
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    val test = tabLayout.getTabAt(tab.position)
+                    if (test != null) {
+                        test.text = DKSpannable().append("·", requireContext().resSpans {
+                            color(DriveKitUI.colors.mainFontColor())
+                            size(R.dimen.dk_text_xxbig)
+                            typeface(Typeface.NORMAL)
+                        }).toSpannable()
+                    }
+                }
 
-            val selectedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.dk_tab_indicator_selected)
-            val selectedColor = ColorUtils.setAlphaComponent(Color.GREEN, 122)
-            DrawableCompat.setTint(
-                selectedDrawable!!,
-                selectedColor
-            )
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
+            for (i in 0 until cards.size){
+                val test = tabLayout.getTabAt(i)
+                test?.let {
+                    test.text = DKSpannable().append("·", requireContext().resSpans {
+                        color(DriveKitUI.colors.mainFontColor())
+                        size(R.dimen.dk_text_xxxbig)
+                        typeface(Typeface.NORMAL)
 
-            val unselectedDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.dk_tab_indicator_default)
-            val unselectedColor = ColorUtils.setAlphaComponent(Color.RED, 122)
-            DrawableCompat.setTint(
-                unselectedDrawable!!,
-                unselectedColor
-            )
-
-            background.addState(
-                intArrayOf(
-                    android.R.attr.state_focused,
-                    android.R.attr.state_selected,
-                    android.R.attr.state_active
-                ), selectedDrawable
-            )
-            //background.addState(intArrayOf(), unselectedDrawable)
-            //tabLayout.background = background
+                    }).toSpannable()
+                }
+            }
+            tabLayout.getTabAt(0)?.customView?.let {
+                it.isSelected = true
+            }
             tabLayout.setupWithViewPager(view_pager, true)
+            tabLayout.getTabAt(0)?.select()
+
         }
     }
 }

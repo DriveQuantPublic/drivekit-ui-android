@@ -54,4 +54,7 @@
     <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
     <string name="vehicle_list_button">Vehicles list</string>
     <string name="vehicle_picker_button">Add a vehicle</string>
+
+    <!-- TODO TRANSLATE -->
+    <string name="driver_data_synthesis_cards_button">Launch Synthesis Cards</string>
 </resources>

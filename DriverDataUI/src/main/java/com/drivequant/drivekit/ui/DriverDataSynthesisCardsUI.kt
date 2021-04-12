@@ -8,11 +8,14 @@ import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardFragmen
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 
 object DriverDataSynthesisCardsUI {
+    internal var internalCards: List<DKSynthesisCard> = listOf()
+        private set
 
     fun getFragments(cards: List<DKSynthesisCard>, listener: SynthesisCardsFragmentsListener) {
+        internalCards = cards
         val fragments = mutableListOf<DKSynthesisCardFragment>()
-        cards.forEach {
-            fragments.add(DKSynthesisCardFragment(it))
+        for (i in cards.indices){
+            fragments.add(DKSynthesisCardFragment.newInstance(i))
         }
         listener.onFragmentsLoaded(fragments)
     }
@@ -29,7 +32,7 @@ object DriverDataSynthesisCardsUI {
         listener: SynthesisCardsViewListener
     ) {
         val lastTrips = SynthesisCardsUtils.getLastWeekTrips()
-        val fragments = synthesisCards.map {
+        val cards = synthesisCards.map {
             when (it) {
                 LastTripsSynthesisCard.SAFETY -> SynthesisCard.SAFETY(lastTrips)
                 LastTripsSynthesisCard.ECO_DRIVING -> SynthesisCard.ECODRIVING(lastTrips)
@@ -37,13 +40,13 @@ object DriverDataSynthesisCardsUI {
                 LastTripsSynthesisCard.SPEEDING -> SynthesisCard.SPEEDING(lastTrips)
             }
         }.filter { it.hasAccess() }
-        getSynthesisCardsView(fragments, listener)
+        getSynthesisCardsView(cards, listener)
     }
 
     fun getSynthesisCardsView(cards: List<DKSynthesisCard>, listener: SynthesisCardsViewListener) {
         getFragments(cards, object : SynthesisCardsFragmentsListener {
             override fun onFragmentsLoaded(fragments: List<DKSynthesisCardFragment>) {
-                val fragment = DKSynthesisCardViewPagerFragment(fragments)
+                val fragment = DKSynthesisCardViewPagerFragment.newInstance(fragments)
                 listener.onViewLoaded(fragment)
             }
         })

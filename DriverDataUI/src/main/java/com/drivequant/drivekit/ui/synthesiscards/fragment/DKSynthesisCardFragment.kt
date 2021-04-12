@@ -16,36 +16,52 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.ui.DriverDataSynthesisCardsUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
 import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_item.*
 
-class DKSynthesisCardFragment(
-    private val synthesisCard: DKSynthesisCard
-) : Fragment() {
+class DKSynthesisCardFragment : Fragment() {
 
+    private var position: Int = 0
+    private lateinit var synthesisCard: DKSynthesisCard
     private lateinit var viewModel: DKSynthesisCardViewModel
+
+    companion object {
+        fun newInstance(position: Int) : DKSynthesisCardFragment {
+            val fragment = DKSynthesisCardFragment()
+            fragment.position = position
+            fragment.synthesisCard = DriverDataSynthesisCardsUI.internalCards[position]
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view =  inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
+        val view = inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
         FontUtils.overrideFonts(context, view)
         return view
     }
 
-    // TODO restore state
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putSerializable("cardPosition", position)
+        super.onSaveInstanceState(outState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!this::viewModel.isInitialized) {
+            savedInstanceState?.getInt("position")?.let {
+                position = it
+            }
+            synthesisCard = DriverDataSynthesisCardsUI.internalCards[position]
             viewModel = ViewModelProviders.of(
                 this,
                 DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(synthesisCard)
-            )
-                .get(DKSynthesisCardViewModel::class.java)
+            ).get(DKSynthesisCardViewModel::class.java)
         }
         updateContent()
     }
