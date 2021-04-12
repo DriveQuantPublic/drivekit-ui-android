@@ -16,47 +16,82 @@ object DKDataFormatter {
 
     private const val NON_BREAKING_SPACE = "\u00A0"
 
-    fun formatDuration(context: Context, durationInSeconds: Double?) : String {
+    fun formatDuration(context: Context, durationInSeconds: Double?): List<FormatType> {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
 
+        val formattingTypes = mutableListOf<FormatType>()
         if (durationInSeconds != null) {
             if (durationInSeconds > 59) {
                 nbMinute = ceil(durationInSeconds.div(60)).toInt()
             } else {
-                return durationInSeconds.toInt().toString()
-                    .plus(NON_BREAKING_SPACE)
-                    .plus(context.getString(R.string.dk_common_unit_second))
+                formattingTypes.addAll(
+                    listOf(
+                        FormatType.VALUE(durationInSeconds.toInt().toString()),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_second))
+                    )
+                )
+                return formattingTypes
             }
-            return if (nbMinute > 59) {
+            if (nbMinute > 59) {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
 
                 if (nbHour > 23) {
                     nbDay = nbHour.div(24)
                     nbHour -= nbHour - (24 * nbDay)
-                    "$nbDay"
-                        .plus(context.getString(R.string.dk_common_unit_day))
-                        .plus(nbHour)
-                        .plus(context.getString(R.string.dk_common_unit_hour))
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbDay.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                            FormatType.VALUE(nbHour.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                        )
+                    )
+                    return formattingTypes
                 } else {
-                    "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbHour.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
+                            FormatType.VALUE(nbMinute.formatLeadingZero()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                        )
+                    )
+                    return formattingTypes
                 }
             } else {
-                val nbSecond = (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
-                return if (nbSecond > 0) {
+                val nbSecond =
+                    (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
+                if (nbSecond > 0) {
                     "${nbMinute - 1}"
                         .plus(context.getString(R.string.dk_common_unit_minute))
                         .plus(nbSecond)
+
+                    val nbMinutes = nbMinute - 1
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbMinutes.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                            FormatType.VALUE(nbSecond.toString())
+                        )
+                    )
                 } else {
-                    "$nbMinute"
-                        .plus(NON_BREAKING_SPACE)
-                        .plus(context.getString(R.string.dk_common_unit_minute))
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbMinute.toString()),
+                            FormatType.SEPARATOR(),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_minute))
+                        )
+                    )
                 }
+                return formattingTypes
             }
         }
-        return "-"
+        formattingTypes.add(FormatType.VALUE("-"))
+        return formattingTypes
     }
 
     @JvmOverloads

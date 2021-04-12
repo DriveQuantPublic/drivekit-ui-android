@@ -18,7 +18,7 @@ object DriverDataSynthesisCardsUI {
     }
 
     @JvmOverloads
-    fun getLastTripsSynthesisCardView(
+    fun getLastTripsSynthesisCardsView(
         synthesisCards: List<LastTripsSynthesisCard> =
             listOf(
                 LastTripsSynthesisCard.SAFETY,

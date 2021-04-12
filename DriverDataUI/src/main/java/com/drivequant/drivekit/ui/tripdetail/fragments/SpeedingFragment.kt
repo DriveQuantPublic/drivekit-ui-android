@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
@@ -90,7 +91,7 @@ internal class SpeedingFragment : Fragment() {
 
         val durationValue = DKDataFormatter.formatDuration(
             requireContext(),
-            DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600))
+            DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600)).convertToString()
 
         speeding_distance_value.apply {
             setSelectorContent(totalDistancePercent)

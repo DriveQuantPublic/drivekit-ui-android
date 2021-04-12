@@ -1,26 +1,19 @@
 package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.text.Spannable
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeActiveDays
 import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
-import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 interface DKSynthesisCardInfo {
     val trips: List<Trip>
     fun getIcon(context: Context): Drawable?
-    fun getText(context: Context): Spannable
+    fun getText(context: Context): List<FormatType>
 }
 
 sealed class SynthesisCardInfo : DKSynthesisCardInfo {
@@ -46,55 +39,42 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
         return ContextCompat.getDrawable(context, identifier)
     }
 
-    override fun getText(context: Context): Spannable {
+    override fun getText(context: Context): List<FormatType> {
         val value: Int
         lateinit var textIdentifier: String
 
+        var formattingTypes = listOf<FormatType>()
         when (this) {
             is ACTIVEDAYS -> {
                 val activeDays = trips.computeActiveDays()
-                return DKSpannable().append(activeDays.toString(), context.resSpans {
-                    color(DriveKitUI.colors.primaryColor())
-                    typeface(Typeface.BOLD)
-                    size(R.dimen.dk_text_medium)
-                }).toSpannable()
+                val daysUnitIdentifier = context.resources.getQuantityString(
+                    R.plurals.day_plural,
+                    activeDays
+                )
+                formattingTypes = listOf(
+                    FormatType.VALUE(activeDays.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(DKResource.convertToString(context, daysUnitIdentifier))
+                )
             }
             is DISTANCE -> {
-                val distance = DKDataFormatter.formatMeterDistanceInKm(
-                    context,
-                    trips.computeCeilDuration()
-                )
-                // TODO
-                return DKSpannable().append(distance, context.resSpans {
-                    color(DriveKitUI.colors.primaryColor())
-                    typeface(Typeface.BOLD)
-                    size(R.dimen.dk_text_medium)
-                }).toSpannable()
+                formattingTypes = DKDataFormatter.getMeterDistanceInKmFormat(context, trips.computeTotalDistance())
             }
             is DURATION -> {
-                val duration =
-                    DKDataFormatter.formatDuration(context, trips.computeCeilDuration())
-                // TODO
-                return DKSpannable().append(duration, context.resSpans {
-                    color(DriveKitUI.colors.primaryColor())
-                    typeface(Typeface.BOLD)
-                    size(R.dimen.dk_text_medium)
-                }).toSpannable()
+                formattingTypes = DKDataFormatter.formatDuration(context, trips.computeCeilDuration())
             }
             is TRIPS -> {
                 value = trips.size
                 textIdentifier = context.resources.getQuantityString(R.plurals.trip_plural, value)
 
-                val spannable = DKSpannable()
-                    .append("$value ", context.resSpans {
-                        color(DriveKitUI.colors.primaryColor())
-                        typeface(Typeface.BOLD)
-                        size(R.dimen.dk_text_medium)
-                    })
-                    .appendSpace(DKResource.convertToString(context, textIdentifier))
-
-                return spannable.toSpannable()
+                formattingTypes = listOf(
+                    FormatType.VALUE(value.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(DKResource.convertToString(context, textIdentifier))
+                )
             }
         }
+
+        return formattingTypes
     }
 }

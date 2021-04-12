@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
@@ -54,7 +55,7 @@ class UnscoredTripFragment : Fragment() {
             viewModel = it
         }
 
-        trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!)
+        trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
         trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")
             .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))

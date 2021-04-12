@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_synthesis_card_infoview_item.view.*
 
-class DKSynthesisCardInfoView(context: Context, attrs: AttributeSet) :
+internal class DKSynthesisCardInfoView(context: Context, attrs: AttributeSet) :
     LinearLayout(context, attrs) {
 
     fun init(icon: Drawable, text: Spannable) {
