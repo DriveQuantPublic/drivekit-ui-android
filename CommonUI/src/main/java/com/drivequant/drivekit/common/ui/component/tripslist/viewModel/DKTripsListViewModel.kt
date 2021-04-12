@@ -4,7 +4,7 @@ import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.orderByDay
 import java.util.*
 
-class DKTripsListViewModel(val tripsList: DKTripsList) {
+class DKTripsListViewModel(private val tripsList: DKTripsList) {
 
     fun getDKTripsByDate() = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
 

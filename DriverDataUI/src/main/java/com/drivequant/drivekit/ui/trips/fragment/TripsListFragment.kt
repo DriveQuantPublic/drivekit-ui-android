@@ -15,11 +15,11 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.tripslist.DKRefreshTrips
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.component.tripslist.fragment.DKTripsListFragment
+import com.drivequant.drivekit.common.ui.component.tripslist.fragment.DKTripsListView
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -38,8 +38,9 @@ import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 
-class TripsListFragment : Fragment() {
+class TripsListFragment : Fragment(), DKRefreshTrips {
     private lateinit var viewModel: TripsListViewModel
+    private lateinit var tripsListView : DKTripsListView
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -51,11 +52,11 @@ class TripsListFragment : Fragment() {
         viewModel.filterData.observe(this, Observer {
             configureFilter()
             updateProgressVisibility(false)
+            tripsListView.updateRefreshTripsVisibility(false)
         })
 
         initFilter()
         updateTrips()
-
         viewModel.tripsData.observe(this, Observer {
             viewModel.getFilterItems(requireContext())
             setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
@@ -63,25 +64,23 @@ class TripsListFragment : Fragment() {
                 displayNoTrips()
             } else {
                 displayTripsList()
-              val tripListComponent = DKTripsListFragment.newInstance(object : DKTripsList {
-                    override fun onTripClickListener(itinId: String) {
-                        TripDetailActivity.launchActivity(
-                            requireActivity(),
-                            itinId,
-                            tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
-                            parentFragment = this@TripsListFragment
-                        )
-                    }
-                    override fun getTripData(): TripData = DriverDataUI.tripData
-                    override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
-                    override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
-                    override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
-                    override fun getDayTripDescendingOrder(): Boolean = DriverDataUI.dayTripDescendingOrder
-                })
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.trips_list_container, tripListComponent)
-                    .commit()
             }
+            val tripsList = object : DKTripsList {
+                override fun onTripClickListener(itinId: String) {
+                    TripDetailActivity.launchActivity(
+                        requireActivity(),
+                        itinId,
+                        tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
+                        parentFragment = this@TripsListFragment
+                    )
+                }
+                override fun getTripData(): TripData = DriverDataUI.tripData
+                override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
+                override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
+                override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
+                override fun getDayTripDescendingOrder(): Boolean = DriverDataUI.dayTripDescendingOrder
+            }
+            tripsListView.configure(tripsList,this)
         })
 
         viewModel.syncTripsError.observe(this, Observer {
@@ -93,6 +92,7 @@ class TripsListFragment : Fragment() {
                 ).show()
             }
             updateProgressVisibility(false)
+            tripsListView.updateRefreshTripsVisibility(false)
         })
     }
 
@@ -159,10 +159,6 @@ class TripsListFragment : Fragment() {
             ), javaClass.simpleName
         )
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
-        refresh_trips.setOnRefreshListener {
-            filter_view.spinner.setSelection(0)
-            updateTrips()
-        }
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
@@ -171,7 +167,7 @@ class TripsListFragment : Fragment() {
     }
 
     private fun displayNoTrips() {
-        val view = if (false) {
+        val view = if (tripsListView.adapter != null) {
             text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
@@ -179,7 +175,7 @@ class TripsListFragment : Fragment() {
         }
         view.visibility = View.VISIBLE
         text_view_trips_synthesis.visibility = View.GONE
-        //dk_trips_list.emptyView = view
+        tripsListView.expandableListView.emptyView = view
         no_trips_recorded_text.apply {
             text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
             headLine1()
@@ -195,7 +191,7 @@ class TripsListFragment : Fragment() {
 
     private fun displayTripsList() {
         no_trips.visibility = View.GONE
-        trips_list_container.visibility = View.VISIBLE
+        dk_trips_list_view.visibility = View.VISIBLE
         hideProgressCircular()
     }
 
@@ -215,6 +211,7 @@ class TripsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
+        tripsListView = view.findViewById(R.id.dk_trips_list_view)
         view.setBackgroundColor(Color.WHITE)
         return view
     }
@@ -222,11 +219,8 @@ class TripsListFragment : Fragment() {
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
             progress_circular.visibility = View.VISIBLE
-            refresh_trips.isRefreshing = true
         } else {
             progress_circular.visibility = View.GONE
-            refresh_trips.visibility = View.VISIBLE
-            refresh_trips.isRefreshing = false
         }
     }
 
@@ -236,5 +230,10 @@ class TripsListFragment : Fragment() {
             updateTrips(SynchronizationType.CACHE)
             filter_view.spinner.setSelection(0, false)
         }
+    }
+
+    override fun onRefreshTrips() {
+        filter_view.spinner.setSelection(0)
+        updateTrips()
     }
 }

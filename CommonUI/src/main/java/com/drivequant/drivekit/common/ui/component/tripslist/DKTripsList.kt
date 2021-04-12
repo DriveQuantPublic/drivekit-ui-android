@@ -34,3 +34,7 @@ interface DKTripListItem {
     fun hasInfoActionConfigured(): Boolean
     fun isDisplayable(): Boolean?
 }
+
+interface DKRefreshTrips {
+    fun onRefreshTrips()
+}
