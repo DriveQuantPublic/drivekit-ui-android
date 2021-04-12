@@ -6,11 +6,16 @@ import java.util.*
 
 class DKTripsListViewModel(private val tripsList: DKTripsList) {
 
-    fun getDKTripsByDate() = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
+    var tripListItems = mutableListOf<DKTripsByDate>()
+
+    init {
+        tripListItems = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
+    }
+
+    fun getDKTripsByDate() = tripListItems
 
     fun getTripsByDate(date: Date): DKTripsByDate? {
-        val tripsByDate = getDKTripsByDate()
-        for (currentDKTripsByDate in tripsByDate) {
+        for (currentDKTripsByDate in tripListItems) {
             if (currentDKTripsByDate.date == date) {
                 return currentDKTripsByDate
             }
