@@ -14,6 +14,8 @@ interface DKTripsList {
     fun getCustomHeader(): DKHeader?
     fun getHeaderDay() : HeaderDay
     fun getDayTripDescendingOrder() : Boolean
+    fun canSwipeToRefresh(): Boolean
+    fun onSwipeToRefresh()
 }
 
 interface DKTripListItem {
@@ -33,8 +35,4 @@ interface DKTripListItem {
     fun infoClickAction(context: Context)
     fun hasInfoActionConfigured(): Boolean
     fun isDisplayable(): Boolean?
-}
-
-interface DKRefreshTrips {
-    fun onRefreshTrips()
 }

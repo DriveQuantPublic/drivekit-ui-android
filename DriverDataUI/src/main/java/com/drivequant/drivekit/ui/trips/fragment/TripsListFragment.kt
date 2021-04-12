@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.tripslist.DKRefreshTrips
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
@@ -38,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_trips_list.*
 import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 
-class TripsListFragment : Fragment(), DKRefreshTrips {
+class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
     private lateinit var tripsListView : DKTripsListView
 
@@ -52,7 +51,6 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
         viewModel.filterData.observe(this, Observer {
             configureFilter()
             updateProgressVisibility(false)
-            tripsListView.updateRefreshTripsVisibility(false)
         })
 
         initFilter()
@@ -79,8 +77,13 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
                 override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
                 override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
                 override fun getDayTripDescendingOrder(): Boolean = DriverDataUI.dayTripDescendingOrder
+                override fun canSwipeToRefresh(): Boolean = true
+                override fun onSwipeToRefresh() {
+                    filter_view.spinner.setSelection(0)
+                    updateTrips()
+                }
             }
-            tripsListView.configure(tripsList,this)
+            tripsListView.configure(tripsList)
         })
 
         viewModel.syncTripsError.observe(this, Observer {
@@ -92,7 +95,6 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
                 ).show()
             }
             updateProgressVisibility(false)
-            tripsListView.updateRefreshTripsVisibility(false)
         })
     }
 
@@ -167,7 +169,7 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
     }
 
     private fun displayNoTrips() {
-        val view = if (tripsListView.adapter != null) {
+        val view = if (tripsListView.isFilterPlacerHolder()) {
             text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
@@ -175,7 +177,7 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
         }
         view.visibility = View.VISIBLE
         text_view_trips_synthesis.visibility = View.GONE
-        tripsListView.expandableListView.emptyView = view
+        tripsListView.setTripsListEmptyView(view)
         no_trips_recorded_text.apply {
             text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
             headLine1()
@@ -222,6 +224,7 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
         } else {
             progress_circular.visibility = View.GONE
         }
+        tripsListView.updateRefreshTripsVisibility(displayProgress)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -230,10 +233,5 @@ class TripsListFragment : Fragment(), DKRefreshTrips {
             updateTrips(SynchronizationType.CACHE)
             filter_view.spinner.setSelection(0, false)
         }
-    }
-
-    override fun onRefreshTrips() {
-        filter_view.spinner.setSelection(0)
-        updateTrips()
     }
 }

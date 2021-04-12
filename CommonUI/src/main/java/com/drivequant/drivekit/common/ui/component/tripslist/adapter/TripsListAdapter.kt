@@ -19,7 +19,7 @@ import com.drivequant.drivekit.common.ui.component.tripslist.viewholder.HeaderDa
 import com.drivequant.drivekit.common.ui.component.tripslist.viewholder.TripViewHolder
 import com.drivequant.drivekit.common.ui.extension.formatDate
 
-class TripsListAdapter(
+internal class TripsListAdapter(
     var context: Context?, val viewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): DKTripsByDate  {
