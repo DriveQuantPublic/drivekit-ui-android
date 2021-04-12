@@ -102,7 +102,8 @@ class DKSynthesisCardFragment : Fragment() {
         score_gauge.configure(
             viewModel.getScore(),
             synthesisCard.getGaugeConfiguration(),
-            Typeface.BOLD
+            Typeface.BOLD,
+            synthesisCard.getGaugeConfiguration().getTitle(requireContext())
         )
 
         val icon = viewModel.getTopSynthesisCardIcon(requireContext())

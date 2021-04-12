@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.extension
 
+import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.extension.formatDateWithPattern
 import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
@@ -9,25 +10,41 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun List<Trip>.computeSafetyScoreAverage(): Double {
-    val scoredTrips = this.filter { !it.unscored }
-    val sumScore = scoredTrips.mapNotNull { it.safety?.safetyScore }.sum()
-    return sumScore / scoredTrips.size
+    val scoredTrips = this.filter { it.safety?.safetyScore != null }
+    return if (this.isEmpty() || scoredTrips.isEmpty()){
+        11.0
+    } else {
+        val sumScore = scoredTrips.mapNotNull { it.safety?.safetyScore }.sum()
+        sumScore / scoredTrips.size
+    }
 }
 
 fun List<Trip>.computeEcodrivingScoreAverage(): Double {
-    val scoredTrips = this.filter { !it.unscored }
-    val sumScore = scoredTrips.mapNotNull { it.ecoDriving?.score }.sum()
-    return sumScore / scoredTrips.size
+    val scoredTrips = this.filter { it.ecoDriving?.score != null }
+    return if (this.isEmpty() || scoredTrips.isEmpty()) {
+        11.0
+    } else {
+        val sumScore = scoredTrips.mapNotNull { it.ecoDriving?.score }.sum()
+        sumScore / scoredTrips.size
+    }
 }
 
 fun List<Trip>.computeDistractionScoreAverage(): Double {
-    val sumScore = this.mapNotNull { it.driverDistraction?.score }.sum()
-    return sumScore / this.size
+    return if (this.isEmpty()) {
+        11.0
+    } else {
+        val sumScore = this.mapNotNull { it.driverDistraction?.score }.sum()
+        sumScore / this.size
+    }
 }
 
 fun List<Trip>.computeSpeedingScoreAverage(): Double {
-    val sumScore = this.mapNotNull { it.speedingStatistics?.score }.sum()
-    return sumScore / this.size
+    return if (this.isEmpty()) {
+        11.0
+    } else {
+        val sumScore = this.mapNotNull { it.speedingStatistics?.score }.sum()
+        sumScore / this.size
+    }
 }
 
 fun List<Trip>.computeActiveDays(): Int {
@@ -72,13 +89,7 @@ fun List<Trip>.computeCeilDuration(): Double {
 
 fun Trip.computeCeilDuration(): Double {
     this.tripStatistics?.duration?.let {
-        var computedDuration = it
-        computedDuration = if (computedDuration % 60 > 0) {
-            (computedDuration / 60).toInt() * 60 + 60.toDouble()
-        } else {
-            ((computedDuration / 60).toInt() * 60).toDouble()
-        }
-        return computedDuration
+        return it.ceilDuration()
     } ?: run {
         return 0.0
     }

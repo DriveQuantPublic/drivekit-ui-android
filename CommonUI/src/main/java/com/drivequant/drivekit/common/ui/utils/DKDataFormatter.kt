@@ -52,24 +52,19 @@ object DKDataFormatter {
                     )
                     return formattingTypes
                 } else {
-                    formattingTypes.addAll(
-                        listOf(
-                            FormatType.VALUE(nbHour.toString()),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
-                            FormatType.VALUE(nbMinute.formatLeadingZero()),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
-                        )
-                    )
+                    formattingTypes.add(FormatType.VALUE(nbHour.toString()))
+                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)))
+
+                    if (nbMinute > 0) {
+                        FormatType.VALUE(nbMinute.formatLeadingZero())
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_minute))
+                    }
                     return formattingTypes
                 }
             } else {
                 val nbSecond =
                     (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
                 if (nbSecond > 0) {
-                    "${nbMinute - 1}"
-                        .plus(context.getString(R.string.dk_common_unit_minute))
-                        .plus(nbSecond)
-
                     val nbMinutes = nbMinute - 1
                     formattingTypes.addAll(
                         listOf(

@@ -28,7 +28,7 @@
             android:background="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/widget"/>
+            app:layout_constraintTop_toBottomOf="@id/dk_toolbar"/>
 
         <TextView
             android:id="@+id/driver_data_title"

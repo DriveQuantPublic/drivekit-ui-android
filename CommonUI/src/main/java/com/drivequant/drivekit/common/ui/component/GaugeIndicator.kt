@@ -61,7 +61,9 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
         textView.text = title
         textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
-        gaugeView.configureScore(value)
+        if (value != 11.0) {
+            gaugeView.configureScore(value)
+        }
         gaugeView.configureMaxScore(type.getMaxScore())
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(value)))
         imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getIcon()!!))

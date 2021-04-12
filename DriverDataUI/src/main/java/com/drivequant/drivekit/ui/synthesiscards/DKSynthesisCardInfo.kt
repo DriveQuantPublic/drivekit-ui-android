@@ -3,12 +3,14 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeActiveDays
 import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
+import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 interface DKSynthesisCardInfo {
     val trips: List<Trip>
@@ -61,7 +63,7 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 formattingTypes = DKDataFormatter.getMeterDistanceInKmFormat(context, trips.computeTotalDistance())
             }
             is DURATION -> {
-                formattingTypes = DKDataFormatter.formatDuration(context, trips.computeCeilDuration())
+                formattingTypes = DKDataFormatter.formatDuration(context, trips.computeTotalDuration().ceilDuration())
             }
             is TRIPS -> {
                 value = trips.size

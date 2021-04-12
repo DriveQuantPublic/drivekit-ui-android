@@ -12,9 +12,17 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     data class DISTRACTION(override val value: Double) : GaugeConfiguration(value)
     data class SPEEDING(override val value: Double) : GaugeConfiguration(value)
 
-    override fun getTitle(context: Context) = value.removeZeroDecimal().toString()
+    override fun getTitle(context: Context): String {
+        return if (value == 11.0) {
+            "-"
+        } else {
+            value.removeZeroDecimal()
+        }
+    }
 
-    override fun getScore() = value
+    override fun getScore(): Double {
+        return value
+    }
 
     override fun getMaxScore(): Double = 10.0
 

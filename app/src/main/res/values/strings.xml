@@ -56,5 +56,5 @@
     <string name="vehicle_picker_button">Add a vehicle</string>
 
     <!-- TODO TRANSLATE -->
-    <string name="driver_data_synthesis_cards_button">Launch Synthesis Cards</string>
+    <string name="driver_data_synthesis_cards_button" translatable="false">Launch Synthesis Cards</string>
 </resources>

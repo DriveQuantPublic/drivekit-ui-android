@@ -93,21 +93,25 @@ sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
         SynthesisCardInfo.DURATION(trips)
 
     override fun getBottomText(context: Context): Spannable? {
-        val pair = SynthesisCardsUtils.getMainRoadCondition(trips, SynthesisCardsUtils.RoadConditionType.SAFETY)
-        val identifier = when (pair.first) {
-            DKRoadCondition.TRAFFIC_JAM -> "" // should not happen
-            DKRoadCondition.HEAVY_URBAN_TRAFFIC -> "dk_driverdata_dense_urban"
-            DKRoadCondition.CITY -> "dk_driverdata_urban"
-            DKRoadCondition.SUBURBAN -> "dk_driverdata_extra_urban"
-            DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
-        }
+        return if (trips.isEmpty()){
+            null
+        } else {
+            val pair = SynthesisCardsUtils.getMainRoadCondition(trips, SynthesisCardsUtils.RoadConditionType.SAFETY)
+            val identifier = when (pair.first) {
+                DKRoadCondition.TRAFFIC_JAM -> "" // should not happen
+                DKRoadCondition.HEAVY_URBAN_TRAFFIC -> "dk_driverdata_dense_urban"
+                DKRoadCondition.CITY -> "dk_driverdata_urban"
+                DKRoadCondition.SUBURBAN -> "dk_driverdata_extra_urban"
+                DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
+            }
 
-        return DKResource.buildString(context,
-            DriveKitUI.colors.complementaryFontColor(),
-            DriveKitUI.colors.primaryColor(),
-            identifier,
-            "${pair.second.toInt()}%"
-        )
+            DKResource.buildString(context,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.primaryColor(),
+                identifier,
+                "${pair.second.toInt()}%"
+            )
+        }
     }
 
     internal fun hasAccess(): Boolean {
