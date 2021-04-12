@@ -4,18 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:padding="@dimen/dk_margin_half"/>
+        android:paddingStart="@dimen/dk_margin_half"
+        android:paddingEnd="@dimen/dk_margin_half" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabDotsScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:tabGravity="center"
-        app:tabIndicatorGravity="center"
-        app:tabIndicatorHeight="0dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dk_margin_half"/>
+        android:layout_marginBottom="@dimen/dk_margin_half"
+        app:tabIndicatorHeight="0dp"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingEnd="0dp"
+        app:tabPaddingStart="0dp"
+        app:tabPaddingTop="0dp" />
 </LinearLayout>
