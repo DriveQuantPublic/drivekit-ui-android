@@ -3,12 +3,10 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeActiveDays
-import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
@@ -42,9 +40,6 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
     }
 
     override fun getText(context: Context): List<FormatType> {
-        val value: Int
-        lateinit var textIdentifier: String
-
         var formattingTypes = listOf<FormatType>()
         when (this) {
             is ACTIVEDAYS -> {
@@ -61,15 +56,15 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
             }
             is DISTANCE -> {
                 val computedDistance = DKDataFormatter.ceilDistance(trips.computeTotalDistance(), 10000)
-                formattingTypes = DKDataFormatter.getMeterDistanceInKmFormat(context, computedDistance)
+                formattingTypes = DKDataFormatter.getMeterDistanceFormat(context, computedDistance)
             }
             is DURATION -> {
                 val computedDuration = DKDataFormatter.ceilDuration(trips.computeTotalDuration(), 600)
                 formattingTypes = DKDataFormatter.formatDuration(context, computedDuration)
             }
             is TRIPS -> {
-                value = trips.size
-                textIdentifier = context.resources.getQuantityString(R.plurals.trip_plural, value)
+                val value = trips.size
+                val textIdentifier = context.resources.getQuantityString(R.plurals.trip_plural, value)
 
                 formattingTypes = listOf(
                     FormatType.VALUE(value.toString()),

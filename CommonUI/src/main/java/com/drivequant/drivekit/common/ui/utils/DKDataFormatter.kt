@@ -92,25 +92,56 @@ object DKDataFormatter {
     @JvmOverloads
     fun getMeterDistanceInKmFormat(
         context: Context,
-        double: Double?,
+        value: Double?,
         unit: Boolean = true
     ): List<FormatType> {
-        return getKilometerDistanceFormat(context, double?.div(1000), unit)
+        return getKilometerDistanceFormat(context, value?.div(1000), unit)
+    }
+
+    @JvmOverloads
+    fun getMeterDistanceFormat(
+        context: Context,
+        value: Double?,
+        unit: Boolean = true): List<FormatType> {
+        lateinit var formattingTypes: List<FormatType>
+
+        value?.let {
+            when {
+                value < 10 -> {
+                    formattingTypes = listOf(
+                        FormatType.VALUE(value.removeZeroDecimal().format(2)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
+                }
+                value < 1000 -> {
+                    formattingTypes = listOf(
+                        FormatType.VALUE(value.format(0)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
+                }
+                else -> {
+                    formattingTypes = getMeterDistanceInKmFormat(context, value, unit)
+                }
+            }
+        }
+        return formattingTypes
     }
 
     @JvmOverloads
     fun getKilometerDistanceFormat(
         context: Context,
-        double: Double?,
+        value: Double?,
         unit: Boolean = true
     ): List<FormatType> {
         val formattingTypes = mutableListOf<FormatType>()
         var formattedDistance: String
-        double?.let {
-            formattedDistance = if (double < 100) {
+        value?.let {
+            formattedDistance = if (value < 100) {
                 BigDecimal(it).setScale(1, RoundingMode.HALF_EVEN).toDouble().removeZeroDecimal()
             } else {
-                double.roundToInt().toString()
+                value.roundToInt().toString()
             }
             formattingTypes.add(FormatType.VALUE(formattedDistance))
             if (unit) {
