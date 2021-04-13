@@ -60,7 +60,8 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 )
             }
             is DISTANCE -> {
-                formattingTypes = DKDataFormatter.getMeterDistanceInKmFormat(context, trips.computeTotalDistance())
+                val computedDistance = DKDataFormatter.ceilDistance(trips.computeTotalDistance(), 10000)
+                formattingTypes = DKDataFormatter.getMeterDistanceInKmFormat(context, computedDistance)
             }
             is DURATION -> {
                 formattingTypes = DKDataFormatter.formatDuration(context, trips.computeTotalDuration().ceilDuration())
