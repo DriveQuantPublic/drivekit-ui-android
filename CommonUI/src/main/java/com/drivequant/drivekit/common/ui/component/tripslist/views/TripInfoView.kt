@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import kotlinx.android.synthetic.main.trip_info_item.view.*
 
-class TripInfoView : LinearLayout {
+internal class TripInfoView : LinearLayout {
 
     constructor(context: Context, trip: DKTripListItem) : super(context) {
         init(trip)

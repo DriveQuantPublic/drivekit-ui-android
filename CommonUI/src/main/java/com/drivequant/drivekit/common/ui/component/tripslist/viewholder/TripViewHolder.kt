@@ -102,8 +102,8 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     private fun configureAlternativeTripData(trip: DKTripListItem) {
-        trip.getTransportationModeResourceId(itemView.context)?.let {
-             showImageIndicator()
+        trip.getTransportationModeResource(itemView.context)?.let {
+            showImageIndicator()
             imageView.setImageDrawable(it)
         }
     }
@@ -127,7 +127,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     private fun computeTripInfo(trip: DKTripListItem) {
-        trip.isDisplayable()?.let {
+        trip.isInfoDisplayable()?.let {
             if (it) {
                 tripInfoContainer.addView(
                     TripInfoView(
@@ -143,4 +143,3 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
         }
     }
 }
-

@@ -10,6 +10,19 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import java.util.*
 
+fun List<Trip>.computeTotalDuration(): Double {
+    val iterator = this.listIterator()
+    var totalDuration: Double = 0.toDouble()
+    for (currentTrip in iterator) {
+        currentTrip.tripStatistics?.duration.let {
+            if (it != null) {
+                totalDuration += it
+            }
+        }
+    }
+    return totalDuration
+}
+
 fun List<Trip>.computeTotalDistance(): Double {
     val iterator = this.listIterator()
     var totalDistance: Double = 0.toDouble()
@@ -73,7 +86,7 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
             TripData.DURATION -> trip.tripStatistics?.duration
         }
 
-    override fun getTransportationModeResourceId(context: Context): Drawable? =
+    override fun getTransportationModeResource(context: Context): Drawable? =
         trip.transportationMode.image(context)
 
     override fun isAlternative(): Boolean = trip.transportationMode.isAlternative()
@@ -109,7 +122,7 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
         )
     }
     override fun hasInfoActionConfigured(): Boolean = true
-    override fun isDisplayable(): Boolean? = !trip.tripAdvices.isNullOrEmpty()
+    override fun isInfoDisplayable(): Boolean? = !trip.tripAdvices.isNullOrEmpty()
 }
 
 fun List<Trip>.toDKTripsList(): List<DKTripListItem> {

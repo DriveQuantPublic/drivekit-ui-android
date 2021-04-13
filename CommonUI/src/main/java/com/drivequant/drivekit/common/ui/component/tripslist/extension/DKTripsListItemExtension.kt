@@ -5,19 +5,6 @@ import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsBy
 import com.drivequant.drivekit.common.ui.extension.isSameDay
 import java.util.*
 
-fun List<DKTripListItem>.computeTotalDuration(): Double {
-    val iterator = this.listIterator()
-    var totalDuration: Double = 0.toDouble()
-    for (currentTrip in iterator) {
-        currentTrip.getDuration().let {
-            if (it != null) {
-                totalDuration += it
-            }
-        }
-    }
-    return totalDuration
-}
-
 fun DKTripListItem.getOrComputeStartDate(): Date? {
     if (this.getStartDate() != null) {
         return this.getStartDate()

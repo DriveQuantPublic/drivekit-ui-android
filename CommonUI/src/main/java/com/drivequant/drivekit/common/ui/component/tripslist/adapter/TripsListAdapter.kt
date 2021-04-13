@@ -20,17 +20,15 @@ import com.drivequant.drivekit.common.ui.component.tripslist.viewholder.TripView
 import com.drivequant.drivekit.common.ui.extension.formatDate
 
 internal class TripsListAdapter(
-    var context: Context?, val viewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
+    var context: Context?, val tripsListViewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
 
-    override fun getGroup(position: Int): DKTripsByDate  {
-        return viewModel.sortedTrips[position]
-    }
+    override fun getGroup(position: Int): DKTripsByDate = tripsListViewModel.sortedTrips[position]
 
     override fun getGroupView(position: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         lateinit var holder: HeaderDayViewHolder
         lateinit var view: View
         val date = getGroup(position).date
-        val trips = viewModel.getTripsByDate(date)
+        val trips = tripsListViewModel.getTripsByDate(date)
 
         if (convertView == null) {
             val layoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -43,13 +41,13 @@ internal class TripsListAdapter(
         }
 
         holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
-        val headerValue = viewModel.getCustomHeader()?.let {
+        val headerValue = tripsListViewModel.getCustomHeader()?.let {
               it.customTripListHeader(holder.itemView.context, trips?.trips) ?: run {
                   it.tripListHeader().text(holder.itemView.context, trips?.trips)
               }
           }
           holder.tvInformations.text = headerValue ?: run {
-              viewModel.getHeaderDay().text(holder.itemView.context, trips?.trips)
+              tripsListViewModel.getHeaderDay().text(holder.itemView.context, trips?.trips)
           }
 
         holder.tvDate.setTextColor(DriveKitUI.colors.mainFontColor())
@@ -65,11 +63,11 @@ internal class TripsListAdapter(
 
     override fun getGroupId(position: Int): Long = position.toLong()
 
-    override fun getGroupCount(): Int = viewModel.sortedTrips.size
+    override fun getGroupCount(): Int = tripsListViewModel.sortedTrips.size
 
     override fun getChild(position: Int, expandedListPosition: Int): DKTripListItem? {
         val date = getGroup(position).date
-        val tripsByDate = viewModel.getTripsByDate(date)
+        val tripsByDate = tripsListViewModel.getTripsByDate(date)
         return tripsByDate?.trips?.get(tripsByDate.trips.indices.last - expandedListPosition)
     }
 
@@ -89,7 +87,7 @@ internal class TripsListAdapter(
         }
 
         trip?.let {
-            holder.bind(trip, viewModel.getTripData(), isLastChild)
+            holder.bind(trip, tripsListViewModel.getTripData(), isLastChild)
         }
         return view
     }
@@ -99,7 +97,7 @@ internal class TripsListAdapter(
 
     override fun getChildrenCount(position: Int): Int {
         val date = getGroup(position).date
-        val trips = viewModel.getTripsByDate(date)?.trips
+        val trips = tripsListViewModel.getTripsByDate(date)?.trips
         return if (trips.isNullOrEmpty()){
             0
         } else {
