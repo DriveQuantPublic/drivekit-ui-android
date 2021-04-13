@@ -4,21 +4,22 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
+import java.io.Serializable
 import java.util.*
 
 
-interface DKTripsList {
+interface DKTripsList : Serializable {
     fun onTripClickListener(itinId: String)
     fun getTripData(): TripData
     fun getTripsList(): List<DKTripListItem>
     fun getCustomHeader(): DKHeader?
-    fun getHeaderDay() : HeaderDay
-    fun getDayTripDescendingOrder() : Boolean
+    fun getHeaderDay(): HeaderDay
+    fun getDayTripDescendingOrder(): Boolean
     fun canSwipeToRefresh(): Boolean
     fun onSwipeToRefresh()
 }
 
-interface DKTripListItem {
+interface DKTripListItem : Serializable {
     fun getItinId(): String
     fun getDuration(): Double?
     fun getDistance(): Double?
@@ -28,7 +29,7 @@ interface DKTripListItem {
     fun getArrivalCity(): String
     fun isScored(tripData: TripData): Boolean
     fun getScore(tripData: TripData): Double?
-    fun getTransportationModeResourceId(context:Context): Drawable?
+    fun getTransportationModeResourceId(context: Context): Drawable?
     fun isAlternative(): Boolean
     fun infoText(): String?
     fun infoImageResource(): Int?

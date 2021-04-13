@@ -18,6 +18,7 @@ class DKTripsListView : FrameLayout {
     private var adapter: TripsListAdapter? = null
     private lateinit var view: View
     private lateinit var expandableListView: ExpandableListView
+    private lateinit var viewModel: DKTripsListViewModel
 
     constructor(context: Context) : super(context) {
         init()
@@ -38,6 +39,7 @@ class DKTripsListView : FrameLayout {
     private fun init() {
         view = View.inflate(context, R.layout.dk_trips_list_fragment, null)
         expandableListView = view.findViewById(R.id.dk_trips_list)
+        viewModel = DKTripsListViewModel()
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -54,12 +56,15 @@ class DKTripsListView : FrameLayout {
         } else {
             view.dk_refresh_trips.isEnabled = false
         }
-
         if (tripsList.getTripsList().isEmpty()) {
             adapter?.notifyDataSetChanged()
         } else {
+            viewModel.apply {
+                setDKTripsList(tripsList)
+                sortTrips()
+            }
             adapter?.notifyDataSetChanged() ?: run {
-                adapter = TripsListAdapter(context, DKTripsListViewModel(tripsList))
+                adapter = TripsListAdapter(context, viewModel)
                 expandableListView.setAdapter(adapter)
             }
         }

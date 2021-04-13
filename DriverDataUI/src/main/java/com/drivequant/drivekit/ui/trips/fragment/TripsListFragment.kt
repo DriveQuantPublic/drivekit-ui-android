@@ -40,14 +40,18 @@ import kotlinx.android.synthetic.main.view_content_no_trips.*
 class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
     private lateinit var tripsListView : DKTripsListView
+    private lateinit var tripsList: DKTripsList
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
-        viewModel = ViewModelProviders.of(this,
-            TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED()))
-            .get(TripsListViewModel::class.java)
-
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(
+                this,
+                TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED())
+            )
+                .get(TripsListViewModel::class.java)
+        }
         viewModel.filterData.observe(this, Observer {
             configureFilter()
             updateProgressVisibility(false)
@@ -63,24 +67,29 @@ class TripsListFragment : Fragment() {
             } else {
                 displayTripsList()
             }
-            val tripsList = object : DKTripsList {
-                override fun onTripClickListener(itinId: String) {
-                    TripDetailActivity.launchActivity(
-                        requireActivity(),
-                        itinId,
-                        tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
-                        parentFragment = this@TripsListFragment
-                    )
-                }
-                override fun getTripData(): TripData = DriverDataUI.tripData
-                override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
-                override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
-                override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
-                override fun getDayTripDescendingOrder(): Boolean = DriverDataUI.dayTripDescendingOrder
-                override fun canSwipeToRefresh(): Boolean = true
-                override fun onSwipeToRefresh() {
-                    filter_view.spinner.setSelection(0)
-                    updateTrips()
+            if (!this::tripsList.isInitialized) {
+               tripsList = object : DKTripsList {
+                    override fun onTripClickListener(itinId: String) {
+                        TripDetailActivity.launchActivity(
+                            requireActivity(),
+                            itinId,
+                            tripListConfigurationType = TripListConfigurationType.getType(viewModel.tripListConfiguration),
+                            parentFragment = this@TripsListFragment
+                        )
+                    }
+
+                    override fun getTripData(): TripData = DriverDataUI.tripData
+                    override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
+                    override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
+                    override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
+                    override fun getDayTripDescendingOrder(): Boolean =
+                        DriverDataUI.dayTripDescendingOrder
+
+                    override fun canSwipeToRefresh(): Boolean = true
+                    override fun onSwipeToRefresh() {
+                        filter_view.spinner.setSelection(0)
+                        updateTrips()
+                    }
                 }
             }
             tripsListView.configure(tripsList)

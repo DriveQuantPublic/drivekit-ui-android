@@ -4,16 +4,21 @@ import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.orderByDay
 import java.util.*
 
-class DKTripsListViewModel(private val tripsList: DKTripsList) {
+class DKTripsListViewModel {
 
-    var tripListItems = mutableListOf<DKTripsByDate>()
+    private lateinit var tripsList: DKTripsList
+    var sortedTrips = mutableListOf<DKTripsByDate>()
 
-    init {
-        tripListItems = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
+    fun setDKTripsList(tripsList: DKTripsList) {
+        this.tripsList = tripsList
+    }
+
+    fun sortTrips() {
+        sortedTrips = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
     }
 
     fun getTripsByDate(date: Date): DKTripsByDate? {
-        for (currentDKTripsByDate in tripListItems) {
+        for (currentDKTripsByDate in sortedTrips) {
             if (currentDKTripsByDate.date == date) {
                 return currentDKTripsByDate
             }
@@ -21,7 +26,7 @@ class DKTripsListViewModel(private val tripsList: DKTripsList) {
         return null
     }
 
-    fun getTripData() = tripsList.getTripData()
+    fun getTripData() =  tripsList.getTripData()
 
     fun getCustomHeader() = tripsList.getCustomHeader()
 
