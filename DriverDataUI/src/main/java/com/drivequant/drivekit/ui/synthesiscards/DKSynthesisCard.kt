@@ -32,28 +32,37 @@ enum class LastTripsSynthesisCard {
     DISTRACTION,
     SPEEDING;
 
-    fun getDKSynthesisCard(trips: List<Trip>) : DKSynthesisCard {
+    @JvmOverloads
+    fun getDKSynthesisCard(trips: List<Trip>, showBottomText: Boolean  = true) : DKSynthesisCard {
         return when (this){
-            SAFETY -> SynthesisCard.SAFETY(trips)
-            ECO_DRIVING -> SynthesisCard.ECODRIVING(trips)
-            DISTRACTION -> SynthesisCard.DISTRACTION(trips)
-            SPEEDING -> SynthesisCard.DISTRACTION(trips)
+            SAFETY -> SynthesisCard.SAFETY(trips, showBottomText)
+            ECO_DRIVING -> SynthesisCard.ECODRIVING(trips, showBottomText)
+            DISTRACTION -> SynthesisCard.DISTRACTION(trips, showBottomText)
+            SPEEDING -> SynthesisCard.DISTRACTION(trips, showBottomText)
         }
     }
 }
 
-sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
-    data class SAFETY(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
-        SynthesisCard(trips)
+sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: Boolean = true) : DKSynthesisCard {
+    data class SAFETY(
+        override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips(),
+        override var showBottomText: Boolean = true
+    ) : SynthesisCard(trips)
 
-    data class ECODRIVING(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
-        SynthesisCard(trips)
+    data class ECODRIVING(
+        override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips(),
+        override var showBottomText: Boolean = true
+    ) : SynthesisCard(trips)
 
-    data class DISTRACTION(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
-        SynthesisCard(trips)
+    data class DISTRACTION(
+        override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips(),
+        override var showBottomText: Boolean = true
+    ) : SynthesisCard(trips)
 
-    data class SPEEDING(override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips()) :
-        SynthesisCard(trips)
+    data class SPEEDING(
+        override var trips: List<Trip> = SynthesisCardsUtils.getLastWeekTrips(),
+        override var showBottomText: Boolean = true
+    ) : SynthesisCard(trips)
 
     override fun getTitle(context: Context): String {
         val identifier = when (this) {
@@ -93,7 +102,7 @@ sealed class SynthesisCard(open var trips: List<Trip>) : DKSynthesisCard {
         SynthesisCardInfo.DURATION(trips)
 
     override fun getBottomText(context: Context): Spannable? {
-        return if (trips.isEmpty()){
+        return if (trips.isEmpty() || !showBottomText){
             null
         } else {
             val pair = SynthesisCardsUtils.getMainRoadCondition(trips, SynthesisCardsUtils.RoadConditionType.SAFETY)
