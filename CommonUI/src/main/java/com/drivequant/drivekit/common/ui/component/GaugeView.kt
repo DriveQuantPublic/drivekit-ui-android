@@ -23,40 +23,11 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         super.onDraw(canvas)
         calculateDrawableArea()
 
-        if (startAngle == 270F && openAngle == 360F) {
-            canvas?.drawArc(
-                drawingArea,
-                startAngle,
-                openAngle,
-                false,
-                createPaint(gaugeColor)
-            )
-        } else {
-
-            if (openAngle == 128F) {
-                canvas?.drawArc(
-                    drawingArea,
-                    270F,
-                    openAngle,
-                    false,
-                    createPaint(Color.argb(0, 0, 0, 0))
-                )
-            }
-            canvas?.drawArc(
-                drawingArea,
-                startAngle,
-                360F - openAngle,
-                false,
-                createPaint(backGaugeColor)
-            )
-            canvas?.drawArc(
-                drawingArea,
-                startAngle,
-                computePercent(),
-                false,
-                createPaint(gaugeColor)
-            )
+        if (openAngle != 0F) {
+            canvas?.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
         }
+        canvas?.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
+        canvas?.drawArc(drawingArea, startAngle, computePercent(), false, createPaint(gaugeColor))
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -109,9 +80,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawingArea = RectF(drawPadding, drawPadding, right, bottom)
     }
 
-    private fun computePercent(): Float {
-        return ((360 - openAngle) * score / maxScore).toFloat()
-    }
+    private fun computePercent() = ((360 - openAngle) * score / maxScore).toFloat()
 
     private fun createPaint(color: Int): Paint {
         val paint = Paint()

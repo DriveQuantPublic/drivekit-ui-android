@@ -73,7 +73,9 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         }
         gaugeView.configureMaxScore(type.getMaxScore())
         gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(value)))
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getIcon()!!))
+        type.getIcon()?.let {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, it))
+        }
     }
 }
 

@@ -24,7 +24,7 @@ sealed class DKGaugeType {
     }
 
     internal fun getOpenAngle(): Float = when (this){
-        is CLOSE -> 360F
+        is CLOSE -> 0F
         is OPEN -> 128F
         is OPEN_WITH_IMAGE -> 128F
     }
