@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DisplayType
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.component.tripslist.TripInfoView
+import com.drivequant.drivekit.common.ui.component.tripslist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.computeCeilDuration
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.getOrComputeStartDate
 import com.drivequant.drivekit.common.ui.extension.formatDate
@@ -129,12 +129,17 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private fun computeTripInfo(trip: DKTripListItem) {
         trip.isDisplayable()?.let {
             if (it) {
-                tripInfoContainer.addView(TripInfoView(itemView.context, trip))
+                tripInfoContainer.addView(
+                    TripInfoView(
+                        itemView.context,
+                        trip
+                    )
+                )
                 tripInfoContainer.visibility = View.VISIBLE
+            } else {
+                tripInfoContainer.removeAllViews()
+                tripInfoContainer.visibility = View.GONE
             }
-        } ?: run {
-            tripInfoContainer.removeAllViews()
-            tripInfoContainer.visibility = View.GONE
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist
+package com.drivequant.drivekit.common.ui.component.tripslist.views
 
 import android.content.Context
 import androidx.core.graphics.drawable.DrawableCompat
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import kotlinx.android.synthetic.main.trip_info_item.view.*
 

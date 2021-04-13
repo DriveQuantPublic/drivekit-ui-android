@@ -12,8 +12,6 @@ class DKTripsListViewModel(private val tripsList: DKTripsList) {
         tripListItems = tripsList.getTripsList().orderByDay(tripsList.getDayTripDescendingOrder())
     }
 
-    fun getDKTripsByDate() = tripListItems
-
     fun getTripsByDate(date: Date): DKTripsByDate? {
         for (currentDKTripsByDate in tripListItems) {
             if (currentDKTripsByDate.date == date) {
@@ -23,7 +21,7 @@ class DKTripsListViewModel(private val tripsList: DKTripsList) {
         return null
     }
 
-    fun getTripData() =  tripsList.getTripData()
+    fun getTripData() = tripsList.getTripData()
 
     fun getCustomHeader() = tripsList.getCustomHeader()
 

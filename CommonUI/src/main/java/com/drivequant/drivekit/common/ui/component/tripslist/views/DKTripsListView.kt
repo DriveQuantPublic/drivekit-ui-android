@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.fragment
+package com.drivequant.drivekit.common.ui.component.tripslist.views
 
 import android.content.Context
 import android.util.AttributeSet

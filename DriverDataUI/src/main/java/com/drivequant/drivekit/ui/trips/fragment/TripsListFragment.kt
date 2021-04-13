@@ -18,7 +18,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.component.tripslist.fragment.DKTripsListView
+import com.drivequant.drivekit.common.ui.component.tripslist.views.DKTripsListView
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.headLine1

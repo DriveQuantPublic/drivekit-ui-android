@@ -45,7 +45,7 @@ fun Trip.computeRoadContext(): Int {
     }
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
-//TODO check if we can separate this implementation in a different class
+
 fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
     override fun getItinId(): String = trip.itinId

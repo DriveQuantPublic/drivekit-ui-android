@@ -23,7 +23,7 @@ internal class TripsListAdapter(
     var context: Context?, val viewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): DKTripsByDate  {
-        return viewModel.getDKTripsByDate()[position]
+        return viewModel.tripListItems[position]
     }
 
     override fun getGroupView(position: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
@@ -65,7 +65,7 @@ internal class TripsListAdapter(
 
     override fun getGroupId(position: Int): Long = position.toLong()
 
-    override fun getGroupCount(): Int = viewModel.getDKTripsByDate().size
+    override fun getGroupCount(): Int = viewModel.tripListItems.size
 
     override fun getChild(position: Int, expandedListPosition: Int): DKTripListItem? {
         val date = getGroup(position).date
