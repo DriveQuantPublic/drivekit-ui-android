@@ -32,10 +32,6 @@ internal class TripInfoView : LinearLayout {
                 setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
                 visibility = View.VISIBLE
                 text = it
-                //TODO how do check if this is the default implementation
-                /*if (trip !is AdviceTripInfo) {
-                    this.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-                }*/
             }
         } ?: run {
             view.text_view_trip_info.visibility = View.GONE
