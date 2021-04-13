@@ -64,8 +64,8 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         scoreStyle: Int = Typeface.NORMAL,
         title: Spannable = DKSpannable().append(value.removeZeroDecimal()).toSpannable()
     ) {
-        gaugeView.setOpenAngle(type.getGaugeConfiguration().getOpenAngle())
-        gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
+        gaugeView.setOpenAngle(type.getGaugeType().getOpenAngle())
+        gaugeView.setStartAngle(type.getGaugeType().getStartAngle())
         textView.text = title
         textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
         if (value != 11.0) {

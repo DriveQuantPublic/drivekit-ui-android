@@ -45,7 +45,7 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
         is SPEEDING -> R.drawable.dk_common_eco_accel
     }
 
-    override fun getGaugeConfiguration(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
+    override fun getGaugeType(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value <= steps[0])

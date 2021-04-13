@@ -9,7 +9,7 @@ interface DKGaugeConfiguration {
     fun getColor(value: Double): Int
     fun getMaxScore(): Double
     fun getIcon(): Int?
-    fun getGaugeConfiguration(): DKGaugeType
+    fun getGaugeType(): DKGaugeType
 }
 
 sealed class DKGaugeType {
