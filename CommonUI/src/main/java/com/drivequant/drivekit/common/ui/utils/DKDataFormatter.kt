@@ -56,8 +56,8 @@ object DKDataFormatter {
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)))
 
                     if (nbMinute > 0) {
-                        FormatType.VALUE(nbMinute.formatLeadingZero())
-                        FormatType.UNIT(context.getString(R.string.dk_common_unit_minute))
+                        formattingTypes.add(FormatType.VALUE(nbMinute.formatLeadingZero()))
+                        formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)))
                     }
                     return formattingTypes
                 }
