@@ -1,10 +1,15 @@
 package com.drivequant.drivekit.ui.commons.enums
 
 import android.content.Context
+import android.graphics.Typeface
+import android.text.Spannable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.common.ui.component.DKGaugeType
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
 sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     data class SAFETY(override val value: Double) : GaugeConfiguration(value)
@@ -12,12 +17,17 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     data class DISTRACTION(override val value: Double) : GaugeConfiguration(value)
     data class SPEEDING(override val value: Double) : GaugeConfiguration(value)
 
-    override fun getTitle(context: Context): String {
-        return if (value == 11.0) {
+    override fun getTitle(context: Context): Spannable {
+        val text = if (value == 11.0) {
             "-"
         } else {
             value.removeZeroDecimal()
         }
+        return DKSpannable().append(text, context.resSpans {
+            size(R.dimen.dk_ic_xbig)
+            typeface(Typeface.BOLD)
+            color(DriveKitUI.colors.complementaryFontColor())
+        }).toSpannable()
     }
 
     override fun getScore(): Double {

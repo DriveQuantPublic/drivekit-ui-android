@@ -76,7 +76,6 @@ sealed class SynthesisCardInfo : DKSynthesisCardInfo {
                 )
             }
         }
-
         return formattingTypes
     }
 }

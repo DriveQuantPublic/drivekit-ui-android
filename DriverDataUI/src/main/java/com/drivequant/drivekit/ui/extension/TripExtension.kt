@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun List<Trip>.computeSafetyScoreAverage(): Double {
-    val scoredTrips = this.filter { it.safety?.safetyScore != null }
+    val scoredTrips = this.filter { it.safety?.safetyScore != null && it.safety?.safetyScore!! <= 10.0 }
     return if (this.isEmpty() || scoredTrips.isEmpty()){
         11.0
     } else {
@@ -20,7 +20,7 @@ fun List<Trip>.computeSafetyScoreAverage(): Double {
 }
 
 fun List<Trip>.computeEcodrivingScoreAverage(): Double {
-    val scoredTrips = this.filter { it.ecoDriving?.score != null }
+    val scoredTrips = this.filter { it.ecoDriving?.score != null && it.ecoDriving?.score!! <= 10.0 }
     return if (this.isEmpty() || scoredTrips.isEmpty()) {
         11.0
     } else {

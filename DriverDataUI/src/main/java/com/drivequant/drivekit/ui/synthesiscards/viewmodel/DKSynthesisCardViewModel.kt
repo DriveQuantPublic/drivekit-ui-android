@@ -58,7 +58,7 @@ internal class DKSynthesisCardViewModel(
                     size(R.dimen.dk_text_medium)
                 })
                 is FormatType.UNIT -> spannable.append(it.value, context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
+                    color(DriveKitUI.colors.complementaryFontColor())
                     size(R.dimen.dk_text_medium)
                 })
                 is FormatType.SEPARATOR -> spannable.append(it.value)

@@ -2,6 +2,7 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Typeface
+import android.text.Spannable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 
@@ -12,6 +13,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
 class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
@@ -56,7 +58,12 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     }
 
     @JvmOverloads
-    fun configure(value: Double, type: DKGaugeConfiguration, scoreStyle: Int = Typeface.NORMAL, title: String = value.removeZeroDecimal()) {
+    fun configure(
+        value: Double,
+        type: DKGaugeConfiguration,
+        scoreStyle: Int = Typeface.NORMAL,
+        title: Spannable = DKSpannable().append(value.removeZeroDecimal()).toSpannable()
+    ) {
         gaugeView.setOpenAngle(type.getGaugeConfiguration().getOpenAngle())
         gaugeView.setStartAngle(type.getGaugeConfiguration().getStartAngle())
         textView.text = title
