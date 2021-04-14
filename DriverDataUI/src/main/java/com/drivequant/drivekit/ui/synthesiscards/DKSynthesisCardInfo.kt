@@ -11,23 +11,22 @@ import com.drivequant.drivekit.ui.extension.computeTotalDistance
 import com.drivequant.drivekit.ui.extension.computeTotalDuration
 
 interface DKSynthesisCardInfo {
-    val trips: List<Trip>
     fun getIcon(context: Context): Drawable?
     fun getText(context: Context): List<FormatType>
 }
 
-sealed class SynthesisCardInfo : DKSynthesisCardInfo {
+sealed class SynthesisCardInfo(open val trips: List<Trip>) : DKSynthesisCardInfo {
     data class ACTIVEDAYS(override val trips: List<Trip>) :
-        SynthesisCardInfo()
+        SynthesisCardInfo(trips)
 
     data class DISTANCE(override val trips: List<Trip>) :
-        SynthesisCardInfo()
+        SynthesisCardInfo(trips)
 
     data class DURATION(override val trips: List<Trip>) :
-        SynthesisCardInfo()
+        SynthesisCardInfo(trips)
 
     data class TRIPS(override val trips: List<Trip>) :
-        SynthesisCardInfo()
+        SynthesisCardInfo(trips)
 
     override fun getIcon(context: Context): Drawable? {
         val identifier = when (this) {
