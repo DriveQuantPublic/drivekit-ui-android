@@ -87,7 +87,9 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
         }
 
     override fun getTransportationModeResource(context: Context): Drawable? =
-        trip.transportationMode.image(context)
+        trip.declaredTransportationMode?.transportationMode?.image(context) ?: run {
+            trip.transportationMode.image(context)
+        }
 
     override fun isAlternative(): Boolean = trip.transportationMode.isAlternative()
 

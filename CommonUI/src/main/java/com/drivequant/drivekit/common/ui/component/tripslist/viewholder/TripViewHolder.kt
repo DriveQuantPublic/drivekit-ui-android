@@ -19,6 +19,7 @@ import com.drivequant.drivekit.common.ui.component.tripslist.extension.getOrComp
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -87,7 +88,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             }
             DisplayType.TEXT -> {
                 showTextIndicator()
-                textIndicator.headLine2(DriveKitUI.colors.primaryColor())
+                textIndicator.smallText(DriveKitUI.colors.primaryColor(), true)
                 textIndicator.text =
                     if (tripData == TripData.DURATION) {
                         DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())

@@ -56,13 +56,13 @@ class DKTripsListView : FrameLayout {
         } else {
             view.dk_refresh_trips.isEnabled = false
         }
+        viewModel.apply {
+            setDKTripsList(tripsList)
+            sortTrips()
+        }
         if (tripsList.getTripsList().isEmpty()) {
             adapter?.notifyDataSetChanged()
         } else {
-            viewModel.apply {
-                setDKTripsList(tripsList)
-                sortTrips()
-            }
             adapter?.notifyDataSetChanged() ?: run {
                 adapter = TripsListAdapter(context, viewModel)
                 expandableListView.setAdapter(adapter)
