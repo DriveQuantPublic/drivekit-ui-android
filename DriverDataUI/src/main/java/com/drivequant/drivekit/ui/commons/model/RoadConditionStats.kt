@@ -18,26 +18,31 @@ class RoadConditionStats(
             trips.forEach { trip ->
                 var majorRoadType = DKRoadCondition.TRAFFIC_JAM
                 var distanceMajor = 0.0
-                for (i in DKRoadCondition.values().indices) {
+                for (i in DKRoadCondition.values().filter { it.getValue() != DKRoadCondition.TRAFFIC_JAM.getValue() }.indices) {
                     val myDistance: Double = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
                         trip.safetyContexts[i].distance
                     } else {
                         trip.ecoDrivingContexts[i].distance
                     }
                     if (myDistance > distanceMajor) {
-                        distanceMajor = myDistance
                         majorRoadType = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
                             DKRoadCondition.getTypeFromValue(trip.safetyContexts[i].contextId)
                         } else {
                             DKRoadCondition.getTypeFromValue(trip.ecoDrivingContexts[i].contextId)
                         }
+                        if (majorRoadType != DKRoadCondition.TRAFFIC_JAM){
+                            distanceMajor = myDistance
+                        }
                     }
                 }
-                val currentCount = mainRoadConditionCount[majorRoadType]
-                if (currentCount != null){
-                    mainRoadConditionCount[majorRoadType] = currentCount+1
-                } else {
-                    mainRoadConditionCount[majorRoadType] = 1
+
+                if (majorRoadType != DKRoadCondition.TRAFFIC_JAM) {
+                    val currentCount = mainRoadConditionCount[majorRoadType]
+                    if (currentCount != null) {
+                        mainRoadConditionCount[majorRoadType] = currentCount + 1
+                    } else {
+                        mainRoadConditionCount[majorRoadType] = 1
+                    }
                 }
             }
 
