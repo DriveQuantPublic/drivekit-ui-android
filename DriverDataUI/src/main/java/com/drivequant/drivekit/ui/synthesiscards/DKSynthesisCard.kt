@@ -38,7 +38,7 @@ enum class LastTripsSynthesisCard {
             SAFETY -> SynthesisCard.SAFETY(trips, showBottomText)
             ECO_DRIVING -> SynthesisCard.ECODRIVING(trips, showBottomText)
             DISTRACTION -> SynthesisCard.DISTRACTION(trips, showBottomText)
-            SPEEDING -> SynthesisCard.DISTRACTION(trips, showBottomText)
+            SPEEDING -> SynthesisCard.SPEEDING(trips, showBottomText)
         }
     }
 }
