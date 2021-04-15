@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component
+package com.drivequant.drivekit.common.ui.component.gauge
 
 import android.content.Context
 import android.graphics.Typeface
@@ -9,7 +9,8 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
-sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
+sealed class GaugeConfiguration(open val value: Double) :
+    DKGaugeConfiguration {
     data class SAFETY(override val value: Double) : GaugeConfiguration(value)
     data class ECO_DRIVING(override val value: Double) : GaugeConfiguration(value)
     data class DISTRACTION(override val value: Double) : GaugeConfiguration(value)
@@ -41,7 +42,10 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
         is SPEEDING -> R.drawable.dk_common_eco_accel
     }
 
-    override fun getGaugeType(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
+    override fun getGaugeType(): DKGaugeType =
+        DKGaugeType.OPEN_WITH_IMAGE(
+            getIcon()
+        )
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value <= steps[0])

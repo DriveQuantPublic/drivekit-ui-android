@@ -1,59 +1,35 @@
 package com.drivequant.drivekit.common.ui.component.tripslist.views
 
-import android.content.Context
-import android.util.AttributeSet
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
-import android.widget.FrameLayout
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.adapter.TripsListAdapter
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
+import kotlinx.android.synthetic.main.dk_trips_list_fragment.*
 import kotlinx.android.synthetic.main.dk_trips_list_fragment.view.*
 
-
-class DKTripsListView : FrameLayout {
+class DKTripsListFragment : Fragment() {
 
     private var adapter: TripsListAdapter? = null
-    private lateinit var view: View
     private lateinit var expandableListView: ExpandableListView
     private lateinit var viewModel: DKTripsListViewModel
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
-        init()
-    }
-
-    private fun init() {
-        view = View.inflate(context, R.layout.dk_trips_list_fragment, null)
-
-        addView(
-            view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
+    companion object {
+        fun newInstance() : DKTripsListFragment = DKTripsListFragment()
     }
 
     fun configure(tripsList: DKTripsList) {
         if (tripsList.canSwipeToRefresh()) {
-            view.dk_refresh_trips.setOnRefreshListener {
+            dk_refresh_trips.setOnRefreshListener {
                 tripsList.onSwipeToRefresh()
             }
         } else {
-            view.dk_refresh_trips.isEnabled = false
+            dk_refresh_trips.isEnabled = false
         }
         viewModel.apply {
             setDKTripsList(tripsList)
@@ -73,6 +49,21 @@ class DKTripsListView : FrameLayout {
             }
             false
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = DKTripsListViewModel()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.dk_trips_list_fragment, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        expandableListView = view.findViewById(R.id.dk_trips_list)
     }
 
     fun isFilterPlacerHolder() = adapter != null

@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.common.ui.component.tripslist
 
 
-import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.gauge.GaugeConfiguration
 
 enum class TripData {
     ECO_DRIVING, SAFETY, DISTRACTION, SPEEDING, DURATION, DISTANCE;

@@ -22,7 +22,7 @@
             android:layout_gravity="center_vertical"
             android:padding="4dp"
             android:visibility="gone"/>
-        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
+        <com.drivequant.drivekit.common.ui.component.gauge.GaugeIndicator
             android:id="@+id/gauge_indicator_view"
             android:layout_width="48dp"
             android:layout_height="48dp"

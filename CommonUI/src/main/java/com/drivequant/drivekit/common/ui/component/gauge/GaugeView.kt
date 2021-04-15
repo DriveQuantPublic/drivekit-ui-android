@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component
+package com.drivequant.drivekit.common.ui.component.gauge
 
 import android.content.Context
 import android.graphics.*
