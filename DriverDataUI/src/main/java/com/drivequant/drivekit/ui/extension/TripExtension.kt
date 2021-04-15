@@ -19,7 +19,7 @@ fun List<Trip>.computeSafetyScoreAverage(): Double {
     }
 }
 
-fun List<Trip>.computeEcodrivingScoreAverage(): Double {
+fun List<Trip>.computeEcoDrivingScoreAverage(): Double {
     val scoredTrips = this.filter { it.ecoDriving?.score != null && it.ecoDriving?.score!! <= 10.0 }
     return if (this.isEmpty() || scoredTrips.isEmpty()) {
         11.0
