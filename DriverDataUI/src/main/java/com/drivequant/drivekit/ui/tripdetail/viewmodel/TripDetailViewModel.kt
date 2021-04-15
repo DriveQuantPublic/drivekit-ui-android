@@ -9,6 +9,7 @@ import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Call
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -347,7 +348,7 @@ internal class TripDetailViewModel(
         DKDataFormatter.formatDuration(
             context,
             DKDataFormatter.ceilDuration(trip?.driverDistraction?.durationUnlock, 600)
-        )
+        ).convertToString()
 
     override fun getUnlockDistance(context: Context): String {
         trip?.driverDistraction?.distanceUnlock?.let {
@@ -408,7 +409,7 @@ internal class TripDetailViewModel(
     override fun getPhoneCallsDuration(context: Context): String {
         val duration = trip?.calls?.map { call -> call.duration }?.sum() ?: 0
         DKDataFormatter.apply {
-            return formatDuration(context, ceilDuration(duration.toDouble(), 600))
+            return formatDuration(context, ceilDuration(duration.toDouble(), 600)).convertToString()
         }
     }
 

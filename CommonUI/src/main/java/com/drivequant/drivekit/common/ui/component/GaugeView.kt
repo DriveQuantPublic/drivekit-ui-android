@@ -12,6 +12,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var drawingArea: RectF = RectF()
     private var score: Double = 0.0
+    private var maxScore: Double = 10.0
     private var openAngle: Float = 0F
     private var startAngle: Float = 0F
     private var strokeSize = 0F
@@ -22,7 +23,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         super.onDraw(canvas)
         calculateDrawableArea()
 
-        if (openAngle == 128F) {
+        if (openAngle != 0F) {
             canvas?.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
         }
         canvas?.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
@@ -36,6 +37,11 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun configureScore(score: Double) {
         this.score = score
+        invalidate()
+    }
+
+    fun configureMaxScore(maxScore: Double) {
+        this.maxScore = maxScore
         invalidate()
     }
 
@@ -74,9 +80,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawingArea = RectF(drawPadding, drawPadding, right, bottom)
     }
 
-    private fun computePercent(): Float {
-        return ((360 - openAngle) * score / 10F).toFloat()
-    }
+    private fun computePercent() = ((360 - openAngle) * score / maxScore).toFloat()
 
     private fun createPaint(color: Int): Paint {
         val paint = Paint()

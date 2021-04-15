@@ -8,6 +8,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.*
@@ -140,7 +141,7 @@ class TripEvent(val type: TripEventType,
                 val duration = DKDataFormatter.formatDuration(
                     context,
                     DKDataFormatter.ceilDuration(value, 600)
-                )
+                ).convertToString()
                 DKSpannable().append(
                     context.getString(R.string.dk_driverdata_calling_time),
                     context.resSpans {

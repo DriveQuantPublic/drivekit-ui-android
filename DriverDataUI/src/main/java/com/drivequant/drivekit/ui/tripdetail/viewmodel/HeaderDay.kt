@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
@@ -16,11 +17,11 @@ enum class HeaderDay {
         return trips?.let {
             when (this) {
                 DISTANCE -> DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance())
-                DURATION -> DKDataFormatter.formatDuration(context, it.computeCeilDuration())
+                DURATION -> DKDataFormatter.formatDuration(context, it.computeCeilDuration()).convertToString()
                 DURATION_DISTANCE -> DKDataFormatter.formatDuration(
                     context,
                     it.computeCeilDuration()
-                )
+                ).convertToString()
                     .plus(separator)
                     .plus(DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance()))
                 DISTANCE_DURATION -> DKDataFormatter.formatMeterDistanceInKm(
@@ -28,7 +29,7 @@ enum class HeaderDay {
                     it.computeTotalDistance()
                 )
                     .plus(separator)
-                    .plus(DKDataFormatter.formatDuration(context, it.computeCeilDuration()))
+                    .plus(DKDataFormatter.formatDuration(context, it.computeCeilDuration()).convertToString())
                 NONE -> null
             }
         } ?: run {
