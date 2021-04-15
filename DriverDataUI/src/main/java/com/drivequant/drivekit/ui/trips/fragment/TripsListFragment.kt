@@ -18,9 +18,9 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
 import com.drivequant.drivekit.common.ui.component.tripslist.TripData
+import com.drivequant.drivekit.common.ui.component.tripslist.views.DKTripsListView
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
-import com.drivequant.drivekit.common.ui.component.tripslist.views.DKTripsListFragment
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -39,8 +39,8 @@ import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
+    private lateinit var tripsListView : DKTripsListView
     private lateinit var tripsList: DKTripsList
-    private lateinit var fragment: DKTripsListFragment
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -56,11 +56,6 @@ class TripsListFragment : Fragment() {
             configureFilter()
             updateProgressVisibility(false)
         })
-
-        fragment = DKTripsListFragment.newInstance()
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.dk_trips_list_container,fragment)
-            .commit()
 
         initFilter()
         updateTrips()
@@ -82,6 +77,7 @@ class TripsListFragment : Fragment() {
                             parentFragment = this@TripsListFragment
                         )
                     }
+
                     override fun getTripData(): TripData = DriverDataUI.tripData
                     override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
                     override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
@@ -96,7 +92,7 @@ class TripsListFragment : Fragment() {
                     }
                 }
             }
-            fragment.configure(tripsList)
+            tripsListView.configure(tripsList)
         })
 
         viewModel.syncTripsError.observe(this, Observer {
@@ -182,7 +178,7 @@ class TripsListFragment : Fragment() {
     }
 
     private fun displayNoTrips() {
-        val view = if (fragment.isFilterPlacerHolder()) {
+        val view = if (tripsListView.isFilterPlacerHolder()) {
             text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
             no_car_trips
         } else {
@@ -190,7 +186,7 @@ class TripsListFragment : Fragment() {
         }
         view.visibility = View.VISIBLE
         text_view_trips_synthesis.visibility = View.GONE
-        fragment.setTripsListEmptyView(view)
+        tripsListView.setTripsListEmptyView(view)
         no_trips_recorded_text.apply {
             text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trips_recorded")
             headLine1()
@@ -206,7 +202,7 @@ class TripsListFragment : Fragment() {
 
     private fun displayTripsList() {
         no_trips.visibility = View.GONE
-        dk_trips_list_container.visibility = View.VISIBLE
+        dk_trips_list_view.visibility = View.VISIBLE
         hideProgressCircular()
     }
 
@@ -226,6 +222,7 @@ class TripsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
+        tripsListView = view.findViewById(R.id.dk_trips_list_view)
         view.setBackgroundColor(Color.WHITE)
         return view
     }
@@ -236,7 +233,7 @@ class TripsListFragment : Fragment() {
         } else {
             progress_circular.visibility = View.GONE
         }
-        fragment.updateRefreshTripsVisibility(displayProgress)
+        tripsListView.updateRefreshTripsVisibility(displayProgress)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

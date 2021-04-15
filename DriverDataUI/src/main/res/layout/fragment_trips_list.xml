@@ -33,8 +33,8 @@
             layout="@layout/dk_view_content_no_car_trip"
             android:visibility="gone" />
 
-        <FrameLayout
-            android:id="@+id/dk_trips_list_container"
+        <com.drivequant.drivekit.common.ui.component.tripslist.views.DKTripsListView
+            android:id="@+id/dk_trips_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

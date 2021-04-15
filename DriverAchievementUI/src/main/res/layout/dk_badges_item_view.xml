@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_horizontal">
 
-        <com.drivequant.drivekit.common.ui.component.gauge.GaugeImage
+        <com.drivequant.drivekit.common.ui.component.GaugeImage
             android:id="@+id/gauge_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

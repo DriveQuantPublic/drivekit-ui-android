@@ -34,7 +34,7 @@
             app:layout_constraintStart_toEndOf="@id/title"
             app:layout_constraintTop_toTopOf="@id/title" />
 
-        <com.drivequant.drivekit.common.ui.component.gauge.GaugeIndicator
+        <com.drivequant.drivekit.common.ui.component.GaugeIndicator
             android:id="@+id/score_gauge"
             style="@style/GaugeSynthesisCard"
             android:layout_width="140dp"

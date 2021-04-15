@@ -38,7 +38,8 @@ class DKTripsListView : FrameLayout {
 
     private fun init() {
         view = View.inflate(context, R.layout.dk_trips_list_fragment, null)
-
+        expandableListView = view.findViewById(R.id.dk_trips_list)
+        viewModel = DKTripsListViewModel()
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.gauge
+package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Typeface

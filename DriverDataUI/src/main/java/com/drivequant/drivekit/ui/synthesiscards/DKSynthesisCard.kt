@@ -3,8 +3,8 @@ package com.drivequant.drivekit.ui.synthesiscards
 import android.content.Context
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.gauge.DKGaugeConfiguration
-import com.drivequant.drivekit.common.ui.component.gauge.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
