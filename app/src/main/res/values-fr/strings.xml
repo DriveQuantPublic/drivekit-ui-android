@@ -19,6 +19,7 @@
    <string name="driver_badges_button">Mes badges</string>
    <string name="driver_data_button">Lancer DriverData</string>
    <string name="driver_data_explanation">Exemple d\'implémentation du SDK Driver Data avec la liste des trajets et le détail d\'un trajet</string>
+   <string name="driver_data_synthesis_cards_button">Lancer Driver Data Synthesis Cards</string>
    <string name="driver_streaks_button">Séquences de succès</string>
    <string name="enable_share_position_off">Activer ce réglage pour partager votre position durant le trajet</string>
    <string name="enable_share_position_on">Désactiver ce réglage pour ne pas partager votre position durant le trajet</string>

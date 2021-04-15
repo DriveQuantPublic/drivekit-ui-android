@@ -19,6 +19,7 @@
    <string name="driver_badges_button">Mis insignias</string>
    <string name="driver_data_button">Iniciar DriverData</string>
    <string name="driver_data_explanation">Un ejemplo de implementación de DriveKit DriverData con su interfaz de usuario para la Lista de Viaje y el Detalle de Viaje</string>
+   <string name="driver_data_synthesis_cards_button">Iniciar Driver Data Synthesis Cards</string>
    <string name="driver_streaks_button">Racha de éxitos</string>
    <string name="enable_share_position_off">Habilitar esta opción para compartir su posición durante el viaje</string>
    <string name="enable_share_position_on">Desactive esta opción para no compartir su posición durante el viaje.</string>

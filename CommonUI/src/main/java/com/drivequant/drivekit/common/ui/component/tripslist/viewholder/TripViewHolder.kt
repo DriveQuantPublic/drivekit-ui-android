@@ -17,12 +17,13 @@ import com.drivequant.drivekit.common.ui.component.tripslist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.computeCeilDuration
 import com.drivequant.drivekit.common.ui.component.tripslist.extension.getOrComputeStartDate
 import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertToString
+
 
 internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime =
@@ -73,9 +74,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     private fun configureMotorizedTripData(trip: DKTripListItem, tripData: TripData) {
         when (tripData.displayType()) {
             DisplayType.GAUGE -> {
-                if (trip.isScored(tripData)) {
+                if (trip.isScored(tripData) && trip.getScore(tripData) != null) {
                     showGaugeIndicator()
-                    gaugeIndicator.configure(trip.getScore(tripData)!!, tripData.getGaugeType())
+                    gaugeIndicator.configure(trip.getScore(tripData)!!,tripData.getGaugeType(trip.getScore(tripData)!!))
                 } else {
                     showImageIndicator()
                     imageView.setImageDrawable(
@@ -92,6 +93,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                 textIndicator.text =
                     if (tripData == TripData.DURATION) {
                         DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
+                            .convertToString()
                     } else {
                         DKDataFormatter.formatMeterDistanceInKm(
                             itemView.context,

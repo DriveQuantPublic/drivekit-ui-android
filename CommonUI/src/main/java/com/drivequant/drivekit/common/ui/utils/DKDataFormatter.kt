@@ -16,47 +16,140 @@ object DKDataFormatter {
 
     private const val NON_BREAKING_SPACE = "\u00A0"
 
-    fun formatDuration(context: Context, durationInSeconds: Double?) : String {
+    fun formatDuration(context: Context, durationInSeconds: Double?): List<FormatType> {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
 
+        val formattingTypes = mutableListOf<FormatType>()
         if (durationInSeconds != null) {
             if (durationInSeconds > 59) {
                 nbMinute = ceil(durationInSeconds.div(60)).toInt()
             } else {
-                return durationInSeconds.toInt().toString()
-                    .plus(NON_BREAKING_SPACE)
-                    .plus(context.getString(R.string.dk_common_unit_second))
+                formattingTypes.addAll(
+                    listOf(
+                        FormatType.VALUE(durationInSeconds.toInt().toString()),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_second))
+                    )
+                )
+                return formattingTypes
             }
-            return if (nbMinute > 59) {
+            if (nbMinute > 59) {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
 
                 if (nbHour > 23) {
                     nbDay = nbHour.div(24)
                     nbHour -= nbHour - (24 * nbDay)
-                    "$nbDay"
-                        .plus(context.getString(R.string.dk_common_unit_day))
-                        .plus(nbHour)
-                        .plus(context.getString(R.string.dk_common_unit_hour))
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbDay.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                            FormatType.VALUE(nbHour.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                        )
+                    )
+                    return formattingTypes
                 } else {
-                    "$nbHour${context.getString(R.string.dk_common_unit_hour)}${nbMinute.formatLeadingZero()}"
+                    formattingTypes.add(FormatType.VALUE(nbHour.toString()))
+                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)))
+
+                    if (nbMinute > 0) {
+                        formattingTypes.add(FormatType.VALUE(nbMinute.formatLeadingZero()))
+                        formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)))
+                    }
+                    return formattingTypes
                 }
             } else {
-                val nbSecond = (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
-                return if (nbSecond > 0) {
-                    "${nbMinute - 1}"
-                        .plus(context.getString(R.string.dk_common_unit_minute))
-                        .plus(nbSecond)
+                val nbSecond =
+                    (durationInSeconds - 60 * ((durationInSeconds / 60).toInt()).toDouble()).toInt()
+                if (nbSecond > 0) {
+                    val nbMinutes = nbMinute - 1
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbMinutes.toString()),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                            FormatType.VALUE(nbSecond.toString())
+                        )
+                    )
                 } else {
-                    "$nbMinute"
-                        .plus(NON_BREAKING_SPACE)
-                        .plus(context.getString(R.string.dk_common_unit_minute))
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbMinute.toString()),
+                            FormatType.SEPARATOR(),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_minute))
+                        )
+                    )
+                }
+                return formattingTypes
+            }
+        }
+        formattingTypes.add(FormatType.VALUE("-"))
+        return formattingTypes
+    }
+
+    @JvmOverloads
+    fun getMeterDistanceInKmFormat(
+        context: Context,
+        value: Double?,
+        unit: Boolean = true
+    ): List<FormatType> {
+        return getKilometerDistanceFormat(context, value?.div(1000), unit)
+    }
+
+    @JvmOverloads
+    fun getMeterDistanceFormat(
+        context: Context,
+        value: Double?,
+        unit: Boolean = true): List<FormatType> {
+        lateinit var formattingTypes: List<FormatType>
+
+        value?.let {
+            when {
+                value < 10 -> {
+                    formattingTypes = listOf(
+                        FormatType.VALUE(value.removeZeroDecimal().format(2)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
+                }
+                value < 1000 -> {
+                    formattingTypes = listOf(
+                        FormatType.VALUE(value.format(0)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
+                }
+                else -> {
+                    formattingTypes = getMeterDistanceInKmFormat(context, value, unit)
                 }
             }
         }
-        return "-"
+        return formattingTypes
+    }
+
+    @JvmOverloads
+    fun getKilometerDistanceFormat(
+        context: Context,
+        value: Double?,
+        unit: Boolean = true
+    ): List<FormatType> {
+        val formattingTypes = mutableListOf<FormatType>()
+        var formattedDistance: String
+        value?.let {
+            formattedDistance = if (value < 100) {
+                BigDecimal(it).setScale(1, RoundingMode.HALF_EVEN).toDouble().removeZeroDecimal()
+            } else {
+                value.roundToInt().toString()
+            }
+            formattingTypes.add(FormatType.VALUE(formattedDistance))
+            if (unit) {
+                formattingTypes.add(FormatType.SEPARATOR())
+                formattingTypes.add(FormatType.UNIT(context.resources.getString(R.string.dk_common_unit_kilometer)))
+            }
+        }
+        return formattingTypes
     }
 
     fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): String {

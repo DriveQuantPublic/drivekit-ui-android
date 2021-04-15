@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
@@ -143,5 +144,18 @@ object DriverDataUI : DriverDataUIEntryPoint {
                 }
             }
         }
+    }
+
+    @JvmOverloads
+    fun getLastTripsSynthesisCardsView(
+        synthesisCards: List<LastTripsSynthesisCard> =
+            listOf(
+                LastTripsSynthesisCard.SAFETY,
+                LastTripsSynthesisCard.DISTRACTION,
+                LastTripsSynthesisCard.ECO_DRIVING,
+                LastTripsSynthesisCard.SPEEDING
+            ), listener: SynthesisCardsViewListener
+    ) {
+        DriverDataSynthesisCardsUI.getLastTripsSynthesisCardsView(synthesisCards, listener)
     }
 }

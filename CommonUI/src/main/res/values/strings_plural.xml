@@ -4,4 +4,8 @@
         <item quantity="one">@string/dk_common_trip_singular</item>
         <item quantity="other">@string/dk_common_trip_plural</item>
     </plurals>
+    <plurals name="day_plural">
+        <item quantity="one">@string/dk_common_day_singular</item>
+        <item quantity="other">@string/dk_common_day_plural</item>
+    </plurals>
 </resources>

@@ -26,6 +26,7 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_day">Trajet de jour</string>
    <string name="dk_driverdata_declared_transportation_mode">Mode déclaré :</string>
    <string name="dk_driverdata_default_filter_item">Tous mes trajets</string>
+   <string name="dk_driverdata_dense_urban">%s dans un trafic dense</string>
    <string name="dk_driverdata_detected_transportation_mode">Mode détecté :</string>
    <string name="dk_driverdata_distance_travelled">%s parcourus</string>
    <string name="dk_driverdata_distraction_score">Score de distraction</string>
@@ -38,6 +39,8 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_end_unauthorized_call">Fin d\'appel non-autorisé</string>
    <string name="dk_driverdata_end_unauthorized_call_info_content">L\'application a détecté la fin d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre.
 Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
+   <string name="dk_driverdata_expressway">%s sur des voies rapides</string>
+   <string name="dk_driverdata_extra_urban">%s en zone extra-urbaine</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Le mode de transport n\'a pas pu être mis à jour, veuillez réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossible de synchroniser les trajets, veuillez réessayer plus tard.</string>
@@ -49,6 +52,10 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_lock_event">Fermeture de l\'écran</string>
    <string name="dk_driverdata_low_accel">Accélération trop faible</string>
    <string name="dk_driverdata_low_decel">Freinage trop faible</string>
+   <string name="dk_driverdata_my_weekly_score_distraction">Mon score hebdomadaire | Distraction</string>
+   <string name="dk_driverdata_my_weekly_score_ecodriving">Mon score hebdomadaire | Éco-conduite</string>
+   <string name="dk_driverdata_my_weekly_score_safety">Mon score hebdomadaire | Sécurité</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">Mon score hebdomadaire | Vitesse</string>
    <string name="dk_driverdata_night">Trajet de nuit</string>
    <string name="dk_driverdata_no_call_congrats">Félicitations !</string>
    <string name="dk_driverdata_no_call_content">Aucun appel</string>
@@ -91,6 +98,10 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_synthesis_co2_mass">Masse de CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Consommation</string>
+   <string name="dk_driverdata_synthesis_info_distraction">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu\'il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>
+   <string name="dk_driverdata_synthesis_info_ecodriving">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu’il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>
+   <string name="dk_driverdata_synthesis_info_safety">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu’il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>
+   <string name="dk_driverdata_synthesis_info_speeding">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu\'il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>
    <string name="dk_driverdata_synthesis_mean_speed">Vitesse moyenne</string>
    <string name="dk_driverdata_synthesis_road_context">Contexte routier</string>
    <string name="dk_driverdata_synthesis_stop_time">Temps à l\'arrêt</string>
@@ -130,6 +141,7 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_unlock_events">Déverrouillages de l\'écran</string>
    <string name="dk_driverdata_unlock_number">Nombre de déverrouillages</string>
    <string name="dk_driverdata_unlock_screen_content">écran allumé %1$s et %2$s</string>
+   <string name="dk_driverdata_urban">%s en zone urbaine</string>
    <string name="dk_driverdata_value">Valeur =</string>
    <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
    <string name="dk_driverdata_weak_accel">Freinage faible</string>

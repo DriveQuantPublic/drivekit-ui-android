@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.databaseutils.entity.Safety
@@ -78,8 +78,8 @@ class SafetyFragment : Fragment() {
         brake_number_event.highlightSmall(primaryColor)
         adherence_number_event.highlightSmall(primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeType.SAFETY, Typeface.BOLD)
-        score_info.init(GaugeType.SAFETY)
+        score_gauge.configure(viewModel.getScore(), GaugeConfiguration.SAFETY(viewModel.getScore()), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.SAFETY(viewModel.getScore()))
 
         accel_number_event.text = viewModel.getAccelNumberEvent().toString()
         brake_number_event.text = viewModel.getBrakeNumberEvent().toString()

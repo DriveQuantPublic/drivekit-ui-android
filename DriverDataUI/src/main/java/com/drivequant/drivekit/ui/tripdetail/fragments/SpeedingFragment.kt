@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.GaugeType
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
@@ -72,8 +73,8 @@ internal class SpeedingFragment : Fragment() {
         }
 
         gauge_type_title.text = DKResource.convertToString(requireContext(), "dk_common_speed")
-        score_gauge.configure(viewModel.getSpeedingScore(), GaugeType.SPEEDING, Typeface.BOLD)
-        score_info.init(GaugeType.SPEEDING)
+        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()), Typeface.BOLD)
+        score_info.init(GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()))
 
         val speedingDistance = viewModel.getSpeedingDistanceAndPercent(requireContext()).first
         val totalDistancePercent = viewModel.getSpeedingDistanceAndPercent(requireContext()).second
@@ -90,7 +91,7 @@ internal class SpeedingFragment : Fragment() {
 
         val durationValue = DKDataFormatter.formatDuration(
             requireContext(),
-            DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600))
+            DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600)).convertToString()
 
         speeding_distance_value.apply {
             setSelectorContent(totalDistancePercent)

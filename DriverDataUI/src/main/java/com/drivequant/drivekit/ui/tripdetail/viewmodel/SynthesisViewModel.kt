@@ -6,6 +6,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.computeRoadContext
@@ -92,7 +93,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     fun getIdlingDuration(context: Context): String {
         return trip.tripStatistics?.let {
-            DKDataFormatter.formatDuration(context, it.idlingDuration)
+            DKDataFormatter.formatDuration(context, it.idlingDuration).convertToString()
         } ?: run {
             notAvailableText
         }

@@ -26,6 +26,7 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_day">Day trip</string>
    <string name="dk_driverdata_declared_transportation_mode">Declared mode:</string>
    <string name="dk_driverdata_default_filter_item">All my trips</string>
+   <string name="dk_driverdata_dense_urban">%s in dense traffic</string>
    <string name="dk_driverdata_detected_transportation_mode">Detected mode:</string>
    <string name="dk_driverdata_distance_travelled">%s travelled</string>
    <string name="dk_driverdata_distraction_score">Distraction score</string>
@@ -38,6 +39,8 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_end_unauthorized_call">End of unauthorized call</string>
    <string name="dk_driverdata_end_unauthorized_call_info_content">The application has detected the end of an unauthorized call. This means that the call was not made with a hands-free kit.
 Handling your phone while driving is very dangerous. Remember to protect yourself, your passengers and other road users. If you need to make a call, your vehicle must be parked in a parking space with the engine turned off.</string>
+   <string name="dk_driverdata_expressway">%s on expressways</string>
+   <string name="dk_driverdata_extra_urban">%s in extra-urban zone</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Transportation mode couldn\'t be updated, please retry later.</string>
    <string name="dk_driverdata_failed_to_delete_trip">The trip could not be deleted, try again later.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Failed to synchronize trips, please retry later.</string>
@@ -49,6 +52,10 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_lock_event">Screen locking</string>
    <string name="dk_driverdata_low_accel">Acceleration is too low</string>
    <string name="dk_driverdata_low_decel">Deceleration is too low</string>
+   <string name="dk_driverdata_my_weekly_score_distraction">My weekly score | Distraction</string>
+   <string name="dk_driverdata_my_weekly_score_ecodriving">My weekly score | Eco-driving</string>
+   <string name="dk_driverdata_my_weekly_score_safety">My weekly score | Safety</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">My Weekly Score | Speeding</string>
    <string name="dk_driverdata_night">Night trip</string>
    <string name="dk_driverdata_no_call_congrats">Congratulations!</string>
    <string name="dk_driverdata_no_call_content">No calls</string>
@@ -91,6 +98,10 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_synthesis_co2_mass">Mass of CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Fuel consumption</string>
+   <string name="dk_driverdata_synthesis_info_distraction">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
+   <string name="dk_driverdata_synthesis_info_ecodriving">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
+   <string name="dk_driverdata_synthesis_info_safety">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
+   <string name="dk_driverdata_synthesis_info_speeding">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
    <string name="dk_driverdata_synthesis_mean_speed">Average speed</string>
    <string name="dk_driverdata_synthesis_road_context">Driving context</string>
    <string name="dk_driverdata_synthesis_stop_time">Idling duration</string>
@@ -130,6 +141,7 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_unlock_events">Screen unlocks</string>
    <string name="dk_driverdata_unlock_number">Number of unlocking</string>
    <string name="dk_driverdata_unlock_screen_content">screen on during %1$s and %2$s</string>
+   <string name="dk_driverdata_urban">%s in urban zone</string>
    <string name="dk_driverdata_value">Value =</string>
    <string name="dk_driverdata_vehicle_trips">Vehicle trips</string>
    <string name="dk_driverdata_weak_accel">Weak acceleration</string>
