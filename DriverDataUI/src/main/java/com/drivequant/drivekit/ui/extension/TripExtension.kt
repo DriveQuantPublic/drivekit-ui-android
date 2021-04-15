@@ -15,7 +15,7 @@ fun List<Trip>.computeSafetyScoreAverage(): Double {
         11.0
     } else {
         val sumScore = scoredTrips.mapNotNull { it.safety?.safetyScore }.sum()
-        sumScore / scoredTrips.size
+        sumScore.div(scoredTrips.size)
     }
 }
 
@@ -25,7 +25,7 @@ fun List<Trip>.computeEcoDrivingScoreAverage(): Double {
         11.0
     } else {
         val sumScore = scoredTrips.mapNotNull { it.ecoDriving?.score }.sum()
-        sumScore / scoredTrips.size
+        sumScore.div(scoredTrips.size)
     }
 }
 
@@ -34,7 +34,7 @@ fun List<Trip>.computeDistractionScoreAverage(): Double {
         11.0
     } else {
         val sumScore = this.mapNotNull { it.driverDistraction?.score }.sum()
-        sumScore / this.size
+        sumScore.div(this.size)
     }
 }
 
@@ -43,7 +43,7 @@ fun List<Trip>.computeSpeedingScoreAverage(): Double {
         11.0
     } else {
         val sumScore = this.mapNotNull { it.speedingStatistics?.score }.sum()
-        sumScore / this.size
+        sumScore.div(this.size)
     }
 }
 

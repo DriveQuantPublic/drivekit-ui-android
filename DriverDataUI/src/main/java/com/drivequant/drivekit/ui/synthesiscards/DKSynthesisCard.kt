@@ -11,7 +11,7 @@ import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
 import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
-import com.drivequant.drivekit.ui.extension.computeEcodrivingScoreAverage
+import com.drivequant.drivekit.ui.extension.computeEcoDrivingScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
 import java.io.Serializable
@@ -64,34 +64,33 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
         override var showBottomText: Boolean = true
     ) : SynthesisCard(trips)
 
-    override fun getTitle(context: Context): String {
-        val identifier = when (this) {
+    override fun getTitle(context: Context): String =
+        when (this) {
             is SAFETY -> "dk_driverdata_my_weekly_score_safety"
             is ECODRIVING -> "dk_driverdata_my_weekly_score_ecodriving"
             is DISTRACTION -> "dk_driverdata_my_weekly_score_distraction"
             is SPEEDING -> "dk_driverdata_my_weekly_score_speeding"
+        }.let {
+            DKResource.convertToString(context, it)
         }
-        return DKResource.convertToString(context, identifier)
-    }
 
-    override fun getExplanationContent(context: Context): String? {
-        val identifier = when (this) {
+    override fun getExplanationContent(context: Context): String? =
+        when (this) {
             is DISTRACTION -> "dk_driverdata_synthesis_info_distraction"
             is ECODRIVING -> "dk_driverdata_synthesis_info_ecodriving"
             is SAFETY -> "dk_driverdata_synthesis_info_safety"
             is SPEEDING -> "dk_driverdata_synthesis_info_speeding"
+        }.let {
+            DKResource.convertToString(context, it)
         }
-        return DKResource.convertToString(context, identifier)
-    }
 
-    override fun getGaugeConfiguration(): DKGaugeConfiguration {
-        return when (this) {
+    override fun getGaugeConfiguration(): DKGaugeConfiguration =
+        when (this) {
             is SAFETY -> GaugeConfiguration.SAFETY(trips.computeSafetyScoreAverage())
-            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips.computeEcodrivingScoreAverage())
+            is ECODRIVING -> GaugeConfiguration.ECO_DRIVING(trips.computeEcoDrivingScoreAverage())
             is DISTRACTION -> GaugeConfiguration.DISTRACTION(trips.computeDistractionScoreAverage())
             is SPEEDING -> GaugeConfiguration.SPEEDING(trips.computeSpeedingScoreAverage())
         }
-    }
 
     override fun getTopSynthesisCardInfo(context: Context) = SynthesisCardInfo.TRIPS(trips)
 
@@ -123,13 +122,13 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
         }
     }
 
-    internal fun hasAccess(): Boolean {
-        val accessType = when (this){
+    internal fun hasAccess(): Boolean =
+        when (this) {
             is SAFETY -> AccessType.SAFETY
             is ECODRIVING -> AccessType.ECODRIVING
             is DISTRACTION -> AccessType.PHONE_DISTRACTION
             is SPEEDING -> AccessType.SPEEDING
+        }.let {
+            DriveKitAccess.hasAccess(it)
         }
-        return DriveKitAccess.hasAccess(accessType)
-    }
 }

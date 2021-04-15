@@ -10,7 +10,7 @@ fun Date.formatDate(pattern: DKDatePattern): String {
     return dateFormat.format(this)
 }
 
-fun Date.formatDateWithPattern(sdf : SimpleDateFormat) = sdf.format(this)
+fun Date.formatDateWithPattern(sdf : SimpleDateFormat): String = sdf.format(this)
 
 fun Date.isSameDay(date: Date): Boolean {
     val tripCal: Calendar = Calendar.getInstance()

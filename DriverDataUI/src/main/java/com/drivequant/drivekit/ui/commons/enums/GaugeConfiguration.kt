@@ -30,9 +30,7 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
         }).toSpannable()
     }
 
-    override fun getScore(): Double {
-        return value
-    }
+    override fun getScore() = value
 
     override fun getMaxScore(): Double = 10.0
 
