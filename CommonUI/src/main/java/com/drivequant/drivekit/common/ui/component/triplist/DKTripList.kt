@@ -33,5 +33,5 @@ interface DKTripListItem {
     fun infoImageResource(): Int?
     fun infoClickAction(context: Context)
     fun hasInfoActionConfigured(): Boolean
-    fun isInfoDisplayable(): Boolean?
+    fun isInfoDisplayable(): Boolean
 }

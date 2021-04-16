@@ -133,19 +133,17 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     private fun computeTripInfo(trip: DKTripListItem) {
-        trip.isInfoDisplayable()?.let {
-            if (it) {
-                tripInfoContainer.addView(
-                    TripInfoView(
-                        itemView.context,
-                        trip
-                    )
+        if (trip.isInfoDisplayable()) {
+            tripInfoContainer.addView(
+                TripInfoView(
+                    itemView.context,
+                    trip
                 )
-                tripInfoContainer.visibility = View.VISIBLE
-            } else {
-                tripInfoContainer.removeAllViews()
-                tripInfoContainer.visibility = View.GONE
-            }
+            )
+            tripInfoContainer.visibility = View.VISIBLE
+        } else {
+            tripInfoContainer.removeAllViews()
+            tripInfoContainer.visibility = View.GONE
         }
     }
 }

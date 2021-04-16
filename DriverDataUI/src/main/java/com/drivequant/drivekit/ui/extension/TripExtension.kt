@@ -188,7 +188,7 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
         )
     }
     override fun hasInfoActionConfigured(): Boolean = true
-    override fun isInfoDisplayable(): Boolean? = !trip.tripAdvices.isNullOrEmpty()
+    override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
 }
 
 fun List<Trip>.toDKTripList(): List<DKTripListItem> {
