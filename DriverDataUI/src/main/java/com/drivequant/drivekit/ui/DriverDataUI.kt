@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
@@ -14,13 +14,13 @@ import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
-import com.drivequant.drivekit.common.ui.component.tripslist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
@@ -43,7 +43,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         private set
     internal var customHeader: DKHeader? = null
         private set
-    internal var customTripInfo: DKTripListItem? = null
+    internal var customTripListItem: DKTripListItem? = null
         private set
 
     internal var enableDeleteTrip: Boolean = true
@@ -108,8 +108,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.customHeader = header
     }
 
-    fun setCustomTripInfo(tripListItem: DKTripListItem?) {
-        this.customTripInfo = tripListItem
+    fun customTripListItem(tripListItem: DKTripListItem?) {
+        this.customTripListItem = tripListItem
     }
 
     override fun startTripListActivity(context: Context) {

@@ -3,11 +3,10 @@ package com.drivequant.drivekit.ui.extension
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.extension.formatDateWithPattern
-import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -192,7 +191,7 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun isInfoDisplayable(): Boolean? = !trip.tripAdvices.isNullOrEmpty()
 }
 
-fun List<Trip>.toDKTripsList(): List<DKTripListItem> {
+fun List<Trip>.toDKTripList(): List<DKTripListItem> {
     val trips = mutableListOf<DKTripListItem>()
     this.forEach {
         trips.add(

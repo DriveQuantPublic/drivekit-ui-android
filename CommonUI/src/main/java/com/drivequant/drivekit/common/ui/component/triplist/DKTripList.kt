@@ -1,12 +1,12 @@
-package com.drivequant.drivekit.common.ui.component.tripslist
+package com.drivequant.drivekit.common.ui.component.triplist
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import java.util.*
 
-interface DKTripsList {
+interface DKTripList {
     fun onTripClickListener(itinId: String)
     fun getTripData(): TripData
     fun getTripsList(): List<DKTripListItem>

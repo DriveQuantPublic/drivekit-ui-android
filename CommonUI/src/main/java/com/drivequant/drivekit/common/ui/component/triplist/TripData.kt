@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist
+package com.drivequant.drivekit.common.ui.component.triplist
 
 
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration

@@ -15,19 +15,19 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
-import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.component.tripslist.views.DKTripsListView
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKHeader
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.extension.toDKTripsList
+import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
@@ -39,8 +39,8 @@ import kotlinx.android.synthetic.main.view_content_no_trips.*
 
 class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
-    private lateinit var tripsListView : DKTripsListView
-    private lateinit var tripsList: DKTripsList
+    private lateinit var tripsListView : DKTripListView
+    private lateinit var tripsList: DKTripList
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -68,7 +68,7 @@ class TripsListFragment : Fragment() {
                 displayTripsList()
             }
             if (!this::tripsList.isInitialized) {
-               tripsList = object : DKTripsList {
+               tripsList = object : DKTripList {
                     override fun onTripClickListener(itinId: String) {
                         TripDetailActivity.launchActivity(
                             requireActivity(),
@@ -79,7 +79,7 @@ class TripsListFragment : Fragment() {
                     }
 
                     override fun getTripData(): TripData = DriverDataUI.tripData
-                    override fun getTripsList(): List<DKTripListItem> = it.toDKTripsList()
+                    override fun getTripsList(): List<DKTripListItem> = it.toDKTripList()
                     override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
                     override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
                     override fun getDayTripDescendingOrder(): Boolean =

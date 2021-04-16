@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.adapter
+package com.drivequant.drivekit.common.ui.component.triplist.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,17 +10,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.common.ui.component.tripslist.viewholder.HeaderDayViewHolder
-import com.drivequant.drivekit.common.ui.component.tripslist.viewholder.TripViewHolder
+import com.drivequant.drivekit.common.ui.component.triplist.viewholder.HeaderDayViewHolder
+import com.drivequant.drivekit.common.ui.component.triplist.viewholder.TripViewHolder
 import com.drivequant.drivekit.common.ui.extension.formatDate
 
-internal class TripsListAdapter(
-    var context: Context?, private val tripsListViewModel: DKTripsListViewModel) : BaseExpandableListAdapter() {
+internal class TripListAdapter(
+    var context: Context?, private val tripsListViewModel: DKTripListViewModel) : BaseExpandableListAdapter() {
 
     override fun getGroup(position: Int): DKTripsByDate = tripsListViewModel.sortedTrips[position]
 

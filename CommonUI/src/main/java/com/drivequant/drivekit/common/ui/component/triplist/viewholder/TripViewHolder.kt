@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.viewholder
+package com.drivequant.drivekit.common.ui.component.triplist.viewholder
 
 import android.graphics.Color
 import androidx.core.graphics.drawable.DrawableCompat
@@ -10,12 +10,12 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.DisplayType
-import com.drivequant.drivekit.common.ui.component.tripslist.TripData
-import com.drivequant.drivekit.common.ui.component.tripslist.views.TripInfoView
-import com.drivequant.drivekit.common.ui.component.tripslist.extension.computeCeilDuration
-import com.drivequant.drivekit.common.ui.component.tripslist.extension.getOrComputeStartDate
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.DisplayType
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeCeilDuration
+import com.drivequant.drivekit.common.ui.component.triplist.extension.getOrComputeStartDate
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText

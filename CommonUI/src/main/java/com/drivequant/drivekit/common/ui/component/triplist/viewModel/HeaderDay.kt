@@ -1,9 +1,9 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.viewModel
+package com.drivequant.drivekit.common.ui.component.triplist.viewModel
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.extension.computeCeilDuration
-import com.drivequant.drivekit.common.ui.component.tripslist.extension.computeTotalDistance
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeCeilDuration
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeTotalDistance
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 

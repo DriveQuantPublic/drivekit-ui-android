@@ -1,7 +1,7 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.extension
+package com.drivequant.drivekit.common.ui.component.triplist.extension
 
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsByDate
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.extension.isSameDay
 import java.util.*
 

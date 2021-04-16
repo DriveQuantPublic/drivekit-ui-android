@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.tripslist.views
+package com.drivequant.drivekit.common.ui.component.triplist.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.ExpandableListView
 import android.widget.FrameLayout
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.tripslist.DKTripsList
-import com.drivequant.drivekit.common.ui.component.tripslist.adapter.TripsListAdapter
-import com.drivequant.drivekit.common.ui.component.tripslist.viewModel.DKTripsListViewModel
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
+import com.drivequant.drivekit.common.ui.component.triplist.adapter.TripListAdapter
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripListViewModel
 import kotlinx.android.synthetic.main.dk_trips_list_fragment.view.*
 
 
-class DKTripsListView : FrameLayout {
+class DKTripListView : FrameLayout {
 
-    private var adapter: TripsListAdapter? = null
+    private var adapter: TripListAdapter? = null
     private lateinit var view: View
     private lateinit var expandableListView: ExpandableListView
-    private lateinit var viewModel: DKTripsListViewModel
+    private lateinit var viewModel: DKTripListViewModel
 
     constructor(context: Context) : super(context) {
         init()
@@ -39,7 +39,7 @@ class DKTripsListView : FrameLayout {
     private fun init() {
         view = View.inflate(context, R.layout.dk_trips_list_fragment, null)
         expandableListView = view.findViewById(R.id.dk_trips_list)
-        viewModel = DKTripsListViewModel()
+        viewModel = DKTripListViewModel()
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -48,7 +48,7 @@ class DKTripsListView : FrameLayout {
         )
     }
 
-    fun configure(tripsList: DKTripsList) {
+    fun configure(tripsList: DKTripList) {
         if (tripsList.canSwipeToRefresh()) {
             view.dk_refresh_trips.setOnRefreshListener {
                 tripsList.onSwipeToRefresh()
@@ -57,14 +57,14 @@ class DKTripsListView : FrameLayout {
             view.dk_refresh_trips.isEnabled = false
         }
         viewModel.apply {
-            setDKTripsList(tripsList)
+            setDKTripList(tripsList)
             sortTrips()
         }
         if (tripsList.getTripsList().isEmpty()) {
             adapter?.notifyDataSetChanged()
         } else {
             adapter?.notifyDataSetChanged() ?: run {
-                adapter = TripsListAdapter(context, viewModel)
+                adapter = TripListAdapter(context, viewModel)
                 expandableListView.setAdapter(adapter)
             }
         }
