@@ -44,7 +44,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putSerializable("itinId", viewModel.getItindId())
+            outState.putSerializable("itinId", viewModel.getItinId())
             outState.putSerializable("tripListConfigurationType", viewModel.getTripListConfigurationType())
         }
         super.onSaveInstanceState(outState)
