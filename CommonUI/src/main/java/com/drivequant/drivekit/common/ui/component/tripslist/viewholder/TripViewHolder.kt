@@ -76,7 +76,10 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             DisplayType.GAUGE -> {
                 if (trip.isScored(tripData) && trip.getScore(tripData) != null) {
                     showGaugeIndicator()
-                    gaugeIndicator.configure(trip.getScore(tripData)!!,tripData.getGaugeType(trip.getScore(tripData)!!))
+                    gaugeIndicator.configure(
+                        trip.getScore(tripData)!!,
+                        tripData.getGaugeType(trip.getScore(tripData)!!)
+                    )
                 } else {
                     showImageIndicator()
                     imageView.setImageDrawable(
