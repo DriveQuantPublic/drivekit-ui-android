@@ -16,8 +16,8 @@ import com.drivequant.drivekit.vehicle.ui.R
 class BeaconDetailViewModel(
     val vehicleId: String,
     val vehicleName: String,
-    private val batteryLevel: Int,
-    private val seenBeacon: BeaconInfo
+    val batteryLevel: Int,
+    val seenBeacon: BeaconInfo
 ) : ViewModel() {
 
     var data: MutableList<BeaconDetailField> = mutableListOf()

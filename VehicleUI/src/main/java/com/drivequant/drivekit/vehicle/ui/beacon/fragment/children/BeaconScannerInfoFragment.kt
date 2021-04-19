@@ -20,7 +20,9 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
@@ -43,8 +45,26 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putSerializable("scanType", viewModel.scanType)
+            outState.putString("vehicleId", viewModel.vehicleId)
+            outState.putSerializable("beacon", viewModel.beacon)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val vehicleId = it.getString("vehicleId")
+            val beacon = it.getSerializable("beacon") as Beacon?
+            if (scanType != null) {
+                viewModel = BeaconViewModel(scanType, vehicleId, beacon)
+                viewModel.init(requireContext())
+            }
+        }
 
         startBatteryReaderScanner()
 
