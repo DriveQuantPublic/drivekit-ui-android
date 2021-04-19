@@ -66,7 +66,9 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
             }
         }
 
-        startBatteryReaderScanner()
+        viewModel.seenBeacon?.let {
+            startBatteryReaderScanner()
+        }
 
         view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
