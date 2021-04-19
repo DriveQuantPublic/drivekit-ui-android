@@ -391,6 +391,7 @@ class VehicleDetailFragment : Fragment() {
             when (requestCode) {
                 REQUEST_GALLERY -> {
                     CameraGalleryPickerHelper.buildUriFromIntentData(data)?.let {
+                        requireContext().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         updatePicture(it)
                         saveVehiclePictureUri(it)
                     }
