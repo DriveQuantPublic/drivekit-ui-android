@@ -90,8 +90,13 @@ class VehicleDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (savedInstanceState?.getSerializable("vehicleDetailTag") as String?)?.let{
-            vehicleId = it
+        savedInstanceState?.let { bundle ->
+            val vehicleId = bundle.getSerializable("vehicleDetailTag") as String?
+
+            vehicleId?.let {
+                this.vehicleId = it
+                viewModel = VehicleDetailViewModel(it)
+            }
         }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)

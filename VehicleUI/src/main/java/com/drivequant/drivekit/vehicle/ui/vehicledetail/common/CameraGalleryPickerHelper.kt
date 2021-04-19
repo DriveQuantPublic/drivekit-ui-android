@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.common
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
@@ -22,6 +23,7 @@ object CameraGalleryPickerHelper {
     fun openGallery(activity: Activity) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
+        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION)
         startActivityForResult(activity, intent, REQUEST_GALLERY, null)
     }
 
