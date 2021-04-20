@@ -1,12 +1,10 @@
-package com.drivequant.drivekit.ui.commons.enums
+package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
-import com.drivequant.drivekit.common.ui.component.DKGaugeType
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable

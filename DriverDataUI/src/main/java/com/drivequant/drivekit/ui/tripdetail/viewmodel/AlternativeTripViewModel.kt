@@ -23,6 +23,8 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
         }
     }
 
+    fun getItinId() = trip.itinId
+
     fun getAnalyzedTransportationModeTitle(context: Context): Spannable {
         return if (trip.declaredTransportationMode?.transportationMode == null) {
             DKResource.buildString(

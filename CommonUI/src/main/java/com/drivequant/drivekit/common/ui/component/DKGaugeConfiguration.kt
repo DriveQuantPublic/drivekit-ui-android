@@ -13,18 +13,18 @@ interface DKGaugeConfiguration {
 }
 
 sealed class DKGaugeType {
-    object CLOSE: DKGaugeType()
+    object CLOSED: DKGaugeType()
     object OPEN: DKGaugeType()
     data class OPEN_WITH_IMAGE(val icon: Int) : DKGaugeType()
 
     internal fun getStartAngle(): Float = when (this){
-        is CLOSE -> 270F
+        is CLOSED -> 270F
         is OPEN -> 38F
         is OPEN_WITH_IMAGE -> 38F
     }
 
     internal fun getOpenAngle(): Float = when (this){
-        is CLOSE -> 0F
+        is CLOSED -> 0F
         is OPEN -> 128F
         is OPEN_WITH_IMAGE -> 128F
     }

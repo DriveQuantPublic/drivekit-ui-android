@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.ui.extension
 
 import android.content.Context
-import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
 fun GaugeConfiguration.getScoreInfoTitle(context: Context): String =
