@@ -18,7 +18,10 @@ class RoadConditionStats(
             trips.forEach { trip ->
                 var majorRoadType = DKRoadCondition.TRAFFIC_JAM
                 var distanceMajor = 0.0
-                for (i in DKRoadCondition.values().filter { it.getValue() != DKRoadCondition.TRAFFIC_JAM.getValue() }.indices) {
+                for (i in DKRoadCondition.values().indices) {
+                    if (DKRoadCondition.getTypeFromValue(i) == DKRoadCondition.TRAFFIC_JAM) {
+                        continue
+                    }
                     val myDistance: Double = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
                         trip.safetyContexts[i].distance
                     } else {
