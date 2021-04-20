@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -67,7 +66,7 @@ class VehicleDetailFragment : Fragment() {
     private var imageView: ImageView? = null
     private var defaultVehicleImage: Int = 0
 
-    private var cameraFilePath : String? = null
+    private var imageUri : Uri? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
 
@@ -91,8 +90,13 @@ class VehicleDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (savedInstanceState?.getSerializable("vehicleDetailTag") as String?)?.let{
-            vehicleId = it
+        savedInstanceState?.let { bundle ->
+            val vehicleId = bundle.getSerializable("vehicleDetailTag") as String?
+
+            vehicleId?.let {
+                this.vehicleId = it
+                viewModel = VehicleDetailViewModel(it)
+            }
         }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -132,10 +136,13 @@ class VehicleDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onCameraCallback = object : OnCameraPictureTakenCallback {
             override fun pictureTaken(filePath: String) {
-                cameraFilePath = filePath
+                imageUri = Uri.parse(filePath)
             }
         }
-        cameraFilePath = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
+        val vehicleUriSharedPrefs = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
+        if (vehicleUriSharedPrefs != null) {
+            imageUri = Uri.parse(vehicleUriSharedPrefs)
+        }
         imageView = activity?.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
@@ -144,7 +151,7 @@ class VehicleDetailFragment : Fragment() {
 
         imageView?.let {
             Glide.with(this)
-                .load(if (!TextUtils.isEmpty(cameraFilePath)) cameraFilePath else defaultVehicleImage)
+                .load(imageUri ?: defaultVehicleImage)
                 .placeholder(defaultVehicleImage)
                 .into(it)
         }
@@ -347,9 +354,9 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun saveVehiclePictureLocalPath(path: String?){
-        path?.let {
-            DriveKitSharedPreferencesUtils.setString(String.format("drivekit-vehicle-picture_%s", vehicleId), path)
+    private fun saveVehiclePictureUri(uri: Uri?){
+        uri?.let {
+            DriveKitSharedPreferencesUtils.setString(String.format("drivekit-vehicle-picture_%s", vehicleId), it.toString())
         }
     }
 
@@ -384,18 +391,19 @@ class VehicleDetailFragment : Fragment() {
             when (requestCode) {
                 REQUEST_GALLERY -> {
                     CameraGalleryPickerHelper.buildUriFromIntentData(data)?.let {
+                        requireContext().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         updatePicture(it)
-                        val path = CameraGalleryPickerHelper.retrieveAbsolutePathFromUri(requireContext(), it)
-                        saveVehiclePictureLocalPath(path)
+                        saveVehiclePictureUri(it)
                     }
                 }
                 REQUEST_CAMERA -> {
-                    updatePicture(Uri.parse(cameraFilePath))
-                    saveVehiclePictureLocalPath(cameraFilePath)
+                    val uri = imageUri
+                    updatePicture(uri)
+                    saveVehiclePictureUri(uri)
                 }
             }
         } else {
-            cameraFilePath = null
+            imageUri = null
         }
     }
 }
