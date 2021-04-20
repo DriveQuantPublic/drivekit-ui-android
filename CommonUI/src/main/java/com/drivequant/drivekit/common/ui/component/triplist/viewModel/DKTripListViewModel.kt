@@ -7,7 +7,7 @@ import java.util.*
 class DKTripListViewModel {
 
     private lateinit var tripList: DKTripList
-    var sortedTrips = mutableListOf<DKTripsByDate>()
+    var sortedTrips = listOf<DKTripsByDate>()
 
     fun setDKTripList(tripsList: DKTripList) {
         this.tripList = tripsList

@@ -51,7 +51,7 @@ internal class AlternativeTripFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putSerializable("itinId", viewModel.getItinId())
+            outState.putString("itinId", viewModel.getItinId())
         }
         super.onSaveInstanceState(outState)
     }
@@ -59,7 +59,7 @@ internal class AlternativeTripFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!this::trip.isInitialized) {
-            (savedInstanceState?.getSerializable("itinId") as String?)?.let{ itinId->
+            (savedInstanceState?.getString("itinId"))?.let { itinId ->
                 DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()?.let {
                     trip = it
                 }
