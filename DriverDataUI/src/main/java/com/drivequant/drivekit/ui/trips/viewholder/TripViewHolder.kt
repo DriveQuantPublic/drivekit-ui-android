@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
@@ -73,7 +74,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
             DisplayType.GAUGE -> {
                 if (tripData.isScored(trip)) {
                     showGaugeIndicator()
-                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType())
+                    gaugeIndicator.configure(tripData.rawValue(trip)!!, tripData.getGaugeType(trip))
                 } else {
                     showImageIndicator(trip)
                 }
@@ -84,6 +85,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                 textIndicator.text =
                     if (tripData == TripData.DURATION) {
                         DKDataFormatter.formatDuration(itemView.context, trip.computeCeilDuration())
+                            .convertToString()
                     } else {
                         DKDataFormatter.formatMeterDistanceInKm(
                             itemView.context,

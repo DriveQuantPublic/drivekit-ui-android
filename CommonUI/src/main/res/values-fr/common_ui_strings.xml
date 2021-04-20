@@ -6,6 +6,8 @@
    <string name="dk_common_close">Fermer</string>
    <string name="dk_common_confirm">Confirmer</string>
    <string name="dk_common_consumption">Consommation</string>
+   <string name="dk_common_day_plural">jours</string>
+   <string name="dk_common_day_singular">jour</string>
    <string name="dk_common_delete">Supprimer</string>
    <string name="dk_common_distance">Distance</string>
    <string name="dk_common_distraction">Distraction</string>

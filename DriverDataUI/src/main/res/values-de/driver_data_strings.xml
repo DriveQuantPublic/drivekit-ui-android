@@ -27,6 +27,7 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_day">Tagesausflug</string>
    <string name="dk_driverdata_declared_transportation_mode">Modus erklärt:</string>
    <string name="dk_driverdata_default_filter_item">Alle meine Reisen</string>
+   <string name="dk_driverdata_dense_urban">%s bei starkem Verkehr</string>
    <string name="dk_driverdata_detected_transportation_mode">Erkannter Modus:</string>
    <string name="dk_driverdata_distance_travelled">%s verfahren</string>
    <string name="dk_driverdata_distraction_score">Ablenkungsmanöver</string>
@@ -40,6 +41,8 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_end_unauthorized_call_info_content">Die App hat das Ende eines unerlaubten Anrufs erkannt...
 Dies bedeutet, dass der Anruf nicht mit einer Freisprecheinrichtung getätigt wurde.
 Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Sie daran, sich selbst, Ihre Mitfahrer und andere Verkehrsteilnehmer zu schützen. Wenn Sie einen Anruf tätigen müssen, stellen Sie Ihr Fahrzeug mit ausgeschaltetem Motor in einer Parklücke ab.</string>
+   <string name="dk_driverdata_expressway">%s auf Schnellstraßen</string>
+   <string name="dk_driverdata_extra_urban">%s in außerstädtischen Gebieten</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Transportmodus konnte nicht aktualisiert werden, bitte versuchen Sie es später erneut.</string>
    <string name="dk_driverdata_failed_to_delete_trip">Die Fahrt konnte nicht gelöscht werden, versuchen Sie es später noch einmal.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Die Synchronisation von Fahrten ist fehlgeschlagen, bitte versuchen Sie es später erneut.</string>
@@ -51,6 +54,10 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_lock_event">Bildschirm sperren</string>
    <string name="dk_driverdata_low_accel">Beschleunigung zu schwach</string>
    <string name="dk_driverdata_low_decel">Bremsen zu schwach</string>
+   <string name="dk_driverdata_my_weekly_score_distraction">Resultat letzte 7 Tage | Ablenkung</string>
+   <string name="dk_driverdata_my_weekly_score_ecodriving">Resultat letzte 7 Tage | Effizienz</string>
+   <string name="dk_driverdata_my_weekly_score_safety">Resultat letzte 7 Tage | Sicherheit</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">Resultat letzte 7 Tage | Geschwindigkeit</string>
    <string name="dk_driverdata_night">Nachtfahrt</string>
    <string name="dk_driverdata_no_call_congrats">Glückwunsch!</string>
    <string name="dk_driverdata_no_call_content">Keine anrufe</string>
@@ -93,6 +100,10 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_synthesis_co2_mass">CO2-Masse</string>
    <string name="dk_driverdata_synthesis_condition">Bedingung</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Kraftstoffverbrauch</string>
+   <string name="dk_driverdata_synthesis_info_distraction">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 rollende Tage ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>
+   <string name="dk_driverdata_synthesis_info_ecodriving">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 rollende Tage ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>
+   <string name="dk_driverdata_synthesis_info_safety">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 rollende Tage ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>
+   <string name="dk_driverdata_synthesis_info_speeding">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 rollende Tage ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>
    <string name="dk_driverdata_synthesis_mean_speed">Mittlere Velocity</string>
    <string name="dk_driverdata_synthesis_road_context">Kontext Fahrt</string>
    <string name="dk_driverdata_synthesis_stop_time">Leerlaufdauer</string>
@@ -132,6 +143,7 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_unlock_events">Bildschirm entriegelt</string>
    <string name="dk_driverdata_unlock_number">Anzahl der Entsperrungen</string>
    <string name="dk_driverdata_unlock_screen_content">Anzeige auf %1$s und %2$s</string>
+   <string name="dk_driverdata_urban">%s in städtischen Gebieten</string>
    <string name="dk_driverdata_value">Wert =</string>
    <string name="dk_driverdata_vehicle_trips">Fahrzeug-Fahrten</string>
    <string name="dk_driverdata_weak_accel">Niedrige Beschleunigung</string>
