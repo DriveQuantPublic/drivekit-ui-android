@@ -77,7 +77,7 @@ class VehicleDetailFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_vehicle_detail, container, false).setDKStyle()
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("vehicleDetailTag", vehicleId)
+        outState.putString("vehicleDetailTag", vehicleId)
         super.onSaveInstanceState(outState)
     }
 
@@ -91,7 +91,7 @@ class VehicleDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         savedInstanceState?.let { bundle ->
-            val vehicleId = bundle.getSerializable("vehicleDetailTag") as String?
+            val vehicleId = bundle.getString("vehicleDetailTag")
 
             vehicleId?.let {
                 this.vehicleId = it
