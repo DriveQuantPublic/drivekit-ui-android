@@ -41,7 +41,7 @@ object DKDataFormatter {
 
                 if (nbHour > 23) {
                     nbDay = nbHour.div(24)
-                    nbHour -= nbHour - (24 * nbDay)
+                    nbHour -= (24 * nbDay)
                     formattingTypes.addAll(
                         listOf(
                             FormatType.VALUE(nbDay.toString()),
