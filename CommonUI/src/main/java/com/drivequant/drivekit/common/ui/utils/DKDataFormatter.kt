@@ -20,7 +20,7 @@ object DKDataFormatter {
     fun formatDuration(
         context: Context,
         durationInSeconds: Double?,
-        maxDurationUnit: DurationUnit = DurationUnit.DAY
+        maxUnit: DurationUnit = DurationUnit.DAY
     ): List<FormatType> {
         var nbMinute: Int
         var nbHour: Int
@@ -28,8 +28,8 @@ object DKDataFormatter {
 
         val formattingTypes = mutableListOf<FormatType>()
         if (durationInSeconds != null) {
-            if (durationInSeconds > 59) {
-                nbMinute = ceil(durationInSeconds.div(60)).toInt()
+            if (maxUnit != DurationUnit.SECOND && durationInSeconds > 59) {
+                nbMinute = ceil(durationInSeconds.div(60)).toInt() // formattage minutes
             } else {
                 formattingTypes.addAll(
                     listOf(
@@ -40,11 +40,11 @@ object DKDataFormatter {
                 )
                 return formattingTypes
             }
-            if (nbMinute > 59) {
+            if (maxUnit != DurationUnit.MINUTE && nbMinute > 59) {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
 
-                if (nbHour > 23 && maxDurationUnit == DurationUnit.DAY) {
+                if (maxUnit != DurationUnit.HOUR && nbHour > 23) {
                     nbDay = nbHour.div(24)
                     nbHour -= (24 * nbDay)
                     formattingTypes.addAll(
