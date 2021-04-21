@@ -62,10 +62,9 @@
     </style>
 
     <style name="GaugeSynthesisCard" >
-        <item name="strokeSize">16dp</item>
+        <item name="strokeSize">15dp</item>
         <item name="backColor">@color/dkGaugeBackColor</item>
-        <item name="textSize">@dimen/dk_text_xxbig</item>
-        <item name="android:textStyle">bold</item>
+        <item name="textSize">@dimen/dk_text_xbig</item>
     </style>
 
     <style name="SynthesisCardInfo" >

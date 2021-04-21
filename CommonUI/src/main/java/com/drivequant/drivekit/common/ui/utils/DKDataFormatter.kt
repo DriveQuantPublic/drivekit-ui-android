@@ -16,7 +16,12 @@ object DKDataFormatter {
 
     private const val NON_BREAKING_SPACE = "\u00A0"
 
-    fun formatDuration(context: Context, durationInSeconds: Double?): List<FormatType> {
+    @JvmOverloads
+    fun formatDuration(
+        context: Context,
+        durationInSeconds: Double?,
+        maxDurationUnit: DurationUnit = DurationUnit.DAY
+    ): List<FormatType> {
         var nbMinute: Int
         var nbHour: Int
         val nbDay: Int
@@ -39,7 +44,7 @@ object DKDataFormatter {
                 nbHour = nbMinute.div(60)
                 nbMinute -= (nbHour * 60)
 
-                if (nbHour > 23) {
+                if (nbHour > 23 && maxDurationUnit == DurationUnit.DAY) {
                     nbDay = nbHour.div(24)
                     nbHour -= (24 * nbDay)
                     formattingTypes.addAll(
@@ -63,7 +68,6 @@ object DKDataFormatter {
 
                     if (nbMinute > 0) {
                         formattingTypes.add(FormatType.VALUE(nbMinute.formatLeadingZero()))
-                        formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)))
                     }
                     return formattingTypes
                 }
@@ -76,7 +80,7 @@ object DKDataFormatter {
                         listOf(
                             FormatType.VALUE(nbMinutes.toString()),
                             FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
-                            FormatType.VALUE(nbSecond.toString())
+                            FormatType.VALUE(nbSecond.formatLeadingZero())
                         )
                     )
                 } else {

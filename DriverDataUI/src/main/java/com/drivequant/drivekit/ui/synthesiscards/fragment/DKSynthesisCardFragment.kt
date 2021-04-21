@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.synthesiscards.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

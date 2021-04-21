@@ -16,6 +16,7 @@ import com.drivequant.drivekit.ui.extension.computeEcoDrivingScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
 import java.io.Serializable
+import kotlin.math.roundToInt
 
 interface DKSynthesisCard : Serializable {
     fun getTitle(context: Context): String
@@ -118,7 +119,7 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 identifier,
-                "${pair.second.toInt()}%"
+                "${pair.second.roundToInt()}%"
             )
             spannable.setSpan(AbsoluteSizeSpan(18, true), 0, spannable.length, 0)
             return spannable
