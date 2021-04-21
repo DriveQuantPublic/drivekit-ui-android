@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
 import android.text.Spannable
+import android.text.style.AbsoluteSizeSpan
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
@@ -113,12 +114,14 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
                 DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
             }
 
-            DKResource.buildString(context,
+            val spannable = DKResource.buildString(context,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 identifier,
                 "${pair.second.toInt()}%"
             )
+            spannable.setSpan(AbsoluteSizeSpan(18, true), 0, spannable.length, 0)
+            return spannable
         }
     }
 

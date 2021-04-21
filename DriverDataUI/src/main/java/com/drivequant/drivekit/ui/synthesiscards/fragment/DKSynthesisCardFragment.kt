@@ -126,7 +126,6 @@ class DKSynthesisCardFragment : Fragment() {
 
         val bottomTextValue = viewModel.getBottomText(requireContext())
         if (bottomTextValue != null) {
-            bottomTextValue.setSpan(AbsoluteSizeSpan(18, true), 0, bottomTextValue.length, 0)
             bottom_text.text = bottomTextValue
             bottom_text.visibility = View.VISIBLE
         } else {
