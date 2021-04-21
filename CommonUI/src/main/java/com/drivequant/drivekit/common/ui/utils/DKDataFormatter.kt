@@ -45,11 +45,17 @@ object DKDataFormatter {
                     formattingTypes.addAll(
                         listOf(
                             FormatType.VALUE(nbDay.toString()),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
-                            FormatType.VALUE(nbHour.toString()),
-                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_day))
                         )
                     )
+                    if (nbHour > 0) {
+                        formattingTypes.addAll(
+                            listOf(
+                                FormatType.VALUE(nbHour.toString()),
+                                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                            )
+                        )
+                    }
                     return formattingTypes
                 } else {
                     formattingTypes.add(FormatType.VALUE(nbHour.toString()))
