@@ -39,14 +39,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dk_margin_medium" />
 
-                <com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.DriverProgressionView
+                <com.drivequant.drivekit.common.ui.component.ranking.views.DriverProgressionView
                     android:id="@+id/driver_progression"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 
-        <com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.DriverProgressionView
+        <com.drivequant.drivekit.common.ui.component.ranking.views.DriverProgressionView
             android:id="@+id/driver_progression_only"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
