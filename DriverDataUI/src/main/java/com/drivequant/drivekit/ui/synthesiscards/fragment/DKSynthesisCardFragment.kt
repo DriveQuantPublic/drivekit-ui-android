@@ -82,7 +82,7 @@ class DKSynthesisCardFragment : Fragment() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton()
+                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_close"))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
