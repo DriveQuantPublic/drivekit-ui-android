@@ -15,11 +15,12 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 class RankingViewModel : ViewModel() {
     var previousRank: Int? = null
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
-    var rankingDriversData = mutableListOf<RankingDriverData?>()
-    var mutableLiveDataRankingHeaderData: MutableLiveData<RankingHeaderData> = MutableLiveData()
+    var rankingDriversData = mutableListOf<RankingDriverData>()
+    var mutableLiveDataRankingData: MutableLiveData<RankingData> = MutableLiveData()
+    lateinit var fetchedRanking: Ranking
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
     val rankingTypesData = mutableListOf<RankingTypeData>()
-    lateinit var rankingHeaderData: RankingHeaderData
+    lateinit var rankingData: RankingData
     var selectedRankingSelectorData: RankingSelectorData
     var selectedRankingTypeData: RankingTypeData
     val useCache: MutableMap<String, Boolean> = mutableMapOf()
@@ -77,11 +78,12 @@ class RankingViewModel : ViewModel() {
                     rankingSyncStatus: RankingSyncStatus,
                     ranking: Ranking
                 ) {
+                    fetchedRanking = ranking
                     previousRank = ranking.userPreviousPosition
                     syncStatus = rankingSyncStatus
                     rankingDriversData = buildRankingDriverData(ranking.driversRanked)
-                    rankingHeaderData = RankingHeaderData(ranking)
-                    mutableLiveDataRankingHeaderData.postValue(rankingHeaderData)
+                    rankingData = RankingData(this@RankingViewModel)
+                    mutableLiveDataRankingData.postValue(rankingData)
                     val isSynchronized = when (syncStatus) {
                         RankingSyncStatus.USER_NOT_RANKED,
                         RankingSyncStatus.CACHE_DATA_ONLY,
@@ -94,23 +96,25 @@ class RankingViewModel : ViewModel() {
             })
     }
 
-    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData?> {
+    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
         rankingDriversData.clear()
         var alreadyInserted = false
+        var isRankJump = false
         for ((index, driverRanked) in driversRanked.withIndex()) {
+            if (index + 1 != driverRanked.rank && !alreadyInserted) {
+                isRankJump = true
+                alreadyInserted = true
+            }
             rankingDriversData.add(
                 RankingDriverData(
                     driverRanked.rank,
                     driverRanked.nickname,
                     driverRanked.distance,
                     driverRanked.score,
-                    driverRanked.userId
+                    driverRanked.userId,
+                    isRankJump
                 )
             )
-            if (index + 1 != driverRanked.rank && !alreadyInserted) {
-                rankingDriversData.add(index, null)
-                alreadyInserted = true
-            }
         }
         return rankingDriversData
     }

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -18,7 +19,6 @@ import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
-import com.drivequant.drivekit.driverachievement.ui.rankings.adapter.RankingListAdapter
 import com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.RankingSelectorView
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
@@ -29,20 +29,20 @@ class RankingFragment : Fragment(),
     RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingViewModel
-    private lateinit var rankingAdapter: RankingListAdapter
     private lateinit var selectedRankingSelectorView: RankingSelectorView
+    private lateinit var fragment: DKRankingFragment
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_rankings"), javaClass.simpleName)
         rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
-        recycler_view_ranking.layoutManager =
-            LinearLayoutManager(requireContext())
+
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
         }
-        setStyle()
+            fragment = DKRankingFragment()
+            fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
     }
 
     private fun createRankingSelectors() {
@@ -123,7 +123,7 @@ class RankingFragment : Fragment(),
 
     fun updateRanking() {
         var isToastShowed = false
-        rankingViewModel.mutableLiveDataRankingHeaderData.observe(this,
+        rankingViewModel.mutableLiveDataRankingData.observe(this,
             Observer {
                 if (rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY && !isToastShowed) {
                     Toast.makeText(
@@ -134,32 +134,11 @@ class RankingFragment : Fragment(),
                     isToastShowed = true
                 }
 
-                if (this::rankingAdapter.isInitialized) {
-                    rankingAdapter.notifyDataSetChanged()
-                } else {
-                    rankingAdapter = RankingListAdapter(requireContext(), rankingViewModel)
-                    recycler_view_ranking.adapter = rankingAdapter
-                }
-                ranking_header_view.setHeaderData(rankingViewModel)
-                updateProgressVisibility(false)
+                fragment.configureDKDriverRanking(rankingViewModel.rankingData)
+                fragment.updateProgressVisibility(false)
             })
 
-        updateProgressVisibility(true)
+        fragment.updateProgressVisibility(true)
         rankingViewModel.fetchRankingList()
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
-        }
-    }
-
-    private fun setStyle() {
-        text_view_position_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        text_view_nickname_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        text_view_score_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

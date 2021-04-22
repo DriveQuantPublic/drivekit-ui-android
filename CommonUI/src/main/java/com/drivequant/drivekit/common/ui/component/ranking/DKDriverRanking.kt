@@ -13,7 +13,6 @@ interface DKDriverRanking {
     fun getDriverGlobalRank(context: Context): Spannable
     fun getScoreTitle(): String
     fun getDriverRankingList(): List<DKDriverRankingItem>
-    fun getJumpIndex(): Int
 }
 
 interface DKDriverRankingItem {
@@ -23,6 +22,7 @@ interface DKDriverRankingItem {
     fun getDistance(context: Context): String
     fun getScore(context: Context, textColor: Int): Spannable
     fun getUserId(): String
+    fun isRankJump(): Boolean
 }
 
 enum class RankingHeaderDisplayType {
