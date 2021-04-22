@@ -101,7 +101,7 @@ class DKSynthesisCardFragment : Fragment() {
         score_gauge.configure(
             viewModel.getScore(),
             synthesisCard.getGaugeConfiguration(),
-            Typeface.BOLD,
+            Typeface.NORMAL,
             synthesisCard.getGaugeConfiguration().getTitle(requireContext())
         )
 
