@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.drivequant.drivekit.common.ui.component.ranking.views.RankingHeaderView
+        android:id="@+id/dk_ranking_header_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:orientation="horizontal"
+        android:padding="@dimen/dk_margin_quarter">
+
+        <TextView
+            android:id="@+id/dk_text_view_position_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:gravity="center"
+            android:text="@string/dk_common_ranking_rank" />
+
+        <TextView
+            android:id="@+id/dk_text_view_nickname_header"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_weight="1"
+            android:text="@string/dk_common_ranking_driver" />
+
+        <TextView
+            android:id="@+id/dk_text_view_score_header"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dk_margin_half"
+            android:gravity="center"
+            android:text="@string/dk_common_ranking_score" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dk_view_separator"
+        style="@style/Separator.Horizontal"
+        android:layout_marginStart="@dimen/dk_margin_half"
+        android:layout_marginEnd="@dimen/dk_margin_half" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dk_recycler_view_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>

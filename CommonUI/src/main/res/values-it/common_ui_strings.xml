@@ -60,4 +60,7 @@
    <string name="dk_common_update_photo_title">Cambiare l\'immagine</string>
    <string name="dk_common_validate">Convalidare</string>
    <string name="dk_common_yes">Sì</string>
+   <string name="dk_common_ranking_rank">Grado</string>
+   <string name="dk_common_ranking_score">Punteggio</string>
+   <string name="dk_common_ranking_driver">Conducente</string>
 </resources>
