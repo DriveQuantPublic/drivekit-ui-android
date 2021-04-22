@@ -1,16 +1,16 @@
-package com.drivequant.drivekit.driverachievement.ui.rankings.commons.views
+package com.drivequant.drivekit.common.ui.component.ranking.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
+import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.DriverProgression
-import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_driver_progression_view.view.*
 
 
@@ -33,14 +33,15 @@ class DriverProgressionView  : LinearLayout {
         setStyle()
     }
 
-    fun setDriverProgression(rankingViewModel: RankingViewModel) {
+    fun setDriverProgression(rankingViewModel: DKRankingViewModel) {
+        //TODO
         val progressionIconId =
-            when (rankingViewModel.rankingHeaderData.getProgression(rankingViewModel.previousRank)) {
+            when (rankingViewModel.getProgression(context)) {
                 DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
                 DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
                 else -> null
             }
-        text_view_global_rank.text = rankingViewModel.rankingHeaderData.getDriverGlobalRank(context)
+        text_view_global_rank.text = rankingViewModel.getDriverGlobalRank(context)
         progressionIconId?.let {
             image_view_driver_progression.setImageDrawable(
                 DKResource.convertToDrawable(
