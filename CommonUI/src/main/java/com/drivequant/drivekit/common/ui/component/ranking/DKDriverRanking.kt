@@ -11,7 +11,7 @@ interface DKDriverRanking {
     fun getIcon(context: Context): Drawable?
     fun getProgression(previousRank: Int?): DriverProgression?
     fun getDriverGlobalRank(context: Context): Spannable
-    fun getScoreTitle(): String
+    fun getScoreTitle(context: Context): String
     fun getDriverRankingList(): List<DKDriverRankingItem>
 }
 

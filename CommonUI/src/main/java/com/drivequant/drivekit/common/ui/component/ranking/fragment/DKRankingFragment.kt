@@ -41,6 +41,7 @@ class DKRankingFragment : Fragment() {
             dk_recycler_view_ranking.adapter = rankingAdapter
         }
         dk_ranking_header_view.setHeaderData(viewModel)
+        dk_text_view_score_header.text = rankingComponent.getScoreTitle(requireContext())
         setStyle()
     }
 

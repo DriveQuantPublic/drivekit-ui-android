@@ -32,10 +32,10 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private var currentDriverColor = DriveKitUI.colors.mainFontColor()
 
     fun bind(rankingDriverData: DKDriverRankingItem) {
-       rankingDriverData?.let {
+       if (!rankingDriverData.isRankJump()) {
            container.visibility = View.VISIBLE
            imageViewJump.visibility = View.GONE
-           if (it.getUserId() == DriveKit.config.userId) {
+           if (rankingDriverData.getUserId() == DriveKit.config.userId) {
                currentDriverColor = DriveKitUI.colors.fontColorOnSecondaryColor()
                driverPositionBackground.setColor(DriveKitUI.colors.secondaryColor())
                driverScoreBackground.setColor(DriveKitUI.colors.secondaryColor())
@@ -45,22 +45,22 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
                driverPositionBackground.setColor(DriveKitUI.colors.transparentColor())
            }
 
-           textViewDriverDistance.text = it.getDistance(itemView.context)
-           textViewDriverScore.text = it.getScore(itemView.context, currentDriverColor)
-           textViewDriverNickname.text = it.getNickname(itemView.context)
+           textViewDriverDistance.text = rankingDriverData.getDistance(itemView.context)
+           textViewDriverScore.text = rankingDriverData.getScore(itemView.context, currentDriverColor)
+           textViewDriverNickname.text = rankingDriverData.getNickname(itemView.context)
 
-           if (it.getRank() in 1..3) {
+           if (rankingDriverData.getRank() in 1..3) {
                textViewDriverPosition.visibility = View.INVISIBLE
                imageViewDriverPosition.visibility = View.VISIBLE
-               it.getRankResource(itemView.context)?.let { drawable ->
+               rankingDriverData.getRankResource(itemView.context)?.let { drawable ->
                    imageViewDriverPosition.setImageDrawable(drawable)
                }
            } else {
                imageViewDriverPosition.visibility = View.INVISIBLE
                textViewDriverPosition.visibility = View.VISIBLE
-               textViewDriverPosition.text = "${it.getRank()}"
+               textViewDriverPosition.text = "${rankingDriverData.getRank()}"
            }
-       } ?: kotlin.run {
+       } else {
            container.visibility = View.GONE
            imageViewJump.visibility = View.VISIBLE
        }

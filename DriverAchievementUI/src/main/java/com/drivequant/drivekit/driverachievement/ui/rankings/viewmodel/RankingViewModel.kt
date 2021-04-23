@@ -99,12 +99,7 @@ class RankingViewModel : ViewModel() {
     private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
         rankingDriversData.clear()
         var alreadyInserted = false
-        var isRankJump = false
         for ((index, driverRanked) in driversRanked.withIndex()) {
-            if (index + 1 != driverRanked.rank && !alreadyInserted) {
-                isRankJump = true
-                alreadyInserted = true
-            }
             rankingDriversData.add(
                 RankingDriverData(
                     driverRanked.rank,
@@ -112,9 +107,20 @@ class RankingViewModel : ViewModel() {
                     driverRanked.distance,
                     driverRanked.score,
                     driverRanked.userId,
-                    isRankJump
+                    false
                 )
             )
+            if (index + 1 != driverRanked.rank && !alreadyInserted) {
+                rankingDriversData.add(index, RankingDriverData(
+                    driverRanked.rank,
+                    driverRanked.nickname,
+                    driverRanked.distance,
+                    driverRanked.score,
+                    driverRanked.userId,
+                    true
+                ))
+                alreadyInserted = true
+            }
         }
         return rankingDriversData
     }

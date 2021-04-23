@@ -21,7 +21,7 @@ class RankingData(
 
     override fun getHeaderDisplayType(): RankingHeaderDisplayType =
         if (DriverAchievementUI.rankingTypes.size > 1 && viewModel.rankingSelectorsData.size > 1)
-            RankingHeaderDisplayType.FULL else RankingHeaderDisplayType.COMPACT
+            RankingHeaderDisplayType.COMPACT else RankingHeaderDisplayType.FULL
 
     override fun getTitle(): String =
         when (viewModel.fetchedRanking.rankingType) {
@@ -73,10 +73,7 @@ class RankingData(
                 .toSpannable()
         }
 
-    override fun getScoreTitle(): String {
-        //TODO score title column
-        return ""
-    }
+    override fun getScoreTitle(context: Context): String = DKResource.convertToString(context, "dk_common_ranking_score")
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
 }
