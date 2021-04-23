@@ -9,7 +9,7 @@ interface DKDriverRanking {
     fun getHeaderDisplayType(): RankingHeaderDisplayType
     fun getTitle(): String
     fun getIcon(context: Context): Drawable?
-    fun getProgression(previousRank: Int?): DriverProgression?
+    fun getProgression(): DriverProgression?
     fun getDriverGlobalRank(context: Context): Spannable
     fun getScoreTitle(context: Context): String
     fun getDriverRankingList(): List<DKDriverRankingItem>

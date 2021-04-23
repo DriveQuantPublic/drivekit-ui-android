@@ -74,7 +74,7 @@
             android:layout_width="@dimen/dk_ic_medium"
             android:layout_height="@dimen/dk_ic_medium"
             android:layout_gravity="center"
-            android:src="@drawable/dk_achievements_jump" />
+            android:src="@drawable/dk_common_jump" />
     </FrameLayout>
 
     <TextView

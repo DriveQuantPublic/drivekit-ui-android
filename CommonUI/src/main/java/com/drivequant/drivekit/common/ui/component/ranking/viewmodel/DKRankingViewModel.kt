@@ -16,7 +16,7 @@ class DKRankingViewModel: ViewModel() {
     fun getTitle() = driverRanking.getTitle()
     fun getIcon(context: Context) = driverRanking.getIcon(context)
     fun getHeaderDisplayType() = driverRanking.getHeaderDisplayType()
-    fun getProgression(context: Context): Spannable = driverRanking.getDriverGlobalRank(context)
+    fun getProgression() = driverRanking.getProgression()
     fun getDriverGlobalRank(context: Context) = driverRanking.getDriverGlobalRank(context)
     fun getDriverRankingList() = driverRanking.getDriverRankingList()
 }

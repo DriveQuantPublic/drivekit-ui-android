@@ -27,9 +27,9 @@ class RankingDriverData(
 
     override fun getRankResource(context: Context): Drawable? =
         when (driverRank) {
-            1 -> "dk_achievements_rank_1"
-            2 -> "dk_achievements_rank_2"
-            3 -> "dk_achievements_rank_3"
+            1 -> "dk_common_rank_1"
+            2 -> "dk_common_rank_2"
+            3 -> "dk_common_rank_3"
             else -> null
         }?.let {
             DKResource.convertToDrawable(
