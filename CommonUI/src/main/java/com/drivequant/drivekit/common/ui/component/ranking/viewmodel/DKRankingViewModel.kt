@@ -5,7 +5,7 @@ import android.text.Spannable
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 
-class DKRankingViewModel: ViewModel() {
+class DKRankingViewModel : ViewModel() {
 
     lateinit var driverRanking: DKDriverRanking
 

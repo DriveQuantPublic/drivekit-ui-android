@@ -26,7 +26,9 @@ class DKRankingFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.dk_fragment_ranking_component, container, false)
 
     fun configureDKDriverRanking(rankingComponent: DKDriverRanking) {
-        viewModel = ViewModelProviders.of(this).get(DKRankingViewModel::class.java)
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(DKRankingViewModel::class.java)
+        }
         viewModel.setDKDriverRanking(rankingComponent)
         dk_recycler_view_ranking.layoutManager =
             LinearLayoutManager(requireContext())

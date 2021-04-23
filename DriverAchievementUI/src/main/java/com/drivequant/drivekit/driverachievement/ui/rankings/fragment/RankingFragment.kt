@@ -25,24 +25,29 @@ import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingVi
 import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 
-class RankingFragment : Fragment(),
-    RankingSelectorListener {
+class RankingFragment : Fragment(), RankingSelectorListener {
 
     lateinit var rankingViewModel: RankingViewModel
     private lateinit var selectedRankingSelectorView: RankingSelectorView
     private lateinit var fragment: DKRankingFragment
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_rankings"), javaClass.simpleName)
-        rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
-
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_rankings"
+            ), javaClass.simpleName
+        )
+        if (!this::rankingViewModel.isInitialized) {
+            rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
+        }
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
         }
-            fragment = DKRankingFragment()
-            fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
+        fragment = DKRankingFragment()
+        fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
     }
 
     private fun createRankingSelectors() {
@@ -63,8 +68,9 @@ class RankingFragment : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
+        savedInstanceState: Bundle?
+    ): View =
+        inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
 
 
     private fun setTabLayout() {
@@ -103,7 +109,10 @@ class RankingFragment : Fragment(),
         })
     }
 
-    override fun onClickSelector(rankingSelectorData: RankingSelectorData, rankingSelectorView: RankingSelectorView) {
+    override fun onClickSelector(
+        rankingSelectorData: RankingSelectorData,
+        rankingSelectorView: RankingSelectorView
+    ) {
         selectedRankingSelectorView.setRankingSelectorSelected(false)
         selectedRankingSelectorView = rankingSelectorView
         rankingSelectorView.setRankingSelectorSelected(true)
