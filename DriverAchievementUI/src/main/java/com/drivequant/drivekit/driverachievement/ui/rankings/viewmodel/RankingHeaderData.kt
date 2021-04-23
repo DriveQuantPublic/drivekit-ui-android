@@ -38,11 +38,11 @@ class RankingData(
             RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
             RankingType.SPEEDING -> "dk_achievements_speeding"
         }.let {
-         DKResource.convertToDrawable(context,it)
+            DKResource.convertToDrawable(context, it)
         }
 
-    override fun getProgression(previousRank: Int?): DriverProgression? =
-         previousRank?.let {
+    override fun getProgression(): DriverProgression? =
+        viewModel.previousRank?.let {
             if (it < viewModel.fetchedRanking.userPosition) {
                 DriverProgression.GOING_UP
             } else {
@@ -73,7 +73,8 @@ class RankingData(
                 .toSpannable()
         }
 
-    override fun getScoreTitle(context: Context): String = DKResource.convertToString(context, "dk_common_ranking_score")
+    override fun getScoreTitle(context: Context): String =
+        DKResource.convertToString(context, "dk_common_ranking_score")
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
 }

@@ -35,9 +35,9 @@ class DriverProgressionView  : LinearLayout {
 
     fun setDriverProgression(rankingViewModel: DKRankingViewModel) {
         val progressionIconId =
-            when (rankingViewModel.getProgression(context)) {
-                DriverProgression.GOING_DOWN -> "dk_achievements_arrow_down"
-                DriverProgression.GOING_UP -> "dk_achievements_arrow_up"
+            when (rankingViewModel.getProgression()) {
+                DriverProgression.GOING_DOWN -> "dk_common_arrow_down"
+                DriverProgression.GOING_UP -> "dk_common_arrow_up"
                 else -> null
             }
         text_view_global_rank.text = rankingViewModel.getDriverGlobalRank(context)
