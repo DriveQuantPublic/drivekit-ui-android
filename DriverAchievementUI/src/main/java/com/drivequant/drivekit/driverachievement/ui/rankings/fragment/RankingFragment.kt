@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI

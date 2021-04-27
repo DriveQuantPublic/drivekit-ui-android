@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.common.ui.component.ranking.viewmodel
 
 import android.content.Context
-import android.text.Spannable
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 
