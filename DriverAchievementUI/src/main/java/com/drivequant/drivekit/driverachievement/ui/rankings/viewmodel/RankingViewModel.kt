@@ -13,7 +13,6 @@ import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
 class RankingViewModel : ViewModel() {
-    var previousRank: Int? = null
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
     var rankingDriversData = mutableListOf<RankingDriverData>()
     var mutableLiveDataRankingData: MutableLiveData<RankingData> = MutableLiveData()
@@ -79,7 +78,6 @@ class RankingViewModel : ViewModel() {
                     ranking: Ranking
                 ) {
                     fetchedRanking = ranking
-                    previousRank = ranking.userPreviousPosition
                     syncStatus = rankingSyncStatus
                     rankingDriversData = buildRankingDriverData(ranking.driversRanked)
                     rankingData = RankingData(this@RankingViewModel)

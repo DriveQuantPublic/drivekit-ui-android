@@ -29,7 +29,6 @@
             android:id="@+id/dk_text_view_nickname_header"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dk_margin_half"
             android:layout_weight="1"
             android:text="@string/dk_common_ranking_driver" />
 

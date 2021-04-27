@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.adapter.RankingListAdapter
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.normalText
 import kotlinx.android.synthetic.main.dk_fragment_ranking_component.*
 
 class DKRankingFragment : Fragment() {
@@ -48,9 +48,9 @@ class DKRankingFragment : Fragment() {
     }
 
     private fun setStyle() {
-        dk_text_view_position_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        dk_text_view_nickname_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        dk_text_view_score_header.smallText(DriveKitUI.colors.complementaryFontColor())
+        dk_text_view_position_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        dk_text_view_nickname_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        dk_text_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 

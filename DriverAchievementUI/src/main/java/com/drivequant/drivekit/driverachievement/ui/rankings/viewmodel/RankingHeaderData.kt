@@ -41,16 +41,20 @@ class RankingData(
             DKResource.convertToDrawable(context, it)
         }
 
-    override fun getProgression(): DriverProgression? =
-        viewModel.previousRank?.let {
-            if (it < viewModel.fetchedRanking.userPosition) {
-                DriverProgression.GOING_UP
-            } else {
-                DriverProgression.GOING_DOWN
+    override fun getProgression(): DriverProgression? {
+        val ranking = viewModel.fetchedRanking
+        if (ranking.userPosition > 0) {
+            ranking.userPreviousPosition?.let {
+                val delta = it - ranking.userPosition
+                return if (delta > 0) {
+                    DriverProgression.GOING_UP
+                } else {
+                    DriverProgression.GOING_DOWN
+                }
             }
-        } ?: kotlin.run {
-            null
         }
+        return null
+    }
 
     override fun getDriverGlobalRank(context: Context): Spannable =
         if (viewModel.fetchedRanking.userPosition == 0) {
