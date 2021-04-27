@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingDriverData(
@@ -18,12 +19,12 @@ class RankingDriverData(
     private val driverDistance: Double,
     private val driverScore: Double,
     private val driverId: String,
-    private val isRankJump: Boolean
+    private val isJumpRank: Boolean
 ) : DKDriverRankingItem {
 
     override fun getRank(): Int = driverRank
 
-    override fun getUserId(): String = driverId
+    override fun isCurrentUser(): Boolean = DriveKit.config.userId == driverId
 
     override fun getRankResource(context: Context): Drawable? =
         when (driverRank) {
@@ -61,5 +62,5 @@ class RankingDriverData(
             }).toSpannable()
         }
 
-    override fun isRankJump(): Boolean = isRankJump
+    override fun isJumpRank(): Boolean = isJumpRank
 }

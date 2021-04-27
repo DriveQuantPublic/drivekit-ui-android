@@ -10,7 +10,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.core.DriveKit
 
 
 class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,10 +31,10 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private var currentDriverColor = DriveKitUI.colors.mainFontColor()
 
     fun bind(rankingDriverData: DKDriverRankingItem) {
-       if (!rankingDriverData.isRankJump()) {
+       if (!rankingDriverData.isJumpRank()) {
            container.visibility = View.VISIBLE
            imageViewJump.visibility = View.GONE
-           if (rankingDriverData.getUserId() == DriveKit.config.userId) {
+           if (rankingDriverData.isCurrentUser()) {
                currentDriverColor = DriveKitUI.colors.fontColorOnSecondaryColor()
                driverPositionBackground.setColor(DriveKitUI.colors.secondaryColor())
                driverScoreBackground.setColor(DriveKitUI.colors.secondaryColor())

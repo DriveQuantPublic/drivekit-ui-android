@@ -21,8 +21,8 @@ interface DKDriverRankingItem {
     fun getNickname(context: Context): String
     fun getDistance(context: Context): String
     fun getScore(context: Context, textColor: Int): Spannable
-    fun getUserId(): String
-    fun isRankJump(): Boolean
+    fun isCurrentUser(): Boolean
+    fun isJumpRank(): Boolean
 }
 
 enum class RankingHeaderDisplayType {
