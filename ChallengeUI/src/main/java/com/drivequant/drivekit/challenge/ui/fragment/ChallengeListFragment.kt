@@ -5,56 +5,120 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
+import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.dk_fragment_challenge_list.*
+import kotlinx.android.synthetic.main.dk_fragment_ranking_component.progress_circular
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ChallengeListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ChallengeListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var challengeAdapter: ChallengeListAdapter
+    private lateinit var viewModel: ChallengeListViewModel
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
+    ): View? = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge-list"
+            ), javaClass.simpleName
+        )
+        setTabLayout()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChallengeListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChallengeListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun setTabLayout() {
+        for (challengeStatusData in viewModel.challengesStatusData) {
+            val tab = tab_layout_challenge.newTab()
+            val icon = DKResource.convertToDrawable(requireContext(), challengeStatusData.iconId)
+            icon?.let {
+                tab.setIcon(it)
             }
+            tab_layout_challenge.addTab(tab)
+        }
+
+        for (i in 0 until tab_layout_challenge.tabCount) {
+            val tab = tab_layout_challenge.getTabAt(i)
+            tab?.setCustomView(R.layout.dk_challenge_view_tab)
+        }
+
+        tab_layout_challenge.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewModel.selectedChallengeStatusData =
+                    viewModel.challengesStatusData[tab_layout_challenge.selectedTabPosition]
+                updateChallenge()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+        })
+    }
+
+    private fun updateChallenge() {
+        var isToastShowed = false
+        viewModel.mutableLiveDataChallengesData.observe(this,
+            Observer {
+                if (viewModel.syncStatus == ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY) {
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(requireContext(),""),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isToastShowed = true
+                }
+
+                dk_recycler_view_challenge.layoutManager =
+                    LinearLayoutManager(requireContext())
+                if (this::challengeAdapter.isInitialized) {
+                    challengeAdapter.notifyDataSetChanged()
+                } else {
+                    challengeAdapter =
+                        ChallengeListAdapter(
+                            requireContext(),
+                            viewModel
+                        )
+                    dk_recycler_view_challenge.adapter = challengeAdapter
+                }
+
+
+                updateProgressVisibility(false)
+            })
+
+        updateProgressVisibility(true)
+        viewModel.fetchChallengeList()
+    }
+
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        if (displayProgress) {
+            progress_circular.visibility = View.VISIBLE
+        } else {
+            progress_circular.visibility = View.GONE
+        }
     }
 }
