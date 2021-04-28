@@ -54,7 +54,7 @@ object DriveKitConfig {
         val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
         DriverAchievementUI.configureRankingSelector(rankingSelectorType)
 
-        val rankingDepthValue = 20
+        val rankingDepthValue = 5
         DriverAchievementUI.configureRankingDepth(rankingDepthValue)
     }
 

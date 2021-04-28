@@ -60,4 +60,8 @@
     <string name="dk_common_update_photo_title">Edit the picture</string>
     <string name="dk_common_validate">Validate</string>
     <string name="dk_common_yes">Yes</string>
+
+    <string name="dk_common_ranking_rank">Rank</string>
+    <string name="dk_common_ranking_score">Score</string>
+    <string name="dk_common_ranking_driver">Driver</string>
 </resources>
