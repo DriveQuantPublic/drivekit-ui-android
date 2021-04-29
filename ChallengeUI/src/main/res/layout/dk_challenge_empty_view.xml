@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_group_empty_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <ImageView
-        android:id="@+id/image_view_no_trips"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:src="@drawable/dk_no_trips_recorded"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:id="@+id/dk_image_view_no_challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/dk_challenge_waiting"
+        android:contentDescription="TODO" />
+
     <TextView
-        android:id="@+id/no_trips_recorded_text"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/dk_text_view_no_challenge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/image_view_no_trips"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:padding="@dimen/dk_margin"
+        android:textStyle="bold" />
+</LinearLayout>

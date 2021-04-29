@@ -15,7 +15,7 @@ class ChallengeListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = DKResource.convertToString(this, "dk_achievements_ranking_menu_ranking")
+        title = DKResource.convertToString(this, "dk_challenge_menu")
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, ChallengeListFragment())

@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="dk_challenge_menu">Challenges</string>
+    <string name="dk_challenge_no_active_challenge">Aucun challenge en cours</string>
+    <string name="dk_challenge_no_finished_challenge">Aucun challenge terminé</string>
+    <string name="dk_challenge_active">Actifs</string>
+    <string name="dk_challenge_finished">Terminés</string>
+    <string name="dk_challenge_failed_to_sync_challenges">Les données du challenge n\'ont pas pu être récupérées, assurez-vous d\'être connecté à internet ou réessayez utlérieurement.</string>
+</resources>

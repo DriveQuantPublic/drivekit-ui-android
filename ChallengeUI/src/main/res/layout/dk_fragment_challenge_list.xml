@@ -15,6 +15,11 @@
         android:layout_height="wrap_content"
         app:tabMode="fixed" />
 
+    <include
+        android:id="@+id/no_challenges"
+        layout="@layout/dk_challenge_empty_view"
+        android:visibility="gone" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
