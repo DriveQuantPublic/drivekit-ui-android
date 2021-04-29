@@ -10,6 +10,8 @@ import com.drivequant.drivekit.common.ui.component.DKGaugeType
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     data class SAFETY(override val value: Double) : GaugeConfiguration(value)
@@ -21,7 +23,7 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
         val text = if (value == 11.0) {
             "-"
         } else {
-            value.removeZeroDecimal()
+            BigDecimal(value).setScale(1, RoundingMode.HALF_UP).toDouble().removeZeroDecimal()
         }
         return DKSpannable().append(text, context.resSpans {
             size(R.dimen.dk_ic_medium)
