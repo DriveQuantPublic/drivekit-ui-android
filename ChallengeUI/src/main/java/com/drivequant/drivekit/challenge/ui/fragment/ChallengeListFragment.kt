@@ -52,7 +52,7 @@ class ChallengeListFragment : Fragment() {
                     isToastShowed = true
                 }
                 if (it.isEmpty()) {
-                    displayNoChallenges(viewModel.selectedChallengeStatusData.challengeStatus)
+                    displayNoChallenges(viewModel.selectedChallengeStatusData.statusList)
                 } else {
                     displayChallenges()
                 }
@@ -91,7 +91,7 @@ class ChallengeListFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewModel.selectedChallengeStatusData =
                     viewModel.challengesStatusData[tab_layout_challenge.selectedTabPosition]
-                viewModel.filterChallenges(viewModel.selectedChallengeStatusData.challengeStatus)
+                viewModel.filterChallenges(viewModel.selectedChallengeStatusData.statusList)
             }
         })
     }
@@ -107,17 +107,19 @@ class ChallengeListFragment : Fragment() {
         updateProgressVisibility(false)
     }
 
-    private fun displayNoChallenges(challengeStatus: ChallengeStatus) {
-        val pair = when (challengeStatus) {
-            ChallengeStatus.FINISHED -> Pair(
-                "dk_challenge_no_active_challenge",
-                "dk_challenge_finished"
-            )
-            ChallengeStatus.PENDING -> Pair(
-                "dk_challenge_no_finished_challenge",
-                "dk_challenge_waiting"
-            )
-            else -> Pair("dk_challenge_no_active_challenge", "dk_challenge_waiting")
+    private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
+        var pair = Pair("dk_challenge_no_active_challenge", "dk_challenge_waiting")
+        challengeStatusList.map {
+            pair = when (it) {
+                ChallengeStatus.FINISHED, ChallengeStatus.ARCHIVED -> Pair(
+                    "dk_challenge_no_finished_challenge",
+                    "dk_challenge_finished"
+                )
+                ChallengeStatus.PENDING, ChallengeStatus.SCHEDULED -> Pair(
+                    "dk_challenge_no_active_challenge",
+                    "dk_challenge_waiting"
+                )
+            }
         }
         val textView = no_challenges.findViewById<TextView>(R.id.dk_text_view_no_challenge)
         val imageView = no_challenges.findViewById<ImageView>(R.id.dk_image_view_no_challenge)

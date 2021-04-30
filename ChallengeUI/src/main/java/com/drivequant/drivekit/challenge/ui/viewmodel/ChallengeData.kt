@@ -3,7 +3,7 @@ package com.drivequant.drivekit.challenge.ui.viewmodel
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.Group
 
-class ChallengeListData(
+class ChallengeData(
     val challengeId: String,
     val title: String,
     val description: String,

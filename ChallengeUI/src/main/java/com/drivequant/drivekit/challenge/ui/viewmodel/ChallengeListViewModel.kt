@@ -11,21 +11,37 @@ import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 class ChallengeListViewModel : ViewModel() {
 
     var syncStatus: ChallengesSyncStatus = ChallengesSyncStatus.SUCCESS
-    var challengeListData = mutableListOf<ChallengeListData>()
-    var mutableLiveDataChallengesData: MutableLiveData<List<ChallengeListData>> = MutableLiveData()
+    var challengeListData = mutableListOf<ChallengeData>()
+    var mutableLiveDataChallengesData: MutableLiveData<List<ChallengeData>> = MutableLiveData()
     var selectedChallengeStatusData: ChallengeStatusData
     var challengesStatusData = mutableListOf<ChallengeStatusData>()
-    var filteredChallenge = mutableListOf<ChallengeListData>()
+    var filteredChallenge = mutableListOf<ChallengeData>()
 
     init {
-        challengesStatusData.add(ChallengeStatusData("dk_challenge_active", ChallengeStatus.PENDING))
-        challengesStatusData.add(ChallengeStatusData("dk_challenge_finished", ChallengeStatus.FINISHED))
+        challengesStatusData.add(
+            ChallengeStatusData(
+                "dk_challenge_active",
+                listOf(ChallengeStatus.PENDING, ChallengeStatus.SCHEDULED)
+            )
+        )
+        challengesStatusData.add(
+            ChallengeStatusData(
+                "dk_challenge_finished",
+                listOf(ChallengeStatus.FINISHED, ChallengeStatus.ARCHIVED)
+            )
+        )
         selectedChallengeStatusData = challengesStatusData.first()
     }
 
-    fun filterChallenges(challengeStatus: ChallengeStatus) {
+    fun filterChallenges(statusList: List<ChallengeStatus>) {
         filteredChallenge.clear()
-        filteredChallenge = challengeListData.filter { it.status == challengeStatus }.toMutableList()
+        for (challengeData in challengeListData) {
+            for (status in statusList) {
+                if (status == challengeData.status) {
+                    filteredChallenge.add(challengeData)
+                }
+            }
+        }
         mutableLiveDataChallengesData.postValue(filteredChallenge)
     }
 
@@ -37,15 +53,15 @@ class ChallengeListViewModel : ViewModel() {
             ) {
                 syncStatus = challengesSyncStatus
                 challengeListData = buildChallengeListData(challenges)
-                filterChallenges(selectedChallengeStatusData.challengeStatus)
+                filterChallenges(selectedChallengeStatusData.statusList)
             }
         })
     }
 
-    fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeListData> {
+    fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
         challengeListData.clear()
         return challengeList.map {
-            ChallengeListData(
+            ChallengeData(
                 it.challengeId,
                 it.title,
                 it.description,
