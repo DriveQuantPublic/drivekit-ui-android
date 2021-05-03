@@ -20,16 +20,14 @@ object SynthesisCardsUtils {
     ): List<Trip> {
         val lastTrip =
             DriveKitDriverData.tripsQuery()
-                .whereGreaterThanOrEqual("transportationMode", TransportationMode.UNKNOWN.value)
-                .and().whereLessThanOrEqual("transportationMode", TransportationMode.TRUCK.value)
+                .whereIn("transportationMode", transportationModes.map { it.value })
                 .orderBy("endDate", Query.Direction.DESCENDING).queryOne().executeOne()
         return if (lastTrip != null) {
             val cal = Calendar.getInstance()
             cal.time = lastTrip.endDate
             cal.add(Calendar.HOUR, -24 * 7)
             DriveKitDriverData.tripsQuery()
-                .whereGreaterThanOrEqual("transportationMode", TransportationMode.UNKNOWN.value)
-                .and().whereLessThanOrEqual("transportationMode", TransportationMode.TRUCK.value)
+                .whereIn("transportationMode", transportationModes.map { it.value })
                 .and()
                 .whereGreaterThan("endDate", cal.time).query().executeTrips().toTrips()
         } else {
