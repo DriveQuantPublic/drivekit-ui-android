@@ -2,14 +2,15 @@ package com.drivequant.drivekit.challenge.ui.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.Group
+import java.util.*
 
 class ChallengeData(
     val challengeId: String,
     val title: String,
     val description: String,
     val conditionsDescription: String?,
-    val startDate: String,
-    val endDate: String,
+    val startDate: Date,
+    val endDate: Date,
     val rankKey: String?,
     val themeCode: Int,
     val iconCode: Int,
