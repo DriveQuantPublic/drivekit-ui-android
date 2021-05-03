@@ -63,6 +63,5 @@ class ChallengeData(
             604 -> "dk_challenge_gift_604_paper_money"
             else -> "dk_challenge_general_101_trophy"
         }
-
 }
 

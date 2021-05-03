@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.DriveKit
 
 class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val challengeTitle = itemView.findViewById<TextView>(R.id.dk_text_view_title)
@@ -31,6 +30,5 @@ class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun setStyle() {
         challengeTitle.headLine1()
         challengeDate.setTextColor(DriveKitUI.colors.mainFontColor())
-
     }
 }
