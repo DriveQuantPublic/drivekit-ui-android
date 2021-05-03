@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="dk_challenge_active">Attivi</string>
+    <string name="dk_challenge_competitors_distance">Distanza totale dalla sfida %1$s %2$s</string>
+    <string name="dk_challenge_competitors_duration">I partecipanti hanno guidato %s</string>
+    <string name="dk_challenge_competitors_trips">su un totale di %1$s %2$s</string>
+    <string name="dk_challenge_consult_rule_button">Consulta le regole</string>
+    <string name="dk_challenge_driver_distance">Ne hai passate tante altre cose %1$s %2$s</string>
+    <string name="dk_challenge_driver_duration">Hai guidato %s</string>
+    <string name="dk_challenge_driver_trips">Hai capito che %1$s %2$s</string>
+    <string name="dk_challenge_failed_to_sync_challenges">Impossibile sincronizzare le sfide, si prega di riprovare più tardi.</string>
+    <string name="dk_challenge_finished">Completa</string>
+    <string name="dk_challenge_menu">Sfide</string>
+    <string name="dk_challenge_no_active_challenge">Nessuna sfida in corso</string>
+    <string name="dk_challenge_no_finished_challenge">Nessuna sfida completata</string>
+    <string name="dk_challenge_optin_title">Accetta le regole</string>
+    <string name="dk_challenge_participate_button">Partecipo</string>
+    <string name="dk_challenge_registered_confirmation">Sei registrato!</string>
+    <string name="dk_challenge_rule_title">Regole della sfida</string>
+    <string name="dk_challenge_score_alert_message">I risultati di questa sfida sono in fase di analisi, si prega di riprovare più tardi.</string>
+    <string name="dk_challenge_score_alert_title">Sfida in analisi</string>
+    <string name="dk_challenge_signin_in_progress">Registrazione in corso…</string>
+    <string name="dk_challenge_start">Inizio della sfida\n%s</string>
+    <string name="dk_challenge_unranked_conditions_info">Per inserire la classifica, è necessario soddisfare le condizioni seguenti:</string>
 </resources>
