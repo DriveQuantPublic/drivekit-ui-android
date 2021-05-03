@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.drivequant.drivekit.common.ui.component.WrapContentViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabDotsScore"
