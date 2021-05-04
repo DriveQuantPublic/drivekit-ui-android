@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.viewholder.ChallengeViewHolder
 import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 
 class ChallengeListAdapter(val context: Context,private val viewModel: ChallengeListViewModel) :
     RecyclerView.Adapter<ChallengeViewHolder>() {

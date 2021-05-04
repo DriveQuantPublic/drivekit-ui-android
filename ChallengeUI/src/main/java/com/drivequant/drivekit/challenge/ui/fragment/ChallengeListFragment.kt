@@ -17,7 +17,6 @@ import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.google.android.material.tabs.TabLayout
@@ -77,7 +76,11 @@ class ChallengeListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
+    ): View? {
+        val view = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
+        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        return view
+    }
 
     private fun setTabLayout() {
         for (challengeStatusData in viewModel.challengesStatusData) {
