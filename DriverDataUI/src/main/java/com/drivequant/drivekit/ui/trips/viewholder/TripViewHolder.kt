@@ -90,7 +90,7 @@ internal class TripViewHolder(itemView: View, private val viewModel: TripsListVi
                         DKDataFormatter.formatMeterDistanceInKm(
                             itemView.context,
                             tripData.rawValue(trip)
-                        )
+                        ).convertToString()
                     }
             }
         }

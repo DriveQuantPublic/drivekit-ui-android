@@ -162,50 +162,63 @@ object DKDataFormatter {
         return formattingTypes
     }
 
-    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): String {
+    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): List<FormatType> {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
-        return when (DriveKitUI.distanceUnit) {
+        val formattingTypes = mutableListOf<FormatType>()
+
+        when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                if (unit) "${formatDistanceValue(distanceInMile)}"
-                    .plus(NON_BREAKING_SPACE)
-                    .plus(context.resources.getString(R.string.dk_common_unit_mile))
-                else "${formatDistanceValue(distanceInMile)}"
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile) ?: ""))
+                if (unit) {
+                    formattingTypes.add(FormatType.SEPARATOR())
+                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
+                }
             }
             DistanceUnit.KM -> {
-                if (unit) "${formatDistanceValue(distanceInKm)}"
-                    .plus(NON_BREAKING_SPACE)
-                    .plus(context.resources.getString(R.string.dk_common_unit_kilometer))
-                else "${formatDistanceValue(distanceInKm)}"
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm) ?: ""))
+                if (unit) {
+                    formattingTypes.add(FormatType.SEPARATOR())
+                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_kilometer)))
+                }
             }
         }
+        return formattingTypes
     }
 
-    fun formatMeterDistance(context: Context, distance: Double?, unit: Boolean = true): String {
+    fun formatMeterDistance(context: Context, distance: Double?, unit: Boolean = true): List<FormatType> {
         distance?.let {
             return when {
                 it == 0.0 -> {
-                    it.removeZeroDecimal()
-                        .plus(NON_BREAKING_SPACE)
-                        .plus(context.getString(R.string.dk_common_unit_meter))
+                    listOf(
+                        FormatType.VALUE(it.removeZeroDecimal()),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
                 }
                 it < 10 -> {
-                    it.format(2)
-                        .plus(NON_BREAKING_SPACE)
-                        .plus(context.getString(R.string.dk_common_unit_meter))
+                    listOf(
+                        FormatType.VALUE(it.format(2)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
                 }
                 it < 1000 -> {
-                    it.format(0)
-                        .plus(NON_BREAKING_SPACE)
-                        .plus(context.getString(R.string.dk_common_unit_meter))
+                    listOf(
+                        FormatType.VALUE(it.format(0)),
+                        FormatType.SEPARATOR(),
+                        FormatType.UNIT(context.getString(R.string.dk_common_unit_meter))
+                    )
                 }
                 else -> {
                     formatMeterDistanceInKm(context, distance, unit)
                 }
             }
         } ?: run {
-            return "-"
+            return listOf(
+                FormatType.VALUE("-")
+            )
         }
     }
 
