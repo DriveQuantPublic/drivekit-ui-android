@@ -29,7 +29,7 @@ object DKDataFormatter {
         val formattingTypes = mutableListOf<FormatType>()
         if (durationInSeconds != null) {
             if (maxUnit != DurationUnit.SECOND && durationInSeconds > 59) {
-                nbMinute = ceil(durationInSeconds.div(60)).toInt() // formattage minutes
+                nbMinute = ceil(durationInSeconds.div(60)).toInt()
             } else {
                 formattingTypes.addAll(
                     listOf(
