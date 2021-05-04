@@ -5,7 +5,7 @@
     </style>
 
     <style name="ChallengeTextAppearance" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/dk_text_small</item>
         <item name="textAllCaps">true</item>
     </style>
 </resources>

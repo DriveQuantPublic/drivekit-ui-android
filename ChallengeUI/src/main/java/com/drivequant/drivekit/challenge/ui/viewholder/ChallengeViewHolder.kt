@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.viewholder
 
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +10,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
@@ -28,7 +30,7 @@ class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private fun setStyle() {
-        challengeTitle.headLine1()
-        challengeDate.setTextColor(DriveKitUI.colors.mainFontColor())
+        challengeTitle.setTextColor(DriveKitUI.colors.mainFontColor())
+        challengeDate.normalText(Color.parseColor("#9E9E9E"))
     }
 }

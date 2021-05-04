@@ -16,6 +16,8 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.google.android.material.tabs.TabLayout
@@ -127,6 +129,7 @@ class ChallengeListFragment : Fragment() {
         DKResource.convertToDrawable(requireContext(), pair.second)?.let {
             imageView.setImageDrawable(it)
         }
+        textView.headLine2(DriveKitUI.colors.mainFontColor())
         no_challenges.visibility = View.VISIBLE
         dk_recycler_view_challenge.visibility = View.GONE
         updateProgressVisibility(false)

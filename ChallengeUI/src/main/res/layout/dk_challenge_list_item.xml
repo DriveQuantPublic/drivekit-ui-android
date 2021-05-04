@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/dk_margin_quarter"
-    app:cardElevation="@dimen/dk_margin_quarter">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/view_group_container"
@@ -19,14 +16,13 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="@dimen/dk_margin_half"
-            android:contentDescription="TODO"
+            android:contentDescription="image"
             tools:src="@color/design_default_color_secondary" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/dk_image_view_icon"
-            android:gravity="center_vertical"
             android:orientation="vertical"
             android:padding="@dimen/dk_margin_half">
 
@@ -36,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin_medium"
                 android:singleLine="false"
-                android:textStyle="bold"
+                android:textSize="@dimen/dk_text_big"
                 tools:text="Conduite en souplesse et autre contorsions" />
 
             <LinearLayout
@@ -46,8 +42,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/dk_ic_medium"
-                    android:layout_height="@dimen/dk_ic_medium"
+                    android:layout_width="@dimen/dk_ic_small"
+                    android:layout_height="@dimen/dk_ic_small"
                     android:layout_marginEnd="@dimen/dk_margin_half"
                     android:contentDescription="TODO"
                     android:src="@drawable/dk_common_calendar" />
@@ -57,7 +53,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:alpha="0.5"
                     tools:text="12/01/2017 - 15/01/2017" />
 
             </LinearLayout>
