@@ -33,6 +33,7 @@
                 android:layout_marginBottom="@dimen/dk_margin_medium"
                 android:singleLine="false"
                 android:textSize="@dimen/dk_text_big"
+                android:textStyle="bold"
                 tools:text="Conduite en souplesse et autre contorsions" />
 
             <LinearLayout
@@ -45,7 +46,7 @@
                     android:layout_width="@dimen/dk_ic_small"
                     android:layout_height="@dimen/dk_ic_small"
                     android:layout_marginEnd="@dimen/dk_margin_half"
-                    android:contentDescription="TODO"
+                    android:contentDescription="image"
                     android:src="@drawable/dk_common_calendar" />
 
                 <TextView

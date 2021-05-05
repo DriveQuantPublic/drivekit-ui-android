@@ -5,17 +5,19 @@ import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.challenge.ChallengesQueryListener
 import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 class ChallengeListViewModel : ViewModel() {
 
-    var syncStatus: ChallengesSyncStatus = ChallengesSyncStatus.SUCCESS
-    var challengeListData = mutableListOf<ChallengeData>()
+    private var challengeListData = mutableListOf<ChallengeData>()
     var mutableLiveDataChallengesData: MutableLiveData<List<ChallengeData>> = MutableLiveData()
     var selectedChallengeStatusData: ChallengeStatusData
     var challengesStatusData = mutableListOf<ChallengeStatusData>()
     var filteredChallenge = mutableListOf<ChallengeData>()
+    var syncChallengesError: MutableLiveData<Any> = MutableLiveData()
+        private set
 
     init {
         challengesStatusData.add(
@@ -46,16 +48,22 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     fun fetchChallengeList() {
-        DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
-            override fun onResponse(
-                challengesSyncStatus: ChallengesSyncStatus,
-                challenges: List<Challenge>
-            ) {
-                syncStatus = challengesSyncStatus
-                challengeListData = buildChallengeListData(challenges)
-                filterChallenges(selectedChallengeStatusData.statusList)
-            }
-        })
+        if (DriveKit.isConfigured()) {
+            DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
+                override fun onResponse(
+                    challengesSyncStatus: ChallengesSyncStatus,
+                    challenges: List<Challenge>
+                ) {
+                    if (challengesSyncStatus == ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY) {
+                        syncChallengesError.postValue(Any())
+                    }
+                    challengeListData = buildChallengeListData(challenges)
+                    filterChallenges(selectedChallengeStatusData.statusList)
+                }
+            })
+        } else {
+            syncChallengesError.postValue(Any())
+        }
     }
 
     fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {

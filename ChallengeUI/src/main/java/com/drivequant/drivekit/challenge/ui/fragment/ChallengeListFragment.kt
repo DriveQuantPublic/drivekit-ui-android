@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
@@ -41,17 +40,8 @@ class ChallengeListFragment : Fragment() {
         )
         setTabLayout()
         updateChallenge()
-        var isToastShowed = false
         viewModel.mutableLiveDataChallengesData.observe(this,
             Observer {
-                if (viewModel.syncStatus == ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY && !isToastShowed) {
-                    Toast.makeText(
-                        context,
-                        DKResource.convertToString(requireContext(), "dk_challenge_failed_to_sync_challenges"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isToastShowed = true
-                }
                 if (it.isEmpty()) {
                     displayNoChallenges(viewModel.selectedChallengeStatusData.statusList)
                 } else {
@@ -71,6 +61,17 @@ class ChallengeListFragment : Fragment() {
                 }
                 updateProgressVisibility(false)
             })
+
+        viewModel.syncChallengesError.observe(this, Observer {
+            it?.let {
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(requireContext(), "dk_challenge_failed_to_sync_challenges"),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            updateProgressVisibility(false)
+        })
     }
 
     override fun onCreateView(
