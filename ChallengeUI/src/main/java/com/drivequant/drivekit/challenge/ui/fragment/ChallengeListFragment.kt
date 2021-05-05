@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -100,6 +101,7 @@ class ChallengeListFragment : Fragment() {
                 viewModel.filterChallenges(viewModel.selectedChallengeStatusData.statusList)
             }
         })
+        tab_layout_challenge.setBackgroundColor(Color.WHITE)
     }
 
     private fun updateChallenge() {
