@@ -26,6 +26,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.toDKTripItem
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
@@ -455,12 +456,12 @@ class TripDetailFragment : Fragment() {
 
         val headerValue =
             DriverDataUI.customHeader?.let {
-                it.customTripDetailHeader(requireContext(), viewModel.trip!!) ?: run {
-                    it.tripDetailHeader().text(requireContext(), viewModel.trip!!)
+                it.customTripDetailHeader(requireContext(), viewModel.trip!!.toDKTripItem()) ?: run {
+                    it.tripDetailHeader().text(requireContext(), viewModel.trip!!.toDKTripItem())
                 }
             }
         trip_header.text = headerValue ?: run {
-            DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!)
+            DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!.toDKTripItem())
         }
         trip_header.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }

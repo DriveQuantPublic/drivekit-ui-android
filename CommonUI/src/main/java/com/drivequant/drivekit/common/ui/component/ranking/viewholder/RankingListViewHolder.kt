@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.driverachievement.ui.rankings.viewholder
+package com.drivequant.drivekit.common.ui.component.ranking.viewholder
 
 import android.graphics.drawable.GradientDrawable
 import androidx.recyclerview.widget.RecyclerView
@@ -7,10 +7,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingDriverData
 
 
 class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,11 +30,11 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     private val driverScoreBackground = textViewDriverScore.background as GradientDrawable
     private var currentDriverColor = DriveKitUI.colors.mainFontColor()
 
-    fun bind(rankingDriverData: RankingDriverData?) {
-       rankingDriverData?.let {
+    fun bind(rankingDriverData: DKDriverRankingItem) {
+       if (!rankingDriverData.isJumpRank()) {
            container.visibility = View.VISIBLE
            imageViewJump.visibility = View.GONE
-           if (it.driverId == DriveKit.config.userId) {
+           if (rankingDriverData.isCurrentUser()) {
                currentDriverColor = DriveKitUI.colors.fontColorOnSecondaryColor()
                driverPositionBackground.setColor(DriveKitUI.colors.secondaryColor())
                driverScoreBackground.setColor(DriveKitUI.colors.secondaryColor())
@@ -45,22 +44,22 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
                driverPositionBackground.setColor(DriveKitUI.colors.transparentColor())
            }
 
-           textViewDriverDistance.text = it.getFormattedDistance(itemView.context)
-           textViewDriverScore.text = it.getFormattedScore(itemView.context, currentDriverColor)
-           textViewDriverNickname.text = it.getNickname(itemView.context)
+           textViewDriverDistance.text = rankingDriverData.getDistance(itemView.context)
+           textViewDriverScore.text = rankingDriverData.getScore(itemView.context, currentDriverColor)
+           textViewDriverNickname.text = rankingDriverData.getNickname(itemView.context)
 
-           if (it.driverRank in 1..3) {
+           if (rankingDriverData.getRank() in 1..3) {
                textViewDriverPosition.visibility = View.INVISIBLE
                imageViewDriverPosition.visibility = View.VISIBLE
-               it.getRankDrawable(itemView.context)?.let { drawable ->
+               rankingDriverData.getRankResource(itemView.context)?.let { drawable ->
                    imageViewDriverPosition.setImageDrawable(drawable)
                }
            } else {
                imageViewDriverPosition.visibility = View.INVISIBLE
                textViewDriverPosition.visibility = View.VISIBLE
-               textViewDriverPosition.text = "${it.driverRank}"
+               textViewDriverPosition.text = "${rankingDriverData.getRank()}"
            }
-       } ?: kotlin.run {
+       } else {
            container.visibility = View.GONE
            imageViewJump.visibility = View.VISIBLE
        }

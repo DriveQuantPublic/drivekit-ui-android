@@ -223,11 +223,15 @@ object DKDataFormatter {
     }
 
     private fun formatDistanceValue(distance: Double?): String? {
-        return if (distance != null && distance >= 100) {
-            distance.format(0)
-        } else {
-            distance?.removeZeroDecimal()
+        distance?.let {
+            val roundedDistance = BigDecimal(distance).setScale(2, RoundingMode.UP).toDouble()
+            return if (roundedDistance >= 100) {
+                roundedDistance.format(0)
+            } else {
+                roundedDistance.removeZeroDecimal()
+            }
         }
+        return null
     }
 
     fun formatCO2Emission(context: Context, emission: Double) : String =

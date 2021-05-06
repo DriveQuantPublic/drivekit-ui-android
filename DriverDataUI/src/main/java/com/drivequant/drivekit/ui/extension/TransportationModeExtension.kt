@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
-fun TransportationMode.isAlternative(): Boolean {
-    return when (this) {
+fun TransportationMode.isAlternative(): Boolean =
+    when (this) {
         TransportationMode.UNKNOWN,
         TransportationMode.CAR,
         TransportationMode.MOTO,
@@ -21,9 +21,8 @@ fun TransportationMode.isAlternative(): Boolean {
         TransportationMode.IDLE,
         TransportationMode.OTHER -> true
     }
-}
 
-fun TransportationMode.image(context: Context): Drawable? {
+fun TransportationMode.image(context: Context): Drawable? =
     when (this) {
         TransportationMode.UNKNOWN,
         TransportationMode.CAR -> "dk_transportation_car"
@@ -39,11 +38,10 @@ fun TransportationMode.image(context: Context): Drawable? {
         TransportationMode.IDLE -> "dk_transportation_idle"
         TransportationMode.OTHER -> "dk_transportation_other"
     }.let {
-        return DKResource.convertToDrawable(context, it)
+        DKResource.convertToDrawable(context, it)
     }
-}
 
-fun TransportationMode?.text(context: Context): String {
+fun TransportationMode?.text(context: Context): String =
     when (this) {
         TransportationMode.UNKNOWN -> ""
         TransportationMode.CAR -> "dk_driverdata_transportation_mode_car"
@@ -58,8 +56,7 @@ fun TransportationMode?.text(context: Context): String {
         TransportationMode.ON_FOOT -> "dk_driverdata_transportation_mode_on_foot"
         TransportationMode.IDLE -> "dk_driverdata_transportation_mode_idle"
         TransportationMode.OTHER -> "dk_driverdata_transportation_mode_other"
-        else -> return ""
+        else -> ""
     }.let {
-        return DKResource.convertToString(context, it)
+        DKResource.convertToString(context, it)
     }
-}

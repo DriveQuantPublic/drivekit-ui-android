@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
@@ -47,9 +49,22 @@ internal class AlternativeTripFragment : Fragment() {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putString("itinId", viewModel.getItinId())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        if (!this::trip.isInitialized) {
+            (savedInstanceState?.getString("itinId"))?.let { itinId ->
+                DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()?.let {
+                    trip = it
+                }
+            }
+        }
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(
                 this,

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -46,7 +46,7 @@ internal class SpeedingFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putSerializable("itinId", viewModel.getItindId())
+            outState.putSerializable("itinId", viewModel.getItinId())
             outState.putSerializable(
                 "tripListConfigurationType",
                 viewModel.getTripListConfigurationType()

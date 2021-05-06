@@ -1,18 +1,18 @@
-package com.drivequant.drivekit.ui.tripdetail.viewmodel
+package com.drivequant.drivekit.common.ui.component.triplist.viewModel
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeCeilDuration
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeTotalDistance
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.extension.computeCeilDuration
-import com.drivequant.drivekit.ui.extension.computeTotalDistance
 
 enum class HeaderDay {
     NONE, DISTANCE, DURATION, DURATION_DISTANCE, DISTANCE_DURATION;
 
-    fun text(context: Context, trip: Trip): String? = text(context, listOf(trip))
+    fun text(context: Context, trip: DKTripListItem): String? = text(context, listOf(trip))
 
-    fun text(context: Context, trips: List<Trip>?): String? {
+    fun text(context: Context, trips: List<DKTripListItem>?): String? {
         val separator = " | "
         return trips?.let {
             when (this) {
@@ -43,8 +43,10 @@ enum class HeaderDay {
 }
 
 interface DKHeader {
-    fun customTripDetailHeader(context: Context, trip: Trip): String? = null
-    fun customTripListHeader(context: Context, trips: List<Trip>?): String? = null
-    fun tripDetailHeader(): HeaderDay = HeaderDay.DURATION_DISTANCE
-    fun tripListHeader(): HeaderDay = HeaderDay.DURATION_DISTANCE
+    fun customTripDetailHeader(context: Context, trip: DKTripListItem): String? = null
+    fun customTripListHeader(context: Context, trips: List<DKTripListItem>?): String? = null
+    fun tripDetailHeader(): HeaderDay =
+        HeaderDay.DURATION_DISTANCE
+    fun tripListHeader(): HeaderDay =
+        HeaderDay.DURATION_DISTANCE
 }
