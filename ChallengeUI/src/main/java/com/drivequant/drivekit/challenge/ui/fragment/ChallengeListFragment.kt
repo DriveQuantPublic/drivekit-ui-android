@@ -36,7 +36,7 @@ class ChallengeListFragment : Fragment() {
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
-                "dk_tag_challenge-list"
+                "dk_tag_challenge_list"
             ), javaClass.simpleName
         )
         setTabLayout()
