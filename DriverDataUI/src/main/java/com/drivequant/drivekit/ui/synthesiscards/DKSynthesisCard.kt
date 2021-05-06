@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.synthesiscards
 
 import android.content.Context
 import android.text.Spannable
+import android.text.style.AbsoluteSizeSpan
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
@@ -15,6 +16,7 @@ import com.drivequant.drivekit.ui.extension.computeEcoDrivingScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSafetyScoreAverage
 import com.drivequant.drivekit.ui.extension.computeSpeedingScoreAverage
 import java.io.Serializable
+import kotlin.math.roundToInt
 
 interface DKSynthesisCard : Serializable {
     fun getTitle(context: Context): String
@@ -38,7 +40,7 @@ enum class LastTripsSynthesisCard {
             SAFETY -> SynthesisCard.SAFETY(trips, showBottomText)
             ECO_DRIVING -> SynthesisCard.ECODRIVING(trips, showBottomText)
             DISTRACTION -> SynthesisCard.DISTRACTION(trips, showBottomText)
-            SPEEDING -> SynthesisCard.DISTRACTION(trips, showBottomText)
+            SPEEDING -> SynthesisCard.SPEEDING(trips, showBottomText)
         }
     }
 }
@@ -113,12 +115,14 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
                 DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
             }
 
-            DKResource.buildString(context,
+            val spannable = DKResource.buildString(context,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 identifier,
-                "${pair.second.toInt()}%"
+                "${pair.second.roundToInt()}%"
             )
+            spannable.setSpan(AbsoluteSizeSpan(18, true), 0, spannable.length, 0)
+            return spannable
         }
     }
 

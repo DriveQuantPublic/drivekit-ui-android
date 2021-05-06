@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import androidx.lifecycle.ViewModelProviders
+import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
@@ -33,8 +35,36 @@ class BeaconDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_beacon_detail, container, false).setDKStyle()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::viewModel.isInitialized) {
+            outState.putString("vehicleName", viewModel.vehicleName)
+            outState.putString("vehicleId", viewModel.vehicleId)
+            outState.putInt("batteryLevel", viewModel.batteryLevel)
+            outState.putSerializable("seenBeacon", viewModel.seenBeacon)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            val vehicleName = it.getString("vehicleName")
+            val vehicleId = it.getString("vehicleId")
+            val batteryLevel = it.getInt("batteryLevel")
+            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo ?
+            if (vehicleId != null && vehicleName != null && seenBeacon != null) {
+                viewModel = ViewModelProviders.of(
+                    this,
+                    BeaconDetailViewModel.BeaconDetailViewModelFactory(
+                        vehicleId,
+                        vehicleName,
+                        batteryLevel,
+                        seenBeacon
+                    )
+                ).get(BeaconDetailViewModel::class.java)
+            }
+        }
+
         viewModel.buildListData(requireContext())
         val layoutManager =
             LinearLayoutManager(requireContext())

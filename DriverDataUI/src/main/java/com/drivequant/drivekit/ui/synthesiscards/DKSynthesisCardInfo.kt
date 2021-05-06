@@ -59,7 +59,7 @@ sealed class SynthesisCardInfo(open val trips: List<Trip>) : DKSynthesisCardInfo
             }
             is DURATION -> {
                 val computedDuration = DKDataFormatter.ceilDuration(trips.computeTotalDuration(), 600)
-                formattingTypes = DKDataFormatter.formatDuration(context, computedDuration)
+                formattingTypes = DKDataFormatter.formatDuration(context, computedDuration, DurationUnit.HOUR)
             }
             is TRIPS -> {
                 val value = trips.size

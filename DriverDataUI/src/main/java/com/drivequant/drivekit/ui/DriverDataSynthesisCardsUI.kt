@@ -8,14 +8,11 @@ import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardFragmen
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 
 object DriverDataSynthesisCardsUI {
-    internal var internalCards: List<DKSynthesisCard> = listOf()
-        private set
 
     fun getFragments(cards: List<DKSynthesisCard>, listener: SynthesisCardsFragmentsListener) {
-        internalCards = cards
         val fragments = mutableListOf<DKSynthesisCardFragment>()
-        for (i in cards.indices){
-            fragments.add(DKSynthesisCardFragment.newInstance(i))
+        cards.forEach {
+            fragments.add(DKSynthesisCardFragment.newInstance(it))
         }
         listener.onFragmentsLoaded(fragments)
     }

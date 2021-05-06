@@ -34,7 +34,6 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_synthesis_card_viewpager, container, false)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

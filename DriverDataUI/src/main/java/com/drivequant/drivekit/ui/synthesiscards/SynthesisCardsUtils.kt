@@ -1,7 +1,8 @@
 package com.drivequant.drivekit.ui.synthesiscards
 
+import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.*
-import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
 import com.drivequant.drivekit.ui.commons.model.RoadConditionStats
 import java.util.*
@@ -17,12 +18,18 @@ object SynthesisCardsUtils {
             TransportationMode.TRUCK
         )
     ): List<Trip> {
-        val trips = DbTripAccess.findTripsOrderByDateDesc(transportationModes).executeTrips().toTrips()
-        return if (trips.isNotEmpty()) {
+        val lastTrip =
+            DriveKitDriverData.tripsQuery()
+                .whereIn("transportationMode", transportationModes.map { it.value })
+                .orderBy("endDate", Query.Direction.DESCENDING).queryOne().executeOne()
+        return if (lastTrip != null) {
             val cal = Calendar.getInstance()
-            cal.time = trips.first().endDate
+            cal.time = lastTrip.endDate
             cal.add(Calendar.HOUR, -24 * 7)
-            trips.filter { it.endDate.after(cal.time)}
+            DriveKitDriverData.tripsQuery()
+                .whereIn("transportationMode", transportationModes.map { it.value })
+                .and()
+                .whereGreaterThan("endDate", cal.time).query().executeTrips().toTrips()
         } else {
             listOf()
         }

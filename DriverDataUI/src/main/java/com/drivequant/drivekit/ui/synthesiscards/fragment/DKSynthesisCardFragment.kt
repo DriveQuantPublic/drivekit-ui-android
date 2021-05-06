@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.synthesiscards.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.style.AbsoluteSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.ui.DriverDataSynthesisCardsUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
@@ -24,15 +22,13 @@ import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_item.*
 
 class DKSynthesisCardFragment : Fragment() {
 
-    private var position: Int = 0
     private lateinit var synthesisCard: DKSynthesisCard
     private lateinit var viewModel: DKSynthesisCardViewModel
 
     companion object {
-        fun newInstance(position: Int) : DKSynthesisCardFragment {
+        fun newInstance(synthesisCard : DKSynthesisCard) : DKSynthesisCardFragment {
             val fragment = DKSynthesisCardFragment()
-            fragment.position = position
-            fragment.synthesisCard = DriverDataSynthesisCardsUI.internalCards[position]
+            fragment.synthesisCard = synthesisCard
             return fragment
         }
     }
@@ -46,24 +42,18 @@ class DKSynthesisCardFragment : Fragment() {
         return view
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putSerializable("cardPosition", position)
-        super.onSaveInstanceState(outState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!this::viewModel.isInitialized) {
-            savedInstanceState?.getInt("position")?.let {
-                position = it
+        if (this::synthesisCard.isInitialized) {
+            if (!this::viewModel.isInitialized) {
+                viewModel = ViewModelProviders.of(
+                    this,
+                    DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(synthesisCard)
+                ).get(DKSynthesisCardViewModel::class.java)
             }
-            synthesisCard = DriverDataSynthesisCardsUI.internalCards[position]
-            viewModel = ViewModelProviders.of(
-                this,
-                DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(synthesisCard)
-            ).get(DKSynthesisCardViewModel::class.java)
+            updateContent()
         }
-        updateContent()
     }
 
     private fun updateContent() {
@@ -82,7 +72,7 @@ class DKSynthesisCardFragment : Fragment() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton()
+                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_close"))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
@@ -102,7 +92,7 @@ class DKSynthesisCardFragment : Fragment() {
         score_gauge.configure(
             viewModel.getScore(),
             synthesisCard.getGaugeConfiguration(),
-            Typeface.BOLD,
+            Typeface.NORMAL,
             synthesisCard.getGaugeConfiguration().getTitle(requireContext())
         )
 
@@ -126,8 +116,10 @@ class DKSynthesisCardFragment : Fragment() {
 
         val bottomTextValue = viewModel.getBottomText(requireContext())
         if (bottomTextValue != null) {
-            bottomTextValue.setSpan(AbsoluteSizeSpan(18, true), 0, bottomTextValue.length, 0)
             bottom_text.text = bottomTextValue
+            bottom_text.visibility = View.VISIBLE
+        } else {
+            bottom_text.visibility = View.GONE
         }
     }
 }
