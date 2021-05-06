@@ -14,6 +14,8 @@
    <string name="beacon_required_on">Beacon es necesario para validar un viaje</string>
    <string name="beacon_required_title">¿ Necesita beacon ?</string>
    <string name="cancel_trip">Cancelar el viaje</string>
+   <string name="challenge_explanation">Un ejemplo de implementación del componente DriveKit Challenge y su interfaz de usuario</string>
+   <string name="challenge_list_button">Lanzar la lista de desafíos</string>
    <string name="driver_achievement_button">Lanzar Driver Achievement</string>
    <string name="driver_achievement_explanation">Un ejemplo de implementación del componente DriveKit Driver Achievements y su interfaz</string>
    <string name="driver_badges_button">Mis insignias</string>
