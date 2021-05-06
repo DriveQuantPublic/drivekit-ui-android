@@ -38,10 +38,8 @@ class ChallengeListViewModel : ViewModel() {
     fun filterChallenges(statusList: List<ChallengeStatus>) {
         filteredChallenge.clear()
         for (challengeData in challengeListData) {
-            for (status in statusList) {
-                if (status == challengeData.status) {
-                    filteredChallenge.add(challengeData)
-                }
+            if (statusList.contains(challengeData.status)) {
+                filteredChallenge.add(challengeData)
             }
         }
         mutableLiveDataChallengesData.postValue(filteredChallenge)

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:src="@drawable/dk_challenge_waiting"
-        android:contentDescription="TODO" />
+        android:contentDescription="image" />
 
     <TextView
         android:id="@+id/dk_text_view_no_challenge"

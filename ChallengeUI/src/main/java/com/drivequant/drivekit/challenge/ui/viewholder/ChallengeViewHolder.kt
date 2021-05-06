@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
-class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val challengeTitle = itemView.findViewById<TextView>(R.id.dk_text_view_title)
     private val challengeDate = itemView.findViewById<TextView>(R.id.dk_text_view_date)
     private val challengeIcon = itemView.findViewById<ImageView>(R.id.dk_image_view_icon)
