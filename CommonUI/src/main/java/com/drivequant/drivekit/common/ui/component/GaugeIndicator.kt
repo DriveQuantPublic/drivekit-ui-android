@@ -2,6 +2,7 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.graphics.Typeface
+import android.text.Spannable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 
@@ -12,6 +13,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 
 class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
@@ -55,65 +57,25 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         attributes.recycle()
     }
 
-    fun configure(score: Double, type: GaugeType, scoreStyle: Int = Typeface.NORMAL) {
-        gaugeView.setOpenAngle(128F)
-        gaugeView.setStartAngle(38F)
-        textView.text = score.removeZeroDecimal()
+    @JvmOverloads
+    fun configure(
+        value: Double,
+        type: DKGaugeConfiguration,
+        scoreStyle: Int = Typeface.NORMAL,
+        title: Spannable = DKSpannable().append(value.removeZeroDecimal()).toSpannable()
+    ) {
+        gaugeView.setOpenAngle(type.getGaugeType().getOpenAngle())
+        gaugeView.setStartAngle(type.getGaugeType().getStartAngle())
+        textView.text = title
         textView.setTypeface(DriveKitUI.secondaryFont(context), scoreStyle)
-        gaugeView.configureScore(score)
-        gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(score)))
-        imageView.setImageDrawable(ContextCompat.getDrawable(context, type.getDrawable()))
-    }
-}
-
-enum class GaugeType {
-    SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
-
-    fun getColor(score: Double): Int {
-        return getColorFromValue(score, getSteps())
-    }
-
-    fun getDrawable(): Int {
-        return when (this) {
-            ECO_DRIVING -> R.drawable.dk_common_ecodriving
-            SAFETY -> R.drawable.dk_common_safety
-            DISTRACTION -> R.drawable.dk_common_distraction
-            SPEEDING -> R.drawable.dk_common_eco_accel
+        if (value != 11.0) {
+            gaugeView.configureScore(value)
         }
-    }
-
-    private fun getColorFromValue(value: Double, steps: List<Double>): Int {
-        if (value <= steps[0])
-            return R.color.dkVeryBad
-        if (value <= steps[1])
-            return R.color.dkBad
-        if (value <= steps[2])
-            return R.color.dkBadMean
-        if (value <= steps[3])
-            return R.color.dkMean
-        if (value <= steps[4])
-            return R.color.dkGoodMean
-        return if (value <= steps[5]) R.color.dkGood else R.color.dkExcellent
-    }
-
-    private fun getSteps(): List<Double> {
-        return when (this) {
-            ECO_DRIVING -> {
-                val mean = 7.63
-                val sigma = 0.844
-                listOf(
-                    mean - (2 * sigma),
-                    mean - sigma,
-                    mean - (0.25 * sigma),
-                    mean,
-                    mean + (0.25 * sigma),
-                    mean + sigma,
-                    mean + (2 * sigma)
-                )
-            }
-            SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
-            DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
-            SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
+        gaugeView.configureMaxScore(type.getMaxScore())
+        gaugeView.setGaugeColor(ContextCompat.getColor(context, type.getColor(value)))
+        type.getIcon()?.let {
+            imageView.setImageDrawable(ContextCompat.getDrawable(context, it))
         }
     }
 }
+

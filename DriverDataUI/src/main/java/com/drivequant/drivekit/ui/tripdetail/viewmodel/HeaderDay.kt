@@ -2,6 +2,7 @@ package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.extension.computeCeilDuration
 import com.drivequant.drivekit.ui.extension.computeTotalDistance
@@ -15,20 +16,24 @@ enum class HeaderDay {
         val separator = " | "
         return trips?.let {
             when (this) {
-                DISTANCE -> DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance())
+                DISTANCE -> DKDataFormatter.formatMeterDistanceInKm(context,
+                    it.computeTotalDistance()).convertToString()
                 DURATION -> DKDataFormatter.formatDuration(context, it.computeCeilDuration())
+                    .convertToString()
                 DURATION_DISTANCE -> DKDataFormatter.formatDuration(
                     context,
                     it.computeCeilDuration()
-                )
+                ).convertToString()
                     .plus(separator)
-                    .plus(DKDataFormatter.formatMeterDistanceInKm(context, it.computeTotalDistance()))
+                    .plus(DKDataFormatter.formatMeterDistanceInKm(context,
+                        it.computeTotalDistance()).convertToString())
                 DISTANCE_DURATION -> DKDataFormatter.formatMeterDistanceInKm(
                     context,
                     it.computeTotalDistance()
-                )
+                ).convertToString()
                     .plus(separator)
-                    .plus(DKDataFormatter.formatDuration(context, it.computeCeilDuration()))
+                    .plus(DKDataFormatter.formatDuration(context, it.computeCeilDuration())
+                        .convertToString())
                 NONE -> null
             }
         } ?: run {
