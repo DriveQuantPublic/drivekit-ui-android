@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,111 +7,89 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.viewmodel.containsActiveChallenge
+import com.drivequant.drivekit.challenge.ui.viewmodel.toStatusList
+import com.drivequant.drivekit.challenge.ui.viewmodel.toStringArray
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.dk_fragment_challenge_list.*
 
 
 class ChallengeListFragment : Fragment() {
 
-    private lateinit var challengeAdapter: ChallengeListAdapter
     private lateinit var viewModel: ChallengeListViewModel
+    private lateinit var status: List<ChallengeStatus>
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
+    companion object {
+        fun newInstance(status: List<ChallengeStatus>, viewModel: ChallengeListViewModel): ChallengeListFragment {
+            val fragment = ChallengeListFragment()
+            fragment.status = status
+            fragment.viewModel = viewModel
+            return fragment
         }
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_list"
-            ), javaClass.simpleName
-        )
-        setTabLayout()
-        updateChallenge()
-        viewModel.mutableLiveDataChallengesData.observe(this,
-            Observer {
-                if (it.isEmpty()) {
-                    displayNoChallenges(viewModel.selectedChallengeStatusData.statusList)
-                } else {
-                    displayChallenges()
-                }
-                dk_recycler_view_challenge.layoutManager =
-                    LinearLayoutManager(requireContext())
-                if (this::challengeAdapter.isInitialized) {
-                    challengeAdapter.notifyDataSetChanged()
-                } else {
-                    challengeAdapter =
-                        ChallengeListAdapter(
-                            requireContext(),
-                            viewModel
-                        )
-                    dk_recycler_view_challenge.adapter = challengeAdapter
-                }
-                updateProgressVisibility(false)
-            })
-
-        viewModel.syncChallengesError.observe(this, Observer {
-            it?.let {
-                Toast.makeText(
-                    context,
-                    DKResource.convertToString(requireContext(), "dk_challenge_failed_to_sync_challenges"),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            updateProgressVisibility(false)
-        })
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
         view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
         return view
     }
 
-    private fun setTabLayout() {
-        for (challengeStatusData in viewModel.challengesStatusData) {
-            val tab = tab_layout_challenge.newTab()
-            val text = DKResource.convertToString(requireContext(), challengeStatusData.textId)
-            tab.text = text
-            tab_layout_challenge.addTab(tab)
-        }
-
-        tab_layout_challenge.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewModel.selectedChallengeStatusData =
-                    viewModel.challengesStatusData[tab_layout_challenge.selectedTabPosition]
-                viewModel.filterChallenges(viewModel.selectedChallengeStatusData.statusList)
-            }
-        })
-        tab_layout_challenge.setBackgroundColor(Color.WHITE)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArray("status",status.toStringArray())
     }
 
-    private fun updateChallenge() {
-        updateProgressVisibility(true)
-        viewModel.fetchChallengeList()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.getStringArray("status")?.let {
+            status = it.toStatusList()
+        }
+
+        val tag = if (status.containsActiveChallenge()) {
+            "dk_tag_challenge_list_active"
+        } else {
+            "dk_tag_challenge_list_finished"
+        }
+
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                tag
+            ), javaClass.simpleName
+        )
+
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
+        }
+
+        if (viewModel.activeChallenges.isEmpty() || viewModel.finishedChallenges.isEmpty()) {
+            displayNoChallenges(status)
+        } else {
+            displayChallenges()
+        }
+
+        dk_recycler_view_challenge.layoutManager =
+            LinearLayoutManager(requireContext())
+        dk_recycler_view_challenge.adapter = ChallengeListAdapter(
+            requireContext(),
+            viewModel,
+            status
+        )
     }
 
     private fun displayChallenges() {
         no_challenges.visibility = View.GONE
         dk_recycler_view_challenge.visibility = View.VISIBLE
-        updateProgressVisibility(false)
     }
 
     private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
@@ -138,14 +115,5 @@ class ChallengeListFragment : Fragment() {
         textView.headLine2(DriveKitUI.colors.mainFontColor())
         no_challenges.visibility = View.VISIBLE
         dk_recycler_view_challenge.visibility = View.GONE
-        updateProgressVisibility(false)
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
-        }
     }
 }

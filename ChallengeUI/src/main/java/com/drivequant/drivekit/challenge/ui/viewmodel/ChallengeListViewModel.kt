@@ -13,36 +13,21 @@ class ChallengeListViewModel : ViewModel() {
 
     private var challengeListData = mutableListOf<ChallengeData>()
     var mutableLiveDataChallengesData: MutableLiveData<List<ChallengeData>> = MutableLiveData()
-    var selectedChallengeStatusData: ChallengeStatusData
-    var challengesStatusData = mutableListOf<ChallengeStatusData>()
-    var filteredChallenge = mutableListOf<ChallengeData>()
+    var activeChallenges = mutableListOf<ChallengeData>()
+    var finishedChallenges = mutableListOf<ChallengeData>()
     var syncChallengesError: MutableLiveData<Any> = MutableLiveData()
         private set
 
-    init {
-        challengesStatusData.add(
-            ChallengeStatusData(
-                "dk_challenge_active",
-                listOf(ChallengeStatus.PENDING, ChallengeStatus.SCHEDULED)
-            )
-        )
-        challengesStatusData.add(
-            ChallengeStatusData(
-                "dk_challenge_finished",
-                listOf(ChallengeStatus.FINISHED, ChallengeStatus.ARCHIVED)
-            )
-        )
-        selectedChallengeStatusData = challengesStatusData.first()
-    }
-
-    fun filterChallenges(statusList: List<ChallengeStatus>) {
-        filteredChallenge.clear()
+    fun filterChallenges() {
+        activeChallenges.clear()
+        finishedChallenges.clear()
         for (challengeData in challengeListData) {
-            if (statusList.contains(challengeData.status)) {
-                filteredChallenge.add(challengeData)
+            if (challengeData.status.isActiveChallenge()) {
+                activeChallenges.add(challengeData)
+            } else {
+                finishedChallenges.add(challengeData)
             }
         }
-        mutableLiveDataChallengesData.postValue(filteredChallenge)
     }
 
     fun fetchChallengeList() {
@@ -56,13 +41,16 @@ class ChallengeListViewModel : ViewModel() {
                         syncChallengesError.postValue(Any())
                     }
                     challengeListData = buildChallengeListData(challenges)
-                    filterChallenges(selectedChallengeStatusData.statusList)
+                    mutableLiveDataChallengesData.postValue(challengeListData)
                 }
             })
         } else {
             syncChallengesError.postValue(Any())
         }
     }
+
+    fun hasActiveChallenges(status: List<ChallengeStatus>): Boolean =
+        status.contains(ChallengeStatus.PENDING) || status.contains(ChallengeStatus.SCHEDULED)
 
     fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
         challengeListData.clear()
