@@ -15,6 +15,7 @@ import android.provider.Settings
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.drivequant.drivekit.common.ui.utils.DKReachability
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
@@ -37,6 +38,7 @@ object DiagnosisHelper {
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     fun hasBackgroundLocationApproved(context: Context): Boolean =
         ContextCompat.checkSelfPermission(
             context.applicationContext,
@@ -150,21 +152,19 @@ object DiagnosisHelper {
     }
 
     fun isLocationSensorHighAccuracy(context: Context, isGPSEnabled: Boolean): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val locationManager =
-                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                return isGPSEnabled && locationManager?.isLocationEnabled ?: run { false }
-            } else {
-                try {
-                    val locationAccuracyLevel = Settings.Secure.getInt(
-                        context.contentResolver,
-                        Settings.Secure.LOCATION_MODE
-                    )
-                    return isGPSEnabled && locationAccuracyLevel == 3
-                } catch (e: Settings.SettingNotFoundException) {
-                    Log.e("DiagnosticHelper", "Could not retrieve location accuracy level")
-                }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val locationManager =
+                context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+            return isGPSEnabled && locationManager?.isLocationEnabled ?: run { false }
+        } else {
+            try {
+                val locationAccuracyLevel = Settings.Secure.getInt(
+                    context.contentResolver,
+                    Settings.Secure.LOCATION_MODE
+                )
+                return isGPSEnabled && locationAccuracyLevel == 3
+            } catch (e: Settings.SettingNotFoundException) {
+                Log.e("DiagnosticHelper", "Could not retrieve location accuracy level")
             }
         }
         return false

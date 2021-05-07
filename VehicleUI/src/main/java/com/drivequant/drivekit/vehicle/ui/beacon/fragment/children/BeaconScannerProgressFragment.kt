@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.drivequant.beaconutils.*
-import com.drivequant.beaconutils.compatibility.BeaconScannerPreLollipop
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -100,20 +98,12 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         updateProgressBar.start()
     }
 
-    private fun startBeaconScan(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            BeaconScanner.registerListener(this, requireContext())
-        } else {
-            BeaconScannerPreLollipop.registerBeaconListener(requireContext(), this)
-        }
+    private fun startBeaconScan() {
+        BeaconScanner.registerListener(this, requireContext())
     }
 
-    private fun stopBeaconScan(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            BeaconScanner.unregisterListener(this, requireContext())
-        } else {
-            BeaconScannerPreLollipop.unregisterBeaconListener()
-        }
+    private fun stopBeaconScan() {
+        BeaconScanner.unregisterListener(this, requireContext())
     }
 
     private fun goToNextStep(){
