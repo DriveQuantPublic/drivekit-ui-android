@@ -354,12 +354,12 @@ internal class TripDetailViewModel(
         trip?.driverDistraction?.distanceUnlock?.let {
             DKDataFormatter.apply {
                 return if (it >= 1000) {
-                    formatMeterDistanceInKm(context, ceilDistance(it, 10000))
+                    formatMeterDistanceInKm(context, ceilDistance(it, 10000)).convertToString()
                 } else {
                     formatMeterDistance(
                         context,
                         trip?.driverDistraction?.distanceUnlock
-                    )
+                    ).convertToString()
                 }
             }
         }
@@ -372,12 +372,13 @@ internal class TripDetailViewModel(
         val distance = trip?.calls?.map { call -> call.distance }?.sum() ?: 0
         DKDataFormatter.apply {
             return if (distance >= 1000) {
-                formatMeterDistanceInKm(context, ceilDistance(distance.toDouble(), 10000))
+                formatMeterDistanceInKm(context,
+                    ceilDistance(distance.toDouble(), 10000)).convertToString()
             } else {
                 formatMeterDistance(
                     context,
                     distance.toDouble()
-                )
+                ).convertToString()
             }
         }
     }

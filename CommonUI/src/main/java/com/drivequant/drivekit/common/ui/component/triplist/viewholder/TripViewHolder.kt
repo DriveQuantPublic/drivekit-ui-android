@@ -101,7 +101,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                         DKDataFormatter.formatMeterDistanceInKm(
                             itemView.context,
                             trip.getScore(tripData)
-                        )
+                        ).convertToString()
                     }
             }
         }

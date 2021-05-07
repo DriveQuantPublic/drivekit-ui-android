@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverachievement.ui.R
 
@@ -22,6 +23,8 @@ class RankingDriverData(
     private val isJumpRank: Boolean
 ) : DKDriverRankingItem {
 
+    fun getFormattedDistance(context: Context): String =
+        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
     override fun getRank(): Int = driverRank
 
     override fun isCurrentUser(): Boolean = DriveKit.config.userId == driverId

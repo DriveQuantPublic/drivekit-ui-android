@@ -2,22 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
+    <com.drivequant.drivekit.common.ui.component.WrapContentViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:paddingStart="@dimen/dk_margin_half"
-        android:paddingEnd="@dimen/dk_margin_half" />
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabDotsScore"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dk_ic_small"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dk_margin_half"
         app:tabIndicatorHeight="0dp"
         app:tabPaddingBottom="0dp"
         app:tabPaddingEnd="0dp"

@@ -42,10 +42,10 @@ class BeaconScannerFragment : Fragment(), ScanState {
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
             outState.putSerializable("scanType", viewModel.scanType)
-            outState.putSerializable("vehicleId", viewModel.vehicleId)
+            outState.putString("vehicleId", viewModel.vehicleId)
             outState.putSerializable("beacon", viewModel.beacon)
+            outState.putSerializable("beaconStep", beaconStep)
         }
-        outState.putSerializable("beaconStep", beaconStep)
         super.onSaveInstanceState(outState)
     }
 
@@ -54,10 +54,9 @@ class BeaconScannerFragment : Fragment(), ScanState {
 
         savedInstanceState?.let {
             val scanType = it.getSerializable("scanType") as BeaconScanType?
-            val vehicleId = savedInstanceState.getString("vehicleId")
-            val beacon = savedInstanceState.getSerializable("beacon") as Beacon?
-
-            beaconStep = savedInstanceState.getSerializable("beaconStep") as BeaconStep
+            val vehicleId = it.getString("vehicleId")
+            val beacon = it.getSerializable("beacon") as Beacon?
+            beaconStep = it.getSerializable("beaconStep") as BeaconStep
 
             if (scanType != null) {
                 viewModel = BeaconViewModel(scanType, vehicleId, beacon)

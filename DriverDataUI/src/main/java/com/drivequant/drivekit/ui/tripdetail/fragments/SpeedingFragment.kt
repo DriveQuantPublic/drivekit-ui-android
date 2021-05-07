@@ -84,9 +84,9 @@ internal class SpeedingFragment : Fragment() {
         val distanceValue = if (speedingDistance >= 1000) {
             DKDataFormatter.formatMeterDistanceInKm(
                 requireContext(),
-                DKDataFormatter.ceilDistance(speedingDistance.toDouble(), 10000))
+                DKDataFormatter.ceilDistance(speedingDistance.toDouble(), 10000)).convertToString()
         } else {
-            DKDataFormatter.formatMeterDistance(requireContext(), speedingDistance.toDouble())
+            DKDataFormatter.formatMeterDistance(requireContext(), speedingDistance.toDouble()).convertToString()
         }
 
         val durationValue = DKDataFormatter.formatDuration(

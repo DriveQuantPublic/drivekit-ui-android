@@ -48,7 +48,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         super.onSaveInstanceState(outState)
         if (this::viewModel.isInitialized) {
             outState.putSerializable("scanType", viewModel.scanType)
-            outState.putSerializable("vehicleId", viewModel.vehicleId)
+            outState.putString("vehicleId", viewModel.vehicleId)
             outState.putSerializable("beacon", viewModel.beacon)
         }
     }
@@ -57,8 +57,8 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
             val scanType = it.getSerializable("scanType") as BeaconScanType?
-            val vehicleId = savedInstanceState.getString("vehicleId")
-            val beacon = savedInstanceState.getSerializable("beacon") as Beacon?
+            val vehicleId = it.getString("vehicleId")
+            val beacon = it.getSerializable("beacon") as Beacon?
 
             if (scanType != null) {
                 viewModel = BeaconViewModel(scanType, vehicleId, beacon)
