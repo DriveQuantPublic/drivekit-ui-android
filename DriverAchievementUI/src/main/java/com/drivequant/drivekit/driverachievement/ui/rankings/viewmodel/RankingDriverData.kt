@@ -48,7 +48,7 @@ class RankingDriverData(
         } else driverNickname
 
     override fun getDistance(context: Context): String =
-        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000)
+        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
 
     override fun getScore(context: Context, textColor: Int): Spannable =
         if (driverScore == 10.0) {
