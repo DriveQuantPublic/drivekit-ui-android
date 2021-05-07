@@ -28,6 +28,9 @@
    <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permissions">Permisos</string>
+   <string name="dk_common_ranking_driver">Conductor</string>
+   <string name="dk_common_ranking_rank">Rango</string>
+   <string name="dk_common_ranking_score">Puntuaciones</string>
    <string name="dk_common_safety">Seguridad</string>
    <string name="dk_common_save">Registro</string>
    <string name="dk_common_select_image_gallery">Seleccione una foto existente</string>
@@ -60,7 +63,4 @@
    <string name="dk_common_update_photo_title">Cambiar la imagen</string>
    <string name="dk_common_validate">Validar</string>
    <string name="dk_common_yes">Sí</string>
-   <string name="dk_common_ranking_rank">Rango</string>
-   <string name="dk_common_ranking_score">Puntuaciones</string>
-   <string name="dk_common_ranking_driver">Conductor</string>
 </resources>

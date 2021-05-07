@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_challenge_list_active" translatable="false">drivekit-challenge-list-active</string>
+    <string name="dk_tag_challenge_list_finished" translatable="false">drivekit-challenge-list-finished</string>
+</resources>

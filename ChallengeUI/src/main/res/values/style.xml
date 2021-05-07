@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ChallengeTabLayout" parent="Base.Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/ChallengeTextAppearance</item>
+    </style>
+
+    <style name="ChallengeTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/dk_text_small</item>
+        <item name="textAllCaps">true</item>
+    </style>
+</resources>

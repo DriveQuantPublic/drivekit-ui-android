@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.drivequant.drivekit.challenge.ui">
+
+    <application>
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".activity.ChallengeListActivity"/>
+    </application>
+
+</manifest>

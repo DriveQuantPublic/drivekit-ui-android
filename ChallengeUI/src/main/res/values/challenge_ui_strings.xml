@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_challenge_active">Active</string>
+    <string name="dk_challenge_competitors_distance">Total distance from the challenge %1$s %2$s</string>
+    <string name="dk_challenge_competitors_duration">The participants drove %s</string>
+    <string name="dk_challenge_competitors_trips">out of a total of %1$s %2$s</string>
+    <string name="dk_challenge_consult_rule_button">Consult the rules</string>
+    <string name="dk_challenge_driver_distance">You\'ve been through %1$s %2$s</string>
+    <string name="dk_challenge_driver_duration">You drove %s</string>
+    <string name="dk_challenge_driver_trips">You have realized %1$s %2$s</string>
+    <string name="dk_challenge_failed_to_sync_challenges">Failed to synchronize challenge data, please retry later.</string>
+    <string name="dk_challenge_finished">Complete</string>
+    <string name="dk_challenge_menu">Challenges</string>
+    <string name="dk_challenge_no_active_challenge">No ongoing challenge</string>
+    <string name="dk_challenge_no_finished_challenge">No challenge completed</string>
+    <string name="dk_challenge_optin_title">Accept the rules</string>
+    <string name="dk_challenge_participate_button">I participate</string>
+    <string name="dk_challenge_registered_confirmation">You are registered !</string>
+    <string name="dk_challenge_rule_title">Challenge rules</string>
+    <string name="dk_challenge_score_alert_message">The results of this challenge are being analysed, please try again later.</string>
+    <string name="dk_challenge_score_alert_title">Challenge under analysis</string>
+    <string name="dk_challenge_signin_in_progress">Signing up…</string>
+    <string name="dk_challenge_start">Start of challenge\n%s</string>
+    <string name="dk_challenge_unranked_conditions_info">To enter the leaderboard, you must fulfill the conditions below:</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_challenge_active">Activos</string>
+    <string name="dk_challenge_competitors_distance">Distancia total del desafío %1$s %2$s</string>
+    <string name="dk_challenge_competitors_duration">Los participantes condujeron %s</string>
+    <string name="dk_challenge_competitors_trips">de un total de %1$s %2$s</string>
+    <string name="dk_challenge_consult_rule_button">Consulta las reglas</string>
+    <string name="dk_challenge_driver_distance">Usted ha pasado por %1$s %2$s</string>
+    <string name="dk_challenge_driver_duration">Condujiste %s</string>
+    <string name="dk_challenge_driver_trips">Te has dado cuenta %1$s %2$s</string>
+    <string name="dk_challenge_failed_to_sync_challenges">No se ha podido sincronizar el Reto, por favor, inténtelo más tarde.</string>
+    <string name="dk_challenge_finished">Completos</string>
+    <string name="dk_challenge_menu">Desafíos</string>
+    <string name="dk_challenge_no_active_challenge">Ningún desafío en curso</string>
+    <string name="dk_challenge_no_finished_challenge">Ningún desafío completado</string>
+    <string name="dk_challenge_optin_title">Acepta las reglas</string>
+    <string name="dk_challenge_participate_button">Participo</string>
+    <string name="dk_challenge_registered_confirmation">¡Estás registrado!</string>
+    <string name="dk_challenge_rule_title">Reglas de desafío</string>
+    <string name="dk_challenge_score_alert_message">Los resultados de este desafío están siendo analizados, por favor inténtelo de nuevo más tarde.</string>
+    <string name="dk_challenge_score_alert_title">Desafío en análisis</string>
+    <string name="dk_challenge_signin_in_progress">Registro en curso…</string>
+    <string name="dk_challenge_start">Inicio del desafío\n%s</string>
+    <string name="dk_challenge_unranked_conditions_info">Para ingresar a la tabla de clasificación, debes cumplir las condiciones a continuación:</string>
+</resources>

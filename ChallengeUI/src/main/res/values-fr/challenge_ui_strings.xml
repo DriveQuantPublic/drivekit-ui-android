@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_challenge_active">Actifs</string>
+    <string name="dk_challenge_competitors_distance">Distance totale du challenge %1$s %2$s</string>
+    <string name="dk_challenge_competitors_duration">Les participants ont roulé %s</string>
+    <string name="dk_challenge_competitors_trips">sur un total de %1$s %2$s</string>
+    <string name="dk_challenge_consult_rule_button">Consulter le règlement</string>
+    <string name="dk_challenge_driver_distance">Vous avez parcouru %1$s %2$s</string>
+    <string name="dk_challenge_driver_duration">Vous avez conduit %s</string>
+    <string name="dk_challenge_driver_trips">Vous avez réalisé %1$s %2$s</string>
+    <string name="dk_challenge_failed_to_sync_challenges">Les données du challenge n\'ont pas pu être récupérées, assurez-vous d\'être connecté à internet ou réessayez utlérieurement.</string>
+    <string name="dk_challenge_finished">Terminés</string>
+    <string name="dk_challenge_menu">Challenges</string>
+    <string name="dk_challenge_no_active_challenge">Aucun challenge en cours</string>
+    <string name="dk_challenge_no_finished_challenge">Aucun challenge terminé</string>
+    <string name="dk_challenge_optin_title">Accepter le règlement</string>
+    <string name="dk_challenge_participate_button">Je participe</string>
+    <string name="dk_challenge_registered_confirmation">Vous êtes inscrit !</string>
+    <string name="dk_challenge_rule_title">Règlement du challenge</string>
+    <string name="dk_challenge_score_alert_message">Les résultats de ce challenge sont en cours d\'analyse, veuillez réessayer plus tard.</string>
+    <string name="dk_challenge_score_alert_title">Challenge en cours d\'analyse</string>
+    <string name="dk_challenge_signin_in_progress">Inscription en cours…</string>
+    <string name="dk_challenge_start">Début du challenge\n%s</string>
+    <string name="dk_challenge_unranked_conditions_info">Pour entrer au classement général, vous devez réaliser les conditions ci-dessous :</string>
+</resources>
