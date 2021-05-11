@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.graphics.drawable.DrawableCompat
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import com.drivequant.beaconutils.BeaconBatteryReaderListener
 import com.drivequant.beaconutils.BeaconBatteryReaderScanner
 import com.drivequant.beaconutils.BeaconData
-import com.drivequant.beaconutils.compatibility.BeaconScannerBatteryReaderPreLollipop
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -139,20 +137,12 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
         stopBatteryReaderScanner()
     }
 
-    private fun startBatteryReaderScanner(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            BeaconBatteryReaderScanner().registerListener(this, requireContext())
-        } else {
-            BeaconScannerBatteryReaderPreLollipop.registerBeaconListener(requireContext(), this)
-        }
+    private fun startBatteryReaderScanner() {
+        BeaconBatteryReaderScanner().registerListener(this, requireContext())
     }
 
-    private fun stopBatteryReaderScanner(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            BeaconBatteryReaderScanner().unregisterListener(requireContext())
-        } else {
-            BeaconScannerBatteryReaderPreLollipop.unregisterBeaconListener()
-        }
+    private fun stopBatteryReaderScanner() {
+        BeaconBatteryReaderScanner().unregisterListener(requireContext())
     }
 
     override fun getBeacon(): BeaconData {

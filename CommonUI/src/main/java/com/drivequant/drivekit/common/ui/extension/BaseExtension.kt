@@ -3,7 +3,6 @@ package com.drivequant.drivekit.common.ui.extension
 import android.content.Context
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
@@ -20,11 +19,8 @@ fun Drawable.tintDrawable(color: Int) {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
             this.mutate().colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
         }
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
-            DrawableCompat.setTint(this, color)
-        }
         else -> {
-            this.mutate().setColorFilter(color, PorterDuff.Mode.SRC_IN)
+            DrawableCompat.setTint(this, color)
         }
     }
 }
