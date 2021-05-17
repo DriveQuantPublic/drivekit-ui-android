@@ -3,10 +3,14 @@
     package="com.drivequant.drivekit.challenge.ui">
 
     <application>
+        <activity android:name=".joinchallenge.activity.ChallengeRulesActivity"/>
         <activity
+            android:name=".joinchallenge.activity.ChallengeJoinActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".challengelist.activity.ChallengeListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".activity.ChallengeListActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
