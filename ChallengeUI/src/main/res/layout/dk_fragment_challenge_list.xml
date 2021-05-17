@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.ChallengeListFragment">
+    tools:context=".challengelist.fragment.ChallengeListFragment">
 
     <include
         android:id="@+id/no_challenges"

@@ -1,13 +1,13 @@
-package com.drivequant.drivekit.challenge.ui.adapter
+package com.drivequant.drivekit.challenge.ui.challengelist.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.viewholder.ChallengeViewHolder
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
-import com.drivequant.drivekit.challenge.ui.viewmodel.containsActiveChallenge
+import com.drivequant.drivekit.challenge.ui.challengelist.viewholder.ChallengeViewHolder
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 internal class ChallengeListAdapter(

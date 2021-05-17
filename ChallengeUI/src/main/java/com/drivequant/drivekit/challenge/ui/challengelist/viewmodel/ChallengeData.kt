@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.challenge.ui.viewmodel
+package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.Group

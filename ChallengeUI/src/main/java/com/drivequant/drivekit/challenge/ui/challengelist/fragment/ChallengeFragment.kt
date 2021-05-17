@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.challenge.ui.fragment
+package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.adapter.ChallengesFragmentPagerAdapter
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.fragment_challenge.*
 
@@ -67,7 +67,7 @@ class ChallengeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_challenge, container, false)
+        return inflater.inflate(R.layout.dk_fragment_challenge, container, false)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

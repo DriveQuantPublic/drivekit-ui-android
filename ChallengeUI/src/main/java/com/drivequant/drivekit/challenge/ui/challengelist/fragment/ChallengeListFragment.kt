@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.challenge.ui.fragment
+package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
-import com.drivequant.drivekit.challenge.ui.viewmodel.containsActiveChallenge
-import com.drivequant.drivekit.challenge.ui.viewmodel.toStatusList
-import com.drivequant.drivekit.challenge.ui.viewmodel.toStringArray
+import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStatusList
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStringArray
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKResource

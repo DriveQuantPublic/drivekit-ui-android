@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.challenge.ui.viewmodel
+package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
