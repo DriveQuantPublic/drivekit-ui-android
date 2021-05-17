@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".joinchallenge.activity.ChallengeRulesActivity"/>
         <activity
-            android:name=".joinchallenge.activity.ChallengeJoinActivity"
+            android:name=".joinchallenge.activity.ChallengeParticipationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".challengelist.activity.ChallengeListActivity"

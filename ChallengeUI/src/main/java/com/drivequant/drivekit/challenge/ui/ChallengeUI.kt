@@ -2,7 +2,7 @@ package com.drivequant.drivekit.challenge.ui
 
 import android.content.Context
 import android.content.Intent
-import com.drivequant.drivekit.challenge.ui.activity.ChallengeListActivity
+import com.drivequant.drivekit.challenge.ui.challengelist.activity.ChallengeListActivity
 
 object ChallengeUI {
 

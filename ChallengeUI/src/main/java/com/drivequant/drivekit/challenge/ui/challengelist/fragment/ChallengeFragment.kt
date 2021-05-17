@@ -13,7 +13,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.fragment_challenge.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge.*
 
 
 class ChallengeFragment : Fragment() {

@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.joinchallenge.fragment.ChallengeJoinFragment
+import com.drivequant.drivekit.challenge.ui.joinchallenge.fragment.ChallengeParticipationFragment
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 
-class ChallengeJoinActivity : AppCompatActivity() {
+class ChallengeParticipationActivity : AppCompatActivity() {
 
     companion object {
         const val CHALLENGE_ID_EXTRA = "challenge-id-extra"
@@ -16,7 +16,7 @@ class ChallengeJoinActivity : AppCompatActivity() {
         fun launchActivity(
             activity: Activity,
             challengeId: String) {
-            val intent = Intent(activity, ChallengeJoinActivity::class.java)
+            val intent = Intent(activity, ChallengeParticipationActivity::class.java)
             intent.putExtra(CHALLENGE_ID_EXTRA, challengeId)
             activity.startActivity(intent)
         }
@@ -32,15 +32,15 @@ class ChallengeJoinActivity : AppCompatActivity() {
 
         val challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
         val challenge = DbChallengeAccess.findChallengeById(challengeId)?.apply {
-            this@ChallengeJoinActivity.title = this.title
+            this@ChallengeParticipationActivity.title = this.title
         }
         challenge?.let {
-            ChallengeJoinFragment.newInstance(it.challengeId)
+            ChallengeParticipationFragment.newInstance(it.challengeId)
         }
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, ChallengeJoinFragment.newInstance(challengeId))
+            .replace(R.id.container, ChallengeParticipationFragment.newInstance(challengeId))
             .commit()
     }
 
