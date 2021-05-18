@@ -54,6 +54,10 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
         }
     }
 
+    fun isChallengeStarted() = challenge?.let { it.startDate.after(it.endDate) } ?: run { false }
+
+    fun getTimeLeft():Long = challenge?.let { it.endDate.time - it.startDate.time } ?: 0
+
     @Suppress("UNCHECKED_CAST")
     class ChallengeParticipationViewModelFactory(private val challengeId: String) :
         ViewModelProvider.NewInstanceFactory() {
