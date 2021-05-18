@@ -39,27 +39,18 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
         }
     }
 
-    fun shouldDisplayJoinChallenge(): Boolean {
+    fun manageChallengeDisplayState(): ChallengeParticipationDisplayState? {
         return challenge?.let {
-            (it.status == ChallengeStatus.PENDING || it.status == ChallengeStatus.SCHEDULED) && !it.isRegistered
-        } ?: run {
-            false
-        }
-    }
+            if (it.status == ChallengeStatus.SCHEDULED && it.isRegistered) {
+                ChallengeParticipationDisplayState.COUNT_DOWN
+            } else if (it.status == ChallengeStatus.PENDING && it.isRegistered && !it.conditionsFilled) {
+                ChallengeParticipationDisplayState.PROGRESS
 
-    fun shouldDisplayCountDown(): Boolean {
-        return challenge?.let {
-            it.status == ChallengeStatus.SCHEDULED && it.isRegistered
-        } ?: run {
-            false
-        }
-    }
-
-    fun shouldDisplayProgressBars(): Boolean {
-        return challenge?.let {
-            it.status == ChallengeStatus.PENDING && it.isRegistered && !it.conditionsFilled
-        } ?: run {
-            false
+            } else if ((it.status == ChallengeStatus.PENDING || it.status == ChallengeStatus.SCHEDULED) && !it.isRegistered) {
+                ChallengeParticipationDisplayState.JOIN
+            } else {
+                null
+            }
         }
     }
 

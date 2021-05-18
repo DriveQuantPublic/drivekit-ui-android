@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dk_margin"
     android:orientation="vertical">
 
     <ScrollView
@@ -19,10 +20,12 @@
             android:padding="@dimen/dk_margin_half">
 
             <TextView
+                android:textSize="26sp"
                 android:id="@+id/text_view_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin_quarter"
                 android:gravity="center"
                 tools:text="King of eco-driving" />
 
@@ -37,7 +40,8 @@
             <TextView
                 android:id="@+id/view_separator"
                 style="@style/Separator.Horizontal"
-                android:layout_marginTop="@dimen/dk_margin_half" />
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"/>
 
             <TextView
                 android:id="@+id/text_view_rules"
@@ -51,7 +55,8 @@
             <TextView
                 android:id="@+id/view_separator_1"
                 style="@style/Separator.Horizontal"
-                android:layout_marginTop="@dimen/dk_margin_half" />
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"/>
 
             <TextView
                 android:id="@+id/text_view_conditions"

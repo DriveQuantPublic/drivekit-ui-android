@@ -4,7 +4,7 @@
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="@color/dkMean" />
+            <solid android:color="@color/dkGaugeBackColor" />
         </shape>
     </item>
 
@@ -12,7 +12,6 @@
         <clip>
             <shape android:shape="rectangle">
                 <corners android:radius="8dp" />
-                <solid android:color="@color/design_default_color_primary" />
             </shape>
         </clip>
     </item>

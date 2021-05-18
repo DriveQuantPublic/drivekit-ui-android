@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import kotlinx.android.synthetic.main.dk_title_progress_bar.view.*
 
 
@@ -37,15 +39,16 @@ class TitleProgressBar(context: Context) : LinearLayout(context) {
             "nbTrip" -> DKResource.convertToString(context,"dk_challenge_nb_trip")
             else -> ""
         }
-        text_view_title_condition.text = "$titleProgressBar : $condition"
+
+        text_view_title_condition.text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
+            color(DriveKitUI.colors.mainFontColor())
+        }).append(condition, context.resSpans {
+            color(DriveKitUI.colors.primaryColor())
+        }).toSpannable()
     }
 
     private fun setStyle() {
-        progress_bar_condition.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        val progressBarDrawable = progress_bar_condition.progressDrawable as LayerDrawable
-        val foregroundDrawable = progressBarDrawable.getDrawable(1)
-        val backgroundDrawable = progressBarDrawable.getDrawable(0)
+        val foregroundDrawable = (progress_bar_condition.progressDrawable as LayerDrawable).getDrawable(1)
         foregroundDrawable.tintDrawable(DriveKitUI.colors.primaryColor())
-        backgroundDrawable.tintDrawable(DriveKitUI.colors.neutralColor())
     }
 }

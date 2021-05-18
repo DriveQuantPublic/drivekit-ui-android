@@ -130,7 +130,7 @@ class ChallengeParticipationFragment : Fragment() {
         viewModel.challenge?.let {
             for (key in it.conditions.keys) {
                 val progressBar = TitleProgressBar(requireContext())
-                val progress = (it.driverConditions.getValue(key).toDouble() / it.conditions.getValue(key).toDouble()) * 100
+                val progress = it.driverConditions.getValue(key).toDouble().div(it.conditions.getValue(key).toDouble()) * 100
                 progressBar.setTitle(key, "${it.driverConditions.getValue(key).toDouble().roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}")
                 progressBar.setProgress(progress.toInt())
 
@@ -161,7 +161,7 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun setStyle() {
-        text_view_title.headLine1()
+        text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
         text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
         text_view_rules.normalText()
         text_view_conditions.normalText()
