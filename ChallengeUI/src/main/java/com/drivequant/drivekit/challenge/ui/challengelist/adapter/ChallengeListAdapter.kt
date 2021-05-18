@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.viewholder.ChallengeViewHolder
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListener
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 internal class ChallengeListAdapter(
     val context: Context,
     private val viewModel: ChallengeListViewModel,
-    private val status: List<ChallengeStatus>
+    private val status: List<ChallengeStatus>,
+    private val listener: ChallengeListener
 ) :
     RecyclerView.Adapter<ChallengeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
@@ -36,6 +38,10 @@ internal class ChallengeListAdapter(
             } else {
                 viewModel.finishedChallenges
             }
-        parent.bind(challenges[position])
+        val challenge = challenges[position]
+        parent.bind(challenge)
+        parent.itemView.setOnClickListener {
+            listener.onClickChallenge(challenge)
+        }
     }
 }
