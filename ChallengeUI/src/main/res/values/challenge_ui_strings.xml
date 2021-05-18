@@ -22,4 +22,7 @@
     <string name="dk_challenge_signin_in_progress">Signing up…</string>
     <string name="dk_challenge_start">Start of challenge\n%s</string>
     <string name="dk_challenge_unranked_conditions_info">To enter the leaderboard, you must fulfill the conditions below:</string>
+
+    <string name="dk_challenge_nb_trip">Number of trips</string>
+    <string name="dk_challenge_distance_kilometer">Distance (km)</string>
 </resources>

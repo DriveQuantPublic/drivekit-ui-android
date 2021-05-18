@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dk_margin_half">
+
+    <TextView
+        android:id="@+id/text_view_title_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dk_margin_half"
+        tools:text="Trajets: 15/23" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_condition"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dk_margin"
+        android:layout_margin="@dimen/dk_margin_quarter"
+        android:max="50"
+        android:progressDrawable="@drawable/dk_progress_bar"
+        tools:progress="40" />
+
+</LinearLayout>
