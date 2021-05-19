@@ -10,6 +10,7 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
+import java.util.*
 
 internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel() {
 
@@ -56,7 +57,7 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
 
     fun isChallengeStarted() = challenge?.let { it.startDate.after(it.endDate) } ?: run { false }
 
-    fun getTimeLeft():Long = challenge?.let { it.endDate.time - it.startDate.time } ?: 0
+    fun getTimeLeft():Long = challenge?.let { it.startDate.time - Date().time } ?: 0
 
     @Suppress("UNCHECKED_CAST")
     class ChallengeParticipationViewModelFactory(private val challengeId: String) :

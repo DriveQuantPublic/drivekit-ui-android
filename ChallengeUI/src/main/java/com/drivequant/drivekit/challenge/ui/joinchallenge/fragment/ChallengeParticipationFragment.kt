@@ -1,7 +1,9 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,10 +26,9 @@ class ChallengeParticipationFragment : Fragment() {
 
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
+    private lateinit var countDownTimer: CountDownTimer
 
     companion object {
-        const val COUNTDOWN_REFRESH_INTERVAL = 1000
-
         fun newInstance(challengeId: String): ChallengeParticipationFragment {
             val fragment = ChallengeParticipationFragment()
             fragment.challengeId = challengeId
@@ -111,8 +112,10 @@ class ChallengeParticipationFragment : Fragment() {
                 }
             }
             text_view_rules.text = it.description
-            text_view_date.text = "${it.startDate.formatDate(DKDatePattern.STANDARD_DATE)} - ${it.endDate.formatDate(
-                DKDatePattern.STANDARD_DATE)}"
+            text_view_date.text =
+                "${it.startDate.formatDate(DKDatePattern.STANDARD_DATE)} - ${it.endDate.formatDate(
+                    DKDatePattern.STANDARD_DATE
+                )}"
             text_view_title.text = it.title
         }
 
@@ -133,7 +136,8 @@ class ChallengeParticipationFragment : Fragment() {
     private fun progress() {
         container_conditions_info.visibility = View.VISIBLE
         text_view_join_challenge.apply {
-            text = DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+            text =
+                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
             visibility = View.VISIBLE
             isClickable = false
         }
@@ -141,8 +145,13 @@ class ChallengeParticipationFragment : Fragment() {
         viewModel.challenge?.let {
             for (key in it.conditions.keys) {
                 val progressBar = TitleProgressBar(requireContext())
-                val progress = it.driverConditions.getValue(key).toDouble().div(it.conditions.getValue(key).toDouble()) * 100
-                progressBar.setTitle(key, "${it.driverConditions.getValue(key).toDouble().roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}")
+                val progress = it.driverConditions.getValue(key).toDouble()
+                    .div(it.conditions.getValue(key).toDouble()) * 100
+                progressBar.setTitle(
+                    key,
+                    "${it.driverConditions.getValue(key).toDouble()
+                        .roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}"
+                )
                 progressBar.setProgress(progress.toInt())
 
                 progressBar.layoutParams = LinearLayout.LayoutParams(
@@ -155,25 +164,10 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun countDown() {
-        //TODO display counter
         if (viewModel.getTimeLeft() > 0) {
             timer_container.visibility = View.VISIBLE
             timer_container.setBackgroundColor(DriveKitUI.colors.primaryColor())
-            val duration =
-                DKDataFormatter.formatDuration(requireContext(), viewModel.getTimeLeft().toDouble())
-                    .convertToString()
-            text_view_countdown.text = duration
-              /*
-              DKSpannable().append("${duration.day}", requireContext().resSpans {
-                  FormatType.UNIT
-              }).append("${duration.hour}", requireContext().resSpans {
-
-              }).append("${duration.min}", requireContext().resSpans {
-
-              }).append("${duration.second}", requireContext().resSpans {
-
-              }).toSpannable()
-              */
+            startCountDown()
             challenge_start.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.fontColorOnPrimaryColor(),
@@ -181,21 +175,51 @@ class ChallengeParticipationFragment : Fragment() {
                 "dk_challenge_start",
                 viewModel.challenge?.title ?: ""
             )
-        } else {
-            //TODO remove handler callbacks and hide container
         }
     }
 
     private fun stopCountDown() {
-
+        if (this::countDownTimer.isInitialized) {
+            countDownTimer.cancel()
+        }
     }
 
     private fun startCountDown() {
+        val difference = viewModel.getTimeLeft()
+        countDownTimer = object : CountDownTimer(difference, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val data =
+                    DKDataFormatter.formatExactDuration(requireContext(), millisUntilFinished)
+                val spannable = DKSpannable()
+                data.forEach {
+                    when (it) {
+                        is FormatType.VALUE -> spannable.append(
+                            it.value,
+                            requireContext().resSpans {
+                                color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                                typeface(Typeface.BOLD)
+                                size(R.dimen.dk_text_big)
+                            })
+                        is FormatType.UNIT -> spannable.append(it.value, requireContext().resSpans {
+                            color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                            size(R.dimen.dk_text_normal)
+                        })
+                        is FormatType.SEPARATOR -> spannable.append(it.value)
+                    }
+                }
 
+                text_view_countdown.text = spannable.toSpannable()
+            }
+
+            override fun onFinish() {
+                //TODO What to do next ?
+            }
+        }.start()
     }
 
-    private fun updateCountDown() {
-
+    override fun onDestroy() {
+        super.onDestroy()
+        stopCountDown()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
