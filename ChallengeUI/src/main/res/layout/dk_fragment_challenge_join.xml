@@ -144,11 +144,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:lines="1"
                 android:paddingLeft="@dimen/dk_margin"
-                android:paddingRight="@dimen/dk_margin"
-                android:text="@string/dk_challenge_start"
-                android:textColor="@android:color/white" />
+                android:paddingRight="@dimen/dk_margin"/>
 
             <TextView
                 android:id="@+id/text_view_countdown"
@@ -157,9 +154,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dk_margin"
                 android:paddingTop="@dimen/dk_margin_half"
-                android:paddingRight="@dimen/dk_margin"
-                android:textColor="@android:color/black"
-                tools:text="bonjodfdfdfdfdfdfur" />
+                android:paddingRight="@dimen/dk_margin" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

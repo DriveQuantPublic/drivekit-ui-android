@@ -155,6 +155,7 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun countDown() {
+        //TODO display counter
         if (viewModel.getTimeLeft() > 0) {
             timer_container.visibility = View.VISIBLE
             timer_container.setBackgroundColor(DriveKitUI.colors.primaryColor())
@@ -162,7 +163,7 @@ class ChallengeParticipationFragment : Fragment() {
                 DKDataFormatter.formatDuration(requireContext(), viewModel.getTimeLeft().toDouble())
                     .convertToString()
             text_view_countdown.text = duration
-            /*
+              /*
               DKSpannable().append("${duration.day}", requireContext().resSpans {
                   FormatType.UNIT
               }).append("${duration.hour}", requireContext().resSpans {
@@ -172,7 +173,7 @@ class ChallengeParticipationFragment : Fragment() {
               }).append("${duration.second}", requireContext().resSpans {
 
               }).toSpannable()
-            */
+              */
             challenge_start.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.fontColorOnPrimaryColor(),
@@ -184,7 +185,6 @@ class ChallengeParticipationFragment : Fragment() {
             //TODO remove handler callbacks and hide container
         }
     }
-
 
     private fun stopCountDown() {
 
@@ -214,6 +214,7 @@ class ChallengeParticipationFragment : Fragment() {
         text_view_conditions.normalText()
         text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
         text_view_date.smallText()
+        text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         view_separator_1.setBackgroundColor(DriveKitUI.colors.neutralColor())
