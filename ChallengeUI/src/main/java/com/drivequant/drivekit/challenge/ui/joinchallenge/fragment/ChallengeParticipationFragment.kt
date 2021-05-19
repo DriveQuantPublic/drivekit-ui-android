@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
 import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBar
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -103,6 +104,9 @@ class ChallengeParticipationFragment : Fragment() {
                     text_view_challenge_rule_consult.visibility = View.VISIBLE
                     text_view_challenge_rule_consult.paintFlags =
                         text_view_challenge_rule_consult.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                    text_view_challenge_rule_consult.setOnClickListener { _ ->
+                        ChallengeRulesActivity.launchActivity(requireActivity(), challengeId,it.isRegistered)
+                    }
                 }
             }
             it.conditionsDescription?.let { conditionsDescription ->

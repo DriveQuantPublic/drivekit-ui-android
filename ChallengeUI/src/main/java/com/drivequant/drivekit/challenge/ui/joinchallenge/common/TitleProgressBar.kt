@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import kotlinx.android.synthetic.main.dk_title_progress_bar.view.*
 
 
-class TitleProgressBar(context: Context) : LinearLayout(context) {
+internal class TitleProgressBar(context: Context) : LinearLayout(context) {
 
     init {
         val view = View.inflate(context, R.layout.dk_title_progress_bar, null)
