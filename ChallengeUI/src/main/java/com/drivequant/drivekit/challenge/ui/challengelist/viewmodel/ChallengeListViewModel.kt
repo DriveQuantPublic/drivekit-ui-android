@@ -7,7 +7,6 @@ import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
-import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 class ChallengeListViewModel : ViewModel() {
 
@@ -48,9 +47,6 @@ class ChallengeListViewModel : ViewModel() {
             syncChallengesError.postValue(Any())
         }
     }
-
-    fun hasActiveChallenges(status: List<ChallengeStatus>): Boolean =
-        status.contains(ChallengeStatus.PENDING) || status.contains(ChallengeStatus.SCHEDULED)
 
     fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
         challengeListData.clear()

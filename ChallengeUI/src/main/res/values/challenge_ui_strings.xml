@@ -25,4 +25,8 @@
 
     <string name="dk_challenge_nb_trip">Number of trips</string>
     <string name="dk_challenge_distance_kilometer">Distance (km)</string>
+    <string name="dk_challenge_failed_to_join">An error occurred, please retry later</string>
+    <string name="dk_challenge_not_a_participant">You did not participate to this challenge or you did not fill the conditions to join the ranking.</string>
+
+
 </resources>

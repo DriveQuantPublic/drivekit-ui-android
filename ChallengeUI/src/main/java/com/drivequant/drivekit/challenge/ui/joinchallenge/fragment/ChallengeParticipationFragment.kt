@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -39,7 +40,7 @@ class ChallengeParticipationFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::challengeId.isInitialized) {
-            outState.putString("challengeId", challengeId)
+            outState.putString("challengeIdTag", challengeId)
         }
         super.onSaveInstanceState(outState)
     }
@@ -61,7 +62,7 @@ class ChallengeParticipationFragment : Fragment() {
             ), javaClass.simpleName
         )
 
-        (savedInstanceState?.getString("challengeId"))?.let { it ->
+        (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
             challengeId = it
         }
 
@@ -72,6 +73,8 @@ class ChallengeParticipationFragment : Fragment() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
+        dispatch()
+
         viewModel.syncJoinChallengeError.observe(this, Observer {
             if (it) {
                 if (viewModel.isChallengeStarted()) {
@@ -79,25 +82,20 @@ class ChallengeParticipationFragment : Fragment() {
                 } else {
                     countDown()
                 }
+            } else {
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(
+                        requireContext(),
+                        "dk_challenge_failed_to_join"
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             updateProgressVisibility(false)
         })
 
-        viewModel.manageChallengeDisplayState()?.let {
-            when (it) {
-                ChallengeParticipationDisplayState.PROGRESS -> {
-                    progress()
-                }
-                ChallengeParticipationDisplayState.JOIN -> {
-                    join()
-                }
-                ChallengeParticipationDisplayState.COUNT_DOWN -> {
-                    countDown()
-                }
-            }
-        }
-
-        viewModel.getRules()?.let {
+        viewModel.challenge?.rules?.let {
             if (it.isNotEmpty()) {
                 text_view_challenge_rule_consult.apply {
                     text = DKResource.convertToString(
@@ -118,35 +116,44 @@ class ChallengeParticipationFragment : Fragment() {
             }
         }
 
-        viewModel.getConditionsDescription()?.let { conditionsDescription ->
+        viewModel.challenge?.conditionsDescription?.let { conditionsDescription ->
             if (conditionsDescription.isNotEmpty()) {
                 text_view_conditions.text = conditionsDescription
                 text_view_conditions.visibility = View.VISIBLE
             }
         }
 
-        text_view_rules.text = viewModel.getDescription()
+        text_view_rules.text = viewModel.challenge?.description ?: ""
         text_view_date.text = viewModel.getDateRange()
-        text_view_title.text = viewModel.getTitle()
-
+        text_view_title.text = viewModel.challenge?.title ?: ""
         text_view_join_challenge.setOnClickListener {
-            viewModel.getRules()?.let { rules ->
+            viewModel.challenge?.rules?.let { rules ->
                 if (rules.isNotEmpty()) {
-                    updateProgressVisibility(true)
-                    viewModel.joinChallenge(challengeId)
-                } else {
                     ChallengeRulesActivity.launchActivity(
                         requireActivity(),
                         challengeId,
                         viewModel.isDriverRegistered()
                     )
                 }
-            }?:run {
-                ChallengeRulesActivity.launchActivity(
-                    requireActivity(),
-                    challengeId,
-                    viewModel.isDriverRegistered()
-                )
+            } ?: run {
+                updateProgressVisibility(true)
+                viewModel.joinChallenge(challengeId)
+            }
+        }
+    }
+
+    fun dispatch() {
+        viewModel.manageChallengeDisplayState()?.let {
+            when (it) {
+                ChallengeParticipationDisplayState.PROGRESS -> {
+                    progress()
+                }
+                ChallengeParticipationDisplayState.JOIN -> {
+                    join()
+                }
+                ChallengeParticipationDisplayState.COUNT_DOWN -> {
+                    countDown()
+                }
             }
         }
     }
@@ -173,23 +180,30 @@ class ChallengeParticipationFragment : Fragment() {
                 val progressBar = TitleProgressBar(requireContext())
                 val progress = it.driverConditions.getValue(key).toDouble()
                     .div(it.conditions.getValue(key).toDouble()) * 100
-                progressBar.setTitle(
-                    key,
-                    "${it.driverConditions.getValue(key).toDouble()
-                        .roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}"
-                )
-                progressBar.setProgress(progress.toInt())
-
-                progressBar.layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-                )
+                progressBar.apply {
+                    setTitle(
+                        key,
+                        "${it.driverConditions.getValue(key).toDouble()
+                            .roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}"
+                    )
+                    setProgress(progress.toInt())
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                    )
+                }
                 challenge_layout.addView(progressBar)
             }
         }
     }
 
     private fun countDown() {
+        text_view_join_challenge.apply {
+            isEnabled = false
+            text =
+                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+            setBackgroundColor(DriveKitUI.colors.primaryColor())
+        }
         if (viewModel.getTimeLeft() > 0) {
             timer_container.visibility = View.VISIBLE
             timer_container.setBackgroundColor(DriveKitUI.colors.primaryColor())
@@ -238,9 +252,14 @@ class ChallengeParticipationFragment : Fragment() {
             }
 
             override fun onFinish() {
-                //TODO What to do next ?
+
             }
         }.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopCountDown()
     }
 
     override fun onDestroy() {

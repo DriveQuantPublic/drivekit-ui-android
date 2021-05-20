@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -29,6 +28,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
     private lateinit var status: List<ChallengeStatus>
+    private var adapter: ChallengeListAdapter? = null
+
 
     companion object {
         fun newInstance(status: List<ChallengeStatus>, viewModel: ChallengeListViewModel): ChallengeListFragment {
@@ -75,20 +76,21 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
 
+        dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
         if (viewModel.activeChallenges.isEmpty() || viewModel.finishedChallenges.isEmpty()) {
             displayNoChallenges(status)
         } else {
+            adapter?.notifyDataSetChanged() ?: run {
+                adapter = ChallengeListAdapter(
+                    requireContext(),
+                    viewModel,
+                    status,
+                    this
+                )
+                dk_recycler_view_challenge.adapter = adapter
+            }
             displayChallenges()
         }
-
-        dk_recycler_view_challenge.layoutManager =
-            LinearLayoutManager(requireContext())
-        dk_recycler_view_challenge.adapter = ChallengeListAdapter(
-            requireContext(),
-            viewModel,
-            status,
-            this
-        )
     }
 
     private fun displayChallenges() {
@@ -136,18 +138,17 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                titleTextView?.text = DKResource.convertToString(requireContext(), "dk_common_ok")
+                titleTextView?.text = getString(R.string.app_name)
                 descriptionTextView?.text =
-                    DKResource.convertToString(requireContext(), "dk_common_ok")
+                    DKResource.convertToString(requireContext(), "dk_challenge_not_a_participant")
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
 
             }
-            challengeData.shouldDisplayChallengeDetail() -> Toast.makeText(
-                requireContext(),
-                "challenge Stats",
-                Toast.LENGTH_LONG
-            ).show()
+
+            challengeData.shouldDisplayChallengeDetail() -> {
+                //TODO next ticket
+            }
 
             else -> ChallengeParticipationActivity.launchActivity(
                 requireActivity(),

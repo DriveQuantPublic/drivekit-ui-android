@@ -57,17 +57,9 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
         }
     }
 
-    fun isChallengeStarted() = challenge?.let { it.startDate.after(it.endDate) } ?: run { false }
+    fun isChallengeStarted() = challenge?.let { Date().after(it.startDate) } ?: run { false }
 
     fun getTimeLeft(): Long = challenge?.let { it.startDate.time - Date().time } ?: 0
-
-    fun getRules() = challenge?.rules
-
-    fun getConditionsDescription() = challenge?.conditionsDescription
-
-    fun getDescription() = challenge?.description
-
-    fun getTitle() = challenge?.title
 
     fun getDateRange() =
         "${challenge?.startDate?.formatDate(DKDatePattern.STANDARD_DATE)} - ${challenge?.endDate?.formatDate(

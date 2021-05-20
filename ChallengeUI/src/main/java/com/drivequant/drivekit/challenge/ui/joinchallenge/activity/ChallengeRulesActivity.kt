@@ -7,6 +7,7 @@ import  androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
@@ -24,12 +25,12 @@ import kotlinx.android.synthetic.main.dk_activity_challenge_rules.progress_circu
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
-
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
 
     companion object {
         const val CONSULT_RULES_EXTRA = "consult-rules-extra"
+        const val UPDATE_CHALLENGE_REQUEST_CODE = 108
 
         fun launchActivity(
             activity: Activity,
@@ -38,7 +39,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             val intent = Intent(activity, ChallengeRulesActivity::class.java)
             intent.putExtra(CONSULT_RULES_EXTRA, isRegistered)
             intent.putExtra(CHALLENGE_ID_EXTRA, challengeId)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent, UPDATE_CHALLENGE_REQUEST_CODE)
         }
     }
 
@@ -84,10 +85,24 @@ class ChallengeRulesActivity : AppCompatActivity() {
             if (it) {
                 finish()
             } else {
-                //TODO show popup sync error
+                Toast.makeText(
+                    this,
+                    DKResource.convertToString(
+                        this,
+                        "dk_challenge_failed_to_join"
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             updateProgressVisibility(false)
         })
+
+        viewModel.challenge?.rules?.let {
+            if (it.isNotEmpty()) {
+                text_view_challenge_rule.text =
+                    HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+        }
 
         text_view_accept_rule.setOnClickListener {
             if (!isRegistered) {
@@ -118,14 +133,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 descriptionTextView?.normalText()
             }
         }
-
-        viewModel.getRules()?.let {
-            if (it.isNotEmpty()) {
-                text_view_challenge_rule.text =
-                    HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            }
-        }
-        setStyle()
+        text_view_accept_rule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -133,10 +141,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
             outState.putString("challengeId", challengeId)
         }
         super.onSaveInstanceState(outState)
-    }
-
-    private fun setStyle() {
-        text_view_accept_rule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

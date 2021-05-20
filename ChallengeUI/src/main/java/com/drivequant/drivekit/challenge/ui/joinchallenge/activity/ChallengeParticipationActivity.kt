@@ -5,11 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.fragment.ChallengeParticipationFragment
-import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
+import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 
 class ChallengeParticipationActivity : AppCompatActivity() {
+
+    private lateinit var viewModel : ChallengeParticipationViewModel
+    private lateinit var fragment : ChallengeParticipationFragment
 
     companion object {
         const val CHALLENGE_ID_EXTRA = "challenge-id-extra"
@@ -26,27 +30,38 @@ class ChallengeParticipationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_challenge_join)
+
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
-        val challenge = DbChallengeAccess.findChallengeById(challengeId)?.apply {
-            this@ChallengeParticipationActivity.title = this.title
-        }
-        challenge?.let {
-            ChallengeParticipationFragment.newInstance(it.challengeId)
+
+        viewModel = ViewModelProviders.of(this,
+            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
+        ).get(ChallengeParticipationViewModel::class.java)
+
+        viewModel.challenge?.let {
+            this@ChallengeParticipationActivity.title = it.title
         }
 
+        fragment = ChallengeParticipationFragment.newInstance(challengeId)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, ChallengeParticipationFragment.newInstance(challengeId))
+            .replace(R.id.container, fragment)
             .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ChallengeRulesActivity.UPDATE_CHALLENGE_REQUEST_CODE) {
+            fragment.dispatch()
+        }
     }
 }
