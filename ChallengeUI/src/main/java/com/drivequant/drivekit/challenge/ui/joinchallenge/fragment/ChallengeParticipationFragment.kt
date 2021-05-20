@@ -97,35 +97,57 @@ class ChallengeParticipationFragment : Fragment() {
             }
         }
 
-        viewModel.challenge?.let {
-            it.rules?.let { rules ->
-                if (rules.isNotEmpty()) {
-                    text_view_challenge_rule_consult.text = rules
-                    text_view_challenge_rule_consult.visibility = View.VISIBLE
-                    text_view_challenge_rule_consult.paintFlags =
-                        text_view_challenge_rule_consult.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-                    text_view_challenge_rule_consult.setOnClickListener { _ ->
-                        ChallengeRulesActivity.launchActivity(requireActivity(), challengeId,it.isRegistered)
+        viewModel.getRules()?.let {
+            if (it.isNotEmpty()) {
+                text_view_challenge_rule_consult.apply {
+                    text = DKResource.convertToString(
+                        requireContext(),
+                        "dk_challenge_consult_rule_button"
+                    )
+                    visibility = View.VISIBLE
+                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
+                    setOnClickListener { _ ->
+                        ChallengeRulesActivity.launchActivity(
+                            requireActivity(),
+                            challengeId,
+                            viewModel.isDriverRegistered()
+                        )
                     }
                 }
             }
-            it.conditionsDescription?.let { conditionsDescription ->
-                if (conditionsDescription.isNotEmpty()) {
-                    text_view_conditions.text = conditionsDescription
-                    text_view_conditions.visibility = View.VISIBLE
-                }
-            }
-            text_view_rules.text = it.description
-            text_view_date.text =
-                "${it.startDate.formatDate(DKDatePattern.STANDARD_DATE)} - ${it.endDate.formatDate(
-                    DKDatePattern.STANDARD_DATE
-                )}"
-            text_view_title.text = it.title
         }
 
+        viewModel.getConditionsDescription()?.let { conditionsDescription ->
+            if (conditionsDescription.isNotEmpty()) {
+                text_view_conditions.text = conditionsDescription
+                text_view_conditions.visibility = View.VISIBLE
+            }
+        }
+
+        text_view_rules.text = viewModel.getDescription()
+        text_view_date.text = viewModel.getDateRange()
+        text_view_title.text = viewModel.getTitle()
+
         text_view_join_challenge.setOnClickListener {
-            updateProgressVisibility(true)
-            viewModel.joinChallenge(challengeId)
+            viewModel.getRules()?.let { rules ->
+                if (rules.isNotEmpty()) {
+                    updateProgressVisibility(true)
+                    viewModel.joinChallenge(challengeId)
+                } else {
+                    ChallengeRulesActivity.launchActivity(
+                        requireActivity(),
+                        challengeId,
+                        viewModel.isDriverRegistered()
+                    )
+                }
+            }?:run {
+                ChallengeRulesActivity.launchActivity(
+                    requireActivity(),
+                    challengeId,
+                    viewModel.isDriverRegistered()
+                )
+            }
         }
     }
 

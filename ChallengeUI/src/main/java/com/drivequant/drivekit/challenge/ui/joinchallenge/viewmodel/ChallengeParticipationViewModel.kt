@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.JoinChallengeQueryListener
 import com.drivequant.drivekit.challenge.JoinChallengeSyncStatus
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
@@ -58,6 +60,21 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
     fun isChallengeStarted() = challenge?.let { it.startDate.after(it.endDate) } ?: run { false }
 
     fun getTimeLeft(): Long = challenge?.let { it.startDate.time - Date().time } ?: 0
+
+    fun getRules() = challenge?.rules
+
+    fun getConditionsDescription() = challenge?.conditionsDescription
+
+    fun getDescription() = challenge?.description
+
+    fun getTitle() = challenge?.title
+
+    fun getDateRange() =
+        "${challenge?.startDate?.formatDate(DKDatePattern.STANDARD_DATE)} - ${challenge?.endDate?.formatDate(
+            DKDatePattern.STANDARD_DATE
+        )}"
+
+    fun isDriverRegistered() = challenge?.isRegistered ?: false
 
     @Suppress("UNCHECKED_CAST")
     class ChallengeParticipationViewModelFactory(private val challengeId: String) :

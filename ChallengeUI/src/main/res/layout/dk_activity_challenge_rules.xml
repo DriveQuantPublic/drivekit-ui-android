@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <include
-        android:id="@+id/dk_toolbar"
+        android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
     <FrameLayout
@@ -14,37 +15,38 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view_challenge_rule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:padding="@dimen/dk_margin_half"
+                tools:text="Rules text" />
+        </ScrollView>
 
         <TextView
-            android:id="@+id/text_view_challenge_rule"
+            android:id="@+id/text_view_accept_rule"
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/black"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:autoLink="all"
-            tools:text="Rules text" />
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/text_view_accept_rule"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_gravity="bottom"
-        android:textStyle="bold"
-        android:visibility="visible" />
-
-
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="visible" />
-</FrameLayout>
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 </LinearLayout>
