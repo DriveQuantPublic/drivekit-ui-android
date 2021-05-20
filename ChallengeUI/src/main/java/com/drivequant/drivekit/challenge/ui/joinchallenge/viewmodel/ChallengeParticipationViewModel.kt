@@ -14,17 +14,12 @@ import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 import java.util.*
 
-internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel() {
+internal class ChallengeParticipationViewModel(private val challengeId: String) : ViewModel() {
 
-    var challenge: Challenge? = null
+    val challenge: Challenge?
+        get() = DbChallengeAccess.findChallengeById(challengeId)
     var syncJoinChallengeError: MutableLiveData<Boolean> = MutableLiveData()
         private set
-
-    init {
-        DbChallengeAccess.findChallengeById(challengeId)?.let {
-            challenge = it
-        }
-    }
 
     fun joinChallenge(challengeId: String) {
         if (DriveKit.isConfigured()) {
@@ -43,7 +38,7 @@ internal class ChallengeParticipationViewModel(challengeId: String) : ViewModel(
     }
 
     fun manageChallengeDisplayState(): ChallengeParticipationDisplayState? {
-        return challenge?.let {
+        return DbChallengeAccess.findChallengeById(challengeId)?.let {
             if (it.status == ChallengeStatus.SCHEDULED && it.isRegistered) {
                 ChallengeParticipationDisplayState.COUNT_DOWN
             } else if (it.status == ChallengeStatus.PENDING && it.isRegistered && !it.conditionsFilled) {

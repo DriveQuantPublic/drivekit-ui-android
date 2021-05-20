@@ -3,7 +3,7 @@ package com.drivequant.drivekit.challenge.ui.joinchallenge.activity
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import  androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -35,12 +35,20 @@ class ChallengeRulesActivity : AppCompatActivity() {
         fun launchActivity(
             activity: Activity,
             challengeId: String,
-            isRegistered: Boolean) {
+            isRegistered: Boolean
+        ) {
             val intent = Intent(activity, ChallengeRulesActivity::class.java)
             intent.putExtra(CONSULT_RULES_EXTRA, isRegistered)
             intent.putExtra(CHALLENGE_ID_EXTRA, challengeId)
             activity.startActivityForResult(intent, UPDATE_CHALLENGE_REQUEST_CODE)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::challengeId.isInitialized) {
+            outState.putString("challengeId", challengeId)
+        }
+        super.onSaveInstanceState(outState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,12 +70,14 @@ class ChallengeRulesActivity : AppCompatActivity() {
         challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
 
         val value = if (isRegistered) {
-            text_view_accept_rule.text = DKResource.convertToString(this, "dk_challenge_participate_button")
+            text_view_accept_rule.text =
+                DKResource.convertToString(this, "dk_challenge_participate_button")
             "dk_challenge_rule_title"
         } else {
             text_view_accept_rule.visibility = View.VISIBLE
-            text_view_accept_rule.text = DKResource.convertToString(this, "dk_challenge_optin_title")
-           "dk_challenge_optin_title"
+            text_view_accept_rule.text =
+                DKResource.convertToString(this, "dk_challenge_optin_title")
+            "dk_challenge_optin_title"
         }
         title = DKResource.convertToString(this, value)
         (savedInstanceState?.getString("challengeId"))?.let { it ->
@@ -134,13 +144,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
             }
         }
         text_view_accept_rule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (this::challengeId.isInitialized) {
-            outState.putString("challengeId", challengeId)
-        }
-        super.onSaveInstanceState(outState)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
