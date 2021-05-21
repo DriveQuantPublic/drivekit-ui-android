@@ -5,14 +5,19 @@
     <string name="dk_challenge_competitors_duration">I partecipanti hanno guidato %s</string>
     <string name="dk_challenge_competitors_trips">su un totale di %1$s %2$s</string>
     <string name="dk_challenge_consult_rule_button">Consulta le regole</string>
+    <string name="dk_challenge_distance_kilometer">Distanza (km)</string>
     <string name="dk_challenge_driver_distance">Ne hai passate tante altre cose %1$s %2$s</string>
     <string name="dk_challenge_driver_duration">Hai guidato %s</string>
     <string name="dk_challenge_driver_trips">Hai capito che %1$s %2$s</string>
+    <string name="dk_challenge_driving_time">Tempo di guida</string>
+    <string name="dk_challenge_failed_to_join">Impossibile partecipare alla sfida, assicurati di essere connesso a Internet o riprova più tardi.</string>
     <string name="dk_challenge_failed_to_sync_challenges">Impossibile sincronizzare le sfide, si prega di riprovare più tardi.</string>
     <string name="dk_challenge_finished">Completa</string>
     <string name="dk_challenge_menu">Sfide</string>
+    <string name="dk_challenge_nb_trip">Numero di viaggi</string>
     <string name="dk_challenge_no_active_challenge">Nessuna sfida in corso</string>
     <string name="dk_challenge_no_finished_challenge">Nessuna sfida completata</string>
+    <string name="dk_challenge_not_a_participant">on hai partecipato a questa sfida o non hai soddisfatto le condizioni per iscriversi alla classifica.</string>
     <string name="dk_challenge_optin_title">Accetta le regole</string>
     <string name="dk_challenge_participate_button">Partecipo</string>
     <string name="dk_challenge_registered_confirmation">Sei registrato!</string>
@@ -21,5 +26,6 @@
     <string name="dk_challenge_score_alert_title">Sfida in analisi</string>
     <string name="dk_challenge_signin_in_progress">Registrazione in corso…</string>
     <string name="dk_challenge_start">Inizio della sfida\n%s</string>
+    <string name="dk_challenge_traveled_distance">Distanza percorsa</string>
     <string name="dk_challenge_unranked_conditions_info">Per inserire la classifica, è necessario soddisfare le condizioni seguenti:</string>
 </resources>
