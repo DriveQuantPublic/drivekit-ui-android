@@ -33,13 +33,11 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
     }
 
     fun setTitle(title: String, condition: String) {
-        //TODO Improve
        val titleProgressBar = when (title) {
             "km" -> DKResource.convertToString(context,"dk_challenge_distance_kilometer")
             "nbTrip" -> DKResource.convertToString(context,"dk_challenge_nb_trip")
             else -> ""
         }
-
         text_view_title_condition.text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
             color(DriveKitUI.colors.mainFontColor())
         }).append(condition, context.resSpans {

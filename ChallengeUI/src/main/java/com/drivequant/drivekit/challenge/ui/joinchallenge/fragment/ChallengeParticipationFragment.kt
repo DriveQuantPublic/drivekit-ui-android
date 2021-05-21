@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
@@ -167,7 +169,7 @@ class ChallengeParticipationFragment : Fragment() {
         text_view_join_challenge.apply {
             text = DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
             visibility = View.VISIBLE
-            isClickable = false
+            isEnabled = false
         }
 
         viewModel.challenge?.let {

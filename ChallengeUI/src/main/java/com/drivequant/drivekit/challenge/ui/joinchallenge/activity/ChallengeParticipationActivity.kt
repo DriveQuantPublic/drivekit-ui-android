@@ -60,7 +60,7 @@ class ChallengeParticipationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ChallengeRulesActivity.UPDATE_CHALLENGE_REQUEST_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == ChallengeRulesActivity.UPDATE_CHALLENGE_REQUEST_CODE) {
             fragment.dispatch()
         }
     }

@@ -93,6 +93,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
 
         viewModel.syncJoinChallengeError.observe(this, Observer {
             if (it) {
+                setResult(Activity.RESULT_OK)
                 finish()
             } else {
                 Toast.makeText(
@@ -157,5 +158,10 @@ class ChallengeRulesActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_CANCELED)
+        super.onBackPressed()
     }
 }
