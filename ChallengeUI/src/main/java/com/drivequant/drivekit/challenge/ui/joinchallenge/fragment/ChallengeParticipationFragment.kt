@@ -1,7 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
