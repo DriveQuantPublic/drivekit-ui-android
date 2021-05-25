@@ -25,7 +25,7 @@
     <string name="dk_challenge_score_alert_message">Die Ergebnisse dieser Herausforderung werden derzeit analysiert, bitte versuchen Sie es später noch einmal.</string>
     <string name="dk_challenge_score_alert_title">Zu analysierende Herausforderung</string>
     <string name="dk_challenge_signin_in_progress">Anmeldung läuft…</string>
-    <string name="dk_challenge_start">Beginn der Challenge\n%s</string>
+    <string name="dk_challenge_start">Beginn der Challenge in</string>
     <string name="dk_challenge_traveled_distance">Zurückgelegte Wegstrecke</string>
     <string name="dk_challenge_unranked_conditions_info">Um an der Rangliste teilzunehmen, müssen Sie die folgenden Bedingungen erfüllen:</string>
 </resources>

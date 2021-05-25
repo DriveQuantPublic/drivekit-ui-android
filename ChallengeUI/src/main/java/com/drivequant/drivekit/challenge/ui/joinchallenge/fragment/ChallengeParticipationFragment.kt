@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.os.Bundle
@@ -104,7 +105,6 @@ class ChallengeParticipationFragment : Fragment() {
                             "dk_challenge_consult_rule_button"
                         )
                         setTextColor(DriveKitUI.colors.secondaryColor())
-                        paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
                         visibility = View.VISIBLE
                         setOnClickListener { _ ->
                             ChallengeRulesActivity.launchActivity(
@@ -164,8 +164,10 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun progress() {
         container_conditions_info.visibility = View.VISIBLE
+        view_separator_1.visibility = View.INVISIBLE
         text_view_join_challenge.apply {
-            text = DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+            text =
+                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
             visibility = View.VISIBLE
             isEnabled = false
         }
@@ -179,7 +181,7 @@ class ChallengeParticipationFragment : Fragment() {
                     setTitle(
                         key,
                         "${it.driverConditions.getValue(key).toDouble()
-                            .roundToInt()} / ${it.conditions.getValue(key).toDouble().roundToInt()}"
+                            .roundToInt()}/${it.conditions.getValue(key).toDouble().roundToInt()}"
                     )
                     setProgress(progress.toInt())
                     layoutParams = LinearLayout.LayoutParams(
@@ -194,21 +196,21 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun countDown() {
         text_view_join_challenge.apply {
-            text = DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+            text =
+                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             isEnabled = false
         }
         if (viewModel.getTimeLeft() > 0) {
             startCountDown()
-            timer_container.setBackgroundColor(DriveKitUI.colors.primaryColor())
-            timer_container.visibility = View.VISIBLE
-            challenge_start.text = DKResource.buildString(
-                requireContext(),
-                DriveKitUI.colors.fontColorOnPrimaryColor(),
-                DriveKitUI.colors.fontColorOnPrimaryColor(),
-                "dk_challenge_start",
-                viewModel.challenge?.title ?: ""
-            )
+            timer_container.apply {
+                setBackgroundColor(DriveKitUI.colors.primaryColor())
+                visibility = View.VISIBLE
+            }
+            challenge_start.apply {
+                text = DKResource.convertToString(requireContext(), "dk_challenge_start")
+                setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            }
         }
     }
 
@@ -222,30 +224,31 @@ class ChallengeParticipationFragment : Fragment() {
         val difference = viewModel.getTimeLeft()
         countDownTimer = object : CountDownTimer(difference, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                    val data =
-                        DKDataFormatter.formatExactDuration(requireContext(), millisUntilFinished)
-                    val spannable = DKSpannable()
-                    data.forEach {
-                        when (it) {
-                            is FormatType.VALUE -> spannable.append(
-                                it.value,
-                                requireContext().resSpans {
-                                    color(DriveKitUI.colors.fontColorOnPrimaryColor())
-                                    typeface(Typeface.BOLD)
-                                    size(R.dimen.dk_text_big)
-                                })
-                            is FormatType.UNIT -> spannable.append(
-                                it.value,
-                                requireContext().resSpans {
-                                    color(DriveKitUI.colors.fontColorOnPrimaryColor())
-                                    size(R.dimen.dk_text_normal)
-                                })
-                            is FormatType.SEPARATOR -> spannable.append(it.value)
-                        }
+                val data =
+                    DKDataFormatter.formatExactDuration(requireContext(), millisUntilFinished)
+                val spannable = DKSpannable()
+                data.forEach {
+                    when (it) {
+                        is FormatType.VALUE -> spannable.append(
+                            it.value,
+                            requireContext().resSpans {
+                                color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                                typeface(Typeface.BOLD)
+                                size(R.dimen.dk_text_big)
+                            })
+                        is FormatType.UNIT -> spannable.append(
+                            it.value,
+                            requireContext().resSpans {
+                                color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                                size(R.dimen.dk_text_normal)
+                            })
+                        is FormatType.SEPARATOR -> spannable.append(it.value)
                     }
-                    text_view_countdown.text = spannable.toSpannable()
                 }
-            override fun onFinish() { }
+                text_view_countdown.text = spannable.toSpannable()
+            }
+
+            override fun onFinish() {}
         }.start()
     }
 
@@ -258,17 +261,17 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun setStyle() {
-        text_view_join_challenge.setBackgroundColor(DriveKitUI.colors.primaryColor())
         text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
-        text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
-        text_view_rules.normalText()
-        text_view_conditions.normalText()
-        text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_date.smallText()
-        text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-        container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        text_view_date.smallText(Color.parseColor("#9E9E9E"))
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        text_view_conditions.normalText()
+        text_view_rules.normalText()
         view_separator_1.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
+        text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
+        container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        text_view_join_challenge.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     override fun onPause() {

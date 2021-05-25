@@ -25,7 +25,7 @@
     <string name="dk_challenge_score_alert_message">Les résultats de ce challenge sont en cours d\'analyse, veuillez réessayer plus tard.</string>
     <string name="dk_challenge_score_alert_title">Challenge en cours d\'analyse</string>
     <string name="dk_challenge_signin_in_progress">Inscription en cours…</string>
-    <string name="dk_challenge_start">Début du challenge\n%s</string>
+    <string name="dk_challenge_start">Début du challenge dans</string>
     <string name="dk_challenge_traveled_distance">Distance parcourue</string>
     <string name="dk_challenge_unranked_conditions_info">Pour entrer au classement général, vous devez réaliser les conditions ci-dessous :</string>
 </resources>

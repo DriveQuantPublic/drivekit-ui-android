@@ -114,7 +114,8 @@ object DKDataFormatter {
             listOf(
                 FormatType.VALUE(days.toString()),
                 FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_day))
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                FormatType.SEPARATOR()
             )
         )
         val hours = difference / hoursInMilli
@@ -123,7 +124,8 @@ object DKDataFormatter {
             listOf(
                 FormatType.VALUE(hours.toString()),
                 FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
+                FormatType.SEPARATOR()
             )
         )
         val minutes = difference / minutesInMilli
@@ -132,7 +134,8 @@ object DKDataFormatter {
             listOf(
                 FormatType.VALUE(minutes.toString()),
                 FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_minute))
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                FormatType.SEPARATOR()
             )
         )
         val seconds = difference / secondsInMilli
@@ -141,7 +144,8 @@ object DKDataFormatter {
             listOf(
                 FormatType.VALUE(seconds.toString()),
                 FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_second))
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_second)),
+                FormatType.SEPARATOR()
             )
         )
         return formattingTypes

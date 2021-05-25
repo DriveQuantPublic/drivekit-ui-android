@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -147,7 +148,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             }
 
             challengeData.shouldDisplayChallengeDetail() -> {
-                //TODO next ticket
+                Toast.makeText(requireContext(), "Sorry, you can't access challenge statistics for now !", Toast.LENGTH_LONG).show()
             }
 
             else -> ChallengeParticipationActivity.launchActivity(

@@ -25,7 +25,7 @@
     <string name="dk_challenge_score_alert_message">Los resultados de este desafío están siendo analizados, por favor inténtelo de nuevo más tarde.</string>
     <string name="dk_challenge_score_alert_title">Desafío en análisis</string>
     <string name="dk_challenge_signin_in_progress">Registro en curso…</string>
-    <string name="dk_challenge_start">Inicio del desafío\n%s</string>
+    <string name="dk_challenge_start">Inicio del desafío en</string>
     <string name="dk_challenge_traveled_distance">Distancia recorrida</string>
     <string name="dk_challenge_unranked_conditions_info">Para ingresar a la tabla de clasificación, debes cumplir las condiciones a continuación:</string>
 </resources>

@@ -69,17 +69,15 @@ class ChallengeRulesActivity : AppCompatActivity() {
         val isRegistered = intent.getBooleanExtra(CONSULT_RULES_EXTRA, false)
         challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
 
-        val value = if (isRegistered) {
-            text_view_accept_rule.text =
-                DKResource.convertToString(this, "dk_challenge_participate_button")
-            "dk_challenge_rule_title"
+        val acceptRulesText = if (isRegistered) {
+            "dk_challenge_participate_button"
         } else {
             text_view_accept_rule.visibility = View.VISIBLE
-            text_view_accept_rule.text =
-                DKResource.convertToString(this, "dk_challenge_optin_title")
             "dk_challenge_optin_title"
         }
-        title = DKResource.convertToString(this, value)
+
+        text_view_accept_rule.text = DKResource.convertToString(this, acceptRulesText)
+        title = DKResource.convertToString(this, "dk_challenge_rule_title")
         (savedInstanceState?.getString("challengeId"))?.let { it ->
             challengeId = it
         }
@@ -127,7 +125,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
                             dialog.dismiss()
                         })
                     .negativeButton(DKResource.convertToString(this, "dk_common_cancel"),
-                        DialogInterface.OnClickListener { dialog, _ ->
+                        DialogInterface.OnClickListener { _,_ ->
                             finish()
                         })
                     .show()

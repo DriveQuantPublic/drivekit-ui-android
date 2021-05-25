@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="@dimen/dk_margin_half">
+                android:paddingBottom="@dimen/dk_margin_half">
 
                 <TextView
                     android:id="@+id/text_view_title"
@@ -30,6 +30,8 @@
                     android:layout_marginTop="@dimen/dk_margin"
                     android:layout_marginBottom="@dimen/dk_margin_quarter"
                     android:gravity="center"
+                    android:layout_marginEnd="@dimen/dk_margin_half"
+                    android:layout_marginStart="@dimen/dk_margin_half"
                     android:textSize="26sp"
                     tools:text="King of eco-driving" />
 
@@ -48,10 +50,11 @@
                     android:layout_marginBottom="@dimen/dk_margin_half" />
 
                 <TextView
+                    android:layout_marginEnd="@dimen/dk_margin_half"
+                    android:layout_marginStart="@dimen/dk_margin_half"
                     android:id="@+id/text_view_rules"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
                     android:gravity="center"
                     android:padding="@dimen/dk_margin_half"
                     tools:text="Text Rules" />
@@ -69,6 +72,8 @@
                     android:layout_marginBottom="@dimen/dk_margin"
                     android:gravity="center"
                     android:padding="@dimen/dk_margin_half"
+                    android:layout_marginEnd="@dimen/dk_margin_half"
+                    android:layout_marginStart="@dimen/dk_margin_half"
                     android:visibility="gone"
                     tools:text="Conditions"
                     tools:visibility="visible" />
@@ -88,7 +93,8 @@
                     android:id="@+id/container_conditions_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dk_margin_half"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:layout_marginBottom="@dimen/dk_margin_half"
                     android:background="@color/dkGood"
                     android:padding="@dimen/dk_margin"
                     android:visibility="gone"

@@ -48,5 +48,14 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
     private fun setStyle() {
         val foregroundDrawable = (progress_bar_condition.progressDrawable as LayerDrawable).getDrawable(1)
         foregroundDrawable.tintDrawable(DriveKitUI.colors.primaryColor())
+
+        val params = progress_bar_condition.layoutParams as MarginLayoutParams
+        params.setMargins(
+            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            params.topMargin,
+            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            params.bottomMargin)
+
+        layoutParams = params
     }
 }
