@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginBottom="@dimen/dk_margin_half"
-                    android:background="@color/dkGood"
+                    tools:background="@color/dkGood"
                     android:padding="@dimen/dk_margin"
                     android:visibility="gone"
                     tools:visibility="visible">
@@ -130,10 +130,9 @@
             android:id="@+id/text_view_join_challenge"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/dkGaugeBackColor"
             android:gravity="center"
             android:text="@string/dk_challenge_registered_confirmation"
-            android:textColor="@android:color/white"
+            tools:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"/>
 

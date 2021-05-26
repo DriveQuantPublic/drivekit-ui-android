@@ -4,7 +4,7 @@
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="@color/dkGaugeBackColor" />
+            <solid android:color="@color/dkProgressBarBackgroundColor" />
         </shape>
     </item>
 

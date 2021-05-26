@@ -48,7 +48,7 @@ class ChallengeListViewModel : ViewModel() {
         }
     }
 
-    fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
+    private fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
         challengeListData.clear()
         return challengeList.map {
             ChallengeData(

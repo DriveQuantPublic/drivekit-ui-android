@@ -118,13 +118,13 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(DKResource.convertToString(this, "dk_common_ok"),
+                    .positiveButton(positiveListener =
                         DialogInterface.OnClickListener { dialog, _ ->
                             updateProgressVisibility(true)
                             viewModel.joinChallenge(challengeId)
                             dialog.dismiss()
                         })
-                    .negativeButton(DKResource.convertToString(this, "dk_common_cancel"),
+                    .negativeButton(negativeListener =
                         DialogInterface.OnClickListener { _,_ ->
                             finish()
                         })

@@ -96,31 +96,27 @@ class ChallengeParticipationFragment : Fragment() {
         })
 
         viewModel.challenge?.let { challenge ->
-            challenge.rules?.let {
-                if (it.isNotEmpty()) {
-                    text_view_challenge_rule_consult.apply {
-                        text = DKResource.convertToString(
-                            requireContext(),
-                            "dk_challenge_consult_rule_button"
+            if (!challenge.rules.isNullOrBlank()) {
+                text_view_challenge_rule_consult.apply {
+                    text = DKResource.convertToString(
+                        requireContext(),
+                        "dk_challenge_consult_rule_button"
+                    )
+                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    visibility = View.VISIBLE
+                    setOnClickListener { _ ->
+                        ChallengeRulesActivity.launchActivity(
+                            requireActivity(),
+                            challenge.challengeId,
+                            viewModel.isDriverRegistered()
                         )
-                        setTextColor(DriveKitUI.colors.secondaryColor())
-                        visibility = View.VISIBLE
-                        setOnClickListener { _ ->
-                            ChallengeRulesActivity.launchActivity(
-                                requireActivity(),
-                                challenge.challengeId,
-                                viewModel.isDriverRegistered()
-                            )
-                        }
                     }
                 }
             }
 
-            challenge.conditionsDescription?.let { conditionsDescription ->
-                if (conditionsDescription.isNotEmpty()) {
-                    text_view_conditions.text = conditionsDescription
-                    text_view_conditions.visibility = View.VISIBLE
-                }
+            if (!challenge.conditionsDescription.isNullOrBlank()) {
+                text_view_conditions.text = challenge.conditionsDescription
+                text_view_conditions.visibility = View.VISIBLE
             }
 
             text_view_rules.text = challenge.description
@@ -167,6 +163,7 @@ class ChallengeParticipationFragment : Fragment() {
         text_view_join_challenge.apply {
             text =
                 DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+            setBackgroundColor(DriveKitUI.colors.primaryColor())
             visibility = View.VISIBLE
             isEnabled = false
         }
@@ -174,15 +171,14 @@ class ChallengeParticipationFragment : Fragment() {
         viewModel.challenge?.let {
             for (key in it.conditions.keys.reversed()) {
                 val progressBar = TitleProgressBar(requireContext())
-                val progress = it.driverConditions.getValue(key).toDouble()
-                    .div(it.conditions.getValue(key).toDouble()) * 100
+                val progress = viewModel.computeDriverProgress(it.driverConditions.getValue(key), it.conditions.getValue(key))
                 progressBar.apply {
                     setTitle(
                         key,
                         "${it.driverConditions.getValue(key).toDouble()
                             .roundToInt()}/${it.conditions.getValue(key).toDouble().roundToInt()}"
                     )
-                    setProgress(progress.toInt())
+                    setProgress(progress)
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT

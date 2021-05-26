@@ -52,6 +52,9 @@ internal class ChallengeParticipationViewModel(private val challengeId: String) 
         }
     }
 
+    fun computeDriverProgress(driverCondition: String, condition: String) =
+        (driverCondition.toDouble().div(condition.toDouble()) * 100).toInt()
+
     fun isChallengeStarted() = challenge?.let { Date().after(it.startDate) } ?: run { false }
 
     fun getTimeLeft(): Long = challenge?.let { it.startDate.time - Date().time } ?: 0
