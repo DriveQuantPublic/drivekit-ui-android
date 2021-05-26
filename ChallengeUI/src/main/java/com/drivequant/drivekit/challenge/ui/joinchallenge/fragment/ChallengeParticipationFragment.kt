@@ -173,7 +173,7 @@ class ChallengeParticipationFragment : Fragment() {
         }
 
         viewModel.challenge?.let {
-            for (key in it.conditions.keys) {
+            for (key in it.conditions.keys.reversed()) {
                 val progressBar = TitleProgressBar(requireContext())
                 val progress = it.driverConditions.getValue(key).toDouble()
                     .div(it.conditions.getValue(key).toDouble()) * 100
