@@ -266,6 +266,7 @@ class ChallengeParticipationFragment : Fragment() {
         text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
         container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
         text_view_join_challenge.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        text_view_join_challenge.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
