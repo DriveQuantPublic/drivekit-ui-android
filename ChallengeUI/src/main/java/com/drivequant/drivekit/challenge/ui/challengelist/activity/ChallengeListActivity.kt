@@ -1,10 +1,10 @@
-package com.drivequant.drivekit.challenge.ui.activity
+package com.drivequant.drivekit.challenge.ui.challengelist.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.fragment.ChallengeFragment
+import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeFragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class ChallengeListActivity : AppCompatActivity() {

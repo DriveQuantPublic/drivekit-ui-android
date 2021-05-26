@@ -1,5 +1,6 @@
-package com.drivequant.drivekit.challenge.ui.fragment
+package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,25 +8,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.adapter.ChallengeListAdapter
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
-import com.drivequant.drivekit.challenge.ui.viewmodel.containsActiveChallenge
-import com.drivequant.drivekit.challenge.ui.viewmodel.toStatusList
-import com.drivequant.drivekit.challenge.ui.viewmodel.toStringArray
+import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.*
+import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import kotlinx.android.synthetic.main.dk_fragment_challenge_list.*
 
 
-class ChallengeListFragment : Fragment() {
+class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
     private lateinit var status: List<ChallengeStatus>
+    private var adapter: ChallengeListAdapter? = null
+
 
     companion object {
         fun newInstance(status: List<ChallengeStatus>, viewModel: ChallengeListViewModel): ChallengeListFragment {
@@ -72,19 +77,21 @@ class ChallengeListFragment : Fragment() {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
 
+        dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
         if (viewModel.activeChallenges.isEmpty() || viewModel.finishedChallenges.isEmpty()) {
             displayNoChallenges(status)
         } else {
+            adapter?.notifyDataSetChanged() ?: run {
+                adapter = ChallengeListAdapter(
+                    requireContext(),
+                    viewModel,
+                    status,
+                    this
+                )
+                dk_recycler_view_challenge.adapter = adapter
+            }
             displayChallenges()
         }
-
-        dk_recycler_view_challenge.layoutManager =
-            LinearLayoutManager(requireContext())
-        dk_recycler_view_challenge.adapter = ChallengeListAdapter(
-            requireContext(),
-            viewModel,
-            status
-        )
     }
 
     private fun displayChallenges() {
@@ -115,5 +122,39 @@ class ChallengeListFragment : Fragment() {
         textView.headLine2(DriveKitUI.colors.mainFontColor())
         no_challenges.visibility = View.VISIBLE
         dk_recycler_view_challenge.visibility = View.GONE
+    }
+
+    override fun onClickChallenge(challengeData: ChallengeData) {
+        when {
+            challengeData.shouldDisplayExplaining() -> {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(requireContext())
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_ok"),
+                        DialogInterface.OnClickListener { dialog, _ ->
+                            dialog.dismiss()
+                        })
+                    .show()
+
+                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                titleTextView?.text = getString(R.string.app_name)
+                descriptionTextView?.text =
+                    DKResource.convertToString(requireContext(), "dk_challenge_not_a_participant")
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
+
+            }
+
+            challengeData.shouldDisplayChallengeDetail() -> {
+                Toast.makeText(requireContext(), "Sorry, you can't access challenge statistics for now !", Toast.LENGTH_LONG).show()
+            }
+
+            else -> ChallengeParticipationActivity.launchActivity(
+                requireActivity(),
+                challengeData.challengeId
+            )
+        }
     }
 }

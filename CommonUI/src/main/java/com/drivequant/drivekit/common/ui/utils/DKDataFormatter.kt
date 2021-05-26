@@ -99,6 +99,58 @@ object DKDataFormatter {
         return formattingTypes
     }
 
+    fun formatExactDuration(context: Context, durationInMilliSecond: Long): List<FormatType> {
+        val formattingTypes = mutableListOf<FormatType>()
+        var difference = durationInMilliSecond
+        val secondsInMilli = 1000
+        val minutesInMilli = secondsInMilli * 60
+        val hoursInMilli = minutesInMilli * 60
+        val daysInMilli = hoursInMilli * 24
+
+        val days = difference / daysInMilli
+        difference %= daysInMilli
+
+        formattingTypes.addAll(
+            listOf(
+                FormatType.VALUE(days.toString()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                FormatType.SEPARATOR()
+            )
+        )
+        val hours = difference / hoursInMilli
+        difference %= hoursInMilli
+        formattingTypes.addAll(
+            listOf(
+                FormatType.VALUE(hours.toString()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
+                FormatType.SEPARATOR()
+            )
+        )
+        val minutes = difference / minutesInMilli
+        difference %= minutesInMilli
+        formattingTypes.addAll(
+            listOf(
+                FormatType.VALUE(minutes.toString()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                FormatType.SEPARATOR()
+            )
+        )
+        val seconds = difference / secondsInMilli
+
+        formattingTypes.addAll(
+            listOf(
+                FormatType.VALUE(seconds.toString()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_second)),
+                FormatType.SEPARATOR()
+            )
+        )
+        return formattingTypes
+    }
+
     @JvmOverloads
     fun getMeterDistanceInKmFormat(
         context: Context,

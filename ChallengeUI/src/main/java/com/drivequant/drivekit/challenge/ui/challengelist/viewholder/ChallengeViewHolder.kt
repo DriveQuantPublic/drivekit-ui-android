@@ -1,11 +1,11 @@
-package com.drivequant.drivekit.challenge.ui.viewholder
+package com.drivequant.drivekit.challenge.ui.challengelist.viewholder
 
 import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeData
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate

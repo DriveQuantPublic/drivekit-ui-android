@@ -2,4 +2,6 @@
 <resources>
     <string name="dk_tag_challenge_list_active" translatable="false">drivekit-challenge-list-active</string>
     <string name="dk_tag_challenge_list_finished" translatable="false">drivekit-challenge-list-finished</string>
+    <string name="dk_tag_challenge_join" translatable="false">drivekit-challenge-join</string>
+    <string name="dk_tag_challenge_rules" translatable="false">drivekit-challenge-rules</string>
 </resources>

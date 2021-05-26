@@ -1,11 +1,11 @@
-package com.drivequant.drivekit.challenge.ui.adapter
+package com.drivequant.drivekit.challenge.ui.challengelist.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.drivequant.drivekit.challenge.ui.fragment.ChallengeListFragment
-import com.drivequant.drivekit.challenge.ui.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeListFragment
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 

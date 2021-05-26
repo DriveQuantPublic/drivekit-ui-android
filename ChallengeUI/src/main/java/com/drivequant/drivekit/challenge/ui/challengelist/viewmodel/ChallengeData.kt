@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.challenge.ui.viewmodel
+package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.Group
@@ -63,5 +63,13 @@ class ChallengeData(
             604 -> "dk_challenge_gift_604_paper_money"
             else -> "dk_challenge_general_101_trophy"
         }
+
+    fun shouldDisplayChallengeDetail() = (status == ChallengeStatus.FINISHED && isRegistered) || (status == ChallengeStatus.PENDING && isRegistered && conditionsFilled)
+
+    fun shouldDisplayExplaining() = status == ChallengeStatus.FINISHED && !isRegistered
+}
+
+interface ChallengeListener {
+    fun onClickChallenge(challengeData: ChallengeData)
 }
 
