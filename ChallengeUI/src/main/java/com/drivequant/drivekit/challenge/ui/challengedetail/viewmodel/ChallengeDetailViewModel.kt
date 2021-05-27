@@ -1,12 +1,25 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableString
+import androidx.core.text.toSpannable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
@@ -17,6 +30,7 @@ import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     var syncChallengeDetailError: MutableLiveData<Boolean> = MutableLiveData()
+    var challengeDetail: MutableLiveData<ChallengeDetail> = MutableLiveData()
         private set
     var challengeDetailData: ChallengeDetail? = null
     var challengeTrips = listOf<Trip>()
@@ -28,6 +42,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             challenge = it
         }
     }
+
+    fun getChallengeDetail() = challengeDetail.postValue(challengeDetailData)
 
     fun getChallengeId() = challengeId
 
@@ -73,6 +89,55 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         in 306..309 -> TripData.DURATION
         221 -> TripData.DISTRACTION
         else -> TripData.SAFETY
+    }
+
+    fun getScoreTitle() = when(challenge.themeCode) {
+        in 101..104,in 201..216,221 -> "Score"
+        in 301..305 -> "Distance"
+        in 306..309 -> "Duration"
+        else -> "Score"
+    }
+
+    fun getDriverGlobalRank(context: Context) =
+        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
+            "-"
+        } else {
+            "${challengeDetailData?.driverStats?.rank?.toInt()}"
+        }.let {
+            DKSpannable().append(it, context.resSpans {
+                color(DriveKitUI.colors.secondaryColor())
+                size(R.dimen.dk_text_xbig)
+            }).append(" / ", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                size(R.dimen.dk_text_xbig)
+            }).append(
+                "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_xbig)
+                }
+            )
+                .toSpannable()
+        }
+
+    fun getRankingList(): List<ChallengeRankingItem> {
+        val listOfRanking = mutableListOf<ChallengeRankingItem>()
+        challengeDetailData?.let { challengeDetail ->
+            challengeDetail.driversRanked?.let { list ->
+                for (driver in list) {
+                    listOfRanking.add(
+                        ChallengeRankingItem(
+                            driver.rank,
+                            driver.pseudo,
+                            driver.distance,
+                            driver.score,
+                            driver.userId,
+                            false
+                        )
+                    )
+                }
+            }
+        }
+        return listOfRanking
     }
 
     @Suppress("UNCHECKED_CAST")

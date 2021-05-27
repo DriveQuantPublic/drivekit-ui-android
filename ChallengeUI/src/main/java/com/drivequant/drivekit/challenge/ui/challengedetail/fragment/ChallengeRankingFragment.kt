@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
@@ -44,27 +45,10 @@ class ChallengeRankingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_challenge_ranking, container, false)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragment = DKRankingFragment()
         fragmentManager?.beginTransaction()?.replace(R.id.container, fragment)?.commit()
-        fragment.configureDKDriverRanking(object : DKDriverRanking {
-            override fun getHeaderDisplayType(): RankingHeaderDisplayType =
-                RankingHeaderDisplayType.COMPACT
-
-            override fun getTitle(): String = ""
-
-            override fun getIcon(context: Context): Drawable? = null
-
-            override fun getProgression(): DriverProgression? = null
-
-            override fun getDriverGlobalRank(context: Context): Spannable = SpannableString("")
-
-            override fun getScoreTitle(context: Context): String = ""
-
-            override fun getDriverRankingList(): List<DKDriverRankingItem> = listOf()
-        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -75,5 +59,26 @@ class ChallengeRankingFragment : Fragment() {
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
             ).get(ChallengeDetailViewModel::class.java)
         }
+
+        viewModel.getChallengeDetail()
+
+        viewModel.challengeDetail.observe(requireActivity(), Observer {
+            fragment.configureDKDriverRanking(object : DKDriverRanking {
+                override fun getHeaderDisplayType(): RankingHeaderDisplayType =
+                    RankingHeaderDisplayType.COMPACT
+
+                override fun getTitle(): String = ""
+
+                override fun getIcon(context: Context): Drawable? = null
+
+                override fun getProgression(): DriverProgression? = null
+
+                override fun getDriverGlobalRank(context: Context): Spannable = viewModel.getDriverGlobalRank(requireContext())
+
+                override fun getScoreTitle(context: Context): String = viewModel.getScoreTitle()
+
+                override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.getRankingList()
+            })
+        })
     }
 }
