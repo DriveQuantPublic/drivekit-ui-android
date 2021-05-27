@@ -1,19 +1,25 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 
+import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeRankingFragment
+import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeResultsFragment
+import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeTripListFragment
+
 enum class ChallengeDetailItem {
     RESULTS, RANKING, TRIPS, RULES;
 
-    fun getImageResource(): String = when (this) {
-        RESULTS -> "dk_challenge_result"
-        RANKING -> "dk_challenge_leaderboard"
-        TRIPS -> "dk_challenge_trip"
-        RULES -> "dk_challenge_rule"
+    fun getImageResource(): Int = when (this) {
+        RESULTS -> R.drawable.dk_challenge_result
+        RANKING -> R.drawable.dk_challenge_leaderboard
+        TRIPS -> R.drawable.dk_challenge_trip
+        RULES -> R.drawable.dk_challenge_rule
     }
 
-    fun getFragment() = when (this) {
-        RESULTS -> 1
-        RANKING -> 2
-        TRIPS -> 3
-        RULES -> 4
+    fun getFragment(viewModel: ChallengeDetailViewModel) = when (this) {
+        RESULTS -> ChallengeResultsFragment.newInstance(viewModel)
+        RANKING ->  ChallengeRankingFragment.newInstance(viewModel)
+        TRIPS -> ChallengeTripListFragment.newInstance(viewModel)
+        RULES -> Fragment()
     }
 }

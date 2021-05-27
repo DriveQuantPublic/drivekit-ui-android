@@ -39,4 +39,9 @@ class ChallengeDetailActivity : AppCompatActivity() {
             .replace(R.id.container, ChallengeDetailFragment.newInstance(challengeId))
             .commit()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }
