@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.*
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
@@ -148,7 +149,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             }
 
             challengeData.shouldDisplayChallengeDetail() -> {
-                Toast.makeText(requireContext(), "Sorry, you can't access challenge statistics for now !", Toast.LENGTH_LONG).show()
+                ChallengeDetailActivity.launchActivity(requireActivity(),
+                challengeData.challengeId)
             }
 
             else -> ChallengeParticipationActivity.launchActivity(
