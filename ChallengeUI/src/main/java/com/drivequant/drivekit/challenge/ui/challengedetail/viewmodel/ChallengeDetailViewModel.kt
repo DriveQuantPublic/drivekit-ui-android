@@ -19,13 +19,14 @@ import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
+import kotlin.math.roundToInt
 
 class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     var syncChallengeDetailError: MutableLiveData<Boolean> = MutableLiveData()
     var challengeDetailData: ChallengeDetail? = null
     var useCache = false
-    private lateinit var challenge: Challenge
+    lateinit var challenge: Challenge
 
     init {
         DbChallengeAccess.findChallengeById(challengeId)?.let {
@@ -77,6 +78,83 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         221 -> TripData.DISTRACTION
         else -> TripData.SAFETY
     }
+
+    fun getDriverProgress() : Int {
+        var progress = 0
+        challengeDetailData?.let {
+            if (it.challengeStats.maxScore == it.challengeStats.minScore) {
+                progress = 100
+            } else {
+                progress = when (challenge.themeCode) {
+                    in 101..301 -> ((it.challengeStats.score - it.challengeStats.minScore) * 100).div(
+                        it.challengeStats.maxScore - it.challengeStats.minScore
+                    ).roundToInt()
+                    in 306..309 -> ((it.challengeStats.distance - it.challengeStats.minScore) * 100).div(
+                        it.challengeStats.maxScore - it.challengeStats.minScore
+                    ).roundToInt()
+                    in 302..305 -> {
+                        val duration = (it.challengeStats.score * 3600 / 60).roundToInt()
+                        val minDuration = (it.challengeStats.minScore * 3600 / 60).roundToInt()
+                        val numeratorDuration = (duration - minDuration) * 100
+                        val maxDuration = (it.challengeStats.maxScore * 3600 / 60).roundToInt()
+                        numeratorDuration / (maxDuration - minDuration)
+                    }
+                    else -> 0
+                }
+            }
+        }
+        return progress
+    }
+
+    fun getUnit(context: Context): String =
+        when (challenge.themeCode) {
+            in 101..301 -> "/10"
+            301 -> challengeDetailData?.let {
+                return context.resources.getQuantityString(
+                    R.plurals.trip_plural,
+                    it.driverStats.numberTrip
+                )
+            } ?: ""
+            in 302..305 -> "km"
+            else -> ""
+        }
+
+    fun getChallengeResultScoreTitle() = when (challenge.themeCode) {
+        in 101..104 -> "ecoDriving score"
+        in 201..204 -> "safety score"
+        in 205..208 -> "Braking score"
+        in 209..212 -> "acceleration score"
+        in 213..216 -> "adherence score"
+        221 -> "distraction score"
+        301 -> "number of trips"
+        in 306..309 -> "driving time"
+        in 302..305 -> "distance travelled"
+        else -> ""
+    }
+
+    fun computeProgressBarPercentage(): Int {
+        val percent = challengeDetailData?.let {
+            100 - (it.driverStats.rank.div(it.nbDriverRanked.toDouble()) * 100)
+        } ?: kotlin.run {
+            0.0
+        }
+        return percent.roundToInt()
+    }
+
+    fun isUserTheFirst() =
+        challengeDetailData?.let {
+            it.driverStats.rank.roundToInt() == 1 || computeProgressBarPercentage() == 100 || it.challengeStats.maxScore == it.challengeStats.minScore
+        } ?: run {
+            false
+        }
+
+    fun computeRatingStartCount(): Float = when {
+        isUserTheFirst() || computeProgressBarPercentage() <= 100 -> 4
+        computeProgressBarPercentage() <= 75 -> 3
+        computeProgressBarPercentage() <= 50 -> 2
+        computeProgressBarPercentage() <= 25 -> 1
+        else -> 0
+    }.toFloat()
 
     fun getScoreTitle(context: Context) = when(challenge.themeCode) {
         in 101..104,in 201..216,221 -> "dk_common_ranking_score"
