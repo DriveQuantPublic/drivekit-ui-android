@@ -8,4 +8,9 @@
         <item name="android:textSize">@dimen/dk_text_small</item>
         <item name="textAllCaps">true</item>
     </style>
+
+    <style name="ChallengeRatingBarAppearance" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/dkRatingBarForegroundColor</item>
+        <item name="colorControlNormal">@color/dkRatingBarBackgroundColor</item>
+    </style>
 </resources>

@@ -54,7 +54,6 @@ class ChallengeDetailFragment : Fragment() {
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
             ).get(ChallengeDetailViewModel::class.java)
         }
-
         viewModel.syncChallengeDetailError.observe(this, Observer {
             if (!it) {
                 Toast.makeText(

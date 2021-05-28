@@ -5,8 +5,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeDetailFragment
+import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 
 class ChallengeDetailActivity : AppCompatActivity() {
@@ -32,7 +34,14 @@ class ChallengeDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val challengeId = intent.getStringExtra(ChallengeParticipationActivity.CHALLENGE_ID_EXTRA) as String
+        val challengeId =
+            intent.getStringExtra(ChallengeParticipationActivity.CHALLENGE_ID_EXTRA) as String
+        val viewModel = ViewModelProviders.of(
+            this,
+            ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
+        ).get(ChallengeDetailViewModel::class.java)
+
+        title = viewModel.challenge.title
 
         supportFragmentManager
             .beginTransaction()
