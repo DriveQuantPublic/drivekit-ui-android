@@ -5,17 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
@@ -82,8 +79,10 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     private fun setViewPager() {
+        view_pager_challenge_detail.offscreenPageLimit = ChallengeUI.challengeDetailItems.size
         view_pager_challenge_detail.adapter =
             ChallengeDetailFragmentPagerAdapter(
+                requireContext(),
                 childFragmentManager,
                 viewModel
             )

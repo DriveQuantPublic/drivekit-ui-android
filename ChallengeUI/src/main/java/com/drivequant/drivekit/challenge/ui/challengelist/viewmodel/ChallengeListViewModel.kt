@@ -2,10 +2,12 @@ package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.ChallengesQueryListener
 import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 
 class ChallengeListViewModel : ViewModel() {
@@ -16,6 +18,7 @@ class ChallengeListViewModel : ViewModel() {
     var finishedChallenges = mutableListOf<ChallengeData>()
     var syncChallengesError: MutableLiveData<Any> = MutableLiveData()
         private set
+    var useCache = false
 
     fun filterChallenges() {
         activeChallenges.clear()
@@ -30,19 +33,28 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     fun fetchChallengeList() {
+        val synchronizationType =
+            if (useCache) SynchronizationType.CACHE else SynchronizationType.DEFAULT
         if (DriveKit.isConfigured()) {
             DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
                 override fun onResponse(
                     challengesSyncStatus: ChallengesSyncStatus,
-                    challenges: List<Challenge>
-                ) {
-                    if (challengesSyncStatus == ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY) {
-                        syncChallengesError.postValue(Any())
+                    challenges: List<Challenge>) {
+                    useCache = when (challengesSyncStatus) {
+                        ChallengesSyncStatus.CACHE_DATA_ONLY,
+                        ChallengesSyncStatus.SUCCESS -> {
+                            challengeListData = buildChallengeListData(challenges)
+                            mutableLiveDataChallengesData.postValue(challengeListData)
+                            true
+                        }
+                        ChallengesSyncStatus.SYNC_ALREADY_IN_PROGRESS,
+                        ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY -> {
+                            syncChallengesError.postValue(Any())
+                            false
+                        }
                     }
-                    challengeListData = buildChallengeListData(challenges)
-                    mutableLiveDataChallengesData.postValue(challengeListData)
                 }
-            })
+            }, synchronizationType)
         } else {
             syncChallengesError.postValue(Any())
         }

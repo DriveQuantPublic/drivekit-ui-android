@@ -23,8 +23,6 @@ class RankingDriverData(
     private val isJumpRank: Boolean
 ) : DKDriverRankingItem {
 
-    fun getFormattedDistance(context: Context): String =
-        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
     override fun getRank(): Int = driverRank
 
     override fun isCurrentUser(): Boolean = DriveKit.config.userId == driverId

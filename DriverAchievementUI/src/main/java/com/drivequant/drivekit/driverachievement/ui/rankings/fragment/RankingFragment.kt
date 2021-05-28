@@ -44,8 +44,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
         }
-        fragment = DKRankingFragment()
-        fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
     }
 
     private fun createRankingSelectors() {
@@ -69,7 +67,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         savedInstanceState: Bundle?
     ): View =
         inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
-
 
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {
@@ -140,12 +137,20 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                     ).show()
                     isToastShowed = true
                 }
-
-                fragment.configureDKDriverRanking(rankingViewModel.rankingData)
-                fragment.updateProgressVisibility(false)
+                fragment = DKRankingFragment(rankingViewModel.rankingData)
+                fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
+                updateProgressVisibility(false)
             })
 
-        fragment.updateProgressVisibility(true)
+        updateProgressVisibility(true)
         rankingViewModel.fetchRankingList()
+    }
+
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        if (displayProgress) {
+            progress_circular.visibility = View.VISIBLE
+        } else {
+            progress_circular.visibility = View.GONE
+        }
     }
 }
