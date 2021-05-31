@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_challenge_active">Aktive</string>
-    <string name="dk_challenge_competitors_distance">Gesamtdistanz von der Herausforderung %1$s %2$s</string>
+    <string name="dk_challenge_competitors_distance">Gesamtdistanz von der Herausforderung %</string>
     <string name="dk_challenge_competitors_duration">Die Teilnehmer fuhren %s</string>
-    <string name="dk_challenge_competitors_trips">über eine Gesamtlänge von %1$s %2$s</string>
+    <string name="dk_challenge_competitors_trips">über eine Gesamtlänge von %s</string>
     <string name="dk_challenge_consult_rule_button">Sehen Sie sich die Regeln an</string>
     <string name="dk_challenge_distance_kilometer">Distanz (km)</string>
-    <string name="dk_challenge_driver_distance">Du hast %1$s %2$s zurückgelegt</string>
+    <string name="dk_challenge_driver_distance">Du hast %s zurückgelegt</string>
     <string name="dk_challenge_driver_duration">Du bist %s gefahren</string>
-    <string name="dk_challenge_driver_trips">Du hast %1$s %2$s erreicht</string>
+    <string name="dk_challenge_driver_trips">Du hast %s erreicht</string>
     <string name="dk_challenge_driving_time">Fahrzeit</string>
     <string name="dk_challenge_failed_to_join">Sie können nicht an der Herausforderung teilnehmen. Stellen Sie sicher, dass Sie mit dem Internet verbunden sind, oder versuchen Sie es später erneut.</string>
     <string name="dk_challenge_failed_to_sync_challenges">Die Challenges können nicht synchronisiert werden, bitte versuchen Sie es später noch einmal.</string>

@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="180dp"
-            android:elevation="@dimen/dk_margin_half">
+            style="@style/DKCard">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,12 +55,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-
                             <TextView
                                 android:id="@+id/text_view_card_score"
                                 android:layout_width="wrap_content"
@@ -68,16 +62,6 @@
                                 android:layout_marginEnd="@dimen/dk_margin_half"
                                 android:textSize="46sp"
                                 android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/text_view_unit"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:textColor="@android:color/black"
-                                android:textSize="@dimen/dk_text_big"
-                                android:textStyle="bold"/>
-
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -154,8 +138,7 @@
                 android:id="@+id/card_view_distance"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                app:cardCornerRadius="@dimen/dk_margin_quarter"
-                android:elevation="@dimen/dk_margin_half">
+                style="@style/DKCard">
 
                 <RelativeLayout
                     android:id="@+id/view_group_container_distance"
@@ -180,7 +163,7 @@
                         android:layout_toEndOf="@+id/icon_distance"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
-                        
+
                         <TextView
                             android:id="@+id/distance_user"
                             android:layout_width="match_parent"
@@ -205,8 +188,7 @@
                 android:id="@+id/card_view_duration"
                 android:layout_height="90dp"
                 android:layout_width="match_parent"
-                app:cardCornerRadius="@dimen/dk_margin_quarter"
-                android:elevation="@dimen/dk_margin_half">
+                style="@style/DKCard">
 
                 <RelativeLayout
                     android:id="@+id/view_group_container_duration"
@@ -257,8 +239,7 @@
                 android:id="@+id/card_view_trip"
                 android:layout_height="90dp"
                 android:layout_width="match_parent"
-                app:cardCornerRadius="@dimen/dk_margin_quarter"
-                android:elevation="@dimen/dk_margin_half">
+                style="@style/DKCard">
 
                 <RelativeLayout
                     android:id="@+id/view_group_container_trip"
