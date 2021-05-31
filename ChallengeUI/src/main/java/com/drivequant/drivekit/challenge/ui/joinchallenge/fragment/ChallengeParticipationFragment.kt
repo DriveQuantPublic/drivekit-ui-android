@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -13,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
 import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBar
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
@@ -29,6 +29,7 @@ class ChallengeParticipationFragment : Fragment() {
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
     private lateinit var countDownTimer: CountDownTimer
+    private lateinit var challengeHeaderView:ChallengeHeaderView
 
     companion object {
         fun newInstance(challengeId: String): ChallengeParticipationFragment {
@@ -73,8 +74,6 @@ class ChallengeParticipationFragment : Fragment() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
-        dispatch()
-
         viewModel.syncJoinChallengeError.observe(this, Observer {
             if (it) {
                 if (viewModel.isChallengeStarted()) {
@@ -95,33 +94,15 @@ class ChallengeParticipationFragment : Fragment() {
             updateProgressVisibility(false)
         })
 
+        if (!this::challengeHeaderView.isInitialized) {
+            challengeHeaderView = ChallengeHeaderView(requireContext())
+        }
+        challengeHeaderView.configure(viewModel, requireActivity())
+        challenge_header_view_container.addView(challengeHeaderView)
+        
+        dispatch()
+
         viewModel.challenge?.let { challenge ->
-            if (!challenge.rules.isNullOrBlank()) {
-                text_view_challenge_rule_consult.apply {
-                    text = DKResource.convertToString(
-                        requireContext(),
-                        "dk_challenge_consult_rule_button"
-                    )
-                    setTextColor(DriveKitUI.colors.secondaryColor())
-                    visibility = View.VISIBLE
-                    setOnClickListener { _ ->
-                        ChallengeRulesActivity.launchActivity(
-                            requireActivity(),
-                            challenge.challengeId,
-                            viewModel.isDriverRegistered()
-                        )
-                    }
-                }
-            }
-
-            if (!challenge.conditionsDescription.isNullOrBlank()) {
-                text_view_conditions.text = challenge.conditionsDescription
-                text_view_conditions.visibility = View.VISIBLE
-            }
-
-            text_view_rules.text = challenge.description
-            text_view_date.text = viewModel.getDateRange()
-            text_view_title.text = challenge.title
             text_view_join_challenge.setOnClickListener {
                 challenge.rules?.let { rules ->
                     if (rules.isNotEmpty()) {
@@ -159,7 +140,7 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun progress() {
         container_conditions_info.visibility = View.VISIBLE
-        view_separator_1.visibility = View.INVISIBLE
+        challengeHeaderView.displaySeparator(false)
         text_view_join_challenge.apply {
             text =
                 DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
@@ -256,14 +237,7 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun setStyle() {
-        text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
-        text_view_date.smallText(Color.parseColor("#9E9E9E"))
-        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        text_view_conditions.normalText()
-        text_view_rules.normalText()
-        view_separator_1.setBackgroundColor(DriveKitUI.colors.neutralColor())
         text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
-        text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
         container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
         text_view_join_challenge.setBackgroundColor(DriveKitUI.colors.primaryColor())
         text_view_join_challenge.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())

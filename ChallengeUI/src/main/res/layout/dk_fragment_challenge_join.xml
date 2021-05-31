@@ -23,71 +23,11 @@
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dk_margin_half">
 
-                <TextView
-                    android:id="@+id/text_view_title"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/challenge_header_view_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dk_margin"
-                    android:layout_marginBottom="@dimen/dk_margin_quarter"
-                    android:gravity="center"
-                    android:layout_marginEnd="@dimen/dk_margin_half"
-                    android:layout_marginStart="@dimen/dk_margin_half"
-                    android:textSize="26sp"
-                    tools:text="King of eco-driving" />
-
-                <TextView
-                    android:id="@+id/text_view_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/dk_margin_half"
-                    tools:text="18/02/2017 - 22/02/2017" />
-
-                <TextView
-                    android:id="@+id/view_separator"
-                    style="@style/Separator.Horizontal"
-                    android:layout_marginTop="@dimen/dk_margin_half"
-                    android:layout_marginBottom="@dimen/dk_margin_half" />
-
-                <TextView
-                    android:layout_marginEnd="@dimen/dk_margin_half"
-                    android:layout_marginStart="@dimen/dk_margin_half"
-                    android:id="@+id/text_view_rules"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/dk_margin_half"
-                    tools:text="Text Rules" />
-
-                <TextView
-                    android:id="@+id/view_separator_1"
-                    style="@style/Separator.Horizontal"
-                    android:layout_marginTop="@dimen/dk_margin_half"
-                    android:layout_marginBottom="@dimen/dk_margin_half" />
-
-                <TextView
-                    android:id="@+id/text_view_conditions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dk_margin"
-                    android:gravity="center"
-                    android:padding="@dimen/dk_margin_half"
-                    android:layout_marginEnd="@dimen/dk_margin_half"
-                    android:layout_marginStart="@dimen/dk_margin_half"
-                    android:visibility="gone"
-                    tools:text="Conditions"
-                    tools:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/text_view_challenge_rule_consult"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:text="@string/dk_challenge_consult_rule_button"
-                    android:textAlignment="center"
-                    android:visibility="gone"
-                    tools:text="Voir le règlement"
-                    tools:visibility="visible" />
+                    android:layout_height="match_parent"/>
 
                 <LinearLayout
                     android:id="@+id/container_conditions_info"
