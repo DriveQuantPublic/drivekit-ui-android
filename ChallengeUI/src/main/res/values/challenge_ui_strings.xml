@@ -28,4 +28,11 @@
     <string name="dk_challenge_start">Start of challenge in</string>
     <string name="dk_challenge_traveled_distance">Distance traveled</string>
     <string name="dk_challenge_unranked_conditions_info">To enter the leaderboard, you must fulfill the conditions below:</string>
+
+    <string name="dk_challenge_acceleration_score">Acceleration score</string>
+    <string name="dk_challenge_adherence_score">Adherence score</string>
+    <string name="dk_challenge_braking_score">Braking score</string>
+    <string name="dk_challenge_distraction_score">Distraction score</string>
+    <string name="dk_challenge_eco_driving_score">Eco-driving score</string>
+    <string name="dk_challenge_safety_score">Safety score</string>
 </resources>

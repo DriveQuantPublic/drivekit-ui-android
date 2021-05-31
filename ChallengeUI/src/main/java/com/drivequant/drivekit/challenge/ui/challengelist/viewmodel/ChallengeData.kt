@@ -66,7 +66,7 @@ class ChallengeData(
 
     fun shouldDisplayChallengeDetail() = (status == ChallengeStatus.FINISHED && isRegistered) || (status == ChallengeStatus.PENDING && isRegistered && conditionsFilled)
 
-    fun shouldDisplayExplaining() = status == ChallengeStatus.FINISHED && !isRegistered
+    fun shouldDisplayExplaining() = status == ChallengeStatus.FINISHED && (!isRegistered || !conditionsFilled)
 }
 
 interface ChallengeListener {

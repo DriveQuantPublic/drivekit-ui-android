@@ -2,7 +2,6 @@ package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.ChallengesQueryListener
 import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
