@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.activity
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -10,7 +12,13 @@ import com.drivequant.drivekit.driverachievement.ui.rankings.fragment.RankingFra
 class RankingActivity : AppCompatActivity() {
 
     companion object {
-        const val GROUPNAME_EXTRA = "groupName-extra"
+        var rankingGroupName: String? = null
+        fun launchActivity(context: Context,
+                           groupName: String? = null) {
+            val intent = Intent(context, RankingActivity::class.java)
+            rankingGroupName = groupName
+            context.startActivity(intent)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,15 +30,9 @@ class RankingActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = DKResource.convertToString(this, "dk_achievements_ranking_menu_ranking")
 
-        val fragment = RankingFragment()
-        val bundle = Bundle()
-        savedInstanceState?.getString(GROUPNAME_EXTRA)?.let {
-            bundle.putString(RankingFragment.GROUPNAME_EXTRA, it)
-            fragment.arguments = bundle
-        }
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, fragment)
+            .replace(R.id.container, RankingFragment.newInstance(rankingGroupName))
             .commit()
     }
 
