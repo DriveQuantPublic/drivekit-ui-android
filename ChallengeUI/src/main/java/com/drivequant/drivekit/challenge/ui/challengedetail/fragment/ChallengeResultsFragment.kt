@@ -77,8 +77,7 @@ class ChallengeResultsFragment : Fragment() {
         text_view_worst.text = viewModel.getWorstPerformance(requireContext())
         text_view_best.text = viewModel.getBestPerformance(requireContext())
         text_view_card_score.text = viewModel.getMainScore(requireContext())
-        text_view_card_title.text = viewModel.getChallengeResultScoreTitle()
-
+        text_view_card_title.text = viewModel.getChallengeResultScoreTitle(requireContext())
 
         DKResource.convertToDrawable(requireContext(), "dk_challenge_first_driver")?.let {
             if (viewModel.isUserTheFirst()) {
