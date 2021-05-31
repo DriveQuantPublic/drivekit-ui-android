@@ -2,6 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverAchievementUIEntryPoint
@@ -87,11 +88,21 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
 
-    fun startRankingActivity(context: Context) {
+    @JvmOverloads
+    fun startRankingActivity(context: Context, groupeName: String? = null) {
         val intent = Intent(context, RankingActivity::class.java)
+        intent.putExtra(RankingActivity.GROUPNAME_EXTRA, groupeName)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
-    fun createRankingFragment(): Fragment = RankingFragment()
+    @JvmOverloads
+    fun createRankingFragment(groupeName: String? = null): Fragment {
+        val fragment = RankingFragment()
+        val bundle = Bundle()
+        if (groupeName != null) {
+            bundle.putString(RankingFragment.GROUPNAME_EXTRA, groupeName)
+        }
+        return fragment
+    }
 }
