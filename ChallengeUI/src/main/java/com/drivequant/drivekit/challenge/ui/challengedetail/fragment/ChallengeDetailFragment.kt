@@ -93,9 +93,10 @@ class ChallengeDetailFragment : Fragment() {
         }
     }
 
+
     override fun onDestroy() {
-        super.onDestroy()
         viewModel.useCache = false
+        super.onDestroy()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

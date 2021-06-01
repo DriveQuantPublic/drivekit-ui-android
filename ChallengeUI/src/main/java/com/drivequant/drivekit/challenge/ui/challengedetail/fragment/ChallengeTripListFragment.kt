@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.challengedetail.toDKTripList
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
+import com.drivequant.drivekit.challenge.ui.common.toDKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.databaseutils.entity.toTrips
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.*
 
 
@@ -42,12 +44,24 @@ class ChallengeTripListFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.getString("challengeIdTag")?.let {
+            viewModel = ViewModelProviders.of(
+                this,
+                ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
+            ).get(ChallengeDetailViewModel::class.java)
+        }
+
         challenge_trips_list.configure(object :DKTripList {
             override fun getTripData(): TripData = viewModel.getTripData()
             override fun getTripsList(): List<DKTripListItem> {
-                val trip =  viewModel.challengeTrips.toDKTripList()
+                val trip =  DbTripAccess.findTrips(listOf(
+                    "60ab91cd68565a59a14ee38f",
+                    "60ab93b0bbae352fd1c35449",
+                    "60abc7d4a4c4252ba9a965ba",
+                    "60ae73f7cc96f9699b21725d"
+                )).executeTrips().toTrips().toDKTripList()
                 return trip
             }
             override fun getCustomHeader(): DKHeader? = null
@@ -62,15 +76,5 @@ class ChallengeTripListFragment : Fragment() {
                 )
             }
         })
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        savedInstanceState?.getString("challengeIdTag")?.let {
-            viewModel = ViewModelProviders.of(
-                this,
-                ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
-            ).get(ChallengeDetailViewModel::class.java)
-        }
     }
 }
