@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface.BOLD
 import android.text.Spannable
 import android.text.SpannableString
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -273,6 +274,19 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         it.challengeStats.maxScore == it.challengeStats.minScore
     } ?: run {
         false
+    }
+
+    fun shouldDisplayDistanceCard() = when(challenge.themeCode) {
+        in 302..305 -> View.GONE
+        else -> View.VISIBLE
+    }
+    fun shouldDisplayTripsCard() = when(challenge.themeCode) {
+        301 -> View.GONE
+        else -> View.VISIBLE
+    }
+    fun shouldDisplayDurationCard() = when(challenge.themeCode) {
+        in 306..309 -> View.GONE
+        else -> View.VISIBLE
     }
 
     fun computeRatingStartCount(): Float {

@@ -73,7 +73,7 @@ class ChallengeResultsFragment : Fragment() {
 
         dk_challenge_progress_bar.progress = viewModel.getDriverProgress()
         dk_challenge_rating_bar.rating = viewModel.computeRatingStartCount()
-
+        text_view_result_global_rank.text = viewModel.getDriverGlobalRank(requireContext())
         text_view_worst.text = viewModel.getWorstPerformance(requireContext())
         text_view_best.text = viewModel.getBestPerformance(requireContext())
         text_view_card_score.text = viewModel.getMainScore(requireContext())
@@ -90,18 +90,20 @@ class ChallengeResultsFragment : Fragment() {
             text_view_worst.visibility = View.INVISIBLE
         }
 
+        displayCards()
         setStyle()
-        setCardText()
     }
 
-    private fun setCardText() {
+
+    private fun displayCards() {
+        viewModel.shouldDisplayDistanceCard().let {
+            card_view_distance.visibility = it
             distance_user.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_driver_distance",
-                viewModel.getDriverDistance(requireContext())
-            )
+                viewModel.getDriverDistance(requireContext()))
 
             distance_competitor.text = DKResource.buildString(
                 requireContext(),
@@ -110,14 +112,16 @@ class ChallengeResultsFragment : Fragment() {
                 "dk_challenge_competitors_distance",
                 viewModel.getCompetitorDistance(requireContext())
             )
+        }
 
+        viewModel.shouldDisplayDurationCard().let {
+            card_view_duration.visibility = it
             duration_user.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_driver_duration",
-                viewModel.getDriverDuration(requireContext())
-            )
+                viewModel.getDriverDuration(requireContext()))
 
             duration_competitor.text = DKResource.buildString(
                 requireContext(),
@@ -126,23 +130,25 @@ class ChallengeResultsFragment : Fragment() {
                 "dk_challenge_competitors_duration",
                 viewModel.getCompetitorDuration(requireContext())
             )
+        }
 
+        viewModel.shouldDisplayTripsCard().let {
+            card_view_trip.visibility = it
             trip_user.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_driver_trips",
-                viewModel.getDriverTripsNumber(requireContext())
-            )
+                viewModel.getDriverTripsNumber(requireContext()))
 
             trip_competitor.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_competitors_trips",
-                viewModel.getCompetitorTripsNumber(requireContext())
-            )
+                viewModel.getCompetitorTripsNumber(requireContext()))
         }
+    }
 
     private fun setStyle() {
         text_view_card_title.setTextColor(DriveKitUI.colors.mainFontColor())

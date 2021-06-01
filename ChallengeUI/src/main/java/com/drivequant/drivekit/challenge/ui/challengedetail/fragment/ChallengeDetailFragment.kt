@@ -93,7 +93,6 @@ class ChallengeDetailFragment : Fragment() {
         }
     }
 
-
     override fun onDestroy() {
         viewModel.useCache = false
         super.onDestroy()

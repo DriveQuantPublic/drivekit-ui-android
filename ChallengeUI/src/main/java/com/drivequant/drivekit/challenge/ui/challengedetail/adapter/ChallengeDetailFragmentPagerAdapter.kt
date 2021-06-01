@@ -13,7 +13,7 @@ internal class ChallengeDetailFragmentPagerAdapter(private val context: Context,
 ) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getItem(position: Int): Fragment =
-        ChallengeUI.challengeDetailItems[position].getFragment(viewModel)
+        ChallengeUI.challengeDetailItems[position].getFragment(viewModel, context)
 
     override fun getCount(): Int = ChallengeUI.challengeDetailItems.size
 }

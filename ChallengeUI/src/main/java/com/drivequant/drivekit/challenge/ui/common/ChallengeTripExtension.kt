@@ -39,8 +39,8 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun infoText(): String? = null
     override fun infoImageResource(): Int? =  null
     override fun infoClickAction(context: Context) {}
-    override fun hasInfoActionConfigured(): Boolean = true
-    override fun isInfoDisplayable(): Boolean = true
+    override fun hasInfoActionConfigured(): Boolean = false
+    override fun isInfoDisplayable(): Boolean = false
 }
 
 fun List<Trip>.toDKTripList(): List<DKTripListItem> {
