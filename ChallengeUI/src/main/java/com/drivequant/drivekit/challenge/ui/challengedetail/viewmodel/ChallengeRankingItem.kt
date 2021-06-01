@@ -35,7 +35,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
             )
         }
 
-    override fun getNickname(context: Context): String = if (driverNickname.isNullOrEmpty()) {
+    override fun getNickname(context: Context): String = if (driverNickname.isBlank()) {
         DKResource.convertToString(context, "dk_common_anonymous_driver")
     } else driverNickname
 

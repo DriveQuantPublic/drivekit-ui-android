@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">Failed to synchronize rankings, please retry later.</string>
-    <string name="dk_achievements_ranking_anonymous_driver">Anonymous</string>
     <string name="dk_achievements_ranking_legacy">Bi-monthly</string>
     <string name="dk_achievements_ranking_menu_ranking">My ranking</string>
     <string name="dk_achievements_ranking_month">Monthly</string>
