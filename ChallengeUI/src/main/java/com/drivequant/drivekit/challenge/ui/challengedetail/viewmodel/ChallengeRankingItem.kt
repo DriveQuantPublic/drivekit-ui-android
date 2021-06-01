@@ -35,7 +35,9 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
             )
         }
 
-    override fun getNickname(context: Context): String = driverNickname
+    override fun getNickname(context: Context): String = if (driverNickname.isNullOrEmpty()) {
+        DKResource.convertToString(context, "dk_common_anonymous_driver")
+    } else driverNickname
 
     override fun getDistance(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
 
