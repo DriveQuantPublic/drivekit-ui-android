@@ -16,6 +16,7 @@ class RankingActivity : AppCompatActivity() {
         fun launchActivity(context: Context,
                            groupName: String? = null) {
             val intent = Intent(context, RankingActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             rankingGroupName = groupName
             context.startActivity(intent)
         }
