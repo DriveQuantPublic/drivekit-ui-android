@@ -25,6 +25,15 @@ import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 class RankingFragment : Fragment(), RankingSelectorListener {
 
+    companion object {
+        fun newInstance(groupName: String?) : RankingFragment {
+            val fragment = RankingFragment()
+            fragment.rankingGroupName = groupName
+            return fragment
+        }
+    }
+
+    var rankingGroupName: String? = null
     lateinit var rankingViewModel: RankingViewModel
     private lateinit var selectedRankingSelectorView: RankingSelectorView
     private lateinit var fragment: DKRankingFragment
@@ -44,6 +53,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
         }
+
         fragment = DKRankingFragment()
         fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
     }
@@ -146,6 +156,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
             })
 
         fragment.updateProgressVisibility(true)
-        rankingViewModel.fetchRankingList()
+        rankingViewModel.fetchRankingList(rankingGroupName)
     }
 }

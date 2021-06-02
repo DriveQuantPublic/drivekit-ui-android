@@ -87,11 +87,11 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
 
-    fun startRankingActivity(context: Context) {
-        val intent = Intent(context, RankingActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    @JvmOverloads
+    fun startRankingActivity(context: Context, groupeName: String? = null) {
+        RankingActivity.launchActivity(context, groupeName)
     }
 
-    fun createRankingFragment(): Fragment = RankingFragment()
+    @JvmOverloads
+    fun createRankingFragment(groupeName: String? = null) = RankingFragment.newInstance(groupeName)
 }
