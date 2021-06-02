@@ -8,7 +8,7 @@ import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.component.ranking.RankingHeaderDisplayType
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 
-class ChallengeDriverRanking(val viewModel: ChallengeDetailViewModel) : DKDriverRanking {
+internal class ChallengeDriverRanking(val viewModel: ChallengeDetailViewModel) : DKDriverRanking {
     override fun getHeaderDisplayType(): RankingHeaderDisplayType = RankingHeaderDisplayType.COMPACT
     override fun getTitle(): String = ""
     override fun getIcon(context: Context): Drawable? = null

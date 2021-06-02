@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 
-import android.content.Context
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeResultsFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeRulesFragment
@@ -18,7 +17,7 @@ enum class ChallengeDetailItem {
         RULES -> R.drawable.dk_challenge_rule
     }
 
-    fun getFragment(viewModel: ChallengeDetailViewModel, context: Context) = when (this) {
+    fun getFragment(viewModel: ChallengeDetailViewModel) = when (this) {
         RESULTS -> ChallengeResultsFragment.newInstance(viewModel)
         RANKING -> DKRankingFragment(ChallengeDriverRanking(viewModel))
         TRIPS ->  ChallengeTripListFragment.newInstance(viewModel)

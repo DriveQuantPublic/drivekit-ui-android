@@ -15,8 +15,6 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.databaseutils.entity.toTrips
-import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.*
 
 
@@ -53,20 +51,14 @@ class ChallengeTripListFragment : Fragment() {
             ).get(ChallengeDetailViewModel::class.java)
         }
 
-        challenge_trips_list.configure(object :DKTripList {
+        challenge_trips_list.configure(object : DKTripList {
             override fun getTripData(): TripData = viewModel.getTripData()
-            override fun getTripsList(): List<DKTripListItem> {
-                val trip =  DbTripAccess.findTrips(listOf(
-                    "60ab91cd68565a59a14ee38f",
-                    "60ab93b0bbae352fd1c35449",
-                    "60abc7d4a4c4252ba9a965ba",
-                    "60ae73f7cc96f9699b21725d"
-                )).executeTrips().toTrips().toDKTripList()
-                return trip
-            }
+            override fun getTripsList(): List<DKTripListItem> =
+                viewModel.challengeDetailTrips.toDKTripList()
+
             override fun getCustomHeader(): DKHeader? = null
             override fun getHeaderDay(): HeaderDay = HeaderDay.DURATION_DISTANCE
-            override fun getDayTripDescendingOrder(): Boolean = false
+            override fun getDayTripDescendingOrder(): Boolean = true
             override fun canSwipeToRefresh(): Boolean = false
             override fun onSwipeToRefresh() {}
             override fun onTripClickListener(itinId: String) {

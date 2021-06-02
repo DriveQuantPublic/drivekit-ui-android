@@ -30,6 +30,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     var syncChallengeDetailError: MutableLiveData<Boolean> = MutableLiveData()
     var challengeDetailData: ChallengeDetail? = null
+    var challengeDetailTrips = listOf<Trip>()
     var useCache = false
     lateinit var challenge: Challenge
 
@@ -42,9 +43,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getChallengeId() = challengeId
 
     fun fetchChallengeDetail() {
-        val synchronizationType =
-            if (useCache) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-
         if (DriveKit.isConfigured()) {
             DriveKitChallenge.getChallengeDetail(
                 challengeId,
@@ -53,23 +51,23 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         challengeDetailSyncStatus: ChallengeDetailSyncStatus,
                         challengeDetail: ChallengeDetail?,
                         trips: List<Trip>) {
-                        useCache = when (challengeDetailSyncStatus) {
+                         when (challengeDetailSyncStatus) {
                             ChallengeDetailSyncStatus.CACHE_DATA_ONLY,
                             ChallengeDetailSyncStatus.SUCCESS -> {
                                 challengeDetailData = challengeDetail
+                                challengeDetailTrips = trips
                                 syncChallengeDetailError.postValue(true)
-                                true
+
                             }
                             ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND,
                             ChallengeDetailSyncStatus.FAILED_TO_SYNC_CHALLENGE_DETAIL_CACHE_ONLY,
                             ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS -> {
                                 syncChallengeDetailError.postValue(false)
-                                false
+
                             }
                         }
                     }
-                }, synchronizationType
-            )
+                })
         } else {
             syncChallengeDetailError.postValue(false)
         }
@@ -298,9 +296,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun computeRatingStartCount(): Float {
         val value = computeRankPercentage()
         return if (isUserTheFirst() || value >= 100) {
-            100
+            4
         } else {
             when (value) {
+                in 76..100 -> 4
                 in 51..75 -> 3
                 in 26..50 -> 2
                 in 0..25 -> 1

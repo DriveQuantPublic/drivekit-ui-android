@@ -79,23 +79,17 @@ class ChallengeDetailFragment : Fragment() {
 
     private fun setViewPager() {
         view_pager_challenge_detail.offscreenPageLimit = ChallengeUI.challengeDetailItems.size
-        view_pager_challenge_detail.adapter =
-            ChallengeDetailFragmentPagerAdapter(
-                requireContext(),
-                childFragmentManager,
-                viewModel
-            )
+        view_pager_challenge_detail.adapter = ChallengeDetailFragmentPagerAdapter(
+            childFragmentManager,
+            viewModel
+        )
+
         tab_layout_challenge_detail.setupWithViewPager(view_pager_challenge_detail)
         for ((index, item) in ChallengeUI.challengeDetailItems.withIndex()) {
             tab_layout_challenge_detail?.getTabAt(index)?.let {
                 it.icon = ContextCompat.getDrawable(requireContext(), item.getImageResource())
             }
         }
-    }
-
-    override fun onDestroy() {
-        viewModel.useCache = false
-        super.onDestroy()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
