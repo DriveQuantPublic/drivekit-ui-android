@@ -108,7 +108,13 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 }
             }
         }
-        return progress
+        return progress.let {
+            if (it <= 0) {
+                 1
+            } else {
+                it
+            }
+        }
     }
 
     fun getBestPerformance(context: Context): String {
@@ -333,19 +339,19 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 color(DriveKitUI.colors.mainFontColor())
                 size(R.dimen.dk_text_normal)
                 typeface(BOLD)
-            }).append(" ")
+            }).append("  ")
                 .append(it, context.resSpans {
                     color(DriveKitUI.colors.secondaryColor())
-                    size(R.dimen.dk_text_xbig)
+                    size(R.dimen.dk_text_xxbig)
                     typeface(BOLD)
-                }).append(" /", context.resSpans {
+                }).append(" / ", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
                     size(R.dimen.dk_text_medium)
                     typeface(BOLD)
                 }).append(
                     "${challengeDetailData?.nbDriverRanked}", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
-                        size(R.dimen.dk_text_medium)
+                        size(R.dimen.dk_text_normal)
                         typeface(BOLD)
                     }).toSpannable()
         }

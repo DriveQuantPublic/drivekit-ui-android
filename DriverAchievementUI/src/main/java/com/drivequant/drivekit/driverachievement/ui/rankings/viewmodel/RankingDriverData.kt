@@ -42,7 +42,7 @@ class RankingDriverData(
 
     override fun getNickname(context: Context): String =
         if (driverNickname.isNullOrEmpty()) {
-            DKResource.convertToString(context, "dk_achievements_ranking_anonymous_driver")
+            DKResource.convertToString(context, "dk_common_anonymous_driver")
         } else driverNickname
 
     override fun getDistance(context: Context): String =

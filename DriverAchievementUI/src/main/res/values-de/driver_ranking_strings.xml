@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">Die Rangliste konnte nicht synchronisiert werden, bitte versuchen Sie es später erneut.</string>
-    <string name="dk_achievements_ranking_anonymous_driver">Anonym</string>
     <string name="dk_achievements_ranking_legacy">Zweimonatlich</string>
     <string name="dk_achievements_ranking_menu_ranking">Meine Rangliste</string>
     <string name="dk_achievements_ranking_month">Monatlich</string>

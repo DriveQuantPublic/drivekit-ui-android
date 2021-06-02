@@ -35,7 +35,9 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
             )
         }
 
-    override fun getNickname(context: Context): String = driverNickname
+    override fun getNickname(context: Context): String = if (driverNickname.isBlank()) {
+        DKResource.convertToString(context, "dk_common_anonymous_driver")
+    } else driverNickname
 
     override fun getDistance(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
 
@@ -47,7 +49,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                 driverScore.format(2)
             }.let {
                 DKSpannable().append(it, context.resSpans {
-                    size(R.dimen.dk_text_medium)
+                    size(R.dimen.dk_text_big)
                     color(textColor)
                 }).append(" / 10", context.resSpans {
                     size(R.dimen.dk_text_small)
@@ -59,7 +61,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                     DKDataFormatter.formatDuration(context, driverScore * 3600).convertToString(),
                     context.resSpans {
                         color(textColor)
-                        size(R.dimen.dk_text_medium)
+                        size(R.dimen.dk_text_normal)
                     }).toSpannable()
             }
 

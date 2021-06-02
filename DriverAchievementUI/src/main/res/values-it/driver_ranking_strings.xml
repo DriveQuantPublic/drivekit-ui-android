@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">Non è stato possibile sincronizzare le classifiche, riprovare più tardi.</string>
-    <string name="dk_achievements_ranking_anonymous_driver">Anonimo</string>
     <string name="dk_achievements_ranking_legacy">Bimestrale</string>
     <string name="dk_achievements_ranking_menu_ranking">La mia posizione in classifica</string>
     <string name="dk_achievements_ranking_month">Mensile</string>
