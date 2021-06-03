@@ -164,7 +164,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
                 in 306..309 -> {
                     val spannable = DKSpannable()
-                    formatChallengeDuration(it.driverStats.duration, context).forEach { formatType ->
+                    formatChallengeDuration(it.driverStats.score, context).forEach { formatType ->
                         when (formatType) {
                             is FormatType.VALUE -> spannable.append(
                                 formatType.value,
@@ -176,8 +176,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                             is FormatType.UNIT -> spannable.append(
                                 formatType.value,
                                 context.resSpans {
-                                    color(DriveKitUI.colors.mainFontColor())
-                                    size(R.dimen.dk_text_big)
+                                    color(DriveKitUI.colors.primaryColor())
+                                    typeface(BOLD)
+                                    size(R.dimen.dk_text_xxxbig)
                                 })
                             is FormatType.SEPARATOR -> spannable.append(formatType.value)
                         }
@@ -186,7 +187,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 }
                 in 302..305 -> {
                     val spannable = DKSpannable()
-                    formatChallengeDistance(it.driverStats.distance, context).forEach { formatType ->
+                    formatChallengeDistance(it.driverStats.score, context).forEach { formatType ->
                         when (formatType) {
                             is FormatType.VALUE -> spannable.append(
                                 formatType.value,
@@ -198,8 +199,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                             is FormatType.UNIT -> spannable.append(
                                 formatType.value,
                                 context.resSpans {
-                                    color(DriveKitUI.colors.mainFontColor())
-                                    size(R.dimen.dk_text_big)
+                                    color(DriveKitUI.colors.primaryColor())
+                                    typeface(BOLD)
+                                    size(R.dimen.dk_text_xxxbig)
                                 })
                             is FormatType.SEPARATOR -> spannable.append(formatType.value)
                         }
@@ -459,7 +461,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun formatChallengeDuration(duration: Double, context: Context): List<FormatType> =
         DKDataFormatter.formatDuration(
             context,
-            DKDataFormatter.ceilDuration(duration * 3600, 600)
+            DKDataFormatter.ceilDuration(duration * 3600, 600), DurationUnit.HOUR
         )
 
     @Suppress("UNCHECKED_CAST")
