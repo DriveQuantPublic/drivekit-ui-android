@@ -13,17 +13,19 @@ import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
+import java.util.*
 import kotlin.math.roundToInt
 
 class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
@@ -31,7 +33,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     var syncChallengeDetailError: MutableLiveData<Boolean> = MutableLiveData()
     var challengeDetailData: ChallengeDetail? = null
     var challengeDetailTrips = listOf<Trip>()
-    var useCache = false
     lateinit var challenge: Challenge
 
     init {
@@ -243,7 +244,44 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         } ?: SpannableString("")
     }
 
-    fun getChallengeResultScoreTitle(context: Context) = when (challenge.themeCode) {
+    fun challengeGlobalRank(context: Context) =
+        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
+            "-"
+        } else {
+            "${challengeDetailData?.driverStats?.rank?.toInt()}"
+        }.let {
+            val pseudo = challengeDetailData?.let { challengeDetail ->
+                challengeDetail.driversRanked?.let { drivers ->
+                    if (drivers.isNotEmpty()) {
+                        drivers[challengeDetail.userIndex].pseudo
+                    } else {
+                        "-"
+                    }
+                }
+            } ?: "-"
+            DKSpannable().append(pseudo, context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                size(R.dimen.dk_text_normal)
+                typeface(BOLD)
+            }).append("  ")
+                .append(it, context.resSpans {
+                    color(DriveKitUI.colors.secondaryColor())
+                    size(R.dimen.dk_text_xxbig)
+                    typeface(BOLD)
+                }).append(" / ", context.resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_medium)
+                    typeface(BOLD)
+                }).append(
+                    "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                        color(DriveKitUI.colors.mainFontColor())
+                        size(R.dimen.dk_text_normal)
+                        typeface(BOLD)
+                    }).toSpannable()
+        }
+
+
+    fun getChallengeResultScoreTitle() = when (challenge.themeCode) {
         in 101..104 -> "dk_challenge_eco_driving_score"
         in 201..204 -> "dk_challenge_safety_score"
         in 205..208 -> "dk_challenge_braking_score"
@@ -254,8 +292,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         in 306..309 -> "dk_challenge_driving_time"
         in 302..305 -> "dk_challenge_traveled_distance"
         else -> ""
-    }.let {
-        DKResource.convertToString(context, it)
     }
 
     private fun computeRankPercentage(): Int {
@@ -312,67 +348,11 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         in 101..221 -> "dk_common_ranking_score"
         in 306..309 -> "dk_common_duration"
         in 302..305 -> "dk_common_distance"
-        301 -> "dk_challenge_nb_trip"
+        301 -> "dk_common_trip_plural"
 
         else -> "dk_common_ranking_score"
     }.let {
-        DKResource.convertToString(context, it)
-    }
-
-    fun getDriverGlobalRank(context: Context) =
-        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
-            "-"
-        } else {
-            "${challengeDetailData?.driverStats?.rank?.toInt()}"
-        }.let {
-            val pseudo = challengeDetailData?.let { challengeDetail ->
-                challengeDetail.driversRanked?.let { drivers ->
-                    if (drivers.isNotEmpty()) {
-                        drivers[challengeDetail.userIndex].pseudo
-                    } else {
-                        "-"
-                    }
-                }
-            } ?: "-"
-            DKSpannable().append(pseudo, context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
-                size(R.dimen.dk_text_normal)
-                typeface(BOLD)
-            }).append("  ")
-                .append(it, context.resSpans {
-                    color(DriveKitUI.colors.secondaryColor())
-                    size(R.dimen.dk_text_xxbig)
-                    typeface(BOLD)
-                }).append(" / ", context.resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
-                    typeface(BOLD)
-                }).append(
-                    "${challengeDetailData?.nbDriverRanked}", context.resSpans {
-                        color(DriveKitUI.colors.mainFontColor())
-                        size(R.dimen.dk_text_normal)
-                        typeface(BOLD)
-                    }).toSpannable()
-        }
-
-    fun getRankingList(): List<ChallengeRankingItem> {
-        val listOfRanking = mutableListOf<ChallengeRankingItem>()
-        challengeDetailData?.let { challengeDetail ->
-            challengeDetail.driversRanked?.let { driversRanking ->
-                for (driver in driversRanking) {
-                    listOfRanking.add(
-                        ChallengeRankingItem(
-                            this,
-                            driver.rank,
-                            driver.pseudo,
-                            driver.distance,
-                            driver.score
-                        )
-                    )
-                }
-            }
-        }
-        return listOfRanking
+        DKResource.convertToString(context, it).capitalizeFirstLetter()
     }
 
     fun getDriverDistance(context: Context): String {
@@ -422,6 +402,85 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             )}"
         } ?: ""
     }
+
+    fun getRankingHeaderIcon(context: Context) = when (challenge.themeCode) {
+        in 101..104 -> "dk_challenge_leaderboard_ecodriving"
+        in 201..204, in 205..208,  in 209..212, in 213..216  -> "dk_challenge_leaderboard_safety"
+        221 -> "dk_challenge_leaderboard_distraction"
+        301 -> "dk_challenge_leaderboard_trips_number"
+        in 306..309 -> "dk_challenge_leaderboard_duration"
+        in 302..305 -> "dk_challenge_leaderboard_distance"
+        else -> ""
+    }.let {
+        DKResource.convertToDrawable(context, it)
+    }
+
+
+    fun getRankingList(): List<ChallengeRankingItem> {
+        val listOfRanking = mutableListOf<ChallengeRankingItem>()
+        challengeDetailData?.let { challengeDetail ->
+            challengeDetail.driversRanked?.let { driversRanking ->
+                for (driver in driversRanking) {
+                    listOfRanking.add(
+                        ChallengeRankingItem(
+                            this,
+                            driver.rank,
+                            driver.pseudo,
+                            driver.distance,
+                            driver.score
+                        )
+                    )
+                }
+            }
+        }
+        return listOfRanking
+    }
+
+    fun getRankingProgression(): DriverProgression? =
+        challengeDetailData?.let {
+            it.driversRanked?.let { driversRanked ->
+                val previousRank = driversRanked[it.userIndex].previousRank
+                val rank = driversRanked[it.userIndex].rank
+                return if (rank > 0 && previousRank > 0) {
+                    val delta = previousRank - rank
+                    return when {
+                        delta > 0 -> {
+                            DriverProgression.GOING_UP
+                        }
+                        delta == 0 -> {
+                            null
+                        }
+                        else -> {
+                            DriverProgression.GOING_DOWN
+                        }
+                    }
+                } else {
+                    null
+                }
+            }
+        }
+
+    fun geRankingGlobalRank(context: Context) =
+        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
+            "-"
+        } else {
+            "${challengeDetailData?.driverStats?.rank?.toInt()}"
+        }.let {
+            DKSpannable().append(it, context.resSpans {
+                color(DriveKitUI.colors.secondaryColor())
+                size(R.dimen.dk_text_xbig)
+                typeface(BOLD)
+            }).append(" / ", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                size(R.dimen.dk_text_xbig)
+                typeface(BOLD)
+            }).append(
+                "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_xbig)
+                    typeface(BOLD)
+                }).toSpannable()
+        }
 
     @Suppress("UNCHECKED_CAST")
     class ChallengeDetailViewModelFactory(private val challengeId: String) :
