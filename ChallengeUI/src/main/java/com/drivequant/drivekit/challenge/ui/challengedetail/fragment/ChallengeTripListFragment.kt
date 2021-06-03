@@ -69,7 +69,7 @@ class ChallengeTripListFragment : Fragment() {
 
             override fun getCustomHeader(): DKHeader? = null
             override fun getHeaderDay(): HeaderDay = HeaderDay.DURATION_DISTANCE
-            override fun getDayTripDescendingOrder(): Boolean = true
+            override fun getDayTripDescendingOrder(): Boolean = false
             override fun canSwipeToRefresh(): Boolean = false
             override fun onSwipeToRefresh() {}
             override fun onTripClickListener(itinId: String) {
