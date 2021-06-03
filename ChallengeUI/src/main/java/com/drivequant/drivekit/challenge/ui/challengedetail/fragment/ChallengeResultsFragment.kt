@@ -73,11 +73,11 @@ class ChallengeResultsFragment : Fragment() {
 
         dk_challenge_progress_bar.progress = viewModel.getDriverProgress()
         dk_challenge_rating_bar.rating = viewModel.computeRatingStartCount()
-        text_view_result_global_rank.text = viewModel.getDriverGlobalRank(requireContext())
+        text_view_result_global_rank.text = viewModel.challengeGlobalRank(requireContext())
         text_view_worst.text = viewModel.getWorstPerformance(requireContext())
         text_view_best.text = viewModel.getBestPerformance(requireContext())
         text_view_card_score.text = viewModel.getMainScore(requireContext())
-        text_view_card_title.text = viewModel.getChallengeResultScoreTitle(requireContext())
+        text_view_card_title.text = DKResource.convertToString(requireContext(), viewModel.getChallengeResultScoreTitle())
 
         DKResource.convertToDrawable(requireContext(), "dk_challenge_first_driver")?.let {
             if (viewModel.isUserTheFirst()) {
