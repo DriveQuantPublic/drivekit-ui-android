@@ -14,7 +14,7 @@ enum class ChallengeDetailItem {
         RESULTS -> R.drawable.dk_challenge_result
         RANKING -> R.drawable.dk_challenge_leaderboard
         TRIPS -> R.drawable.dk_challenge_trip
-        RULES -> R.drawable.dk_challenge_rule
+        RULES -> R.drawable.dk_challenge_rules
     }
 
     fun getFragment(viewModel: ChallengeDetailViewModel) = when (this) {

@@ -140,7 +140,6 @@ class ChallengeParticipationFragment : Fragment() {
 
     private fun progress() {
         container_conditions_info.visibility = View.VISIBLE
-        challengeHeaderView.displaySeparator(false)
         text_view_join_challenge.apply {
             text =
                 DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")

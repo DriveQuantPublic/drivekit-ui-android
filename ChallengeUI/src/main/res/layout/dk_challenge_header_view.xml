@@ -38,16 +38,12 @@
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin_half"
         android:gravity="center"
+        android:layout_marginBottom="@dimen/dk_margin_half"
         android:padding="@dimen/dk_margin_half"
         tools:text="Text Rules" />
 
     <TextView
-        android:id="@+id/view_separator_1"
-        style="@style/Separator.Horizontal"
         android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginBottom="@dimen/dk_margin_half" />
-
-    <TextView
         android:id="@+id/text_view_conditions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

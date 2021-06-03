@@ -59,21 +59,12 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
         }
     }
 
-    fun displaySeparator(display:Boolean = true) {
-        view_separator_1.visibility = if (display) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
-    }
-
     private fun setStyle() {
         text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
         text_view_date.smallText(Color.parseColor("#9E9E9E"))
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         text_view_conditions.normalText()
         text_view_rules.normalText()
-        view_separator_1.setBackgroundColor(DriveKitUI.colors.neutralColor())
         text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 }
