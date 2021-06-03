@@ -56,25 +56,20 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                     color(textColor)
                 }).toSpannable()
             }
-            in 306..309 -> {
-                DKSpannable().append(
-                    DKDataFormatter.formatDuration(context, driverScore * 3600).convertToString(),
+            in 306..309 -> DKSpannable().append(viewModel.formatChallengeDuration(driverScore, context)
+                    .convertToString(),
                     context.resSpans {
                         color(textColor)
                         size(R.dimen.dk_text_normal)
                     }).toSpannable()
-            }
 
-            in 302..305 -> {
-                DKSpannable().append(DKDataFormatter.formatMeterDistanceInKm(
-                    context,
-                    driverScore * 1000
-                ).convertToString(), context.resSpans {
-                    color(textColor)
-                    size(R.dimen.dk_text_normal)
-                }).toSpannable()
+            in 302..305 -> DKSpannable().append(
+                    viewModel.formatChallengeDistance(driverScore, context).convertToString(),
+                    context.resSpans {
+                        color(textColor)
+                        size(R.dimen.dk_text_normal)
+                    }).toSpannable()
 
-            }
             301 -> DKSpannable().append(driverScore.removeZeroDecimal(), context.resSpans {
                 size(R.dimen.dk_text_medium)
                 color(textColor)

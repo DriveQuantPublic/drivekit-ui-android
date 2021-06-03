@@ -20,12 +20,14 @@ import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.*
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.ceilDistance
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistance
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
-import java.util.*
 import kotlin.math.roundToInt
 
 class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
@@ -120,14 +122,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
                 in 101..221 -> "${it.challengeStats.maxScore.format(2)}/10"
-                in 306..309 -> DKDataFormatter.formatDuration(
-                    context,
-                    it.challengeStats.maxScore * 3600
-                ).convertToString()
-                in 302..305 -> DKDataFormatter.formatMeterDistance(
-                    context,
-                    it.challengeStats.maxScore * 1000
-                ).convertToString()
+                in 306..309 ->formatChallengeDuration(it.challengeStats.maxScore, context).convertToString()
+                in 302..305 -> formatChallengeDistance(it.challengeStats.maxScore, context).convertToString()
                 301 -> "${it.challengeStats.maxScore.removeZeroDecimal()} ${context.resources.getQuantityString(
                     R.plurals.trip_plural,
                     it.challengeStats.numberTrip
@@ -141,14 +137,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
                 in 101..221 -> "${it.challengeStats.minScore.format(2)}/10"
-                in 306..309 -> DKDataFormatter.formatDuration(
-                    context,
-                    it.challengeStats.minScore * 3600
-                ).convertToString()
-                in 302..305 -> DKDataFormatter.formatMeterDistance(
-                    context,
-                    it.challengeStats.minScore * 1000
-                ).convertToString()
+                in 306..309 -> formatChallengeDuration(it.challengeStats.minScore, context).convertToString()
+                in 302..305 -> formatChallengeDistance(it.challengeStats.minScore, context).convertToString()
                 301 -> "${it.challengeStats.minScore.removeZeroDecimal()} ${context.resources.getQuantityString(
                     R.plurals.trip_plural,
                     it.challengeStats.numberTrip
@@ -161,8 +151,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getMainScore(context: Context): Spannable {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> {
-                    DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
+                in 101..221 -> DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
                         size(R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
@@ -173,12 +162,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         typeface(BOLD)
                     }).toSpannable()
 
-                }
                 in 306..309 -> {
-                    val data =
-                        DKDataFormatter.formatDuration(context, it.driverStats.duration * 3600)
                     val spannable = DKSpannable()
-                    data.forEach { formatType ->
+                    formatChallengeDuration(it.driverStats.duration, context).forEach { formatType ->
                         when (formatType) {
                             is FormatType.VALUE -> spannable.append(
                                 formatType.value,
@@ -199,10 +185,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     spannable.toSpannable()
                 }
                 in 302..305 -> {
-                    val data =
-                        DKDataFormatter.formatMeterDistance(context, it.driverStats.distance * 1000)
                     val spannable = DKSpannable()
-                    data.forEach { formatType ->
+                    formatChallengeDistance(it.driverStats.distance, context).forEach { formatType ->
                         when (formatType) {
                             is FormatType.VALUE -> spannable.append(
                                 formatType.value,
@@ -222,8 +206,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     }
                     spannable.toSpannable()
                 }
-                301 -> {
-                    DKSpannable().append("${it.driverStats.numberTrip} ", context.resSpans {
+                301 -> DKSpannable().append("${it.driverStats.numberTrip} ", context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
                         size(R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
@@ -238,7 +221,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                             typeface(BOLD)
                         }).toSpannable()
 
-                }
                 else -> SpannableString("")
             }
         } ?: SpannableString("")
@@ -280,7 +262,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     }).toSpannable()
         }
 
-
     fun getChallengeResultScoreTitle() = when (challenge.themeCode) {
         in 101..104 -> "dk_challenge_eco_driving_score"
         in 201..204 -> "dk_challenge_safety_score"
@@ -291,16 +272,13 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_nb_trip"
         in 306..309 -> "dk_challenge_driving_time"
         in 302..305 -> "dk_challenge_traveled_distance"
-        else -> ""
+        else -> "-"
     }
 
-    private fun computeRankPercentage(): Int {
-        val percent = challengeDetailData?.let {
-            100 - (it.driverStats.rank.div(it.nbDriverRanked.toDouble()) * 100)
-        } ?: kotlin.run {
-            0.0
-        }
-        return percent.roundToInt()
+    private fun computeRankPercentage(): Int = challengeDetailData?.let {
+        100 - (it.driverStats.rank.div(it.nbDriverRanked.toDouble()) * 100).roundToInt()
+    } ?: kotlin.run {
+        0
     }
 
     fun isUserTheFirst() =
@@ -355,35 +333,25 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         DKResource.convertToString(context, it).capitalizeFirstLetter()
     }
 
-    fun getDriverDistance(context: Context): String {
-        return challengeDetailData?.let {
-            DKDataFormatter.formatMeterDistanceInKm(
-                context,
-                it.driverStats.distance * 1000
-            ).convertToString()
-        } ?: ""
-    }
+    fun getDriverDistance(context: Context) =
+        challengeDetailData?.let {
+            formatChallengeDistance(it.driverStats.distance, context).convertToString()
+        } ?: "-"
 
-    fun getCompetitorDistance(context: Context): String {
-        return challengeDetailData?.let {
-            DKDataFormatter.formatMeterDistanceInKm(
-                context,
-                it.challengeStats.distance * 1000
-            ).convertToString()
-        } ?: ""
-    }
+    fun getCompetitorDistance(context: Context): String =
+        challengeDetailData?.let {
+            formatChallengeDistance(it.challengeStats.distance, context).convertToString()
+        } ?: "-"
 
-    fun getDriverDuration(context: Context):String {
-        return challengeDetailData?.let {
-             DKDataFormatter.formatDuration(context, it.driverStats.duration * 3600).convertToString()
-        }?: ""
-    }
+    fun getDriverDuration(context: Context) =
+        challengeDetailData?.let {
+            formatChallengeDuration(it.driverStats.duration, context).convertToString()
+        } ?: "-"
 
-    fun getCompetitorDuration(context: Context): String {
-        return challengeDetailData?.let {
-            DKDataFormatter.formatDuration(context, it.challengeStats.duration * 3600).convertToString()
-        }?: ""
-    }
+    fun getCompetitorDuration(context: Context) =
+        challengeDetailData?.let {
+            formatChallengeDuration(it.challengeStats.duration, context).convertToString()
+        } ?: "-"
 
     fun getDriverTripsNumber(context: Context): String {
         return challengeDetailData?.let {
@@ -391,7 +359,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 R.plurals.trip_plural,
                 it.driverStats.numberTrip
             )}"
-        } ?: ""
+        } ?: "-"
     }
 
     fun getCompetitorTripsNumber(context: Context): String {
@@ -400,7 +368,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 R.plurals.trip_plural,
                 it.challengeStats.numberTrip
             )}"
-        } ?: ""
+        } ?: "-"
     }
 
     fun getRankingHeaderIcon(context: Context) = when (challenge.themeCode) {
@@ -410,11 +378,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_leaderboard_trips_number"
         in 306..309 -> "dk_challenge_leaderboard_duration"
         in 302..305 -> "dk_challenge_leaderboard_distance"
-        else -> ""
+        else -> "-"
     }.let {
         DKResource.convertToDrawable(context, it)
     }
-
 
     fun getRankingList(): List<ChallengeRankingItem> {
         val listOfRanking = mutableListOf<ChallengeRankingItem>()
@@ -444,15 +411,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 return if (rank > 0 && previousRank > 0) {
                     val delta = previousRank - rank
                     return when {
-                        delta > 0 -> {
-                            DriverProgression.GOING_UP
-                        }
-                        delta == 0 -> {
-                            null
-                        }
-                        else -> {
-                            DriverProgression.GOING_DOWN
-                        }
+                        delta > 0 -> DriverProgression.GOING_UP
+                        delta == 0 -> null
+                        else -> DriverProgression.GOING_DOWN
                     }
                 } else {
                     null
@@ -481,6 +442,25 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     typeface(BOLD)
                 }).toSpannable()
         }
+
+    fun formatChallengeDistance(distance:Double, context: Context) :List<FormatType> =
+        if (distance >= 10.0) {
+            formatMeterDistanceInKm(
+                context,
+                ceilDistance(distance * 1000, 10000)
+            )
+        } else {
+            formatMeterDistance(
+                context,
+                distance * 1000
+            )
+        }
+
+    fun formatChallengeDuration(duration: Double, context: Context): List<FormatType> =
+        DKDataFormatter.formatDuration(
+            context,
+            DKDataFormatter.ceilDuration(duration * 3600, 600)
+        )
 
     @Suppress("UNCHECKED_CAST")
     class ChallengeDetailViewModelFactory(private val challengeId: String) :
