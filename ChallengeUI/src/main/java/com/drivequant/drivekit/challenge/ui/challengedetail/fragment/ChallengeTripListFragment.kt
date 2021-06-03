@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
+import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.common.toDKTripList
+import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
@@ -77,5 +79,18 @@ class ChallengeTripListFragment : Fragment() {
                 )
             }
         })
+
+        val viewModelParticipation = ViewModelProviders.of(
+            this,
+            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.getChallengeId())
+        ).get(ChallengeParticipationViewModel::class.java)
+
+        val view =
+            ChallengeHeaderView(
+                requireContext()
+            )
+        view.configure(viewModelParticipation, requireActivity())
+        view.displayRulesText(false)
+        challenge_header_view_container.addView(view)
     }
 }

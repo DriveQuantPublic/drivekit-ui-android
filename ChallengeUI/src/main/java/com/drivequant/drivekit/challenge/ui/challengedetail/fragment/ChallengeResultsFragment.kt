@@ -16,7 +16,7 @@ import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeD
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_results.*
+ import kotlinx.android.synthetic.main.dk_fragment_challenge_results.*
 
 
 class ChallengeResultsFragment : Fragment() {

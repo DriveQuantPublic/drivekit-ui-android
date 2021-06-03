@@ -59,6 +59,10 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
         }
     }
 
+    fun displayRulesText(visibility: Boolean = true) {
+        text_view_rules.visibility = if (visibility) View.VISIBLE else GONE
+    }
+
     private fun setStyle() {
         text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
         text_view_date.smallText(Color.parseColor("#9E9E9E"))
