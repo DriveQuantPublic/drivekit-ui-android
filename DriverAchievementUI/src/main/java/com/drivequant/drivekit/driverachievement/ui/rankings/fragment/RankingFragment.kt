@@ -1,5 +1,8 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.fragment
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.content.DialogInterface
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,10 +11,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.PseudoAlertDialog
+import com.drivequant.drivekit.common.ui.component.PseudoChangedListener
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -130,6 +140,23 @@ class RankingFragment : Fragment(), RankingSelectorListener {
 
     override fun onResume() {
         super.onResume()
+        // TODO if no pseudo
+
+        PseudoAlertDialog().show(requireContext(), object : PseudoChangedListener {
+            override fun onPseudoChanged(success: Boolean) {
+                if (success) {
+
+                } else {
+
+                }
+            }
+
+            override fun onCancelled() {
+                activity?.finish()
+            }
+        })
+
+        // TODO if has pseudo, then call updateRanking
         updateRanking()
     }
 

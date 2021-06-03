@@ -63,4 +63,6 @@
     <string name="dk_common_update_photo_title">Edit the picture</string>
     <string name="dk_common_validate">Validate</string>
     <string name="dk_common_yes">Yes</string>
+
+    <string name="dk_common_no_pseudo_set">You need to enter a pseudo to access this page.</string>
 </resources>
