@@ -45,6 +45,13 @@ class ChallengeResultsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_detail_results"
+            ), javaClass.simpleName
+        )
+
         savedInstanceState?.getString("challengeIdTag")?.let {
             if (!this::viewModel.isInitialized) {
                 viewModel = ViewModelProviders.of(

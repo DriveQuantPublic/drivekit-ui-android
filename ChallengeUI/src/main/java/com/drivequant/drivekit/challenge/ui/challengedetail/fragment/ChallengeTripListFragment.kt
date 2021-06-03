@@ -9,12 +9,14 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.common.toDKTripList
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.*
 
 
@@ -44,6 +46,13 @@ class ChallengeTripListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_detail_trips"
+            ), javaClass.simpleName
+        )
+
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProviders.of(
                 this,

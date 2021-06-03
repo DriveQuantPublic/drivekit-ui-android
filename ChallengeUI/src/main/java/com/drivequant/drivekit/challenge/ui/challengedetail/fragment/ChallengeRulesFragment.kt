@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_fragment_challenge_rules.*
 
 class ChallengeRulesFragment : Fragment() {
@@ -39,6 +41,13 @@ class ChallengeRulesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_detail_rules"
+            ), javaClass.simpleName
+        )
+
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProviders.of(
                 this,

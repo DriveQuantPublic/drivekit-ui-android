@@ -1,11 +1,10 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeRankingFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeResultsFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeRulesFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeTripListFragment
-import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
-
 
 enum class ChallengeDetailItem {
     RESULTS, RANKING, TRIPS, RULES;
@@ -19,7 +18,7 @@ enum class ChallengeDetailItem {
 
     fun getFragment(viewModel: ChallengeDetailViewModel) = when (this) {
         RESULTS -> ChallengeResultsFragment.newInstance(viewModel)
-        RANKING -> DKRankingFragment(ChallengeDriverRanking(viewModel))
+        RANKING -> ChallengeRankingFragment.newInstance(viewModel)
         TRIPS ->  ChallengeTripListFragment.newInstance(viewModel)
         RULES -> ChallengeRulesFragment.newInstance(viewModel.challenge.challengeId)
     }

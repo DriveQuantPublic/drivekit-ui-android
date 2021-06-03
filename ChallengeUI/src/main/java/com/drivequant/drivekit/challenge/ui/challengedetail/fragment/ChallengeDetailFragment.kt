@@ -13,6 +13,7 @@ import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
@@ -45,6 +46,13 @@ class ChallengeDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_detail"
+            ), javaClass.simpleName
+        )
+
         (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
             challengeId = it
         }
