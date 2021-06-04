@@ -172,9 +172,9 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
         } else if (count == 1) {
             val theme = trip.tripAdvices.first().theme
             if (theme == "SAFETY") {
-                return R.drawable.dk_safety_advice
+                return R.drawable.dk_common_safety_advice
             } else if (theme == "ECODRIVING") {
-                return R.drawable.dk_eco_advice
+                return R.drawable.dk_common_eco_advice
             }
         }
         return null

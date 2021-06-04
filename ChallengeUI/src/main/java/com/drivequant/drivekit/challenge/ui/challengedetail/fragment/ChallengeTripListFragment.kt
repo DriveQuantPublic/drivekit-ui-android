@@ -46,15 +46,18 @@ class ChallengeTripListFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
                 "dk_tag_challenge_detail_trips"
             ), javaClass.simpleName
         )
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProviders.of(
                 this,

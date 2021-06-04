@@ -2,12 +2,14 @@ package com.drivequant.drivekit.challenge.ui.common
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import java.util.*
 
-fun Trip.toDKTripItem() = object: DKTripListItem {
+internal fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
@@ -36,19 +38,37 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
 
     override fun getTransportationModeResource(context: Context): Drawable? = null
     override fun isAlternative(): Boolean = false
-    override fun infoText(): String? = null
-    override fun infoImageResource(): Int? =  null
-    override fun infoClickAction(context: Context) {}
-    override fun hasInfoActionConfigured(): Boolean = false
-    override fun isInfoDisplayable(): Boolean = false
-}
+    override fun infoText(): String? {
+        return if (trip.tripAdvices.size > 1) {
+            trip.tripAdvices.size.toString()
+        } else {
+            null
+        }
+    }
 
-fun List<Trip>.toDKTripList(): List<DKTripListItem> {
-    val trips = mutableListOf<DKTripListItem>()
-    this.forEach {
-        trips.add(
-            it.toDKTripItem()
+    override fun infoImageResource(): Int? {
+        val count = trip.tripAdvices.size
+        if (count > 1) {
+            return R.drawable.dk_trip_info_count
+        } else if (count == 1) {
+            val theme = trip.tripAdvices.first().theme
+            if (theme == "SAFETY") {
+                return R.drawable.dk_common_safety_advice
+            } else if (theme == "ECODRIVING") {
+                return R.drawable.dk_common_eco_advice
+            }
+        }
+        return null
+    }
+
+    override fun infoClickAction(context: Context) {
+        DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(
+            context,
+            itinId
         )
     }
-    return trips
+    override fun hasInfoActionConfigured(): Boolean = true
+    override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
 }
+
+internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem()}
