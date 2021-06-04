@@ -209,7 +209,7 @@ class ChallengeParticipationFragment : Fragment() {
                             requireContext().resSpans {
                                 color(DriveKitUI.colors.fontColorOnPrimaryColor())
                                 typeface(Typeface.BOLD)
-                                size(R.dimen.dk_text_big)
+                                size(R.dimen.dk_text_xbig)
                             })
                         is FormatType.UNIT -> spannable.append(
                             it.value,
