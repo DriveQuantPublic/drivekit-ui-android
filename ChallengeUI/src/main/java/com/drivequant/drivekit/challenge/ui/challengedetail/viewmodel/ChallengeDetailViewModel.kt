@@ -95,7 +95,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     in 101..301 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
                         it.challengeStats.maxScore - it.challengeStats.minScore
                     ).roundToInt()
-                    in 306..309 -> ((it.driverStats.distance - it.challengeStats.minScore) * 100).div(
+                    in 306..309 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
                         it.challengeStats.maxScore - it.challengeStats.minScore
                     ).roundToInt()
                     in 302..305 -> {
