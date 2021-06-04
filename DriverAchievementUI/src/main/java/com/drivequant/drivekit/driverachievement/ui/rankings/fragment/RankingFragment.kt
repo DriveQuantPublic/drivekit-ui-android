@@ -25,6 +25,15 @@ import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 class RankingFragment : Fragment(), RankingSelectorListener {
 
+    companion object {
+        fun newInstance(groupName: String?) : RankingFragment {
+            val fragment = RankingFragment()
+            fragment.rankingGroupName = groupName
+            return fragment
+        }
+    }
+
+    var rankingGroupName: String? = null
     lateinit var rankingViewModel: RankingViewModel
     private lateinit var selectedRankingSelectorView: RankingSelectorView
     private lateinit var fragment: DKRankingFragment
@@ -143,7 +152,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
             })
 
         updateProgressVisibility(true)
-        rankingViewModel.fetchRankingList()
+        rankingViewModel.fetchRankingList(rankingGroupName)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {

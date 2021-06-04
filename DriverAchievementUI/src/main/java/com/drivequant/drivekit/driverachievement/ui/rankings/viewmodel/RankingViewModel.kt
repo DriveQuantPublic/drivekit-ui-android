@@ -58,7 +58,7 @@ class RankingViewModel : ViewModel() {
         }
     }
 
-    fun fetchRankingList() {
+    fun fetchRankingList(groupName: String? = null) {
         val useCacheKey =
             "${selectedRankingTypeData.rankingType}-${selectedRankingSelectorData.rankingPeriod}"
         synchronizationType = if (useCache[useCacheKey] == true) {
@@ -72,6 +72,7 @@ class RankingViewModel : ViewModel() {
             rankingPeriod = selectedRankingSelectorData.rankingPeriod,
             rankingDepth = DriverAchievementUI.rankingDepth,
             synchronizationType = synchronizationType,
+            groupName = groupName,
             listener = object : RankingQueryListener {
                 override fun onResponse(
                     rankingSyncStatus: RankingSyncStatus,
