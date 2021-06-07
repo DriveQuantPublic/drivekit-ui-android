@@ -14,7 +14,7 @@ import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 import java.util.*
 
-internal class ChallengeParticipationViewModel(private val challengeId: String) : ViewModel() {
+class ChallengeParticipationViewModel(private val challengeId: String) : ViewModel() {
 
     val challenge: Challenge?
         get() = DbChallengeAccess.findChallengeById(challengeId)

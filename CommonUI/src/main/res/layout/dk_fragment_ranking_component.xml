@@ -47,21 +47,8 @@
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin_half" />
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dk_recycler_view_ranking"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dk_recycler_view_ranking"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ProgressBar
-            android:id="@+id/progress_circular"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

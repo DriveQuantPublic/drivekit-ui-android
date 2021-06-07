@@ -65,8 +65,8 @@ enum class MapItem : DKMapItem {
 
     override fun getAdviceImageResource(): Int? =
         when (this) {
-            SAFETY -> R.drawable.dk_safety_advice
-            ECO_DRIVING -> R.drawable.dk_eco_advice
+            SAFETY -> R.drawable.dk_common_safety_advice
+            ECO_DRIVING -> R.drawable.dk_common_eco_advice
             INTERACTIVE_MAP, SYNTHESIS, DISTRACTION, SPEEDING -> null
         }
 

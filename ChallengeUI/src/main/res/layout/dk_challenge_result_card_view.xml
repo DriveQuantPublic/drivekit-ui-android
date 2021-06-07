@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view_distance"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    style="@style/DKCard">
+
+    <RelativeLayout
+        android:id="@+id/view_group_container_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dk_margin_half">
+
+        <ImageView
+            android:id="@+id/icon_distance"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/dk_margin_medium"
+            android:layout_marginTop="@dimen/dk_margin_medium"
+            android:layout_marginEnd="@dimen/dk_margin_medium"
+            android:contentDescription="@string/dk_challenge_competitors_distance"
+            android:gravity="center_vertical"
+            tools:src="@drawable/dk_common_road" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/icon_distance"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_driver_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_medium"
+                android:textSize="@dimen/dk_text_normal"
+                tools:text="@string/dk_challenge_driver_distance" />
+
+            <TextView
+                android:id="@+id/text_view_competitor_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dk_text_small"
+                tools:text="@string/dk_challenge_competitors_distance" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

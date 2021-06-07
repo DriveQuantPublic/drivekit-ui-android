@@ -123,7 +123,7 @@ fun Trip.computeRoadContext(): Int {
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
 
-fun Trip.toDKTripItem() = object: DKTripListItem {
+internal fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
@@ -172,9 +172,9 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
         } else if (count == 1) {
             val theme = trip.tripAdvices.first().theme
             if (theme == "SAFETY") {
-                return R.drawable.dk_safety_advice
+                return R.drawable.dk_common_safety_advice
             } else if (theme == "ECODRIVING") {
-                return R.drawable.dk_eco_advice
+                return R.drawable.dk_common_eco_advice
             }
         }
         return null
@@ -191,12 +191,4 @@ fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
 }
 
-fun List<Trip>.toDKTripList(): List<DKTripListItem> {
-    val trips = mutableListOf<DKTripListItem>()
-    this.forEach {
-        trips.add(
-            it.toDKTripItem()
-        )
-    }
-    return trips
-}
+internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }

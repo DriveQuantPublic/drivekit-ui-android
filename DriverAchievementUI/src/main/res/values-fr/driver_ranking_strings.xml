@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">La récupération du classement a échoué. Veuillez réessayer plus tard.</string>
-    <string name="dk_achievements_ranking_anonymous_driver">Anonyme</string>
     <string name="dk_achievements_ranking_legacy">Bi-mensuel</string>
     <string name="dk_achievements_ranking_menu_ranking">Mon classement</string>
     <string name="dk_achievements_ranking_month">Mensuel</string>

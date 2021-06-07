@@ -11,10 +11,9 @@ import com.drivequant.drivekit.databaseutils.entity.Challenge
 class ChallengeListViewModel : ViewModel() {
 
     private var challengeListData = mutableListOf<ChallengeData>()
-    var mutableLiveDataChallengesData: MutableLiveData<List<ChallengeData>> = MutableLiveData()
     var activeChallenges = mutableListOf<ChallengeData>()
     var finishedChallenges = mutableListOf<ChallengeData>()
-    var syncChallengesError: MutableLiveData<Any> = MutableLiveData()
+    var syncChallengesError: MutableLiveData<Boolean> = MutableLiveData()
         private set
 
     fun filterChallenges() {
@@ -34,17 +33,20 @@ class ChallengeListViewModel : ViewModel() {
             DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
                 override fun onResponse(
                     challengesSyncStatus: ChallengesSyncStatus,
-                    challenges: List<Challenge>
-                ) {
-                    if (challengesSyncStatus == ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY) {
-                        syncChallengesError.postValue(Any())
+                    challenges: List<Challenge>) {
+                    if (challengesSyncStatus != ChallengesSyncStatus.SYNC_ALREADY_IN_PROGRESS) {
+                        challengeListData = buildChallengeListData(challenges)
                     }
-                    challengeListData = buildChallengeListData(challenges)
-                    mutableLiveDataChallengesData.postValue(challengeListData)
+                    val value = when (challengesSyncStatus) {
+                        ChallengesSyncStatus.CACHE_DATA_ONLY,
+                        ChallengesSyncStatus.SUCCESS -> true
+                        ChallengesSyncStatus.SYNC_ALREADY_IN_PROGRESS,ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY -> false
+                    }
+                    syncChallengesError.postValue(value)
                 }
             })
         } else {
-            syncChallengesError.postValue(Any())
+            syncChallengesError.postValue(false)
         }
     }
 

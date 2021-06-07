@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingVi
 import com.drivequant.drivekit.common.ui.extension.normalText
 import kotlinx.android.synthetic.main.dk_fragment_ranking_component.*
 
-class DKRankingFragment : Fragment() {
+class DKRankingFragment(private val rankingComponent: DKDriverRanking) : Fragment() {
 
     private lateinit var rankingAdapter: RankingListAdapter
     private lateinit var viewModel: DKRankingViewModel
@@ -25,7 +25,8 @@ class DKRankingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_ranking_component, container, false)
 
-    fun configureDKDriverRanking(rankingComponent: DKDriverRanking) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(DKRankingViewModel::class.java)
         }
@@ -52,13 +53,5 @@ class DKRankingFragment : Fragment() {
         dk_text_view_nickname_header.normalText(DriveKitUI.colors.complementaryFontColor())
         dk_text_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-    }
-
-    fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
-        }
     }
 }
