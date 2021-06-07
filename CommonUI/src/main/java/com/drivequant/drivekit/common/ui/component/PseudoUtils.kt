@@ -2,6 +2,7 @@ package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
 import android.content.DialogInterface
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
@@ -55,18 +56,19 @@ object PseudoUtils {
         val titleTextView = view.findViewById<TextView>(R.id.text_view_alert_title)
         val descriptionTextView = view.findViewById<TextView>(R.id.text_view_alert_description)
 
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,
-            DKResource.convertToString(context, "dk_common_validate")
-        ) { _, _ ->
-            // do nothing because onClick() callback is overriden in getButton()
-        }
-        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, DKResource.convertToString(
-            context,
-            "dk_common_cancel"
-        )
-        ) { dialogInterface, _ ->
-            dialogInterface.dismiss()
-            listener.onCancelled()
+        alertDialog.apply {
+            setButton(DialogInterface.BUTTON_POSITIVE,
+                DKResource.convertToString(context, "dk_common_validate")
+            ) { _, _ ->
+                // do nothing because onClick() callback is overriden in getButton()
+            }
+            setButton(DialogInterface.BUTTON_NEGATIVE,
+                DKResource.convertToString(context, "dk_common_cancel")
+            ) { dialogInterface, _ ->
+                dialogInterface.dismiss()
+                listener.onCancelled()
+            }
+            setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
         }
 
         titleTextView.apply {
