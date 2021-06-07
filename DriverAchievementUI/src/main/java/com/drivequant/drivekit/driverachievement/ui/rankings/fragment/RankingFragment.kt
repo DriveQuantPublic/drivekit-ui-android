@@ -10,8 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.PseudoAlertDialog
+import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.PseudoChangedListener
+import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -132,30 +133,36 @@ class RankingFragment : Fragment(), RankingSelectorListener {
 
     override fun onResume() {
         super.onResume()
-        /* TODO check pseudo in SharedPrefs
-           if there is local pseudo {
-            call updateRanking
-            } else {
-                fragment.updateProgressVisibility(true)
 
-                synchronize (remote) DriveKit userInfo {
-                    if success, call updateRanking
-                    else call PseudoAlertDialog().show()
+        PseudoUtils.checkPseudo(object : PseudoCheckListener {
+            override fun onPseudoChecked(hasPseudo: Boolean) {
+                if (hasPseudo) {
+                    updateRanking()
+                } else {
+                    fragment.updateProgressVisibility(true)
+                    PseudoUtils.show(requireContext(), object : PseudoChangedListener {
+                        override fun onPseudoChanged(success: Boolean) {
+                            if (success) {
+                                updateRanking()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    DKResource.convertToString(
+                                        requireContext(),
+                                        "dk_common_error_message"
+                                    ),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun onCancelled() {
+                            activity?.finish()
+                        }
+                    })
                 }
-           }
-         */
-        PseudoAlertDialog().show(requireContext(), object : PseudoChangedListener {
-            override fun onPseudoChanged(success: Boolean) {
-            
-            }
-
-            override fun onCancelled() {
-                activity?.finish()
             }
         })
-
-        // remove that call once internal modules with get user info available
-        updateRanking()
     }
 
     override fun onStop() {
