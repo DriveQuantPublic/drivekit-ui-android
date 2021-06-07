@@ -9,7 +9,6 @@ import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -39,7 +38,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
         DKResource.convertToString(context, "dk_common_anonymous_driver")
     } else driverNickname
 
-    override fun getDistance(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
+    override fun getDistance(context: Context): String = viewModel.formatChallengeDistance(driverDistance, context).convertToString()
 
     override fun getScore(context: Context, textColor: Int): Spannable {
         return when (viewModel.challenge.themeCode) {

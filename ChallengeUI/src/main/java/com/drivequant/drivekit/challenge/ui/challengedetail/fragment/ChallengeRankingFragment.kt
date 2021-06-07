@@ -33,6 +33,16 @@ class ChallengeRankingFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_detail_ranking"
+            ), javaClass.simpleName
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,13 +50,6 @@ class ChallengeRankingFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_detail_ranking"
-            ), javaClass.simpleName
-        )
-
         savedInstanceState?.getString("challengeIdTag")?.let {
             if (!this::viewModel.isInitialized) {
                 viewModel = ViewModelProviders.of(

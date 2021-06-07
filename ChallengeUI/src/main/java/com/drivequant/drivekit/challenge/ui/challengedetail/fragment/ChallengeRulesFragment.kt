@@ -39,15 +39,18 @@ class ChallengeRulesFragment : Fragment() {
     ): View? =
         inflater.inflate(R.layout.dk_fragment_challenge_rules, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
                 "dk_tag_challenge_detail_rules"
             ), javaClass.simpleName
         )
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProviders.of(
                 this,
