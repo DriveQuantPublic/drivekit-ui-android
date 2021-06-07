@@ -71,4 +71,4 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
 }
 
-internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem()}
+internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }

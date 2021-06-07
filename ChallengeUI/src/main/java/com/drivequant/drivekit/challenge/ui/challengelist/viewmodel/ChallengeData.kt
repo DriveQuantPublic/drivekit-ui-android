@@ -25,7 +25,7 @@ class ChallengeData(
 
     fun getChallengeResourceId(): String = when (iconCode) {
             101 -> "dk_challenge_general_101_trophy"
-            102 -> "dk_challenge_general_102_metal"
+            102 -> "dk_challenge_general_102_medal"
             103 -> "dk_challenge_general_103_medal_first"
             104 -> "dk_challenge_general_104_leader_board"
             105 -> "dk_challenge_general_105_steering_wheel"
