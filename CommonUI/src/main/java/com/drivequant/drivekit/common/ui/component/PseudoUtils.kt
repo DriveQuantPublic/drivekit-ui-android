@@ -30,7 +30,7 @@ object PseudoUtils {
                     DriveKit.getUserInfo(object : GetUserInfoQueryListener {
                         override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) =
                             when (status) {
-                                UserInfoGetStatus.NO_ERROR,
+                                UserInfoGetStatus.SUCCESS,
                                 UserInfoGetStatus.CACHE_DATA_ONLY -> {
                                     val ret = userInfo.hasPseudo()
                                     listener.onPseudoChecked(ret)
