@@ -14,7 +14,7 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengePart
 class ChallengeDetailActivity : AppCompatActivity() {
 
     companion object {
-        const val CHALLENGE_ID_EXTRA = "challenge-id-extra"
+       private const val CHALLENGE_ID_EXTRA = "challenge-id-extra"
 
         fun launchActivity(
             activity: Activity,

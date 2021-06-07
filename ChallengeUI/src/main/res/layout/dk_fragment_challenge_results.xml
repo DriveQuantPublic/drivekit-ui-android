@@ -1,10 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="@dimen/dk_margin_half"
     android:layout_height="match_parent">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,7 +83,7 @@
                             android:orientation="vertical">
 
                             <ImageView
-                                android:id="@+id/image_view_reword_icon"
+                                android:id="@+id/image_view_reward_icon"
                                 android:layout_width="33dp"
                                 android:layout_height="0dp"
                                 android:layout_marginBottom="5dp"
@@ -101,8 +100,7 @@
                                 android:layout_marginBottom="@dimen/dk_margin_quarter"
                                 android:layout_weight="4"
                                 android:max="100"
-                                android:progressDrawable="@drawable/dk_challenge_progress_bar"
-                                tools:ignore="NewApi" />
+                                android:progressDrawable="@drawable/dk_challenge_progress_bar" />
 
 
                         </LinearLayout>
@@ -141,155 +139,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <androidx.cardview.widget.CardView
+
+            <include
                 android:id="@+id/card_view_distance"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                style="@style/DKCard">
+                layout="@layout/dk_challenge_result_card_view" />
 
-                <RelativeLayout
-                    android:id="@+id/view_group_container_distance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dk_margin_half">
-
-                    <ImageView
-                        android:id="@+id/icon_distance"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:contentDescription="@string/dk_challenge_competitors_distance"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/dk_common_road" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/icon_distance"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/distance_user"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dk_margin_medium"
-                            android:textSize="@dimen/dk_text_normal"
-                            tools:text="@string/dk_challenge_driver_distance" />
-
-                        <TextView
-                            android:id="@+id/distance_competitor"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/dk_text_small"
-                            tools:text="@string/dk_challenge_competitors_distance" />
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <include
                 android:id="@+id/card_view_duration"
-                android:layout_height="90dp"
-                android:layout_width="match_parent"
-                style="@style/DKCard">
+                layout="@layout/dk_challenge_result_card_view" />
 
-                <RelativeLayout
-                    android:id="@+id/view_group_container_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dk_margin_half">
-
-                    <ImageView
-                        android:id="@+id/icon_duration"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="@dimen/dk_margin_medium"
-                        android:layout_marginTop="@dimen/dk_margin_medium"
-                        android:layout_marginEnd="@dimen/dk_margin_medium"
-                        android:contentDescription="@string/dk_challenge_competitors_distance"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/dk_common_clock" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/icon_duration"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/duration_user"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dk_margin_medium"
-                            android:textSize="@dimen/dk_text_normal"
-                            tools:text="@string/dk_challenge_driver_duration" />
-
-                        <TextView
-                            android:id="@+id/duration_competitor"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/dk_text_small"
-                            tools:text="La moyenne est de " />
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_trip"
-                android:layout_height="90dp"
-                android:layout_width="match_parent"
-                style="@style/DKCard">
-
-                <RelativeLayout
-                    android:id="@+id/view_group_container_trip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dk_margin_half">
-
-                    <ImageView
-                        android:id="@+id/icon_trip"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginStart="@dimen/dk_margin_medium"
-                        android:layout_marginTop="@dimen/dk_margin_medium"
-                        android:layout_marginEnd="@dimen/dk_margin_medium"
-                        android:contentDescription="@string/dk_challenge_competitors_distance"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/dk_common_trip" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@+id/icon_trip"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/trip_user"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dk_margin_medium"
-                            android:textSize="@dimen/dk_text_normal"
-                            tools:text="@string/dk_challenge_driver_trips" />
-
-                        <TextView
-                            android:id="@+id/trip_competitor"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/dk_text_small"
-                            tools:text="@string/dk_challenge_competitors_trips" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            <include
+                android:id="@+id/card_view_trips_number"
+                layout="@layout/dk_challenge_result_card_view" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
