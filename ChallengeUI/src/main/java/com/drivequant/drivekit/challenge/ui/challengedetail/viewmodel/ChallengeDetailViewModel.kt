@@ -53,22 +53,22 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     override fun onResponse(
                         challengeDetailSyncStatus: ChallengeDetailSyncStatus,
                         challengeDetail: ChallengeDetail?,
-                        trips: List<Trip>) {
-                         when (challengeDetailSyncStatus) {
+                        trips: List<Trip>
+                    ) {
+                        if (challengeDetailSyncStatus != ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND &&
+                            challengeDetailSyncStatus != ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS
+                        ) {
+                            challengeDetailData = challengeDetail
+                            challengeDetailTrips = trips
+                        }
+                        val value = when (challengeDetailSyncStatus) {
                             ChallengeDetailSyncStatus.CACHE_DATA_ONLY,
-                            ChallengeDetailSyncStatus.SUCCESS -> {
-                                challengeDetailData = challengeDetail
-                                challengeDetailTrips = trips
-                                syncChallengeDetailError.postValue(true)
-
-                            }
+                            ChallengeDetailSyncStatus.SUCCESS -> true
                             ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND,
                             ChallengeDetailSyncStatus.FAILED_TO_SYNC_CHALLENGE_DETAIL_CACHE_ONLY,
-                            ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS -> {
-                                syncChallengeDetailError.postValue(false)
-
-                            }
+                            ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS -> false
                         }
+                        syncChallengeDetailError.postValue(value)
                     }
                 })
         } else {

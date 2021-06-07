@@ -72,9 +72,8 @@ class ChallengeDetailFragment : Fragment() {
                     ),
                     Toast.LENGTH_LONG
                 ).show()
-            } else {
-                setViewPager()
             }
+            setViewPager()
             updateProgressVisibility(false)
         })
         updateChallengeDetail()
