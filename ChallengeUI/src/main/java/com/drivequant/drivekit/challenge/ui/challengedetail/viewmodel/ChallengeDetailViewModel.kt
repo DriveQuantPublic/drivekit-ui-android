@@ -20,8 +20,6 @@ import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.*
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.ceilDistance
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistance
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Challenge
@@ -199,9 +197,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                             is FormatType.UNIT -> spannable.append(
                                 formatType.value,
                                 context.resSpans {
-                                    color(DriveKitUI.colors.primaryColor())
+                                    color(DriveKitUI.colors.mainFontColor())
                                     typeface(BOLD)
-                                    size(R.dimen.dk_text_xxxbig)
+                                    size(R.dimen.dk_text_big)
                                 })
                             is FormatType.SEPARATOR -> spannable.append(formatType.value)
                         }
@@ -446,17 +444,11 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }
 
     fun formatChallengeDistance(distance:Double, context: Context) :List<FormatType> =
-        if (distance >= 10.0) {
-            formatMeterDistanceInKm(
-                context,
-                ceilDistance(distance * 1000, 10000)
-            )
-        } else {
-            formatMeterDistance(
-                context,
-                distance * 1000
-            )
-        }
+        formatMeterDistanceInKm(
+            context,
+            distance * 1000,
+            minDistanceToRemoveFractions = 10.0
+        )
 
     fun formatChallengeDuration(duration: Double, context: Context): List<FormatType> =
         DKDataFormatter.formatDuration(
