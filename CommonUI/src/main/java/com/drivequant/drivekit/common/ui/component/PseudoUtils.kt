@@ -44,7 +44,7 @@ object PseudoUtils {
         }, SynchronizationType.CACHE)
     }
 
-    fun show(context: Context, listener: PseudoChangedListener) {
+    fun show(context: Context, listener: PseudoChangeListener) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.dk_alert_dialog_pseudo, null)
         val builder = AlertDialog.Builder(context)
@@ -62,7 +62,7 @@ object PseudoUtils {
                 // Do nothing, onClick() callback is overriden in getButton()
             }
             setButton(DialogInterface.BUTTON_NEGATIVE,
-                DKResource.convertToString(context, "dk_common_cancel")
+                DKResource.convertToString(context, "dk_common_later")
             ) { dialogInterface, _ ->
                 dialogInterface.dismiss()
                 listener.onCancelled()
@@ -110,7 +110,7 @@ interface PseudoCheckListener {
     fun onPseudoChecked(hasPseudo: Boolean)
 }
 
-interface PseudoChangedListener {
+interface PseudoChangeListener {
     fun onPseudoChanged(success: Boolean)
     fun onCancelled()
 }

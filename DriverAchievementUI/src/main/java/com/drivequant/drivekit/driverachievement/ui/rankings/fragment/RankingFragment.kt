@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
-import com.drivequant.drivekit.common.ui.component.PseudoChangedListener
+import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -143,17 +143,16 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                 if (hasPseudo) {
                     updateRanking()
                 } else {
-                    PseudoUtils.show(requireContext(), object : PseudoChangedListener {
+                    PseudoUtils.show(requireContext(), object : PseudoChangeListener {
                         override fun onPseudoChanged(success: Boolean) {
-                            if (success) {
-                                updateRanking()
-                            } else {
+                            if (!success) {
                                 Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
                             }
+                            updateRanking()
                         }
 
                         override fun onCancelled() {
-                            activity?.finish()
+                            updateRanking()
                         }
                     })
                 }
