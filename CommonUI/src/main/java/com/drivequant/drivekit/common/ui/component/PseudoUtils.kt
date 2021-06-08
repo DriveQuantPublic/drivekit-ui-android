@@ -32,8 +32,7 @@ object PseudoUtils {
                             when (status) {
                                 UserInfoGetStatus.SUCCESS,
                                 UserInfoGetStatus.CACHE_DATA_ONLY -> {
-                                    val ret = userInfo.hasPseudo()
-                                    listener.onPseudoChecked(ret)
+                                    listener.onPseudoChecked(userInfo.hasPseudo())
                                 }
                                 UserInfoGetStatus.FAILED_TO_SYNC_USER_INFO_CACHE_ONLY -> {
                                     listener.onPseudoChecked(false)
@@ -60,7 +59,7 @@ object PseudoUtils {
             setButton(DialogInterface.BUTTON_POSITIVE,
                 DKResource.convertToString(context, "dk_common_validate")
             ) { _, _ ->
-                // do nothing because onClick() callback is overriden in getButton()
+                // Do nothing, onClick() callback is overriden in getButton()
             }
             setButton(DialogInterface.BUTTON_NEGATIVE,
                 DKResource.convertToString(context, "dk_common_cancel")
@@ -69,18 +68,9 @@ object PseudoUtils {
                 listener.onCancelled()
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
+            show()
         }
 
-        titleTextView.apply {
-            text = DKResource.convertToString(context, "app_name")
-            headLine1()
-        }
-        descriptionTextView.apply {
-            text = DKResource.convertToString(context, "dk_common_no_pseudo_set")
-            normalText()
-        }
-
-        alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             val newPseudo = editText.editableText.toString()
             if (newPseudo.isNotBlank()) {
@@ -100,6 +90,15 @@ object PseudoUtils {
             } else {
                 Toast.makeText(context, DKResource.convertToString(context, "dk_fields_not_valid"), Toast.LENGTH_LONG).show()
             }
+        }
+
+        titleTextView.apply {
+            text = DKResource.convertToString(context, "app_name")
+            headLine1()
+        }
+        descriptionTextView.apply {
+            text = DKResource.convertToString(context, "dk_common_no_pseudo_set")
+            normalText()
         }
     }
 

@@ -129,26 +129,26 @@ class RankingFragment : Fragment(), RankingSelectorListener {
 
     override fun onResume() {
         super.onResume()
+        checkPseudo()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        rankingViewModel.useCache.clear()
+    }
+
+    private fun checkPseudo() {
         PseudoUtils.checkPseudo(object : PseudoCheckListener {
             override fun onPseudoChecked(hasPseudo: Boolean) {
                 if (hasPseudo) {
                     updateRanking()
                 } else {
-                    fragment.updateProgressVisibility(true)
                     PseudoUtils.show(requireContext(), object : PseudoChangedListener {
                         override fun onPseudoChanged(success: Boolean) {
                             if (success) {
                                 updateRanking()
                             } else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    DKResource.convertToString(
-                                        requireContext(),
-                                        "dk_common_error_message"
-                                    ),
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
                             }
                         }
 
@@ -159,11 +159,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                 }
             }
         })
-    }
-
-    override fun onStop() {
-        super.onStop()
-        rankingViewModel.useCache.clear()
     }
 
     fun updateRanking() {
