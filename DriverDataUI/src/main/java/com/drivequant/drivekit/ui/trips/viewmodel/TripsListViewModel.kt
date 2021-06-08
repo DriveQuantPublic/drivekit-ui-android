@@ -53,6 +53,9 @@ internal class TripsListViewModel(
                 }
                 DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                     override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
+
+
+
                         if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                             syncTripsError.postValue(Any())
                         }

@@ -26,15 +26,8 @@ class ChallengeFragment : Fragment() {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
         updateChallenge()
-        viewModel.mutableLiveDataChallengesData.observe(this,
-            Observer {
-                viewModel.filterChallenges()
-                setViewPager()
-                updateProgressVisibility(false)
-            })
-
         viewModel.syncChallengesError.observe(this, Observer {
-            it?.let {
+            if(!it){
                 Toast.makeText(
                     context,
                     DKResource.convertToString(
@@ -44,6 +37,8 @@ class ChallengeFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            viewModel.filterChallenges()
+            setViewPager()
             updateProgressVisibility(false)
         })
     }

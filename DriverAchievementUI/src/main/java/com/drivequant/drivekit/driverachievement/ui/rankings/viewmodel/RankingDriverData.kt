@@ -23,8 +23,6 @@ class RankingDriverData(
     private val isJumpRank: Boolean
 ) : DKDriverRankingItem {
 
-    fun getFormattedDistance(context: Context): String =
-        DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
     override fun getRank(): Int = driverRank
 
     override fun isCurrentUser(): Boolean = DriveKit.config.userId == driverId
@@ -44,7 +42,7 @@ class RankingDriverData(
 
     override fun getNickname(context: Context): String =
         if (driverNickname.isNullOrEmpty()) {
-            DKResource.convertToString(context, "dk_achievements_ranking_anonymous_driver")
+            DKResource.convertToString(context, "dk_common_anonymous_driver")
         } else driverNickname
 
     override fun getDistance(context: Context): String =

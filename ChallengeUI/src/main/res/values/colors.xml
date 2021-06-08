@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dkProgressBarBackgroundColor">#E0E0E0</color>
+    <color name="dkRatingBarForegroundColor">#FFD232</color>
+    <color name="dkRatingBarBackgroundColor">#DAA520</color>
 </resources>

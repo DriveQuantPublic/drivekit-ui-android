@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_common_activate">Activate</string>
+    <string name="dk_common_anonymous_driver">Anonymous</string>
     <string name="dk_common_back">Back</string>
     <string name="dk_common_cancel">Cancel</string>
     <string name="dk_common_close">Close</string>

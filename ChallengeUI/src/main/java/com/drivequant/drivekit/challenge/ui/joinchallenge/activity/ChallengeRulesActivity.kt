@@ -76,7 +76,10 @@ class ChallengeRulesActivity : AppCompatActivity() {
             "dk_challenge_optin_title"
         }
 
-        text_view_accept_rule.text = DKResource.convertToString(this, acceptRulesText)
+        text_view_accept_rule.apply {
+            text = DKResource.convertToString(this@ChallengeRulesActivity, acceptRulesText)
+            setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+        }
         title = DKResource.convertToString(this, "dk_challenge_rule_title")
         (savedInstanceState?.getString("challengeId"))?.let { it ->
             challengeId = it

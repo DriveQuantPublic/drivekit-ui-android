@@ -49,12 +49,13 @@ class DKTripListView : FrameLayout {
     }
 
     fun configure(tripsList: DKTripList) {
+        updateSwipeRefreshTripsVisibility(false)
         if (tripsList.canSwipeToRefresh()) {
-            view.dk_refresh_trips.setOnRefreshListener {
+            view.dk_swipe_refresh_trips.setOnRefreshListener {
                 tripsList.onSwipeToRefresh()
             }
         } else {
-            view.dk_refresh_trips.isEnabled = false
+            view.dk_swipe_refresh_trips.isEnabled = false
         }
         viewModel.apply {
             setDKTripList(tripsList)
@@ -78,12 +79,12 @@ class DKTripListView : FrameLayout {
 
     fun isFilterPlacerHolder() = adapter != null
 
-    fun updateRefreshTripsVisibility(display: Boolean) {
+    fun updateSwipeRefreshTripsVisibility(display: Boolean) {
         if (display) {
-            dk_refresh_trips.isRefreshing = display
+            dk_swipe_refresh_trips.isRefreshing = display
         } else {
-            dk_refresh_trips.visibility = View.VISIBLE
-            dk_refresh_trips.isRefreshing = display
+            dk_swipe_refresh_trips.visibility = View.VISIBLE
+            dk_swipe_refresh_trips.isRefreshing = display
         }
     }
 

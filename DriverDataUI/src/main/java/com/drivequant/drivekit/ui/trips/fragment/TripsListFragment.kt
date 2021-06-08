@@ -233,7 +233,7 @@ class TripsListFragment : Fragment() {
         } else {
             progress_circular.visibility = View.GONE
         }
-        tripsListView.updateRefreshTripsVisibility(displayProgress)
+        tripsListView.updateSwipeRefreshTripsVisibility(displayProgress)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

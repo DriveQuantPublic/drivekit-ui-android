@@ -58,7 +58,7 @@
             <TextView
                 android:id="@+id/text_view_driver_score"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/dk_margin_half"
                 android:background="@drawable/dk_driver_score_rectangle"

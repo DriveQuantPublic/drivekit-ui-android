@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
+import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.*
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
@@ -130,10 +132,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_ok"),
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            dialog.dismiss()
-                        })
+                    .positiveButton()
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
@@ -144,12 +143,11 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                     DKResource.convertToString(requireContext(), "dk_challenge_not_a_participant")
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
-
             }
-
-            challengeData.shouldDisplayChallengeDetail() -> {
-                Toast.makeText(requireContext(), "Sorry, you can't access challenge statistics for now !", Toast.LENGTH_LONG).show()
-            }
+            challengeData.shouldDisplayChallengeDetail() ->
+                ChallengeDetailActivity.launchActivity(
+                    requireActivity(),
+                    challengeData.challengeId)
 
             else -> ChallengeParticipationActivity.launchActivity(
                 requireActivity(),
