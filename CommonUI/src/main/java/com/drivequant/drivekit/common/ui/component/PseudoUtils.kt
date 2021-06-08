@@ -56,6 +56,7 @@ object PseudoUtils {
         val descriptionTextView = view.findViewById<TextView>(R.id.text_view_alert_description)
 
         alertDialog.apply {
+            setCancelable(false)
             setButton(DialogInterface.BUTTON_POSITIVE,
                 DKResource.convertToString(context, "dk_common_validate")
             ) { _, _ ->

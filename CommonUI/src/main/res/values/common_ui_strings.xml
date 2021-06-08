@@ -67,4 +67,5 @@
 
     <string name="dk_common_no_pseudo_set">You need to enter a pseudo to access this page.</string>
     <string name="dk_common_error_message">An error occurred during the request, please retry later.</string>
+    <string name="dk_common_later">Later</string>
 </resources>

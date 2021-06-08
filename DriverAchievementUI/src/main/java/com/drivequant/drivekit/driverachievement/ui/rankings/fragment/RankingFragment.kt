@@ -150,7 +150,6 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                             }
                             updateRanking()
                         }
-
                         override fun onCancelled() {
                             updateRanking()
                         }
