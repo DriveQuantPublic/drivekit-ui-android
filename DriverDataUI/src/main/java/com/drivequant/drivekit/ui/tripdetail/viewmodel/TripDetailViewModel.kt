@@ -218,7 +218,7 @@ internal class TripDetailViewModel(
 
         route.screenLockedIndex?.let {
             for ((index, indexScreenLocked) in it.withIndex()) {
-                if (indexScreenLocked == 0 || indexScreenLocked == route.latitude.size - 1) continue
+                if (indexScreenLocked <= 0 || indexScreenLocked >= route.latitude.size - 1) continue
                 if (route.screenStatus!![index] == 1) {
                     events.add(
                         TripEvent(
