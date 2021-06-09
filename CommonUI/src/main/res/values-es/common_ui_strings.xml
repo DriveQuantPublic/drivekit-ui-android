@@ -20,11 +20,14 @@
    <string name="dk_common_ecodriving">Eco-conducción</string>
    <string name="dk_common_edit">Editar</string>
    <string name="dk_common_error_empty_field">Este campo no puede estar vacío</string>
+   <string name="dk_common_error_message">Se ha producido un error durante la solicitud, vuelva a intentarlo más tarde.</string>
    <string name="dk_common_finish">Acabado</string>
+   <string name="dk_common_later">más tarde</string>
    <string name="dk_common_loading">Cargando. Por favor, espere...</string>
    <string name="dk_common_mass">Masa</string>
    <string name="dk_common_mean_speed">Velocidad media</string>
    <string name="dk_common_no">No</string>
+   <string name="dk_common_no_pseudo_set">Para acceder a este contenido es necesario introducir un seudónimo.</string>
    <string name="dk_common_ok">OK</string>
    <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.</string>
