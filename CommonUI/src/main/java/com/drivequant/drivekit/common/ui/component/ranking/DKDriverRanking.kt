@@ -18,7 +18,7 @@ interface DKDriverRanking {
 interface DKDriverRankingItem {
     fun getRank(): Int
     fun getRankResource(context: Context): Drawable?
-    fun getNickname(context: Context): String
+    fun getPseudo(context: Context): String
     fun getDistance(context: Context): String
     fun getScore(context: Context, textColor: Int): Spannable
     fun isCurrentUser(): Boolean

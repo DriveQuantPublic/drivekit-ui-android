@@ -16,7 +16,7 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingDriverData(
     private val driverRank: Int,
-    private val driverNickname: String?,
+    private val driverPseudo: String?,
     private val driverDistance: Double,
     private val driverScore: Double,
     private val driverId: String,
@@ -40,10 +40,10 @@ class RankingDriverData(
             )
         }
 
-    override fun getNickname(context: Context): String =
-        if (driverNickname.isNullOrEmpty()) {
+    override fun getPseudo(context: Context): String =
+        if (driverPseudo.isNullOrEmpty()) {
             DKResource.convertToString(context, "dk_common_anonymous_driver")
-        } else driverNickname
+        } else driverPseudo
 
     override fun getDistance(context: Context): String =
         DKDataFormatter.formatMeterDistanceInKm(context, driverDistance * 1000).convertToString()
