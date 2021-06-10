@@ -16,8 +16,8 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     private val textViewDriverDistance =
         itemView.findViewById<TextView>(R.id.text_view_driver_distance)
-    private val textViewDriverNickname =
-        itemView.findViewById<TextView>(R.id.text_view_driver_nickname)
+    private val textViewDriverPseudo =
+        itemView.findViewById<TextView>(R.id.text_view_driver_pseudo)
     private val textViewDriverPosition =
         itemView.findViewById<TextView>(R.id.text_view_driver_position)
     private val imageViewDriverPosition =
@@ -46,7 +46,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
            textViewDriverDistance.text = rankingDriverData.getDistance(itemView.context)
            textViewDriverScore.text = rankingDriverData.getScore(itemView.context, currentDriverColor)
-           textViewDriverNickname.text = rankingDriverData.getNickname(itemView.context)
+           textViewDriverPseudo.text = rankingDriverData.getPseudo(itemView.context)
 
            if (rankingDriverData.getRank() in 1..3) {
                textViewDriverPosition.visibility = View.INVISIBLE
@@ -68,7 +68,7 @@ class RankingListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     private fun setStyle() {
         textViewDriverPosition.normalText(textColor = currentDriverColor)
-        textViewDriverNickname.headLine2()
+        textViewDriverPseudo.headLine2()
         textViewDriverDistance.smallText(textColor = DriveKitUI.colors.complementaryFontColor())
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
