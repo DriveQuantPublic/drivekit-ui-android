@@ -101,6 +101,9 @@ object PseudoUtils {
             text = DKResource.convertToString(context, "dk_common_no_pseudo_set")
             normalText()
         }
+        editText.apply {
+            hint = DKResource.convertToString(context, "dk_common_pseudo")
+        }
     }
 
     private fun UserInfo?.hasPseudo(): Boolean =
