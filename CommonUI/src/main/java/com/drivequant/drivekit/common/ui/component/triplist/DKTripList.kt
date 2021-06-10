@@ -2,6 +2,7 @@ package com.drivequant.drivekit.common.ui.component.triplist
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.Spannable
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import java.util.*
@@ -29,9 +30,17 @@ interface DKTripListItem {
     fun getScore(tripData: TripData): Double?
     fun getTransportationModeResource(context: Context): Drawable?
     fun isAlternative(): Boolean
-    fun infoText(): String?
+    fun infoText(context: Context): Spannable?
     fun infoImageResource(): Int?
     fun infoClickAction(context: Context)
     fun hasInfoActionConfigured(): Boolean
     fun isInfoDisplayable(): Boolean
+}
+
+interface DKTripInfo {
+    fun infoText(context: Context, itinId: String): Spannable?
+    fun infoImageResource(itinId: String): Int?
+    fun infoClickAction(context: Context, itinId: String)
+    fun hasInfoActionConfigured(itinId: String): Boolean
+    fun isInfoDisplayable(itinId: String): Boolean
 }

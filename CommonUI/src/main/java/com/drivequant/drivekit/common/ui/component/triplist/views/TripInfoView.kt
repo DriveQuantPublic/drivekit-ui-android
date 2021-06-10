@@ -27,9 +27,9 @@ internal class TripInfoView : LinearLayout {
         trip.infoImageResource()?.let {
             view.image_view_trip_info.setImageResource(it)
         }
-        trip.infoText()?.let {
+
+        trip.infoText(context)?.let {
             view.text_view_trip_info.apply {
-                setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
                 visibility = View.VISIBLE
                 text = it
             }
