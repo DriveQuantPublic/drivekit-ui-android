@@ -4,12 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeDetailFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
+import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
+import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
+import com.drivequant.drivekit.common.ui.component.PseudoUtils
+import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class ChallengeDetailActivity : AppCompatActivity() {
 
@@ -33,7 +38,32 @@ class ChallengeDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        PseudoUtils.checkPseudo(object : PseudoCheckListener {
+            override fun onPseudoChecked(hasPseudo: Boolean) {
+                if (hasPseudo) {
+                    showFragment()
+                } else {
+                    PseudoUtils.show(this@ChallengeDetailActivity, object : PseudoChangeListener {
+                        override fun onPseudoChanged(success: Boolean) {
+                            if (!success) {
+                                Toast.makeText(applicationContext, DKResource.convertToString(applicationContext, "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                            }
+                            showFragment()
+                        }
+                        override fun onCancelled() {
+                            showFragment()
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    private fun showFragment(){
         val challengeId =
             intent.getStringExtra(ChallengeParticipationActivity.CHALLENGE_ID_EXTRA) as String
         val viewModel = ViewModelProviders.of(

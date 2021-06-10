@@ -50,7 +50,7 @@ class DKRankingFragment(private val rankingComponent: DKDriverRanking) : Fragmen
 
     private fun setStyle() {
         dk_text_view_position_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        dk_text_view_nickname_header.normalText(DriveKitUI.colors.complementaryFontColor())
+        dk_text_view_pseudo_header.normalText(DriveKitUI.colors.complementaryFontColor())
         dk_text_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }

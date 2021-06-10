@@ -29,7 +29,7 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_default_filter_item">Alle meine Reisen</string>
    <string name="dk_driverdata_dense_urban">%s bei starkem Verkehr</string>
    <string name="dk_driverdata_detected_transportation_mode">Erkannter Modus:</string>
-   <string name="dk_driverdata_distance_travelled">%s verfahren</string>
+   <string name="dk_driverdata_distance_travelled">%s gefahren</string>
    <string name="dk_driverdata_distraction_score">Ablenkungsmanöver</string>
    <string name="dk_driverdata_distraction_score_info">Der Ablenkungs-Score (Telefonnutzung während der Fahrt) misst die Interaktionen des Fahrers mit dem Smartphone während der Fahrt. Dazu gehören sowohl die Anzahl der Entsperrungen des Telefons als auch die Dauer der Telefonate während der Fahrt. Die Nutzung des Telefons kann die Aufmerksamkeit des Fahrers ablenken und erhöht das Risiko eines Autounfalls erheblich. Anrufe, die mit der Freisprecheinrichtung Ihres Fahrzeugs getätigt werden, sind erlaubt und verringern Ihren Score nicht.</string>
    <string name="dk_driverdata_eco_score">Bewertung für umweltfreundliches Fahren</string>
@@ -67,7 +67,7 @@ Das Hantieren mit dem Telefon während der Fahrt ist sehr gefährlich. Denken Si
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo und vielen Dank für Ihre Umsicht!</string>
    <string name="dk_driverdata_no_trip_placeholder">Du hast noch keine Fahrten mit diesem Fahrzeug gemacht.</string>
    <string name="dk_driverdata_no_trips_recorded">Sie sind noch nicht gefahren.</string>
-   <string name="dk_driverdata_phone_call_plur">%s telefonate</string>
+   <string name="dk_driverdata_phone_call_plur">%s Telefonate</string>
    <string name="dk_driverdata_phone_call_sing">%s telefonat</string>
    <string name="dk_driverdata_safety_accel">Starke Beschleunigung</string>
    <string name="dk_driverdata_safety_adherence">Adhäsionsgrenze</string>
