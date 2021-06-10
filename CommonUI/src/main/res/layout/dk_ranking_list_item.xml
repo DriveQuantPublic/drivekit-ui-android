@@ -45,7 +45,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_view_driver_nickname"
+                    android:id="@+id/text_view_driver_pseudo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

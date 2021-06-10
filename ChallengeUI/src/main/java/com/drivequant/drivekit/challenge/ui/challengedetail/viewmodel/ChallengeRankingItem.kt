@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 
 class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                            private val driverRank: Int,
-                           private val driverNickname: String,
+                           private val driverPseudo: String,
                            private val driverDistance: Double,
                            private val driverScore: Double) : DKDriverRankingItem {
 
@@ -34,9 +34,9 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
             )
         }
 
-    override fun getNickname(context: Context): String = if (driverNickname.isBlank()) {
+    override fun getPseudo(context: Context): String = if (driverPseudo.isBlank()) {
         DKResource.convertToString(context, "dk_common_anonymous_driver")
-    } else driverNickname
+    } else driverPseudo
 
     override fun getDistance(context: Context): String = viewModel.formatChallengeDistance(driverDistance, context).convertToString()
 
