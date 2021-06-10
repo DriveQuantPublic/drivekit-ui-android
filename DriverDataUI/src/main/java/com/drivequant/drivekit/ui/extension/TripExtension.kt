@@ -14,6 +14,7 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.DriverDataUI
 import java.text.SimpleDateFormat
+import android.graphics.Typeface.BOLD
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -169,6 +170,8 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
             return if (trip.tripAdvices.size > 1) {
                 DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
                     color(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    typeface(BOLD)
+                    size(R.dimen.dk_text_very_small)
                 }).toSpannable()
             } else {
                 null
