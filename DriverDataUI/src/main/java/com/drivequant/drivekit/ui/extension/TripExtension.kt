@@ -210,8 +210,8 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
         DriverDataUI.customTripInfo?.hasInfoActionConfigured(trip.itinId) ?: false
 
     override fun isInfoDisplayable(): Boolean =
-        DriverDataUI.customTripInfo?.isInfoDisplayable(trip.itinId)
-            ?: !trip.tripAdvices.isNullOrEmpty()
+        (DriverDataUI.customTripInfo?.isInfoDisplayable(trip.itinId)
+            ?: !trip.tripAdvices.isNullOrEmpty()) && !trip.transportationMode.isAlternative()
 }
 
 internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }
