@@ -95,6 +95,7 @@ class ChallengeTripListFragment : Fragment() {
         view.configure(viewModelParticipation, requireActivity())
         view.displayRulesText(false)
         view.displayConsultRulesText(false)
+        view.displayConditionsDescriptionText(false)
         challenge_header_view_container.addView(view)
     }
 }
