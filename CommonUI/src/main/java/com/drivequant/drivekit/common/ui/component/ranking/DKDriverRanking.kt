@@ -13,6 +13,7 @@ interface DKDriverRanking {
     fun getDriverGlobalRank(context: Context): Spannable
     fun getScoreTitle(context: Context): String
     fun getDriverRankingList(): List<DKDriverRankingItem>
+    fun getBackgroundColor(): Int
 }
 
 interface DKDriverRankingItem {

@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.adapter.RankingListAdapter
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import kotlinx.android.synthetic.main.dk_fragment_ranking_component.*
 
 class DKRankingFragment(private val rankingComponent: DKDriverRanking) : Fragment() {
@@ -24,7 +24,12 @@ class DKRankingFragment(private val rankingComponent: DKDriverRanking) : Fragmen
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_ranking_component, container, false).setDKStyle()
+    ): View {
+        val view = inflater.inflate(R.layout.dk_fragment_ranking_component, container, false)
+        view.setBackgroundColor(rankingComponent.getBackgroundColor())
+        FontUtils.overrideFonts(context, view)
+        return view
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -18,4 +18,5 @@ class DKRankingViewModel : ViewModel() {
     fun getProgression() = driverRanking.getProgression()
     fun getDriverGlobalRank(context: Context) = driverRanking.getDriverGlobalRank(context)
     fun getDriverRankingList() = driverRanking.getDriverRankingList()
+    fun getBackgroundColor() = driverRanking.getBackgroundColor()
 }

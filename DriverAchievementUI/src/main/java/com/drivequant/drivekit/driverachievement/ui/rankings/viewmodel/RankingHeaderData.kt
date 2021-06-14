@@ -81,4 +81,5 @@ class RankingData(
         DKResource.convertToString(context, "dk_common_ranking_score")
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
+    override fun getBackgroundColor(): Int = DriveKitUI.colors.backgroundViewColor()
 }
