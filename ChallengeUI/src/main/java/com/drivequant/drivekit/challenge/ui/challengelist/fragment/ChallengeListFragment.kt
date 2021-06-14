@@ -80,19 +80,31 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
 
         dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
-        if (viewModel.activeChallenges.isEmpty() || viewModel.finishedChallenges.isEmpty()) {
-            displayNoChallenges(status)
-        } else {
-            adapter?.notifyDataSetChanged() ?: run {
-                adapter = ChallengeListAdapter(
-                    requireContext(),
-                    viewModel,
-                    status,
-                    this
+        when {
+            viewModel.activeChallenges.isEmpty() && status.containsAll(
+                listOf(
+                    ChallengeStatus.PENDING,
+                    ChallengeStatus.SCHEDULED
                 )
-                dk_recycler_view_challenge.adapter = adapter
+            ) -> displayNoChallenges(status)
+            viewModel.finishedChallenges.isEmpty() && status.containsAll(
+                listOf(
+                    ChallengeStatus.ARCHIVED,
+                    ChallengeStatus.FINISHED
+                )
+            ) -> displayNoChallenges(status)
+            else -> {
+                adapter?.notifyDataSetChanged() ?: run {
+                    adapter = ChallengeListAdapter(
+                        requireContext(),
+                        viewModel,
+                        status,
+                        this
+                    )
+                    dk_recycler_view_challenge.adapter = adapter
+                }
+                displayChallenges()
             }
-            displayChallenges()
         }
     }
 
