@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.challenge.ui.common
 
 import android.content.Context
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
@@ -9,7 +10,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import java.util.*
-import android.text.Spannable
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
@@ -43,15 +43,14 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
 
     override fun getTransportationModeResource(context: Context): Drawable? = null
     override fun isAlternative(): Boolean = false
-    override fun infoText(context:Context): Spannable? {
-        return if (trip.tripAdvices.size > 1) {
-            DKSpannable()
-                .append("${trip.tripAdvices.size}", context.resSpans {
-                color(DriveKitUI.colors.fontColorOnSecondaryColor())
-            }).toSpannable()
-        } else {
-            null
-        }
+    override fun infoText(context: Context) = if (trip.tripAdvices.size > 1) {
+        DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
+            color(DriveKitUI.colors.fontColorOnSecondaryColor())
+            typeface(Typeface.BOLD)
+            size(R.dimen.dk_text_very_small)
+        }).toSpannable()
+    } else {
+        null
     }
 
     override fun infoImageResource(): Int? {
