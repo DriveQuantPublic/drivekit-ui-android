@@ -19,6 +19,7 @@ interface DKTripList {
 }
 
 interface DKTripListItem {
+    fun getChildObject(): Any
     fun getItinId(): String
     fun getDuration(): Double?
     fun getDistance(): Double?
@@ -35,12 +36,4 @@ interface DKTripListItem {
     fun infoClickAction(context: Context)
     fun hasInfoActionConfigured(): Boolean
     fun isInfoDisplayable(): Boolean
-}
-
-interface DKTripInfo {
-    fun infoText(context: Context, itinId: String): Spannable?
-    fun infoImageResource(itinId: String): Int?
-    fun infoClickAction(context: Context, itinId: String)
-    fun hasInfoActionConfigured(itinId: String): Boolean
-    fun isInfoDisplayable(itinId: String): Boolean
 }

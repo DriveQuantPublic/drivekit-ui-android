@@ -131,6 +131,7 @@ fun Trip.computeRoadContext(): Int {
 
 internal fun Trip.toDKTripItem() = object : DKTripListItem {
     val trip = this@toDKTripItem
+    override fun getChildObject() = trip
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
     override fun getDistance(): Double? = trip.tripStatistics?.distance
@@ -165,7 +166,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
 
     override fun infoText(context: Context): Spannable? {
         DriverDataUI.customTripInfo?.let {
-            return it.infoText(context, trip.itinId)
+            return it.infoText(context, trip)
         } ?: run {
             return if (trip.tripAdvices.size > 1) {
                 DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
@@ -180,7 +181,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
     }
 
     override fun infoImageResource(): Int? {
-        return DriverDataUI.customTripInfo?.infoImageResource(trip.itinId) ?: run {
+        return DriverDataUI.customTripInfo?.infoImageResource(trip) ?: run {
             val count = trip.tripAdvices.size
             if (count > 1) {
                 return R.drawable.dk_trip_info_count
@@ -197,7 +198,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
     }
 
     override fun infoClickAction(context: Context) {
-        return DriverDataUI.customTripInfo?.infoClickAction(context, trip.itinId) ?: run {
+        return DriverDataUI.customTripInfo?.infoClickAction(context, trip) ?: run {
             TripDetailActivity.launchActivity(
                 context as Activity,
                 trip.itinId,
@@ -207,10 +208,10 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
     }
 
     override fun hasInfoActionConfigured(): Boolean =
-        DriverDataUI.customTripInfo?.hasInfoActionConfigured(trip.itinId) ?: false
+        DriverDataUI.customTripInfo?.hasInfoActionConfigured(trip) ?: false
 
     override fun isInfoDisplayable(): Boolean =
-        (DriverDataUI.customTripInfo?.isInfoDisplayable(trip.itinId)
+        (DriverDataUI.customTripInfo?.isInfoDisplayable(trip)
             ?: !trip.tripAdvices.isNullOrEmpty()) && !trip.transportationMode.isAlternative()
 }
 

@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 
 internal fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
+    override fun getChildObject() = trip
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
     override fun getDistance(): Double? = trip.tripStatistics?.distance

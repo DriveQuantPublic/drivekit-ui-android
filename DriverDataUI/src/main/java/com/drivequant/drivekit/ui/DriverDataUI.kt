@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.component.triplist.DKTripInfo
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
@@ -22,6 +21,7 @@ import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
+import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
@@ -109,7 +109,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.customHeader = header
     }
 
-    fun customTripInfo(tripInfo: DKTripInfo?) {
+    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
         this.customTripInfo = tripInfo
     }
 
