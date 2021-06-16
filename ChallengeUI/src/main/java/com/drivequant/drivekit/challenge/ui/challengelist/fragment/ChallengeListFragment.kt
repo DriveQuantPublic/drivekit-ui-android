@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -44,7 +45,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingListBackgroundColor))
         return view
     }
 

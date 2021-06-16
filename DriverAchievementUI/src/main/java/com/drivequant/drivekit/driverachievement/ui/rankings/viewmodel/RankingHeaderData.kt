@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -81,5 +82,5 @@ class RankingData(
         DKResource.convertToString(context, "dk_common_ranking_score")
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
-    override fun getBackgroundColor(): Int = DriveKitUI.colors.backgroundViewColor()
+    override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
 }

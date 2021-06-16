@@ -9,12 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -55,6 +55,10 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
+            selectors_container.apply {
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingBackgroundColor))
+                visibility = View.VISIBLE
+            }
         }
     }
 
@@ -78,7 +82,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View =
-        inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
+        inflater.inflate(R.layout.dk_fragment_ranking, container, false)
 
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {
@@ -98,22 +102,29 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         if (rankingViewModel.rankingTypesData.size < 2) {
             tab_layout_leader_board.visibility = View.GONE
         }
+        tab_layout_leader_board.apply {
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.dkRankingBackgroundColor
+                )
+            )
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
 
-        tab_layout_leader_board.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
 
-            }
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    rankingViewModel.selectedRankingTypeData.rankingType =
+                        DriverAchievementUI.rankingTypes[tab_layout_leader_board.selectedTabPosition]
+                    updateRanking()
+                }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                rankingViewModel.selectedRankingTypeData.rankingType =
-                    DriverAchievementUI.rankingTypes[tab_layout_leader_board.selectedTabPosition]
-                updateRanking()
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-        })
+                }
+            })
+        }
     }
 
     override fun onClickSelector(
