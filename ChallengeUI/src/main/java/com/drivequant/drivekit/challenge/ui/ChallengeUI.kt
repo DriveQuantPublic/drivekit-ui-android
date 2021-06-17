@@ -15,6 +15,8 @@ object ChallengeUI {
         ChallengeDetailItem.TRIPS,
         ChallengeDetailItem.RULES)
 
+    fun initialize() {}
+
     fun startChallengeActivity(context: Context) {
         val intent = Intent(context, ChallengeListActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
