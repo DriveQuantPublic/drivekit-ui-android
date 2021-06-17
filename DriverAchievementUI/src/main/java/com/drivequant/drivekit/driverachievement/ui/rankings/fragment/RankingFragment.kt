@@ -81,8 +81,16 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View =
-        inflater.inflate(R.layout.dk_fragment_ranking, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.dk_fragment_ranking, container, false)
+        view.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.dkRankingBackgroundColor
+            )
+        )
+        return view
+    }
 
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {

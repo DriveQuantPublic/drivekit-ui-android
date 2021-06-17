@@ -73,9 +73,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
 
         PermissionsUtilsUI.initialize()
 
-        DriveKitChallenge.initialize()
-        ChallengeUI.initialize()
-
         val vehiclesTypes = listOf(VehicleType.CAR, VehicleType.TRUCK)
         DriveKitVehicleUI.configureVehiclesTypes(vehiclesTypes)
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
