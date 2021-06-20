@@ -108,37 +108,41 @@ object DKDataFormatter {
 
         val days = difference / daysInMilli
         difference %= daysInMilli
-
-        formattingTypes.addAll(
-            listOf(
-                FormatType.VALUE(days.toString()),
-                FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
-                FormatType.SEPARATOR()
+        if (days > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(days.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                    FormatType.SEPARATOR()
+                )
             )
-        )
+        }
         val hours = difference / hoursInMilli
         difference %= hoursInMilli
-        formattingTypes.addAll(
-            listOf(
-                FormatType.VALUE(hours.toString()),
-                FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
-                FormatType.SEPARATOR()
+        if (hours > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(hours.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
+                    FormatType.SEPARATOR()
+                )
             )
-        )
+        }
         val minutes = difference / minutesInMilli
         difference %= minutesInMilli
-        formattingTypes.addAll(
-            listOf(
-                FormatType.VALUE(minutes.toString()),
-                FormatType.SEPARATOR(),
-                FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
-                FormatType.SEPARATOR()
+        if (minutes > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(minutes.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                    FormatType.SEPARATOR()
+                )
             )
-        )
+        }
         val seconds = difference / secondsInMilli
-
         formattingTypes.addAll(
             listOf(
                 FormatType.VALUE(seconds.toString()),
