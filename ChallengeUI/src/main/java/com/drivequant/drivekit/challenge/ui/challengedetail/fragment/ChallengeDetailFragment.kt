@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -93,8 +94,15 @@ class ChallengeDetailFragment : Fragment() {
 
         tab_layout_challenge_detail.setupWithViewPager(view_pager_challenge_detail)
         for ((index, item) in ChallengeUI.challengeDetailItems.withIndex()) {
-            tab_layout_challenge_detail?.getTabAt(index)?.let {
-                it.icon = ContextCompat.getDrawable(requireContext(), item.getImageResource())
+            tab_layout_challenge_detail.getTabAt(index)?.let {
+                val icon = ImageView(requireContext())
+                ContextCompat.getDrawable(requireContext(), item.getImageResource())
+                    ?.let { drawable ->
+                        icon.setImageDrawable(drawable)
+                    }
+                it.parent?.let { _ ->
+                    it.customView = icon
+                }
             }
         }
     }
