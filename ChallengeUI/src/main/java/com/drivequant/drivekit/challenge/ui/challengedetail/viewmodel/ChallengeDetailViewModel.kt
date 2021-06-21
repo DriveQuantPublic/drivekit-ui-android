@@ -234,10 +234,11 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }.let {
             val pseudo = challengeDetailData?.let { challengeDetail ->
                 challengeDetail.driversRanked?.let { drivers ->
-                    if (drivers.isNotEmpty()) {
-                        drivers[challengeDetail.userIndex].pseudo
+                    val pseudo = drivers[challengeDetail.userIndex].pseudo
+                    if (drivers.isNotEmpty() && !pseudo?.trim().isNullOrBlank()) {
+                        pseudo
                     } else {
-                        "-"
+                        DKResource.convertToString(context, "dk_common_anonymous_driver")
                     }
                 }
             } ?: "-"

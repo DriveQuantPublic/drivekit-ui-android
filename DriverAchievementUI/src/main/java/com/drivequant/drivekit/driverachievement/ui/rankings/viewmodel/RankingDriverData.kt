@@ -41,7 +41,7 @@ class RankingDriverData(
         }
 
     override fun getPseudo(context: Context): String =
-        if (driverPseudo.isNullOrEmpty()) {
+        if (driverPseudo.isNullOrBlank()) {
             DKResource.convertToString(context, "dk_common_anonymous_driver")
         } else driverPseudo
 
