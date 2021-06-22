@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
-import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
+import com.drivequant.drivekit.common.ui.component.ranking.views.DKRankingView
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -39,7 +40,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
     var rankingGroupName: String? = null
     lateinit var rankingViewModel: RankingViewModel
     private lateinit var selectedRankingSelectorView: RankingSelectorView
-    private lateinit var fragment: DKRankingFragment
+    private lateinit var rankingView: DKRankingView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -190,8 +191,15 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                     ).show()
                     isToastShowed = true
                 }
-                fragment = DKRankingFragment(rankingViewModel.rankingData)
-                fragmentManager?.beginTransaction()?.replace(R.id.dk_ranking_container, fragment)?.commit()
+                rankingView = DKRankingView(requireContext())
+                rankingView.apply {
+                    this.configure(rankingViewModel.rankingData)
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                    )
+                }
+                dk_ranking_container.addView(rankingView)
                 updateProgressVisibility(false)
             })
 
