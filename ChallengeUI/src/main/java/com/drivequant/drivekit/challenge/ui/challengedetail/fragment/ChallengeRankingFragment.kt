@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDriverRanking
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
+import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
+import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.ranking.fragment.DKRankingFragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
@@ -58,7 +63,51 @@ class ChallengeRankingFragment : Fragment() {
                 ).get(ChallengeDetailViewModel::class.java)
             }
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        PseudoUtils.checkPseudo(object : PseudoCheckListener {
+            override fun onPseudoChecked(hasPseudo: Boolean) {
+                if (hasPseudo) {
+                    showFragment()
+                } else {
+                    if (context != null) {
+                        PseudoUtils.show(requireContext(), object : PseudoChangeListener {
+                            override fun onPseudoChanged(success: Boolean) {
+                                if (!success) {
+                                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                }
+                                fetchDetail()
+                            }
+                            override fun onCancelled() {
+                                showFragment()
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    }
+
+    private fun fetchDetail() {
+        viewModel.syncChallengeDetailError.observe(this, Observer {
+            if (!it) {
+                Toast.makeText(
+                    requireContext(),
+                    DKResource.convertToString(
+                        requireContext(),
+                        "dk_challenge_score_alert_message"
+                    ),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            showFragment()
+        })
+        viewModel.fetchChallengeDetail()
+    }
+
+    private fun showFragment() {
         fragmentManager?.beginTransaction()
             ?.replace(R.id.container, DKRankingFragment(ChallengeDriverRanking(viewModel)))
             ?.commit()
