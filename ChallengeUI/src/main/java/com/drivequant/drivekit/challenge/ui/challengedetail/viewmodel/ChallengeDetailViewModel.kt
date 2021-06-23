@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -43,7 +44,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     fun getChallengeId() = challengeId
 
-    fun fetchChallengeDetail() {
+    fun getLocalChallengeDetail() : ChallengeDetail? =
+        DbChallengeAccess.findChallengeDetailById(challengeId)
+
+    fun fetchChallengeDetail(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKit.isConfigured()) {
             DriveKitChallenge.getChallengeDetail(
                 challengeId,
@@ -66,7 +70,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         }
                         syncChallengeDetailError.postValue(value)
                     }
-                })
+                }, synchronizationType)
         } else {
             syncChallengeDetailError.postValue(false)
         }
