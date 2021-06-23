@@ -16,6 +16,7 @@ import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDet
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
 
@@ -24,6 +25,8 @@ class ChallengeDetailFragment : Fragment() {
 
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeDetailViewModel
+    private lateinit var startSyncType: SynchronizationType
+    private var shouldSyncDetail = true
 
     companion object {
         fun newInstance(challengeId: String): ChallengeDetailFragment {
@@ -63,6 +66,7 @@ class ChallengeDetailFragment : Fragment() {
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
             ).get(ChallengeDetailViewModel::class.java)
         }
+        startSyncType = if (viewModel.getLocalChallengeDetail() != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
         viewModel.syncChallengeDetailError.observe(this, Observer {
             if (!it) {
                 Toast.makeText(
@@ -76,13 +80,19 @@ class ChallengeDetailFragment : Fragment() {
             }
             setViewPager()
             updateProgressVisibility(false)
+
+            // If user has data in local database then load them first, then fetch detail challenge
+            if (startSyncType == SynchronizationType.CACHE && shouldSyncDetail) {
+                shouldSyncDetail = false
+                updateChallengeDetail(SynchronizationType.DEFAULT)
+            }
         })
-        updateChallengeDetail()
+        updateChallengeDetail(startSyncType)
     }
 
-    private fun updateChallengeDetail() {
+    private fun updateChallengeDetail(synchronizationType: SynchronizationType) {
         updateProgressVisibility(true)
-        viewModel.fetchChallengeDetail()
+        viewModel.fetchChallengeDetail(synchronizationType)
     }
 
     private fun setViewPager() {
