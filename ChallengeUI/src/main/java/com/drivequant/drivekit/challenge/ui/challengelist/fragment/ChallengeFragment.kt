@@ -13,6 +13,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
 import kotlinx.android.synthetic.main.dk_fragment_challenge.*
 
 
@@ -20,12 +21,17 @@ class ChallengeFragment : Fragment() {
 
     private lateinit var viewModel: ChallengeListViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
-        updateChallenge()
+        updateProgressVisibility(true)
+        viewModel.fetchChallengeList()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel.syncChallengesError.observe(this, Observer {
             if(!it){
                 Toast.makeText(
@@ -43,9 +49,8 @@ class ChallengeFragment : Fragment() {
         })
     }
 
-    private fun updateChallenge() {
-        updateProgressVisibility(true)
-        viewModel.fetchChallengeList()
+    fun updateChallenge() {
+        viewModel.fetchChallengeList(SynchronizationType.CACHE)
     }
 
     private fun setViewPager() {
