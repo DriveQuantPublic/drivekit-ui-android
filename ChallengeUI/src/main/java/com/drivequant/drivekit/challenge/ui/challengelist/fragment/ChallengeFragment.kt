@@ -44,9 +44,9 @@ class ChallengeFragment : Fragment() {
                 ).show()
             }
             viewModel.filterChallenges()
-            setViewPager()
             updateProgressVisibility(false)
         })
+        setViewPager()
     }
 
     fun updateChallenge() {

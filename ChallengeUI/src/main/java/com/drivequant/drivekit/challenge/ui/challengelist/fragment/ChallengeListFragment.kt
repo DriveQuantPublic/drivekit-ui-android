@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -77,38 +79,67 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
 
-        dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
-        when {
-            viewModel.activeChallenges.isEmpty() && status.containsAll(
-                listOf(
-                    ChallengeStatus.PENDING,
-                    ChallengeStatus.SCHEDULED
-                )
-            ) -> displayNoChallenges(status)
-            viewModel.finishedChallenges.isEmpty() && status.containsAll(
-                listOf(
-                    ChallengeStatus.ARCHIVED,
-                    ChallengeStatus.FINISHED
-                )
-            ) -> displayNoChallenges(status)
-            else -> {
-                adapter?.notifyDataSetChanged() ?: run {
-                    adapter = ChallengeListAdapter(
+
+
+        dk_swipe_refresh_challenge.setOnRefreshListener {
+            updateSwipeRefreshChallengesVisibility(true)
+            viewModel.fetchChallengeList()
+        }
+
+        viewModel.syncChallengesError.observe(this, Observer {
+            if(!it){
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(
                         requireContext(),
-                        viewModel,
-                        status,
-                        this
-                    )
-                    dk_recycler_view_challenge.adapter = adapter
-                }
-                displayChallenges()
+                        "dk_challenge_failed_to_sync_challenges"
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+            when {
+                viewModel.activeChallenges.isEmpty() && status.containsAll(
+                    listOf(
+                        ChallengeStatus.PENDING,
+                        ChallengeStatus.SCHEDULED
+                    )
+                ) -> displayNoChallenges(status)
+                viewModel.finishedChallenges.isEmpty() && status.containsAll(
+                    listOf(
+                        ChallengeStatus.ARCHIVED,
+                        ChallengeStatus.FINISHED
+                    )
+                ) -> displayNoChallenges(status)
+                else -> {
+                    dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
+                    adapter?.notifyDataSetChanged() ?: run {
+                        adapter = ChallengeListAdapter(
+                            requireContext(),
+                            viewModel,
+                            status,
+                            this
+                        )
+                        dk_recycler_view_challenge.adapter = adapter
+                    }
+                    displayChallenges()
+                }
+            }
+            updateSwipeRefreshChallengesVisibility(false)
+        })
+    }
+
+    private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {
+        if (display) {
+            dk_swipe_refresh_challenge.isRefreshing = display
+        } else {
+            dk_swipe_refresh_challenge.visibility = View.VISIBLE
+            dk_swipe_refresh_challenge.isRefreshing = display
         }
     }
 
     private fun displayChallenges() {
         no_challenges.visibility = View.GONE
-        dk_recycler_view_challenge.visibility = View.VISIBLE
+        dk_swipe_refresh_challenge.visibility = View.VISIBLE
     }
 
     private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
@@ -133,7 +164,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
         textView.headLine2(DriveKitUI.colors.mainFontColor())
         no_challenges.visibility = View.VISIBLE
-        dk_recycler_view_challenge.visibility = View.GONE
+        dk_swipe_refresh_challenge.visibility = View.GONE
     }
 
     override fun onClickChallenge(challengeData: ChallengeData) {
