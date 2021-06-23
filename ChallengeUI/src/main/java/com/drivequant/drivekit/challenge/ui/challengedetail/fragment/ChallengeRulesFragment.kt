@@ -54,7 +54,7 @@ class ChallengeRulesFragment : Fragment() {
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProviders.of(
                 this,
-                ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
+                ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(it)
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
