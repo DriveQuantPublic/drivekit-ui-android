@@ -121,7 +121,14 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getBestPerformance(context: Context): String {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> "${it.challengeStats.maxScore.format(2)}/10"
+                in 101..221 -> {
+                    val score = if (it.challengeStats.maxScore == 10.0) {
+                        it.challengeStats.maxScore.removeZeroDecimal()
+                    } else {
+                        it.challengeStats.maxScore.format(2)
+                    }
+                    "$score/10"
+                }
                 in 306..309 ->formatChallengeDuration(it.challengeStats.maxScore, context).convertToString()
                 in 302..305 -> formatChallengeDistance(it.challengeStats.maxScore, context).convertToString()
                 301 -> "${it.challengeStats.maxScore.removeZeroDecimal()} ${context.resources.getQuantityString(
@@ -151,7 +158,13 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getMainScore(context: Context): Spannable {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
+                in 101..221 -> {
+                    val score = if (it.driverStats.score == 10.0) {
+                        it.driverStats.score.removeZeroDecimal()
+                    } else {
+                        it.driverStats.score.format(2)
+                    }
+                    DKSpannable().append(score, context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
                         size(R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
@@ -161,6 +174,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         size(R.dimen.dk_text_big)
                         typeface(BOLD)
                     }).toSpannable()
+                }
 
                 in 306..309 -> {
                     val spannable = DKSpannable()
