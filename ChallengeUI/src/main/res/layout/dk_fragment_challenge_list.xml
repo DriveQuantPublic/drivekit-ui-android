@@ -6,18 +6,22 @@
     android:orientation="vertical"
     tools:context=".challengelist.fragment.ChallengeListFragment">
 
-    <include
-        android:id="@+id/no_challenges"
-        layout="@layout/dk_challenge_empty_view"
-        android:visibility="gone" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/dk_swipe_refresh_challenge"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <include
+            android:id="@+id/no_challenges"
+            layout="@layout/dk_challenge_empty_view"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dk_recycler_view_challenge"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -139,7 +139,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private fun displayChallenges() {
         no_challenges.visibility = View.GONE
-        dk_swipe_refresh_challenge.visibility = View.VISIBLE
+        dk_recycler_view_challenge.visibility = View.VISIBLE
     }
 
     private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
@@ -164,7 +164,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
         textView.headLine2(DriveKitUI.colors.mainFontColor())
         no_challenges.visibility = View.VISIBLE
-        dk_swipe_refresh_challenge.visibility = View.GONE
+        dk_recycler_view_challenge.visibility = View.GONE
     }
 
     override fun onClickChallenge(challengeData: ChallengeData) {
