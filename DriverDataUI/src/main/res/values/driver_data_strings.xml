@@ -18,8 +18,7 @@
    <string name="dk_driverdata_beginning_authorized_call">Start of authorized call</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">The application has detected the start of an authorized call, this means that it has been made to your hands-free car kit. This action does not penalize your phone usage score, as it is legally permitted. However, it remains a distraction while driving, for your safety and that of other road users, it is strongly recommended that you wait until your vehicle is parked to make a call.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Start of unauthorized call</string>
-   <string name="dk_driverdata_beginning_unauthorized_call_info_content">The application has detected the start of an unauthorized call. This means that the call was not made with a hands-free kit.
-Handling your phone while driving is very dangerous. Remember to protect yourself, your passengers and other road users. If you need to make a call, your vehicle must be parked in a parking space with the engine turned off.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">The application has detected the start of an unauthorized call. This means that the call was not made with a hands-free kit. Handling your phone while driving is very dangerous. Remember to protect yourself, your passengers and other road users. If you need to make a call, your vehicle must be parked in a parking space with the engine turned off.</string>
    <string name="dk_driverdata_calling_time">Calling time =</string>
    <string name="dk_driverdata_change_transportation_mode">Change?</string>
    <string name="dk_driverdata_confirm_delete_trip">Delete the trip ?</string>
@@ -37,8 +36,7 @@ Handling your phone while driving is very dangerous. Remember to protect yoursel
    <string name="dk_driverdata_end_authorized_call_info_content">The application has detected the end of an authorized call, this means that it has been made to your hands-free car kit. This action does not penalize your phone usage score, as it is legally permitted. However, it remains a distraction while driving, for your safety and that of other road users, it is strongly recommended that you wait until your vehicle is parked to make a call.</string>
    <string name="dk_driverdata_end_event">End of trip</string>
    <string name="dk_driverdata_end_unauthorized_call">End of unauthorized call</string>
-   <string name="dk_driverdata_end_unauthorized_call_info_content">The application has detected the end of an unauthorized call. This means that the call was not made with a hands-free kit.
-Handling your phone while driving is very dangerous. Remember to protect yourself, your passengers and other road users. If you need to make a call, your vehicle must be parked in a parking space with the engine turned off.</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">The application has detected the end of an unauthorized call. This means that the call was not made with a hands-free kit. Handling your phone while driving is very dangerous. Remember to protect yourself, your passengers and other road users. If you need to make a call, your vehicle must be parked in a parking space with the engine turned off.</string>
    <string name="dk_driverdata_expressway">%s on expressways</string>
    <string name="dk_driverdata_extra_urban">%s in extra-urban zone</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Transportation mode couldn\'t be updated, please retry later.</string>

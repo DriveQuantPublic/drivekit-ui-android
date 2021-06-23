@@ -18,8 +18,7 @@
    <string name="dk_driverdata_beginning_authorized_call">Début d\'un appel autorisé</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">L\'application a détecté le début d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Début d\'appel non-autorisé</string>
-   <string name="dk_driverdata_beginning_unauthorized_call_info_content">L\'application a détecté le début d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre.
-Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">L\'application a détecté le début d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre. Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
    <string name="dk_driverdata_calling_time">Temps d\'appel =</string>
    <string name="dk_driverdata_change_transportation_mode">Changer ?</string>
    <string name="dk_driverdata_confirm_delete_trip">Supprimer le trajet ?</string>
@@ -37,8 +36,7 @@ Manipuler son téléphone au volant est très dangereux. Pensez à vous protége
    <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
    <string name="dk_driverdata_end_unauthorized_call">Fin d\'appel non-autorisé</string>
-   <string name="dk_driverdata_end_unauthorized_call_info_content">L\'application a détecté la fin d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre.
-Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">L\'application a détecté la fin d\'un appel non-autorisé. Cela signifie que l\'appel n\'a pas été effectué avec un kit main-libre. Manipuler son téléphone au volant est très dangereux. Pensez à vous protéger ainsi que vos passagers et les autres utilisateurs de la route. Si vous devez téléphoner, il faut que votre véhicule soit garé sur une place de stationnement avec le moteur éteint.</string>
    <string name="dk_driverdata_expressway">%s sur des voies rapides</string>
    <string name="dk_driverdata_extra_urban">%s en zone extra-urbaine</string>
    <string name="dk_driverdata_failed_to_declare_transportation">Le mode de transport n\'a pas pu être mis à jour, veuillez réessayer ultérieurement.</string>
