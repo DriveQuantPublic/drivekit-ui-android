@@ -12,7 +12,7 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengePart
 
 object ChallengeUI : DriveKitChallengeListener {
 
-    var challengeListFragment: ChallengeFragment? = null
+    private var challengeListFragment: ChallengeFragment? = null
 
     fun initialize() {
         DriveKitChallenge.addListener(this)

@@ -1,13 +1,12 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -15,10 +14,12 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
 
 
 class ChallengeDetailFragment : Fragment() {
@@ -104,14 +105,37 @@ class ChallengeDetailFragment : Fragment() {
 
         tab_layout_challenge_detail.setupWithViewPager(view_pager_challenge_detail)
         for ((index, item) in ChallengeUI.challengeDetailItems.withIndex()) {
-            tab_layout_challenge_detail.getTabAt(index)?.let {
-                val icon = ImageView(requireContext())
-                ContextCompat.getDrawable(requireContext(), item.getImageResource())
-                    ?.let { drawable ->
-                        icon.setImageDrawable(drawable)
-                    }
-                it.parent?.let { _ ->
-                    it.customView = icon
+            tab_layout_challenge_detail?.getTabAt(index)?.let {
+                val drawable = ContextCompat.getDrawable(requireContext(), item.getImageResource())
+                if (index == 0) {
+                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
+                }
+                it.icon = drawable
+            }
+        }
+        tab_layout_challenge_detail.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                updateTabLayout(tab.position)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+    }
+
+    private fun updateTabLayout(position: Int) {
+        for (i in 0 until tab_layout_challenge_detail.tabCount) {
+            tab_layout_challenge_detail.getTabAt(i)?.let {
+                if (i == position) {
+                    val drawable = ContextCompat.getDrawable(requireContext(),
+                        ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
+                    drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
+                    tab_layout_challenge_detail.getTabAt(i)?.icon = drawable
+                } else {
+                    val drawable = ContextCompat.getDrawable(requireContext(),
+                        ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
+                    drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
+                    tab_layout_challenge_detail.getTabAt(i)?.icon = drawable
                 }
             }
         }
