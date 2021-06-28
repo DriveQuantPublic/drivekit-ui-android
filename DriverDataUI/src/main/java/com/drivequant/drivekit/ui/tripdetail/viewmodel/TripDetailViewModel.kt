@@ -418,7 +418,7 @@ internal class TripDetailViewModel(
         (trip?.driverDistraction?.distanceUnlock
             ?: 0.0) > 0.0 && (trip?.driverDistraction?.durationUnlock ?: 0.0) > 0.0
 
-    override fun getItindId() = itinId
+    override fun getItinId() = itinId
 
     override fun getTripListConfigurationType() = tripListConfiguration.getTripListConfigurationType()
 
@@ -468,7 +468,7 @@ class TripDetailViewModelFactory(
 }
 
 interface DKTripDetailViewModel {
-    fun getItindId(): String
+    fun getItinId(): String
     fun getTripListConfigurationType(): TripListConfigurationType
     fun getTripEvents(): List<TripEvent>
     fun getSelectedEvent(): MutableLiveData<Int>

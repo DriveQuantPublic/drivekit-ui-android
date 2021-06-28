@@ -11,10 +11,9 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import kotlin.math.ceil
 import kotlin.math.roundToInt
+import kotlin.text.Typography.nbsp
 
 object DKDataFormatter {
-
-    private const val NON_BREAKING_SPACE = "\u00A0"
 
     @JvmOverloads
     fun formatDuration(
@@ -99,6 +98,62 @@ object DKDataFormatter {
         return formattingTypes
     }
 
+    fun formatExactDuration(context: Context, durationInMilliSecond: Long): List<FormatType> {
+        val formattingTypes = mutableListOf<FormatType>()
+        var difference = durationInMilliSecond
+        val secondsInMilli = 1000
+        val minutesInMilli = secondsInMilli * 60
+        val hoursInMilli = minutesInMilli * 60
+        val daysInMilli = hoursInMilli * 24
+
+        val days = difference / daysInMilli
+        difference %= daysInMilli
+        if (days > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(days.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
+                    FormatType.SEPARATOR()
+                )
+            )
+        }
+        val hours = difference / hoursInMilli
+        difference %= hoursInMilli
+        if (hours > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(hours.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
+                    FormatType.SEPARATOR()
+                )
+            )
+        }
+        val minutes = difference / minutesInMilli
+        difference %= minutesInMilli
+        if (minutes > 0) {
+            formattingTypes.addAll(
+                listOf(
+                    FormatType.VALUE(minutes.toString()),
+                    FormatType.SEPARATOR(),
+                    FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                    FormatType.SEPARATOR()
+                )
+            )
+        }
+        val seconds = difference / secondsInMilli
+        formattingTypes.addAll(
+            listOf(
+                FormatType.VALUE(seconds.toString()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(R.string.dk_common_unit_second)),
+                FormatType.SEPARATOR()
+            )
+        )
+        return formattingTypes
+    }
+
     @JvmOverloads
     fun getMeterDistanceInKmFormat(
         context: Context,
@@ -162,7 +217,8 @@ object DKDataFormatter {
         return formattingTypes
     }
 
-    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true): List<FormatType> {
+    @JvmOverloads
+    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true, minDistanceToRemoveFractions: Double = 100.0): List<FormatType> {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
@@ -170,14 +226,14 @@ object DKDataFormatter {
 
         when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
                 }
             }
             DistanceUnit.KM -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_kilometer)))
@@ -222,17 +278,21 @@ object DKDataFormatter {
         }
     }
 
-    private fun formatDistanceValue(distance: Double?): String? {
-        return if (distance != null && distance >= 100) {
-            distance.format(0)
-        } else {
-            distance?.removeZeroDecimal()
+    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
+        distance?.let {
+            val roundedDistance = BigDecimal(distance).setScale(2, RoundingMode.UP).toDouble()
+            return if (roundedDistance >= minDistanceRemoveFraction) {
+                roundedDistance.format(0)
+            } else {
+                roundedDistance.removeZeroDecimal()
+            }
         }
+        return null
     }
 
     fun formatCO2Emission(context: Context, emission: Double) : String =
         "${emission.roundToInt()}"
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_g_per_km))
 
     fun formatCO2Mass(context: Context, co2mass: Double): String {
@@ -240,7 +300,7 @@ object DKDataFormatter {
             co2mass < 1 -> {
                 val unit = DKResource.convertToString(context, "dk_common_unit_g")
                 "${(co2mass * 1000).roundToInt()}"
-                    .plus(NON_BREAKING_SPACE)
+                    .plus(nbsp)
                     .plus(unit)
             }
             co2mass > 1000 -> {
@@ -249,7 +309,7 @@ object DKDataFormatter {
             else -> {
                 val unit = DKResource.convertToString(context, "dk_common_unit_kg")
                 co2mass.format(2)
-                    .plus(NON_BREAKING_SPACE)
+                    .plus(nbsp)
                     .plus(unit)
             }
         }
@@ -257,28 +317,28 @@ object DKDataFormatter {
 
     fun formatSpeedMean(context: Context, speed: Double): String =
         "${speed.roundToInt()}"
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_km_per_hour))
 
     fun formatConsumption(context: Context, consumption: Double): String =
         consumption.removeZeroDecimal()
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_l_per_100km))
 
     fun formatMass(context: Context, mass: Double): String =
         mass.removeZeroDecimal()
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_kg))
 
 
     fun formatMassInTon(context: Context, mass: Double): String =
         (mass / 1000).removeZeroDecimal()
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_ton))
 
     fun formatVehiclePower(context: Context, power: Double): String =
         power.removeZeroDecimal()
-            .plus(NON_BREAKING_SPACE)
+            .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_power))
 
     fun ceilDuration(durationInSeconds: Double?, ceilValueInSeconds: Int): Double? {

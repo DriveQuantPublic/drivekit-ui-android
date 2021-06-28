@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
@@ -44,7 +44,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putSerializable("itinId", viewModel.getItindId())
+            outState.putString("itinId", viewModel.getItinId())
             outState.putSerializable("tripListConfigurationType", viewModel.getTripListConfigurationType())
         }
         super.onSaveInstanceState(outState)
@@ -52,15 +52,16 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            val itinId = it.getString("itinId")
+            val tripListConfigurationType = it.getSerializable("tripListConfigurationType") as TripListConfigurationType?
 
-        val itinId = savedInstanceState?.getSerializable("itinId") as String?
-        val tripListConfigurationType = savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
-
-        if (itinId != null && tripListConfigurationType != null) {
-            viewModel = ViewModelProviders.of(
-                this,
-                TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
-            ).get(TripDetailViewModel::class.java)
+            if (itinId != null && tripListConfigurationType != null) {
+                viewModel = ViewModelProviders.of(
+                    this,
+                    TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
+                ).get(TripDetailViewModel::class.java)
+            }
         }
 
         phone_call_selector.apply {

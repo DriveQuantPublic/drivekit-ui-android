@@ -5,44 +5,62 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.component.PseudoUtils
+import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
+import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
+import com.drivequant.drivekit.common.ui.component.ranking.views.DKRankingView
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
-import com.drivequant.drivekit.driverachievement.ui.rankings.adapter.RankingListAdapter
 import com.drivequant.drivekit.driverachievement.ui.rankings.commons.views.RankingSelectorView
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingViewModel
 import kotlinx.android.synthetic.main.dk_fragment_ranking.*
 
 
-class RankingFragment : Fragment(),
-    RankingSelectorListener {
+class RankingFragment : Fragment(), RankingSelectorListener {
 
+    companion object {
+        fun newInstance(groupName: String?) : RankingFragment {
+            val fragment = RankingFragment()
+            fragment.rankingGroupName = groupName
+            return fragment
+        }
+    }
+
+    var rankingGroupName: String? = null
     lateinit var rankingViewModel: RankingViewModel
-    private lateinit var rankingAdapter: RankingListAdapter
     private lateinit var selectedRankingSelectorView: RankingSelectorView
+    private lateinit var rankingView: DKRankingView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_rankings"), javaClass.simpleName)
-        rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
-        recycler_view_ranking.layoutManager =
-            LinearLayoutManager(requireContext())
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_rankings"
+            ), javaClass.simpleName
+        )
+        if (!this::rankingViewModel.isInitialized) {
+            rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
+        }
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {
             createRankingSelectors()
+            selectors_container.apply {
+                setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingBackgroundColor))
+                visibility = View.VISIBLE
+            }
         }
-        setStyle()
     }
 
     private fun createRankingSelectors() {
@@ -63,9 +81,17 @@ class RankingFragment : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.dk_fragment_ranking, container, false).setDKStyle()
-
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.dk_fragment_ranking, container, false)
+        view.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.dkRankingBackgroundColor
+            )
+        )
+        return view
+    }
 
     private fun setTabLayout() {
         for (rankingTypeData in rankingViewModel.rankingTypesData) {
@@ -85,25 +111,35 @@ class RankingFragment : Fragment(),
         if (rankingViewModel.rankingTypesData.size < 2) {
             tab_layout_leader_board.visibility = View.GONE
         }
+        tab_layout_leader_board.apply {
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.dkRankingBackgroundColor
+                )
+            )
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
 
-        tab_layout_leader_board.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
 
-            }
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    rankingViewModel.selectedRankingTypeData.rankingType =
+                        DriverAchievementUI.rankingTypes[tab_layout_leader_board.selectedTabPosition]
+                    updateRanking()
+                }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                rankingViewModel.selectedRankingTypeData.rankingType =
-                    DriverAchievementUI.rankingTypes[tab_layout_leader_board.selectedTabPosition]
-                updateRanking()
-            }
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-            }
-        })
+                }
+            })
+        }
     }
 
-    override fun onClickSelector(rankingSelectorData: RankingSelectorData, rankingSelectorView: RankingSelectorView) {
+    override fun onClickSelector(
+        rankingSelectorData: RankingSelectorData,
+        rankingSelectorView: RankingSelectorView
+    ) {
         selectedRankingSelectorView.setRankingSelectorSelected(false)
         selectedRankingSelectorView = rankingSelectorView
         rankingSelectorView.setRankingSelectorSelected(true)
@@ -113,7 +149,7 @@ class RankingFragment : Fragment(),
 
     override fun onResume() {
         super.onResume()
-        updateRanking()
+        checkPseudo()
     }
 
     override fun onStop() {
@@ -121,9 +157,31 @@ class RankingFragment : Fragment(),
         rankingViewModel.useCache.clear()
     }
 
+    private fun checkPseudo() {
+        PseudoUtils.checkPseudo(object : PseudoCheckListener {
+            override fun onPseudoChecked(hasPseudo: Boolean) {
+                if (hasPseudo) {
+                    updateRanking()
+                } else {
+                    PseudoUtils.show(requireContext(), object : PseudoChangeListener {
+                        override fun onPseudoChanged(success: Boolean) {
+                            if (!success) {
+                                Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                            }
+                            updateRanking()
+                        }
+                        override fun onCancelled() {
+                            updateRanking()
+                        }
+                    })
+                }
+            }
+        })
+    }
+
     fun updateRanking() {
         var isToastShowed = false
-        rankingViewModel.mutableLiveDataRankingHeaderData.observe(this,
+        rankingViewModel.mutableLiveDataRankingData.observe(this,
             Observer {
                 if (rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY && !isToastShowed) {
                     Toast.makeText(
@@ -133,19 +191,20 @@ class RankingFragment : Fragment(),
                     ).show()
                     isToastShowed = true
                 }
-
-                if (this::rankingAdapter.isInitialized) {
-                    rankingAdapter.notifyDataSetChanged()
-                } else {
-                    rankingAdapter = RankingListAdapter(requireContext(), rankingViewModel)
-                    recycler_view_ranking.adapter = rankingAdapter
+                rankingView = DKRankingView(requireContext())
+                rankingView.apply {
+                    this.configure(rankingViewModel.rankingData)
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT
+                    )
                 }
-                ranking_header_view.setHeaderData(rankingViewModel)
+                dk_ranking_container.addView(rankingView)
                 updateProgressVisibility(false)
             })
 
         updateProgressVisibility(true)
-        rankingViewModel.fetchRankingList()
+        rankingViewModel.fetchRankingList(rankingGroupName)
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
@@ -154,12 +213,5 @@ class RankingFragment : Fragment(),
         } else {
             progress_circular.visibility = View.GONE
         }
-    }
-
-    private fun setStyle() {
-        text_view_position_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        text_view_nickname_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        text_view_score_header.smallText(DriveKitUI.colors.complementaryFontColor())
-        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 }

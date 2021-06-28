@@ -18,9 +18,7 @@
    <string name="dk_driverdata_beginning_authorized_call">Inicio de una llamada autorizada</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">La aplicación ha detectado el inicio de una llamada autorizada, lo que significa que se ha realizado con tu kit de manos libres. Esta acción no penaliza tu puntuación de uso del teléfono, ya que está legalmente permitida. Sin embargo, sigue siendo una distracción durante la conducción, por su seguridad y la de los demás usuarios de la carretera, se recomienda encarecidamente que espere a que su vehículo esté aparcado antes de hacer una llamada.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Inicio de llamada no autorizada</string>
-   <string name="dk_driverdata_beginning_unauthorized_call_info_content">La aplicación detectó el inicio de una llamada no autorizada.
-Esto significa que la llamada no se realizó con un kit de manos libres.
-Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe protegerse a sí mismo, a sus pasajeros y a los demás usuarios de la carretera. Si necesitas hacer una llamada, aparca tu vehículo en una plaza de aparcamiento con el motor apagado.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">La aplicación detectó el inicio de una llamada no autorizada. Esto significa que la llamada no se realizó con un kit de manos libres. Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe protegerse a sí mismo, a sus pasajeros y a los demás usuarios de la carretera. Si necesitas hacer una llamada, aparca tu vehículo en una plaza de aparcamiento con el motor apagado.</string>
    <string name="dk_driverdata_calling_time">Tiempo de llamada =</string>
    <string name="dk_driverdata_change_transportation_mode">¿Cambio?</string>
    <string name="dk_driverdata_confirm_delete_trip">Eliminar el viaje?</string>
@@ -38,9 +36,7 @@ Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe pro
    <string name="dk_driverdata_end_authorized_call_info_content">La aplicación ha detectado el final de una llamada autorizada, lo que significa que se ha realizado con tu kit de manos libres. Esta acción no penaliza tu puntuación de uso del teléfono, ya que está legalmente permitida. Sin embargo, sigue siendo una distracción durante la conducción, por su seguridad y la de los demás usuarios de la carretera, se recomienda encarecidamente que espere a que su vehículo esté aparcado antes de hacer una llamada.</string>
    <string name="dk_driverdata_end_event">Fin del viaje</string>
    <string name="dk_driverdata_end_unauthorized_call">Terminación no autorizada de la llamada</string>
-   <string name="dk_driverdata_end_unauthorized_call_info_content">La aplicación detectó el final de una llamada telefónica no autorizada...
-Esto significa que la llamada no se realizó con un kit de manos libres.
-Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe protegerse a sí mismo, a sus pasajeros y a los demás usuarios de la carretera. Si necesitas hacer una llamada, aparca tu vehículo en una plaza de aparcamiento con el motor apagado.</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">La aplicación detectó el final de una llamada telefónica no autorizada... Esto significa que la llamada no se realizó con un kit de manos libres. Manejar el teléfono mientras se conduce es muy peligroso. Recuerde que debe protegerse a sí mismo, a sus pasajeros y a los demás usuarios de la carretera. Si necesitas hacer una llamada, aparca tu vehículo en una plaza de aparcamiento con el motor apagado.</string>
    <string name="dk_driverdata_expressway">%s en la autopista</string>
    <string name="dk_driverdata_extra_urban">%s en zonas extraurbanas</string>
    <string name="dk_driverdata_failed_to_declare_transportation">El modo de transporte no pudo ser actualizado, por favor vuelva a intentarlo más tarde.</string>

@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven'
 android {
-    compileSdkVersion 30
+    compileSdkVersion project.ext.compile_sdk_version
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 30
+        minSdkVersion project.ext.min_sdk_version
+        targetSdkVersion project.ext.target_sdk_version
         versionCode 1
         versionName "$drivekitui_version"
         consumerProguardFiles 'consumer-rules.pro'
@@ -33,7 +33,7 @@ dependencies {
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 
-    api "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
+    implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
 }
 
 uploadArchives {

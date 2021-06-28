@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
@@ -69,6 +70,10 @@ class MainActivity : AppCompatActivity() {
 
     fun onDriverRankingClicked(view: View) {
         DriverAchievementUI.startRankingActivity(this)
+    }
+
+    fun onChallengeClicked(view: View) {
+        ChallengeUI.startChallengeActivity(this)
     }
 
     fun onPermissionUtilsClicked(view: View) {

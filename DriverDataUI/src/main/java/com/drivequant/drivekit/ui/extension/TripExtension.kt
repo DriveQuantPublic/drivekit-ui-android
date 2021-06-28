@@ -1,12 +1,23 @@
 package com.drivequant.drivekit.ui.extension
 
+import android.app.Activity
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.text.Spannable
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.ceilDuration
 import com.drivequant.drivekit.common.ui.extension.formatDateWithPattern
-import com.drivequant.drivekit.common.ui.extension.isSameDay
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.trips.viewmodel.TripsByDate
+import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.DriverDataUI
 import java.text.SimpleDateFormat
+import android.graphics.Typeface.BOLD
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import java.util.*
 
 fun List<Trip>.computeSafetyScoreAverage(): Double {
@@ -106,40 +117,6 @@ fun Trip.getOrComputeStartDate(): Date? {
     return null
 }
 
-fun List<Trip>.orderByDay(orderDesc: Boolean): MutableList<TripsByDate> {
-    val tripsSorted: MutableList<TripsByDate> = mutableListOf()
-    if (this.isNotEmpty()) {
-        var dayTrips: MutableList<Trip> = mutableListOf()
-        var currentDay: Date = this.first().endDate
-
-        if (this.size > 1) {
-            for (i in this.indices) {
-                if (this[i].endDate.isSameDay(currentDay)) {
-                    dayTrips.add(this[i])
-                } else {
-                    if (orderDesc) {
-                        dayTrips = dayTrips.asReversed()
-                    }
-                    val tripsByDate = TripsByDate(currentDay, dayTrips)
-                    tripsSorted.add(tripsByDate)
-
-                    currentDay = this[i].endDate
-                    dayTrips = mutableListOf()
-                    dayTrips.add(this[i])
-                }
-                if (i == this.size - 1) {
-                    tripsSorted.add(TripsByDate(currentDay, dayTrips))
-                }
-            }
-        } else {
-            dayTrips.add(this[0])
-            val tripsByDate = TripsByDate(currentDay, dayTrips)
-            tripsSorted.add(tripsByDate)
-        }
-    }
-    return tripsSorted
-}
-
 fun Trip.computeRoadContext(): Int {
     var biggestDistance = 0.0
     var majorRoadContext = 0
@@ -151,3 +128,91 @@ fun Trip.computeRoadContext(): Int {
     }
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
+
+internal fun Trip.toDKTripItem() = object : DKTripListItem {
+    val trip = this@toDKTripItem
+    override fun getChildObject() = trip
+    override fun getItinId(): String = trip.itinId
+    override fun getDuration(): Double? = trip.tripStatistics?.duration
+    override fun getDistance(): Double? = trip.tripStatistics?.distance
+    override fun getStartDate(): Date? = trip.startDate
+    override fun getEndDate(): Date = trip.endDate
+    override fun getDepartureCity(): String = trip.departureCity
+    override fun getArrivalCity(): String = trip.arrivalCity
+    override fun isScored(tripData: TripData): Boolean =
+        when (tripData) {
+            TripData.SAFETY, TripData.ECO_DRIVING -> !trip.unscored
+            TripData.DISTRACTION -> !trip.unscored && trip.driverDistraction != null
+            TripData.SPEEDING -> !trip.unscored && trip.speedingStatistics != null
+            TripData.DISTANCE, TripData.DURATION -> true
+        }
+
+    override fun getScore(tripData: TripData): Double? =
+        when (tripData) {
+            TripData.SAFETY -> trip.safety?.safetyScore
+            TripData.ECO_DRIVING -> trip.ecoDriving?.score
+            TripData.DISTRACTION -> trip.driverDistraction?.score
+            TripData.SPEEDING -> trip.speedingStatistics?.score
+            TripData.DISTANCE -> trip.tripStatistics?.distance
+            TripData.DURATION -> trip.tripStatistics?.duration
+        }
+
+    override fun getTransportationModeResource(context: Context): Drawable? =
+        trip.declaredTransportationMode?.transportationMode?.image(context) ?: run {
+            trip.transportationMode.image(context)
+        }
+
+    override fun isAlternative(): Boolean = trip.transportationMode.isAlternative()
+
+    override fun infoText(context: Context): Spannable? {
+        DriverDataUI.customTripInfo?.let {
+            return it.infoText(context, trip)
+        } ?: run {
+            return if (trip.tripAdvices.size > 1) {
+                DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
+                    color(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    typeface(BOLD)
+                    size(R.dimen.dk_text_very_small)
+                }).toSpannable()
+            } else {
+                null
+            }
+        }
+    }
+
+    override fun infoImageResource(): Int? {
+        return DriverDataUI.customTripInfo?.infoImageResource(trip) ?: run {
+            val count = trip.tripAdvices.size
+            if (count > 1) {
+                return R.drawable.dk_trip_info_count
+            } else if (count == 1) {
+                val theme = trip.tripAdvices.first().theme
+                if (theme == "SAFETY") {
+                    return R.drawable.dk_common_safety_advice
+                } else if (theme == "ECODRIVING") {
+                    return R.drawable.dk_common_eco_advice
+                }
+            }
+            return null
+        }
+    }
+
+    override fun infoClickAction(context: Context) {
+        return DriverDataUI.customTripInfo?.infoClickAction(context, trip) ?: run {
+            TripDetailActivity.launchActivity(
+                context as Activity,
+                trip.itinId,
+                openAdvice = true
+            )
+        }
+    }
+
+    override fun hasInfoActionConfigured(): Boolean =
+        DriverDataUI.customTripInfo?.hasInfoActionConfigured(trip) ?: false
+
+    override fun isInfoDisplayable(): Boolean =
+        (DriverDataUI.customTripInfo?.isInfoDisplayable(trip)
+            ?: !trip.tripAdvices.isNullOrEmpty()) && !trip.transportationMode.isAlternative()
+}
+
+internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }

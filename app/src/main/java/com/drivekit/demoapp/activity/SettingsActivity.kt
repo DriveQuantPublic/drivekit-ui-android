@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.beaconutils.BeaconData
+import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -77,11 +79,13 @@ class SettingsActivity : AppCompatActivity() {
                 DriveKitTripAnalysis.setBeacons(listOf())
         }
 
-        private fun reconfigureDriveKit(userId: String){
+        private fun reconfigureDriveKit(userId: String) {
             val apiKey = DriveKit.config.apiKey
             DriveKit.reset()
             DriveKitDriverData.reset()
             DriveKitVehicle.reset()
+            DriveKitDriverAchievement.reset()
+            DriveKitChallenge.reset()
             apiKey?.let {
                 DriveKit.setApiKey(it)
             }

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="@dimen/dk_margin_half"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_result_global_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:layout_gravity="center" />
+
+        <RatingBar
+            android:id="@+id/dk_challenge_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="4"
+            android:rating="3"
+            android:theme="@style/ChallengeRatingBarAppearance" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="180dp"
+            style="@style/DKCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/dk_margin_medium">
+
+
+                <TextView
+                    android:id="@+id/text_view_card_title"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:textColor="@color/dkBad"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center">
+                            <TextView
+                                android:id="@+id/text_view_card_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dk_margin_half"
+                                android:textSize="46sp"
+                                android:textStyle="bold"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image_view_reward_icon"
+                                android:layout_width="33dp"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight="1"
+                                android:contentDescription="image" />
+
+
+                            <ProgressBar
+                                android:id="@+id/dk_challenge_progress_bar"
+                                style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+                                android:layout_width="15dp"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/dk_margin_quarter"
+                                android:layout_weight="4"
+                                android:max="100"
+                                android:progressDrawable="@drawable/dk_challenge_progress_bar" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_view_best"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/dk_text_normal"
+                                android:textStyle="bold"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/text_view_worst"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="bottom"
+                                    android:textSize="@dimen/dk_text_normal"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/card_view_distance"
+                layout="@layout/dk_challenge_result_card_view" />
+
+            <include
+                android:id="@+id/card_view_duration"
+                layout="@layout/dk_challenge_result_card_view" />
+
+            <include
+                android:id="@+id/card_view_trips_number"
+                layout="@layout/dk_challenge_result_card_view" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

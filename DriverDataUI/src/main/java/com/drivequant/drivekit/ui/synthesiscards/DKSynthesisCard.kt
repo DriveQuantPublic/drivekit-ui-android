@@ -5,7 +5,7 @@ import android.text.Spannable
 import android.text.style.AbsoluteSizeSpan
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKGaugeConfiguration
-import com.drivequant.drivekit.ui.commons.enums.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess

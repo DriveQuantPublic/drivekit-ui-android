@@ -13,14 +13,15 @@ import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKHeader
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
-import com.drivequant.drivekit.ui.trips.viewmodel.TripData
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
@@ -121,6 +122,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     override fun startTripDetailActivity(context: Context, tripId: String) {
         val intent = Intent(context, TripDetailActivity::class.java)
         intent.putExtra(ITINID_EXTRA, tripId)
+        intent.putExtra(OPEN_ADVICE_EXTRA, true)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_challenge_list_active" translatable="false">drivekit-challenge-list-active</string>
+    <string name="dk_tag_challenge_list_finished" translatable="false">drivekit-challenge-list-finished</string>
+    <string name="dk_tag_challenge_join" translatable="false">drivekit-challenge-join</string>
+    <string name="dk_tag_challenge_rules" translatable="false">drivekit-challenge-rules</string>
+    <string name="dk_tag_challenge_detail" translatable="false">drivekit-challenge-detail</string>
+    <string name="dk_tag_challenge_detail_results" translatable="false">drivekit-challenge-detail-results</string>
+    <string name="dk_tag_challenge_detail_trips" translatable="false">drivekit-challenge-detail-trips</string>
+    <string name="dk_tag_challenge_detail_rules" translatable="false">drivekit-challenge-detail-rules</string>
+    <string name="dk_tag_challenge_detail_ranking" translatable="false">drivekit-challenge-detail-ranking</string>
+</resources>
