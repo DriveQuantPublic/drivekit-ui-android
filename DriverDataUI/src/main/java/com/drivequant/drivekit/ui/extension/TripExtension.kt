@@ -3,6 +3,7 @@ package com.drivequant.drivekit.ui.extension
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.Spannable
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.ceilDuration
@@ -11,7 +12,12 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.DriverDataUI
 import java.text.SimpleDateFormat
+import android.graphics.Typeface.BOLD
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import java.util.*
 
 fun List<Trip>.computeSafetyScoreAverage(): Double {
@@ -123,8 +129,9 @@ fun Trip.computeRoadContext(): Int {
     return if (majorRoadContext == 0) 1 else majorRoadContext
 }
 
-internal fun Trip.toDKTripItem() = object: DKTripListItem {
+internal fun Trip.toDKTripItem() = object : DKTripListItem {
     val trip = this@toDKTripItem
+    override fun getChildObject() = trip
     override fun getItinId(): String = trip.itinId
     override fun getDuration(): Double? = trip.tripStatistics?.duration
     override fun getDistance(): Double? = trip.tripStatistics?.distance
@@ -157,38 +164,55 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
 
     override fun isAlternative(): Boolean = trip.transportationMode.isAlternative()
 
-    override fun infoText(): String? {
-        return if (trip.tripAdvices.size > 1) {
-            trip.tripAdvices.size.toString()
-        } else {
-            null
+    override fun infoText(context: Context): Spannable? {
+        DriverDataUI.customTripInfo?.let {
+            return it.infoText(context, trip)
+        } ?: run {
+            return if (trip.tripAdvices.size > 1) {
+                DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
+                    color(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    typeface(BOLD)
+                    size(R.dimen.dk_text_very_small)
+                }).toSpannable()
+            } else {
+                null
+            }
         }
     }
 
     override fun infoImageResource(): Int? {
-        val count = trip.tripAdvices.size
-        if (count > 1) {
-            return R.drawable.dk_trip_info_count
-        } else if (count == 1) {
-            val theme = trip.tripAdvices.first().theme
-            if (theme == "SAFETY") {
-                return R.drawable.dk_common_safety_advice
-            } else if (theme == "ECODRIVING") {
-                return R.drawable.dk_common_eco_advice
+        return DriverDataUI.customTripInfo?.infoImageResource(trip) ?: run {
+            val count = trip.tripAdvices.size
+            if (count > 1) {
+                return R.drawable.dk_trip_info_count
+            } else if (count == 1) {
+                val theme = trip.tripAdvices.first().theme
+                if (theme == "SAFETY") {
+                    return R.drawable.dk_common_safety_advice
+                } else if (theme == "ECODRIVING") {
+                    return R.drawable.dk_common_eco_advice
+                }
             }
+            return null
         }
-        return null
     }
 
     override fun infoClickAction(context: Context) {
-        TripDetailActivity.launchActivity(
-            context as Activity,
-            trip.itinId,
-            openAdvice = true
-        )
+        return DriverDataUI.customTripInfo?.infoClickAction(context, trip) ?: run {
+            TripDetailActivity.launchActivity(
+                context as Activity,
+                trip.itinId,
+                openAdvice = true
+            )
+        }
     }
-    override fun hasInfoActionConfigured(): Boolean = true
-    override fun isInfoDisplayable(): Boolean = !trip.tripAdvices.isNullOrEmpty()
+
+    override fun hasInfoActionConfigured(): Boolean =
+        DriverDataUI.customTripInfo?.hasInfoActionConfigured(trip) ?: false
+
+    override fun isInfoDisplayable(): Boolean =
+        (DriverDataUI.customTripInfo?.isInfoDisplayable(trip)
+            ?: !trip.tripAdvices.isNullOrEmpty()) && !trip.transportationMode.isAlternative()
 }
 
 internal fun List<Trip>.toDKTripList(): List<DKTripListItem> = this.map { it.toDKTripItem() }

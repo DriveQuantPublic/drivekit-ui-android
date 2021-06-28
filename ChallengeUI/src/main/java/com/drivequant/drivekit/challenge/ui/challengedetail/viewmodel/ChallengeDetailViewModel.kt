@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -43,7 +44,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     fun getChallengeId() = challengeId
 
-    fun fetchChallengeDetail() {
+    fun getLocalChallengeDetail() : ChallengeDetail? =
+        DbChallengeAccess.findChallengeDetailById(challengeId)
+
+    fun fetchChallengeDetail(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
         if (DriveKit.isConfigured()) {
             DriveKitChallenge.getChallengeDetail(
                 challengeId,
@@ -53,22 +57,20 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         challengeDetail: ChallengeDetail?,
                         trips: List<Trip>
                     ) {
-                        if (challengeDetailSyncStatus != ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND &&
-                            challengeDetailSyncStatus != ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS
-                        ) {
+                        if (challengeDetailSyncStatus != ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND) {
                             challengeDetailData = challengeDetail
                             challengeDetailTrips = trips
                         }
                         val value = when (challengeDetailSyncStatus) {
                             ChallengeDetailSyncStatus.CACHE_DATA_ONLY,
-                            ChallengeDetailSyncStatus.SUCCESS -> true
+                            ChallengeDetailSyncStatus.SUCCESS,
+                            ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS -> true
                             ChallengeDetailSyncStatus.CHALLENGE_NOT_FOUND,
-                            ChallengeDetailSyncStatus.FAILED_TO_SYNC_CHALLENGE_DETAIL_CACHE_ONLY,
-                            ChallengeDetailSyncStatus.SYNC_ALREADY_IN_PROGRESS -> false
+                            ChallengeDetailSyncStatus.FAILED_TO_SYNC_CHALLENGE_DETAIL_CACHE_ONLY -> false
                         }
                         syncChallengeDetailError.postValue(value)
                     }
-                })
+                }, synchronizationType)
         } else {
             syncChallengeDetailError.postValue(false)
         }
@@ -119,7 +121,14 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getBestPerformance(context: Context): String {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> "${it.challengeStats.maxScore.format(2)}/10"
+                in 101..221 -> {
+                    val score = if (it.challengeStats.maxScore == 10.0) {
+                        it.challengeStats.maxScore.removeZeroDecimal()
+                    } else {
+                        it.challengeStats.maxScore.format(2)
+                    }
+                    "$score/10"
+                }
                 in 306..309 ->formatChallengeDuration(it.challengeStats.maxScore, context).convertToString()
                 in 302..305 -> formatChallengeDistance(it.challengeStats.maxScore, context).convertToString()
                 301 -> "${it.challengeStats.maxScore.removeZeroDecimal()} ${context.resources.getQuantityString(
@@ -149,7 +158,13 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getMainScore(context: Context): Spannable {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
+                in 101..221 -> {
+                    val score = if (it.driverStats.score == 10.0) {
+                        it.driverStats.score.removeZeroDecimal()
+                    } else {
+                        it.driverStats.score.format(2)
+                    }
+                    DKSpannable().append(score, context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
                         size(R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
@@ -159,6 +174,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         size(R.dimen.dk_text_big)
                         typeface(BOLD)
                     }).toSpannable()
+                }
 
                 in 306..309 -> {
                     val spannable = DKSpannable()
@@ -234,10 +250,11 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }.let {
             val pseudo = challengeDetailData?.let { challengeDetail ->
                 challengeDetail.driversRanked?.let { drivers ->
-                    if (drivers.isNotEmpty()) {
-                        drivers[challengeDetail.userIndex].pseudo
+                    val pseudo = drivers[challengeDetail.userIndex].pseudo
+                    if (drivers.isNotEmpty() && !pseudo?.trim().isNullOrBlank()) {
+                        pseudo
                     } else {
-                        "-"
+                        ""
                     }
                 }
             } ?: "-"

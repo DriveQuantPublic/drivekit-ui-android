@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 
 class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                            private val driverRank: Int,
-                           private val driverPseudo: String,
+                           private val driverPseudo: String?,
                            private val driverDistance: Double,
                            private val driverScore: Double) : DKDriverRankingItem {
 
@@ -34,7 +34,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
             )
         }
 
-    override fun getPseudo(context: Context): String = if (driverPseudo.isBlank()) {
+    override fun getPseudo(context: Context): String = if (driverPseudo.isNullOrBlank()) {
         DKResource.convertToString(context, "dk_common_anonymous_driver")
     } else driverPseudo
 
@@ -48,7 +48,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                 driverScore.format(2)
             }.let {
                 DKSpannable().append(it, context.resSpans {
-                    size(R.dimen.dk_text_big)
+                    size(R.dimen.dk_text_medium)
                     color(textColor)
                 }).append(" / 10", context.resSpans {
                     size(R.dimen.dk_text_small)

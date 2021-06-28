@@ -19,6 +19,7 @@
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="@dimen/dk_margin_quarter" />
 
     <FrameLayout

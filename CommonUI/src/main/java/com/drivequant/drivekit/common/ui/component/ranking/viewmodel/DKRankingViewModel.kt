@@ -1,10 +1,9 @@
 package com.drivequant.drivekit.common.ui.component.ranking.viewmodel
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 
-class DKRankingViewModel : ViewModel() {
+class DKRankingViewModel {
 
     lateinit var driverRanking: DKDriverRanking
 
@@ -18,4 +17,5 @@ class DKRankingViewModel : ViewModel() {
     fun getProgression() = driverRanking.getProgression()
     fun getDriverGlobalRank(context: Context) = driverRanking.getDriverGlobalRank(context)
     fun getDriverRankingList() = driverRanking.getDriverRankingList()
+    fun getBackgroundColor() = driverRanking.getBackgroundColor()
 }

@@ -18,9 +18,7 @@
    <string name="dk_driverdata_beginning_authorized_call">Inizio di una telefonata autorizzata</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">L\'applicazione ha rilevato l\'inizio di una chiamata autorizzata, il che significa che è stata effettuata utilizzando il tuo kit vivavoce. Questa azione non penalizza il tuo punteggio di utilizzo del telefono, in quanto è legalmente consentito. Tuttavia, rimane una distrazione durante la guida, per la vostra sicurezza e quella degli altri utenti della strada, si raccomanda vivamente di aspettare che il vostro veicolo sia parcheggiato prima di fare una chiamata.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Inizio di una telefonata non autorizzato</string>
-   <string name="dk_driverdata_beginning_unauthorized_call_info_content">L\'app ha rilevato l\'inizio di una telefonata non autorizzata.
-Questo significa che la chiamata non è stata fatta utilizzando un kit vivavoce.
-Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di proteggere voi stessi, i vostri passeggeri e gli altri utenti della strada. Se avete bisogno di fare una chiamata, parcheggiate il vostro veicolo in un posto con il motore spento.</string>
+   <string name="dk_driverdata_beginning_unauthorized_call_info_content">L\'app ha rilevato l\'inizio di una telefonata non autorizzata. Questo significa che la chiamata non è stata fatta utilizzando un kit vivavoce. Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di proteggere voi stessi, i vostri passeggeri e gli altri utenti della strada. Se avete bisogno di fare una chiamata, parcheggiate il vostro veicolo in un posto con il motore spento.</string>
    <string name="dk_driverdata_calling_time">Tempo di chiamata =</string>
    <string name="dk_driverdata_change_transportation_mode">Cambiare?</string>
    <string name="dk_driverdata_confirm_delete_trip">Elimina il viaggio?</string>
@@ -38,9 +36,7 @@ Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di prote
    <string name="dk_driverdata_end_authorized_call_info_content">L\'app ha rilevato la fine di una chiamata autorizzata, il che significa che è stata fatta usando il tuo kit vivavoce. Questa azione non penalizza il tuo punteggio di utilizzo del telefono, in quanto è legalmente consentito. Tuttavia, rimane una distrazione durante la guida, per la vostra sicurezza e quella degli altri utenti della strada, si raccomanda vivamente di aspettare che il vostro veicolo sia parcheggiato prima di fare una chiamata.</string>
    <string name="dk_driverdata_end_event">Fine del viaggio</string>
    <string name="dk_driverdata_end_unauthorized_call">Fine di una telefonata non autorizzata</string>
-   <string name="dk_driverdata_end_unauthorized_call_info_content">L\'applicazione ha rilevato la fine di una telefonata non autorizzata...
-Questo significa che la chiamata non è stata fatta utilizzando un kit vivavoce.
-Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di proteggere voi stessi, i vostri passeggeri e gli altri utenti della strada. Se avete bisogno di fare una chiamata, parcheggiate il vostro veicolo in un posto con il motore spento.</string>
+   <string name="dk_driverdata_end_unauthorized_call_info_content">L\'applicazione ha rilevato la fine di una telefonata non autorizzata... Questo significa che la chiamata non è stata fatta utilizzando un kit vivavoce. Maneggiare il telefono mentre si guida è molto pericoloso. Ricordatevi di proteggere voi stessi, i vostri passeggeri e gli altri utenti della strada. Se avete bisogno di fare una chiamata, parcheggiate il vostro veicolo in un posto con il motore spento.</string>
    <string name="dk_driverdata_expressway">%s sull\'autostrada</string>
    <string name="dk_driverdata_extra_urban">%s in aree extra-urbane</string>
    <string name="dk_driverdata_failed_to_declare_transportation">La modalità di trasporto non può essere aggiornata, si prega di riprovare più tardi.</string>

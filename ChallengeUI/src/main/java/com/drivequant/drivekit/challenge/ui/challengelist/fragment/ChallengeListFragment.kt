@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
-import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.*
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
@@ -47,7 +47,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
-        view.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingListBackgroundColor))
         return view
     }
 
@@ -79,20 +79,61 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
 
-        dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
-        if (viewModel.activeChallenges.isEmpty() || viewModel.finishedChallenges.isEmpty()) {
-            displayNoChallenges(status)
-        } else {
-            adapter?.notifyDataSetChanged() ?: run {
-                adapter = ChallengeListAdapter(
-                    requireContext(),
-                    viewModel,
-                    status,
-                    this
-                )
-                dk_recycler_view_challenge.adapter = adapter
+
+
+        dk_swipe_refresh_challenge.setOnRefreshListener {
+            updateSwipeRefreshChallengesVisibility(true)
+            viewModel.fetchChallengeList()
+        }
+
+        viewModel.syncChallengesError.observe(this, Observer {
+            if(!it){
+                Toast.makeText(
+                    context,
+                    DKResource.convertToString(
+                        requireContext(),
+                        "dk_challenge_failed_to_sync_challenges"
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            displayChallenges()
+            when {
+                viewModel.activeChallenges.isEmpty() && status.containsAll(
+                    listOf(
+                        ChallengeStatus.PENDING,
+                        ChallengeStatus.SCHEDULED
+                    )
+                ) -> displayNoChallenges(status)
+                viewModel.finishedChallenges.isEmpty() && status.containsAll(
+                    listOf(
+                        ChallengeStatus.ARCHIVED,
+                        ChallengeStatus.FINISHED
+                    )
+                ) -> displayNoChallenges(status)
+                else -> {
+                    dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
+                    adapter?.notifyDataSetChanged() ?: run {
+                        adapter = ChallengeListAdapter(
+                            requireContext(),
+                            viewModel,
+                            status,
+                            this
+                        )
+                        dk_recycler_view_challenge.adapter = adapter
+                    }
+                    displayChallenges()
+                }
+            }
+            updateSwipeRefreshChallengesVisibility(false)
+        })
+    }
+
+    private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {
+        if (display) {
+            dk_swipe_refresh_challenge.isRefreshing = display
+        } else {
+            dk_swipe_refresh_challenge.visibility = View.VISIBLE
+            dk_swipe_refresh_challenge.isRefreshing = display
         }
     }
 

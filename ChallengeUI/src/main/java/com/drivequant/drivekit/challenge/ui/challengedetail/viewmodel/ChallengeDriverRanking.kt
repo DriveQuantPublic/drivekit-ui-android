@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
@@ -19,4 +20,5 @@ internal class ChallengeDriverRanking(val viewModel: ChallengeDetailViewModel) :
 
     override fun getScoreTitle(context: Context): String = viewModel.getScoreTitle(context)
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.getRankingList()
+    override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
 }

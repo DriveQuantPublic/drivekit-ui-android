@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
@@ -21,6 +20,8 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
+import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
@@ -43,7 +44,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         private set
     internal var customHeader: DKHeader? = null
         private set
-    internal var customTripListItem: DKTripListItem? = null
+    internal var customTripInfo: DKTripInfo? = null
         private set
 
     internal var enableDeleteTrip: Boolean = true
@@ -108,8 +109,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.customHeader = header
     }
 
-    fun customTripListItem(tripListItem: DKTripListItem?) {
-        this.customTripListItem = tripListItem
+    fun setCustomTripInfo(tripInfo: DKTripInfo?) {
+        this.customTripInfo = tripInfo
     }
 
     override fun startTripListActivity(context: Context) {
@@ -121,6 +122,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     override fun startTripDetailActivity(context: Context, tripId: String) {
         val intent = Intent(context, TripDetailActivity::class.java)
         intent.putExtra(ITINID_EXTRA, tripId)
+        intent.putExtra(OPEN_ADVICE_EXTRA, true)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }

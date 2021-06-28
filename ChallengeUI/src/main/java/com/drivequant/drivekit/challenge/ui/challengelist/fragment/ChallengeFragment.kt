@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.SynchronizationType
 import kotlinx.android.synthetic.main.dk_fragment_challenge.*
 
 
@@ -20,12 +22,17 @@ class ChallengeFragment : Fragment() {
 
     private lateinit var viewModel: ChallengeListViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
-        updateChallenge()
+        updateProgressVisibility(true)
+        viewModel.fetchChallengeList()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel.syncChallengesError.observe(this, Observer {
             if(!it){
                 Toast.makeText(
@@ -38,14 +45,13 @@ class ChallengeFragment : Fragment() {
                 ).show()
             }
             viewModel.filterChallenges()
-            setViewPager()
             updateProgressVisibility(false)
         })
+        setViewPager()
     }
 
-    private fun updateChallenge() {
-        updateProgressVisibility(true)
-        viewModel.fetchChallengeList()
+    fun updateChallenge() {
+        viewModel.fetchChallengeList(SynchronizationType.CACHE)
     }
 
     private fun setViewPager() {
@@ -56,6 +62,7 @@ class ChallengeFragment : Fragment() {
             )
         tab_layout_challenge.setupWithViewPager(view_pager_challenge)
         tab_layout_challenge.setBackgroundColor(Color.WHITE)
+        tab_layout_challenge.setTabTextColors(DriveKitUI.colors.complementaryFontColor(), DriveKitUI.colors.secondaryColor())
     }
 
     override fun onCreateView(

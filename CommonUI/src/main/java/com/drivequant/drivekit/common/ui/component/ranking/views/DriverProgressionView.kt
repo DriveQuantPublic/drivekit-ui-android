@@ -51,6 +51,7 @@ class DriverProgressionView  : LinearLayout {
         }?:run {
             image_view_driver_progression.visibility = View.GONE
         }
+        driver_progression_container.setBackgroundColor(rankingViewModel.getBackgroundColor())
     }
 
     private fun setStyle() {

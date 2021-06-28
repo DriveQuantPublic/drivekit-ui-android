@@ -10,7 +10,6 @@ import com.drivequant.drivekit.common.ui.component.ranking.RankingHeaderDisplayT
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.extension.bigText
 
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_ranking_header_view.view.*
 
@@ -30,7 +29,7 @@ class RankingHeaderView : LinearLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.dk_ranking_header_view, null).setDKStyle()
+        val view = View.inflate(context, R.layout.dk_ranking_header_view, null)
         addView(view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT))
@@ -45,6 +44,7 @@ class RankingHeaderView : LinearLayout {
     }
 
     fun setHeaderData(rankingViewModel: DKRankingViewModel) {
+        container.setBackgroundColor(rankingViewModel.getBackgroundColor())
         driver_progression.setDriverProgression(rankingViewModel)
         text_view_header_title.text = DKResource.convertToString(context, rankingViewModel.getTitle())
         rankingViewModel.getIcon(context)?.let {

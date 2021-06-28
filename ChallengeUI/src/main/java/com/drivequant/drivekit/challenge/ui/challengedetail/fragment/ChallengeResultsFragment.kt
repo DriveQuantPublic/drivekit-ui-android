@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
@@ -58,15 +59,14 @@ class ChallengeResultsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
-            if (!this::viewModel.isInitialized) {
-                viewModel = ViewModelProviders.of(
-                    this,
-                    ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
-                ).get(ChallengeDetailViewModel::class.java)
-            }
+            viewModel = ViewModelProviders.of(
+                this,
+                ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
+            ).get(ChallengeDetailViewModel::class.java)
         }
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+        viewModel.syncChallengeDetailError.observe(this, Observer {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = dk_challenge_progress_bar.progressDrawable
             drawable.setColorFilter(
                 ContextCompat.getColor(requireContext(), R.color.dkRatingBarForegroundColor),
@@ -104,6 +104,7 @@ class ChallengeResultsFragment : Fragment() {
 
         displayCards()
         setStyle()
+        })
     }
 
 
