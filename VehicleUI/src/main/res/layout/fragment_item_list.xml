@@ -20,7 +20,7 @@
             android:layout_margin="@dimen/dk_margin"
             android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/items_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
