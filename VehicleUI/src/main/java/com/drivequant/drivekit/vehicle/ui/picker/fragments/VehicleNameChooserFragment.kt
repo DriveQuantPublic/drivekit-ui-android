@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
@@ -20,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
 class VehicleNameChooserFragment : Fragment() {
 
     private lateinit var viewModel: VehiclePickerViewModel
-    private lateinit var vehicleVersion: VehicleVersion
 
     companion object {
         fun newInstance(
@@ -28,7 +26,6 @@ class VehicleNameChooserFragment : Fragment() {
                 : VehicleNameChooserFragment {
             val fragment = VehicleNameChooserFragment()
             fragment.viewModel = viewModel
-            fragment.vehicleVersion = viewModel.selectedVersion
             return fragment
         }
     }
