@@ -59,11 +59,12 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         textViewBrands.headLine2(DriveKitUI.colors.secondaryColor())
         textViewBrands.text = DKResource.convertToString(requireContext(), "dk_vehicle_category_display_brands")
 
-        textViewDescription.normalText()
-        textViewDescription.text = vehiclePickerCategoryItem.description
-
-        imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
-
+        if (this::vehiclePickerCategoryItem.isInitialized) {
+            textViewDescription.normalText()
+            textViewDescription.text = vehiclePickerCategoryItem.description
+            imageViewCategory.setImageDrawable(vehiclePickerCategoryItem.icon2)
+        }
+        
         if (DriveKitVehicleUI.categoryConfigType != CategoryConfigType.LITE_CONFIG_ONLY) {
             textViewBrands.visibility = View.VISIBLE
             textViewBrands.setOnClickListener {

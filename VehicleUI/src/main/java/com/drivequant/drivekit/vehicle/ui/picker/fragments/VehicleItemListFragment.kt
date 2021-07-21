@@ -5,11 +5,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -20,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
+import kotlinx.android.synthetic.main.fragment_item_list.*
 
 class VehicleItemListFragment : Fragment() {
 
@@ -57,8 +57,6 @@ class VehicleItemListFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var adapterType: AdapterType
-    private lateinit var textViewDescription: TextView
-    private lateinit var recyclerView: RecyclerView
     private var adapter: ItemRecyclerViewAdapter? = null
 
     companion object {
@@ -75,63 +73,69 @@ class VehicleItemListFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (this::vehiclePickerStep.isInitialized) {
+            outState.putSerializable("vehiclePickerStep", vehiclePickerStep)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            vehiclePickerStep = it.getSerializable("vehiclePickerStep") as VehiclePickerStep
+        }
+
+        if (vehiclePickerStep == TYPE) {
+            text_view_description.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+        }
+
+        adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
+
+        items_recycler_view.layoutManager = when (adapterType) {
+            AdapterType.TEXT_ITEM,
+            AdapterType.TEXT_ITEM_PADDING -> LinearLayoutManager(context)
+            AdapterType.TRUCK_TYPE_ITEM -> GridLayoutManager(context, 1)
+            AdapterType.TEXT_IMAGE_ITEM, AdapterType.TEXT_OR_IMAGE_ITEM -> GridLayoutManager(context, 2)
+        }
+
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory()).get(VehiclePickerViewModel::class.java)
+        }
+        val descriptionText = viewModel.getDescription(requireContext(), vehiclePickerStep)
+        descriptionText?.let {
+            text_view_description.text = it
+            text_view_description.visibility = View.VISIBLE
+        }?:run {
+            text_view_description.visibility = View.GONE
+        }
+        text_view_description.bigText()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.fragment_item_list, container,false)
-        textViewDescription = view.findViewById(R.id.text_view_description) as TextView
-        textViewDescription.bigText()
-        if (vehiclePickerStep == TYPE) {
-            textViewDescription.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
-        }
-        recyclerView = view.findViewById(R.id.list) as RecyclerView
-        adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
-
-        recyclerView.layoutManager = when (adapterType){
-            AdapterType.TEXT_ITEM,
-            AdapterType.TEXT_ITEM_PADDING -> {
-                LinearLayoutManager(context)
-            }
-            AdapterType.TRUCK_TYPE_ITEM -> {
-                GridLayoutManager(context, 1)
-            }
-            AdapterType.TEXT_IMAGE_ITEM,
-            AdapterType.TEXT_OR_IMAGE_ITEM -> {
-                GridLayoutManager(context, 2)
-            }
-        }
-        return view.setDKStyle()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val descriptionText = viewModel.getDescription(view.context, vehiclePickerStep)
-        descriptionText?.let {
-            textViewDescription.text = it
-            textViewDescription.visibility = View.VISIBLE
-        }?:run {
-            textViewDescription.visibility = View.GONE
-        }
-    }
+    ): View = inflater.inflate(R.layout.fragment_item_list, container,false).setDKStyle()
 
     override fun onResume() {
         super.onResume()
         fetchItems()
-
         if (activity is VehiclePickerActivity){
             (activity as VehiclePickerActivity).updateTitle(DKResource.convertToString(requireContext(), "dk_vehicle_my_vehicle"))
         }
     }
 
     private fun fetchItems() {
-        if (adapter != null){
+        if (adapter != null) {
             adapter?.notifyDataSetChanged()
         } else {
+            if (!this::items.isInitialized) {
+                items = viewModel.getItemsByStep(vehiclePickerStep)
+            }
             adapter = ItemRecyclerViewAdapter(vehiclePickerStep, items, listener)
-            recyclerView.adapter = adapter
-            recyclerView.adapter?.notifyDataSetChanged()
+            items_recycler_view.adapter = adapter
+            items_recycler_view.adapter?.notifyDataSetChanged()
         }
     }
 
