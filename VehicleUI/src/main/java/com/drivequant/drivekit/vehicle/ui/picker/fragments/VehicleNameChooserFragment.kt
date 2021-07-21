@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_vehicle_name_chooser.*
 class VehicleNameChooserFragment : Fragment() {
 
     private lateinit var viewModel: VehiclePickerViewModel
-    private lateinit var vehicleVersion: VehicleVersion
 
     companion object {
         fun newInstance(
@@ -27,7 +26,6 @@ class VehicleNameChooserFragment : Fragment() {
                 : VehicleNameChooserFragment {
             val fragment = VehicleNameChooserFragment()
             fragment.viewModel = viewModel
-            fragment.vehicleVersion = viewModel.selectedVersion
             return fragment
         }
     }
@@ -40,7 +38,11 @@ class VehicleNameChooserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        if (!this::viewModel.isInitialized) {
+            viewModel =
+                ViewModelProviders.of(this, VehiclePickerViewModel.VehiclePickerViewModelFactory())
+                    .get(VehiclePickerViewModel::class.java)
+        }
         dk_image_view_vehicle_name.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_vehicle_name_chooser"))
         text_view_description.normalText()
         text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_name_chooser_description")
