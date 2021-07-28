@@ -24,7 +24,7 @@ import kotlin.collections.ArrayList
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
-
+    internal const val TAG = "DriveKit PermissionsUtils UI"
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false
     internal var shouldDisplayDiagnosisLogs: Boolean = false

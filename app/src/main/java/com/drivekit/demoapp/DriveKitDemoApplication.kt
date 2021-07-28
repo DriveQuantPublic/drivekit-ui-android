@@ -21,8 +21,6 @@ import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.challenge.DriveKitChallenge
-import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
@@ -140,6 +138,8 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
             }
 
             override fun sdkStateChanged(state: State) {}
+
+            override fun potentialTripStart(startMode: StartMode) {}
         })
         DriveKitDriverData.initialize()
 

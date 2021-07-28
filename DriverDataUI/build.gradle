@@ -32,7 +32,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
     implementation "com.google.android.material:material:$material"
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
