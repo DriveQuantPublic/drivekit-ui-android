@@ -67,7 +67,7 @@ class TripDetailFragment : Fragment() {
 
             DriveKitUI.analyticsListener?.trackEvent(
                 DKAnalyticsEvent.TRIP_OPEN,
-                mapOf(DKAnalyticsEventKey.ITIN_ID.name to itinId)
+                mapOf(DKAnalyticsEventKey.ITIN_ID to itinId)
             )
 
             val fragment = TripDetailFragment()

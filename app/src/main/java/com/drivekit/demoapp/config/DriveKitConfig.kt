@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
+import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
@@ -27,7 +28,7 @@ object DriveKitConfig {
                 // TODO: manage screen tracking here
             }
 
-            override fun trackEvent(event: DKAnalyticsEvent, parameters: Map<String, String>) {
+            override fun trackEvent(event: DKAnalyticsEvent, parameters: Map<DKAnalyticsEventKey, String>) {
                 // TODO: manage event tracking here
             }
         })
