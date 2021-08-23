@@ -19,6 +19,8 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import android.view.*
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
+import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
@@ -62,6 +64,12 @@ class TripDetailFragment : Fragment() {
             openAdvice: Boolean = false,
             tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED
         ): TripDetailFragment {
+
+            DriveKitUI.analyticsListener?.trackEvent(
+                DKAnalyticsEvent.TRIP_OPEN,
+                mapOf(DKAnalyticsEventKey.ITIN_ID.name to itinId)
+            )
+
             val fragment = TripDetailFragment()
             fragment.itinId = itinId
             fragment.openAdvice = openAdvice
