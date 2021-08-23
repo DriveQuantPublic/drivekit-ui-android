@@ -28,7 +28,7 @@ object DriveKitConfig {
                 // TODO: manage screen tracking here
             }
 
-            override fun trackEvent(event: DKAnalyticsEvent, parameters: Map<DKAnalyticsEventKey, String>) {
+            override fun trackEvent(event: DKAnalyticsEvent, parameters: Map<DKAnalyticsEventKey, Any>) {
                 // TODO: manage event tracking here
             }
         })
