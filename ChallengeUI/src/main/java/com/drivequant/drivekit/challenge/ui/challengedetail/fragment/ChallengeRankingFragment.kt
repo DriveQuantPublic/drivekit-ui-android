@@ -74,8 +74,8 @@ class ChallengeRankingFragment : Fragment() {
                 if (hasPseudo) {
                     showFragment()
                 } else {
-                    if (context != null) {
-                        PseudoUtils.show(requireContext(), object : PseudoChangeListener {
+                    context?.let {
+                        PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
                                     Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
