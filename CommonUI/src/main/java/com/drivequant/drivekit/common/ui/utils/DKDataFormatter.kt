@@ -46,47 +46,35 @@ object DKDataFormatter {
                 if (maxUnit != DurationUnit.HOUR && nbHour > 23) {
                     nbDay = nbHour.div(24)
                     nbHour -= (24 * nbDay)
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbDay.toString()),
+                            FormatType.SEPARATOR(),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_day))
+                        )
+                    )
                     if (nbHour > 0) {
                         formattingTypes.addAll(
                             listOf(
-                                FormatType.VALUE(nbDay.toString()),
-                                FormatType.SEPARATOR(),
-                                FormatType.UNIT(context.getString(R.string.dk_common_unit_day)),
                                 FormatType.SEPARATOR(),
                                 FormatType.VALUE(nbHour.toString()),
                                 FormatType.SEPARATOR(),
                                 FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
-                            )
-                        )
-                    } else {
-                        formattingTypes.addAll(
-                            listOf(
-                                FormatType.VALUE(nbDay.toString()),
-                                FormatType.SEPARATOR(),
-                                FormatType.UNIT(context.getString(R.string.dk_common_unit_day))
                             )
                         )
                     }
                     return formattingTypes
                 } else {
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbHour.toString()),
+                            FormatType.SEPARATOR(),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                        )
+                    )
+
                     if (nbMinute > 0) {
-                        formattingTypes.addAll(
-                            listOf(
-                                FormatType.VALUE(nbHour.toString()),
-                                FormatType.SEPARATOR(),
-                                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)),
-                                FormatType.SEPARATOR(),
-                                FormatType.VALUE(nbMinute.formatLeadingZero())
-                            )
-                        )
-                    } else {
-                        formattingTypes.addAll(
-                            listOf(
-                                FormatType.VALUE(nbHour.toString()),
-                                FormatType.SEPARATOR(),
-                                FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
-                            )
-                        )
+                        formattingTypes.add(FormatType.VALUE(nbMinute.formatLeadingZero()))
                     }
                     return formattingTypes
                 }
