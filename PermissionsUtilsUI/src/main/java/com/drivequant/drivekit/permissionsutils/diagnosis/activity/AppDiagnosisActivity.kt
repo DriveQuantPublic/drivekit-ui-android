@@ -85,6 +85,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         checkLocation()
         checkActivity()
         checkAutoReset()
+        checkNearbyPermissions()
         checkNotification()
         checkExternalStorage()
         checkNetwork()
@@ -201,6 +202,17 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             } else {
                 errorsCount++
                 setProblemState(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
+            }
+        }
+    }
+
+    private fun checkNearbyPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (DiagnosisHelper.getNearbyStatus(this) == PermissionStatus.VALID) {
+                diag_item_nearby_devices.setNormalState()
+            } else {
+                errorsCount++
+                setProblemState(PermissionType.NEARBY, diag_item_nearby_devices)
             }
         }
     }
@@ -328,8 +340,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
     }
 
-    private fun displayNearbyDevicesItem() { // TODO WIP
-        diag_item_auto_reset_permissions.visibility =
+    private fun displayNearbyDevicesItem() {
+        diag_item_nearby_devices.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 View.VISIBLE
             } else {
@@ -500,7 +512,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
-                    this@AppDiagnosisActivity, R.string.dk_perm_utils_app_diag_location_ko_android, // TODO wip
+                    this@AppDiagnosisActivity, R.string.dk_common_app_diag_nearby_ko,
                     this@AppDiagnosisActivity::requestNearbyPermission
                 )
             }
@@ -508,7 +520,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             override fun onPermissionTotallyDeclined(permissionName: String) {
                 handlePermissionTotallyDeclined(
                     this@AppDiagnosisActivity,
-                    R.string.dk_perm_utils_app_diag_location_ko_android // TODO wip
+                    R.string.dk_common_app_diag_nearby_ko
                 )
             }
         }
