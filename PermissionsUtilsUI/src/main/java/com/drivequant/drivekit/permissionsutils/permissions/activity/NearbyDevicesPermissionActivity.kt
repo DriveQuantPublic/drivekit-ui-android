@@ -1,25 +1,21 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
-import android.app.Activity
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
-import kotlinx.android.synthetic.main.activity_background_task_permission.*
-import kotlinx.android.synthetic.main.activity_background_task_permission.text_view_background_task_permission_text1
-import kotlinx.android.synthetic.main.activity_background_task_permission.text_view_background_task_permission_text2
-import kotlinx.android.synthetic.main.activity_background_task_permission.text_view_background_task_permission_title
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_nearby_devices_permission.*
 
+@RequiresApi(Build.VERSION_CODES.S)
 class NearbyDevicesPermissionActivity : BasePermissionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,20 +26,45 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
     }
 
     fun onRequestPermissionClicked(view: View) {
-        DiagnosisHelper.requestBatteryOptimization(this) // TODO wip
+        checkRequiredPermissions()
+    }
+
+    private fun checkRequiredPermissions() {
+        permissionCallback = object : OnPermissionCallback {
+            override fun onPermissionGranted(permissionName: Array<String>) {
+                forward()
+            }
+
+            override fun onPermissionDeclined(permissionName: Array<String>) {
+                handlePermissionDeclined(
+                    this@NearbyDevicesPermissionActivity,
+                    R.string.dk_perm_utils_app_diag_location_ko_android,
+                    this@NearbyDevicesPermissionActivity::checkRequiredPermissions
+                )
+            }
+
+            override fun onPermissionTotallyDeclined(permissionName: String) {
+                button_request_nearby_devices_permission.text =
+                    getString(R.string.dk_perm_utils_permissions_text_button_nearby_devices_settings)
+                handlePermissionTotallyDeclined(
+                    this@NearbyDevicesPermissionActivity,
+                    R.string.dk_common_app_diag_nearby_ko
+                )
+            }
+        }
+
+        request(
+            this,
+            permissionCallback as OnPermissionCallback,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.BLUETOOTH_CONNECT
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_BATTERY_OPTIMIZATION) {
-            // We may need to skip that screen because some Chinese OEMs (Xiaomi / Redmi) automatically return RESULT_CANCELED
-            if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID || resultCode == Activity.RESULT_CANCELED) {
-                if (resultCode == Activity.RESULT_CANCELED) {
-                    DriveKitLog.i(PermissionsUtilsUI.TAG, "User or system has cancelled the background task permissions")
-                }
-                finish()
-                next()
-            }
+        if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS) {
+            checkRequiredPermissions()
         }
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".permissions.activity.BackgroundTaskPermissionActivity">
+    tools:context=".permissions.activity.NearbyDevicesPermissionActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin"
                 android:padding="@dimen/dk_margin"
-                android:src="@drawable/dk_perm_utils_background_task_permission"
+                android:src="@drawable/dk_perm_utils_nearby_devices_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"  />

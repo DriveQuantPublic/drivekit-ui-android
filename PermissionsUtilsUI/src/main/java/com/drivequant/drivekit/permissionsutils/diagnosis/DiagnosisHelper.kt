@@ -89,9 +89,11 @@ object DiagnosisHelper {
             if (ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.BLUETOOTH_CONNECT
-                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                ) == PackageManager.PERMISSION_GRANTED
+                &&
+                ContextCompat.checkSelfPermission(
                     context,
-                    Manifest.permission.BLUETOOTH_CONNECT
+                    Manifest.permission.BLUETOOTH_SCAN
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 PermissionStatus.VALID

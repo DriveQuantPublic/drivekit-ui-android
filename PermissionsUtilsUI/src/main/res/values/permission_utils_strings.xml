@@ -117,4 +117,6 @@
     <string name="dk_perm_utils_permissions_popup_button_settings">Settings</string>
     <string name="dk_perm_utils_permissions_text_button_activity_settings">Open the settings</string>
     <string name="dk_perm_utils_permissions_text_button_location_settings">Open the settings</string>
+    <!-- TODO add in file -->
+    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Open the settings</string>
 </resources>
