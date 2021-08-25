@@ -80,7 +80,8 @@ class MainActivity : AppCompatActivity() {
         val permissionViews = arrayListOf(
             PermissionView.LOCATION,
             PermissionView.ACTIVITY,
-            PermissionView.BACKGROUND_TASK
+            PermissionView.BACKGROUND_TASK,
+            PermissionView.NEARBY_DEVICES
         )
         PermissionsUtilsUI.showPermissionViews(
             this@MainActivity,

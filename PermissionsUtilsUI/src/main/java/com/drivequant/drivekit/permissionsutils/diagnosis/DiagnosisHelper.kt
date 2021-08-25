@@ -84,7 +84,7 @@ object DiagnosisHelper {
         }
     }
 
-    fun getNearbyStatus(context: Context): PermissionStatus =
+    fun getNearbyDevicesStatus(context: Context): PermissionStatus =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ContextCompat.checkSelfPermission(
                     context,
@@ -143,7 +143,7 @@ object DiagnosisHelper {
             PermissionType.ACTIVITY -> getActivityStatus(context)
             PermissionType.NOTIFICATION -> getNotificationStatus(context)
             PermissionType.AUTO_RESET -> getAutoResetStatus(context)
-            PermissionType.NEARBY -> getNearbyStatus(context)
+            PermissionType.NEARBY -> getNearbyDevicesStatus(context)
         }
     }
 

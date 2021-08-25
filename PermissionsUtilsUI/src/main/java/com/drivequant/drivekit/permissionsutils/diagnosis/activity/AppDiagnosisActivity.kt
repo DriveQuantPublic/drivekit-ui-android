@@ -208,7 +208,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkNearbyPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (DiagnosisHelper.getNearbyStatus(this) == PermissionStatus.VALID) {
+            if (DiagnosisHelper.getNearbyDevicesStatus(this) == PermissionStatus.VALID) {
                 diag_item_nearby_devices.setNormalState()
             } else {
                 errorsCount++
