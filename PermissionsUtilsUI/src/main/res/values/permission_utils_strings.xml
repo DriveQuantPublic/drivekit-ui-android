@@ -56,6 +56,7 @@
     <string name="dk_perm_utils_app_diag_location_full_ko_ios14">You must allow the application to access the precise location of the phone so that it can analyze your routes. In the \"Location\" settings, activate \"Precise Location\".</string>
     <string name="dk_perm_utils_app_diag_location_full_link">Use the precise location</string>
     <string name="dk_perm_utils_app_diag_location_ko_android">To detect and analyze your trips, the application must be able to access the phone\'s location.</string>
+    <string name="dk_perm_utils_app_diag_location_ko_android12">To detect and analyze your trips, the application must be able to access the phone\'s precise location.</string>
     <string name="dk_perm_utils_app_diag_location_ko_ios">You must allow the app to access the phone\'s location for it to detect and scan your trips. In the phone settings, three options are available: (1) never, (2) when the app is active and (3) always. It is essential to select option (3) always otherwise, the application will not work.</string>
     <string name="dk_perm_utils_app_diag_location_ko_ios13">You must allow the application to access the phone\'s position so that it can detect and analyze your routes. In the phone settings, four options are available: (1) never, (2) ask next time, (3) while using the app and (4) always. It is necessary to select option (4) always otherwise the application will not work.</string>
     <string name="dk_perm_utils_app_diag_location_link">Allow access to the location</string>
@@ -69,6 +70,7 @@
     <string name="dk_perm_utils_app_diag_log_ok_contact_mail">Logging is enabled. This file contains important events for analyzing the application\'s behavior. It will be automatically attached to the support contact email.</string>
     <string name="dk_perm_utils_app_diag_log_ok_ios">Logging is enabled. This file contains important events for analyzing the application\'s behavior. The file is available in the application folder on your iPhone.</string>
     <string name="dk_perm_utils_app_diag_log_title">Enable app activity logging</string>
+    <string name="dk_perm_utils_app_diag_nearby_title">Nearby devices detection</string>
     <string name="dk_perm_utils_app_diag_network_ko">Mobile data is not enabled. This will not block the trip detection and trip recording. On the other hand, mobile data is essential for analyzing the data of your trip. If mobile data is disabled, the trip will not be lost but trip results will be displayed only after reconnecting to a mobile network.</string>
     <string name="dk_perm_utils_app_diag_network_link">Enable mobile data</string>
     <string name="dk_perm_utils_app_diag_network_ok">Mobile data is enabled. The connection to a mobile network is required to analyze the data at the end of your trip. The app can detect and save your trip without accessing mobile data. However, the trip analysis will be performed only if your phone is connected to a mobile network.</string>
@@ -90,12 +92,16 @@
     <string name="dk_perm_utils_permissions_location_pre_ios13_ko">You must allow the app to access the phone\'s location for it to detect and scan your trips.\n\nIn the phone settings, three options are available:\n(1) Never\n(2) While Using the App\n(3) Always\n\nIt is essential to select option (3) Always, otherwise, the application will not work.</string>
     <string name="dk_perm_utils_permissions_location_text1_android">The application must be allowed to access the phone\'s location to detect and analyze your trips when it is running in background.</string>
     <string name="dk_perm_utils_permissions_location_text1_android11">The application must be allowed to access the phone\'s position to detect and analyze your trips.</string>
+    <string name="dk_perm_utils_permissions_location_text1_android12">The application must be allowed to access the phone\'s precise location to detect and analyze your trips.</string>
     <string name="dk_perm_utils_permissions_location_text2_android11">To do this, choose the \"While using the app\" option after pressing the button below.</string>
+    <string name="dk_perm_utils_permissions_location_text2_android12">To do this, choose the options \"Precise\" and \"While using the app\" after pressing the button below.</string>
     <string name="dk_perm_utils_permissions_location_text2_post_android10">To do this, choose \"Allow all the time\" when the next popup is displayed.</string>
     <string name="dk_perm_utils_permissions_location_text2_pre_android10">To do this, choose \"Allow\" when the next popup is displayed.</string>
-    <string name="dk_perm_utils_permissions_location_text3_android11">In order to enjoy the automatic recording of your trips, the application must access the phone location when it is running in the background.</string>
+    <string name="dk_perm_utils_permissions_location_text3_android11">In order to enjoy the automatic recording of your trips, the application must access the phone location when it is running in background.</string>
     <string name="dk_perm_utils_permissions_location_text4_android11">To do this, press the \"open the settings\" button and select the %s option in the phone settings.</string>
     <string name="dk_perm_utils_permissions_location_title">Trip recording</string>
+    <string name="dk_perm_utils_permissions_nearby_text1_android12">To recognize your vehicle and analyze your trips, you must activate the detection of nearby devices.</string>
+    <string name="dk_perm_utils_permissions_nearby_text2_android12">To do this, choose the \"Allow\" option after pressing the button below.</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_button">Authorize activity monitoring</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_text">To improve the analysis of your trips and identify the mode of transport used, you must activate the option Motion &amp; Fitness on your phone.</string>
     <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">To improve the analysis of your trips and identify the mode of transport used, you must allow the application to access the phone activity.</string>

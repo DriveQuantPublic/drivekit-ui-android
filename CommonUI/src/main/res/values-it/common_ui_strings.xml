@@ -2,6 +2,9 @@
 <resources>
    <string name="dk_common_activate">Attivare</string>
    <string name="dk_common_anonymous_driver">Anonimo</string>
+   <string name="dk_common_app_diag_nearby">Dispositivi nelle vicinanze</string>
+   <string name="dk_common_app_diag_nearby_ko">Devi permettere all\'applicazione di rilevare i dispositivi vicini per poter analizzare i tuoi viaggi.</string>
+   <string name="dk_common_app_diag_nearby_link">Consentire il rilevamento dei dispositivi vicini</string>
    <string name="dk_common_back">Indietro</string>
    <string name="dk_common_cancel">Annullare</string>
    <string name="dk_common_close">Chiudere</string>
