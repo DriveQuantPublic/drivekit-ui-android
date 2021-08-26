@@ -17,6 +17,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
 
 class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListener {
@@ -56,6 +57,12 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             }
         }
         viewModel.beaconInfoStatusListener = this
+
+        if (!NearbyDevicesUtils.isBluetoothScanAuthorized()) {
+            activity?.let {
+                NearbyDevicesUtils.displayPermissionsError(it)
+            }
+        }
 
         text_view_beacon_code_text.apply {
             bigText(DriveKitUI.colors.mainFontColor())

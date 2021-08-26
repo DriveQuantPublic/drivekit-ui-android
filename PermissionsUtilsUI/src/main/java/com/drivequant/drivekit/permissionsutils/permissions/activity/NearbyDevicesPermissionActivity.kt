@@ -38,7 +38,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
                     this@NearbyDevicesPermissionActivity,
-                    R.string.dk_perm_utils_app_diag_location_ko_android,
+                    R.string.dk_common_app_diag_nearby_ko,
                     this@NearbyDevicesPermissionActivity::checkRequiredPermissions
                 )
             }

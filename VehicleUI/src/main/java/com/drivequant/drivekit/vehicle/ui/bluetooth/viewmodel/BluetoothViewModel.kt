@@ -1,14 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Bluetooth
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -22,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.ErrorBluetoothFragm
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.GuideBluetoothFragment
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SelectBluetoothFragment
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SuccessBluetoothFragment
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import java.io.Serializable
 
 class BluetoothViewModel(
@@ -33,36 +31,24 @@ class BluetoothViewModel(
 
     var fragmentDispatcher = MutableLiveData<Fragment>()
     val progressBarObserver = MutableLiveData<Boolean>()
+    val nearbyDevicesAlertDialogObserver = MutableLiveData<Boolean>()
     var addBluetoothObserver = MutableLiveData<String>()
 
     init {
         this@BluetoothViewModel.vehicle = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
         bluetoothDevices = DriveKitTripAnalysis.getBluetoothPairedDevices()
-
-        if (isBluetoothScanAuthorized()) { //TODO: WIP if ok show GuideBluetooth else show error fragment
-            Toast.makeText(DriveKit.applicationContext!!,  "authorized", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(DriveKit.applicationContext!!,  "Not authorized", Toast.LENGTH_SHORT).show()
-        }
-
         fragmentDispatcher.postValue(GuideBluetoothFragment.newInstance(this, vehicleId))
     }
 
-    fun isBluetoothScanAuthorized(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ContextCompat.checkSelfPermission(
-                DriveKit.applicationContext!!, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                DriveKit.applicationContext!!, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
-
     fun onStartButtonClicked(){
-        if (bluetoothDevices.isEmpty()){
-            fragmentDispatcher.postValue(ErrorBluetoothFragment.newInstance(vehicleId))
+        if (NearbyDevicesUtils.isBluetoothScanAuthorized()) {
+            if (bluetoothDevices.isEmpty()) {
+                fragmentDispatcher.postValue(ErrorBluetoothFragment.newInstance(vehicleId))
+            } else {
+                fragmentDispatcher.postValue(SelectBluetoothFragment.newInstance(this, vehicleId))
+            }
         } else {
-            fragmentDispatcher.postValue(SelectBluetoothFragment.newInstance(this, vehicleId))
+            nearbyDevicesAlertDialogObserver.postValue(true)
         }
     }
 
