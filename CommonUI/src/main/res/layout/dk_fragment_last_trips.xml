@@ -58,12 +58,10 @@
                 android:id="@+id/text_view_see_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="@dimen/dk_text_medium"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:visibility="gone"
-                tools:text="See more trips" />
+                tools:text="@string/dk_common_see_more_trips" />
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
