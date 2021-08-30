@@ -26,7 +26,11 @@
         </activity>
         <activity android:name="com.drivekit.demoapp.activity.SettingsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
+        <activity
+            android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>
