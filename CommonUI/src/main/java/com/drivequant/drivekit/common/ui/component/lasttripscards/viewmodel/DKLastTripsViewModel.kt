@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.lasttrips.viewmodel
+package com.drivequant.drivekit.common.ui.component.lasttripscards.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
@@ -10,8 +10,8 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 class DKLastTripsViewModel(
     val tripData: TripData,
     val headerDay: HeaderDay,
-    val trip: DKTripListItem
-) {
+    val trip: DKTripListItem) {
+
     fun getTripCardTitle(context: Context) =
         "${trip.getEndDate().formatDate(DKDatePattern.WEEK_LETTER)} | ${
             headerDay.text(

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.lasttrips.fragment
+package com.drivequant.drivekit.common.ui.component.lasttripscards.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.lasttrips.adapter.DKLastTripsFragmentPagerAdapter
+import com.drivequant.drivekit.common.ui.component.lasttripscards.adapter.DKLastTripsFragmentPagerAdapter
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener

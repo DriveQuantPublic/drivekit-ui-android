@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.component.lasttrips.DKLastTripsUI
+import com.drivequant.drivekit.common.ui.component.lasttripscards.DKLastTripsUI
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit

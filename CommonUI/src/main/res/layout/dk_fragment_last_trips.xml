@@ -36,9 +36,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dk_margin_half"
                     android:layout_marginBottom="@dimen/dk_margin_half"
-                    android:textColor="#616161"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     tools:text="last Trip" />
 
                 <LinearLayout

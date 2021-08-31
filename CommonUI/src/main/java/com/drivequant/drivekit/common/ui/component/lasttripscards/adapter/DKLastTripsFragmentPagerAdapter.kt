@@ -1,9 +1,9 @@
-package com.drivequant.drivekit.common.ui.component.lasttrips.adapter
+package com.drivequant.drivekit.common.ui.component.lasttripscards.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.drivequant.drivekit.common.ui.component.lasttrips.fragment.DKLastTripsFragment
+import com.drivequant.drivekit.common.ui.component.lasttripscards.fragment.DKLastTripsFragment
 
 internal class DKLastTripsFragmentPagerAdapter(
     fragmentManager: FragmentManager,
