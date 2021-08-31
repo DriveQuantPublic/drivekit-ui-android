@@ -7,7 +7,7 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 
-class DKLastTripsViewModel(
+internal class DKLastTripsViewModel(
     val tripData: TripData,
     val headerDay: HeaderDay,
     val trip: DKTripListItem) {
