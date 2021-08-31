@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="128dp"
-    android:layout_margin="@dimen/dk_margin"
+    android:layout_height="wrap_content"
     android:focusable="true">
 
     <androidx.cardview.widget.CardView
@@ -21,7 +20,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="115dp">
 
             <LinearLayout
                 android:id="@+id/container"
