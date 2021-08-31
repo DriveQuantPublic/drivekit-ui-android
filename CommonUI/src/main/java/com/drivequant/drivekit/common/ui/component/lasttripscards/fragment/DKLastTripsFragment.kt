@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_fragment_last_trips.*
 
-class DKLastTripsFragment : Fragment() {
+internal class DKLastTripsFragment : Fragment() {
 
     private var viewModel: DKLastTripsViewModel? = null
 

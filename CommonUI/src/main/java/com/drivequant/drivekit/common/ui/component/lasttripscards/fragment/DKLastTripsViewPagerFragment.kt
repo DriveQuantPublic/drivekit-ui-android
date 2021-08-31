@@ -15,7 +15,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.dk_fragment_last_trips_card_viewpager.*
 
 
-class DKLastTripsViewPagerFragment : Fragment() {
+internal class DKLastTripsViewPagerFragment : Fragment() {
 
     private var lastTripsCards = listOf<DKLastTripsFragment>()
     private lateinit var tabLayout: TabLayout
