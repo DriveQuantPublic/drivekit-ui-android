@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, SynthesisCardExampleActivity::class.java))
     }
 
+    fun onDriverDataLastTripsCardsClicked(view: View) {
+        startActivity(Intent(this, LastTripsCardActivity::class.java))
+    }
+
     fun onDriverStreaksClicked(view: View) {
         DriveKitNavigationController.driverAchievementUIEntryPoint?.startStreakListActivity(applicationContext)
     }

@@ -2,6 +2,9 @@
 <resources>
    <string name="dk_common_activate">Activar</string>
    <string name="dk_common_anonymous_driver">Anónimo</string>
+   <string name="dk_common_app_diag_nearby">Dispositivos cercanos</string>
+   <string name="dk_common_app_diag_nearby_ko">Debes permitir que la aplicación detecte los dispositivos cercanos para que pueda analizar tus trayectos.</string>
+   <string name="dk_common_app_diag_nearby_link">Permitir la detección de dispositivos cercanos</string>
    <string name="dk_common_back">Volver</string>
    <string name="dk_common_cancel">Anulador</string>
    <string name="dk_common_close">Cerrar</string>
@@ -38,6 +41,7 @@
    <string name="dk_common_ranking_score">Puntuaciones</string>
    <string name="dk_common_safety">Seguridad</string>
    <string name="dk_common_save">Registro</string>
+   <string name="dk_common_see_more_trips">Ver más viajes</string>
    <string name="dk_common_select_image_gallery">Seleccione una foto existente</string>
    <string name="dk_common_send_mail_error">Su dispositivo no está configurado para enviar correo electrónico...</string>
    <string name="dk_common_settings">Ajustes</string>
