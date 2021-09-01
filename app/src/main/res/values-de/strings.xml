@@ -22,6 +22,7 @@
    <string name="driver_data_button">DriverData starten</string>
    <string name="driver_data_explanation">Ein Beispiel für die DriveKit DriverData-Implementierung mit seiner Benutzeroberfläche für die Reiseliste und das Reisendetail.</string>
    <string name="driver_data_synthesis_cards_button">Synthesis Cards starten</string>
+   <string name="driver_data_last_trips_cards_button">Last trips Cards starten</string>
    <string name="driver_streaks_button">Streifen von Treffern</string>
    <string name="enable_share_position_off">Aktivieren Sie diese Einstellung, um Ihre Position während der Fahrt zu teilen.</string>
    <string name="enable_share_position_on">Deaktivieren Sie diese Einstellung, um Ihre Position während der Fahrt nicht zu teilen.</string>

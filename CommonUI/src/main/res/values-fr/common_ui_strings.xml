@@ -2,6 +2,9 @@
 <resources>
    <string name="dk_common_activate">Activer</string>
    <string name="dk_common_anonymous_driver">Anonyme</string>
+   <string name="dk_common_app_diag_nearby">Appareils à proximité</string>
+   <string name="dk_common_app_diag_nearby_ko">Vous devez autoriser l\'application à détecter les appareils à proximité afin qu\'elle puisse analyser vos trajets.</string>
+   <string name="dk_common_app_diag_nearby_link">Autoriser la détection des appareils à proximité</string>
    <string name="dk_common_back">Retour</string>
    <string name="dk_common_cancel">Annuler</string>
    <string name="dk_common_close">Fermer</string>
@@ -38,6 +41,7 @@
    <string name="dk_common_ranking_score">Score</string>
    <string name="dk_common_safety">Sécurité</string>
    <string name="dk_common_save">Enregistrer</string>
+   <string name="dk_common_see_more_trips">Voir plus de trajets</string>
    <string name="dk_common_select_image_gallery">Sélectionner une photo existante</string>
    <string name="dk_common_send_mail_error">Votre appareil n\'est pas configuré pour l\'envoi d\'email</string>
    <string name="dk_common_settings">Paramètres</string>

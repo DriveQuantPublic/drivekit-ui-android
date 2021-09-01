@@ -2,6 +2,9 @@
 <resources>
     <string name="dk_common_activate">Activate</string>
     <string name="dk_common_anonymous_driver">Anonymous</string>
+    <string name="dk_common_app_diag_nearby">Nearby devices</string>
+    <string name="dk_common_app_diag_nearby_ko">You must allow the application to detect nearby devices so that it can analyze your trips.</string>
+    <string name="dk_common_app_diag_nearby_link">Allow nearby devices detection</string>
     <string name="dk_common_back">Back</string>
     <string name="dk_common_cancel">Cancel</string>
     <string name="dk_common_close">Close</string>
@@ -38,6 +41,7 @@
     <string name="dk_common_ranking_score">Score</string>
     <string name="dk_common_safety">Safety</string>
     <string name="dk_common_save">Record</string>
+    <string name="dk_common_see_more_trips">See more trips</string>
     <string name="dk_common_select_image_gallery">Select an existing photo</string>
     <string name="dk_common_send_mail_error">Your device isn\'t configured to send email</string>
     <string name="dk_common_settings">Settings</string>
