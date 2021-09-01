@@ -11,7 +11,7 @@ class LastTripsCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_last_trips_card)
 
-        val fragment = DriverDataUI.getLastTripsView(headerDay = HeaderDay.DURATION)
+        val fragment = DriverDataUI.getLastTripsView(HeaderDay.DURATION)
 
         supportFragmentManager
             .beginTransaction()
