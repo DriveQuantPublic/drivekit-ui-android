@@ -1,63 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
+    style="@style/DKCard"
+    android:id="@id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true"
+    card_view:cardBackgroundColor="@android:color/white">
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:background="@drawable/dk_last_trips_background"
-        android:foreground="?attr/selectableItemBackground"
-        android:orientation="vertical"
-        android:padding="@dimen/dk_margin_half"
-        card_view:cardBackgroundColor="@android:color/white">
+        android:layout_height="115dp">
 
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="115dp">
-
-            <LinearLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/dk_margin_half">
-
-                <TextView
-                    android:id="@+id/text_view_last_trip_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dk_margin_half"
-                    android:layout_marginBottom="@dimen/dk_margin_half"
-                    tools:text="last Trip" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dk_margin_half"
-                    android:paddingBottom="@dimen/dk_margin_half">
-
-                    <FrameLayout
-                        android:id="@+id/trip_item_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/dk_margin_half">
 
             <TextView
-                android:id="@+id/text_view_see_more"
+                android:id="@+id/text_view_last_trip_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                tools:text="last Trip" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:visibility="gone"
-                tools:text="@string/dk_common_see_more_trips" />
-        </FrameLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                android:paddingTop="@dimen/dk_margin_half"
+                android:paddingBottom="@dimen/dk_margin_half">
+
+                <FrameLayout
+                    android:id="@+id/trip_item_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_see_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:text="@string/dk_common_see_more_trips" />
+    </FrameLayout>
+</androidx.cardview.widget.CardView>
