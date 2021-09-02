@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 
 interface DriverDataUIEntryPoint {
     fun startTripListActivity(context: Context)
-    fun startTripDetailActivity(context: Context, tripId: String)
+    fun startTripDetailActivity(context: Context, tripId: String, openAdvice: Boolean = true)
     fun createTripListFragment(): Fragment
     fun createTripDetailFragment(tripId: String): Fragment
 }

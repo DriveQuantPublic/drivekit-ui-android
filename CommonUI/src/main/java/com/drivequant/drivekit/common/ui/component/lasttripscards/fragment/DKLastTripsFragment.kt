@@ -52,7 +52,8 @@ internal class DKLastTripsFragment : Fragment() {
                 root.setOnClickListener {
                     DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(
                         context,
-                        viewModel.trip.getItinId()
+                        viewModel.trip.getItinId(),
+                        false
                     )
                 }
             } ?: run {
