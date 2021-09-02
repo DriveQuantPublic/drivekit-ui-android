@@ -122,10 +122,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun startTripDetailActivity(context: Context, tripId: String) {
+    override fun startTripDetailActivity(context: Context, tripId: String, openAdvice: Boolean) {
         val intent = Intent(context, TripDetailActivity::class.java)
         intent.putExtra(ITINID_EXTRA, tripId)
-        intent.putExtra(OPEN_ADVICE_EXTRA, true)
+        intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
