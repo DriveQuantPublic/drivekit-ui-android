@@ -15,7 +15,8 @@ The available components are:
 * **Permissions Utils** is used to get user's permissions that allow the SDK to access the smartphone's sensors while running in background ;
 * **Driver Data** manages the driver trips display (list and details) and ensures the synchronisation of driver data ;
 * **Vehicle** is made to select one or more vehicles and to choose the autostart mode for each of them ;
-* **Driver Achievement** contains gaming features that measure driver performance and stimulate driver improvement.
+* **Driver Achievement** contains gaming features that measure driver performance and stimulate driver improvement;
+* **Challenge** is used to display the list of challenges, join a challenge or display challenge details.
 
 Before installing the **DriveKit SDK** in your mobile application we recommend that you do some tests with the demo application. It's fast and it will save your time. 
 
