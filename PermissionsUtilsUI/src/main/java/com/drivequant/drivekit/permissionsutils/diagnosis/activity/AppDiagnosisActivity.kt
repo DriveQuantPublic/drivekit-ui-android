@@ -564,20 +564,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 }
             }
         } else {
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                request(
-                    this,
-                    permissionCallback as OnPermissionCallback,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            } else {
-                request(
-                    this,
-                    permissionCallback as OnPermissionCallback,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            }*/
             request(
                 this,
                 permissionCallback as OnPermissionCallback,
