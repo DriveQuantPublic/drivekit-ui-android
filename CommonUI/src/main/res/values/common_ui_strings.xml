@@ -41,6 +41,7 @@
     <string name="dk_common_ranking_score">Score</string>
     <string name="dk_common_safety">Safety</string>
     <string name="dk_common_save">Record</string>
+    <string name="dk_common_see_more_trips">See more trips</string>
     <string name="dk_common_select_image_gallery">Select an existing photo</string>
     <string name="dk_common_send_mail_error">Your device isn\'t configured to send email</string>
     <string name="dk_common_settings">Settings</string>

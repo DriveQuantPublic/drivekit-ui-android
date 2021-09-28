@@ -49,21 +49,29 @@ object DKDataFormatter {
                     formattingTypes.addAll(
                         listOf(
                             FormatType.VALUE(nbDay.toString()),
+                            FormatType.SEPARATOR(),
                             FormatType.UNIT(context.getString(R.string.dk_common_unit_day))
                         )
                     )
                     if (nbHour > 0) {
                         formattingTypes.addAll(
                             listOf(
+                                FormatType.SEPARATOR(),
                                 FormatType.VALUE(nbHour.toString()),
+                                FormatType.SEPARATOR(),
                                 FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
                             )
                         )
                     }
                     return formattingTypes
                 } else {
-                    formattingTypes.add(FormatType.VALUE(nbHour.toString()))
-                    formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_hour)))
+                    formattingTypes.addAll(
+                        listOf(
+                            FormatType.VALUE(nbHour.toString()),
+                            FormatType.SEPARATOR(),
+                            FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
+                        )
+                    )
 
                     if (nbMinute > 0) {
                         formattingTypes.add(FormatType.VALUE(nbMinute.formatLeadingZero()))
@@ -78,7 +86,9 @@ object DKDataFormatter {
                     formattingTypes.addAll(
                         listOf(
                             FormatType.VALUE(nbMinutes.toString()),
+                            FormatType.SEPARATOR(),
                             FormatType.UNIT(context.getString(R.string.dk_common_unit_minute)),
+                            FormatType.SEPARATOR(),
                             FormatType.VALUE(nbSecond.formatLeadingZero())
                         )
                     )

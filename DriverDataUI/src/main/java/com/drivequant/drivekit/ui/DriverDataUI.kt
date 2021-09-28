@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.component.lasttripscards.DKLastTripsUI
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
@@ -20,6 +21,8 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.ui.extension.toDKTripList
+import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
@@ -119,10 +122,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun startTripDetailActivity(context: Context, tripId: String) {
+    override fun startTripDetailActivity(context: Context, tripId: String, openAdvice: Boolean) {
         val intent = Intent(context, TripDetailActivity::class.java)
         intent.putExtra(ITINID_EXTRA, tripId)
-        intent.putExtra(OPEN_ADVICE_EXTRA, true)
+        intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
@@ -159,5 +162,13 @@ object DriverDataUI : DriverDataUIEntryPoint {
             ), listener: SynthesisCardsViewListener
     ) {
         DriverDataSynthesisCardsUI.getLastTripsSynthesisCardsView(synthesisCards, listener)
+    }
+
+    @JvmOverloads
+    fun getLastTripsView(
+        headerDay: HeaderDay = HeaderDay.DISTANCE,
+        lastTripMaxNumber: Int = 10): Fragment {
+        val trips = LastTripsWidgetUtils.getLastTrips(lastTripMaxNumber)
+        return DKLastTripsUI.getLastTripWidget(trips.toDKTripList(), headerDay, tripData)
     }
 }

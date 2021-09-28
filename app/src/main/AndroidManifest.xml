@@ -30,6 +30,9 @@
             tools:ignore="LockedOrientationActivity" />
         <activity android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"  />
+        <activity android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"  />
     </application>
 </manifest>

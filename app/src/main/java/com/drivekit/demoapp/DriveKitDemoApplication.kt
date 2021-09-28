@@ -129,16 +129,11 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
             override fun tripPoint(tripPoint: TripPoint) {
                 // Call for each location registered during a trip
             }
-
             override fun tripSavedForRepost() {
                 showNotification(applicationContext, getString(R.string.trip_save_for_repost))
             }
-
-            override fun beaconDetected() {
-            }
-
+            override fun beaconDetected() {}
             override fun sdkStateChanged(state: State) {}
-
             override fun potentialTripStart(startMode: StartMode) {}
         })
         DriveKitDriverData.initialize()

@@ -163,17 +163,19 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                 if (hasPseudo) {
                     updateRanking()
                 } else {
-                    PseudoUtils.show(requireContext(), object : PseudoChangeListener {
-                        override fun onPseudoChanged(success: Boolean) {
-                            if (!success) {
-                                Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                    context?.let {
+                        PseudoUtils.show(it, object : PseudoChangeListener {
+                            override fun onPseudoChanged(success: Boolean) {
+                                if (!success) {
+                                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                }
+                                updateRanking()
                             }
-                            updateRanking()
-                        }
-                        override fun onCancelled() {
-                            updateRanking()
-                        }
-                    })
+                            override fun onCancelled() {
+                                updateRanking()
+                            }
+                        })
+                    }
                 }
             }
         })

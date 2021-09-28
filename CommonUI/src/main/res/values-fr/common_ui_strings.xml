@@ -41,6 +41,7 @@
    <string name="dk_common_ranking_score">Score</string>
    <string name="dk_common_safety">Sécurité</string>
    <string name="dk_common_save">Enregistrer</string>
+   <string name="dk_common_see_more_trips">Voir plus de trajets</string>
    <string name="dk_common_select_image_gallery">Sélectionner une photo existante</string>
    <string name="dk_common_send_mail_error">Votre appareil n\'est pas configuré pour l\'envoi d\'email</string>
    <string name="dk_common_settings">Paramètres</string>

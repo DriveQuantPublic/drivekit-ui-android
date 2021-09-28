@@ -92,7 +92,6 @@ class VehicleDetailFragment : Fragment() {
 
         savedInstanceState?.let { bundle ->
             val vehicleId = bundle.getString("vehicleDetailTag")
-
             vehicleId?.let {
                 this.vehicleId = it
                 viewModel = VehicleDetailViewModel(it)
