@@ -73,8 +73,7 @@ class ChallengeRankingFragment : Fragment() {
         PseudoUtils.checkPseudo(object : PseudoCheckListener {
             override fun onPseudoChecked(hasPseudo: Boolean) {
                 if (hasPseudo) {
-                    val reqc = requireContext()
-                    showFragment(reqc)
+                    showFragment(requireContext())
                 } else {
                     context?.let {
                         PseudoUtils.show(it, object : PseudoChangeListener {
