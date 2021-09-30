@@ -39,6 +39,7 @@
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Genauer Standort:</string>
    <string name="dk_perm_utils_app_diag_email_location_sensor">Positionssensor (GPS):</string>
    <string name="dk_perm_utils_app_diag_email_model">Telefonmodell:</string>
+   <string name="dk_perm_utils_app_diag_email_nearby_title">Erkennung von Geräten in der Nähe:</string>
    <string name="dk_perm_utils_app_diag_email_network">Mobiles Netzwerk:</string>
    <string name="dk_perm_utils_app_diag_email_notification">Berechtigung zum Senden von Benachrichtigungen:</string>
    <string name="dk_perm_utils_app_diag_email_os">Betriebssystem:</string>
@@ -117,4 +118,5 @@
    <string name="dk_perm_utils_permissions_popup_button_settings">Einstellungen</string>
    <string name="dk_perm_utils_permissions_text_button_activity_settings">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_text_button_location_settings">Öffnen Sie die Einstellungen</string>
+   <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Öffnen Sie die Einstellungen</string>
 </resources>
