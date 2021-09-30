@@ -114,6 +114,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
+        val nearbyDevices = when (DiagnosisHelper.getNearbyDevicesStatus(context)) {
+            PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+        }
+
         val versionName = try {
             val pInfo = DriveKit.applicationContext!!.packageManager.getPackageInfo(DriveKit.applicationContext!!.packageName, 0)
             pInfo.versionName
@@ -156,6 +161,10 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
 
         if (isBluetoothNeeded) {
             mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_bluetooth)} $bluetoothMail \n"
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_nearby_title)} $nearbyDevices \n"
         }
 
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n"

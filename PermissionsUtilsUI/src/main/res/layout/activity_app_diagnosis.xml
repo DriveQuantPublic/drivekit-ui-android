@@ -156,13 +156,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_activity_recognition" />
 
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_nearby_devices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_common_app_diag_nearby_link"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_common_app_diag_nearby_ko"
+                app:diagnosisTextOK="@string/dk_common_app_diag_nearby_link"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_nearby_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_connectivity" />
+
             <TextView
                 android:id="@+id/diag_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_connectivity" />
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
 
             <TextView
                 android:id="@+id/text_view_battery_title"

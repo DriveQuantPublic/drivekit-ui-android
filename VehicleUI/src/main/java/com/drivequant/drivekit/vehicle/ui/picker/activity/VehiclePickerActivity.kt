@@ -164,7 +164,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     private fun showProgressCircular() {
         dk_progress_circular.animate()
-            .alpha(255f)
+            .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {

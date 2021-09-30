@@ -24,5 +24,9 @@
             android:name=".permissions.activity.ActivityRecognitionPermissionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".permissions.activity.NearbyDevicesPermissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

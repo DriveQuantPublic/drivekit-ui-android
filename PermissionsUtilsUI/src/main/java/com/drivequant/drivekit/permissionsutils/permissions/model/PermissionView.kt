@@ -10,6 +10,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.ActivityRec
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BackgroundTaskPermissionActivity
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
 import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPermissionActivity
+import com.drivequant.drivekit.permissionsutils.permissions.activity.NearbyDevicesPermissionActivity
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -17,7 +18,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPer
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionView {
-    ACTIVITY, LOCATION, BACKGROUND_TASK;
+    ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
 
     fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(context)) {
@@ -40,15 +41,18 @@ enum class PermissionView {
             LOCATION -> DiagnosisHelper.getLocationStatus(context)
             ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
             BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
+            NEARBY_DEVICES -> DiagnosisHelper.getNearbyDevicesStatus(context)
         }
     }
 
     private fun buildIntent(context: Context, permissionViews: ArrayList<PermissionView>): Intent {
-        val intent = when (this) {
-            LOCATION -> Intent(context, LocationPermissionActivity::class.java)
-            ACTIVITY -> Intent(context, ActivityRecognitionPermissionActivity::class.java)
-            BACKGROUND_TASK -> Intent(context, BackgroundTaskPermissionActivity::class.java)
+        val selectedClass = when (this) {
+            LOCATION -> LocationPermissionActivity::class.java
+            ACTIVITY -> ActivityRecognitionPermissionActivity::class.java
+            BACKGROUND_TASK -> BackgroundTaskPermissionActivity::class.java
+            NEARBY_DEVICES -> NearbyDevicesPermissionActivity::class.java
         }
+        val intent = Intent(context, selectedClass)
         intent.putExtra(PERMISSION_VIEWS_LIST_EXTRA, permissionViews)
         intent.flags = FLAG_ACTIVITY_NEW_TASK
         return intent

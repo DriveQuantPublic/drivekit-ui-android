@@ -6,5 +6,5 @@ package com.drivequant.drivekit.permissionsutils.diagnosis.model
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionType {
-    ACTIVITY, NOTIFICATION, LOCATION, AUTO_RESET
+    ACTIVITY, NOTIFICATION, LOCATION, AUTO_RESET, NEARBY
 }

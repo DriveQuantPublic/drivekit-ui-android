@@ -23,18 +23,32 @@ class LocationPermissionActivity : BasePermissionActivity() {
         setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            text_view_location_permission_text1.text =
-                DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android11")
-            text_view_location_permission_text2.text =
-                DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android11")
-        } else {
-            val stringResId = when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
-                    "dk_perm_utils_permissions_location_text2_post_android10"
-                else -> "dk_perm_utils_permissions_location_text2_pre_android10"
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                if (DiagnosisHelper.hasCoarseLocationPermission(this)) {
+                    text_view_location_permission_text1.text =
+                        DKResource.convertToString(this,"dk_perm_utils_app_diag_location_ko_android12")
+                } else {
+                    text_view_location_permission_text1.text =
+                        DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android12")
+                    text_view_location_permission_text2.text =
+                        DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android12")
+                }
             }
-            text_view_location_permission_text2.text = DKResource.convertToString(this, stringResId)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                text_view_location_permission_text1.text =
+                    DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android11")
+                text_view_location_permission_text2.text =
+                    DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android11")
+            }
+            else -> {
+                val stringResId = when {
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
+                        "dk_perm_utils_permissions_location_text2_post_android10"
+                    else -> "dk_perm_utils_permissions_location_text2_pre_android10"
+                }
+                text_view_location_permission_text2.text = DKResource.convertToString(this, stringResId)
+            }
         }
     }
 

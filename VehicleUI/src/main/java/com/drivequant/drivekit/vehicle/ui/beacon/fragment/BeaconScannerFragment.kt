@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.ScanState
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import kotlinx.android.synthetic.main.fragment_beacon_scanner.*
 
 class BeaconScannerFragment : Fragment(), ScanState {
@@ -79,23 +79,38 @@ class BeaconScannerFragment : Fragment(), ScanState {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_activate"),
-                        DialogInterface.OnClickListener { _, _ ->
-                            viewModel.enableBluetoothSensor()
-                            beaconStep.onImageClicked(viewModel)
-                        })
+                    .positiveButton(
+                        DKResource.convertToString(
+                            requireContext(),
+                            "dk_common_activate"
+                        )
+                    ) { _, _ ->
+                        viewModel.enableBluetoothSensor()
+                        beaconStep.onImageClicked(viewModel)
+                    }
                     .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
                 titleTextView?.apply {
-                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_title")
+                    text = DKResource.convertToString(
+                        requireContext(),
+                        "dk_vehicle_beacon_enable_bluetooth_alert_title"
+                    )
                     headLine1()
                 }
                 descriptionTextView?.apply {
-                    text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_enable_bluetooth_alert_message")
+                    text = DKResource.convertToString(
+                        requireContext(),
+                        "dk_vehicle_beacon_enable_bluetooth_alert_message"
+                    )
                     normalText()
+                }
+            } else if (!NearbyDevicesUtils.isBluetoothScanAuthorized()) {
+                activity?.let {
+                    NearbyDevicesUtils.displayPermissionsError(it)
                 }
             } else {
                 beaconStep.onImageClicked(viewModel)
