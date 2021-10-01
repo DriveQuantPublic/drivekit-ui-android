@@ -167,7 +167,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                         PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
-                                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(it, DKResource.convertToString(it, "dk_common_error_message"), Toast.LENGTH_LONG).show()
                                 }
                                 updateRanking()
                             }
