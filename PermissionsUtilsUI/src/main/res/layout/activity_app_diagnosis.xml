@@ -164,7 +164,7 @@
                 app:diagnosisLink="@string/dk_common_app_diag_nearby_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_common_app_diag_nearby_ko"
-                app:diagnosisTextOK="@string/dk_common_app_diag_nearby_link"
+                app:diagnosisTextOK="@string/dk_perm_utils_permissions_nearby_text1_android12"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_nearby_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_connectivity" />
