@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProviders
 import android.content.Context
@@ -9,12 +10,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 
 class BeaconDetailActivity : AppCompatActivity() {
 
@@ -94,5 +97,25 @@ class BeaconDetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == NearbyDevicesUtils.NEARBY_DEVICES_PERMISSIONS_REQUEST_CODE) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ) || !ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                )
+            ) {
+                NearbyDevicesUtils.displayPermissionsError(this, true)
+            }
+        }
     }
 }

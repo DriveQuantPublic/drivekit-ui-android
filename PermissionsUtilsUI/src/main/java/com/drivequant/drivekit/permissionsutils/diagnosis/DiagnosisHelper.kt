@@ -33,6 +33,11 @@ object DiagnosisHelper {
     const val REQUEST_PERMISSIONS_OPEN_SETTINGS = 3
     const val REQUEST_BATTERY_OPTIMIZATION = 4
 
+    fun hasCoarseLocationPermission(context: Context): Boolean = ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+
     fun hasFineLocationPermission(context: Context): Boolean = ContextCompat.checkSelfPermission(
         context,
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -84,6 +89,26 @@ object DiagnosisHelper {
         }
     }
 
+    fun getNearbyDevicesStatus(context: Context): PermissionStatus =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) == PackageManager.PERMISSION_GRANTED
+                &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_SCAN
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                PermissionStatus.VALID
+            } else {
+                PermissionStatus.NOT_VALID
+            }
+        } else {
+            PermissionStatus.VALID
+        }
+
     fun getBatteryOptimizationsStatus(context: Context): PermissionStatus {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context.applicationContext?.let {
@@ -125,6 +150,7 @@ object DiagnosisHelper {
             PermissionType.ACTIVITY -> getActivityStatus(context)
             PermissionType.NOTIFICATION -> getNotificationStatus(context)
             PermissionType.AUTO_RESET -> getAutoResetStatus(context)
+            PermissionType.NEARBY -> getNearbyDevicesStatus(context)
         }
     }
 

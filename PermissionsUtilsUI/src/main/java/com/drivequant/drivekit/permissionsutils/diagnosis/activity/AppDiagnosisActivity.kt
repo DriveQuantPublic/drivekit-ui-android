@@ -13,7 +13,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import android.Manifest
 import android.annotation.SuppressLint
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
@@ -63,6 +62,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayBluetoothItem()
         displayActivityItem()
         displayAutoResetItem()
+        displayNearbyDevicesItem()
         displayLogSection()
         displayReportSection()
 
@@ -85,6 +85,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         checkLocation()
         checkActivity()
         checkAutoReset()
+        checkNearbyPermissions()
         checkNotification()
         checkExternalStorage()
         checkNetwork()
@@ -116,7 +117,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         errorsCount = 0
     }
 
-    private fun checkBluetooth() {
+    private fun checkBluetooth() =
         if (DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)) {
             diag_item_bluetooth.setNormalState()
         } else {
@@ -128,10 +129,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_bluetooth.getDiagnosisLink(),
-                        DialogInterface.OnClickListener { _, _ ->
-                            enableSensor(SensorType.BLUETOOTH)
-                        })
+                    .positiveButton(diag_item_bluetooth.getDiagnosisLink()) { _, _ ->
+                        enableSensor(SensorType.BLUETOOTH)
+                    }
                     .show()
 
                 val titleTextView =
@@ -146,7 +146,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 descriptionTextView?.normalText()
             }
         }
-    }
 
     private fun checkGPS() {
         if (DiagnosisHelper.isSensorActivated(this, SensorType.GPS)) {
@@ -158,10 +157,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_location_sensor.getDiagnosisLink(),
-                        DialogInterface.OnClickListener { _, _ ->
-                            enableSensor(SensorType.GPS)
-                        })
+                    .positiveButton(diag_item_location_sensor.getDiagnosisLink()) { _, _ ->
+                        enableSensor(SensorType.GPS)
+                    }
                     .show()
 
                 val titleTextView =
@@ -204,6 +202,17 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             } else {
                 errorsCount++
                 setProblemState(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
+            }
+        }
+    }
+
+    private fun checkNearbyPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (DiagnosisHelper.getNearbyDevicesStatus(this) == PermissionStatus.VALID) {
+                diag_item_nearby_devices.setNormalState()
+            } else {
+                errorsCount++
+                setProblemState(PermissionType.NEARBY, diag_item_nearby_devices)
             }
         }
     }
@@ -274,11 +283,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_connectivity.getDiagnosisLink(),
-                        DialogInterface.OnClickListener { _, _ ->
-                            val networkIntent = Intent(Settings.ACTION_SETTINGS)
-                            startActivity(networkIntent)
-                        })
+                    .positiveButton(diag_item_connectivity.getDiagnosisLink()) { _, _ ->
+                        val networkIntent = Intent(Settings.ACTION_SETTINGS)
+                        startActivity(networkIntent)
+                    }
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
@@ -326,6 +334,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun displayAutoResetItem() {
         diag_item_auto_reset_permissions.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+    }
+
+    private fun displayNearbyDevicesItem() {
+        diag_item_nearby_devices.visibility =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -447,6 +464,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 )
                 startActivity(notificationIntent)
             }
+            PermissionType.NEARBY -> requestNearbyPermission()
         }
     }
 
@@ -486,6 +504,33 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
+    private fun requestNearbyPermission() {
+        permissionCallback = object :
+            OnPermissionCallback {
+            override fun onPermissionGranted(permissionName: Array<String>) {
+            }
+
+            override fun onPermissionDeclined(permissionName: Array<String>) {
+                handlePermissionDeclined(
+                    this@AppDiagnosisActivity, R.string.dk_common_app_diag_nearby_ko,
+                    this@AppDiagnosisActivity::requestNearbyPermission
+                )
+            }
+
+            override fun onPermissionTotallyDeclined(permissionName: String) {
+                handlePermissionTotallyDeclined(
+                    this@AppDiagnosisActivity,
+                    R.string.dk_common_app_diag_nearby_ko
+                )
+            }
+        }
+        request(
+            this,
+            permissionCallback as OnPermissionCallback,
+            Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT
+        )
+    }
+
     private fun requestLocationPermission() {
         permissionCallback = object :
             OnPermissionCallback {
@@ -519,20 +564,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 }
             }
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                request(
-                    this,
-                    permissionCallback as OnPermissionCallback,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            } else {
-                request(
-                    this,
-                    permissionCallback as OnPermissionCallback,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            }
+            request(
+                this,
+                permissionCallback as OnPermissionCallback,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
         }
     }
 
@@ -542,10 +578,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             val alertDialog = DKAlertDialog.LayoutBuilder()
                 .init(this)
                 .layout(R.layout.template_alert_dialog_layout)
-                .positiveButton(diagnosticItem.getDiagnosisLink(),
-                    DialogInterface.OnClickListener { _, _ ->
-                        requestPermission(permissionType)
-                    })
+                .positiveButton(diagnosticItem.getDiagnosisLink()) { _, _ ->
+                    requestPermission(permissionType)
+                }
                 .show()
 
             val titleTextView =

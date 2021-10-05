@@ -3,7 +3,6 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -130,10 +129,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             .init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(positiveListener =
-                DialogInterface.OnClickListener { _, _ ->
-                    callback()
-                })
+            .positiveButton(positiveListener = { _, _ -> callback() })
             .show()
 
         val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
@@ -151,13 +147,12 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
             .init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings),
-                DialogInterface.OnClickListener { _, _ ->
-                    startActivityForResult(
-                        DiagnosisHelper.buildSettingsIntent(context),
-                        DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
-                    )
-                })
+            .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings)) { _, _ ->
+                startActivityForResult(
+                    DiagnosisHelper.buildSettingsIntent(context),
+                    DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
+                )
+            }
             .negativeButton(getString(R.string.dk_common_close))
             .show()
 

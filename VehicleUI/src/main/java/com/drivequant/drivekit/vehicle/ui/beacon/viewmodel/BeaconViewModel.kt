@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconScannerFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.ConnectBeaconFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import java.io.Serializable
 
 class BeaconViewModel(
@@ -211,7 +213,12 @@ class BeaconViewModel(
         return isBeaconValid
     }
 
-    fun enableBluetoothSensor() = bluetoothAdapter?.enable()
+    @SuppressLint("MissingPermission")
+    fun enableBluetoothSensor() {
+        if (NearbyDevicesUtils.isBluetoothScanAuthorized()) {
+            bluetoothAdapter?.enable()
+        }
+    }
 
     fun isBluetoothSensorEnabled(): Boolean = bluetoothAdapter?.isEnabled ?: false
 

@@ -1,22 +1,25 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.activity
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.View
+import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import kotlinx.android.synthetic.main.activity_bluetooth.*
 
 class BluetoothActivity : AppCompatActivity() {
@@ -56,7 +59,7 @@ class BluetoothActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName)).get(BluetoothViewModel::class.java)
 
-        viewModel.fragmentDispatcher.observe(this, Observer { fragment ->
+        viewModel.fragmentDispatcher.observe(this, { fragment ->
             fragment?.let {
                 supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
@@ -66,7 +69,15 @@ class BluetoothActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.progressBarObserver.observe(this, Observer {
+        viewModel.nearbyDevicesAlertDialogObserver.observe(this, {
+            it?.let { displayError ->
+                if (displayError) {
+                    NearbyDevicesUtils.displayPermissionsError(this@BluetoothActivity)
+                }
+            }
+        })
+
+        viewModel.progressBarObserver.observe(this, {
             it?.let {displayProgressCircular ->
                 if (displayProgressCircular){
                     showProgressCircular()
@@ -91,7 +102,7 @@ class BluetoothActivity : AppCompatActivity() {
 
     private fun showProgressCircular() {
         dk_progress_circular.animate()
-            .alpha(255f)
+            .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
@@ -114,6 +125,21 @@ class BluetoothActivity : AppCompatActivity() {
             finish()
         } else {
             supportFragmentManager.popBackStack()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == NearbyDevicesUtils.NEARBY_DEVICES_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                viewModel.onStartButtonClicked()
+            } else if (!shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_SCAN) || !shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                NearbyDevicesUtils.displayPermissionsError(this, true)
+            }
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.Bluetooth
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
@@ -16,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.ErrorBluetoothFragm
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.GuideBluetoothFragment
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SelectBluetoothFragment
 import com.drivequant.drivekit.vehicle.ui.bluetooth.fragment.SuccessBluetoothFragment
+import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import java.io.Serializable
 
 class BluetoothViewModel(
@@ -27,6 +31,7 @@ class BluetoothViewModel(
 
     var fragmentDispatcher = MutableLiveData<Fragment>()
     val progressBarObserver = MutableLiveData<Boolean>()
+    val nearbyDevicesAlertDialogObserver = MutableLiveData<Boolean>()
     var addBluetoothObserver = MutableLiveData<String>()
 
     init {
@@ -36,10 +41,14 @@ class BluetoothViewModel(
     }
 
     fun onStartButtonClicked(){
-        if (bluetoothDevices.isEmpty()){
-            fragmentDispatcher.postValue(ErrorBluetoothFragment.newInstance(vehicleId))
+        if (NearbyDevicesUtils.isBluetoothScanAuthorized()) {
+            if (bluetoothDevices.isEmpty()) {
+                fragmentDispatcher.postValue(ErrorBluetoothFragment.newInstance(vehicleId))
+            } else {
+                fragmentDispatcher.postValue(SelectBluetoothFragment.newInstance(this, vehicleId))
+            }
         } else {
-            fragmentDispatcher.postValue(SelectBluetoothFragment.newInstance(this, vehicleId))
+            nearbyDevicesAlertDialogObserver.postValue(true)
         }
     }
 

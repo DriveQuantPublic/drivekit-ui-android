@@ -476,7 +476,7 @@ class TripDetailFragment : Fragment() {
 
     private fun showProgressCircular() {
         progress_circular.animate()
-            .alpha(255f)
+            .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
