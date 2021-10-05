@@ -72,10 +72,10 @@ class ChallengeRankingFragment : Fragment() {
         super.onResume()
         PseudoUtils.checkPseudo(object : PseudoCheckListener {
             override fun onPseudoChecked(hasPseudo: Boolean) {
+                context?.let {
                 if (hasPseudo) {
-                    showFragment(requireContext())
+                    showFragment(it)
                 } else {
-                    context?.let {
                         PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
