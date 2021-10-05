@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.rankings.fragment
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -126,7 +127,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     rankingViewModel.selectedRankingTypeData.rankingType =
                         DriverAchievementUI.rankingTypes[tab_layout_leader_board.selectedTabPosition]
-                    updateRanking()
+                    updateRanking(requireContext())
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -144,7 +145,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         selectedRankingSelectorView = rankingSelectorView
         rankingSelectorView.setRankingSelectorSelected(true)
         rankingViewModel.selectedRankingSelectorData = rankingSelectorData
-        updateRanking()
+        updateRanking(requireContext())
     }
 
     override fun onResume() {
@@ -160,19 +161,19 @@ class RankingFragment : Fragment(), RankingSelectorListener {
     private fun checkPseudo() {
         PseudoUtils.checkPseudo(object : PseudoCheckListener {
             override fun onPseudoChecked(hasPseudo: Boolean) {
-                if (hasPseudo) {
-                    updateRanking()
-                } else {
-                    context?.let {
+                context?.let {
+                    if (hasPseudo) {
+                        updateRanking(it)
+                    } else {
                         PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
-                                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(it, DKResource.convertToString(it, "dk_common_error_message"), Toast.LENGTH_LONG).show()
                                 }
-                                updateRanking()
+                                updateRanking(it)
                             }
                             override fun onCancelled() {
-                                updateRanking()
+                                updateRanking(it)
                             }
                         })
                     }
@@ -181,21 +182,20 @@ class RankingFragment : Fragment(), RankingSelectorListener {
         })
     }
 
-    fun updateRanking() {
+    fun updateRanking(context: Context) {
         var isToastShowed = false
-        rankingViewModel.mutableLiveDataRankingData.observe(this,
-            Observer {
+        rankingViewModel.mutableLiveDataRankingData.observe(this, Observer {
                 if (rankingViewModel.syncStatus == RankingSyncStatus.FAILED_TO_SYNC_RANKING_CACHE_ONLY && !isToastShowed) {
                     Toast.makeText(
                         context,
-                        context?.getString(R.string.dk_achievements_failed_to_sync_rankings),
+                        context.getString(R.string.dk_achievements_failed_to_sync_rankings),
                         Toast.LENGTH_SHORT
                     ).show()
                     isToastShowed = true
                 }
-                rankingView = DKRankingView(requireContext())
+                rankingView = DKRankingView(context)
                 rankingView.apply {
-                    this.configure(rankingViewModel.rankingData)
+                    configure(rankingViewModel.rankingData)
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
