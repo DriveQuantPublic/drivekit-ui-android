@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -71,19 +72,19 @@ class ChallengeRankingFragment : Fragment() {
         super.onResume()
         PseudoUtils.checkPseudo(object : PseudoCheckListener {
             override fun onPseudoChecked(hasPseudo: Boolean) {
+                context?.let {
                 if (hasPseudo) {
-                    showFragment()
+                    showFragment(it)
                 } else {
-                    context?.let {
                         PseudoUtils.show(it, object : PseudoChangeListener {
                             override fun onPseudoChanged(success: Boolean) {
                                 if (!success) {
-                                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_error_message"), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(it, DKResource.convertToString(it, "dk_common_error_message"), Toast.LENGTH_LONG).show()
                                 }
                                 fetchDetail()
                             }
                             override fun onCancelled() {
-                                showFragment()
+                                showFragment(it)
                             }
                         })
                     }
@@ -104,13 +105,15 @@ class ChallengeRankingFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            showFragment()
+            context?.let { context ->
+                showFragment(context)
+            }
         })
         viewModel.fetchChallengeDetail()
     }
 
-    private fun showFragment() {
-        val ranking = DKRankingView(requireContext())
+    private fun showFragment(context : Context) {
+        val ranking = DKRankingView(context)
         ranking.apply {
             this.configure(ChallengeDriverRanking(viewModel))
             layoutParams = LinearLayout.LayoutParams(
@@ -118,6 +121,8 @@ class ChallengeRankingFragment : Fragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
         }
-        container.addView(ranking)
+        if (this.isVisible) {
+            container.addView(ranking)
+        }
     }
 }
