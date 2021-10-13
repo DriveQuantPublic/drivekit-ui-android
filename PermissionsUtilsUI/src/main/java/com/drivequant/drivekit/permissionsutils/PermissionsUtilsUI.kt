@@ -56,6 +56,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         this.contactType = ContactType
     }
 
+    @Deprecated("Logs are now only driven by DriveKit Core module.")
+    fun configureLogPathFile(logPathFile: String) { }
+
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
