@@ -67,8 +67,6 @@ object DriveKitConfig {
     fun configurePermissionsUtils(context: Context) {
         PermissionsUtilsUI.initialize()
         PermissionsUtilsUI.configureBluetooth(true)
-        PermissionsUtilsUI.configureDiagnosisLogs(true)
-        PermissionsUtilsUI.configureLogPathFile("/DQ-demo-test/")
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
             override fun getMailBody(): String = "Mail body"
