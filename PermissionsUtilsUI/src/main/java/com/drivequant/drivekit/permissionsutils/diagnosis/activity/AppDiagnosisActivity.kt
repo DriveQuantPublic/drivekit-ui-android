@@ -329,11 +329,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
                     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
-
-                    if (checkLoggingStatus()) {
-                        DriveKitLog.getLogUriFile(this)?.let {
-                            intent.putExtra(Intent.EXTRA_STREAM, it)
-                        }
+                    DriveKitLog.getLogUriFile(this)?.let {
+                        intent.putExtra(Intent.EXTRA_STREAM, it)
                     }
                     startActivity(intent)
                 }
@@ -381,9 +378,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         val connectivityFilter = IntentFilter(SensorsReceiver.CONNECTIVITY_INTENT_ACTION)
         registerReceiver(sensorsReceiver, connectivityFilter)
     }
-
-    private fun checkLoggingStatus(): Boolean = DriveKitLog.isLoggingEnabled
-
+    
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
             PermissionType.LOCATION -> requestLocationPermission()
