@@ -32,7 +32,6 @@ import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
-import com.facebook.stetho.Stetho
 import java.util.*
 
 class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraStepListener {
@@ -55,7 +54,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this)
 
         createNotificationChannel()
         configureDriveKit()

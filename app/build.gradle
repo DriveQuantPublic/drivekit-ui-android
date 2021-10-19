@@ -40,8 +40,6 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-challenge:$drivekit_version"
 
-    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
-
     implementation project(':CommonUI')
     implementation project(':DriverDataUI')
     implementation project(':VehicleUI')

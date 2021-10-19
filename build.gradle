@@ -32,7 +32,6 @@ allprojects {
         maven {
             url "https://maven.drivequant.com/repository/android-sdk/"
         }
-        mavenLocal()
     }
     project.ext {
         min_sdk_version = 21
