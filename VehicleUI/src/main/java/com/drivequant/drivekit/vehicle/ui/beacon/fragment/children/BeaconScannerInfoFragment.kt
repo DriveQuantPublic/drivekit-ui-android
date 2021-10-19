@@ -9,8 +9,6 @@ import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.drivequant.beaconutils.BeaconBatteryReaderListener
-import com.drivequant.beaconutils.BeaconBatteryReaderScanner
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -23,10 +21,12 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.utils.BatteryLevelReadListener
+import com.drivequant.drivekit.vehicle.ui.utils.BeaconBatteryScannerManager
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
 
-class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
+class BeaconScannerInfoFragment : Fragment() {
     companion object {
         fun newInstance(viewModel: BeaconViewModel, isValid: Boolean): BeaconScannerInfoFragment {
             val fragment = BeaconScannerInfoFragment()
@@ -38,6 +38,7 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
     private lateinit var viewModel: BeaconViewModel
     private var isValid: Boolean = false
+    private var beaconBatteryScannerManager: BeaconBatteryScannerManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
@@ -64,8 +65,28 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
             }
         }
 
-        viewModel.seenBeacon?.let {
-            startBatteryReaderScanner()
+        viewModel.seenBeacon?.let { beacon ->
+            context?.let { context ->
+                beaconBatteryScannerManager = BeaconBatteryScannerManager(
+                    context,
+                    BeaconData(beacon.proximityUuid, beacon.major, beacon.minor),
+                    object : BatteryLevelReadListener {
+                        override fun onBatteryLevelRead(batteryLevel: Int) {
+                            beaconBatteryScannerManager?.stopBatteryReaderScanner()
+                            viewModel.batteryLevel = batteryLevel
+                            if (isAdded) {
+                                text_view_battery?.text = buildBeaconCharacteristics(batteryLevel.toString(), "%")
+                                computeBatteryDrawable(batteryLevel)?.let { drawable ->
+                                    text_view_battery?.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
+                                }
+                            }
+                        }
+                    }
+                )
+                if (isValid) {
+                    beaconBatteryScannerManager?.startBatteryReaderScanner()
+                }
+            }
         }
 
         view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
@@ -112,7 +133,7 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
                 text_view_distance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
 
-            text_view_battery.text = buildBeaconCharacteristics(viewModel.batteryLevel.toString(), "%")
+            text_view_battery.text = buildBeaconCharacteristics("", "%")
             computeBatteryDrawable(viewModel.batteryLevel)?.let { drawable ->
                 text_view_battery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
             }
@@ -134,33 +155,7 @@ class BeaconScannerInfoFragment : Fragment(), BeaconBatteryReaderListener {
 
     override fun onStop() {
         super.onStop()
-        stopBatteryReaderScanner()
-    }
-
-    private fun startBatteryReaderScanner() {
-        BeaconBatteryReaderScanner().registerListener(this, requireContext())
-    }
-
-    private fun stopBatteryReaderScanner() {
-        BeaconBatteryReaderScanner().unregisterListener(requireContext())
-    }
-
-    override fun getBeacon(): BeaconData {
-        return viewModel.seenBeacon?.let {
-             BeaconData(it.proximityUuid, it.major, it.minor)
-        }?: run {
-            BeaconData("")
-        }
-    }
-
-    override fun onBatteryLevelRead(batteryLevel: Int) {
-        viewModel.batteryLevel = batteryLevel
-        if (isAdded) {
-            text_view_battery?.text = buildBeaconCharacteristics(batteryLevel.toString(), "%")
-            computeBatteryDrawable(viewModel.batteryLevel)?.let { drawable ->
-                text_view_battery?.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
-            }
-        }
+        beaconBatteryScannerManager?.stopBatteryReaderScanner()
     }
 
     private fun computeBatteryDrawable(batteryLevel: Int): Drawable? {
