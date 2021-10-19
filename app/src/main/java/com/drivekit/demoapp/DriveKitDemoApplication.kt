@@ -67,8 +67,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         DriverDataUI.enableAlternativeTrips(true)
         DriveKitVehicleUI.initialize()
 
-        PermissionsUtilsUI.initialize()
-
         val vehiclesTypes = listOf(VehicleType.CAR, VehicleType.TRUCK)
         DriveKitVehicleUI.configureVehiclesTypes(vehiclesTypes)
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
@@ -80,19 +78,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
         DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
-
-        PermissionsUtilsUI.configureBluetooth(true)
-        PermissionsUtilsUI.configureDiagnosisLogs(true)
-        PermissionsUtilsUI.configureLogPathFile("/DQ-demo-test/")
-        PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String =
-                getString(R.string.app_name) + " - " + getString(R.string.ask_for_request)
-
-            override fun overrideMailBodyContent(): Boolean = false
-        }))
     }
 
     private fun createNotificationChannel() {

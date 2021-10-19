@@ -5,7 +5,6 @@ import kotlinx.android.synthetic.main.activity_app_diagnosis.*
 import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
 import com.drivequant.drivekit.permissionsutils.R
 import android.os.Bundle
-import android.util.TypedValue
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -16,18 +15,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
-import android.graphics.Typeface
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
-import android.text.Spannable
-import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
@@ -63,7 +57,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayActivityItem()
         displayAutoResetItem()
         displayNearbyDevicesItem()
-        displayLogSection()
         displayReportSection()
 
         setStyle()
@@ -87,7 +80,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         checkAutoReset()
         checkNearbyPermissions()
         checkNotification()
-        checkExternalStorage()
         checkNetwork()
 
         setSummaryContent()
@@ -217,52 +209,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun checkExternalStorage() {
-        val loggingStatus = checkLoggingStatus()
-        switch_enable_logging.isChecked = loggingStatus
-        val description = if (loggingStatus) {
-            handleLoggingDescription()
-        } else {
-            DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
-        }
-
-        text_view_logging_description.text = SpannableString.valueOf(description)
-        switch_enable_logging.setOnClickListener {
-            val loggingDescription = if (switch_enable_logging.isChecked) {
-                DriveKit.enableLogging(PermissionsUtilsUI.logPathFile)
-                handleLoggingDescription()
-            } else {
-                DriveKit.disableLogging()
-                DKResource.convertToString(this, "dk_perm_utils_app_diag_log_ko")
-            }
-            text_view_logging_description.text = SpannableString.valueOf(loggingDescription)
-        }
-    }
-
-    private fun getUserFriendlyPath() : String {
-        val path = DriveKitLog.buildDirectory(PermissionsUtilsUI.logPathFile).path
-        return path.substring("storage/emulated/0/".lastIndex + 1)
-    }
-
-    private fun handleLoggingDescription(): Spannable {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            SpannableString.valueOf(
-                DKResource.convertToString(
-                    this,
-                    "dk_perm_utils_app_diag_log_ok_android11"
-                )
-            )
-        } else {
-            DKResource.buildString(
-                this,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.mainFontColor(),
-                "dk_perm_utils_app_diag_log_ok",
-                getUserFriendlyPath()
-            )
-        }
-    }
-
     private fun checkNotification() {
         when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
             PermissionStatus.VALID -> diag_item_notification.setNormalState()
@@ -349,20 +295,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
     }
 
-    private fun displayLogSection() {
-        val visibility =
-            if (PermissionsUtilsUI.shouldDisplayDiagnosisLogs) View.VISIBLE else View.GONE
-        switch_enable_logging.visibility = visibility
-        text_view_logging_description.visibility = visibility
-    }
-
     private fun displayReportSection() {
         when (val contactType = PermissionsUtilsUI.contactType) {
             is ContactType.NONE -> {
                 text_view_help_title.visibility = View.GONE
                 text_view_help_description.visibility = View.GONE
                 button_help_report.visibility = View.GONE
-                support_view_separator.visibility = View.GONE
             }
             is ContactType.WEB -> {
                 button_help_report.setOnClickListener {
@@ -391,11 +329,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     intent.putExtra(Intent.EXTRA_BCC, bccRecipients)
                     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
                     intent.putExtra(Intent.EXTRA_TEXT, mailBody)
-
-                    if (switch_enable_logging.isChecked && checkLoggingStatus()) {
-                        DriveKitLog.getLogUriFile(this)?.let {
-                            intent.putExtra(Intent.EXTRA_STREAM, it)
-                        }
+                    DriveKitLog.getLogUriFile(this)?.let {
+                        intent.putExtra(Intent.EXTRA_STREAM, it)
                     }
                     startActivity(intent)
                 }
@@ -443,11 +378,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         val connectivityFilter = IntentFilter(SensorsReceiver.CONNECTIVITY_INTENT_ACTION)
         registerReceiver(sensorsReceiver, connectivityFilter)
     }
-
-    private fun checkLoggingStatus(): Boolean =
-        DriveKitLog.isLoggingEnabled &&
-                PermissionsUtilsUI.shouldDisplayDiagnosisLogs
-
+    
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
             PermissionType.LOCATION -> requestLocationPermission()
@@ -607,24 +538,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         button_help_report.button()
         text_view_help_title.headLine1()
         text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
-        if (switch_enable_logging.isChecked) {
-            switch_enable_logging.thumbDrawable.tintDrawable(
-                DriveKitUI.colors.secondaryColor()
-            )
-        }
-        switch_enable_logging.setTextColor(DriveKitUI.colors.mainFontColor())
-        switch_enable_logging.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
-                com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium
-            )
-        )
-        switch_enable_logging.setTypeface(DriveKitUI.primaryFont(this), Typeface.BOLD)
-        text_view_logging_description.normalText(DriveKitUI.colors.complementaryFontColor())
-
         summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        support_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         dk_diagnosis_root.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 
