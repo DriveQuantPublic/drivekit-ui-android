@@ -4,10 +4,6 @@ import android.content.Context
 import com.drivequant.beaconutils.BeaconBatteryReaderListener
 import com.drivequant.beaconutils.BeaconBatteryReaderScanner
 import com.drivequant.beaconutils.BeaconData
-import com.drivequant.drivekit.databaseutils.entity.Beacon
-import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconBatteryStatus
-import com.drivequant.drivekit.vehicle.manager.beacon.VehicleUpdateBeaconBatteryLevelQueryListener
 
 internal class BeaconBatteryScannerManager(
     private val context: Context,
