@@ -16,6 +16,8 @@ import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
+import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
@@ -180,4 +182,12 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         }
         return vehiclesFilterItems
     }
+
+    fun startOdometerVehicleActivity(context: Context) {
+        val intent = Intent(context, OdometerVehicleListActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun getVehicleOdometerFragment() = OdometerVehicleListFragment.newInstance()
 }
