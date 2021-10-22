@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.fragment
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -53,7 +52,7 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateBadges() {
-        listViewModel.badgesData.observe(this, Observer {
+        listViewModel.badgesData.observe(this, {
             if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
                 Toast.makeText(context,
                     context?.getString(R.string.dk_achievements_failed_to_sync_badges),
@@ -73,10 +72,10 @@ class BadgesListFragment : Fragment() {
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
+            progress_circular?.visibility = View.VISIBLE
             refresh_badges.isRefreshing = true
         } else {
-            progress_circular.visibility = View.GONE
+            progress_circular?.visibility = View.GONE
             refresh_badges.visibility = View.VISIBLE
             refresh_badges.isRefreshing = false
         }

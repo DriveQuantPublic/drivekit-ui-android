@@ -89,25 +89,29 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
+        dk_progress_circular.apply {
+            animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
+                    visibility = View.GONE
                 }
             })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
+        dk_progress_circular.apply {
+            animate()
             .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
+                    visibility = View.VISIBLE
                 }
             })
+        }
     }
 
     private fun updateTitle(title: String){

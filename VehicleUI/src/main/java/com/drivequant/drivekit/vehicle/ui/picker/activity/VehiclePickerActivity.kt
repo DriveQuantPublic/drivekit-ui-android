@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -70,14 +69,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             viewModel.vehicleToDelete = it
         }
 
-        viewModel.stepDispatcher.observe(this, Observer {
+        viewModel.stepDispatcher.observe(this, {
             viewModel.stepDispatcher.value?.let {
                 hideProgressCircular()
                 dispatchToScreen(it)
             }
         })
 
-        viewModel.progressBarObserver.observe(this, Observer {
+        viewModel.progressBarObserver.observe(this, {
             it?.let {
                 if (it){
                     showProgressCircular()
@@ -87,7 +86,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
         })
 
-        viewModel.fetchServiceErrorObserver.observe(this, Observer {
+        viewModel.fetchServiceErrorObserver.observe(this, {
             it?.let {
                 if (it == VehiclePickerStatus.NO_RESULT){
                     Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_no_data"), Toast.LENGTH_LONG).show()
@@ -97,7 +96,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             }
         })
 
-        viewModel.endObserver.observe(this, Observer {
+        viewModel.endObserver.observe(this, {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
                     DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
@@ -163,25 +162,29 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        dk_progress_circular.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
-                }
-            })
+        dk_progress_circular.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

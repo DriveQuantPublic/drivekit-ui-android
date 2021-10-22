@@ -3,7 +3,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -43,7 +42,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         ).get(VehicleDetailViewModel::class.java)
         viewModel.init(this)
 
-        viewModel.progressBarObserver.observe(this, Observer {
+        viewModel.progressBarObserver.observe(this, {
             it?.let { displayProgressCircular ->
                 if (displayProgressCircular){
                     showProgressCircular()
@@ -74,25 +73,29 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
-                }
-            })
+        dk_progress_circular.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        dk_progress_circular.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -3,7 +3,6 @@ package com.drivequant.drivekit.ui.transportationmode.fragment
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -99,7 +98,7 @@ internal class TransportationModeFragment : Fragment(){
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(this, Observer { status ->
+        viewModel.updateObserver.observe(this, { status ->
             hideProgressCircular()
             if (status != null){
                 when (status){
@@ -306,25 +305,29 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
+        progress_circular.apply {
+            animate()
             .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
+                    visibility = View.VISIBLE
                 }
             })
+        }
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
-                }
-            })
+        progress_circular.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
