@@ -305,7 +305,7 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     private fun showProgressCircular() {
-        progress_circular.apply {
+        progress_circular?.apply {
             animate()
             .alpha(1f)
             .setDuration(200L)
@@ -318,7 +318,7 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     private fun hideProgressCircular() {
-        progress_circular.apply {
+        progress_circular?.apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)

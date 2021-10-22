@@ -206,7 +206,7 @@ class TripsListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular.apply {
+        progress_circular?.apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)

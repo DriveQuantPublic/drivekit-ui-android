@@ -162,7 +162,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.apply {
+        dk_progress_circular?.apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
@@ -175,7 +175,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.apply {
+        dk_progress_circular?.apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)

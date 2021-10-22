@@ -134,7 +134,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.apply {
+        dk_progress_circular?.apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -147,7 +147,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.apply {
+        dk_progress_circular?apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
