@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
@@ -39,7 +38,7 @@ class VehiclesListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
 
-        viewModel.progressBarObserver.observe(this, Observer {
+        viewModel.progressBarObserver.observe(this, {
             it?.let { displayProgressCircular ->
                 if (displayProgressCircular){
                     showProgressCircular()
@@ -49,7 +48,7 @@ class VehiclesListFragment : Fragment() {
             }
         })
 
-        viewModel.removeBeaconOrBluetoothObserver.observe(this, Observer {
+        viewModel.removeBeaconOrBluetoothObserver.observe(this, {
             viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
         })
     }
@@ -85,7 +84,7 @@ class VehiclesListFragment : Fragment() {
 
     private fun updateVehicles(synchronizationType : SynchronizationType = SynchronizationType.DEFAULT){
         adapter?.setTouched(false)
-        viewModel.vehiclesData.observe(this, Observer {
+        viewModel.vehiclesData.observe(this, {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
                 Toast.makeText(
                     context,
@@ -152,24 +151,28 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
+        dk_progress_circular?.apply {
+            animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
+                    visibility = View.GONE
                 }
             })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        dk_progress_circular?.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 }

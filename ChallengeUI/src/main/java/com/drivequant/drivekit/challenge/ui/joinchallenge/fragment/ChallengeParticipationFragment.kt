@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
@@ -21,6 +20,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.*
 import kotlinx.android.synthetic.main.dk_fragment_challenge_join.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.progress_circular
 import kotlin.math.roundToInt
 
 
@@ -74,7 +74,7 @@ class ChallengeParticipationFragment : Fragment() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
-        viewModel.syncJoinChallengeError.observe(this, Observer {
+        viewModel.syncJoinChallengeError.observe(this, {
             if (it) {
                 if (viewModel.isChallengeStarted()) {
                     progress()
@@ -228,10 +228,12 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 
