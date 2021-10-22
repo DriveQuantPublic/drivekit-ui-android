@@ -134,25 +134,29 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
-                }
-            })
+        dk_progress_circular?.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        dk_progress_circular?apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 
     override fun onRequestPermissionsResult(
