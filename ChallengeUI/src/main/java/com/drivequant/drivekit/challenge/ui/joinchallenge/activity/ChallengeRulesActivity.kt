@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.activity
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
@@ -22,6 +20,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_activity_challenge_rules.*
 import kotlinx.android.synthetic.main.dk_activity_challenge_rules.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
@@ -92,7 +91,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
-        viewModel.syncJoinChallengeError.observe(this, Observer {
+        viewModel.syncJoinChallengeError.observe(this, {
             if (it) {
                 setResult(Activity.RESULT_OK)
                 finish()
@@ -121,16 +120,14 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(positiveListener =
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            updateProgressVisibility(true)
-                            viewModel.joinChallenge(challengeId)
-                            dialog.dismiss()
-                        })
-                    .negativeButton(negativeListener =
-                        DialogInterface.OnClickListener { _,_ ->
-                            finish()
-                        })
+                    .positiveButton(positiveListener = { dialog, _ ->
+                        updateProgressVisibility(true)
+                        viewModel.joinChallenge(challengeId)
+                        dialog.dismiss()
+                    })
+                    .negativeButton(negativeListener = { _,_ ->
+                        finish()
+                    })
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
@@ -149,10 +146,12 @@ class ChallengeRulesActivity : AppCompatActivity() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 

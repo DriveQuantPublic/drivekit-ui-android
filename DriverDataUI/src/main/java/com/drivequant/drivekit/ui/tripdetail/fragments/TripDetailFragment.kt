@@ -475,25 +475,29 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun showProgressCircular() {
-        progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        progress_circular?.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
+        progress_circular?.apply {
+            animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
+                    visibility = View.GONE
                 }
             })
+        }
     }
 
     private class DetailOnPageChangeListener(private var tripDetailViewModel: TripDetailViewModel) : ViewPager.SimpleOnPageChangeListener() {
