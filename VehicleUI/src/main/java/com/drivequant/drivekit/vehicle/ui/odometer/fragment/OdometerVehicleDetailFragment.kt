@@ -18,6 +18,7 @@ import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesLis
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
 import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.*
 
@@ -57,19 +58,23 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                 OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)
             ).get(OdometerDetailViewModel::class.java)
 
-            OdometerItemType.values().toList().forEach { odometerItemType ->
-                when (odometerItemType) {
-                    OdometerItemType.ODOMETER -> mileage_vehicle_item.configureOdometerItem(
-                        vehicleId, odometerItemType, this
-                    )
-                    OdometerItemType.ANALYZED -> distance_analyzed_item.configureOdometerItem(
-                        vehicleId, odometerItemType, this
-                    )
-                    OdometerItemType.ESTIMATED -> distance_estimated_item.configureOdometerItem(
-                        vehicleId, odometerItemType, this
-                    )
-                }
-            }
+            val itemViewModel = OdometerItemViewModel(vehicleId)
+            mileage_vehicle_item.configureOdometerItem(
+                itemViewModel,
+                OdometerItemType.ODOMETER,
+                this
+            )
+            distance_estimated_item.configureOdometerItem(
+                itemViewModel,
+                OdometerItemType.ESTIMATED,
+                this
+            )
+            distance_analyzed_item.configureOdometerItem(
+                itemViewModel,
+                OdometerItemType.ANALYZED,
+                this
+            )
+
             context?.let { context ->
                 viewModel.getVehicleDrawable(context)?.let { drawable ->
                     Glide.with(context)
@@ -85,9 +90,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                     //TODO
                 }
                 button_display_odometer_readings.setOnClickListener {
-                    context.let { context ->
-                        OdometerHistoriesListActivity.launchActivity(context, vehicleId)
-                    }
+                    OdometerHistoriesListActivity.launchActivity(context, vehicleId)
                 }
             }
         }

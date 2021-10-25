@@ -8,6 +8,7 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleListFragment
 
 class OdometerVehicleListActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_odometer_vehicle_list)
@@ -15,8 +16,8 @@ class OdometerVehicleListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        //TODO Update activity title
-        title = DKResource.convertToString(this, "dk_challenge_menu")
+
+        title = DKResource.convertToString(this, "dk_vehicle_odometer_vehicle_title")
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, OdometerVehicleListFragment.newInstance())

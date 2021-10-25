@@ -54,8 +54,7 @@ class OdometerVehicleDetailView : LinearLayout {
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
-    fun configureOdometerItem(vehicleId: String, odometerItemType: OdometerItemType, listener: OdometerDrawableListener) {
-        val viewModel = OdometerItemViewModel(vehicleId)
+    fun configureOdometerItem(viewModel: OdometerItemViewModel, odometerItemType: OdometerItemType, listener: OdometerDrawableListener) {
         text_view_odometer_distance_description.text = viewModel.getDescription(context, odometerItemType)
         text_view_odometer_distance_value.text = viewModel.getDistance(context, odometerItemType)
 

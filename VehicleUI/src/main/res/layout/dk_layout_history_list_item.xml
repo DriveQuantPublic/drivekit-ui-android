@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardView"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dk_margin_half">
+
+        <ImageView
+            android:layout_width="@dimen/dk_ic_medium"
+            android:layout_height="@dimen/dk_ic_medium"
+            android:layout_marginStart="@dimen/dk_margin"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:src="@drawable/dk_common_eco_accel"
+            android:contentDescription="@string/dk_common_see_more_trips"/>
+
+        <TextView
+            android:id="@+id/text_view_distance_km"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="viewEnd"
+            android:textColor="#000"
+            android:textStyle="bold"
+            tools:text="330 000 km" />
+
+        <TextView
+            android:id="@+id/text_view_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:layout_weight="1.5"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="viewEnd"
+            android:textColor="#000"
+            android:textSize="12sp"
+            tools:text="Dimanche 14 Décembre 2019" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

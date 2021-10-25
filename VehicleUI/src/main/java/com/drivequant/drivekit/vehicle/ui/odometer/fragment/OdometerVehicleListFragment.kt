@@ -15,12 +15,10 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerAction
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerActionItem
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerVehicleListViewModel
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.*
 
 
@@ -44,15 +42,17 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         dk_swipe_refresh_odometer.setOnRefreshListener {
             updateSwipeRefreshOdometerVisibility(true)
             viewModel.selection.value?.let {
-                synchronizeOdometer(it, SynchronizationType.DEFAULT)
+                updateOdometer(it, SynchronizationType.DEFAULT)
             }
         }
 
         viewModel.vehicleOdometerData.observe(this, {
             if (it) {
+
                 viewModel.selection.value?.let { vehicleId ->
+                    val viewModel = OdometerItemViewModel(vehicleId)
                     mileage_vehicle_item.configureOdometerItem(
-                        vehicleId,
+                        viewModel,
                         OdometerItemType.ODOMETER,
                         this@OdometerVehicleListFragment
                     )
@@ -69,15 +69,25 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
             updateProgressVisibility(false)
             updateSwipeRefreshOdometerVisibility(false)
+
+            // If user has data in local database then load them first, then fetch odometer data
+            if (synchronizationType == SynchronizationType.CACHE && shouldSyncOdometer) {
+                shouldSyncOdometer = false
+                viewModel.selection.value?.let { vehicleId ->
+                    updateOdometer(vehicleId, SynchronizationType.DEFAULT)
+                }
+            }
         })
         viewModel.getVehicleListItems(requireContext())
 
         viewModel.selection.observe(this, {
-            synchronizeOdometer(it, SynchronizationType.DEFAULT)
+            val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
+            synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
+            updateOdometer(it, synchronizationType)
         })
     }
 
-    private fun synchronizeOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
+    private fun updateOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
         updateProgressVisibility(true)
         viewModel.getOdometer(vehicleId, synchronizationType)
     }
