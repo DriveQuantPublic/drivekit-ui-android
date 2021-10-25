@@ -4,19 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity
+import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.*
 
-class OdometerVehicleDetailFragment : Fragment() {
+class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     private var vehicleId: String? = null
+    private lateinit var viewModel: OdometerDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,46 +44,50 @@ class OdometerVehicleDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.dk_fragment_odometer_vehicle_detail, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_detail, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (savedInstanceState?.getString("vehicleId"))?.let {
-           vehicleId = it
+            vehicleId = it
         }
-        vehicleId?.let {
-            val vehicleOdometer =
-                DriveKitVehicle.odometerQuery().whereEqualTo("vehicleId", it).queryOne()
-                    .executeOne()
-            vehicleOdometer?.let { odometer ->
-                mileage_vehicle_item.apply {
-                    setOdometerDistance("${odometer.distance}")
-                    //TODO setItemTitle(DKResource.convertToString(requireContext(), "dk_"))
-                    setTitle("Vehicle mileage")
-                    setDescription("Last updated 24/08/2021")
-                }
-                distance_analyzed_item.apply {
-                    setOdometerDistance("${odometer.analyzedDistance}")
-                    setTitle("Distance analyzed by the applicaiton")
-                    setDescription("inlcuding 0 this year")
-                }
-                distance_estimated_item.apply {
-                    setOdometerDistance("${odometer.estimatedYearDistance}")
-                    setTitle("Estimated annual distance")
-                    setDescription("for the year 2021")
+        vehicleId?.let { vehicleId ->
+            viewModel = ViewModelProviders.of(
+                this,
+                OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)
+            ).get(OdometerDetailViewModel::class.java)
+
+            OdometerItemType.values().toList().forEach { odometerItemType ->
+                when (odometerItemType) {
+                    OdometerItemType.ODOMETER -> mileage_vehicle_item.configureOdometerItem(
+                        vehicleId, odometerItemType, this
+                    )
+                    OdometerItemType.ANALYZED -> distance_analyzed_item.configureOdometerItem(
+                        vehicleId, odometerItemType, this
+                    )
+                    OdometerItemType.ESTIMATED -> distance_estimated_item.configureOdometerItem(
+                        vehicleId, odometerItemType, this
+                    )
                 }
             }
-
             context?.let { context ->
-                VehicleUtils().getVehicleDrawable(context, it)?.let { drawable ->
+                viewModel.getVehicleDrawable(context)?.let { drawable ->
                     Glide.with(context)
                         .load(drawable)
                         .apply(RequestOptions.circleCropTransform())
                         .placeholder(drawable)
                         .into(image_item)
+                }
+
+                text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
+
+                button_update_odometer_reading.setOnClickListener {
+                    //TODO
+                }
+                button_display_odometer_readings.setOnClickListener {
+                    context.let { context ->
+                        OdometerHistoriesListActivity.launchActivity(context, vehicleId)
+                    }
                 }
             }
         }
@@ -88,5 +100,41 @@ class OdometerVehicleDetailFragment : Fragment() {
                     putString("vehicleId_arg", vehicleId)
                 }
             }
+    }
+
+    override fun onDrawableClicked(view: View, odometerItemType: OdometerItemType) {
+        val alertDialogData = when (odometerItemType) {
+            OdometerItemType.ODOMETER -> Pair(
+                "dk_vehicle_odometer_vehicle_title",
+                "dk_vehicle_odometer_info_vehicle_distance_text"
+            )
+            OdometerItemType.ANALYZED -> Pair(
+                "dk_vehicle_odometer_info_analysed_distance_title",
+                "dk_vehicle_odometer_info_analysed_distance_text"
+            )
+            OdometerItemType.ESTIMATED -> Pair(
+                "dk_vehicle_odometer_info_estimated_distance_title",
+                "dk_vehicle_odometer_info_estimated_distance_text"
+            )
+        }.let {
+            Pair(
+                DKResource.convertToString(view.context, it.first),
+                DKResource.convertToString(view.context, it.second)
+            )
+        }
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(requireContext())
+            .layout(R.layout.template_alert_dialog_layout)
+            .positiveButton()
+            .show()
+
+        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView =
+            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        titleTextView?.text = alertDialogData.first
+        descriptionTextView?.text = alertDialogData.second
+
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 }

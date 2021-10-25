@@ -195,4 +195,5 @@
    <string name="dk_vehicle_version_description">Version of the vehicle?</string>
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
+   <string name="dk_vehicle_odometer_failed_to_sync" translatable="false">Failed to synchronize vehicle odometer data, please retry later.</string>
 </resources>

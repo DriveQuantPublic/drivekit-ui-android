@@ -8,11 +8,13 @@ import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
 import kotlinx.android.synthetic.main.dk_layout_odometer_distance_item.view.*
 
 class OdometerVehicleDetailView : LinearLayout {
 
-    fun init() {
+    fun init(attrs: AttributeSet?) {
         val view = View.inflate(context, R.layout.dk_layout_odometer_distance_item, null)
         addView(
             view, ViewGroup.LayoutParams(
@@ -20,34 +22,52 @@ class OdometerVehicleDetailView : LinearLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
-        setStyle()
+        if (attrs != null) {
+            val a =
+                context.obtainStyledAttributes(attrs, R.styleable.OdometerVehicleDetailView, 0, 0)
+            try {
+                a.getString(R.styleable.OdometerVehicleDetailView_odometerTitle)?.let {
+                    text_view_odometer_distance_title.text = DKResource.convertToString(context, it)
+                }
+                a.getDrawable(R.styleable.OdometerVehicleDetailView_odometerCornerIcon)?.let {
+                    image_view_info.setImageDrawable(it)
+                }
+            } finally {
+                a.recycle()
+            }
+            setStyle()
+        }
     }
 
     constructor(context: Context) : super(context) {
-        init()
+        init(null)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
+        init(attrs)
     }
 
     private fun setStyle() {
         image_view_info.apply {
-            setImageDrawable(DKResource.convertToDrawable(context, "dk_common_info"))
             setColorFilter(DriveKitUI.colors.secondaryColor())
         }
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
-    fun setTitle(title: String) {
-        text_view_odometer_distance_title.text = title
-    }
+    fun configureOdometerItem(vehicleId: String, odometerItemType: OdometerItemType, listener: OdometerDrawableListener) {
+        val viewModel = OdometerItemViewModel(vehicleId)
+        text_view_odometer_distance_description.text = viewModel.getDescription(context, odometerItemType)
+        text_view_odometer_distance_value.text = viewModel.getDistance(context, odometerItemType)
 
-    fun setDescription(description: String) {
-        text_view_odometer_distance_description.text = description
+        image_view_info.apply {
+            setColorFilter(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                listener.onDrawableClicked(it, odometerItemType)
+            }
+        }
     }
+}
 
-    fun setOdometerDistance(distance: String) {
-        text_view_odometer_distance_value.text = distance
-    }
+interface OdometerDrawableListener {
+    fun onDrawableClicked(view: View, odometerItemType: OdometerItemType)
 }

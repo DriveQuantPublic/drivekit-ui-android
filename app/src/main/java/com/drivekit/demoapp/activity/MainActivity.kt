@@ -17,6 +17,7 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -130,5 +131,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun onOdometerVehicleClicked(view: View) {
+        DriveKitVehicleUI.startOdometerVehicleActivity(this)
     }
 }

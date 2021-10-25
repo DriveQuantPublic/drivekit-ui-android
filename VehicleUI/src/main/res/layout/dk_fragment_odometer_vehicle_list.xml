@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,71 +17,16 @@
             android:orientation="vertical">
 
             <com.drivequant.drivekit.common.ui.component.FilterView
-                android:id="@+id/filter_view"
+                android:id="@+id/vehicle_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <androidx.cardview.widget.CardView
-                style="@style/DKCard"
+            <com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerVehicleDetailView
+                android:id="@+id/mileage_vehicle_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dk_margin_half"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dk_margin">
-
-                    <LinearLayout
-                        style="@style/MW"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/dk_margin_quarter"
-                            android:layout_weight="1"
-                            android:textColor="#000"
-                            android:textSize="@dimen/dk_text_normal"
-                            tools:text="Vehicle Mileage" />
-
-                        <ImageView
-                            android:id="@+id/image_view_popup"
-                            android:layout_width="@dimen/dk_ic_small"
-                            android:layout_height="@dimen/dk_ic_small"
-                            android:layout_gravity="end|center_vertical"
-                            android:contentDescription="@string/appbar_scrolling_view_behavior"
-                            android:src="@drawable/dk_common_dots" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/dk_view_separator"
-                        style="@style/Separator.Horizontal"/>
-
-                    <TextView
-                        android:id="@+id/text_total_distance_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dk_margin_half"
-                        android:layout_marginBottom="@dimen/dk_margin_half"
-                        android:textAlignment="viewEnd"
-                        android:textColor="#9E9E9E"
-                        android:textSize="@dimen/dk_text_xxbig"
-                        android:textStyle="bold"
-                        tools:text="123 456 km" />
-
-                    <TextView
-                        android:id="@+id/text_total_distance_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="viewEnd"
-                        android:textColor="#9E9E9E"
-                        android:textSize="@dimen/dk_text_small"
-                        tools:text="Dernière mise à jour du compteur le 25/12/2018" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                app:odometerCornerIcon="@drawable/dk_common_dots"
+                app:odometerTitle="dk_vehicle_odometer_info_vehicle_distance_title" />
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

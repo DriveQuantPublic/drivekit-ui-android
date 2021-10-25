@@ -16,105 +16,74 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerAction
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerActionItem
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerViewModel
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerVehicleListViewModel
 import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.*
 
 
-class OdometerVehicleListFragment : Fragment() {
+class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
-    private lateinit var viewModel: OdometerViewModel
+    private lateinit var viewModel: OdometerVehicleListViewModel
+    private lateinit var synchronizationType: SynchronizationType
+    private var shouldSyncOdometer = true
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        updateProgressVisibility(true)
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(OdometerViewModel::class.java)
+            viewModel = ViewModelProviders.of(this).get(OdometerVehicleListViewModel::class.java)
         }
 
         viewModel.filterData.observe(this, {
-            configureFilter()
-            updateProgressVisibility(false)
+            vehicle_filter.setItems(viewModel.filterItems)
+            initVehicleFilter()
         })
-        initFilter(SynchronizationType.DEFAULT)
+
         dk_swipe_refresh_odometer.setOnRefreshListener {
-            initFilter(SynchronizationType.DEFAULT)
+            updateSwipeRefreshOdometerVisibility(true)
+            viewModel.selection.value?.let {
+                synchronizeOdometer(it, SynchronizationType.DEFAULT)
+            }
         }
 
-        viewModel.odometerData.observe(this, {
+        viewModel.vehicleOdometerData.observe(this, {
             if (it) {
-                updateOdometerData()
+                viewModel.selection.value?.let { vehicleId ->
+                    mileage_vehicle_item.configureOdometerItem(
+                        vehicleId,
+                        OdometerItemType.ODOMETER,
+                        this@OdometerVehicleListFragment
+                    )
+                }
             } else {
                 Toast.makeText(
                     requireContext(),
                     DKResource.convertToString(
                         requireContext(),
-                        "dk_challenge_score_alert_message"
+                        "dk_vehicle_odometer_failed_to_sync"
                     ),
                     Toast.LENGTH_LONG
                 ).show()
             }
+            updateProgressVisibility(false)
+            updateSwipeRefreshOdometerVisibility(false)
         })
+        viewModel.getVehicleListItems(requireContext())
 
-        //TODO show filter and data in the same time / after odometer data is ready
-        viewModel.getFilterItems(requireContext())
-        setupPopup()
+        viewModel.selection.observe(this, {
+            synchronizeOdometer(it, SynchronizationType.DEFAULT)
+        })
     }
 
-    private fun setupPopup() {
-        image_view_popup.apply {
-            setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_dots"))
-            setColorFilter(DriveKitUI.colors.secondaryColor())
-            setOnClickListener {
-                val popupMenu = PopupMenu(context, it)
-                val itemsList: List<OdometerActionItem> = OdometerAction.values().toList()
-                for (i in itemsList.indices) {
-                    popupMenu.menu.add(
-                        Menu.NONE,
-                        i,
-                        i,
-                        DKSpannable().append(itemsList[i].getTitle(context), context.resSpans {
-                            color(DriveKitUI.colors.mainFontColor())
-                        }).toSpannable()
-                    )
-                }
-                popupMenu.show()
-                popupMenu.setOnMenuItemClickListener { menuItem ->
-                    viewModel.currentVehicleId?.let { vehicleId ->
-                        context?.let { context ->
-                            itemsList[menuItem.itemId].onItemClicked(context, vehicleId)
-                        }
-                    }
-                    return@setOnMenuItemClickListener false
-                }
-            }
-        }
+    private fun synchronizeOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
+        updateProgressVisibility(true)
+        viewModel.getOdometer(vehicleId, synchronizationType)
     }
 
-    private fun updateOdometerData() {
-        text_total_distance_title.text = viewModel.getDistance(requireContext())
-        text_total_distance_description.text = viewModel.getDate(requireContext())
-        dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false)
-    }
-
-    companion object {
-        fun newInstance(): OdometerVehicleListFragment {
-            return OdometerVehicleListFragment()
-        }
-    }
-
-    private fun initFilter(synchronizationType: SynchronizationType = SynchronizationType.CACHE) {
-        filter_view.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+    private fun initVehicleFilter() {
+        vehicle_filter.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
                 view: View,
@@ -123,23 +92,61 @@ class OdometerVehicleListFragment : Fragment() {
             ) {
                 val itemId = viewModel.filterItems[position].getItemId()
                 itemId?.let {
-                    viewModel.updateVehicleMileageData((it as String), synchronizationType)
+                    viewModel.selection.postValue(it as String)
                 }
             }
-
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
     }
 
-    private fun configureFilter() {
-        filter_view.setItems(viewModel.filterItems)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false)
+
+    companion object {
+        fun newInstance() = OdometerVehicleListFragment()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+    }
+
+    private fun updateSwipeRefreshOdometerVisibility(display: Boolean) {
+        if (display) {
+            dk_swipe_refresh_odometer.isRefreshing = display
         } else {
-            progress_circular.visibility = View.GONE
+            dk_swipe_refresh_odometer.visibility = View.VISIBLE
+            dk_swipe_refresh_odometer.isRefreshing = display
+        }
+    }
+
+    override fun onDrawableClicked(view: View, odometerItemType: OdometerItemType) {
+        val popupMenu = PopupMenu(context, view)
+        val itemsList: List<OdometerActionItem> = OdometerAction.values().toList()
+        for (i in itemsList.indices) {
+            popupMenu.menu.add(
+                Menu.NONE,
+                i,
+                i,
+                DKSpannable().append(itemsList[i].getTitle(requireContext()), requireContext().resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                }).toSpannable()
+            )
+        }
+        popupMenu.show()
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            viewModel.selection.value?.let { vehicleId ->
+                context?.let { context ->
+                    itemsList[menuItem.itemId].onItemClicked(context, vehicleId)
+                }
+            }
+            return@setOnMenuItemClickListener false
         }
     }
 }
