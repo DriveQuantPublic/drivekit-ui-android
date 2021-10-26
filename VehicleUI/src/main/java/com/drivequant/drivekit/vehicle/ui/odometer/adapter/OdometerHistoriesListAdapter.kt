@@ -53,7 +53,6 @@ class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 }
 
 interface OdometerHistoriesListener {
-    fun onHistoryClicked(vehicleId: String)
+    fun onHistoryClicked(historyId: Int)
 }
-
 

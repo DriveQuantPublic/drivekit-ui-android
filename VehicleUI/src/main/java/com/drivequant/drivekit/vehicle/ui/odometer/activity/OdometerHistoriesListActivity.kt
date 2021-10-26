@@ -24,7 +24,6 @@ class OdometerHistoriesListActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_odometer_histories_list)

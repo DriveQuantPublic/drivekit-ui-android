@@ -45,7 +45,7 @@ class OdometerVehicleListViewModel : ViewModel() {
         DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
             filterItems.addAll(it)
         }
-        selection.value = filterItems.first().getItemId() as String
+        selection.value = if (filterItems.isNotEmpty()) filterItems.first().getItemId() as String else null
         filterData.postValue(filterItems)
     }
 }

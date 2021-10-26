@@ -16,7 +16,7 @@ class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
         DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
             .execute().map {
             OdometerHistoryData(
-                it.vehicleId,
+                it.historyId,
                 it.realDistance,
                 it.updateDate
             )
@@ -32,12 +32,11 @@ class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
 }
 
 data class OdometerHistoryData(
-    val historyId: String,
+    val historyId: Int,
     private val realDistance: Double,
-    private val date: Date?
-) {
+    private val date: Date?) {
     fun getRealDistance(context: Context) =
-        DKDataFormatter.formatMeterDistanceInKm(context, realDistance * 100).convertToString()
+        DKDataFormatter.formatMeterDistanceInKm(context, realDistance * 1000).convertToString()
 
     fun getUpdateDate() = date?.formatDate(DKDatePattern.FULL_DATE)
 }

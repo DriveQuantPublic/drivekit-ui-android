@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.adapter.OdometerHistoriesListAdapter
 import com.drivequant.drivekit.vehicle.ui.odometer.adapter.OdometerHistoriesListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoriesViewModel
@@ -58,12 +58,13 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
                 historyAdapter = OdometerHistoriesListAdapter(requireContext(), viewModel, this)
             }
             dk_recycler_view_histories.adapter = historyAdapter
-        }
 
-        dk_button_add_reference.apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            setOnClickListener {
-                //TODO go to odometer history detail
+
+            dk_button_add_reference.apply {
+                setBackgroundColor(DriveKitUI.colors.secondaryColor())
+                setOnClickListener {
+                    OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
+                }
             }
         }
     }
@@ -77,7 +78,11 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
             }
     }
 
-    override fun onHistoryClicked(vehicleId: String) {
-        Log.e("TEST", vehicleId)
+    override fun onHistoryClicked(historyId: Int) {
+        vehicleId?.let {
+            context?.let { context ->
+                OdometerHistoryDetailActivity.launchActivity(context, it, historyId)
+            }
+        }
     }
 }
