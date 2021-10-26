@@ -47,7 +47,8 @@ class OdometerItemViewModel(val vehicleId: String) {
         val analyzedDistance = vehicleOdometer?.yearAnalyzedDistance?.let {
             DKDataFormatter.formatMeterDistance(
                 context,
-                it * 1000
+                it * 1000,
+                false
             ).convertToString()
         } ?: run {
             ""

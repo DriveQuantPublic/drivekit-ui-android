@@ -10,11 +10,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 
 class EditableDrawableText : LinearLayout {
-    private val editTextManualTripEditable = true
-    private val editTextManualTripGreyedOut = false
+
     private var inputType = InputType.TYPE_CLASS_TEXT
     private var imageView: ImageView? = null
     private var textView: TextView? = null
@@ -71,9 +72,9 @@ class EditableDrawableText : LinearLayout {
         )
     }
 
-    fun setInputType(inputType: Int) {
+    private fun setInputType(inputType: Int) {
         this.inputType = inputType
-        textView!!.inputType = inputType
+        textView?.inputType = inputType
     }
 
     fun setEditTextTitle(title: String?) {
@@ -83,19 +84,16 @@ class EditableDrawableText : LinearLayout {
     }
 
     private fun setEditTextHint(hint: String?) {
-        if (!TextUtils.isEmpty(hint)) {
-            textView!!.hint = hint
+        if (!hint.isNullOrBlank()) {
+            textView?.hint = hint
         }
     }
 
     private fun setEditTextDrawable(drawableResId: Int) {
         if (drawableResId > 0) {
-            val drawable = ContextCompat.getDrawable(context, drawableResId)
-            if (drawable != null) {
-                val wrapped = DrawableCompat.wrap(drawable)
-                wrapped.mutate()
-                DrawableCompat.setTint(wrapped, ContextCompat.getColor(context, R.color.dkGood))
-                imageView!!.setImageDrawable(drawable)
+            ContextCompat.getDrawable(context, drawableResId)?.let {
+                DrawableCompat.wrap(it).mutate().tintDrawable(DriveKitUI.colors.mainFontColor())
+                imageView!!.setImageDrawable(it)
             }
         }
     }

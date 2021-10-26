@@ -1,69 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F0F0F0"
     tools:context="com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.cardview.widget.CardView
+                style="@style/DKCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/DKCard"
                 android:layout_margin="@dimen/dk_margin">
+
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="@dimen/dk_margin_half"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
+                    android:orientation="vertical"
+                    android:padding="@dimen/dk_margin_half">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/dk_margin"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dk_margin">
+                        android:orientation="horizontal">
+
                         <TextView
+                            android:id="@+id/text_view_history_detail_title"
                             android:layout_width="0dp"
+                            android:layout_height="@dimen/dk_margin_double"
                             android:layout_weight="1"
-                            android:layout_height="32dp"
-                            android:textAllCaps="true"
-                            android:textColor="#000"
                             android:gravity="center_vertical"
-                            android:text="@string/dk_vehicle_odometer_odometer_history_detail_title"/>
+                            tools:text="@string/dk_vehicle_odometer_odometer_history_detail_title"
+                            android:textAllCaps="true" />
                     </LinearLayout>
 
                     <com.drivequant.drivekit.common.ui.component.EditableDrawableText
                         android:id="@+id/edit_text_distance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:editTextTitleHint="@string/dk_vehicle_odometer_reference_update"
-                        app:editTextTitleDrawable="@drawable/dk_common_eco_accel"
                         android:layout_marginBottom="@dimen/dk_margin_half"
-                        />
+                        app:editTextTitleDrawable="@drawable/dk_common_eco_accel"
+                        app:editTextTitleHint="@string/dk_vehicle_odometer_reference_update" />
 
                     <com.drivequant.drivekit.common.ui.component.EditableDrawableText
                         android:id="@+id/edit_text_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:editTextTitleHint="@string/dk_vehicle_odometer_reference_date"
-                        app:editTextTitleDrawable="@drawable/dk_common_calendar"
                         android:layout_marginBottom="@dimen/dk_margin_half"
-                        />
+                        app:editTextTitleDrawable="@drawable/dk_common_calendar"
+                        app:editTextTitleHint="@string/dk_vehicle_odometer_reference_date" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#FFF">
+                        android:background="#F0F0F0">
+
                         <include layout="@layout/dk_custom_filter_spinner_item" />
 
                     </LinearLayout>
@@ -75,41 +78,39 @@
                 android:id="@+id/button_validate_reference"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="#000"
-                android:textColor="@android:color/white"
-                android:text="@string/dk_common_validate"
-                android:textAllCaps="true"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginStart="@dimen/dk_margin"
-                android:layout_marginEnd="@dimen/dk_margin"/>
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:gravity="center"
+                android:text="@string/dk_common_validate"
+                android:textAllCaps="true" />
 
             <Button
                 android:id="@+id/button_cancel_action"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textColor="#77E2B0"
-                android:text="@string/dk_common_cancel"
-                android:textAllCaps="true"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginStart="@dimen/dk_margin"
-                android:layout_marginEnd="@dimen/dk_margin"/>
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:background="@drawable/dk_button_bgd"
+                android:gravity="center"
+                tools:text="@string/dk_common_cancel"
+                android:textAllCaps="true"
+                tools:textColor="#77E2B0"
+                tools:textSize="14sp" />
 
             <TextView
                 android:id="@+id/button_delete_reference"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textColor="#77E2B0"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:gravity="center"
                 android:text="@string/dk_common_delete"
                 android:textAllCaps="true"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/dk_margin_half"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

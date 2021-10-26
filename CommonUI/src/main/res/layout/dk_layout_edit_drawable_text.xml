@@ -23,6 +23,6 @@
         android:background="@null"
         android:textColor="#616161"
         android:textSize="12sp"
-        tools:hint="Bonjour ceci est un hint"
-        tools:text="Bonjour ceci est un texte" />
+        tools:hint="This is a hint"
+        tools:text="This is a text" />
 </LinearLayout>
