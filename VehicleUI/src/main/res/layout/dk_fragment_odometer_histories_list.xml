@@ -8,7 +8,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dk_recycler_view_histories"
-        android:layout_marginTop="@dimen/dk_ic_xxbig"
         android:layout_marginBottom="@dimen/dk_ic_xxbig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -18,10 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textColor="@android:color/white"
-        android:text="@string/dk_vehicle_odometer_add_reference"
+        tools:text="@string/dk_vehicle_odometer_add_reference"
         android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textSize="14sp"
         android:gravity="center"
         android:layout_gravity="bottom"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

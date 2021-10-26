@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
@@ -86,11 +89,21 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
                 text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
 
-                button_update_odometer_reading.setOnClickListener {
-                    //TODO
+                button_update_odometer_reading.apply {
+                    text = DKResource.convertToString(context, "dk_vehicle_odometer_reference_update")
+                    headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
+                    setBackgroundColor(DriveKitUI.colors.secondaryColor())
+                    setOnClickListener {
+                        OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
+                    }
                 }
-                button_display_odometer_readings.setOnClickListener {
-                    OdometerHistoriesListActivity.launchActivity(context, vehicleId)
+
+                button_display_odometer_readings.apply {
+                    text = DKResource.convertToString(context, "dk_vehicle_odometer_references_link")
+                    headLine2(DriveKitUI.colors.secondaryColor())
+                    setOnClickListener {
+                        OdometerHistoriesListActivity.launchActivity(context, vehicleId)
+                    }
                 }
             }
         }

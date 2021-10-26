@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.adapter.OdometerHistoriesListAdapter
@@ -59,8 +61,9 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
             }
             dk_recycler_view_histories.adapter = historyAdapter
 
-
             dk_button_add_reference.apply {
+                text = DKResource.convertToString(context, "dk_vehicle_odometer_add_reference")
+                headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
                 setBackgroundColor(DriveKitUI.colors.secondaryColor())
                 setOnClickListener {
                     OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)

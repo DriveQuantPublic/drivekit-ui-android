@@ -34,13 +34,13 @@
 
                 <ImageView
                     android:id="@+id/image_view_info"
-                    android:layout_width="@dimen/dk_ic_medium"
-                    android:layout_height="@dimen/dk_ic_medium"
-                    android:contentDescription="@string/dk_common_activate"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     tools:src="@drawable/dk_common_info" />
             </LinearLayout>
 
             <TextView
+                android:layout_marginTop="@dimen/dk_margin_eigth"
                 android:id="@+id/dk_view_separator"
                 style="@style/Separator.Horizontal"/>
 

@@ -14,13 +14,15 @@ class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
 
     fun getOdometerHistoriesList() =
         DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
-            .execute().map {
-            OdometerHistoryData(
-                it.historyId,
-                it.realDistance,
+            .execute().sortedByDescending {
                 it.updateDate
-            )
-        }
+            }.map {
+                OdometerHistoryData(
+                    it.historyId,
+                    it.realDistance,
+                    it.updateDate
+                )
+            }
 
     @Suppress("UNCHECKED_CAST")
     class OdometerHistoriesViewModelFactory(private val vehicleId: String) :

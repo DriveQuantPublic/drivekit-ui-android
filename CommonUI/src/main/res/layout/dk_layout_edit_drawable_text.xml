@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="@dimen/dk_margin_half">
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:drawablePadding="4dp"
-        android:contentDescription="@string/app_name"/>
+        android:layout_width="@dimen/dk_margin_double"
+        android:layout_height="@dimen/dk_margin_double"
+        android:drawablePadding="@dimen/dk_margin_quarter"/>
 
     <TextView
         android:id="@+id/edit_text"
@@ -21,8 +20,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:background="@null"
-        android:textColor="#616161"
-        android:textSize="12sp"
         tools:hint="This is a hint"
         tools:text="This is a text" />
 </LinearLayout>

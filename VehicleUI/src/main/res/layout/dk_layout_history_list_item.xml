@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardView"
+    style="@style/DKCard"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:clickable="true"
@@ -15,12 +15,11 @@
         android:padding="@dimen/dk_margin_half">
 
         <ImageView
-            android:layout_width="@dimen/dk_ic_medium"
-            android:layout_height="@dimen/dk_ic_medium"
+            android:layout_width="@dimen/dk_ic_big"
+            android:layout_height="@dimen/dk_ic_big"
             android:layout_marginStart="@dimen/dk_margin"
             android:layout_marginEnd="@dimen/dk_margin"
-            android:src="@drawable/dk_common_eco_accel"
-            android:contentDescription="@string/dk_common_see_more_trips"/>
+            android:src="@drawable/dk_common_eco_accel" />
 
         <TextView
             android:id="@+id/text_view_distance_km"
@@ -30,8 +29,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
-            android:textColor="#000"
-            android:textStyle="bold"
+            tools:textColor="#000"
+            tools:textStyle="bold"
             tools:text="330 000 km" />
 
         <TextView
@@ -39,12 +38,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dk_margin"
-            android:layout_weight="1.5"
+            android:layout_weight="1.6"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
-            android:textColor="#000"
-            android:textSize="12sp"
+            tools:textColor="#000"
+            tools:textSize="12sp"
             tools:text="Dimanche 14 Décembre 2019" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

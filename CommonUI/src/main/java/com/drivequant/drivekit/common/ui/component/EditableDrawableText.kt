@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
+import android.graphics.Color
 import android.text.InputType
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 
 class EditableDrawableText : LinearLayout {
@@ -40,6 +42,8 @@ class EditableDrawableText : LinearLayout {
         val view = inflate(context, R.layout.dk_layout_edit_drawable_text, null)
         imageView = view.findViewById(R.id.image_view)
         textView = view.findViewById(R.id.edit_text)
+        textView!!.smallText(Color.parseColor("#616161"))
+        view.setBackgroundColor(DriveKitUI.colors.neutralColor())
         if (attrs != null) {
             val a = context.theme.obtainStyledAttributes(
                 attrs,

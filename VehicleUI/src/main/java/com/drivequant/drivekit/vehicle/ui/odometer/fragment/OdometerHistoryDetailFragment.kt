@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -109,11 +111,13 @@ class OdometerHistoryDetailFragment : Fragment() {
     }
 
     private fun configureVehicle(context: Context, vehicleId: String) {
-        text_view_item_display_name.text =
-            DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne()
+        text_view_item_display_name.apply {
+            smallText(Color.parseColor("#616161"))
+            text = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne()
                 .executeOne()?.let {
                     VehicleUtils().buildFormattedName(context, it)
                 }
+        }
 
         VehicleUtils().getVehicleDrawable(context, vehicleId)?.let { drawable ->
             Glide.with(context)

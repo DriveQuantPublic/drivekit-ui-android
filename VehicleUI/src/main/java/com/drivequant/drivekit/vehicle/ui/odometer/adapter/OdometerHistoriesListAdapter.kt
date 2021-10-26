@@ -1,11 +1,16 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoriesViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryData
@@ -44,10 +49,12 @@ class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     fun bind(historyData: OdometerHistoryData) {
         date.apply {
             text = historyData.getUpdateDate()
+            smallText(ContextCompat.getColor(itemView.context, R.color.dkOdometerHistoryDateColor))
         }
 
         distance.apply {
             text = historyData.getRealDistance(itemView.context)
+            headLine2()
         }
     }
 }
