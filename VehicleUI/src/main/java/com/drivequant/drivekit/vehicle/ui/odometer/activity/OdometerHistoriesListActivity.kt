@@ -11,7 +11,6 @@ import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoriesLis
 
 class OdometerHistoriesListActivity : AppCompatActivity() {
 
-
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
 

@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,15 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
     private var vehicleId: String? = null
     private var historyAdapter: OdometerHistoriesListAdapter? = null
     private lateinit var viewModel: OdometerHistoriesViewModel
+
+    companion object {
+        fun newInstance(vehicleId: String) =
+            OdometerHistoriesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString("vehicleIdTag", vehicleId)
+                }
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,35 +60,37 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
             vehicleId = it
         }
         vehicleId?.let { vehicleId ->
-            viewModel = ViewModelProviders.of(
-                this,
-                OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId)
-            ).get(OdometerHistoriesViewModel::class.java)
-
-            dk_recycler_view_histories.layoutManager = LinearLayoutManager(requireContext())
-            historyAdapter?.notifyDataSetChanged() ?: run {
-                historyAdapter = OdometerHistoriesListAdapter(requireContext(), viewModel, this)
-            }
-            dk_recycler_view_histories.adapter = historyAdapter
-
-            dk_button_add_reference.apply {
-                text = DKResource.convertToString(context, "dk_vehicle_odometer_add_reference")
-                headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-                setBackgroundColor(DriveKitUI.colors.secondaryColor())
-                setOnClickListener {
-                    OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
-                }
+            context?.let { context ->
+                viewModel = ViewModelProviders.of(this,
+                OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId)).get(OdometerHistoriesViewModel::class.java)
+                initReadingsList()
+                addOdometerReading(context, vehicleId)
             }
         }
     }
 
-    companion object {
-        fun newInstance(vehicleId: String) =
-            OdometerHistoriesListFragment().apply {
-                arguments = Bundle().apply {
-                    putString("vehicleIdTag", vehicleId)
-                }
+    private fun addOdometerReading(context: Context, vehicleId: String) {
+        dk_button_add_reference.apply {
+            text = DKResource.convertToString(context, "dk_vehicle_odometer_add_reference")
+            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
             }
+        }
+    }
+
+    private fun initReadingsList() {
+        dk_recycler_view_histories.layoutManager = LinearLayoutManager(requireContext())
+        historyAdapter?.notifyDataSetChanged() ?: run {
+            historyAdapter = OdometerHistoriesListAdapter(requireContext(), viewModel, this)
+        }
+        dk_recycler_view_histories.adapter = historyAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        historyAdapter?.notifyDataSetChanged()
     }
 
     override fun onHistoryClicked(historyId: Int) {

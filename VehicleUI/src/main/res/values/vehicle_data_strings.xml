@@ -195,5 +195,11 @@
    <string name="dk_vehicle_version_description">Version of the vehicle?</string>
    <string name="dk_vehicle_year_description">Year of release?</string>
    <string name="dk_version">Version</string>
+
    <string name="dk_vehicle_odometer_failed_to_sync" translatable="false">Failed to synchronize vehicle odometer data, please retry later.</string>
+   <string name="dk_vehicle_not_found" translatable="false">Le véhicule n\'a pas été trouvé</string>
+   <string name="dk_vehicle_odometer_history_not_found" translatable="false">Aucune référence kilométrique ne correspond à l\'identifiant renseigné.</string>
+   <string name="dk_vehicle_odometer_last_history_error" translatable="false">La dernière référence kilométrique ne peut pas être supprimée.</string>
+   <string name="dk_vehicle_odometer_bad_distance" translatable="false">La valeur saisie n\'est pas plausible</string>
+   <string name="dk_vehicle_odometer_mileage_kilometer" translatable="false">Mileage (km)</string>
 </resources>

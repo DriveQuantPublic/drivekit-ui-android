@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 
 import android.content.Context
-import android.util.Log
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 
 enum class OdometerAction(
@@ -17,7 +17,7 @@ enum class OdometerAction(
         vehicleId: String) {
         when (this) {
             SHOW -> OdometerVehicleDetailActivity.launchActivity(context, vehicleId)
-            ADD  -> Log.e("TEST_vehicleId", "add : ${vehicleId}")
+            ADD  -> OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
         }
     }
 }

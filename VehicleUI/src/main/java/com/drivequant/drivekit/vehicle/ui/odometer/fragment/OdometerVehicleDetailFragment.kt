@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,17 +31,26 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     private var vehicleId: String? = null
     private lateinit var viewModel: OdometerDetailViewModel
 
+    companion object {
+        fun newInstance(vehicleId: String) =
+            OdometerVehicleDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putString("vehicleIdArg", vehicleId)
+                }
+            }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            vehicleId = it.getString("vehicleId_arg")
+            vehicleId = it.getString("vehicleIdArg")
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         vehicleId?.let {
-            outState.putString("vehicleId", it)
+            outState.putString("vehicleIdTag", it)
         }
         super.onSaveInstanceState(outState)
     }
@@ -52,70 +62,69 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getString("vehicleId"))?.let {
+        (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }
         vehicleId?.let { vehicleId ->
-            viewModel = ViewModelProviders.of(
-                this,
-                OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)
-            ).get(OdometerDetailViewModel::class.java)
-
-            val itemViewModel = OdometerItemViewModel(vehicleId)
-            mileage_vehicle_item.configureOdometerItem(
-                itemViewModel,
-                OdometerItemType.ODOMETER,
-                this
-            )
-            distance_estimated_item.configureOdometerItem(
-                itemViewModel,
-                OdometerItemType.ESTIMATED,
-                this
-            )
-            distance_analyzed_item.configureOdometerItem(
-                itemViewModel,
-                OdometerItemType.ANALYZED,
-                this
-            )
-
             context?.let { context ->
-                viewModel.getVehicleDrawable(context)?.let { drawable ->
-                    Glide.with(context)
-                        .load(drawable)
-                        .apply(RequestOptions.circleCropTransform())
-                        .placeholder(drawable)
-                        .into(image_item)
-                }
-
-                text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
-
-                button_update_odometer_reading.apply {
-                    text = DKResource.convertToString(context, "dk_vehicle_odometer_reference_update")
-                    headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
-                    setBackgroundColor(DriveKitUI.colors.secondaryColor())
-                    setOnClickListener {
-                        OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
-                    }
-                }
-
-                button_display_odometer_readings.apply {
-                    text = DKResource.convertToString(context, "dk_vehicle_odometer_references_link")
-                    headLine2(DriveKitUI.colors.secondaryColor())
-                    setOnClickListener {
-                        OdometerHistoriesListActivity.launchActivity(context, vehicleId)
-                    }
-                }
+            viewModel = ViewModelProviders.of(this,
+                OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)).get(OdometerDetailViewModel::class.java)
+                initVehicleOdometerDetail(vehicleId)
+                initVehicle(context)
+                displayOdometerReadings(context, vehicleId)
+                updateOdometerClicked(context, vehicleId)
             }
         }
     }
 
-    companion object {
-        fun newInstance(vehicleId: String) =
-            OdometerVehicleDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString("vehicleId_arg", vehicleId)
-                }
+    private fun displayOdometerReadings(context: Context, vehicleId: String) {
+        button_display_odometer_readings.apply {
+            text = DKResource.convertToString(context, "dk_vehicle_odometer_references_link")
+            headLine2(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                OdometerHistoriesListActivity.launchActivity(context, vehicleId)
             }
+        }
+    }
+
+    private fun updateOdometerClicked(context: Context, vehicleId: String) {
+        button_update_odometer_reading.apply {
+            text = DKResource.convertToString(context, "dk_vehicle_odometer_reference_update")
+            headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
+            }
+        }
+    }
+
+    private fun initVehicle(context: Context) {
+        viewModel.getVehicleDrawable(context)?.let { drawable ->
+            Glide.with(context)
+                .load(drawable)
+                .apply(RequestOptions.circleCropTransform())
+                .placeholder(drawable)
+                .into(image_item)
+        }
+        text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
+    }
+
+    private fun initVehicleOdometerDetail(vehicleId: String) {
+        val itemViewModel = OdometerItemViewModel(vehicleId)
+        mileage_vehicle_item.configureOdometerItem(
+            itemViewModel,
+            OdometerItemType.ODOMETER,
+            this)
+
+        distance_estimated_item.configureOdometerItem(
+            itemViewModel,
+            OdometerItemType.ESTIMATED,
+            this)
+
+        distance_analyzed_item.configureOdometerItem(
+            itemViewModel,
+            OdometerItemType.ANALYZED,
+            this)
     }
 
     override fun onDrawableClicked(view: View, odometerItemType: OdometerItemType) {

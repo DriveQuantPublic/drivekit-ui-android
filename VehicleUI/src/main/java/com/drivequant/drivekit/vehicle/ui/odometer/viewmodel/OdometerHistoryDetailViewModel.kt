@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 
 import android.content.Context
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
@@ -17,9 +17,12 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.odometer.*
 import java.util.*
 
-class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) : ViewModel() {
+class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) :
+    ViewModel() {
 
     private var vehicleOdometerHistory: VehicleOdometerHistory? = null
+    var odometerActionObserver: MutableLiveData<Pair<String, Boolean>> = MutableLiveData()
+    var mileageDistance = 0.0
 
     init {
         vehicleOdometerHistory = DriveKitVehicle.odometerHistoriesQuery()
@@ -48,8 +51,12 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
         .executeOne()
 
     fun getHistoryDistance(context: Context) = vehicleOdometerHistory?.let {
+        mileageDistance = it.distance
         DKDataFormatter.formatMeterDistanceInKm(context, it.distance * 1000).convertToString()
-    } ?: DKResource.convertToString(context, "dk_vehicle_odometer_reference_update")
+    } ?: DKResource.convertToString(context, "dk_vehicle_odometer_mileage_kilometer")
+
+    fun getFormattedMileageDistance(context: Context, unit: Boolean = true) =
+        DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit).convertToString()
 
     fun getHistoryUpdateDate() = if (isAddMode()) {
         Calendar.getInstance().time
@@ -57,34 +64,46 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
         vehicleOdometerHistory?.updateDate
     }?.formatDate(DKDatePattern.FULL_DATE)?.capitalizeFirstLetter() ?: ""
 
-
-    fun addOdometerHistory(distance: Double) {
+    fun addOdometerHistory() {
         DriveKitVehicle.addOdometerHistory(
             vehicleId,
-            distance,
+            mileageDistance,
             object : OdometerAddHistoryQueryListener {
                 override fun onResponse(
                     status: OdometerAddHistoryStatus,
                     odometer: VehicleOdometer?,
-                    histories: List<VehicleOdometerHistory>
-                ) {
-                    Log.e("TEST_SERVICE", "from add $status")
+                    histories: List<VehicleOdometerHistory>) {
+                    when (status) {
+                        OdometerAddHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_add_success", true)
+                        OdometerAddHistoryStatus.FAILED ->  Pair("dk_common_error_message",false)
+                        OdometerAddHistoryStatus.VEHICLE_NOT_FOUND ->  Pair("dk_vehicle_not_found", false)
+                        OdometerAddHistoryStatus.BAD_DISTANCE ->   Pair("dk_vehicle_odometer_bad_distance",false)
+                    }.let {
+                        odometerActionObserver.postValue(it)
+                    }
                 }
             })
     }
 
-    fun updateOdometerHistory(distance: Double) {
+    fun updateOdometerHistory() {
         DriveKitVehicle.updateOdometerHistory(
             vehicleId,
             historyId,
-            distance,
+            mileageDistance,
             object : OdometerUpdateHistoryQueryListener {
                 override fun onResponse(
                     status: OdometerUpdateHistoryStatus,
                     odometer: VehicleOdometer?,
-                    histories: List<VehicleOdometerHistory>
-                ) {
-                    Log.e("TEST_SERVICE", "from update : $status")
+                    histories: List<VehicleOdometerHistory>) {
+                    when (status) {
+                        OdometerUpdateHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_update_success", true)
+                        OdometerUpdateHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
+                        OdometerUpdateHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found", false)
+                        OdometerUpdateHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found", false)
+                        OdometerUpdateHistoryStatus.BAD_DISTANCE -> Pair("dk_vehicle_odometer_bad_distance", false)
+                    }.let {
+                        odometerActionObserver.postValue(it)
+                    }
                 }
             })
     }
@@ -97,9 +116,16 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
                 override fun onResponse(
                     status: OdometerDeleteHistoryStatus,
                     odometer: VehicleOdometer?,
-                    histories: List<VehicleOdometerHistory>
-                ) {
-                    Log.e("TEST_SERVICE", "form delete $status")
+                    histories: List<VehicleOdometerHistory>) {
+                    when (status) {
+                        OdometerDeleteHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_delete_success", true)
+                        OdometerDeleteHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
+                        OdometerDeleteHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found",false)
+                        OdometerDeleteHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found",false)
+                        OdometerDeleteHistoryStatus.LAST_ODOMETER_ERROR -> Pair("dk_vehicle_odometer_last_history_error",false)
+                    }.let {
+                        odometerActionObserver.postValue(it)
+                    }
                 }
             })
     }
@@ -107,8 +133,7 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
     @Suppress("UNCHECKED_CAST")
     class OdometerHistoryDetailViewModelFactory(
         private val vehicleId: String,
-        private val historyId: Int
-    ) :
+        private val historyId: Int) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return OdometerHistoryDetailViewModel(vehicleId, historyId) as T

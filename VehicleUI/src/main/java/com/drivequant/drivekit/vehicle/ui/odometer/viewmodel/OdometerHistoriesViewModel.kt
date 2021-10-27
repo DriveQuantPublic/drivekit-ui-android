@@ -37,8 +37,6 @@ data class OdometerHistoryData(
     val historyId: Int,
     private val realDistance: Double,
     private val date: Date?) {
-    fun getRealDistance(context: Context) =
-        DKDataFormatter.formatMeterDistanceInKm(context, realDistance * 1000).convertToString()
-
+    fun getRealDistance(context: Context) = DKDataFormatter.formatMeterDistanceInKm(context, realDistance * 1000).convertToString()
     fun getUpdateDate() = date?.formatDate(DKDatePattern.FULL_DATE)
 }

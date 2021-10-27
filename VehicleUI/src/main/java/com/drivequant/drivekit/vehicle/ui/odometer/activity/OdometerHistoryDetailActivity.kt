@@ -25,7 +25,6 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_odometer_history_detail)
@@ -35,10 +34,16 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        title = DKResource.convertToString(this, "dk_vehicle_odometer_references_title")
-
         val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
         val historyId = intent.getIntExtra(HISTORY_ID_EXTRA, -1)
+
+        if (historyId == -1) {
+            "dk_vehicle_odometer_reference_add"
+        } else {
+            "dk_vehicle_odometer_references_title"
+        }.let {
+            title = DKResource.convertToString(this, it)
+        }
 
         supportFragmentManager
             .beginTransaction()

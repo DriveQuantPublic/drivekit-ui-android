@@ -28,6 +28,10 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     private lateinit var synchronizationType: SynchronizationType
     private var shouldSyncOdometer = true
 
+    companion object {
+        fun newInstance() = OdometerVehicleListFragment()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!this::viewModel.isInitialized) {
@@ -48,7 +52,6 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
         viewModel.vehicleOdometerData.observe(this, {
             if (it) {
-
                 viewModel.selection.value?.let { vehicleId ->
                     val viewModel = OdometerItemViewModel(vehicleId)
                     mileage_vehicle_item.configureOdometerItem(
@@ -70,7 +73,6 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             updateProgressVisibility(false)
             updateSwipeRefreshOdometerVisibility(false)
 
-            // If user has data in local database then load them first, then fetch odometer data
             if (synchronizationType == SynchronizationType.CACHE && shouldSyncOdometer) {
                 shouldSyncOdometer = false
                 viewModel.selection.value?.let { vehicleId ->
@@ -78,8 +80,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 }
             }
         })
-        viewModel.getVehicleListItems(requireContext())
 
+        viewModel.getVehicleListItems(requireContext())
         viewModel.selection.observe(this, {
             val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
             synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
@@ -112,10 +114,6 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false)
-
-    companion object {
-        fun newInstance() = OdometerVehicleListFragment()
-    }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         progress_circular?.apply {

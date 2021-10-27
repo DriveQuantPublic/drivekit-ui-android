@@ -45,14 +45,12 @@ class OdometerItemViewModel(val vehicleId: String) {
 
     private fun getAnalyzedDistanceDescription(context: Context): String {
         val analyzedDistance = vehicleOdometer?.yearAnalyzedDistance?.let {
-            DKDataFormatter.formatMeterDistance(
+            DKDataFormatter.formatMeterDistanceInKm(
                 context,
                 it * 1000,
                 false
             ).convertToString()
-        } ?: run {
-            ""
-        }
+        } ?: ""
 
        return DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
@@ -71,25 +69,21 @@ class OdometerItemViewModel(val vehicleId: String) {
                 "dk_vehicle_odometer_last_update",
                 it
             )
-        } ?: run {
-            ""
-        }
+        } ?: ""
     }"
 
     private fun getMileageDistance(context: Context) = vehicleOdometer?.distance?.let {
         DKDataFormatter.formatMeterDistanceInKm(context, it * 1000).convertToString()
-    } ?: run {
-        ""
-    }
+    } ?: ""
+
 
     private fun getAnalyzedDistance(context: Context) = vehicleOdometer?.analyzedDistance?.let {
         DKDataFormatter.formatMeterDistanceInKm(
             context,
             it * 1000
         ).convertToString()
-    } ?: run {
-        ""
-    }
+    } ?: ""
+
 
     private fun getEstimatedAnnualDistance(context: Context) =
         vehicleOdometer?.estimatedYearDistance?.let {
@@ -97,7 +91,5 @@ class OdometerItemViewModel(val vehicleId: String) {
                 context,
                 it * 1000
             ).convertToString()
-        } ?: run {
-            ""
-        }
+        } ?: ""
 }
