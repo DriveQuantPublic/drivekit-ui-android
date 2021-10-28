@@ -12,7 +12,7 @@ import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
 import kotlinx.android.synthetic.main.dk_layout_odometer_distance_item.view.*
 
-class OdometerVehicleDetailView : LinearLayout {
+internal class OdometerVehicleDetailView : LinearLayout {
 
     fun init(attrs: AttributeSet?) {
         val view = View.inflate(context, R.layout.dk_layout_odometer_distance_item, null)
@@ -67,6 +67,6 @@ class OdometerVehicleDetailView : LinearLayout {
     }
 }
 
-interface OdometerDrawableListener {
+internal interface OdometerDrawableListener {
     fun onDrawableClicked(view: View, odometerItemType: OdometerItemType)
 }

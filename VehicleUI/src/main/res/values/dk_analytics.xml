@@ -8,10 +8,9 @@
     <string name="dk_tag_vehicles_beacon_diagnosis" translatable="false">drivekit-vehicles-beacon-diagnosis</string>
     <string name="dk_tag_vehicles_beacon_info" translatable="false">drivekit-vehicles-beacon-info</string>
     <string name="dk_tag_vehicles_bluetooth_add" translatable="false">drivekit-vehicles-bluetooth-add</string>
-
-    <string name="dk_tag_vehicles_odometer_histories_list" translatable="false">drivekit-vehicles-odometer-histories-list</string>
+    <string name="dk_tag_vehicles_odometer_vehicles_list" translatable="false">drivekit-vehicles-odometer-list</string>
+    <string name="dk_tag_vehicles_odometer_vehicles_detail" translatable="false">drivekit-vehicles-odometer-detail</string>
     <string name="dk_tag_vehicles_odometer_history_add" translatable="false">drivekit-vehicles-history-add</string>
     <string name="dk_tag_vehicles_odometer_history_edit" translatable="false">drivekit-vehicles-history-edit</string>
-    <string name="dk_tag_vehicles_odometer_vehicles_detail" translatable="false">drivekit-vehicles-odometer-detail</string>
-    <string name="dk_tag_vehicles_odometer_vehicles_list" translatable="false">drivekit-vehicles-odometer-list</string>
+    <string name="dk_tag_vehicles_odometer_histories_list" translatable="false">drivekit-vehicles-histories-list</string>
 </resources>

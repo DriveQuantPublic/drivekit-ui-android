@@ -60,6 +60,14 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val tag = if (historyId == -1) "dk_tag_vehicles_odometer_history_add" else "dk_tag_vehicles_odometer_history_edit"
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                tag
+            ), javaClass.simpleName
+        )
+
         (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }

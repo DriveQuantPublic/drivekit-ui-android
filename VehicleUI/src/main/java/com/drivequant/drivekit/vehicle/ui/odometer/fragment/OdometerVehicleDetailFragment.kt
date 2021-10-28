@@ -62,6 +62,12 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_vehicles_odometer_vehicles_detail"
+            ), javaClass.simpleName
+        )
         (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }

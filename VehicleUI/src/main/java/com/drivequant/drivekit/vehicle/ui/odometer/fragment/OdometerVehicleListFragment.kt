@@ -34,6 +34,12 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_vehicles_odometer_vehicles_list"
+            ), javaClass.simpleName
+        )
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(OdometerVehicleListViewModel::class.java)
         }
