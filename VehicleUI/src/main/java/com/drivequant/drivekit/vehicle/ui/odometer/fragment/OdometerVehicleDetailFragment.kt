@@ -1,11 +1,14 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -71,11 +74,16 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }
+
+        initVehicleOdometerDetail()
+    }
+
+    private fun initVehicleOdometerDetail() {
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-            viewModel = ViewModelProviders.of(this,
-                OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)).get(OdometerDetailViewModel::class.java)
-                initVehicleOdometerDetail(vehicleId)
+                viewModel = ViewModelProviders.of(this,
+                    OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)).get(OdometerDetailViewModel::class.java)
+                initOdometerItems(vehicleId)
                 initVehicle(context)
                 displayOdometerReadings(context, vehicleId)
                 updateOdometerClicked(context, vehicleId)
@@ -88,7 +96,9 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
             text = DKResource.convertToString(context, "dk_vehicle_odometer_references_link")
             headLine2(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                OdometerHistoriesListActivity.launchActivity(context, vehicleId)
+                activity?.let { activity ->
+                    OdometerHistoriesListActivity.launchActivity(activity, vehicleId, this@OdometerVehicleDetailFragment)
+                }
             }
         }
     }
@@ -99,7 +109,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
+                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerVehicleDetailFragment)
             }
         }
     }
@@ -115,7 +125,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
     }
 
-    private fun initVehicleOdometerDetail(vehicleId: String) {
+    private fun initOdometerItems(vehicleId: String) {
         val itemViewModel = OdometerItemViewModel(vehicleId)
         mileage_vehicle_item.configureOdometerItem(
             itemViewModel,
@@ -167,5 +177,18 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && (
+            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE ||
+            requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE ||
+            requestCode == OdometerHistoriesListActivity.UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)) {
+            initVehicleOdometerDetail()
+            val intentData = Intent()
+            activity?.setResult(Activity.RESULT_OK, intentData)
+        }
     }
 }

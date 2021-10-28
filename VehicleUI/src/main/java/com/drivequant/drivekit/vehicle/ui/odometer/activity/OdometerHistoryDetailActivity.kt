@@ -1,29 +1,43 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.activity
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoriesListFragment
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoryDetailFragment
+import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleListFragment
 
 class OdometerHistoryDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
         private const val HISTORY_ID_EXTRA = "history-id-extra"
+        const val UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE = 97
+        const val UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE = 98
+        const val UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE = 96
 
         fun launchActivity(
-            context: Context,
-            vehicleId: String, historyId: Int) {
-            val intent = Intent(context, OdometerHistoryDetailActivity::class.java)
+            activity: Activity,
+            vehicleId: String,
+            historyId: Int,
+            parentFragment: Fragment? = null) {
+            val intent = Intent(activity, OdometerHistoryDetailActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
             intent.putExtra(HISTORY_ID_EXTRA, historyId)
-            context.startActivity(intent)
+            val requestCode = when (parentFragment) {
+                is OdometerVehicleListFragment -> UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE
+                is OdometerHistoriesListFragment -> UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE
+                else ->  UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE
+            }
+            parentFragment?.startActivityForResult(intent, requestCode)
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,10 +1,13 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,7 +72,7 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
             context?.let { context ->
                 viewModel = ViewModelProviders.of(this,
                 OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId)).get(OdometerHistoriesViewModel::class.java)
-                initReadingsList()
+                initReadingsList(context)
                 addOdometerReading(context, vehicleId)
             }
         }
@@ -81,29 +84,35 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                OdometerHistoryDetailActivity.launchActivity(context, vehicleId, -1)
+                OdometerHistoryDetailActivity.launchActivity(requireActivity(), vehicleId, -1, this@OdometerHistoriesListFragment)
             }
         }
     }
 
-    private fun initReadingsList() {
-        dk_recycler_view_histories.layoutManager = LinearLayoutManager(requireContext())
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initReadingsList(context: Context) {
+        dk_recycler_view_histories.layoutManager = LinearLayoutManager(context)
         historyAdapter?.notifyDataSetChanged() ?: run {
-            historyAdapter = OdometerHistoriesListAdapter(requireContext(), viewModel, this)
+            historyAdapter = OdometerHistoriesListAdapter(context, viewModel, this)
         }
         dk_recycler_view_histories.adapter = historyAdapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        historyAdapter?.notifyDataSetChanged()
+    override fun onHistoryClicked(historyId: Int, context: Context) {
+        vehicleId?.let {
+            activity?.let { activity ->
+                OdometerHistoryDetailActivity.launchActivity(activity, it, historyId, this@OdometerHistoriesListFragment)
+            }
+        }
     }
 
-    override fun onHistoryClicked(historyId: Int) {
-        vehicleId?.let {
-            context?.let { context ->
-                OdometerHistoryDetailActivity.launchActivity(context, it, historyId)
-            }
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_HISTORY_LIST_REQUEST_CODE) {
+            historyAdapter?.notifyDataSetChanged()
+            val intentData = Intent()
+            activity?.setResult(AppCompatActivity.RESULT_OK, intentData)
         }
     }
 }

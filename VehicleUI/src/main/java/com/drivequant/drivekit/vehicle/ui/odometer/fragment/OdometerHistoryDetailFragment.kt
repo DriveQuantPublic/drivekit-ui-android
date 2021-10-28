@@ -1,8 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.KeyEvent
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -78,9 +80,9 @@ class OdometerHistoryDetailFragment : Fragment() {
 
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-            viewModel = ViewModelProviders.of(this,
-                OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
-                    historyId)).get(OdometerHistoryDetailViewModel::class.java)
+                viewModel = ViewModelProviders.of(this,
+                    OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
+                        historyId)).get(OdometerHistoryDetailViewModel::class.java)
 
                 initVehicle(context, vehicleId)
                 initMileageRecord(context)
@@ -93,7 +95,11 @@ class OdometerHistoryDetailFragment : Fragment() {
                     updateProgressVisibility(false)
                     Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()
                     if (it.second) {
-                        activity?.finish()
+                        val intentData = Intent()
+                        activity?.let { activity ->
+                            activity.setResult(Activity.RESULT_OK, intentData)
+                            activity.finish()
+                        }
                     }
                 })
             }
@@ -102,7 +108,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun initVehicle(context: Context, vehicleId: String) {
         text_view_item_display_name.apply {
-            smallText(Color.parseColor("#616161"))
+            smallText(ContextCompat.getColor(context,R.color.dkGrayColor))
             text = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne()
                 .executeOne()?.let {
                     VehicleUtils().buildFormattedName(context, it)
@@ -132,7 +138,7 @@ class OdometerHistoryDetailFragment : Fragment() {
             text = DKResource.convertToString(context, "dk_common_validate")
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             visibility =
-                if (viewModel.isAddMode() || viewModel.canEditHistory()) View.VISIBLE else View.GONE
+                if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
                 updateProgressVisibility(true)
                 if (viewModel.canEditHistory()) {
@@ -148,9 +154,13 @@ class OdometerHistoryDetailFragment : Fragment() {
         button_cancel_action.apply {
             normalText(DriveKitUI.colors.secondaryColor())
             text = DKResource.convertToString(context, "dk_common_cancel")
-            visibility = if (viewModel.isAddMode() || viewModel.canEditHistory()) View.VISIBLE else View.GONE
+            visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
-                activity?.finish()
+                activity?.let {
+                    val intentData = Intent()
+                    it.setResult(Activity.RESULT_CANCELED, intentData)
+                    it.finish()
+                }
             }
         }
     }
@@ -158,7 +168,7 @@ class OdometerHistoryDetailFragment : Fragment() {
     private fun onDistanceClicked(context: Context) {
         edit_text_distance.apply {
             setOnClickListener {
-                if (viewModel.isAddMode() || viewModel.canEditHistory()) {
+                if (viewModel.canEditOrAddHistory()) {
                     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     val view = inflater.inflate(com.drivequant.drivekit.common.ui.R.layout.dk_alert_dialog_edit_value, null)
                     val builder = androidx.appcompat.app.AlertDialog.Builder(context)
@@ -174,7 +184,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                     }
                     editText.apply {
                         inputType = InputType.TYPE_CLASS_NUMBER
-                        if (viewModel.isAddMode()) {
+                        if (viewModel.canAddHistory()) {
                             this.hint = DKResource.convertToString(
                                 context,
                                 "dk_vehicle_odometer_mileage_kilometer"

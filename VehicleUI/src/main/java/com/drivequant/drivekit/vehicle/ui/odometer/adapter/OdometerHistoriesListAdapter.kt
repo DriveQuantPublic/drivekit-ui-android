@@ -33,7 +33,7 @@ class OdometerHistoriesListAdapter(
         parent.apply {
             bind(history)
             itemView.setOnClickListener {
-                listener.onHistoryClicked(history.historyId)
+                listener.onHistoryClicked(history.historyId, context)
             }
         }
     }
@@ -58,6 +58,6 @@ class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 }
 
 interface OdometerHistoriesListener {
-    fun onHistoryClicked(historyId: Int)
+    fun onHistoryClicked(historyId: Int, context: Context)
 }
 

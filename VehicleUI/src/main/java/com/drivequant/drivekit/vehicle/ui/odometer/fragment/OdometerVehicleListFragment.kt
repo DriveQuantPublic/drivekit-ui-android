@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -17,6 +19,8 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.*
@@ -156,11 +160,20 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         popupMenu.show()
         popupMenu.setOnMenuItemClickListener { menuItem ->
             viewModel.selection.value?.let { vehicleId ->
-                context?.let { context ->
-                    itemsList[menuItem.itemId].onItemClicked(context, vehicleId)
+                activity?.let { activity ->
+                    itemsList[menuItem.itemId].onItemClicked(activity, vehicleId, this@OdometerVehicleListFragment)
                 }
             }
             return@setOnMenuItemClickListener false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK && (requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE || requestCode == OdometerVehicleDetailActivity.UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE)) {
+            viewModel.selection.value?.let {
+                updateOdometer(it, SynchronizationType.CACHE)
+            }
         }
     }
 }

@@ -1,25 +1,30 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.activity
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleDetailFragment
 
 class OdometerVehicleDetailActivity : AppCompatActivity() {
 
+    private lateinit var fragment: OdometerVehicleDetailFragment
+
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
+        const val UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE = 97
 
         fun launchActivity(
-            context: Context,
-            vehicleId: String) {
-            val intent = Intent(context, OdometerVehicleDetailActivity::class.java)
+            activity: Activity,
+            vehicleId: String,
+            parentFragment: Fragment? = null) {
+            val intent = Intent(activity, OdometerVehicleDetailActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-            context.startActivity(intent)
+            parentFragment?.startActivityForResult(intent, UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE)
         }
     }
 
@@ -32,13 +37,12 @@ class OdometerVehicleDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         title = DKResource.convertToString(this, "dk_vehicle_odometer_vehicle_title")
+        val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
 
-        val vehicleId =
-            intent.getStringExtra(VEHICLE_ID_EXTRA) as String
-
+        fragment = OdometerVehicleDetailFragment.newInstance(vehicleId)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, OdometerVehicleDetailFragment.newInstance(vehicleId))
+            .replace(R.id.container, fragment)
             .commit()
     }
 

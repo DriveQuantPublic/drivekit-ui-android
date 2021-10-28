@@ -3,7 +3,6 @@ package com.drivequant.drivekit.common.ui.component
 import android.content.Context
 import android.graphics.Color
 import android.text.InputType
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -33,8 +32,7 @@ class EditableDrawableText : LinearLayout {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
-        defStyleAttr
-    ) {
+        defStyleAttr) {
         init(attrs)
     }
 
@@ -42,31 +40,31 @@ class EditableDrawableText : LinearLayout {
         val view = inflate(context, R.layout.dk_layout_edit_drawable_text, null)
         imageView = view.findViewById(R.id.image_view)
         textView = view.findViewById(R.id.edit_text)
-        textView!!.smallText(Color.parseColor("#616161"))
+        textView?.smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
         view.setBackgroundColor(DriveKitUI.colors.neutralColor())
         if (attrs != null) {
-            val a = context.theme.obtainStyledAttributes(
+            val themeTypedArray = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.DKEditableDrawableText,
                 0,
                 0
             )
-            val n = a.indexCount
-            for (i in 0 until n) {
-                val attr = a.getIndex(i)
-                if (attr == R.styleable.DKEditableDrawableText_editTextTitle) {
-                    setEditTextTitle(a.getString(attr))
-                } else if (attr == R.styleable.DKEditableDrawableText_editTextTitleHint) {
-                    setEditTextHint(a.getString(attr))
-                } else if (attr == R.styleable.DKEditableDrawableText_editTextTitleDrawable) {
-                    setEditTextDrawable(a.getResourceId(attr, -1))
+            for (i in 0 until themeTypedArray.indexCount) {
+                when (val attr = themeTypedArray.getIndex(i)) {
+                    R.styleable.DKEditableDrawableText_editTextTitle -> setEditTextTitle(themeTypedArray.getString(attr))
+                    R.styleable.DKEditableDrawableText_editTextTitleHint -> setEditTextHint(themeTypedArray.getString(attr))
+                    R.styleable.DKEditableDrawableText_editTextTitleDrawable -> setEditTextDrawable(themeTypedArray.getResourceId(attr, -1))
                 }
             }
-            a.recycle()
-            val b =
-                context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.inputType), 0, 0)
-            setInputType(b.getInt(0, inputType))
-            b.recycle()
+            themeTypedArray.recycle()
+            val inputTypeTypedArray =
+                context.obtainStyledAttributes(
+                    attrs,
+                    intArrayOf(android.R.attr.inputType),
+                    0,
+                    0)
+            setInputType(inputTypeTypedArray.getInt(0, inputType))
+            inputTypeTypedArray.recycle()
         }
         addView(
             view, ViewGroup.LayoutParams(
@@ -82,8 +80,8 @@ class EditableDrawableText : LinearLayout {
     }
 
     fun setEditTextTitle(title: String?) {
-        if (!TextUtils.isEmpty(title)) {
-            textView!!.text = title
+        if (!title.isNullOrBlank()) {
+            textView?.text = title
         }
     }
 

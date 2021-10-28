@@ -1,10 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.activity
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoriesListFragment
@@ -13,13 +14,16 @@ class OdometerHistoriesListActivity : AppCompatActivity() {
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
+        const val UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE = 98
+
 
         fun launchActivity(
-            context: Context,
-            vehicleId: String) {
-            val intent = Intent(context, OdometerHistoriesListActivity::class.java)
+            activity: Activity,
+            vehicleId: String,
+            parentFragment: Fragment? = null) {
+            val intent = Intent(activity, OdometerHistoriesListActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-            context.startActivity(intent)
+            parentFragment?.startActivityForResult(intent, UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE)
         }
     }
 

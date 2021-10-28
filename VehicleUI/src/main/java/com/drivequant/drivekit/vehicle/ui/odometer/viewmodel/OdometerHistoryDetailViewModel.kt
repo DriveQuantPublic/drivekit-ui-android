@@ -42,7 +42,9 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
 
     fun canEditHistory() = historyId == getMostRecentHistory()?.historyId
 
-    fun isAddMode() = historyId == -1
+    fun canAddHistory() = historyId == -1
+
+    fun canEditOrAddHistory() = canEditHistory() || canAddHistory()
 
     private fun getMostRecentHistory() = DriveKitVehicle.odometerHistoriesQuery()
         .whereEqualTo("vehicleId", vehicleId)
@@ -58,7 +60,7 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
     fun getFormattedMileageDistance(context: Context, unit: Boolean = true) =
         DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit).convertToString()
 
-    fun getHistoryUpdateDate() = if (isAddMode()) {
+    fun getHistoryUpdateDate() = if (canAddHistory()) {
         Calendar.getInstance().time
     } else {
         vehicleOdometerHistory?.updateDate
