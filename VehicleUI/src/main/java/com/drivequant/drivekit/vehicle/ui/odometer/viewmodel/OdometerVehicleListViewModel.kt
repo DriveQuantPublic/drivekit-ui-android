@@ -14,7 +14,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.odometer.OdometerSyncQueryListener
 import com.drivequant.drivekit.vehicle.odometer.OdometerSyncStatus
 
-class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel() {
+internal class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel() {
 
     var filterItems: MutableList<FilterItem> = mutableListOf()
     val filterData: MutableLiveData<Int> = MutableLiveData()
@@ -62,7 +62,7 @@ class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    class OdometerVehicleListViewModelFactory(
+    internal class OdometerVehicleListViewModelFactory(
         private val vehicleId: String?) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

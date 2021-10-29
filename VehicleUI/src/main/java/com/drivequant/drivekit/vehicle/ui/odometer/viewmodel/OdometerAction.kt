@@ -7,7 +7,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 
-enum class OdometerAction(
+internal enum class OdometerAction(
     private val descriptionResId: String) : OdometerActionItem {
     SHOW("dk_vehicle_show"),
     ADD("dk_vehicle_odometer_add_reference");
@@ -25,7 +25,7 @@ enum class OdometerAction(
     }
 }
 
-interface OdometerActionItem {
+internal interface OdometerActionItem {
     fun getTitle(context: Context): String
     fun onItemClicked(activity: Activity, vehicleId: String, parentFragment: Fragment?)
 }

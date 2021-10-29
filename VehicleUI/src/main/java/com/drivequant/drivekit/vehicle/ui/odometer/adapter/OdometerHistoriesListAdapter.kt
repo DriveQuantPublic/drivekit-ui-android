@@ -13,7 +13,7 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoriesViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryData
 
-class OdometerHistoriesListAdapter(
+internal class OdometerHistoriesListAdapter(
     private val context: Context,
     private val viewModel: OdometerHistoriesViewModel,
     private val listener: OdometerHistoriesListener
@@ -39,7 +39,7 @@ class OdometerHistoriesListAdapter(
     }
 }
 
-class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val distance = itemView.findViewById<TextView>(R.id.text_view_distance_km)
     private val date = itemView.findViewById<TextView>(R.id.text_view_date)
@@ -57,7 +57,7 @@ class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     }
 }
 
-interface OdometerHistoriesListener {
+internal interface OdometerHistoriesListener {
     fun onHistoryClicked(historyId: Int, context: Context)
 }
 

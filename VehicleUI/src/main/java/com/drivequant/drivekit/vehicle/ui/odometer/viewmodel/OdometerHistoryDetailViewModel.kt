@@ -17,7 +17,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.odometer.*
 import java.util.*
 
-class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) :
+internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) :
     ViewModel() {
 
     private var vehicleOdometerHistory: VehicleOdometerHistory? = null
@@ -133,7 +133,7 @@ class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyI
     }
 
     @Suppress("UNCHECKED_CAST")
-    class OdometerHistoryDetailViewModelFactory(
+    internal class OdometerHistoryDetailViewModelFactory(
         private val vehicleId: String,
         private val historyId: Int) :
         ViewModelProvider.NewInstanceFactory() {

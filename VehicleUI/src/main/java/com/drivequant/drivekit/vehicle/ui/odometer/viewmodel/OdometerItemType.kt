@@ -1,5 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 
-enum class OdometerItemType {
+internal enum class OdometerItemType {
     ODOMETER, ANALYZED, ESTIMATED;
 }

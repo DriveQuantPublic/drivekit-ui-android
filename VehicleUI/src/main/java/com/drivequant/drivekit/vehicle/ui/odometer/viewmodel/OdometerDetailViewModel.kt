@@ -7,7 +7,7 @@ import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
-class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
+internal class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
 
     var vehicleOdometer: VehicleOdometer? = null
 
@@ -27,7 +27,7 @@ class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
     fun getVehicleDrawable(context:Context) = VehicleUtils().getVehicleDrawable(context, vehicleId)
 
     @Suppress("UNCHECKED_CAST")
-    class OdometerDetailViewModelFactory(private val vehicleId: String) :
+    internal class OdometerDetailViewModelFactory(private val vehicleId: String) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return OdometerDetailViewModel(vehicleId) as T

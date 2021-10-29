@@ -10,7 +10,7 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import java.util.*
 
-class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
+internal class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
 
     fun getOdometerHistoriesList() =
         DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
@@ -25,7 +25,7 @@ class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
             }
 
     @Suppress("UNCHECKED_CAST")
-    class OdometerHistoriesViewModelFactory(private val vehicleId: String) :
+    internal class OdometerHistoriesViewModelFactory(private val vehicleId: String) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return OdometerHistoriesViewModel(vehicleId) as T
@@ -33,7 +33,7 @@ class OdometerHistoriesViewModel(val vehicleId: String) : ViewModel() {
     }
 }
 
-data class OdometerHistoryData(
+internal data class OdometerHistoryData(
     val historyId: Int,
     private val realDistance: Double,
     private val date: Date?) {

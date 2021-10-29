@@ -11,7 +11,7 @@ import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import java.util.*
 
-class OdometerItemViewModel(val vehicleId: String) {
+internal class OdometerItemViewModel(val vehicleId: String) {
 
     private var vehicleOdometer: VehicleOdometer? = null
 
@@ -27,10 +27,14 @@ class OdometerItemViewModel(val vehicleId: String) {
         OdometerItemType.ESTIMATED -> getEstimatedDistanceDescription(context)
     }
 
-    fun getDistance(context: Context, odometerType: OdometerItemType) = when (odometerType) {
-        OdometerItemType.ODOMETER -> getMileageDistance(context)
-        OdometerItemType.ANALYZED -> getAnalyzedDistance(context)
-        OdometerItemType.ESTIMATED -> getEstimatedAnnualDistance(context)
+    fun getDistance(context: Context, odometerType: OdometerItemType) = vehicleOdometer?.let {
+        when (odometerType) {
+            OdometerItemType.ODOMETER -> it.distance
+            OdometerItemType.ANALYZED -> it.analyzedDistance
+            OdometerItemType.ESTIMATED -> it.estimatedYearDistance
+        }.let { distance ->
+            getFormattedDistance(context, distance)
+        }
     }
 
     private fun getEstimatedDistanceDescription(context: Context) = "${
@@ -44,10 +48,8 @@ class OdometerItemViewModel(val vehicleId: String) {
     }"
 
     private fun getAnalyzedDistanceDescription(context: Context): String {
-        val analyzedDistance = vehicleOdometer?.yearAnalyzedDistance?.let {
-            DKDataFormatter.formatMeterDistanceInKm(
-                context,
-                it * 1000,
+        val analyzedDistance = vehicleOdometer?.let {
+            DKDataFormatter.formatMeterDistanceInKm(context, it.yearAnalyzedDistance * 1000,
                 false
             ).convertToString()
         } ?: ""
@@ -69,27 +71,9 @@ class OdometerItemViewModel(val vehicleId: String) {
                 "dk_vehicle_odometer_last_update",
                 it
             )
-        } ?: ""
+        } ?: "0"
     }"
 
-    private fun getMileageDistance(context: Context) = vehicleOdometer?.distance?.let {
-        DKDataFormatter.formatMeterDistanceInKm(context, it * 1000).convertToString()
-    } ?: ""
-
-
-    private fun getAnalyzedDistance(context: Context) = vehicleOdometer?.analyzedDistance?.let {
-        DKDataFormatter.formatMeterDistanceInKm(
-            context,
-            it * 1000
-        ).convertToString()
-    } ?: ""
-
-
-    private fun getEstimatedAnnualDistance(context: Context) =
-        vehicleOdometer?.estimatedYearDistance?.let {
-            DKDataFormatter.formatMeterDistanceInKm(
-                context,
-                it * 1000
-            ).convertToString()
-        } ?: ""
+    private fun getFormattedDistance(context: Context, distance: Double) =
+        DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000).convertToString()
 }
