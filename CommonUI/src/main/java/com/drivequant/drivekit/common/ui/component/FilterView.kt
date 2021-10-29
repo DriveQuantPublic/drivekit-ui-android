@@ -34,11 +34,11 @@ class FilterView : LinearLayout {
             ViewGroup.LayoutParams.MATCH_PARENT))
     }
 
-    fun setItems(filterItems: List<FilterItem>) {
+    fun setItems(filterItems: List<FilterItem>, position: Int = 0) {
         if (!this::adapter.isInitialized) {
             adapter = FilterAdapter(context, R.layout.dk_simple_list_item_spinner, filterItems)
             spinner.adapter = adapter
-            spinner.setSelection(0, false)
+            spinner.setSelection(position, false)
         } else {
             adapter.setItems(filterItems)
             adapter.notifyDataSetChanged()

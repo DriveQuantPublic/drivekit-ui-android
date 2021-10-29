@@ -31,9 +31,19 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     private lateinit var viewModel: OdometerVehicleListViewModel
     private lateinit var synchronizationType: SynchronizationType
     private var shouldSyncOdometer = true
+    private var vehicleId: String? = null
 
     companion object {
-        fun newInstance() = OdometerVehicleListFragment()
+        fun newInstance(vehicleId: String?) : OdometerVehicleListFragment {
+            val fragment = OdometerVehicleListFragment()
+            fragment.vehicleId = vehicleId
+            return fragment
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("vehicleIdTag", vehicleId)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,15 +54,13 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 "dk_tag_vehicles_odometer_vehicles_list"
             ), javaClass.simpleName
         )
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(OdometerVehicleListViewModel::class.java)
+        savedInstanceState?.getString("vehicleIdTag")?.let {
+            vehicleId = it
         }
-
-        viewModel.filterData.observe(this, {
-            vehicle_filter.setItems(viewModel.filterItems)
-            initVehicleFilter()
-        })
-
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this,
+                OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId)).get(OdometerVehicleListViewModel::class.java)
+        }
         dk_swipe_refresh_odometer.setOnRefreshListener {
             updateSwipeRefreshOdometerVisibility(true)
             viewModel.selection.value?.let {
@@ -60,6 +68,11 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
         }
 
+        viewModel.getVehicleListItems(requireContext())
+        viewModel.filterData.observe(this, { position ->
+            vehicle_filter.setItems(viewModel.filterItems, position)
+            initVehicleFilter()
+        })
         viewModel.vehicleOdometerData.observe(this, {
             if (it) {
                 viewModel.selection.value?.let { vehicleId ->
@@ -90,8 +103,6 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 }
             }
         })
-
-        viewModel.getVehicleListItems(requireContext())
         viewModel.selection.observe(this, {
             val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
             synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
@@ -110,8 +121,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 adapterView: AdapterView<*>?,
                 view: View,
                 position: Int,
-                l: Long
-            ) {
+                l: Long) {
                 val itemId = viewModel.filterItems[position].getItemId()
                 itemId?.let {
                     viewModel.selection.postValue(it as String)

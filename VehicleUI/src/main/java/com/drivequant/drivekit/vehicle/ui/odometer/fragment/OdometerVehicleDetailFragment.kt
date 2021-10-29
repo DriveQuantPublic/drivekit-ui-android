@@ -93,6 +93,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     private fun displayOdometerReadings(context: Context, vehicleId: String) {
         button_display_odometer_readings.apply {
+            visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
             text = DKResource.convertToString(context, "dk_vehicle_odometer_references_link")
             headLine2(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

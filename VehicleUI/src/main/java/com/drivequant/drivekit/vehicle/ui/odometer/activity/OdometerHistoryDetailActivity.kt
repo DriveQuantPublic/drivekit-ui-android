@@ -54,7 +54,7 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         if (historyId == -1) {
             "dk_vehicle_odometer_reference_add"
         } else {
-            "dk_vehicle_odometer_references_title"
+            "dk_vehicle_odometer_reference_update"
         }.let {
             title = DKResource.convertToString(this, it)
         }

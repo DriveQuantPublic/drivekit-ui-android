@@ -134,6 +134,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onOdometerVehicleClicked(view: View) {
-        DriveKitVehicleUI.startOdometerVehicleActivity(this)
+        DriveKitVehicleUI.startOdometerUIActivity(this)
     }
 }

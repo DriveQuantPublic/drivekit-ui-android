@@ -183,7 +183,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         return vehiclesFilterItems
     }
 
-    fun startOdometerVehicleActivity(activity: Activity) {
-        OdometerVehicleListActivity.launchActivity(activity)
+    fun startOdometerUIActivity(activity: Activity, vehicleId:String? = null) {
+        OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 }

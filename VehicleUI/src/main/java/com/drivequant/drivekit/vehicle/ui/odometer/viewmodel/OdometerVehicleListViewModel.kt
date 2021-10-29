@@ -3,6 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.DriveKit
@@ -13,10 +14,10 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.odometer.OdometerSyncQueryListener
 import com.drivequant.drivekit.vehicle.odometer.OdometerSyncStatus
 
-class OdometerVehicleListViewModel : ViewModel() {
+class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel() {
 
     var filterItems: MutableList<FilterItem> = mutableListOf()
-    val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
+    val filterData: MutableLiveData<Int> = MutableLiveData()
     val vehicleOdometerData: MutableLiveData<Boolean> = MutableLiveData()
     var selection: MutableLiveData<String> = MutableLiveData()
 
@@ -41,11 +42,31 @@ class OdometerVehicleListViewModel : ViewModel() {
     }
 
     fun getVehicleListItems(context: Context) {
-        filterItems.clear()
-        DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
-            filterItems.addAll(it)
+        filterItems.apply {
+            clear()
+            DriveKitNavigationController.vehicleUIEntryPoint?.getVehiclesFilterItems(context)?.let {
+                addAll(it)
+            }
         }
-        selection.value = if (filterItems.isNotEmpty()) filterItems.first().getItemId() as String else null
-        filterData.postValue(filterItems)
+        selection.value = vehicleId ?: if (filterItems.isNotEmpty()) filterItems.first().getItemId() as String else null
+        val position = vehicleId?.let {
+            var index = 0
+            filterItems.forEachIndexed { i, filterItem ->
+                if (filterItem.getItemId() == it) {
+                  index =  i
+                }
+            }
+            index
+        } ?:  0
+        filterData.postValue(position)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class OdometerVehicleListViewModelFactory(
+        private val vehicleId: String?) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return OdometerVehicleListViewModel(vehicleId) as T
+        }
     }
 }

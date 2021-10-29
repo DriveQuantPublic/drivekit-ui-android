@@ -17,6 +17,9 @@ class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
                 .executeOne()
     }
 
+    fun shouldShowDisplayReadingButton() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
+        .execute().isNotEmpty()
+
     fun getVehicleDisplayName(context: Context) = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let {
         VehicleUtils().buildFormattedName(context, it)
     }
