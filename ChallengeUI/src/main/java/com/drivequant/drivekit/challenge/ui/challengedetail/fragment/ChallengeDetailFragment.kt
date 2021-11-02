@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.challenge.ui.R
@@ -68,7 +67,7 @@ class ChallengeDetailFragment : Fragment() {
             ).get(ChallengeDetailViewModel::class.java)
         }
         startSyncType = if (viewModel.getLocalChallengeDetail() != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-        viewModel.syncChallengeDetailError.observe(this, Observer {
+        viewModel.syncChallengeDetailError.observe(this, {
             if (!it) {
                 Toast.makeText(
                     requireContext(),
@@ -142,10 +141,12 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 }

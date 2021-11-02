@@ -77,12 +77,12 @@ class StreaksListFragment : Fragment() {
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-            refresh_streaks.isRefreshing = true
+            progress_circular?.visibility = View.VISIBLE
+            refresh_streaks?.isRefreshing = true
         } else {
-            progress_circular.visibility = View.GONE
-            refresh_streaks.visibility = View.VISIBLE
-            refresh_streaks.isRefreshing = false
+            progress_circular?.visibility = View.GONE
+            refresh_streaks?.visibility = View.VISIBLE
+            refresh_streaks?.isRefreshing = false
         }
     }
 }

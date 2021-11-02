@@ -63,14 +63,6 @@
    <string name="dk_perm_utils_app_diag_location_link">Consentire l\'accesso alla posizione</string>
    <string name="dk_perm_utils_app_diag_location_ok">L\'applicazione utilizza la posizione del telefono per rilevare e analizzare i tuoi viaggi. Non può funzionare se non si consente all\'app di accedere alla posizione.</string>
    <string name="dk_perm_utils_app_diag_location_title">Posizione</string>
-   <string name="dk_perm_utils_app_diag_log_folder">Accedere al file di registro delle attività</string>
-   <string name="dk_perm_utils_app_diag_log_ko">La registrazione è disabilitata. In caso di malfunzionamento dell\'applicazione, si consiglia di consentire la registrazione per una facile diagnosi.</string>
-   <string name="dk_perm_utils_app_diag_log_link">Permettete di scrivere il registro delle attività sul vostro smartphone.</string>
-   <string name="dk_perm_utils_app_diag_log_ok">La registrazione è attiva. Questo file contiene eventi importanti per l\'analisi del comportamento dell\'applicazione. Viene memorizzato nella cartella %s.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_android11">La registrazione è attiva. Questo file contiene eventi importanti per l\'analisi del comportamento dell\'applicazione.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_contact_mail">La registrazione è abilitata. Questo file contiene eventi importanti per l\'analisi del comportamento dell\'applicazione. Sarà allegato automaticamente all\'e-mail di contatto del supporto.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_ios">La registrazione è attiva. Questo file contiene eventi importanti per l\'analisi del comportamento dell\'applicazione. Il file è disponibile nella cartella delle applicazioni del vostro iPhone.</string>
-   <string name="dk_perm_utils_app_diag_log_title">Salvare il registro delle attività</string>
    <string name="dk_perm_utils_app_diag_nearby_title">Rilevamento dei dispositivi vicini</string>
    <string name="dk_perm_utils_app_diag_network_ko">I dati mobili non sono abilitati. Ciò non bloccherà il rilevamento del viaggio e la registrazione del viaggio. D\'altra parte, i dati mobili sono essenziali per analizzare i dati del tuo viaggio. Se i dati mobili sono disabilitati, il viaggio non verrà perso ma i risultati del viaggio verranno visualizzati solo dopo la riconnessione a una rete mobile.</string>
    <string name="dk_perm_utils_app_diag_network_link">Abilita i dati mobili</string>
