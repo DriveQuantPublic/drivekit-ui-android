@@ -66,13 +66,13 @@
                             app:editTextTitleHint="@string/dk_vehicle_odometer_history_date" />
 
                         <LinearLayout
+                            android:id="@+id/vehicle_item"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#F0F0F0">
+                            android:layout_height="wrap_content">
+
                             <include layout="@layout/dk_custom_filter_spinner_item_no_padding" />
 
                         </LinearLayout>
-
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -94,12 +94,10 @@
                     android:layout_marginStart="@dimen/dk_margin"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginEnd="@dimen/dk_margin"
-                    android:background="@drawable/dk_button_bgd"
                     android:gravity="center"
                     android:textAllCaps="true"
                     tools:text="@string/dk_common_cancel"
-                    tools:textColor="#77E2B0"
-                    tools:textSize="14sp" />
+                    tools:textSize="@dimen/dk_text_normal" />
 
                 <TextView
                     android:id="@+id/button_delete_reference"

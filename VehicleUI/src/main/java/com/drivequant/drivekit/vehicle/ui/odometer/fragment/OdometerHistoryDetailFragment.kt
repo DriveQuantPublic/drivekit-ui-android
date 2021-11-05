@@ -19,10 +19,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
@@ -31,6 +27,7 @@ import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item_no_padding.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.*
+import com.drivequant.drivekit.common.ui.extension.*
 
 
 class OdometerHistoryDetailFragment : Fragment() {
@@ -100,7 +97,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 onDeleteOdometerHistory(context)
                 onDistanceClicked(context)
                 onCancelButtonClicked(context)
-
+                vehicle_item.setBackgroundColor(DriveKitUI.colors.neutralColor())
                 viewModel.odometerActionObserver.observe(this, {
                     updateProgressVisibility(false)
                     Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()
@@ -162,6 +159,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun onCancelButtonClicked(context: Context) {
         button_cancel_action.apply {
+            selectorButton(context, DriveKitUI.colors.secondaryColor())
             normalText(DriveKitUI.colors.secondaryColor())
             text = DKResource.convertToString(context, "dk_common_cancel")
             visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
