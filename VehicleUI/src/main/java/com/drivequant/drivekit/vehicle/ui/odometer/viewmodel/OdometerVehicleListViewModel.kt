@@ -19,7 +19,7 @@ internal class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel(
     var filterItems: MutableList<FilterItem> = mutableListOf()
     val filterData: MutableLiveData<Int> = MutableLiveData()
     val vehicleOdometerData: MutableLiveData<Boolean> = MutableLiveData()
-    var selection: MutableLiveData<String> = MutableLiveData()
+    var selection: MutableLiveData<String?> = MutableLiveData()
 
     fun getOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
         if (DriveKit.isConfigured()) {

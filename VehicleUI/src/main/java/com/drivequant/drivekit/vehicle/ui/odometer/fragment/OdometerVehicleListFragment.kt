@@ -104,9 +104,13 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
         })
         viewModel.selection.observe(this, {
-            val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
-            synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-            updateOdometer(it, synchronizationType)
+            it?.let {
+                val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
+                synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
+                updateOdometer(it, synchronizationType)
+            } ?: run {
+                root.visibility = View.GONE
+            }
         })
     }
 

@@ -71,7 +71,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
                 "dk_vehicle_odometer_last_update",
                 it
             )
-        } ?: "0"
+        } ?: ""
     }"
 
     private fun getFormattedDistance(context: Context, distance: Double) =
