@@ -29,8 +29,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dk_margin_quarter"
                     android:layout_weight="1"
-                    android:textColor="#000"
-                    android:textSize="@dimen/dk_text_normal" />
+                    tools:textColor="#000"
+                    tools:textSize="@dimen/dk_text_normal" />
 
                 <ImageView
                     android:id="@+id/image_view_info"
@@ -40,7 +40,8 @@
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="@dimen/dk_margin_eigth"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:layout_marginTop="@dimen/dk_margin_half"
                 android:id="@+id/dk_view_separator"
                 style="@style/Separator.Horizontal"/>
 
@@ -51,7 +52,7 @@
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 android:textAlignment="viewEnd"
-                android:textColor="#000"
+                tools:textColor="#000"
                 android:textSize="@dimen/dk_text_xxbig"
                 android:textStyle="bold"
                 tools:text="123 456 km" />
