@@ -65,14 +65,6 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val tag = if (historyId == -1) "dk_tag_vehicles_odometer_history_add" else "dk_tag_vehicles_odometer_history_edit"
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                tag
-            ), javaClass.simpleName
-        )
-
         (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }
@@ -86,7 +78,22 @@ class OdometerHistoryDetailFragment : Fragment() {
                 viewModel = ViewModelProviders.of(this,
                     OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
                         historyId)).get(OdometerHistoryDetailViewModel::class.java)
-
+                if (!viewModel.canEditOrAddHistory()) {
+                    "dk_tag_vehicles_odometer_histories_detail"
+                } else {
+                    if (historyId == -1) {
+                        "dk_tag_vehicles_odometer_history_add"
+                    } else {
+                        "dk_tag_vehicles_odometer_history_edit"
+                    }
+                }.let {
+                    DriveKitUI.analyticsListener?.trackScreen(
+                        DKResource.convertToString(
+                            requireContext(),
+                            it
+                        ), javaClass.simpleName
+                    )
+                }
                 initVehicle(context, vehicleId)
                 initMileageRecord(context)
                 onValidateButtonClicked(context)
