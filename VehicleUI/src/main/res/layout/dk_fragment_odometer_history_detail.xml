@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
     tools:context="com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity">
 
     <ScrollView
