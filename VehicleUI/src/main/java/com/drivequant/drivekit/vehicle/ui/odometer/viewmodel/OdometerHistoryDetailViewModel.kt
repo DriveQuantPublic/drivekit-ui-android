@@ -76,7 +76,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerAddHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_add_success", true)
+                        OdometerAddHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_add_success", true)
                         OdometerAddHistoryStatus.FAILED ->  Pair("dk_common_error_message",false)
                         OdometerAddHistoryStatus.VEHICLE_NOT_FOUND ->  Pair("dk_vehicle_not_found", false)
                         OdometerAddHistoryStatus.BAD_DISTANCE ->   Pair("dk_vehicle_odometer_bad_distance",false)
@@ -98,7 +98,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerUpdateHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_update_success", true)
+                        OdometerUpdateHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_update_success", true)
                         OdometerUpdateHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
                         OdometerUpdateHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found", false)
                         OdometerUpdateHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found", false)
@@ -120,7 +120,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerDeleteHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_reference_delete_success", true)
+                        OdometerDeleteHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_delete_success", true)
                         OdometerDeleteHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
                         OdometerDeleteHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found",false)
                         OdometerDeleteHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found",false)

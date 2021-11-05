@@ -10,7 +10,7 @@ import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetai
 internal enum class OdometerAction(
     private val descriptionResId: String) : OdometerActionItem {
     SHOW("dk_vehicle_show"),
-    ADD("dk_vehicle_odometer_add_reference");
+    ADD("dk_vehicle_odometer_add_history");
 
     override fun getTitle(context: Context) = DKResource.convertToString(context, descriptionResId)
 

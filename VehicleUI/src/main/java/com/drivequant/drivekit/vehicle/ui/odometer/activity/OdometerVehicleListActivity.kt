@@ -31,7 +31,7 @@ class OdometerVehicleListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = DKResource.convertToString(this, "dk_vehicle_odometer_vehicle_title")
+        title = DKResource.convertToString(this, "dk_vehicle_odometer")
         val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         supportFragmentManager
             .beginTransaction()

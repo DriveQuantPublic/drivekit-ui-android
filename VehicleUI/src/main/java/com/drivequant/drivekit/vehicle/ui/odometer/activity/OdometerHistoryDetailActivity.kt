@@ -52,9 +52,9 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         val historyId = intent.getIntExtra(HISTORY_ID_EXTRA, -1)
 
         if (historyId == -1) {
-            "dk_vehicle_odometer_reference_add"
+            "dk_vehicle_odometer_history_add"
         } else {
-            "dk_vehicle_odometer_reference_update"
+            "dk_vehicle_odometer_history_update"
         }.let {
             title = DKResource.convertToString(this, it)
         }

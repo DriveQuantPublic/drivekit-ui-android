@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.graphics.Color
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.ViewGroup

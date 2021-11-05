@@ -80,7 +80,7 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
 
     private fun addOdometerReading(context: Context, vehicleId: String) {
         dk_button_add_reference.apply {
-            text = DKResource.convertToString(context, "dk_vehicle_odometer_add_reference")
+            text = DKResource.convertToString(context, "dk_vehicle_odometer_add_history")
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

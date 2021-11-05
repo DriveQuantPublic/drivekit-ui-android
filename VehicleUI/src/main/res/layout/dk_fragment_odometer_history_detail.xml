@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/dk_margin_half"
                             app:editTextTitleDrawable="@drawable/dk_common_calendar"
-                            app:editTextTitleHint="@string/dk_vehicle_odometer_reference_date" />
+                            app:editTextTitleHint="@string/dk_vehicle_odometer_history_date" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
