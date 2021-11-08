@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.permissionsutils.permissions.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,8 +7,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
@@ -31,15 +28,9 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_BATTERY_OPTIMIZATION) {
-            // We may need to skip that screen because some Chinese OEMs (Xiaomi / Redmi) automatically return RESULT_CANCELED
-            if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID || resultCode == Activity.RESULT_CANCELED) {
-                if (resultCode == Activity.RESULT_CANCELED) {
-                    DriveKitLog.i(PermissionsUtilsUI.TAG, "User or system has cancelled the background task permissions")
-                }
-                finish()
-                next()
-            }
+        if (requestCode == REQUEST_BATTERY_OPTIMIZATION && DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
+            finish()
+            next()
         }
     }
 
