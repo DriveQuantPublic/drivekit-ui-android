@@ -12,7 +12,7 @@ import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleListF
 class OdometerVehicleListActivity : AppCompatActivity() {
 
     companion object {
-        private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
+        const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
 
         fun launchActivity(
             activity: Activity,
