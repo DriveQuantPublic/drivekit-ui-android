@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -101,6 +102,20 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                     }
                 }
             })
+            viewModel.selection.observe(this, {
+                it?.let {
+                    val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
+                    synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
+                    updateOdometer(it, synchronizationType)
+                } ?: run {
+                    root.visibility = View.GONE
+                    text_view_no_vehicle.apply {
+                        text = DKResource.convertToString(context, "dk_vehicle_list_empty")
+                        normalText()
+                        visibility = View.VISIBLE
+                    }
+                }
+            })
         }
 
         viewModel.filterData.observe(this, { position ->
@@ -108,15 +123,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             initVehicleFilter()
         })
 
-        viewModel.selection.observe(this, {
-            it?.let {
-                val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
-                synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-                updateOdometer(it, synchronizationType)
-            } ?: run {
-                root.visibility = View.GONE
-            }
-        })
+
     }
 
     private fun updateOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
