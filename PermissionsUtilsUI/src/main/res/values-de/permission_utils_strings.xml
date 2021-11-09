@@ -63,14 +63,6 @@
    <string name="dk_perm_utils_app_diag_location_link">Zugriff auf den Standort zulassen</string>
    <string name="dk_perm_utils_app_diag_location_ok">Die Anwendung verwendet den Standort Ihres Telefons, um Ihre Reisen zu erkennen und zu analysieren. Es kann nicht funktionieren, wenn Sie der App nicht den Zugriff auf den Standort erlauben.</string>
    <string name="dk_perm_utils_app_diag_location_title">Lage</string>
-   <string name="dk_perm_utils_app_diag_log_folder">Zugriff auf die Aktivitätsprotokolldatei</string>
-   <string name="dk_perm_utils_app_diag_log_ko">Die Protokollierung ist deaktiviert. Im Falle einer Fehlfunktion in der Anwendung empfehlen wir Ihnen, die Protokollierung zur einfachen Diagnose zuzulassen.</string>
-   <string name="dk_perm_utils_app_diag_log_link">Erlauben Sie das Schreiben des Aktivitätsprotokolls auf Ihr Smartphone.</string>
-   <string name="dk_perm_utils_app_diag_log_ok">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind. Sie wird im Ordner %s gespeichert.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_android11">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_contact_mail">Die Protokollierung ist aktiviert. Diese Datei enthält wichtige Ereignisse, um das Verhalten der Anwendung zu analysieren. Sie wird automatisch an die E-Mail des Support-Kontaktes angehängt.</string>
-   <string name="dk_perm_utils_app_diag_log_ok_ios">Die Protokollierung ist aktiv. Diese Datei enthält Ereignisse, die für die Analyse des Anwendungsverhaltens wichtig sind. Die Datei ist im Anwendungsordner auf Ihrem iPhone verfügbar.</string>
-   <string name="dk_perm_utils_app_diag_log_title">Sichern Sie das Aktivitätsprotokoll</string>
    <string name="dk_perm_utils_app_diag_nearby_title">Erkennung von Geräten in der Nähe</string>
    <string name="dk_perm_utils_app_diag_network_ko">Mobile Daten sind nicht aktiviert. Dies blockiert nicht die Auslöseerkennung und die Auslöseaufnahme. Auf der anderen Seite sind mobile Daten wesentlich für die Analyse der Daten Ihrer Fahrten. Wenn mobile Daten deaktiviert sind, geht die Fahrt nicht verloren, die Ergebnisse werden jedoch erst angezeigt, nachdem Sie sich erneut mit einem Mobilfunknetz verbunden haben.</string>
    <string name="dk_perm_utils_app_diag_network_link">Mobile Daten aktivieren</string>

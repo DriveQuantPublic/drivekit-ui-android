@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.trips.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Color
@@ -52,14 +51,14 @@ class TripsListFragment : Fragment() {
             )
                 .get(TripsListViewModel::class.java)
         }
-        viewModel.filterData.observe(this, Observer {
+        viewModel.filterData.observe(this, {
             configureFilter()
             updateProgressVisibility(false)
         })
 
         initFilter()
         updateTrips()
-        viewModel.tripsData.observe(this, Observer {
+        viewModel.tripsData.observe(this, {
             viewModel.getFilterItems(requireContext())
             setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
             if (viewModel.filteredTrips.isEmpty()) {
@@ -95,7 +94,7 @@ class TripsListFragment : Fragment() {
             tripsListView.configure(tripsList)
         })
 
-        viewModel.syncTripsError.observe(this, Observer {
+        viewModel.syncTripsError.observe(this, {
             it?.let {
                 Toast.makeText(
                     context,
@@ -207,14 +206,16 @@ class TripsListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    progress_circular?.visibility = View.GONE
-                }
-            })
+        progress_circular?.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     override fun onCreateView(
@@ -228,10 +229,12 @@ class TripsListFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        if (displayProgress) {
-            progress_circular.visibility = View.VISIBLE
-        } else {
-            progress_circular.visibility = View.GONE
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
         tripsListView.updateSwipeRefreshTripsVisibility(displayProgress)
     }

@@ -16,35 +16,37 @@ class RoadConditionStats(
         if (tripsCount > 0){
             val mainRoadConditionCount: HashMap<DKRoadCondition, Int> = hashMapOf()
             trips.forEach { trip ->
-                var majorRoadType = DKRoadCondition.TRAFFIC_JAM
-                var distanceMajor = 0.0
-                for (i in DKRoadCondition.values().indices) {
-                    if (DKRoadCondition.getTypeFromValue(i) == DKRoadCondition.TRAFFIC_JAM) {
-                        continue
-                    }
-                    val myDistance: Double = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
-                        trip.safetyContexts[i].distance
-                    } else {
-                        trip.ecoDrivingContexts[i].distance
-                    }
-                    if (myDistance > distanceMajor) {
-                        majorRoadType = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
-                            DKRoadCondition.getTypeFromValue(trip.safetyContexts[i].contextId)
+                if (trip.ecoDrivingContexts.isNotEmpty() && trip.safetyContexts.isNotEmpty()) {
+                    var majorRoadType = DKRoadCondition.TRAFFIC_JAM
+                    var distanceMajor = 0.0
+                    for (i in DKRoadCondition.values().indices) {
+                        if (DKRoadCondition.getTypeFromValue(i) == DKRoadCondition.TRAFFIC_JAM) {
+                            continue
+                        }
+                        val myDistance: Double = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
+                            trip.safetyContexts[i].distance
                         } else {
-                            DKRoadCondition.getTypeFromValue(trip.ecoDrivingContexts[i].contextId)
+                            trip.ecoDrivingContexts[i].distance
                         }
-                        if (majorRoadType != DKRoadCondition.TRAFFIC_JAM){
-                            distanceMajor = myDistance
+                        if (myDistance > distanceMajor) {
+                            majorRoadType = if (roadConditionType == SynthesisCardsUtils.RoadConditionType.SAFETY) {
+                                DKRoadCondition.getTypeFromValue(trip.safetyContexts[i].contextId)
+                            } else {
+                                DKRoadCondition.getTypeFromValue(trip.ecoDrivingContexts[i].contextId)
+                            }
+                            if (majorRoadType != DKRoadCondition.TRAFFIC_JAM){
+                                distanceMajor = myDistance
+                            }
                         }
                     }
-                }
 
-                if (majorRoadType != DKRoadCondition.TRAFFIC_JAM) {
-                    val currentCount = mainRoadConditionCount[majorRoadType]
-                    if (currentCount != null) {
-                        mainRoadConditionCount[majorRoadType] = currentCount + 1
-                    } else {
-                        mainRoadConditionCount[majorRoadType] = 1
+                    if (majorRoadType != DKRoadCondition.TRAFFIC_JAM) {
+                        val currentCount = mainRoadConditionCount[majorRoadType]
+                        if (currentCount != null) {
+                            mainRoadConditionCount[majorRoadType] = currentCount + 1
+                        } else {
+                            mainRoadConditionCount[majorRoadType] = 1
+                        }
                     }
                 }
             }

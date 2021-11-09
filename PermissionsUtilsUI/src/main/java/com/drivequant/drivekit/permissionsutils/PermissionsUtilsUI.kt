@@ -27,9 +27,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal const val TAG = "DriveKit PermissionsUtils UI"
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false
-    internal var shouldDisplayDiagnosisLogs: Boolean = false
     internal var contactType: ContactType = ContactType.NONE
-    internal var logPathFile: String = "/drivekit-permissions-utils/logs/"
 
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
@@ -51,17 +49,15 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         this.isBluetoothNeeded = isBluetoothNeeded
     }
 
-    fun configureDiagnosisLogs(shouldDisplayDiagnosisLogs: Boolean) {
-        this.shouldDisplayDiagnosisLogs = shouldDisplayDiagnosisLogs
-    }
+    @Deprecated("Logs are now enabled by default. To disable logging, just call DriveKit.disableLogging()")
+    fun configureDiagnosisLogs(shouldDisplayDiagnosisLogs: Boolean) { }
 
     fun configureContactType(ContactType: ContactType) {
         this.contactType = ContactType
     }
 
-    fun configureLogPathFile(logPathFile: String) {
-        this.logPathFile = logPathFile
-    }
+    @Deprecated("Logs are now only driven by DriveKit Core module.")
+    fun configureLogPathFile(logPathFile: String) { }
 
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {

@@ -246,42 +246,17 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.8"
                 android:layout_margin="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/dk_margin_half"
                 android:paddingStart="@dimen/dk_margin_half"
                 android:paddingEnd="@dimen/dk_margin_half"
+                android:paddingBottom="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_help_description" />
-
-            <TextView
-                android:id="@+id/support_view_separator"
-                style="@style/Separator.Horizontal"
-                android:layout_marginTop="@dimen/dk_margin"
-                android:layout_marginBottom="@dimen/dk_margin_half"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_help_report" />
-
-            <Switch
-                android:id="@+id/switch_enable_logging"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_log_title"
-                android:textSize="@dimen/dk_text_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/support_view_separator" />
-
-            <TextView
-                android:id="@+id/text_view_logging_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dk_margin_half"
-                android:paddingBottom="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_log_ko"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch_enable_logging" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_help_description"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>
