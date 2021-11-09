@@ -35,6 +35,7 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
                 else ->  UPDATE_VEHICLE_ODOMETER_DETAIL_REQUEST_CODE
             }
             parentFragment?.startActivityForResult(intent, requestCode)
+                ?: activity.startActivityForResult(intent, requestCode)
         }
     }
 

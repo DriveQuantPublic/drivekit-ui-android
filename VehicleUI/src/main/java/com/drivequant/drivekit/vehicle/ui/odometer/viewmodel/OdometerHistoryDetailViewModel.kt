@@ -15,6 +15,7 @@ import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometerHistory
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.odometer.*
+import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import java.util.*
 
 internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) :
@@ -33,12 +34,11 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
             .executeOne()
     }
 
-    fun canDeleteHistory(): Boolean {
-        val histories =
-            DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
-                .execute()
-        return histories.isNotEmpty() && histories.size > 1 && historyId > -1
-    }
+    fun canDeleteHistory() =
+        DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
+            .execute().let {
+                it.size > 1 && historyId > -1
+            }
 
     fun canEditHistory() = historyId == getMostRecentHistory()?.historyId
 
@@ -65,6 +65,18 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
     } else {
         vehicleOdometerHistory?.updateDate
     }?.formatDate(DKDatePattern.FULL_DATE)?.capitalizeFirstLetter() ?: ""
+
+    fun showMileageDistanceErrorMessage() = when {
+        mileageDistance > 1000000 || mileageDistance < 0 -> true
+        else -> false
+    }
+
+    fun getVehicleFormattedName(context: Context) =
+        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()
+            ?.let {
+                VehicleUtils().buildFormattedName(context, it)
+            } ?: ""
+
 
     fun addOdometerHistory() {
         DriveKitVehicle.addOdometerHistory(

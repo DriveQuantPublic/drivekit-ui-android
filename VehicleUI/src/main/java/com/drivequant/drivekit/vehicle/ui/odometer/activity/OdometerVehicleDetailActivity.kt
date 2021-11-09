@@ -25,6 +25,7 @@ class OdometerVehicleDetailActivity : AppCompatActivity() {
             val intent = Intent(activity, OdometerVehicleDetailActivity::class.java)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
             parentFragment?.startActivityForResult(intent, UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE)
+                ?: activity.startActivityForResult(intent, UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE)
         }
     }
 

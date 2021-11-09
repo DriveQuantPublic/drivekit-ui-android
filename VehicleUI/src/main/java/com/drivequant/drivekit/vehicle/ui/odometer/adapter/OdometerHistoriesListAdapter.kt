@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoriesViewModel
@@ -46,13 +47,13 @@ internal class OdometerHistoryViewHolder(itemView: View) : RecyclerView.ViewHold
 
     fun bind(historyData: OdometerHistoryData) {
         date.apply {
-            text = historyData.getUpdateDate()
+            text = historyData.getUpdateDate()?.capitalizeFirstLetter()
             smallText(ContextCompat.getColor(itemView.context, R.color.dkOdometerHistoryDateColor))
         }
 
         distance.apply {
             text = historyData.getRealDistance(itemView.context)
-            headLine2()
+            headLine1()
         }
     }
 }

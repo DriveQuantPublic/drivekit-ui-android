@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -68,41 +69,45 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
         }
 
-        viewModel.getVehicleListItems(requireContext())
+        context?.let { context ->
+            viewModel.getVehicleListItems(context)
+            viewModel.vehicleOdometerData.observe(this, {
+                if (it) {
+                    viewModel.selection.value?.let { vehicleId ->
+                        val viewModel = OdometerItemViewModel(vehicleId)
+                        mileage_vehicle_item.configureOdometerItem(
+                            viewModel,
+                            OdometerItemType.ODOMETER,
+                            this@OdometerVehicleListFragment
+                        )
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(
+                            context,
+                            "dk_vehicle_odometer_failed_to_sync"
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                updateProgressVisibility(false)
+                updateSwipeRefreshOdometerVisibility(false)
+
+                if (synchronizationType == SynchronizationType.CACHE && shouldSyncOdometer) {
+                    shouldSyncOdometer = false
+                    viewModel.selection.value?.let { vehicleId ->
+                        updateOdometer(vehicleId, SynchronizationType.DEFAULT)
+                    }
+                }
+            })
+        }
+
         viewModel.filterData.observe(this, { position ->
             vehicle_filter.setItems(viewModel.filterItems, position)
             initVehicleFilter()
         })
-        viewModel.vehicleOdometerData.observe(this, {
-            if (it) {
-                viewModel.selection.value?.let { vehicleId ->
-                    val viewModel = OdometerItemViewModel(vehicleId)
-                    mileage_vehicle_item.configureOdometerItem(
-                        viewModel,
-                        OdometerItemType.ODOMETER,
-                        this@OdometerVehicleListFragment
-                    )
-                }
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    DKResource.convertToString(
-                        requireContext(),
-                        "dk_vehicle_odometer_failed_to_sync"
-                    ),
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            updateProgressVisibility(false)
-            updateSwipeRefreshOdometerVisibility(false)
 
-            if (synchronizationType == SynchronizationType.CACHE && shouldSyncOdometer) {
-                shouldSyncOdometer = false
-                viewModel.selection.value?.let { vehicleId ->
-                    updateOdometer(vehicleId, SynchronizationType.DEFAULT)
-                }
-            }
-        })
         viewModel.selection.observe(this, {
             it?.let {
                 val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
@@ -137,7 +142,10 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false)
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false).apply {
+        setBackgroundColor(Color.WHITE)
+    }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         progress_circular?.apply {
@@ -150,11 +158,9 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun updateSwipeRefreshOdometerVisibility(display: Boolean) {
-        if (display) {
-            dk_swipe_refresh_odometer.isRefreshing = display
-        } else {
+        dk_swipe_refresh_odometer.isRefreshing = display
+        if (!display) {
             dk_swipe_refresh_odometer.visibility = View.VISIBLE
-            dk_swipe_refresh_odometer.isRefreshing = display
         }
     }
 
@@ -166,7 +172,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 Menu.NONE,
                 i,
                 i,
-                DKSpannable().append(itemsList[i].getTitle(requireContext()), requireContext().resSpans {
+                DKSpannable().append(itemsList[i].getTitle(view.context), view.context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
                 }).toSpannable()
             )

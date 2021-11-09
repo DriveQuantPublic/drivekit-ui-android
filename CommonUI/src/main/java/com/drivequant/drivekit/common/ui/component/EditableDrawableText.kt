@@ -78,23 +78,29 @@ class EditableDrawableText : LinearLayout {
         textView?.inputType = inputType
     }
 
-    fun setEditTextTitle(title: String?) {
+    fun setEditTextTitle(
+        title: String?,
+        color: Int = ContextCompat.getColor(context, R.color.dkGrayColor)) {
         if (!title.isNullOrBlank()) {
             textView?.text = title
         }
+        textView?.smallText(color)
     }
 
-    private fun setEditTextHint(hint: String?) {
+    private fun setEditTextHint(
+        hint: String?,
+        color: Int = ContextCompat.getColor(context, R.color.dkGrayColor)) {
         if (!hint.isNullOrBlank()) {
             textView?.hint = hint
         }
+        textView?.setTextColor(color)
     }
 
     private fun setEditTextDrawable(drawableResId: Int) {
         if (drawableResId > 0) {
             ContextCompat.getDrawable(context, drawableResId)?.let {
                 DrawableCompat.wrap(it).mutate().tintDrawable(DriveKitUI.colors.mainFontColor())
-                imageView!!.setImageDrawable(it)
+                imageView?.setImageDrawable(it)
             }
         }
     }

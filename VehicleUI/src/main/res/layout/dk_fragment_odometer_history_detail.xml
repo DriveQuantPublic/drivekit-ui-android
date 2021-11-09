@@ -87,7 +87,7 @@
                     android:text="@string/dk_common_validate"
                     android:textAllCaps="true" />
 
-                <Button
+                <TextView
                     android:id="@+id/button_cancel_action"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

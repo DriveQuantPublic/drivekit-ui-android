@@ -3,19 +3,10 @@ package com.drivequant.drivekit.vehicle.ui.odometer.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 
 internal class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
-
-    var vehicleOdometer: VehicleOdometer? = null
-
-    init {
-        vehicleOdometer =
-            DriveKitVehicle.odometerQuery().whereEqualTo("vehicleId", vehicleId).queryOne()
-                .executeOne()
-    }
 
     fun shouldShowDisplayReadingButton() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
         .execute().isNotEmpty()
