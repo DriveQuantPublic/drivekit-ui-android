@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -16,6 +17,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
@@ -179,5 +181,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
             vehiclesFilterItems.add(vehicleItem)
         }
         return vehiclesFilterItems
+    }
+
+    @JvmOverloads
+    fun startOdometerUIActivity(activity: Activity, vehicleId:String? = null) {
+        OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 }

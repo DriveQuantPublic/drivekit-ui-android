@@ -15,19 +15,17 @@ enum class DKDatePattern {
     DAY,
     MONTH;
 
-    fun getPattern(): String {
-        return when (this) {
-            WEEK_LETTER -> "EEEE d MMMM"
-            STANDARD_DATE -> "dd/MM/yyyy"
-            HOUR_MINUTE_LETTER -> "HH'h'mm"
-            HOUR_MINUTE -> "HH:mm"
-            FULL_DATE -> "EEEE d MMMM yyyy"
-            DAY_MONTH -> "dd/MM"
-            MONTH_YEAR -> "MM/yyyy"
-            YEAR_ONLY -> "E"
-            YEAR -> "yyyy"
-            DAY -> "EEEE"
-            MONTH -> "M"
-        }
+    fun getPattern() = when (this) {
+        WEEK_LETTER -> "EEEE d MMMM"
+        STANDARD_DATE -> "dd/MM/yyyy"
+        HOUR_MINUTE_LETTER -> "HH'h'mm"
+        HOUR_MINUTE -> "HH:mm"
+        FULL_DATE -> "EEEE d MMMM yyyy"
+        DAY_MONTH -> "dd/MM"
+        MONTH_YEAR -> "MM/yyyy"
+        YEAR_ONLY -> "E"
+        YEAR -> "yyyy"
+        DAY -> "EEEE"
+        MONTH -> "M"
     }
 }

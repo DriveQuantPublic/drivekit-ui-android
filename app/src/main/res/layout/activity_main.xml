@@ -263,6 +263,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="onVehicleClicked"/>
 
+        <Button
+            android:id="@+id/button_vehicle_odometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vehicle_odometer_list_button"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toBottomOf="@id/button_vehicle_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="onOdometerVehicleClicked"/>
+
         <View
             android:id="@+id/separator_vehicles"
             android:layout_width="match_parent"
@@ -273,7 +284,7 @@
             android:background="@android:color/darker_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_vehicle_list"/>
+            app:layout_constraintTop_toBottomOf="@id/button_vehicle_odometer"/>
 
         <TextView
             android:id="@+id/driver_achievement_title"

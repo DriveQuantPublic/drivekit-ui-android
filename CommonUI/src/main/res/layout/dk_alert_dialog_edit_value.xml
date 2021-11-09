@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alert_dialog_edit_value_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_view_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dk_margin_half"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:text="@string/dk_common_distance"
+        android:textAlignment="center"
+        tools:textColor="#FFF" />
+
+    <LinearLayout
+        android:layout_margin="@dimen/dk_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dk_margin"
+        android:paddingBottom="@dimen/dk_margin">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_text_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</LinearLayout>
