@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -89,25 +90,29 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
+        dk_progress_circular?.apply {
+            animate()
             .alpha(0f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
+                    visibility = View.GONE
                 }
             })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
+        dk_progress_circular?.apply {
+            animate()
             .alpha(1f)
             .setDuration(200L)
             .setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
+                    visibility = View.VISIBLE
                 }
             })
+        }
     }
 
     private fun updateTitle(title: String){
@@ -134,10 +139,10 @@ class BluetoothActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == NearbyDevicesUtils.NEARBY_DEVICES_PERMISSIONS_REQUEST_CODE) {
-            if (!shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_SCAN) || !shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
-                NearbyDevicesUtils.displayPermissionsError(this, true)
-            } else {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 viewModel.onStartButtonClicked()
+            } else if (!shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_SCAN) || !shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)) {
+                NearbyDevicesUtils.displayPermissionsError(this, true)
             }
         }
     }

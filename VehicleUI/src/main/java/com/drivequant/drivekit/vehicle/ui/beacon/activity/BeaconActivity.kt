@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -134,25 +135,29 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(0f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.GONE
-                }
-            })
+        dk_progress_circular?.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.GONE
+                    }
+                })
+        }
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular.animate()
-            .alpha(1f)
-            .setDuration(200L)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    dk_progress_circular?.visibility = View.VISIBLE
-                }
-            })
+        dk_progress_circular?.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(200L)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        visibility = View.VISIBLE
+                    }
+                })
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -162,13 +167,10 @@ class BeaconActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == NearbyDevicesUtils.NEARBY_DEVICES_PERMISSIONS_REQUEST_CODE) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.BLUETOOTH_SCAN
-                ) || !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                )
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // do nothing
+            } else if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_SCAN)
+                || !ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_CONNECT)
             ) {
                 NearbyDevicesUtils.displayPermissionsError(this, true)
             }
