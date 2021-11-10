@@ -104,8 +104,10 @@ class OdometerHistoryDetailFragment : Fragment() {
                     if (it.second) {
                         val intentData = Intent()
                         activity?.let { activity ->
-                            activity.setResult(Activity.RESULT_OK, intentData)
-                            activity.finish()
+                            activity.apply {
+                                setResult(Activity.RESULT_OK, intentData)
+                                finish()
+                            }
                         }
                     }
                 })
@@ -115,7 +117,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun initVehicle(context: Context, vehicleId: String) {
         text_view_item_display_name.apply {
-            smallText(ContextCompat.getColor(context,R.color.dkGrayColor))
+            smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
             text = viewModel.getVehicleFormattedName(context)
         }
         VehicleUtils().getVehicleDrawable(context, vehicleId)?.let { drawable ->
@@ -128,7 +130,11 @@ class OdometerHistoryDetailFragment : Fragment() {
     }
 
     private fun initMileageRecord(context: Context) {
-        edit_text_distance.setEditTextTitle(viewModel.getHistoryDistance(context), Color.parseColor("#9E9E9E"))
+        if (viewModel.canEditOrAddHistory()) {
+            edit_text_distance.setEditTextTitle(viewModel.getHistoryDistance(context), ContextCompat.getColor(context,R.color.dkOdometerHistoryDateColor))
+        } else {
+            edit_text_distance.setEditTextTitle(viewModel.getHistoryDistance(context))
+        }
         edit_text_date.setEditTextTitle(viewModel.getHistoryUpdateDate())
         text_view_history_detail_title.apply {
             text = DKResource.convertToString(context, "dk_vehicle_odometer_odometer_history_detail_title")
