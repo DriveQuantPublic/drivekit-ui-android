@@ -40,7 +40,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
-    internal var enableInitOdometer: Boolean = true
+    internal var enableOdometer: Boolean = false
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
@@ -134,8 +134,8 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.vehiclePickerExtraStep = listener
     }
 
-    fun enableOdometer(enable: Boolean) {
-        this.enableInitOdometer = enable
+    fun enableOdometer(enableOdometer: Boolean) {
+        this.enableOdometer = enableOdometer
     }
 
     fun configureVehicleOdometerNextStep(listener: VehicleOdometerNextStepListener) {
@@ -197,10 +197,13 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     @JvmOverloads
     fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
-        if (!enableInitOdometer) {
-            OdometerVehicleListActivity.launchActivity(activity, vehicleId)
-        } else {
-            OdometerInitActivity.launchActivity(activity, vehicleId)
+        vehicleId?.let {
+            DriveKitVehicle.odometerQuery().whereEqualTo("vehicleId", it).queryOne()
+                .executeOne()?.let {
+                    OdometerInitActivity.launchActivity(activity, vehicleId)
+                } ?: kotlin.run {
+                OdometerVehicleListActivity.launchActivity(activity, vehicleId)
+            }
         }
     }
 }
