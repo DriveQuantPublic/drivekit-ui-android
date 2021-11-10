@@ -49,6 +49,10 @@
             android:name=".odometer.activity.OdometerHistoryDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".odometer.activity.OdometerInitActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".utils.BaseFileProvider"

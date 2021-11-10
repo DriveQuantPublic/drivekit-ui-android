@@ -16,7 +16,9 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
+import com.drivequant.drivekit.vehicle.ui.listener.VehicleOdometerNextStepListener
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
@@ -38,6 +40,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
+    internal var enableInitOdometer: Boolean = true
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
@@ -49,6 +52,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
     internal var vehiclePickerExtraStep: VehiclePickerExtraStepListener? = null
+    internal var vehicleOdometerNextStep: VehicleOdometerNextStepListener? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -130,6 +134,14 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.vehiclePickerExtraStep = listener
     }
 
+    fun enableOdometer(enable: Boolean) {
+        this.enableInitOdometer = enable
+    }
+
+    fun configureVehicleOdometerNextStep(listener: VehicleOdometerNextStepListener) {
+        this.vehicleOdometerNextStep = listener
+    }
+
     override fun startVehicleListActivity(context: Context) {
         val intent = Intent(context, VehiclesListActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -184,7 +196,11 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     @JvmOverloads
-    fun startOdometerUIActivity(activity: Activity, vehicleId:String? = null) {
-        OdometerVehicleListActivity.launchActivity(activity, vehicleId)
+    fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
+        if (!enableInitOdometer) {
+            OdometerVehicleListActivity.launchActivity(activity, vehicleId)
+        } else {
+            OdometerInitActivity.launchActivity(activity, vehicleId)
+        }
     }
 }

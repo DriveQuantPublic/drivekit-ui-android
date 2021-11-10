@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/dk_margin_half"
+    android:paddingEnd="@dimen/dk_margin_half">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="168dp"
+                    android:layout_height="168dp"
+                    android:src="@drawable/dk_vehicle_odometer" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_view_odometer_desc"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                tools:text="@string/dk_vehicle_odometer_car_desc"
+                tools:textSize="@dimen/dk_text_normal" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_view_vehicle_distance_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:hint="@string/dk_vehicle_odometer_enter_mileage"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/button_validate_reference"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:gravity="center"
+                android:textAllCaps="true"
+                tools:text="@string/dk_common_validate" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+</ScrollView>
