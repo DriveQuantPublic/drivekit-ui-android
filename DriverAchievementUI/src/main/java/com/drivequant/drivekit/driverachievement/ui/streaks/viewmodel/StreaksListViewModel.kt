@@ -9,7 +9,7 @@ import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 import com.drivequant.drivekit.driverachievement.StreaksQueryListener
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
-class StreaksListViewModel : ViewModel() {
+internal class StreaksListViewModel : ViewModel() {
 
     var filteredStreaksData: MutableList<StreaksData> = mutableListOf()
     val streaksData: MutableLiveData<List<StreaksData>> = MutableLiveData()
