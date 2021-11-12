@@ -112,8 +112,19 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                             } else {
                                 listener.onVehiclePickerFinished(vehicleId)
                             }
+                            finish()
                         }
-                    }?: finish()
+                    }?: run {
+                        if (DriveKitVehicleUI.enableOdometer) {
+                            viewModel.createdVehicleId?.let { vehicleId ->
+                                OdometerInitActivity.launchActivity(
+                                    this@VehiclePickerActivity,
+                                    vehicleId
+                                )
+                            }
+                        }
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
                 }

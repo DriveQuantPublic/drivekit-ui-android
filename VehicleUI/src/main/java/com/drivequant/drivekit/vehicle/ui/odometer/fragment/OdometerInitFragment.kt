@@ -89,8 +89,7 @@ class OdometerInitFragment : Fragment() {
                     updateProgressVisibility(false)
                     Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()
                     if (it.second) {
-                        DriveKitVehicleUI.vehicleOdometerNextStep?.onVehicleOdometerInitFinished(vehicleId) ?: activity?.finish()
-                    } else {
+                        DriveKitVehicleUI.vehiclePickerExtraStep?.onVehiclePickerFinished(vehicleId)
                         activity?.finish()
                     }
                 })

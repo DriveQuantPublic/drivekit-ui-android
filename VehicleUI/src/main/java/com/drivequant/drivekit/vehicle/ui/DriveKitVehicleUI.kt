@@ -52,7 +52,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
     internal var vehiclePickerExtraStep: VehiclePickerExtraStepListener? = null
-    internal var vehicleOdometerNextStep: VehicleOdometerNextStepListener? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -136,10 +135,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     fun enableOdometer(enableOdometer: Boolean) {
         this.enableOdometer = enableOdometer
-    }
-
-    fun configureVehicleOdometerNextStep(listener: VehicleOdometerNextStepListener) {
-        this.vehicleOdometerNextStep = listener
     }
 
     override fun startVehicleListActivity(context: Context) {
