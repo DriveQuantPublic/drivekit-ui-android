@@ -197,13 +197,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
 
     @JvmOverloads
     fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
-        vehicleId?.let {
-            DriveKitVehicle.odometerQuery().whereEqualTo("vehicleId", it).queryOne()
-                .executeOne()?.let {
-                    OdometerInitActivity.launchActivity(activity, vehicleId)
-                } ?: kotlin.run {
-                OdometerVehicleListActivity.launchActivity(activity, vehicleId)
-            }
-        }
+        OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 }
