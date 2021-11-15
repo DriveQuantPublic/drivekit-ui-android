@@ -50,9 +50,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
     private fun getAnalyzedDistanceDescription(context: Context): String {
         val analyzedDistance = vehicleOdometer?.let {
             DKDataFormatter.formatMeterDistanceInKm(context, it.yearAnalyzedDistance * 1000,
-                false
-            ).convertToString()
-        } ?: ""
+                false, minDistanceToRemoveFractions = 0.0).convertToString() } ?: ""
 
        return DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
@@ -75,5 +73,5 @@ internal class OdometerItemViewModel(val vehicleId: String) {
     }"
 
     private fun getFormattedDistance(context: Context, distance: Double) =
-        DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000).convertToString()
+        DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
 }

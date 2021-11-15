@@ -34,8 +34,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
             .executeOne()
     }
 
-    fun canDeleteHistory() =
-        DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
+    fun canDeleteHistory() = DriveKitVehicle.odometerHistoriesQuery().whereEqualTo("vehicleId", vehicleId).query()
             .execute().let {
                 it.size > 1 && historyId > -1
             }
@@ -54,11 +53,11 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
 
     fun getHistoryDistance(context: Context) = vehicleOdometerHistory?.let {
         mileageDistance = it.distance
-        DKDataFormatter.formatMeterDistanceInKm(context, it.distance * 1000).convertToString()
+        DKDataFormatter.formatMeterDistanceInKm(context, it.distance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
     } ?: DKResource.convertToString(context, "dk_vehicle_odometer_mileage_kilometer")
 
     fun getFormattedMileageDistance(context: Context, unit: Boolean = true) =
-        DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit).convertToString()
+        DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit, minDistanceToRemoveFractions = 0.0).convertToString()
 
     fun getHistoryUpdateDate() = if (canAddHistory()) {
         Calendar.getInstance().time
@@ -67,7 +66,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
     }?.formatDate(DKDatePattern.FULL_DATE)?.capitalizeFirstLetter() ?: ""
 
     fun showMileageDistanceErrorMessage() = when {
-        mileageDistance > 1000000 || mileageDistance < 0 -> true
+        mileageDistance >= 1000000.0 || mileageDistance >= 0.0 -> true
         else -> false
     }
 
@@ -76,7 +75,6 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
             ?.let {
                 VehicleUtils().buildFormattedName(context, it)
             } ?: ""
-
 
     fun addOdometerHistory() {
         DriveKitVehicle.addOdometerHistory(

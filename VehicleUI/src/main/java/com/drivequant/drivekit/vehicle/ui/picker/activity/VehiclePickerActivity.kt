@@ -104,7 +104,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
                     DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
                         viewModel.createdVehicleId?.let { vehicleId ->
-                            if (DriveKitVehicleUI.enableOdometer) {
+                            if (DriveKitVehicleUI.hasOdometer) {
                                 OdometerInitActivity.launchActivity(
                                     this@VehiclePickerActivity,
                                     vehicleId
@@ -115,7 +115,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                             finish()
                         }
                     }?: run {
-                        if (DriveKitVehicleUI.enableOdometer) {
+                        if (DriveKitVehicleUI.hasOdometer) {
                             viewModel.createdVehicleId?.let { vehicleId ->
                                 OdometerInitActivity.launchActivity(
                                     this@VehiclePickerActivity,

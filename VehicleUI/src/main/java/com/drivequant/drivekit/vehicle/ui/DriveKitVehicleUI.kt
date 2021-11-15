@@ -16,9 +16,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import com.drivequant.drivekit.vehicle.ui.listener.VehicleOdometerNextStepListener
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
-import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
@@ -40,7 +38,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
-    internal var enableOdometer: Boolean = false
+    internal var hasOdometer: Boolean = false
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
@@ -133,8 +131,8 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.vehiclePickerExtraStep = listener
     }
 
-    fun enableOdometer(enableOdometer: Boolean) {
-        this.enableOdometer = enableOdometer
+    fun enableOdometer(hasOdometer: Boolean) {
+        this.hasOdometer = hasOdometer
     }
 
     override fun startVehicleListActivity(context: Context) {

@@ -50,6 +50,7 @@
                     android:id="@+id/text_view_vehicle_distance_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/dkOdometerHistoryDateColor"
                     android:textSize="@dimen/dk_text_normal"
                     tools:hint="@string/dk_vehicle_odometer_enter_mileage"
                     android:inputType="number" />

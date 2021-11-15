@@ -82,7 +82,7 @@ class OdometerInitFragment : Fragment() {
 
                 text_view_vehicle_distance_field.apply {
                     hint = DKResource.convertToString(context, "dk_vehicle_odometer_enter_mileage")
-                    normalText(ContextCompat.getColor(context, R.color.dkOdometerHistoryDateColor))
+                    normalText()
                 }
 
                 viewModel.odometerActionObserver.observe(requireActivity(), {
@@ -113,7 +113,7 @@ class OdometerInitFragment : Fragment() {
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                viewModel.mileageDistance = text_view_vehicle_distance_field.editableText.toString().trim().toDouble()
+                viewModel.mileageDistance = if (text_view_vehicle_distance_field.editableText.toString().isBlank()) 0.0 else text_view_vehicle_distance_field.editableText.toString().toDouble()
                 if (viewModel.showMileageDistanceErrorMessage()) {
                     text_input_layout_distance.apply {
                         isErrorEnabled = true
