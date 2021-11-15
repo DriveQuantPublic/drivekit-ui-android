@@ -9,7 +9,7 @@ import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewholder.StreakViewHolder
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
 
-class StreaksListAdapter(
+internal class StreaksListAdapter(
     private var context: Context?,
     private var streaksListViewModel: StreaksListViewModel) : RecyclerView.Adapter<StreakViewHolder>() {
 
