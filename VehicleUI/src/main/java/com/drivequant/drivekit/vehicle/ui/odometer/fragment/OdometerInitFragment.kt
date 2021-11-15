@@ -113,7 +113,7 @@ class OdometerInitFragment : Fragment() {
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                viewModel.mileageDistance = text_view_vehicle_distance_field.editableText.toString().toDouble()
+                viewModel.mileageDistance = text_view_vehicle_distance_field.editableText.toString().trim().toDouble()
                 if (viewModel.showMileageDistanceErrorMessage()) {
                     text_input_layout_distance.apply {
                         isErrorEnabled = true
