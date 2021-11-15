@@ -66,7 +66,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
     }?.formatDate(DKDatePattern.FULL_DATE)?.capitalizeFirstLetter() ?: ""
 
     fun showMileageDistanceErrorMessage() = when {
-        mileageDistance >= 1000000.0 || mileageDistance >= 0.0 -> true
+        mileageDistance >= 1000000.0 || mileageDistance <= 0.0 -> true
         else -> false
     }
 
