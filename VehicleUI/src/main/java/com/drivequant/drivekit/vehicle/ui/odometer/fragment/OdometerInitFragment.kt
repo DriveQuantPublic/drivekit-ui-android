@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -84,7 +83,6 @@ class OdometerInitFragment : Fragment() {
                     hint = DKResource.convertToString(context, "dk_vehicle_odometer_enter_mileage")
                     normalText()
                 }
-
                 viewModel.odometerActionObserver.observe(requireActivity(), {
                     updateProgressVisibility(false)
                     Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()

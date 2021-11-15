@@ -129,10 +129,12 @@ class OdometerHistoryDetailFragment : Fragment() {
     }
 
     private fun initMileageRecord(context: Context) {
-        if (viewModel.canEditOrAddHistory()) {
-            edit_text_distance.setEditTextTitle(viewModel.getHistoryDistance(context), ContextCompat.getColor(context,R.color.dkOdometerHistoryDateColor))
-        } else {
-            edit_text_distance.setEditTextTitle(viewModel.getHistoryDistance(context))
+        edit_text_distance.apply {
+            if (viewModel.canEditOrAddHistory()) {
+                setEditTextTitle(viewModel.getHistoryDistance(context), ContextCompat.getColor(context,R.color.dkOdometerHistoryDateColor))
+            } else {
+                setEditTextTitle(viewModel.getHistoryDistance(context))
+            }
         }
         edit_text_date.setEditTextTitle(viewModel.getHistoryUpdateDate())
         text_view_history_detail_title.apply {
