@@ -38,6 +38,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var canAddVehicle: Boolean = true
     internal var canRemoveBeacon: Boolean = true
     internal var maxVehicles: Int? = null
+    internal var hasOdometer: Boolean = false
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes: List<DetectionMode> = listOf(
@@ -130,6 +131,10 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.vehiclePickerExtraStep = listener
     }
 
+    fun enableOdometer(hasOdometer: Boolean) {
+        this.hasOdometer = hasOdometer
+    }
+
     override fun startVehicleListActivity(context: Context) {
         val intent = Intent(context, VehiclesListActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -184,7 +189,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     }
 
     @JvmOverloads
-    fun startOdometerUIActivity(activity: Activity, vehicleId:String? = null) {
+    fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 }

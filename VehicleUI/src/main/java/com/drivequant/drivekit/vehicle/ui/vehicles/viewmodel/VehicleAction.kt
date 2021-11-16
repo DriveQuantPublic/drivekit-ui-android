@@ -40,7 +40,7 @@ enum class VehicleAction(
         REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
         DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().query().execute().size > 1
                 && DriveKitVehicleUI.vehicleActions.contains(DELETE)
-        ODOMETER -> DriveKitVehicleUI.vehicleActions.contains(ODOMETER)
+        ODOMETER -> DriveKitVehicleUI.hasOdometer && DriveKitVehicleUI.vehicleActions.contains(ODOMETER)
     }
 
     override fun onItemClicked(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
