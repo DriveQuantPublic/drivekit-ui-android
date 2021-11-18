@@ -23,6 +23,7 @@ import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
@@ -40,8 +41,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     companion object {
         private var vehicleToDelete: Vehicle? = null
         @JvmOverloads
-        fun launchActivity(activityContext: Context, vehicleToDelete: Vehicle? = null) {
+        fun launchActivity(
+            activityContext: Context,
+            vehicleToDelete: Vehicle? = null,
+            listener: VehiclePickerCompleteListener? = null) {
             this.vehicleToDelete = vehicleToDelete
+            DriveKitVehicleUI.vehiclePickerComplete = listener
             val intent = Intent(activityContext, VehiclePickerActivity::class.java)
             val activity = activityContext as Activity
             activity.startActivity(intent)
@@ -79,7 +84,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
         viewModel.progressBarObserver.observe(this, {
             it?.let {
-                if (it){
+                if (it) {
                     showProgressCircular()
                 } else {
                     hideProgressCircular()
@@ -102,7 +107,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
-                    DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
+                    DriveKitVehicleUI.vehiclePickerComplete?.let { listener ->
                         viewModel.createdVehicleId?.let { vehicleId ->
                             if (DriveKitVehicleUI.hasOdometer) {
                                 OdometerInitActivity.launchActivity(

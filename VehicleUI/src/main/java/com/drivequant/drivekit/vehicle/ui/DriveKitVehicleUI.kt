@@ -16,7 +16,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleListActivity
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.CategoryConfigType
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailActivity
@@ -49,7 +49,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     )
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
-    internal var vehiclePickerExtraStep: VehiclePickerExtraStepListener? = null
+    internal var vehiclePickerComplete: VehiclePickerCompleteListener? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -127,9 +127,8 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         this.beaconDiagnosticMail = beaconDiagnosticMail
     }
 
-    fun configureVehiclePickerExtraStep(listener: VehiclePickerExtraStepListener) {
-        this.vehiclePickerExtraStep = listener
-    }
+    @Deprecated("This method is not used anymore.")
+    fun configureVehiclePickerExtraStep(listener: VehiclePickerCompleteListener) {}
 
     fun enableOdometer(hasOdometer: Boolean) {
         this.hasOdometer = hasOdometer

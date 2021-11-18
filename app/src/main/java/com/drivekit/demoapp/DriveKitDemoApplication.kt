@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import android.util.Log
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -28,11 +27,10 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import java.util.*
 
-class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraStepListener {
+class DriveKitDemoApplication : Application(), ContentMail {
 
     companion object {
         fun showNotification(context: Context, message: String) {
@@ -74,7 +72,6 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
             listOf(DemoPtacTrailerTruckField())
         )
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
         DriveKitVehicleUI.enableOdometer(true)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
     }
@@ -147,7 +144,4 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
     override fun getSubject() = "Mock subject"
     override fun getMailBody() = "Mock mail body in DriveKitDemoApplication.kt"
     override fun overrideMailBodyContent() = true
-    override fun onVehiclePickerFinished(vehicleId: String) {
-        Log.i("Vehicle Picker", "New vehicle created : $vehicleId")
-    }
 }
