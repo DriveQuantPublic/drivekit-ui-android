@@ -51,25 +51,23 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         }
     }
 
-    fun getScreenTitle(context: Context): String {
-        return if (vehiclesList.size > 1) {
-            DKResource.convertToString(context, "dk_vehicle_my_vehicles")
-        } else {
-            DKResource.convertToString(context, "dk_vehicle_my_vehicle")
-        }
+    fun hasLocalVehicles() = DriveKitVehicle.vehiclesQuery().noFilter().query().execute().isNotEmpty()
+    
+    fun getScreenTitle(context: Context) = if (vehiclesList.size > 1) {
+        "dk_vehicle_my_vehicles"
+    } else {
+        "dk_vehicle_my_vehicle"
+    }.let {
+        DKResource.convertToString(context, it)
     }
 
-    fun getTitle(context: Context, vehicle: Vehicle): String {
-        return vehicle.buildFormattedName(context)
-    }
+    fun getTitle(context: Context, vehicle: Vehicle) = vehicle.buildFormattedName(context)
 
-    fun getSubtitle(context: Context, vehicle: Vehicle): String? {
-        return vehicle.computeSubtitle(context)
-    }
+    fun getSubtitle(context: Context, vehicle: Vehicle) = vehicle.computeSubtitle(context)
 
-    fun removeBeaconToVehicle(vehicle: Vehicle){
+    fun removeBeaconToVehicle(vehicle: Vehicle) {
         progressBarObserver.postValue(true)
-        DriveKitVehicle.removeBeaconToVehicle(vehicle, object: VehicleRemoveBeaconQueryListener {
+        DriveKitVehicle.removeBeaconToVehicle(vehicle, object : VehicleRemoveBeaconQueryListener {
             override fun onResponse(status: VehicleBeaconRemoveStatus) {
                 progressBarObserver.postValue(false)
                 removeBeaconOrBluetoothObserver.postValue(status == VehicleBeaconRemoveStatus.SUCCESS)
@@ -77,14 +75,16 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         })
     }
 
-    fun removeBluetoothToVehicle(vehicle: Vehicle){
+    fun removeBluetoothToVehicle(vehicle: Vehicle) {
         progressBarObserver.postValue(true)
-        DriveKitVehicle.removeBluetoothToVehicle(vehicle, object: VehicleRemoveBluetoothQueryListener {
-            override fun onResponse(status: VehicleRemoveBluetoothStatus) {
-                progressBarObserver.postValue(false)
-                removeBeaconOrBluetoothObserver.postValue(status == VehicleRemoveBluetoothStatus.SUCCESS)
-            }
-        })
+        DriveKitVehicle.removeBluetoothToVehicle(
+            vehicle,
+            object : VehicleRemoveBluetoothQueryListener {
+                override fun onResponse(status: VehicleRemoveBluetoothStatus) {
+                    progressBarObserver.postValue(false)
+                    removeBeaconOrBluetoothObserver.postValue(status == VehicleRemoveBluetoothStatus.SUCCESS)
+                }
+            })
     }
 
     fun buildDetectionModeSpinnerItems(context: Context): List<DetectionModeSpinnerItem> {
@@ -100,11 +100,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         return detectionModeSpinnerItems
     }
 
-    fun maxVehiclesReached(): Boolean {
-        return DriveKitVehicleUI.maxVehicles?.let {
-            vehiclesList.size >= it
-        } ?: run {
-            false
-        }
-    }
+    fun maxVehiclesReached() = DriveKitVehicleUI.maxVehicles?.let {
+        vehiclesList.size >= it
+    } ?: false
 }
