@@ -50,13 +50,6 @@ class VehiclesListFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
         viewModel.apply {
-            synchronizationType = if (viewModel.hasLocalVehicles()) {
-                SynchronizationType.CACHE
-            } else {
-                SynchronizationType.DEFAULT
-            }
-            updateVehicles(synchronizationType)
-
             progressBarObserver.observe(this@VehiclesListFragment, {
                 it?.let { displayProgressCircular ->
                     if (displayProgressCircular) {
@@ -75,7 +68,12 @@ class VehiclesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateVehicles(SynchronizationType.CACHE)
+        synchronizationType = if (viewModel.hasLocalVehicles()) {
+            SynchronizationType.CACHE
+        } else {
+            SynchronizationType.DEFAULT
+        }
+        updateVehicles(synchronizationType)
     }
 
     private fun updateTitle(title: String) {
