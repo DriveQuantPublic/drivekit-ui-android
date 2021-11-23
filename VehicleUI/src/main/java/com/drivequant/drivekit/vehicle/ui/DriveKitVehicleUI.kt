@@ -5,13 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.navigation.VehicleUIEntryPoint
+import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.DriveKitVehicleListener
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
@@ -23,11 +26,12 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.activity.VehicleDetailAc
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.Field
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
+import com.drivequant.drivekit.vehicle.ui.vehicles.fragment.VehiclesListFragment
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleAction
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 
-object DriveKitVehicleUI : VehicleUIEntryPoint {
+object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
 
     internal var vehicleTypes: List<VehicleType> = VehicleType.values().asList()
     internal var brands: List<VehicleBrand> = VehicleBrand.values().asList()
@@ -41,15 +45,11 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     internal var hasOdometer: Boolean = false
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
-    internal var detectionModes: List<DetectionMode> = listOf(
-        DetectionMode.DISABLED,
-        DetectionMode.GPS,
-        DetectionMode.BEACON,
-        DetectionMode.BLUETOOTH
-    )
+    internal var detectionModes = DetectionMode.values().toList()
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
     internal var vehiclePickerExtraStep: VehiclePickerExtraStepListener? = null
+    private var vehiclesListFragment: VehiclesListFragment? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
@@ -57,16 +57,13 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     fun initialize(vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
                    maxVehicles: Int? = null,
                    categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
-                   detectionModes: List<DetectionMode> = listOf(
-                       DetectionMode.DISABLED,
-                       DetectionMode.GPS,
-                       DetectionMode.BEACON,
-                       DetectionMode.BLUETOOTH)) {
+                   detectionModes: List<DetectionMode> = DetectionMode.values().toList()) {
         this.vehicleTypes = vehicleTypes
         this.maxVehicles = maxVehicles
         this.categoryConfigType = categoryConfigType
         this.detectionModes = detectionModes
         DriveKitNavigationController.vehicleUIEntryPoint = this
+        DriveKitVehicle.addListener(this)
     }
 
     fun configureVehiclesTypes(vehicleTypes: List<VehicleType>){
@@ -141,6 +138,11 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
         context.startActivity(intent)
     }
 
+    override fun createVehicleListFragment(): Fragment {
+        vehiclesListFragment = VehiclesListFragment()
+        return vehiclesListFragment!!
+    }
+
     override fun startVehicleDetailActivity(context: Context, vehicleId: String) : Boolean {
         DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let { vehicle ->
             return if (vehicle.liteConfig){
@@ -191,5 +193,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint {
     @JvmOverloads
     fun startOdometerUIActivity(activity: Activity, vehicleId: String? = null) {
         OdometerVehicleListActivity.launchActivity(activity, vehicleId)
+    }
+
+    override fun vehiclesUpdated() {
+        vehiclesListFragment?.updateVehicles(SynchronizationType.CACHE)
     }
 }

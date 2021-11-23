@@ -82,7 +82,7 @@ class VehiclesListFragment : Fragment() {
         }
     }
 
-    private fun updateVehicles(synchronizationType: SynchronizationType) {
+    fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
