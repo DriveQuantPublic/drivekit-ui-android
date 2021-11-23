@@ -19,8 +19,7 @@ import android.graphics.drawable.LayerDrawable
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 
 
-class StreakViewHolder(itemView: View) :
-    RecyclerView.ViewHolder(itemView) {
+internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val context = itemView.context
     private val textViewStreakTitle = itemView.findViewById<TextView>(R.id.text_view_streak_title)
     private val textViewCurrentStreakData = itemView.findViewById<TextView>(R.id.text_view_current_streak_trip)

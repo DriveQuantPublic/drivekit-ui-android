@@ -4,4 +4,11 @@
         <attr name="dkCircularButtonItemTitle" format="string" />
         <attr name="dkCircularButtonItemDrawable" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="DKEditableDrawableText">
+        <attr name="editTextTitle" format="string" />
+        <attr name="editTextTitleHint" format="string" />
+        <attr name="editTextTitleDrawable" format="integer" />
+        <attr name="editTextTitlePreferenceKey" format="string" />
+    </declare-styleable>
 </resources>

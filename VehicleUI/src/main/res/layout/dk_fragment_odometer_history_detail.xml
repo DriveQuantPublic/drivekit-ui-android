@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    style="@style/DKCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dk_margin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dk_margin_half">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/dk_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/text_view_history_detail_title"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/dk_margin_double"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textAllCaps="true"
+                                tools:text="@string/dk_vehicle_odometer_odometer_history_detail_title" />
+                        </LinearLayout>
+
+                        <com.drivequant.drivekit.common.ui.component.EditableDrawableText
+                            android:id="@+id/edit_text_distance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dk_margin_half"
+                            app:editTextTitleDrawable="@drawable/dk_common_eco_accel"
+                            app:editTextTitleHint="@string/dk_vehicle_odometer_mileage_kilometer" />
+
+                        <com.drivequant.drivekit.common.ui.component.EditableDrawableText
+                            android:id="@+id/edit_text_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dk_margin_half"
+                            app:editTextTitleDrawable="@drawable/dk_common_calendar"
+                            app:editTextTitleHint="@string/dk_vehicle_odometer_history_date" />
+
+                        <LinearLayout
+                            android:id="@+id/vehicle_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <include layout="@layout/dk_custom_filter_spinner_item_no_padding" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/button_validate_reference"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:layout_marginEnd="@dimen/dk_margin"
+                    android:gravity="center"
+                    android:text="@string/dk_common_validate"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/button_cancel_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:layout_marginEnd="@dimen/dk_margin"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    tools:text="@string/dk_common_cancel"
+                    tools:textSize="@dimen/dk_text_normal" />
+
+                <TextView
+                    android:id="@+id/button_delete_reference"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:layout_marginEnd="@dimen/dk_margin"
+                    android:layout_marginBottom="@dimen/dk_margin_half"
+                    android:gravity="center"
+                    android:text="@string/dk_common_delete"
+                    android:textAllCaps="true"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

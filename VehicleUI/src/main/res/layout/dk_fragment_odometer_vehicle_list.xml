@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".odometer.fragment.OdometerVehicleListFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/dk_swipe_refresh_odometer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dk_margin">
+
+        <LinearLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.drivequant.drivekit.common.ui.component.FilterView
+                android:id="@+id/vehicle_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerVehicleDetailView
+                android:id="@+id/mileage_vehicle_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:odometerCornerIcon="@drawable/dk_common_dots"
+                app:odometerTitle="dk_vehicle_odometer_info_vehicle_distance_title" />
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/text_view_no_vehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+</FrameLayout>

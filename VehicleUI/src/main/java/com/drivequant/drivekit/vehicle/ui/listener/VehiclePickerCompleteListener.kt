@@ -1,5 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.listener
 
-interface VehiclePickerExtraStepListener {
+interface VehiclePickerCompleteListener {
     fun onVehiclePickerFinished(vehicleId: String)
 }

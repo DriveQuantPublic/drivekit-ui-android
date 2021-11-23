@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import android.util.Log
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -22,19 +21,16 @@ import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.listener.ContentMail
-import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerExtraStepListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import java.util.*
 
-class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraStepListener {
+class DriveKitDemoApplication : Application(), ContentMail {
 
     companion object {
         fun showNotification(context: Context, message: String) {
@@ -76,7 +72,7 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
             listOf(DemoPtacTrailerTruckField())
         )
         DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.configureVehiclePickerExtraStep(this)
+        DriveKitVehicleUI.enableOdometer(true)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
     }
 
@@ -143,25 +139,9 @@ class DriveKitDemoApplication : Application(), ContentMail, VehiclePickerExtraSt
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
     }
 
-    override fun getRecipients(): List<String> {
-        return listOf("recipient1@email.com")
-    }
-
-    override fun getBccRecipients(): List<String> {
-        return listOf("bcc_test1@email.com")
-    }
-
-    override fun getSubject(): String {
-        return "Mock subject"
-    }
-
-    override fun getMailBody(): String {
-        return "Mock mail body in DriveKitDemoApplication.kt"
-    }
-
-    override fun overrideMailBodyContent(): Boolean = true
-
-    override fun onVehiclePickerFinished(vehicleId: String) {
-        Log.i("Vehicle Picker", "New vehicle created : $vehicleId")
-    }
+    override fun getRecipients() = listOf("recipient1@email.com")
+    override fun getBccRecipients() = listOf("bcc_test1@email.com")
+    override fun getSubject() = "Mock subject"
+    override fun getMailBody() = "Mock mail body in DriveKitDemoApplication.kt"
+    override fun overrideMailBodyContent() = true
 }

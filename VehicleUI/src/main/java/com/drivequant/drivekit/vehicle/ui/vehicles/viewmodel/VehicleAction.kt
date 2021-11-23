@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
+import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import com.google.android.material.textfield.TextInputEditText
 import android.widget.TextView
 import android.widget.Toast
@@ -27,20 +27,20 @@ enum class VehicleAction(
     SHOW("dk_vehicle_show"),
     RENAME("dk_vehicle_rename"),
     REPLACE("dk_vehicle_replace"),
-    DELETE("dk_vehicle_delete");
+    DELETE("dk_vehicle_delete"),
+    ODOMETER("dk_vehicle_odometer");
 
     override fun getTitle(context: Context): String {
         return DKResource.convertToString(context, descriptionIdentifier)
     }
 
-    override fun isDisplayable(vehicle: Vehicle): Boolean {
-        return when (this){
-            SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
-            RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
-            REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
-            DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().query().execute().size > 1
-                    && DriveKitVehicleUI.vehicleActions.contains(DELETE)
-        }
+    override fun isDisplayable(vehicle: Vehicle) = when (this) {
+        SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
+        RENAME -> DriveKitVehicleUI.vehicleActions.contains(RENAME)
+        REPLACE -> DriveKitVehicleUI.vehicleActions.contains(REPLACE)
+        DELETE -> DriveKitVehicle.vehiclesQuery().noFilter().query().execute().size > 1
+                && DriveKitVehicleUI.vehicleActions.contains(DELETE)
+        ODOMETER -> DriveKitVehicleUI.hasOdometer && DriveKitVehicleUI.vehicleActions.contains(ODOMETER)
     }
 
     override fun onItemClicked(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
@@ -49,7 +49,12 @@ enum class VehicleAction(
             RENAME -> manageRenameVehicle(context, viewModel, vehicle)
             REPLACE -> manageReplaceVehicle(context, vehicle)
             DELETE -> manageDeleteVehicle(context, viewModel, vehicle)
+            ODOMETER -> manageShowOdometer(context, vehicle)
         }
+    }
+
+    private fun manageShowOdometer(context: Context, vehicle: Vehicle) {
+        DriveKitVehicleUI.startOdometerUIActivity(context as Activity, vehicle.vehicleId)
     }
 
     private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle){
@@ -69,22 +74,21 @@ enum class VehicleAction(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.alert_dialog_vehicle_rename)
             .cancelable(true)
-            .positiveButton(positiveListener =
-                DialogInterface.OnClickListener { _, _ ->
-                    vehicleFieldInputEditText?.let {
-                        viewModel.progressBarObserver.postValue(true)
-                        DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
-                            override fun onResponse(status: VehicleManagerStatus) {
-                                viewModel.progressBarObserver.postValue(false)
-                                if (status == VehicleManagerStatus.SUCCESS){
-                                    viewModel.fetchVehicles(context)
-                                } else {
-                                    displayError(context)
-                                }
+            .positiveButton(positiveListener = { _, _ ->
+                vehicleFieldInputEditText?.let {
+                    viewModel.progressBarObserver.postValue(true)
+                    DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
+                        override fun onResponse(status: VehicleManagerStatus) {
+                            viewModel.progressBarObserver.postValue(false)
+                            if (status == VehicleManagerStatus.SUCCESS){
+                                viewModel.fetchVehicles(context)
+                            } else {
+                                displayError(context)
                             }
-                        })
-                    }
-                })
+                        }
+                    })
+                }
+            })
             .negativeButton()
             .show()
 
@@ -113,18 +117,17 @@ enum class VehicleAction(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(positiveListener =
-                DialogInterface.OnClickListener { _, _ ->
-                    DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
-                        override fun onResponse(status: VehicleManagerStatus) {
-                            if (status == VehicleManagerStatus.SUCCESS){
-                                viewModel.fetchVehicles(context)
-                            } else {
-                                displayError(context)
-                            }
+            .positiveButton(positiveListener = { _, _ ->
+                DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                    override fun onResponse(status: VehicleManagerStatus) {
+                        if (status == VehicleManagerStatus.SUCCESS){
+                            viewModel.fetchVehicles(context)
+                        } else {
+                            displayError(context)
                         }
-                    })
+                    }
                 })
+            })
             .negativeButton()
             .show()
 

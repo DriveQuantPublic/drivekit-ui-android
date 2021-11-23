@@ -406,14 +406,12 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 selectedEngineIndex = VehicleEngineIndex.getEnumByName(itemEngines.first().value)
                 fetchVehicleModels()
             }
-            else -> {
-                stepDispatcher.postValue(ENGINE)
-            }
+            else -> stepDispatcher.postValue(ENGINE)
         }
     }
 
-    fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep): String? {
-        val stringResId = when (vehiclePickerStep){
+    fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep) =
+        when (vehiclePickerStep) {
             TYPE -> "dk_vehicle_type_selection_title"
             TRUCK_TYPE -> "dk_vehicle_category_truck_selection_title"
             BRANDS_FULL -> "dk_vehicle_brand_description"
@@ -425,20 +423,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             CATEGORY_DESCRIPTION,
             BRANDS_ICONS,
             NAME -> null
+        }?.let {
+            DKResource.convertToString(context, it)
         }
-        stringResId?.let {
-            return DKResource.convertToString(context, it)
-        }?: run {
-            return null
-        }
-    }
 
-    fun getDefaultVehicleName(): String? {
-        return if (isLiteConfig){
-            selectedCategory.title
-        } else {
-            "${selectedBrand.value} $selectedModel ${selectedVersion.version}"
-        }
+    fun getDefaultVehicleName() = if (isLiteConfig) {
+        selectedCategory.title
+    } else {
+        "${selectedBrand.value} $selectedModel ${selectedVersion.version}"
     }
 
     private fun buildVehicleTypesItems(): List<VehicleTypeItem> {
