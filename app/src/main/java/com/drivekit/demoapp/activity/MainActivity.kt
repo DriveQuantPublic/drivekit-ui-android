@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +19,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -103,27 +105,27 @@ class MainActivity : AppCompatActivity() {
         DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this@MainActivity)
     }
 
-    fun buttonTripClicked(view: View){
+    fun buttonTripClicked(view: View) {
         if (DriveKitTripAnalysis.isConfigured()) {
             when (view.id) {
-                R.id.button_trip_start -> {
-                    DriveKitTripAnalysis.startTrip()
-                }
-                R.id.button_trip_stop -> {
-                    DriveKitTripAnalysis.stopTrip()
-                }
-                R.id.button_trip_cancel -> {
-                    DriveKitTripAnalysis.cancelTrip()
-                }
+                R.id.button_trip_start -> DriveKitTripAnalysis.startTrip()
+                R.id.button_trip_stop -> DriveKitTripAnalysis.stopTrip()
+                R.id.button_trip_cancel -> DriveKitTripAnalysis.cancelTrip()
             }
         }
     }
 
-    fun onVehicleClicked(view: View){
+    fun onVehicleClicked(view: View) {
         if (DriveKitTripAnalysis.isConfigured()) {
-            when (view.id){
+            when (view.id) {
                 R.id.button_vehicle_picker -> {
-                    VehiclePickerActivity.launchActivity(this)
+                    VehiclePickerActivity.launchActivity(
+                        this,
+                        listener = object : VehiclePickerCompleteListener {
+                            override fun onVehiclePickerFinished(vehicleId: String) {
+                                Log.e("VehiclePicker", "New vehicle created : $vehicleId")
+                            }
+                        })
                 }
 
                 R.id.button_vehicle_list -> {
