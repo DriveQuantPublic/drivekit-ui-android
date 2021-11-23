@@ -33,6 +33,16 @@ class BeaconViewModel(
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
+        set(value) {
+            field = value
+            beacon?.let {
+                DriveKitVehicle.updateBeaconBatteryLevel(it, value, object : VehicleUpdateBeaconBatteryLevelQueryListener {
+                    override fun onResponse(status: VehicleBeaconBatteryStatus) {
+                        // do nothing
+                    }
+                })
+            }
+        }
     var listener: ScanState? = null
     var beaconInfoStatusListener: BeaconInfoStatusListener? = null
 
