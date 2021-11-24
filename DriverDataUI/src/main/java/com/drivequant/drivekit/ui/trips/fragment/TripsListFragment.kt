@@ -40,7 +40,7 @@ class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
     private lateinit var tripsListView : DKTripListView
     private lateinit var tripsList: DKTripList
-    private var shouldSyncTrip = true
+    private var shouldSyncTrips = true
     private lateinit var synchronizationType: SynchronizationType
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -92,8 +92,8 @@ class TripsListFragment : Fragment() {
                     }
                 }
             }
-            if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrip) {
-                shouldSyncTrip = false
+            if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrips) {
+                shouldSyncTrips = false
                 updateTrips()
             }
             tripsListView.configure(tripsList)

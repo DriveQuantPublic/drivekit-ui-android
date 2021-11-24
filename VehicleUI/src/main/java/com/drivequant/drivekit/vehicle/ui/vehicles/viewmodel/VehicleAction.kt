@@ -57,11 +57,14 @@ enum class VehicleAction(
         DriveKitVehicleUI.startOdometerUIActivity(context as Activity, vehicle.vehicleId)
     }
 
-    private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle){
-        DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleDetailActivity(context, vehicle.vehicleId)
+    private fun manageShowVehicleDetail(context: Context, vehicle: Vehicle) {
+        DriveKitNavigationController.vehicleUIEntryPoint?.startVehicleDetailActivity(
+            context,
+            vehicle.vehicleId
+        )
     }
 
-    private fun manageReplaceVehicle(context: Context, vehicle: Vehicle){
+    private fun manageReplaceVehicle(context: Context, vehicle: Vehicle) {
         VehiclePickerActivity.launchActivity(context, vehicleToDelete = vehicle)
     }
 
@@ -80,7 +83,7 @@ enum class VehicleAction(
                     DriveKitVehicle.renameVehicle(it.text.toString(), vehicle, object: VehicleRenameQueryListener {
                         override fun onResponse(status: VehicleManagerStatus) {
                             viewModel.progressBarObserver.postValue(false)
-                            if (status == VehicleManagerStatus.SUCCESS){
+                            if (status == VehicleManagerStatus.SUCCESS) {
                                 viewModel.fetchVehicles(context)
                             } else {
                                 displayError(context)
@@ -107,7 +110,7 @@ enum class VehicleAction(
         vehicleFieldInputEditText?.setText(vehicleName)
     }
 
-    private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
+    private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         val title = DKResource.convertToString(context, "app_name")
         val vehicleName = vehicle.buildFormattedName(context)
         val message = DKResource.buildString(
@@ -118,9 +121,9 @@ enum class VehicleAction(
             .layout(R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton(positiveListener = { _, _ ->
-                DriveKitVehicle.deleteVehicle(vehicle, object: VehicleDeleteQueryListener {
+                DriveKitVehicle.deleteVehicle(vehicle, object : VehicleDeleteQueryListener {
                     override fun onResponse(status: VehicleManagerStatus) {
-                        if (status == VehicleManagerStatus.SUCCESS){
+                        if (status == VehicleManagerStatus.SUCCESS) {
                             viewModel.fetchVehicles(context)
                         } else {
                             displayError(context)
