@@ -133,9 +133,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     }
 
     override fun startVehicleListActivity(context: Context) {
-        val intent = Intent(context, VehiclesListActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        VehiclesListActivity.launchActivity(context)
     }
 
     override fun createVehicleListFragment(): Fragment {
