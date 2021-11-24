@@ -40,24 +40,28 @@ class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
     private lateinit var tripsListView : DKTripListView
     private lateinit var tripsList: DKTripList
+    private var shouldSyncTrip = true
+    private lateinit var synchronizationType: SynchronizationType
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         progress_circular.visibility = View.VISIBLE
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
-                this,
-                TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED())
-            )
-                .get(TripsListViewModel::class.java)
+            viewModel = ViewModelProviders.of(this,
+                TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED())).get(TripsListViewModel::class.java)
         }
         viewModel.filterData.observe(this, {
             configureFilter()
             updateProgressVisibility(false)
         })
 
+        synchronizationType = if (viewModel.hasLocalTrips()) {
+            SynchronizationType.CACHE
+        } else {
+            SynchronizationType.DEFAULT
+        }
         initFilter()
-        updateTrips()
+        updateTrips(synchronizationType)
         viewModel.tripsData.observe(this, {
             viewModel.getFilterItems(requireContext())
             setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
@@ -76,20 +80,21 @@ class TripsListFragment : Fragment() {
                             parentFragment = this@TripsListFragment
                         )
                     }
-
                     override fun getTripData(): TripData = DriverDataUI.tripData
                     override fun getTripsList(): List<DKTripListItem> = it.toDKTripList()
                     override fun getCustomHeader(): DKHeader? = DriverDataUI.customHeader
                     override fun getHeaderDay(): HeaderDay = DriverDataUI.headerDay
-                    override fun getDayTripDescendingOrder(): Boolean =
-                        DriverDataUI.dayTripDescendingOrder
-
-                    override fun canSwipeToRefresh(): Boolean = true
+                    override fun getDayTripDescendingOrder() = DriverDataUI.dayTripDescendingOrder
+                    override fun canSwipeToRefresh() = true
                     override fun onSwipeToRefresh() {
                         filter_view.spinner.setSelection(0)
                         updateTrips()
                     }
                 }
+            }
+            if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrip) {
+                shouldSyncTrip = false
+                updateTrips()
             }
             tripsListView.configure(tripsList)
         })
@@ -111,20 +116,18 @@ class TripsListFragment : Fragment() {
         inflater.inflate(R.menu.trip_list_menu_bar, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.trips_vehicle -> {
-                viewModel.filterTrips(TripListConfiguration.MOTORIZED())
-                filter_view.spinner.setSelection(0, false)
-                true
-            }
-            R.id.trips_alternative -> {
-                viewModel.filterTrips(TripListConfiguration.ALTERNATIVE())
-                filter_view.spinner.setSelection(0, false)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.trips_vehicle -> {
+            viewModel.filterTrips(TripListConfiguration.MOTORIZED())
+            filter_view.spinner.setSelection(0, false)
+            true
         }
+        R.id.trips_alternative -> {
+            viewModel.filterTrips(TripListConfiguration.ALTERNATIVE())
+            filter_view.spinner.setSelection(0, false)
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun initFilter() {
@@ -135,15 +138,14 @@ class TripsListFragment : Fragment() {
                 position: Int,
                 l: Long) {
                 val itemId = viewModel.filterItems[position].getItemId()
-                when (viewModel.tripListConfiguration){
-                    is TripListConfiguration.MOTORIZED -> {
-                        viewModel.filterTrips(TripListConfiguration.MOTORIZED(itemId as String?))
-                    }
-                    is TripListConfiguration.ALTERNATIVE -> {
-                        viewModel.filterTrips(TripListConfiguration.ALTERNATIVE(itemId as TransportationMode?))
-                    }
+                when (viewModel.tripListConfiguration) {
+                    is TripListConfiguration.MOTORIZED -> TripListConfiguration.MOTORIZED(itemId as String?)
+                    is TripListConfiguration.ALTERNATIVE -> TripListConfiguration.ALTERNATIVE(itemId as TransportationMode?)
+                }.let {
+                    viewModel.filterTrips(it)
                 }
             }
+
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         }
     }

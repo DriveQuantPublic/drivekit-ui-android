@@ -20,6 +20,7 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.databaseutils.entity.toTrips
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
@@ -183,9 +184,9 @@ internal class TripsListViewModel(
         }).toSpannable()
     }
 
-    fun getFilterVisibility(): Boolean {
-        return (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
-    }
+    fun getFilterVisibility() = (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
+
+    fun hasLocalTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
 
     @Suppress("UNCHECKED_CAST")
     class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
