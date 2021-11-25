@@ -36,7 +36,6 @@ internal class TripsListViewModel(
     var filterItems: MutableList<FilterItem> = mutableListOf()
         private set
     val tripsData: MutableLiveData<List<Trip>> = MutableLiveData()
-    val filterData: MutableLiveData<List<FilterItem>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
         private set
 
@@ -115,7 +114,6 @@ internal class TripsListViewModel(
                 filterItems.addAll(getTransportationModeFilterItems())
             }
         }
-        filterData.postValue(filterItems)
     }
 
     private fun getTransportationModeFilterItems(): List<FilterItem> {
@@ -183,9 +181,9 @@ internal class TripsListViewModel(
         }).toSpannable()
     }
 
-    fun getFilterVisibility(): Boolean {
-        return (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
-    }
+    fun getFilterVisibility() = (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
+
+    fun hasLocalTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
 
     @Suppress("UNCHECKED_CAST")
     class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
