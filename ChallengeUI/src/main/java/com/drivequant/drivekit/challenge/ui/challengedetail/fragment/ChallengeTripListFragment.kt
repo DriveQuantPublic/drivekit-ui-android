@@ -81,7 +81,7 @@ class ChallengeTripListFragment : Fragment() {
                     itinId
                 )
             }
-        })
+        }, null)
 
         val viewModelParticipation = ViewModelProviders.of(
             this,

@@ -48,7 +48,7 @@ class DKTripListView : FrameLayout {
         )
     }
 
-    fun configure(tripsList: DKTripList) {
+    fun configure(tripsList: DKTripList, listener: TripListViewListener?) {
         updateSwipeRefreshTripsVisibility(false)
         if (tripsList.canSwipeToRefresh()) {
             view.dk_swipe_refresh_trips.setOnRefreshListener {
@@ -69,6 +69,7 @@ class DKTripListView : FrameLayout {
                 expandableListView.setAdapter(adapter)
             }
         }
+        listener?.onTripListConfigured()
         expandableListView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
             adapter?.getChild(groupPosition, childPosition)?.let {
                 tripsList.onTripClickListener(it.getItinId())
@@ -91,4 +92,8 @@ class DKTripListView : FrameLayout {
     fun setTripsListEmptyView(view: View) {
         expandableListView.emptyView = view
     }
+}
+
+interface TripListViewListener {
+    fun onTripListConfigured()
 }

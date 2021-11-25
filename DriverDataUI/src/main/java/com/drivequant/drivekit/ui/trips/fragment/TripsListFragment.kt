@@ -20,6 +20,7 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.views.TripListViewListener
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -92,11 +93,14 @@ class TripsListFragment : Fragment() {
                     }
                 }
             }
-            if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrips) {
-                shouldSyncTrips = false
-                updateTrips()
-            }
-            tripsListView.configure(tripsList)
+            tripsListView.configure(tripsList, object: TripListViewListener {
+                override fun onTripListConfigured() {
+                    if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrips) {
+                        shouldSyncTrips = false
+                        updateTrips()
+                    }
+                }
+            })
         })
 
         viewModel.syncTripsError.observe(this, {
