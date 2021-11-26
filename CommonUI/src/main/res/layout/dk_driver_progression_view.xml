@@ -18,5 +18,15 @@
         android:id="@+id/text_view_global_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dk_margin_half"
         android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/image_view_info_popup_condition"
+        android:layout_width="@dimen/dk_ic_medium"
+        android:layout_height="@dimen/dk_ic_medium"
+        android:paddingTop="@dimen/dk_margin_quarter"
+        android:layout_gravity="center"
+        android:paddingEnd="@dimen/dk_margin_quarter"
+        android:paddingBottom="@dimen/dk_margin_quarter" />
 </LinearLayout>

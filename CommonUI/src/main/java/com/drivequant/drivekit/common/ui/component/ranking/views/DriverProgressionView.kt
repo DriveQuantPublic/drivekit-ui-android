@@ -5,11 +5,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_driver_progression_view.view.*
 
@@ -52,6 +54,35 @@ class DriverProgressionView  : LinearLayout {
             image_view_driver_progression.visibility = View.GONE
         }
         driver_progression_container.setBackgroundColor(rankingViewModel.getBackgroundColor())
+        DKResource.convertToDrawable(context, "dk_common_info")?.let {
+            it.tintDrawable(DriveKitUI.colors.secondaryColor())
+            image_view_info_popup_condition.apply {
+                visibility = if (rankingViewModel.getConditionVisibility()) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+                setImageDrawable(it)
+                setOnClickListener {
+                    val alertDialog = DKAlertDialog.LayoutBuilder()
+                        .init(context)
+                        .layout(R.layout.template_alert_dialog_layout)
+                        .positiveButton(DKResource.convertToString(context, "dk_common_ok")) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
+
+                    val titleTextView =
+                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    val descriptionTextView =
+                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    titleTextView?.text = rankingViewModel.getConditionTitle(context)
+                    descriptionTextView?.text = rankingViewModel.getConditionDescription(context)
+                    titleTextView?.headLine1()
+                    descriptionTextView?.normalText()
+                }
+            }
+        }
     }
 
     private fun setStyle() {

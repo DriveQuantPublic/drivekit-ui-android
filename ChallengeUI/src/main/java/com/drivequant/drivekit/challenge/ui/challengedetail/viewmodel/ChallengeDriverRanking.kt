@@ -21,4 +21,7 @@ internal class ChallengeDriverRanking(val viewModel: ChallengeDetailViewModel) :
     override fun getScoreTitle(context: Context): String = viewModel.getScoreTitle(context)
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.getRankingList()
     override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
+    override fun haveInfoButton() = false
+    override fun getInfoPopupTitle(context: Context): String? = null
+    override fun getInfoPopupMessage(context: Context): String? = null
 }
