@@ -111,8 +111,9 @@ class OdometerInitFragment : Fragment() {
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                viewModel.mileageDistance = if (text_view_vehicle_distance_field.editableText.toString().isBlank()) 0.0 else text_view_vehicle_distance_field.editableText.toString().toDouble()
-                if (viewModel.showMileageDistanceErrorMessage()) {
+                val isEditTextDistanceBlank = text_view_vehicle_distance_field.editableText.toString().isBlank()
+                viewModel.mileageDistance = if (isEditTextDistanceBlank) 0.0 else text_view_vehicle_distance_field.editableText.toString().toDouble()
+                if (viewModel.showMileageDistanceErrorMessage() || isEditTextDistanceBlank) {
                     text_input_layout_distance.apply {
                         isErrorEnabled = true
                         error = DKResource.convertToString(context, "dk_vehicle_odometer_history_error")
