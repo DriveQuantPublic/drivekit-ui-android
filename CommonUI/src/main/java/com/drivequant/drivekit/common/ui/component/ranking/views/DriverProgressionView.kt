@@ -54,6 +54,10 @@ class DriverProgressionView  : LinearLayout {
             image_view_driver_progression.visibility = View.GONE
         }
         driver_progression_container.setBackgroundColor(rankingViewModel.getBackgroundColor())
+        setConditionInfoButton(rankingViewModel)
+    }
+
+    private fun setConditionInfoButton(rankingViewModel: DKRankingViewModel) {
         DKResource.convertToDrawable(context, "dk_common_info")?.let {
             it.tintDrawable(DriveKitUI.colors.secondaryColor())
             image_view_info_popup_condition.apply {
