@@ -2,9 +2,13 @@
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">La récupération du classement a échoué. Veuillez réessayer plus tard.</string>
     <string name="dk_achievements_ranking_legacy">Bi-mensuel</string>
+    <string name="dk_achievements_ranking_legacy_info">Ce classement est calculé à partir de la moyenne des scores des trajets des deux dernières semaines. Pour figurer au classement, il faut avoir réalisé au moins un trajet au cours des 14 derniers jours.</string>
     <string name="dk_achievements_ranking_menu_ranking">Mon classement</string>
     <string name="dk_achievements_ranking_month">Mensuel</string>
+    <string name="dk_achievements_ranking_month_info">Le classement mensuel est calculé à partir de la moyenne des scores de tous les trajets d\'une semaine. Pour apparaitre dans ce classement, il faut parcourir au moins 20 km et avoir réalisé 5 trajets.</string>
     <string name="dk_achievements_ranking_no_pseudo_set">Vous devez renseigner un pseudo pour accéder à cette page.</string>
     <string name="dk_achievements_ranking_permanent">Permanent</string>
+    <string name="dk_achievements_ranking_permanent_info">Le classement permanent est calculé à partir de la moyenne des scores de tous les trajets. Pour apparaitre dans ce classement, il faut parcourir au moins 50 km et avoir réalisé 10 trajets.</string>
     <string name="dk_achievements_ranking_week">Hebdo</string>
+    <string name="dk_achievements_ranking_week_info">Le classement hebdomadaire est calculé à partir de la moyenne des scores de tous les trajets d\'une semaine. Pour apparaitre dans ce classement, il faut parcourir au moins 10 km et avoir réalisé 2 trajets.</string>
 </resources>

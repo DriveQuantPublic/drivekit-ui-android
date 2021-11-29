@@ -2,9 +2,13 @@
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">Failed to synchronize rankings, please retry later.</string>
     <string name="dk_achievements_ranking_legacy">Bi-monthly</string>
+    <string name="dk_achievements_ranking_legacy_info">This ranking is calculated from the mean score of the trips of the last two weeks. To appear in the ranking, you must have completed at least one trip in the last 14 days.</string>
     <string name="dk_achievements_ranking_menu_ranking">My ranking</string>
     <string name="dk_achievements_ranking_month">Monthly</string>
+    <string name="dk_achievements_ranking_month_info">The monthly ranking is calculated from the mean score of all the trips of a week. To figure in this ranking, you need to drive at least 20 km and complete 5 trips.</string>
     <string name="dk_achievements_ranking_no_pseudo_set">You need to enter a nickname to access this page.</string>
     <string name="dk_achievements_ranking_permanent">Permanent</string>
+    <string name="dk_achievements_ranking_permanent_info">The permanent ranking is calculated from the mean score of all the trips. To figure in this ranking, you must drive at least 50 km and complete 10 trips.</string>
     <string name="dk_achievements_ranking_week">Weekly</string>
+    <string name="dk_achievements_ranking_week_info">The weekly ranking is calculated from the mean score of all the trips of a week. To figure in this ranking, you need to drive at least 10 km and complete 2 trips.</string>
 </resources>
