@@ -2,9 +2,13 @@
 <resources>
     <string name="dk_achievements_failed_to_sync_rankings">Die Rangliste konnte nicht synchronisiert werden, bitte versuchen Sie es später erneut.</string>
     <string name="dk_achievements_ranking_legacy">Zweimonatlich</string>
+    <string name="dk_achievements_ranking_legacy_info">Diese Rangliste wird aus der durchschnittlichen Punktzahl der Fahrten der letzten zwei Wochen berechnet. Um in die Rangliste aufgenommen zu werden, muss man in den letzten 14 Tagen mindestens eine Fahrt durchgeführt haben.</string>
     <string name="dk_achievements_ranking_menu_ranking">Meine Rangliste</string>
     <string name="dk_achievements_ranking_month">Monatlich</string>
+    <string name="dk_achievements_ranking_month_info">Die monatliche Rangliste wird aus dem Durchschnitt der Punktzahlen aller Fahrten einer Woche errechnet. Um in dieser Rangliste zu erscheinen, musst du mindestens 20 km zurücklegen und 5 Fahrten absolviert haben.</string>
     <string name="dk_achievements_ranking_no_pseudo_set">Sie müssen einen Benutzernamen eingeben, um auf diese Seite zugreifen zu können.</string>
     <string name="dk_achievements_ranking_permanent">Ständig</string>
+    <string name="dk_achievements_ranking_permanent_info">Die permanente Rangliste wird aus dem Durchschnitt der Punktzahlen aller Fahrten berechnet. Um in dieser Rangliste zu erscheinen, musst du mindestens 50 km zurücklegen und 10 Fahrten absolviert haben.</string>
     <string name="dk_achievements_ranking_week">Wöchentlich</string>
+    <string name="dk_achievements_ranking_week_info">Die wöchentliche Rangliste wird aus dem Durchschnitt der Punktzahlen aller Fahrten einer Woche berechnet. Um in dieser Rangliste zu erscheinen, musst du mindestens 10 km zurücklegen und 2 Fahrten absolviert haben.</string>
 </resources>
