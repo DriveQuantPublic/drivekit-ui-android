@@ -84,7 +84,7 @@ class RankingData(
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
     override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
-    override fun haveInfoButton() = true
+    override fun hasInfoButton() = true
     override fun getInfoPopupMessage(context: Context) =
         when (viewModel.selectedRankingSelectorData.rankingPeriod) {
             RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy_info"

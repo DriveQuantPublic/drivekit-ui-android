@@ -14,7 +14,7 @@ interface DKDriverRanking {
     fun getScoreTitle(context: Context): String
     fun getDriverRankingList(): List<DKDriverRankingItem>
     fun getBackgroundColor(): Int
-    fun haveInfoButton(): Boolean
+    fun hasInfoButton(): Boolean
     fun getInfoPopupTitle(context: Context): String?
     fun getInfoPopupMessage(context: Context): String?
 }

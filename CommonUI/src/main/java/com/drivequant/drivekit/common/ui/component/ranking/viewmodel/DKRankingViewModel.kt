@@ -20,5 +20,5 @@ class DKRankingViewModel {
     fun getBackgroundColor() = driverRanking.getBackgroundColor()
     fun getConditionTitle(context: Context) = driverRanking.getInfoPopupTitle(context)
     fun getConditionDescription(context: Context) = driverRanking.getInfoPopupMessage(context)
-    fun getConditionVisibility() = driverRanking.haveInfoButton()
+    fun getConditionVisibility() = driverRanking.hasInfoButton()
 }
