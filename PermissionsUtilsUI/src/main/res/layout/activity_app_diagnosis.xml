@@ -173,10 +173,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 android:visibility="gone"
-                app:diagnosisLink="Do not optimize the battery"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_battery_link_android"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
-                app:diagnosisTextKO="You must disable battery optimization, that's allow the app to detect and analyze your trips"
-                app:diagnosisTextOK="To detect and analyze your trips you must disable battery optimization"
+                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_battery_ko"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_battery_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_battery_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />

@@ -15,6 +15,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
@@ -222,20 +223,46 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun displayBatteryOptimizationSection() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            text_view_battery_description_2.text = DKResource.buildString(
-                this,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.secondaryColor(),
-                "dk_perm_utils_app_diag_battery_text_android_02",
-                DKResource.convertToString(this, "dk_perm_utils_app_diag_battery_link_android")
-            )
-
-            if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
-                text_view_battery_description_2.visibility = View.GONE
-            }
-
-            text_view_battery_description_2.setOnClickListener {
-                DiagnosisHelper.requestBatteryOptimization(this)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                text_view_battery_description_1.visibility = View.GONE
+                text_view_battery_description_3.text = DKResource.buildString(this,
+                    DriveKitUI.colors.complementaryFontColor(),
+                    DriveKitUI.colors.secondaryColor(),
+                    "dk_perm_utils_app_diag_battery_text_android12_01",
+                    DKResource.convertToString(
+                        this@AppDiagnosisActivity,
+                        "dk_perm_utils_app_diag_battery_link_android12"
+                    )
+                )
+                PermissionsUtilsUI.batteryOptimizationUrl?.let { redirectUrl ->
+                    text_view_battery_description_3.setOnClickListener {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(redirectUrl)
+                        startActivity(intent)
+                    }
+                }?:run {
+                    text_view_battery_description_3.visibility = View.GONE
+                }
+                text_view_battery_description_2.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
+            } else {
+                text_view_battery_description_2.apply {
+                    setOnClickListener {
+                        DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
+                    }
+                    text = DKResource.buildString(
+                        this@AppDiagnosisActivity,
+                        DriveKitUI.colors.complementaryFontColor(),
+                        DriveKitUI.colors.secondaryColor(),
+                        "dk_perm_utils_app_diag_battery_text_android_02",
+                        DKResource.convertToString(
+                            this@AppDiagnosisActivity,
+                            "dk_perm_utils_app_diag_battery_link_android"
+                        )
+                    )
+                    if (DiagnosisHelper.getBatteryOptimizationsStatus(this@AppDiagnosisActivity) == PermissionStatus.VALID) {
+                        visibility = View.GONE
+                    }
+                }
             }
         } else {
             text_view_battery_description_2.visibility = View.GONE

@@ -74,5 +74,6 @@ object DriveKitConfig {
             override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
+        PermissionsUtilsUI.configureBatteryOptimizationUrl("https://drivequant.zendesk.com/hc/fr-fr/articles/360007407020-Comment-d%C3%A9sactiver-l-optimisation-de-la-batterie-sur-votre-smartphone")
     }
 }
