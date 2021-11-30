@@ -205,27 +205,26 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun checkBatteryOptimization() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             when (DiagnosisHelper.getBatteryOptimizationsStatus(this)) {
                 PermissionStatus.VALID -> diag_item_battery_optimization.setNormalState()
                 PermissionStatus.NOT_VALID -> {
                     errorsCount++
                     setProblemState(
-                        diag_item_battery_optimization,
-                        object : ResolveProblemStateListener {
+                        diag_item_battery_optimization, object : ResolveProblemStateListener {
                             override fun onSubmit() {
                                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
-                            }
-                        })
+                            }})
                 }
             }
+        }
     }
 
     private fun batteryOptimizationContent12() {
         text_view_battery_description_1.visibility = View.GONE
         text_view_battery_description_2.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
         text_view_battery_description_3.apply {
-            text = DKResource.buildString(this@AppDiagnosisActivity,
+                text = DKResource.buildString(this@AppDiagnosisActivity,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.secondaryColor(),
                 "dk_perm_utils_app_diag_battery_text_android12_01",
@@ -267,14 +266,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayBatteryOptimizationSection() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                batteryOptimizationContent12()
-            } else {
-                batteryOptimizationContent()
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> batteryOptimizationContent12()
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> batteryOptimizationContent()
+            else -> {
+                battery_view_separator.visibility = View.GONE
+                text_view_battery_description_1.visibility = View.GONE
+                text_view_battery_description_2.visibility = View.GONE
+                text_view_battery_description_3.visibility = View.GONE
+                text_view_battery_title.visibility = View.GONE
             }
-        } else {
-            text_view_battery_description_2.visibility = View.GONE
         }
     }
 
@@ -579,7 +580,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         when (requestCode) {
             REQUEST_PERMISSIONS_OPEN_SETTINGS -> alertDialog?.dismiss()
             REQUEST_BATTERY_OPTIMIZATION ->
-                if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID) {
+                if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID &&
+                    Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
                     text_view_battery_description_2.visibility = View.GONE
                 }
         }
