@@ -221,48 +221,57 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
     }
 
+    private fun batteryOptimizationContent12() {
+        text_view_battery_description_1.visibility = View.GONE
+        text_view_battery_description_2.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
+        text_view_battery_description_3.apply {
+            text = DKResource.buildString(this@AppDiagnosisActivity,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor(),
+                "dk_perm_utils_app_diag_battery_text_android12_01",
+                DKResource.convertToString(
+                    this@AppDiagnosisActivity,
+                    "dk_perm_utils_app_diag_battery_url_android12"))
+
+            PermissionsUtilsUI.batteryOptimizationUrl?.let { redirectUrl ->
+                setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(redirectUrl)
+                    startActivity(intent)
+                }
+            }?:run {
+                visibility = View.GONE
+            }
+        }
+    }
+
+    private fun batteryOptimizationContent() {
+        text_view_battery_description_2.apply {
+            setOnClickListener {
+                DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
+            }
+            text = DKResource.buildString(
+                this@AppDiagnosisActivity,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor(),
+                "dk_perm_utils_app_diag_battery_text_android_02",
+                DKResource.convertToString(
+                    this@AppDiagnosisActivity,
+                    "dk_perm_utils_app_diag_battery_link_android"
+                )
+            )
+            if (DiagnosisHelper.getBatteryOptimizationsStatus(this@AppDiagnosisActivity) == PermissionStatus.VALID) {
+                visibility = View.GONE
+            }
+        }
+    }
+
     private fun displayBatteryOptimizationSection() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                text_view_battery_description_1.visibility = View.GONE
-                text_view_battery_description_3.text = DKResource.buildString(this,
-                    DriveKitUI.colors.complementaryFontColor(),
-                    DriveKitUI.colors.secondaryColor(),
-                    "dk_perm_utils_app_diag_battery_text_android12_01",
-                    DKResource.convertToString(
-                        this@AppDiagnosisActivity,
-                        "dk_perm_utils_app_diag_battery_link_android12"
-                    )
-                )
-                PermissionsUtilsUI.batteryOptimizationUrl?.let { redirectUrl ->
-                    text_view_battery_description_3.setOnClickListener {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(redirectUrl)
-                        startActivity(intent)
-                    }
-                }?:run {
-                    text_view_battery_description_3.visibility = View.GONE
-                }
-                text_view_battery_description_2.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
+                batteryOptimizationContent12()
             } else {
-                text_view_battery_description_2.apply {
-                    setOnClickListener {
-                        DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
-                    }
-                    text = DKResource.buildString(
-                        this@AppDiagnosisActivity,
-                        DriveKitUI.colors.complementaryFontColor(),
-                        DriveKitUI.colors.secondaryColor(),
-                        "dk_perm_utils_app_diag_battery_text_android_02",
-                        DKResource.convertToString(
-                            this@AppDiagnosisActivity,
-                            "dk_perm_utils_app_diag_battery_link_android"
-                        )
-                    )
-                    if (DiagnosisHelper.getBatteryOptimizationsStatus(this@AppDiagnosisActivity) == PermissionStatus.VALID) {
-                        visibility = View.GONE
-                    }
-                }
+                batteryOptimizationContent()
             }
         } else {
             text_view_battery_description_2.visibility = View.GONE

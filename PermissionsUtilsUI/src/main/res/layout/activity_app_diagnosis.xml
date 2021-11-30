@@ -172,12 +172,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
-                android:visibility="gone"
-                app:diagnosisLink="@string/dk_perm_utils_app_diag_battery_link_android"
+                app:diagnosisLink="@string/dk_perm_utils_app_diag_battery_link_android12"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_battery_ko"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_battery_ok"
-                app:diagnosisTitle="@string/dk_perm_utils_app_diag_battery_title"
+                app:diagnosisTitle="@string/dk_perm_utils_app_diag_battery_title_android12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
 
