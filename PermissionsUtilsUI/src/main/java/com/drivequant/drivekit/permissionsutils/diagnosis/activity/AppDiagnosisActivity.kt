@@ -45,43 +45,38 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_diagnosis"), javaClass.simpleName)
-
         setContentView(R.layout.activity_app_diagnosis)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setToolbar()
-
         init()
-
-        displayBatteryOptimizationSection()
         displayBluetoothItem()
         displayActivityItem()
         displayAutoResetItem()
         displayNearbyDevicesItem()
+        displayBatteryOptimizationItem()
+        displayBatteryOptimizationSection()
         displayReportSection()
-
         setStyle()
     }
 
     private fun setToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-
-        this.title = DKResource.convertToString(this, "dk_perm_utils_app_diag_title")
-
+        title = DKResource.convertToString(this, "dk_perm_utils_app_diag_title")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     private fun init() {
+        checkPermissionItem(PermissionType.LOCATION, diag_item_location)
+        checkPermissionItem(PermissionType.ACTIVITY, diag_item_activity_recognition)
+        checkPermissionItem(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
+        checkPermissionItem(PermissionType.NEARBY, diag_item_nearby_devices)
+        checkPermissionItem(PermissionType.NOTIFICATION, diag_item_notification)
         checkGPS()
         checkBluetooth()
-        checkLocation()
-        checkActivity()
-        checkAutoReset()
-        checkNearbyPermissions()
-        checkNotification()
         checkNetwork()
-
+        checkBatteryOptimization()
         setSummaryContent()
     }
 
@@ -167,54 +162,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun checkActivity() {
-        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.ACTIVITY)) {
-            PermissionStatus.VALID -> diag_item_activity_recognition.setNormalState()
+    private fun checkPermissionItem(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
+        when (DiagnosisHelper.getPermissionStatus(this, permissionType)) {
+            PermissionStatus.VALID -> diagnosticItem.setNormalState()
             PermissionStatus.NOT_VALID -> {
                 errorsCount++
-                setProblemState(PermissionType.ACTIVITY, diag_item_activity_recognition)
-            }
-        }
-    }
-
-    private fun checkLocation() {
-        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.LOCATION)) {
-            PermissionStatus.VALID -> diag_item_location.setNormalState()
-            PermissionStatus.NOT_VALID -> {
-                errorsCount++
-                setProblemState(PermissionType.LOCATION, diag_item_location)
-            }
-        }
-    }
-
-    private fun checkAutoReset() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (DiagnosisHelper.getAutoResetStatus(this) == PermissionStatus.VALID) {
-                diag_item_auto_reset_permissions.setNormalState()
-            } else {
-                errorsCount++
-                setProblemState(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
-            }
-        }
-    }
-
-    private fun checkNearbyPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (DiagnosisHelper.getNearbyDevicesStatus(this) == PermissionStatus.VALID) {
-                diag_item_nearby_devices.setNormalState()
-            } else {
-                errorsCount++
-                setProblemState(PermissionType.NEARBY, diag_item_nearby_devices)
-            }
-        }
-    }
-
-    private fun checkNotification() {
-        when (DiagnosisHelper.getPermissionStatus(this, PermissionType.NOTIFICATION)) {
-            PermissionStatus.VALID -> diag_item_notification.setNormalState()
-            PermissionStatus.NOT_VALID -> {
-                errorsCount++
-                setProblemState(PermissionType.NOTIFICATION, diag_item_notification)
+                setProblemState(diagnosticItem, object : ResolveProblemStateListener {
+                    override fun onSubmit() {
+                        requestPermission(permissionType)
+                    }
+                })
             }
         }
     }
@@ -244,6 +201,23 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 descriptionTextView?.normalText()
             }
         }
+    }
+
+    private fun checkBatteryOptimization() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            when (DiagnosisHelper.getBatteryOptimizationsStatus(this)) {
+                PermissionStatus.VALID -> diag_item_battery_optimization.setNormalState()
+                PermissionStatus.NOT_VALID -> {
+                    errorsCount++
+                    setProblemState(
+                        diag_item_battery_optimization,
+                        object : ResolveProblemStateListener {
+                            override fun onSubmit() {
+                                DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
+                            }
+                        })
+                }
+            }
     }
 
     private fun displayBatteryOptimizationSection() {
@@ -341,6 +315,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun displayBluetoothItem() {
         val visibility = if (PermissionsUtilsUI.isBluetoothNeeded) View.VISIBLE else View.GONE
         diag_item_bluetooth.visibility = visibility
+    }
+
+    private fun displayBatteryOptimizationItem() {
+        diag_item_battery_optimization.visibility =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
     }
 
     private fun enableSensor(sensorType: SensorType) {
@@ -503,26 +486,27 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun setProblemState(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
-        diagnosticItem.setDiagnosisDrawable(true)
-        diagnosticItem.setOnClickListener {
-            val alertDialog = DKAlertDialog.LayoutBuilder()
-                .init(this)
-                .layout(R.layout.template_alert_dialog_layout)
-                .positiveButton(diagnosticItem.getDiagnosisLink()) { _, _ ->
-                    requestPermission(permissionType)
-                }
-                .show()
+    private fun setProblemState(diagnosticItem: DiagnosisItemView, listener: ResolveProblemStateListener) {
+        diagnosticItem.apply {
+            setDiagnosisDrawable(true)
+            setOnClickListener {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(this@AppDiagnosisActivity)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .positiveButton(getDiagnosisLink()) { _, _ ->
+                        listener.onSubmit()
+                    }
+                    .show()
 
-            val titleTextView =
-                alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-            val descriptionTextView =
-                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-            titleTextView?.text = diagnosticItem.getDiagnosisTitle()
-            descriptionTextView?.text =
-                diagnosticItem.getDiagnosticTextKO()
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
+                val titleTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                titleTextView?.text = getDiagnosisTitle()
+                descriptionTextView?.text = getDiagnosticTextKO()
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
+            }
         }
     }
 
@@ -569,4 +553,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         onBackPressed()
         return true
     }
+}
+
+interface ResolveProblemStateListener {
+    fun onSubmit()
 }

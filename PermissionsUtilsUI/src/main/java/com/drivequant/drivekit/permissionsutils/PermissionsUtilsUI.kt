@@ -77,6 +77,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
             return true
         }
 
+        if (DiagnosisHelper.getBatteryOptimizationsStatus(context) == PermissionStatus.NOT_VALID
+            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return true
+        }
+
         return !DiagnosisHelper.isNetworkReachable(context)
     }
 
