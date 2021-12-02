@@ -232,7 +232,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     this@AppDiagnosisActivity,
                     "dk_perm_utils_app_diag_battery_optim_tutorial_url"))
 
-            PermissionsUtilsUI.batteryOptimizationUrl?.let { redirectUrl ->
+            PermissionsUtilsUI.tutorialUrl?.let { redirectUrl ->
                 setOnClickListener {
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data = Uri.parse(redirectUrl)

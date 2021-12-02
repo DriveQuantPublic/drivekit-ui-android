@@ -28,7 +28,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false
     internal var contactType: ContactType = ContactType.NONE
-    internal var batteryOptimizationUrl:String ? = null
+    internal var tutorialUrl:String ? = null
 
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
@@ -60,8 +60,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     @Deprecated("Logs are now only driven by DriveKit Core module.")
     fun configureLogPathFile(logPathFile: String) { }
 
-    fun configureBatteryOptimizationUrl(url: String) {
-        this.batteryOptimizationUrl = url
+    fun configureTutorialUrl(tutorialUrl: String) {
+        this.tutorialUrl = tutorialUrl
     }
 
     fun hasError(context: Context): Boolean {
