@@ -227,10 +227,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 text = DKResource.buildString(this@AppDiagnosisActivity,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.secondaryColor(),
-                "dk_perm_utils_app_diag_battery_text_android12_01",
+                "dk_perm_utils_app_diag_battery_optim_tutorial_text",
                 DKResource.convertToString(
                     this@AppDiagnosisActivity,
-                    "dk_perm_utils_app_diag_battery_url_android12"))
+                    "dk_perm_utils_app_diag_battery_optim_tutorial_url"))
 
             PermissionsUtilsUI.batteryOptimizationUrl?.let { redirectUrl ->
                 setOnClickListener {
