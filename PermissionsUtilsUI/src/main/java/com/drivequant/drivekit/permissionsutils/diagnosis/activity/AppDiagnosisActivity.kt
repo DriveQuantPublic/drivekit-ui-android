@@ -581,7 +581,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             REQUEST_PERMISSIONS_OPEN_SETTINGS -> alertDialog?.dismiss()
             REQUEST_BATTERY_OPTIMIZATION ->
                 if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID &&
-                    Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                     text_view_battery_description_2.visibility = View.GONE
                 }
         }

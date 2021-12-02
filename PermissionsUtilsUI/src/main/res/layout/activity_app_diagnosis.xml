@@ -172,11 +172,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
-                app:diagnosisLink="@string/dk_perm_utils_app_diag_battery_link_android12"
+                app:diagnosisLink="@string/dk_perm_utils_permissions_phone_settings_background_button"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
-                app:diagnosisTextKO="@string/dk_perm_utils_app_diag_battery_ko"
+                app:diagnosisTextKO="@string/dk_perm_utils_permissions_phone_settings_background_text1"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_battery_ok"
-                app:diagnosisTitle="@string/dk_perm_utils_app_diag_battery_title_android12"
+                app:diagnosisTitle="@string/dk_perm_utils_permissions_phone_settings_background_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
 
