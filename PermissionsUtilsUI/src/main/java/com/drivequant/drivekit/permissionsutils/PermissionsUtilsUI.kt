@@ -28,6 +28,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false
     internal var contactType: ContactType = ContactType.NONE
+    internal var tutorialUrl:String ? = null
 
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
@@ -59,6 +60,10 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     @Deprecated("Logs are now only driven by DriveKit Core module.")
     fun configureLogPathFile(logPathFile: String) { }
 
+    fun configureTutorialUrl(tutorialUrl: String) {
+        this.tutorialUrl = tutorialUrl
+    }
+
     fun hasError(context: Context): Boolean {
         PermissionType.values().forEach {
             if (DiagnosisHelper.getPermissionStatus(context, it) == PermissionStatus.NOT_VALID)
@@ -74,6 +79,11 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         if (!DiagnosisHelper.isSensorActivated(context, SensorType.GPS)) {
+            return true
+        }
+
+        if (DiagnosisHelper.getBatteryOptimizationsStatus(context) == PermissionStatus.NOT_VALID
+            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             return true
         }
 

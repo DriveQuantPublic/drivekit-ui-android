@@ -13,6 +13,9 @@
    <string name="dk_perm_utils_app_diag_auto_reset_title">Berechtigungen nicht löschen</string>
    <string name="dk_perm_utils_app_diag_battery_link_android">Batterieleistung nicht optimierien</string>
    <string name="dk_perm_utils_app_diag_battery_link_ios">Deaktivieren Sie den Energiesparmodus</string>
+   <string name="dk_perm_utils_app_diag_battery_ok">Hintergrundaufgaben sind erlaubt. Die Anwendung verwendet den GPS-Sensor nur beim Fahren. Sie wurde optimiert, um Batterieverbrauch zu vermeiden.</string>
+   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_text">Wir empfehlen Ihnen, sich die %s anzusehen. So können Sie herausfinden, wie Sie die Akkuoptimierung auf Ihrem Telefon deaktivieren können.</string>
+   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_url">Tutorials</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_01">Bei einigen Telefonmodellen kann die Batterieoptimierungsdienste die Anwendung herunterfahren, wenn sie im Hintergrund ausgeführt wird.</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_02">Wenn Ihr Telefon mit einer nativen Android-Version läuft, können Sie die Akku-Optimierung deaktivieren. %s</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_03">Wenn Ihr Telefon auf einer Android-Version mit einem Software-Overlay des Herstellers läuft, laden wir Sie ein, das Batteriemenü zu durchsuchen, um Optimierungen zu deaktivieren.</string>
