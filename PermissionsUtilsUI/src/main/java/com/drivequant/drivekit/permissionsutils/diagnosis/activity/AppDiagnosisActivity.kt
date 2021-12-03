@@ -21,6 +21,7 @@ import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.TextView
+import com.android.volley.BuildConfig
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
@@ -56,6 +57,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayNearbyDevicesItem()
         displayBatteryOptimizationItem()
         displayBatteryOptimizationSection()
+        displayBatteryOptimizationUrl()
         displayReportSection()
         setStyle()
     }
@@ -222,29 +224,32 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun batteryOptimizationContent12() {
         text_view_battery_description_1.visibility = View.GONE
-        text_view_battery_description_2.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
-        text_view_battery_description_3.apply {
-                text = DKResource.buildString(this@AppDiagnosisActivity,
+        text_view_battery_description_2.visibility = View.GONE
+    }
+
+    private fun displayBatteryOptimizationUrl() {
+        text_view_battery_description_4.apply {
+            text = DKResource.buildString(this@AppDiagnosisActivity,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.secondaryColor(),
                 "dk_perm_utils_app_diag_battery_optim_tutorial_text",
                 DKResource.convertToString(
                     this@AppDiagnosisActivity,
                     "dk_perm_utils_app_diag_battery_optim_tutorial_url"))
-
             PermissionsUtilsUI.tutorialUrl?.let { redirectUrl ->
                 setOnClickListener {
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data = Uri.parse(redirectUrl)
                     startActivity(intent)
                 }
-            }?:run {
+            } ?: run {
                 visibility = View.GONE
             }
         }
     }
 
     private fun batteryOptimizationContent() {
+        text_view_battery_description_3.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
         text_view_battery_description_2.apply {
             setOnClickListener {
                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
@@ -274,6 +279,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 text_view_battery_description_1.visibility = View.GONE
                 text_view_battery_description_2.visibility = View.GONE
                 text_view_battery_description_3.visibility = View.GONE
+                text_view_battery_description_4.visibility = View.GONE
                 text_view_battery_title.visibility = View.GONE
             }
         }
