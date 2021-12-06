@@ -28,10 +28,7 @@
     </style>
 
     <style name="DKCard">
-        <item name="android:layout_marginTop">@dimen/dk_margin_half</item>
-        <item name="android:layout_marginBottom">@dimen/dk_margin_half</item>
-        <item name="android:layout_marginStart">@dimen/dk_margin_half</item>
-        <item name="android:layout_marginEnd">@dimen/dk_margin_half</item>
+        <item name="android:layout_margin">@dimen/dk_margin_half</item>
         <item name="android:padding">@dimen/dk_margin</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@android:color/white</item>

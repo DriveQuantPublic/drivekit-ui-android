@@ -58,4 +58,5 @@
    <string name="vehicle_explanation">Exemple d\'implémentation de DriveKit Vehicle avec la sélection d\'un véhicule, la liste la liste des véhicules, le détail d\'un véhicule, l\'appairage d\'un beacon et d\'un dispositif Bluetooth</string>
    <string name="vehicle_list_button">Liste des véhicules</string>
    <string name="vehicle_picker_button">Ajouter un véhicule</string>
+   <string name="dk_vehicle_odometer">Suivi kilométrique</string>
 </resources>

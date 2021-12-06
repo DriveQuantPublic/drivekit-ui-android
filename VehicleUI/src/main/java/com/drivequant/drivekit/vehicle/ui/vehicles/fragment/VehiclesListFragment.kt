@@ -29,60 +29,60 @@ import kotlinx.android.synthetic.main.header_vehicle_list.*
 class VehiclesListFragment : Fragment() {
     private lateinit var viewModel : VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
-    private var isInit: Boolean = true
+    private var shouldSyncVehicles = true
+    private lateinit var synchronizationType: SynchronizationType
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_vehicles_list"
+            ), javaClass.simpleName
+        )
 
-        viewModel.progressBarObserver.observe(this, {
-            it?.let { displayProgressCircular ->
-                if (displayProgressCircular){
-                    showProgressCircular()
-                } else {
-                    hideProgressCircular()
-                }
-            }
-        })
-
-        viewModel.removeBeaconOrBluetoothObserver.observe(this, {
-            viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
-        })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         refresh_vehicles.setOnRefreshListener {
-            updateVehicles()
+            updateVehicles(SynchronizationType.DEFAULT)
         }
 
-        val linearLayoutManager =
-            LinearLayoutManager(view.context)
-        vehicles_list.layoutManager = linearLayoutManager
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_list"), javaClass.simpleName)
+        viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
+        viewModel.apply {
+            progressBarObserver.observe(this@VehiclesListFragment, {
+                it?.let { displayProgressCircular ->
+                    if (displayProgressCircular) {
+                        showProgressCircular()
+                    } else {
+                        hideProgressCircular()
+                    }
+                }
+            })
+
+            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment, {
+                viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
+            })
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        updateTitle(DKResource.convertToString(requireContext(), "dk_common_loading"))
-        if (isInit) {
-            isInit = false
-            updateVehicles()
+        synchronizationType = if (viewModel.hasLocalVehicles()) {
+            SynchronizationType.CACHE
         } else {
-            updateVehicles(SynchronizationType.CACHE)
+            SynchronizationType.DEFAULT
         }
+        updateVehicles(synchronizationType)
     }
 
-    private fun updateTitle(title: String){
+    private fun updateTitle(title: String) {
         if (activity is VehiclesListActivity) {
             (activity as VehiclesListActivity).updateTitle(title)
         }
     }
 
-    private fun updateVehicles(synchronizationType : SynchronizationType = SynchronizationType.DEFAULT){
+    fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
         viewModel.vehiclesData.observe(this, {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
@@ -95,36 +95,47 @@ class VehiclesListFragment : Fragment() {
             if (it.isNullOrEmpty()) {
                 linear_layout_header_vehicle_list.visibility = View.VISIBLE
             } else {
+                vehicles_list.layoutManager = LinearLayoutManager(context)
                 displayVehiclesList()
-                if (adapter != null) {
-                    adapter?.setVehicles(it)
-                    adapter?.notifyDataSetChanged()
-                } else {
+                adapter?.let { adapter ->
+                    adapter.setVehicles(it)
+                    adapter.notifyDataSetChanged()
+                }?:run {
                     adapter = VehiclesListAdapter(requireContext(), viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter
                 }
             }
-
-            updateTitle(viewModel.getScreenTitle(requireContext()))
-
-            refresh_vehicles.visibility = View.VISIBLE
-            refresh_vehicles.isRefreshing = false
+            refresh_vehicles.apply {
+                visibility = View.VISIBLE
+                isRefreshing = false
+            }
             setupAddVehicleButton()
+            updateTitle(viewModel.getScreenTitle(requireContext()))
+            if (synchronizationType == SynchronizationType.CACHE && shouldSyncVehicles) {
+                shouldSyncVehicles = false
+                updateVehicles(SynchronizationType.DEFAULT)
+            }
         })
         refresh_vehicles.isRefreshing = true
         viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
-    private fun setupAddVehicleButton(){
-        if (DriveKitVehicleUI.canAddVehicle){
-            add_vehicle.visibility = View.VISIBLE
-            add_vehicle.button()
-            add_vehicle.text = DKResource.convertToString(requireContext(), "dk_vehicle_add")
-            add_vehicle.setOnClickListener {
-                if (viewModel.maxVehiclesReached()) {
-                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert"), Toast.LENGTH_LONG).show()
-                } else {
-                    VehiclePickerActivity.launchActivity(requireContext())
+    private fun setupAddVehicleButton() {
+        if (DriveKitVehicleUI.canAddVehicle) {
+            add_vehicle.apply {
+                visibility = View.VISIBLE
+                button()
+                text = DKResource.convertToString(requireContext(), "dk_vehicle_add")
+                setOnClickListener {
+                    if (viewModel.maxVehiclesReached()) {
+                        Toast.makeText(
+                            requireContext(),
+                            DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        VehiclePickerActivity.launchActivity(requireContext())
+                    }
                 }
             }
         } else {
@@ -132,7 +143,7 @@ class VehiclesListFragment : Fragment() {
         }
     }
 
-    private fun displayVehiclesList(){
+    private fun displayVehiclesList() {
         if (viewModel.vehiclesList.isNotEmpty()) {
             linear_layout_header_vehicle_list.visibility = View.GONE
             vehicles_list.visibility = View.VISIBLE
@@ -144,10 +155,17 @@ class VehiclesListFragment : Fragment() {
         hideProgressCircular()
     }
 
-    private fun setupEmptyListLayout(){
-        text_view_summary_icon.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_warning"))
-        text_view_header_title.typeface = Typeface.DEFAULT_BOLD
-        text_view_header_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
+    private fun setupEmptyListLayout() {
+        text_view_summary_icon.setImageDrawable(
+            DKResource.convertToDrawable(
+                requireContext(),
+                "dk_common_warning"
+            )
+        )
+        text_view_header_title.apply {
+            typeface = Typeface.DEFAULT_BOLD
+            text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
+        }
     }
 
     private fun hideProgressCircular() {

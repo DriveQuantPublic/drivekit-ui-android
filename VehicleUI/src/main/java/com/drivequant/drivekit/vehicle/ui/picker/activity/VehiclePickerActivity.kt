@@ -23,6 +23,8 @@ import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
+import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleCategoryDescriptionFragment
@@ -39,8 +41,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     companion object {
         private var vehicleToDelete: Vehicle? = null
         @JvmOverloads
-        fun launchActivity(activityContext: Context, vehicleToDelete: Vehicle? = null) {
+        fun launchActivity(
+            activityContext: Context,
+            vehicleToDelete: Vehicle? = null,
+            listener: VehiclePickerCompleteListener? = null) {
             this.vehicleToDelete = vehicleToDelete
+            DriveKitVehicleUI.vehiclePickerComplete = listener
             val intent = Intent(activityContext, VehiclePickerActivity::class.java)
             val activity = activityContext as Activity
             activity.startActivity(intent)
@@ -78,7 +84,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
         viewModel.progressBarObserver.observe(this, {
             it?.let {
-                if (it){
+                if (it) {
                     showProgressCircular()
                 } else {
                     hideProgressCircular()
@@ -88,10 +94,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
         viewModel.fetchServiceErrorObserver.observe(this, {
             it?.let {
-                if (it == VehiclePickerStatus.NO_RESULT){
-                    Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_no_data"), Toast.LENGTH_LONG).show()
+                if (it == VehiclePickerStatus.NO_RESULT) {
+                    "dk_vehicle_no_data"
                 } else {
-                    Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_error_message"), Toast.LENGTH_LONG).show()
+                    "dk_vehicle_error_message"
+                }.let { text ->
+                    Toast.makeText(this, DKResource.convertToString(this, text), Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -99,12 +107,27 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.endObserver.observe(this, {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
-                    DriveKitVehicleUI.vehiclePickerExtraStep?.let { listener ->
+                    DriveKitVehicleUI.vehiclePickerComplete?.let { listener ->
                         viewModel.createdVehicleId?.let { vehicleId ->
-                            listener.onVehiclePickerFinished(vehicleId)
+                            if (DriveKitVehicleUI.hasOdometer) {
+                                OdometerInitActivity.launchActivity(
+                                    this@VehiclePickerActivity,
+                                    vehicleId
+                                )
+                            } else {
+                                listener.onVehiclePickerFinished(vehicleId)
+                            }
                             finish()
                         }
-                    }?:run {
+                    }?: run {
+                        if (DriveKitVehicleUI.hasOdometer) {
+                            viewModel.createdVehicleId?.let { vehicleId ->
+                                OdometerInitActivity.launchActivity(
+                                    this@VehiclePickerActivity,
+                                    vehicleId
+                                )
+                            }
+                        }
                         finish()
                     }
                 } else {
@@ -112,26 +135,19 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 }
             }
         })
-
         viewModel.computeNextScreen(this, null)
     }
 
-    fun updateTitle(title: String){
+    fun updateTitle(title: String) {
         this.title = title
     }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         var otherAction = false
         when (currentPickerStep){
-            TYPE -> {
-                viewModel.selectedVehicleTypeItem = VehicleTypeItem.valueOf(item.value)
-            }
-            TRUCK_TYPE -> {
-                viewModel.selectedTruckType = TruckType.getEnumByName(item.value)
-            }
-            CATEGORY -> {
-                viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!
-            }
+            TYPE -> viewModel.selectedVehicleTypeItem = VehicleTypeItem.valueOf(item.value)
+            TRUCK_TYPE -> viewModel.selectedTruckType = TruckType.getEnumByName(item.value)
+            CATEGORY -> viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!
             BRANDS_ICONS -> {
                 if (item.value != "OTHER_BRANDS"){
                     viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
@@ -139,22 +155,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                     otherAction = true
                 }
             }
-            BRANDS_FULL -> {
-                viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
-            }
-            ENGINE -> {
-                viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByName(item.value)
-            }
-            MODELS -> {
-                viewModel.selectedModel = item.value
-            }
-            YEARS -> {
-                viewModel.selectedYear = item.value
-            }
-            VERSIONS -> {
-                item.text?.let {
-                    viewModel.selectedVersion = VehicleVersion(it, item.value)
-                }
+            BRANDS_FULL -> viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
+            ENGINE -> viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByName(item.value)
+            MODELS -> viewModel.selectedModel = item.value
+            YEARS -> viewModel.selectedYear = item.value
+            VERSIONS -> item.text?.let {
+                viewModel.selectedVersion = VehicleVersion(it, item.value)
             }
             else -> {}
         }

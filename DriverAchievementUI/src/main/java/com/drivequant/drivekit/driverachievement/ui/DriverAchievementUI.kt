@@ -18,14 +18,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksList
 
 object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
-    internal var streakThemes: List<StreakTheme> = listOf(
-        StreakTheme.PHONE_DISTRACTION,
-        StreakTheme.SAFETY,
-        StreakTheme.ACCELERATION,
-        StreakTheme.BRAKE,
-        StreakTheme.ADHERENCE,
-        StreakTheme.SPEEDING
-    )
+    internal var streakThemes: List<StreakTheme> = StreakTheme.values().toList()
 
     internal var badgeCategories: List<BadgeCategory> = listOf(
         BadgeCategory.GENERIC,
@@ -88,10 +81,10 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
     override fun createStreakListFragment(): Fragment = StreaksListFragment()
 
     @JvmOverloads
-    fun startRankingActivity(context: Context, groupeName: String? = null) {
-        RankingActivity.launchActivity(context, groupeName)
+    fun startRankingActivity(context: Context, groupName: String? = null) {
+        RankingActivity.launchActivity(context, groupName)
     }
 
     @JvmOverloads
-    fun createRankingFragment(groupeName: String? = null) = RankingFragment.newInstance(groupeName)
+    fun createRankingFragment(groupName: String? = null) = RankingFragment.newInstance(groupName)
 }
