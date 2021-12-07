@@ -11,12 +11,8 @@ import com.drivequant.drivekit.driverachievement.ui.badges.commons.views.BadgeIt
 import com.drivequant.drivekit.driverachievement.ui.badges.extension.*
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesData
 
-/**
- * Created by Mohamed on 2020-05-05.
- */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val context = itemView.context
     private val title = itemView.findViewById<TextView>(R.id.text_view_badge_title)
     private val bronzeBadge = itemView.findViewById<BadgeItemView>(R.id.badge_bronze)

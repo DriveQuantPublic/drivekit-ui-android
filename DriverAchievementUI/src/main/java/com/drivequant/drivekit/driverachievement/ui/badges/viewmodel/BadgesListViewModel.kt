@@ -9,12 +9,8 @@ import com.drivequant.drivekit.driverachievement.BadgesQueryListener
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
-/**
- * Created by Mohamed on 2020-05-05.
- */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class BadgesListViewModel : ViewModel() {
+internal class BadgesListViewModel : ViewModel() {
     var filteredBadgesData: MutableList<BadgesData> = mutableListOf()
     val badgesData: MutableLiveData<List<BadgesData>> = MutableLiveData()
     var syncStatus: BadgeSyncStatus = BadgeSyncStatus.NO_ERROR
@@ -37,7 +33,7 @@ class BadgesListViewModel : ViewModel() {
         }
     }
 
-    fun getFilteredBadges(fetchedBadges: List<Badge>): MutableList<BadgesData> {
+    private fun getFilteredBadges(fetchedBadges: List<Badge>): MutableList<BadgesData> {
         if (fetchedBadges.isNotEmpty()) {
             val filteredBadges =
                 fetchedBadges.filter { badge -> badge.category in DriverAchievementUI.badgeCategories }

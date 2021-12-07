@@ -150,8 +150,7 @@
    <string name="badge_expressway_distance_congrats_3">Congratulazioni, hai raggiunto l\'obiettivo!</string>
    <string name="badge_expressway_distance_description_1">Per ottenere questo badge, devi guidare per almeno 100 km in autostrada. Questi viaggi sono i più monotoni e stancanti. Cerca di non abbassare la vigilanza.</string>
    <string name="badge_expressway_distance_description_2">Per ottenere questo badge, devi solo percorrere 300 km in autostrada. Prima della partenza, non dimenticare di controllare le condizioni del veicolo (pressione dei pneumatici, freni, illuminazione e tergicristalli).</string>
-   <string name="badge_expressway_distance_description_3">Percorri 1000 km in autostrada per guadagnare questo badge. Non dimenticare mai la regola di base: per limitare il rischio di addormentarti, fai delle pause di quindici minuti ogni due ore.
-</string>
+   <string name="badge_expressway_distance_description_3">Percorri 1000 km in autostrada per guadagnare questo badge. Non dimenticare mai la regola di base: per limitare il rischio di addormentarti, fai delle pause di quindici minuti ogni due ore.</string>
    <string name="badge_expressway_distance_name_1">Fast and Serious</string>
    <string name="badge_expressway_distance_name_2">Road Trip</string>
    <string name="badge_expressway_distance_name_3">Easy Rider</string>
@@ -165,8 +164,7 @@
    <string name="badge_extra_urban_distance_congrats_1">Congratulazioni, hai raggiunto l\'obiettivo!</string>
    <string name="badge_extra_urban_distance_congrats_2">Congratulazioni, hai raggiunto l\'obiettivo!</string>
    <string name="badge_extra_urban_distance_congrats_3">Congratulazioni, hai raggiunto l\'obiettivo!</string>
-   <string name="badge_extra_urban_distance_description_1">Percorri oltre 100 km al di fuori di un centro abitato per convalidare questo badge. Fuori dalle città, il traffico è più fluido ma esistono dei pericoli. Ricorda sempre di rispettare le distanze di sicurezza e di distogliere lo sguardo per anticipare tutte le situazioni.
-</string>
+   <string name="badge_extra_urban_distance_description_1">Percorri oltre 100 km al di fuori di un centro abitato per convalidare questo badge. Fuori dalle città, il traffico è più fluido ma esistono dei pericoli. Ricorda sempre di rispettare le distanze di sicurezza e di distogliere lo sguardo per anticipare tutte le situazioni.</string>
    <string name="badge_extra_urban_distance_description_2">Per ottenere questo badge, devi percorrere 300 km in un ambiente extraurbano. Su una strada di campagna, pensa alle bici in particolare quando esci dalle curve.</string>
    <string name="badge_extra_urban_distance_description_3">Per ottenere questo badge, devi completare 1000 km in un ambiente extraurbano. È importante gestire correttamente i cambiamenti di ritmo quando ci si sposta dalla città alle aree extraurbane. Aumenta gradualmente il ritmo non appena lasci la città. Al contrario, anticipa la decelerazione per raggiungere una velocità di 50 km/h quando torni in un\'area urbana.</string>
    <string name="badge_extra_urban_distance_name_1">Passeggiata</string>
@@ -195,6 +193,22 @@
    <string name="badge_night_trip_progress_2">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
    <string name="badge_night_trip_progress_3">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
    <string name="badge_night_trip_theme">Guida notturna</string>
+   <string name="badge_phone_call_congrats_1">Congratulazioni, hai raggiunto l\'obiettivo!</string>
+   <string name="badge_phone_call_congrats_2">Congratulazioni, hai raggiunto l\'obiettivo!</string>
+   <string name="badge_phone_call_congrats_3">Congratulazioni, hai raggiunto l\'obiettivo!</string>
+   <string name="badge_phone_call_description_1">Per guadagnare il distintivo, devi fare 20 viaggi senza effettuare alcuna chiamata. Le chiamate effettuate con un kit vivavoce sono consentite.</string>
+   <string name="badge_phone_call_description_2">Completa 50 viaggi senza chiamare per guadagnare questo distintivo. Chiamare mentre si guida è pericoloso per voi e per i vostri passeggeri.</string>
+   <string name="badge_phone_call_description_3">Per guadagnare questo distintivo, devi fare 100 viaggi senza fare una chiamata durante la guida. Non rispondere al telefono significa rimanere concentrati sulla strada ed evitare incidenti.</string>
+   <string name="badge_phone_call_name_1">Novizio</string>
+   <string name="badge_phone_call_name_2">Apprendista</string>
+   <string name="badge_phone_call_name_3">Campione</string>
+   <string name="badge_phone_call_notif_1">Hai appena vinto il distintivo Novizio (20 viaggi senza fare una chiamata). Congratulazioni!</string>
+   <string name="badge_phone_call_notif_2">Hai appena vinto il distintivo Apprendista (50 viaggi senza fare una chiamata). Congratulazioni!</string>
+   <string name="badge_phone_call_notif_3">Hai appena vinto il distintivo Campione (100 viaggi senza fare una chiamata). Congratulazioni!</string>
+   <string name="badge_phone_call_progress_1">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
+   <string name="badge_phone_call_progress_2">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
+   <string name="badge_phone_call_progress_3">Hai ancora dei %s viaggi da percorrere per vincere questo badge.</string>
+   <string name="badge_phone_call_theme">Chiamare mentre si guida</string>
    <string name="badge_phone_distraction_congrats_1">Congratulazioni, hai raggiunto l\'obiettivo!</string>
    <string name="badge_phone_distraction_congrats_2">Congratulazioni, hai raggiunto l\'obiettivo!</string>
    <string name="badge_phone_distraction_congrats_3">Congratulazioni, hai raggiunto l\'obiettivo!</string>
