@@ -14,10 +14,6 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 
-/**
- * Created by Mohamed on 2020-05-13.
- */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
 class BadgeItemView : LinearLayout {
 
@@ -89,27 +85,30 @@ class BadgeItemView : LinearLayout {
 
         val badgeTitle = badgeDetails.findViewById<TextView>(R.id.text_view_badge_title)
         val badgeDescription = badgeDetails.findViewById<TextView>(R.id.text_view_badge_goal)
-        val badgeProgressCongrats =
-            badgeDetails.findViewById<TextView>(R.id.text_view_badge_progress_congrats)
+        val badgeProgressCongrats = badgeDetails.findViewById<TextView>(R.id.text_view_badge_progress_congrats)
         val gaugeImage = badgeDetails.findViewById<GaugeImage>(R.id.gauge_image)
         val goal = badgeDetails.findViewById<TextView>(R.id.text_view_goal)
         val progress = badgeDetails.findViewById<TextView>(R.id.text_view_progress)
         val goalViewSeparator = badgeDetails.findViewById<TextView>(R.id.goal_view_separator)
-        val progressViewSeparator =
-            badgeDetails.findViewById<TextView>(R.id.progress_view_separator)
+        val progressViewSeparator = badgeDetails.findViewById<TextView>(R.id.progress_view_separator)
 
         gaugeImage?.configure(gaugeProgress, gaugeDrawable, gaugeColor)
 
-        badgeProgressCongrats?.text = this.badgeProgressCongrats
-        badgeDescription?.text = this.badgeDescription
-        badgeTitle?.text = this.badgeTitle
-
-        badgeTitle?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
-        badgeTitle?.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        badgeProgressCongrats?.apply {
+            text = this@BadgeItemView.badgeProgressCongrats
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
+        badgeDescription?.apply {
+            text = this@BadgeItemView.badgeDescription
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
+        badgeTitle?.apply {
+            text = this@BadgeItemView.badgeTitle
+            normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
+            setBackgroundColor(DriveKitUI.colors.primaryColor())
+        }
         progressViewSeparator?.setBackgroundColor(DriveKitUI.colors.neutralColor())
         goalViewSeparator?.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        badgeDescription?.normalText(DriveKitUI.colors.complementaryFontColor())
-        badgeProgressCongrats?.normalText(DriveKitUI.colors.complementaryFontColor())
         goal?.headLine2(DriveKitUI.colors.primaryColor())
         progress?.headLine2(DriveKitUI.colors.primaryColor())
     }
