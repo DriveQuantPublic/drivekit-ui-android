@@ -21,6 +21,7 @@ import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSe
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
@@ -91,6 +92,7 @@ internal object DriveKitConfig : ContentMail {
             override fun potentialTripStart(startMode: StartMode) {}
         })
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
+        DriveKitTripAnalysisUI.initialize()
     }
 
     private fun configureDriverData() {
