@@ -54,8 +54,6 @@
                 android:stepSize="0.5"
                 app:values="@array/initial_range_slider_activation_hours_values" />
 
-
-            <!-- android:textColor="@color/colorPrimary" -->
             <TextView
                 android:id="@+id/textMin"
                 android:layout_width="wrap_content"

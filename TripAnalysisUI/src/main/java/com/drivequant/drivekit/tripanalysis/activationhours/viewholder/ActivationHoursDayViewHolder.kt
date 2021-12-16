@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.tripanalysis.activationhours.viewholder
 
-import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.view.View
 import android.widget.CheckBox
@@ -28,17 +27,19 @@ internal class ActivationHoursDayViewHolder(
     private val labelMin = itemView.findViewById<TextView>(R.id.textMin)
     private val labelMax = itemView.findViewById<TextView>(R.id.textMax)
 
-    private var itemPosition: Int = 0
-
     init {
         labelMin.setTextColor(DriveKitUI.colors.primaryColor())
         labelMax.setTextColor(DriveKitUI.colors.primaryColor())
         rangeSlider.labelBehavior = LabelFormatter.LABEL_GONE
         rangeSlider.trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         rangeSlider.trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
-        rangeSlider.addOnChangeListener(RangeSlider.OnChangeListener {
-                _, _, _ -> updateHoursLabels()
-        })
+        rangeSlider.addOnChangeListener(RangeSlider.OnChangeListener(fun(
+            _: RangeSlider,
+            _: Float,
+            _: Boolean
+        ) {
+            updateHoursLabels()
+        }))
         rangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: RangeSlider) {
                 // do nothing
@@ -48,13 +49,13 @@ internal class ActivationHoursDayViewHolder(
                updateDayConfig()
             }
         })
+
         checkBox.setOnCheckedChangeListener { _, _ ->
             updateDayConfig()
         }
     }
 
     fun bind(position: Int) {
-        itemPosition = position
         viewModel.config?.dayConfiguration?.get(position)?.let { dayConfig ->
             initDayLabel(dayConfig)
             checkBox.isChecked = !dayConfig.entireDayOff
@@ -84,10 +85,7 @@ internal class ActivationHoursDayViewHolder(
     }
 
     private fun updateHoursLabels() {
-        val values = rangeSlider.values
-        if (values.size == 2) {
-            labelMin.text = viewModel.rawTickValueToDate(values[0])
-            labelMax.text = viewModel.rawTickValueToDate(values[1])
-        }
+        labelMin.text = viewModel.rawTickValueToDate(rangeSlider.values[0])
+        labelMax.text = viewModel.rawTickValueToDate(rangeSlider.values[1])
     }
 }

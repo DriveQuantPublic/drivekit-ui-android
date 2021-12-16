@@ -31,6 +31,7 @@ class SwitchSettings: LinearLayout {
         val view = View.inflate(context, R.layout.dk_layout_switch_settings, null)
         textViewTitle = view.findViewById(R.id.text_view_title)
         textViewDescription = view.findViewById(R.id.text_view_description)
+        switchView = view.findViewById(R.id.switch_view)
 
         textViewTitle.bigText(DriveKitUI.colors.primaryColor())
         textViewTitle.setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)

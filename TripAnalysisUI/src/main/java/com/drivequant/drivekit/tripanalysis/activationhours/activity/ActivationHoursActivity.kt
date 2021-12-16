@@ -52,8 +52,7 @@ class ActivationHoursActivity : AppCompatActivity() {
             setDescription(DKResource.convertToString(context, "dk_activation_hours_logbook_description"))
         }
 
-        val linearLayoutManager = LinearLayoutManager(this)
-        day_list.layoutManager = linearLayoutManager
+        day_list.layoutManager = LinearLayoutManager(this)
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(ActivationHoursViewModel::class.java)
