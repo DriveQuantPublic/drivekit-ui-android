@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:padding="@dimen/dk_margin">
 
-        <!-- TODO: style="@style/SettingTitleStyle" -->
         <TextView
             android:id="@+id/text_view_title"
             android:layout_width="match_parent"
@@ -17,8 +16,7 @@
             android:maxLines="3"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="text à retirer"
-            tools:text="Description"
+            tools:text="Title"
             android:layout_alignLeft="@id/switch_view"
             android:layout_alignTop="@+id/switch_view"
             android:layout_toLeftOf="@id/switch_view"/>

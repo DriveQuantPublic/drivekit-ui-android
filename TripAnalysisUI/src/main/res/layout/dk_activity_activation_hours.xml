@@ -10,37 +10,40 @@
         android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#0DDEDD">
-
-        <com.drivequant.drivekit.common.ui.component.SwitchSettings
-            android:id="@+id/switch_enable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_settings_work_hours_enable_personal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone"
-            >
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/work_hours_day_list"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.drivequant.drivekit.common.ui.component.SwitchSettings
+                android:id="@+id/switch_enable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/view_separator_description"
+                style="@style/Separator.Horizontal"
+                android:layout_marginStart="@dimen/dk_margin_half"
+                android:layout_marginEnd="@dimen/dk_margin_half"/>
+
+            <com.drivequant.drivekit.common.ui.component.SwitchSettings
+                android:id="@+id/switch_sorting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/day_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/dk_margin_half" />
+
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
