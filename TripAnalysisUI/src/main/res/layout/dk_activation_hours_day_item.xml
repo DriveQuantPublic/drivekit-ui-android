@@ -38,7 +38,7 @@
 
         <!-- RIGHT PART -->
         <RelativeLayout
-            android:id="@+id/rangeseekbar_container"
+            android:id="@+id/rangeslider_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dk_margin_half"
@@ -48,6 +48,7 @@
                 android:id="@+id/range_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:tickVisible="false"
                 style="@style/SliderStyle"
                 android:valueFrom="0.0"
                 android:valueTo="24.0"
