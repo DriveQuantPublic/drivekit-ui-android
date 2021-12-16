@@ -48,14 +48,13 @@ internal object DriveKitConfig : ContentMail {
         configureDriverAchievement()
         configurePermissionsUtils(application)
         configureVehicle()
+        initFirstLaunch()
     }
 
     private fun configureCore(application: Application) {
         DriveKit.initialize(application)
         //TODO: Push your api key here
-        DriveKit.setApiKey("Your API key here")
-
-        initFirstLaunch()
+        //DriveKit.setApiKey("Your API key here")
     }
 
     private fun configureCommonUI() {

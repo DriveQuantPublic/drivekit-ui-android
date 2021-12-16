@@ -84,4 +84,18 @@
         <item name="android:textColor">@color/dkVeryBad</item>
         <item name="android:textSize">@dimen/dk_text_small</item>
     </style>
+
+    <!-- Used for RangeSlider-->
+    <style name="SliderStyle" parent="@style/Widget.MaterialComponents.Slider">
+        <item name="labelStyle">@style/TooltipStyle</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Slider</item>
+    </style>
+    <style name="TooltipStyle" parent="Widget.MaterialComponents.Tooltip">
+        <item name="backgroundTint">@color/dkGood</item>
+    </style>
+    <style name="ThemeOverlay.Slider" parent="">
+        <item name="colorOnPrimary">@color/dkGood</item>
+        <item name="colorOnBackground">@color/dkGaugeBackColor</item>
+        <item name="colorSurface">@color/dkGood</item>
+    </style>
 </resources>
