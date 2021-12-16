@@ -12,27 +12,19 @@ internal class ActivationHoursListAdapter(
     val context: Context,
     private val viewModel: ActivationHoursViewModel
 ) : RecyclerView.Adapter<ActivationHoursDayViewHolder>() {
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ActivationHoursDayViewHolder {
         val view =
             LayoutInflater.from(context).inflate(R.layout.dk_activation_hours_day_item, parent, false)
-        return ActivationHoursDayViewHolder(view)
+        return ActivationHoursDayViewHolder(view, viewModel)
     }
 
     override fun getItemCount() =
-        viewModel.dayConfigList?.size ?: 0
+        viewModel.config?.dayConfiguration?.size ?: 0
 
     override fun onBindViewHolder(parent: ActivationHoursDayViewHolder, position: Int) {
-        viewModel.dayConfigList?.get(position)?.let { dayConfig ->
-            parent.apply {
-                bind(dayConfig)
-                itemView.setOnClickListener {
-
-                }
-            }
-        }
+        parent.bind(position)
     }
 }

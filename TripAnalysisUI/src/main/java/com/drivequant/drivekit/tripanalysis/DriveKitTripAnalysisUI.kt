@@ -8,6 +8,8 @@ import com.drivequant.drivekit.tripanalysis.activationhours.activity.ActivationH
 
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
 
+    internal const val TAG = "DriveKit TripAnalysis UI"
+
     private var logbookSorting = false
 
     fun initialize() {

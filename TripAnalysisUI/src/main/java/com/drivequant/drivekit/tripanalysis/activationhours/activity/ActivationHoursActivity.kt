@@ -3,6 +3,7 @@ package com.drivequant.drivekit.tripanalysis.activationhours.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
@@ -12,8 +13,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.activationhours.adapter.ActivationHoursListAdapter
 import com.drivequant.drivekit.tripanalysis.activationhours.viewmodel.ActivationHoursViewModel
-import com.google.android.material.slider.LabelFormatter.LABEL_WITHIN_BOUNDS
-import kotlinx.android.synthetic.main.dk_activation_hours_day_item.*
 import kotlinx.android.synthetic.main.dk_activity_activation_hours.*
 
 class ActivationHoursActivity : AppCompatActivity() {
@@ -46,8 +45,7 @@ class ActivationHoursActivity : AppCompatActivity() {
     private fun setContent() {
         switch_enable.apply {
             setTitle(DKResource.convertToString(context, "dk_activation_hours_enable_title"))
-            setDescription(DKResource.convertToString(context, "dk_activation_hours_enable_description")
-            )
+            setDescription(DKResource.convertToString(context, "dk_activation_hours_enable_description"))
         }
         switch_sorting.apply {
             setTitle(DKResource.convertToString(context, "dk_activation_hours_logbook_title"))
@@ -60,16 +58,49 @@ class ActivationHoursActivity : AppCompatActivity() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(ActivationHoursViewModel::class.java)
         }
+
+        viewModel.syncDataStatus.observe(this, { success ->
+            if (!success) {
+                if (applicationContext != null) {
+                    Toast.makeText(
+                        applicationContext,
+                        DKResource.convertToString(this, "dk_activation_hours_sync_failed"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            viewModel.config?.let {
+                switch_enable.setChecked(it.enable)
+                switch_sorting.setChecked(it.outsideHours)
+                adapter = ActivationHoursListAdapter(this, viewModel)
+                day_list.adapter = adapter
+            }
+        })
+        viewModel.updateDataStatus.observe(this, { success ->
+            val toastMessage = if (success) {
+                "dk_activation_hours_update_succeed"
+            } else {
+                "dk_activation_hours_update_failed"
+            }
+            if (applicationContext != null) {
+                Toast.makeText(
+                    applicationContext,
+                    DKResource.convertToString(this, toastMessage),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
         viewModel.fetchData()
-
-        //TODO
-
-        adapter = ActivationHoursListAdapter(this, viewModel)
-        day_list.adapter = adapter
     }
 
     private fun setStyle() {
         view_separator_description?.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.updateConfig(switch_enable.isChecked(), switch_sorting.isChecked())
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -13,8 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:baselineAligned="false"
-        android:weightSum="1"
-        >
+        android:weightSum="1">
         <!-- LEFT PART -->
         <LinearLayout
             android:layout_width="0dp"
@@ -22,14 +21,10 @@
             android:layout_weight="0.2"
             android:gravity="center"
             android:orientation="vertical">
-
-            <!--
-                android:button="@drawable/custom_checkbox"-->
             <CheckBox
                 android:id="@+id/checkbox_select_day"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/card_view_day_textview"
@@ -71,7 +66,6 @@
                 android:textSize="12sp"
                 tools:text="0" />
 
-            <!-- android:textColor="@color/colorPrimary" -->
             <TextView
                 android:id="@+id/textMax"
                 android:layout_width="wrap_content"
