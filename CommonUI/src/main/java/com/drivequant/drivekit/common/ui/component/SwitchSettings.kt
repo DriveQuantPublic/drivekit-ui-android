@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.normalText
 
-class SwitchSettings: LinearLayout {
+class SwitchSettings : LinearLayout {
 
     private lateinit var textViewTitle: TextView
     private lateinit var textViewDescription: TextView
@@ -28,7 +28,6 @@ class SwitchSettings: LinearLayout {
         init()
     }
 
-
     private fun init() {
         val view = View.inflate(context, R.layout.dk_layout_switch_settings, null)
         textViewTitle = view.findViewById(R.id.text_view_title)
@@ -39,11 +38,16 @@ class SwitchSettings: LinearLayout {
             listener?.onSwitchChanged(isChecked)
         }
 
-        textViewTitle.bigText(DriveKitUI.colors.primaryColor())
-        textViewTitle.setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+        textViewTitle.apply {
+            bigText(DriveKitUI.colors.primaryColor())
+            setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+        }
 
-        textViewDescription.normalText(DriveKitUI.colors.mainFontColor())
-        textViewDescription.setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+        textViewDescription.apply {
+            normalText(DriveKitUI.colors.mainFontColor())
+            setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+        }
+
 
         addView(
             view, ViewGroup.LayoutParams(

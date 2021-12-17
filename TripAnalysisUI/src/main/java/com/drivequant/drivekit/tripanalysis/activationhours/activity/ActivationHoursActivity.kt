@@ -17,7 +17,9 @@ import com.drivequant.drivekit.tripanalysis.activationhours.adapter.ActivationHo
 import com.drivequant.drivekit.tripanalysis.activationhours.viewmodel.ActivationHoursViewModel
 import kotlinx.android.synthetic.main.dk_activity_activation_hours.*
 
+
 class ActivationHoursActivity : AppCompatActivity() {
+    // TODO manage when activity process is killed
 
     private lateinit var viewModel: ActivationHoursViewModel
     private var adapter: ActivationHoursListAdapter? = null
@@ -45,25 +47,36 @@ class ActivationHoursActivity : AppCompatActivity() {
     }
 
     private fun setContent() {
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(ActivationHoursViewModel::class.java)
+        }
+
         switch_enable.apply {
             setTitle(DKResource.convertToString(context, "dk_activation_hours_enable_title"))
             setDescription(DKResource.convertToString(context, "dk_activation_hours_enable_description"))
             setListener(object : SwitchSettings.SwitchListener {
                 override fun onSwitchChanged(isChecked: Boolean) {
-                    manageEnableSwitchVisibility(isChecked)
+                    manageDaysVisibility(isChecked, switch_sorting.isChecked())
                 }
             })
         }
-        switch_sorting.apply {
-            setTitle(DKResource.convertToString(context, "dk_activation_hours_logbook_title"))
-            setDescription(DKResource.convertToString(context, "dk_activation_hours_logbook_description"))
+
+        if (viewModel.displayLogbook()) {
+            switch_sorting.apply {
+                visibility = View.VISIBLE
+                setTitle(DKResource.convertToString(context, "dk_activation_hours_logbook_title"))
+                setDescription(DKResource.convertToString(context, "dk_activation_hours_logbook_description"))
+                setListener(object : SwitchSettings.SwitchListener {
+                    override fun onSwitchChanged(isChecked: Boolean) {
+                        manageDaysVisibility(switch_enable.isChecked(), isChecked)
+                    }
+                })
+            }
+        } else {
+            switch_sorting.visibility = View.GONE
         }
 
         day_list.layoutManager = LinearLayoutManager(this)
-
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(ActivationHoursViewModel::class.java)
-        }
 
         viewModel.syncDataStatus.observe(this, { success ->
             if (!success) {
@@ -77,8 +90,8 @@ class ActivationHoursActivity : AppCompatActivity() {
             }
             viewModel.config?.let {
                 switch_enable.setChecked(it.enable)
-                manageEnableSwitchVisibility(switch_enable.isChecked())
                 switch_sorting.setChecked(it.outsideHours)
+                manageDaysVisibility(switch_enable.isChecked(), switch_sorting.isChecked())
                 adapter = ActivationHoursListAdapter(this, viewModel)
                 day_list.adapter = adapter
             }
@@ -101,11 +114,11 @@ class ActivationHoursActivity : AppCompatActivity() {
         viewModel.fetchData()
     }
 
-    private fun manageEnableSwitchVisibility(isChecked: Boolean) {
-        if (!isChecked) {
-            day_list.visibility = View.GONE
-        } else {
+    private fun manageDaysVisibility(isEnabledChecked: Boolean, isLogbookSortingEnabled: Boolean) {
+        if (isEnabledChecked || (isLogbookSortingEnabled && viewModel.displayLogbook())) {
             day_list.visibility = View.VISIBLE
+        } else {
+            day_list.visibility = View.GONE
         }
     }
 

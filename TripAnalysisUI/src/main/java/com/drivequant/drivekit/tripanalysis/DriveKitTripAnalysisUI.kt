@@ -10,14 +10,10 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
 
     internal const val TAG = "DriveKit TripAnalysis UI"
 
-    private var logbookSorting = false
+    var logbookSorting = false
 
     fun initialize() {
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
-    }
-
-    fun configureLogbookSorting(enable: Boolean) {
-        logbookSorting = enable
     }
 
     override fun startActivationHoursActivity(context: Context) {

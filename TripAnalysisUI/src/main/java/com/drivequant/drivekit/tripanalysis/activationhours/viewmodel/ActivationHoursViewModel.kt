@@ -72,6 +72,8 @@ internal class ActivationHoursViewModel : ViewModel() {
         }
     }
 
+    fun displayLogbook() = DriveKitTripAnalysisUI.logbookSorting
+
     private fun buildData(enable: Boolean, outsideHours: Boolean): DKActivationHours? {
         return updatedDaysConfig?.let {
             DKActivationHours(

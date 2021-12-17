@@ -15,15 +15,13 @@ import com.drivequant.drivekit.tripanalysis.activationhours.viewmodel.Activation
 import com.drivequant.drivekit.tripanalysis.service.activationhours.DKActivationHoursDayConfiguration
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 internal class ActivationHoursDayViewHolder(
     itemView: View,
     private val viewModel: ActivationHoursViewModel
-) : RecyclerView.ViewHolder(itemView)
-{
+) : RecyclerView.ViewHolder(itemView) {
     private val sliderContainer = itemView.findViewById<RelativeLayout>(R.id.rangeslider_container)
     private val rangeSlider = itemView.findViewById<RangeSlider>(R.id.range_slider)
     private val checkBox = itemView.findViewById<CheckBox>(R.id.checkbox_select_day)
@@ -34,29 +32,30 @@ internal class ActivationHoursDayViewHolder(
     init {
         labelMin.setTextColor(DriveKitUI.colors.primaryColor())
         labelMax.setTextColor(DriveKitUI.colors.primaryColor())
-        rangeSlider.labelBehavior = LabelFormatter.LABEL_GONE
-        rangeSlider.trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
-        rangeSlider.trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
-        rangeSlider.addOnChangeListener(RangeSlider.OnChangeListener(fun(
-            _: RangeSlider,
-            _: Float,
-            _: Boolean
-        ) {
-            manageMinSeparation()
-            updateHoursLabels()
-        }))
-        rangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: RangeSlider) {
-                // do nothing
-            }
+        rangeSlider.apply {
+            labelBehavior = LabelFormatter.LABEL_GONE
+            trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            addOnChangeListener(RangeSlider.OnChangeListener(fun(
+                _: RangeSlider,
+                _: Float,
+                _: Boolean
+            ) {
+                manageMinSeparation()
+                updateHoursLabels()
+            }))
+            addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(slider: RangeSlider) {
+                    // do nothing
+                }
 
-            override fun onStopTrackingTouch(slider: RangeSlider) {
-               updateDayConfig()
-            }
-        })
-
+                override fun onStopTrackingTouch(slider: RangeSlider) {
+                    updateDayConfig()
+                }
+            })
+        }
         checkBox.setOnCheckedChangeListener { _, _ ->
-            manageSliderVisibility()
+            manageSliderVisibility(checkBox.isChecked)
             updateDayConfig()
         }
     }
@@ -67,7 +66,7 @@ internal class ActivationHoursDayViewHolder(
             checkBox.isChecked = !dayConfig.entireDayOff
             rangeSlider.setValues(dayConfig.startTime, dayConfig.endTime)
             updateHoursLabels()
-            manageSliderVisibility()
+            manageSliderVisibility(checkBox.isChecked)
         }
     }
 
@@ -84,34 +83,20 @@ internal class ActivationHoursDayViewHolder(
         }
     }
 
-    private fun manageSliderVisibility() {
-        if (!checkBox.isChecked) {
-            sliderContainer.animate().alpha(0.15f)
-                .setDuration(
-                    itemView.context.resources.getInteger(android.R.integer.config_shortAnimTime)
-                        .toLong()
-                )
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        rangeSlider.isClickable = false
-                        rangeSlider.isEnabled = false
-                    }
-                })
-        } else {
-            sliderContainer.animate().alpha(1f)
-                .setDuration(
-                    itemView.context.resources.getInteger(android.R.integer.config_shortAnimTime)
-                        .toLong()
-                )
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        super.onAnimationEnd(animation)
-                        rangeSlider.isClickable = true
-                        rangeSlider.isEnabled = true
-                    }
-                })
-        }
+    private fun manageSliderVisibility(display: Boolean) {
+        val alpha = if (display) 1.0f else 0.15f
+        sliderContainer.animate().alpha(alpha)
+            .setDuration(
+                itemView.context.resources.getInteger(android.R.integer.config_shortAnimTime)
+                    .toLong()
+            )
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    rangeSlider.isClickable = display
+                    rangeSlider.isEnabled = display
+                }
+            })
     }
 
     // Fix minSeparation property that is not working
@@ -143,10 +128,9 @@ internal class ActivationHoursDayViewHolder(
     }
 
     private fun initDayLabel(dayConfig: DKActivationHoursDayConfiguration) {
-        val df: DateFormat = SimpleDateFormat("E", Locale.getDefault())
         val cal = Calendar.getInstance(Locale.getDefault())
         cal[Calendar.DAY_OF_WEEK] = dayConfig.day.toDay()
-        labelDay.text = df.format(cal.time)
+        labelDay.text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
     }
 
     private fun updateHoursLabels() {

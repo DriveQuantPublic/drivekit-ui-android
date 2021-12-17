@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.drivequant.drivekit.tripanalysis.activationhours.activity.ActivationHoursActivity">
 
     <include
@@ -12,36 +12,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.drivequant.drivekit.common.ui.component.SwitchSettings
+            android:id="@+id/switch_enable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view_separator_description"
+            style="@style/Separator.Horizontal"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginEnd="@dimen/dk_margin_half" />
+
+        <com.drivequant.drivekit.common.ui.component.SwitchSettings
+            android:id="@+id/switch_sorting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/day_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.drivequant.drivekit.common.ui.component.SwitchSettings
-                android:id="@+id/switch_enable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view_separator_description"
-                style="@style/Separator.Horizontal"
-                android:layout_marginStart="@dimen/dk_margin_half"
-                android:layout_marginEnd="@dimen/dk_margin_half"/>
-
-            <com.drivequant.drivekit.common.ui.component.SwitchSettings
-                android:id="@+id/switch_sorting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/day_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dk_margin_half" />
-        </LinearLayout>
+            android:orientation="vertical"
+            android:padding="@dimen/dk_margin_half" />
     </LinearLayout>
 </LinearLayout>
