@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.dk_activity_activation_hours.*
 
 
 class ActivationHoursActivity : AppCompatActivity() {
-    // TODO manage when activity process is killed
 
     private lateinit var viewModel: ActivationHoursViewModel
     private var adapter: ActivationHoursListAdapter? = null
