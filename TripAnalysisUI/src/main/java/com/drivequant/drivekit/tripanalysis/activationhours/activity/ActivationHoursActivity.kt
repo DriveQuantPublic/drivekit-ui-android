@@ -35,7 +35,6 @@ class ActivationHoursActivity : AppCompatActivity() {
         setContentView(R.layout.dk_activity_activation_hours)
         setToolbar()
         setContent()
-        setStyle()
     }
 
     private fun setToolbar() {
@@ -71,6 +70,14 @@ class ActivationHoursActivity : AppCompatActivity() {
                         manageDaysVisibility(switch_enable.isChecked(), isChecked)
                     }
                 })
+            }
+            view_separator_before_logbook?.apply {
+                setBackgroundColor(DriveKitUI.colors.neutralColor())
+                visibility = View.VISIBLE
+            }
+            view_separator_after_logbook?.apply {
+                setBackgroundColor(DriveKitUI.colors.neutralColor())
+                visibility = View.VISIBLE
             }
         } else {
             switch_sorting.visibility = View.GONE
@@ -111,7 +118,7 @@ class ActivationHoursActivity : AppCompatActivity() {
             }
 
         })
-        viewModel.fetchData()
+        viewModel.synchronizeData()
     }
 
     private fun manageDaysVisibility(isEnabledChecked: Boolean, isLogbookSortingEnabled: Boolean) {
@@ -120,10 +127,6 @@ class ActivationHoursActivity : AppCompatActivity() {
         } else {
             day_list.visibility = View.GONE
         }
-    }
-
-    private fun setStyle() {
-        view_separator_description?.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
     }
 
     override fun onPause() {

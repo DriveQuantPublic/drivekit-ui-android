@@ -21,15 +21,23 @@
             android:layout_height="wrap_content" />
 
         <View
-            android:id="@+id/view_separator_description"
+            android:id="@+id/view_separator_before_logbook"
             style="@style/Separator.Horizontal"
-            android:layout_marginStart="@dimen/dk_margin_half"
-            android:layout_marginEnd="@dimen/dk_margin_half" />
+            android:layout_marginStart="@dimen/dk_margin"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:visibility="gone"/>
 
         <com.drivequant.drivekit.common.ui.component.SwitchSettings
             android:id="@+id/switch_sorting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/view_separator_after_logbook"
+            style="@style/Separator.Horizontal"
+            android:layout_marginStart="@dimen/dk_margin"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/day_list"

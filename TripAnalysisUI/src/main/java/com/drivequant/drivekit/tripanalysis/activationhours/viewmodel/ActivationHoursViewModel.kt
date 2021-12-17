@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.service.activationhours.*
@@ -23,7 +22,7 @@ internal class ActivationHoursViewModel : ViewModel() {
     var updateDataStatus: MutableLiveData<Boolean> = MutableLiveData()
         private set
 
-    fun fetchData(syncType: SynchronizationType = SynchronizationType.DEFAULT) {
+    fun synchronizeData() {
         if (DriveKit.isConfigured()) {
             DriveKitTripAnalysis.getActivationHours(object : SyncActivationHoursQueryListener {
                 override fun onResponse(
@@ -38,7 +37,7 @@ internal class ActivationHoursViewModel : ViewModel() {
                     updatedDaysConfig = activationHours?.dayConfiguration?.toMutableList()
                     syncDataStatus.postValue(value)
                 }
-            }, syncType)
+            })
         }
     }
 
