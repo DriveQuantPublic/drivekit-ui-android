@@ -36,6 +36,7 @@ internal class ActivationHoursDayViewHolder(
             labelBehavior = LabelFormatter.LABEL_GONE
             trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
             trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            thumbTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
             addOnChangeListener(RangeSlider.OnChangeListener(fun(
                 _: RangeSlider,
                 _: Float,
