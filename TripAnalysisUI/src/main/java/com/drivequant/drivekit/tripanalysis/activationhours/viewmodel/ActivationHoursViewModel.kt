@@ -14,7 +14,6 @@ import java.util.*
 
 internal class ActivationHoursViewModel : ViewModel() {
 
-    private var shouldUpdate = false
     var config: DKActivationHours? = null
     var updatedDaysConfig: MutableList<DKActivationHoursDayConfiguration>? = mutableListOf()
     var syncDataStatus: MutableLiveData<Boolean> = MutableLiveData()
@@ -43,8 +42,8 @@ internal class ActivationHoursViewModel : ViewModel() {
 
     fun updateConfig(enable: Boolean, enableSorting: Boolean) {
         if (DriveKit.isConfigured()) {
-            if (shouldUpdate) {
-                buildData(enable, enableSorting)?.let {
+            buildData(enable, enableSorting)?.let {
+                if (it != config) {
                     DriveKitTripAnalysis.updateActivationHours(it,
                         object : UpdateActivationHoursQueryListener {
                             override fun onResponse(status: UpdateActivationHoursStatus) {
@@ -55,15 +54,14 @@ internal class ActivationHoursViewModel : ViewModel() {
                                 updateDataStatus.postValue(value)
                             }
                         })
+                } else {
+                    DriveKitLog.i(DriveKitTripAnalysisUI.TAG, "No need to update activation hours")
                 }
-            } else {
-                DriveKitLog.i(DriveKitTripAnalysisUI.TAG, "No need to update activation hours")
             }
         }
     }
 
     fun updateDayConfig(dayConfiguration: DKActivationHoursDayConfiguration) {
-        shouldUpdate = true
         config?.dayConfiguration?.indexOfFirst {
             it.day == dayConfiguration.day
         }?.let { index ->

@@ -55,10 +55,6 @@ internal class ActivationHoursDayViewHolder(
                 }
             })
         }
-        checkBox.setOnCheckedChangeListener { _, _ ->
-            manageSliderVisibility(checkBox.isChecked)
-            updateDayConfig()
-        }
     }
 
     fun bind(position: Int) {
@@ -68,6 +64,11 @@ internal class ActivationHoursDayViewHolder(
             rangeSlider.setValues(dayConfig.startTime, dayConfig.endTime)
             updateHoursLabels()
             manageSliderVisibility(checkBox.isChecked)
+        }
+
+        checkBox.setOnCheckedChangeListener { _, _ ->
+            manageSliderVisibility(checkBox.isChecked)
+            updateDayConfig()
         }
     }
 
