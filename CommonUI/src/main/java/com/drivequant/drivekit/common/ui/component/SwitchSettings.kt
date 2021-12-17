@@ -16,8 +16,9 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 class SwitchSettings: LinearLayout {
 
     private lateinit var textViewTitle: TextView
-    private lateinit var textViewDescription:TextView
+    private lateinit var textViewDescription: TextView
     private lateinit var switchView: SwitchCompat
+    private var listener: SwitchListener? = null
 
     constructor(context: Context) : super(context) {
         init()
@@ -27,11 +28,16 @@ class SwitchSettings: LinearLayout {
         init()
     }
 
+
     private fun init() {
         val view = View.inflate(context, R.layout.dk_layout_switch_settings, null)
         textViewTitle = view.findViewById(R.id.text_view_title)
         textViewDescription = view.findViewById(R.id.text_view_description)
         switchView = view.findViewById(R.id.switch_view)
+
+        switchView.setOnCheckedChangeListener { _, isChecked ->
+            listener?.onSwitchChanged(isChecked)
+        }
 
         textViewTitle.bigText(DriveKitUI.colors.primaryColor())
         textViewTitle.setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
@@ -67,5 +73,13 @@ class SwitchSettings: LinearLayout {
 
     fun isChecked(): Boolean {
         return switchView.isChecked
+    }
+
+    fun setListener(listener: SwitchListener) {
+        this.listener = listener
+    }
+
+    interface SwitchListener {
+        fun onSwitchChanged(isChecked: Boolean)
     }
 }

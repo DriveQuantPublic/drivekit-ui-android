@@ -150,7 +150,7 @@ internal class ActivationHoursDayViewHolder(
     }
 
     private fun updateHoursLabels() {
-        labelMin.text = viewModel.rawTickValueToDate(rangeSlider.values[0])
-        labelMax.text = viewModel.rawTickValueToDate(rangeSlider.values[1])
+        labelMin.text = viewModel.rawHoursValueToDate(rangeSlider.values[0])
+        labelMax.text = viewModel.rawHoursValueToDate(rangeSlider.values[1])
     }
 }

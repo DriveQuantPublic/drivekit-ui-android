@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="12sp"
+                android:textSize="@dimen/dk_text_small"
                 tools:text="MON."/>
         </LinearLayout>
 
@@ -60,9 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/range_slider"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:textSize="@dimen/dk_text_small"
                 tools:text="0" />
 
             <TextView
@@ -71,8 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/range_slider"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/dk_margin_medium"
+                android:layout_marginTop="@dimen/dk_margin_half"
                 android:textSize="@dimen/dk_text_small"
                 tools:text="1" />
         </RelativeLayout>

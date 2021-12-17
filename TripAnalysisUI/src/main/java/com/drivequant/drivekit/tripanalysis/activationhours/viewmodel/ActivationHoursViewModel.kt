@@ -2,6 +2,7 @@ package com.drivequant.drivekit.tripanalysis.activationhours.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.SynchronizationType
@@ -81,13 +82,26 @@ internal class ActivationHoursViewModel : ViewModel() {
         }
     }
 
-    fun rawTickValueToDate(tick: Float): String? {
-        val df: DateFormat = SimpleDateFormat("HH'h'mm", Locale.getDefault())
+    fun rawHoursValueToDate(hours: Float): String? {
+        val df: DateFormat = getDateFormat(hours)
         val cal = Calendar.getInstance()
         cal[Calendar.HOUR_OF_DAY] = 0
         cal[Calendar.MINUTE] = 0
         cal[Calendar.SECOND] = 0
-        cal.add(Calendar.MINUTE, (60 * tick).toInt())
+        cal.add(Calendar.MINUTE, (60 * hours).toInt())
         return df.format(cal.time)
+    }
+
+    private fun getDateFormat(hours: Float): SimpleDateFormat {
+        val pattern = if (hasMinutes(hours)) {
+            DKDatePattern.HOUR_MINUTE_LETTER
+        } else {
+            DKDatePattern.HOUR_ONLY
+        }
+        return SimpleDateFormat(pattern.getPattern(), Locale.getDefault())
+    }
+
+    private fun hasMinutes(hours: Float): Boolean {
+        return (hours % 1) != 0.0f
     }
 }

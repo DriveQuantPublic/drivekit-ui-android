@@ -3,6 +3,7 @@ package com.drivequant.drivekit.tripanalysis.activationhours.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.activationhours.adapter.ActivationHoursListAdapter
 import com.drivequant.drivekit.tripanalysis.activationhours.viewmodel.ActivationHoursViewModel
@@ -46,6 +48,11 @@ class ActivationHoursActivity : AppCompatActivity() {
         switch_enable.apply {
             setTitle(DKResource.convertToString(context, "dk_activation_hours_enable_title"))
             setDescription(DKResource.convertToString(context, "dk_activation_hours_enable_description"))
+            setListener(object : SwitchSettings.SwitchListener {
+                override fun onSwitchChanged(isChecked: Boolean) {
+                    manageEnableSwitchVisibility(isChecked)
+                }
+            })
         }
         switch_sorting.apply {
             setTitle(DKResource.convertToString(context, "dk_activation_hours_logbook_title"))
@@ -70,6 +77,7 @@ class ActivationHoursActivity : AppCompatActivity() {
             }
             viewModel.config?.let {
                 switch_enable.setChecked(it.enable)
+                manageEnableSwitchVisibility(switch_enable.isChecked())
                 switch_sorting.setChecked(it.outsideHours)
                 adapter = ActivationHoursListAdapter(this, viewModel)
                 day_list.adapter = adapter
@@ -91,6 +99,14 @@ class ActivationHoursActivity : AppCompatActivity() {
 
         })
         viewModel.fetchData()
+    }
+
+    private fun manageEnableSwitchVisibility(isChecked: Boolean) {
+        if (!isChecked) {
+            day_list.visibility = View.GONE
+        } else {
+            day_list.visibility = View.VISIBLE
+        }
     }
 
     private fun setStyle() {
