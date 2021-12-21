@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.drivequant.drivekit.tripanalysis.activationhours.activity.ActivationHoursActivity">
+    tools:context="com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -26,18 +26,6 @@
             android:layout_marginStart="@dimen/dk_margin"
             android:layout_marginEnd="@dimen/dk_margin"
             android:visibility="gone"/>
-
-        <com.drivequant.drivekit.common.ui.component.SwitchSettings
-            android:id="@+id/switch_sorting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:id="@+id/view_separator_after_logbook"
-            style="@style/Separator.Horizontal"
-            android:layout_marginStart="@dimen/dk_margin"
-            android:layout_marginEnd="@dimen/dk_margin"
-            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/day_list"

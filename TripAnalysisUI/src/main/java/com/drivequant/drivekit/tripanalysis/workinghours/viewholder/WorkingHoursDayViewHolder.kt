@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis.activationhours.viewholder
+package com.drivequant.drivekit.tripanalysis.workinghours.viewholder
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -10,17 +10,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.tripanalysis.activationhours.toDay
-import com.drivequant.drivekit.tripanalysis.activationhours.viewmodel.ActivationHoursViewModel
-import com.drivequant.drivekit.tripanalysis.service.activationhours.DKActivationHoursDayConfiguration
+import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel
+import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
+import com.drivequant.drivekit.tripanalysis.workinghours.toDay
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class ActivationHoursDayViewHolder(
+internal class WorkingHoursDayViewHolder(
     itemView: View,
-    private val viewModel: ActivationHoursViewModel
+    private val viewModel: WorkingHoursViewModel
 ) : RecyclerView.ViewHolder(itemView) {
     private val sliderContainer = itemView.findViewById<RelativeLayout>(R.id.rangeslider_container)
     private val rangeSlider = itemView.findViewById<RangeSlider>(R.id.range_slider)
@@ -74,7 +74,7 @@ internal class ActivationHoursDayViewHolder(
 
     private fun updateDayConfig() {
         viewModel.config?.dayConfiguration?.get(adapterPosition)?.let { dayConfig ->
-            val newDayConfig = DKActivationHoursDayConfiguration(
+            val newDayConfig = DKWorkingHoursDayConfiguration(
                 day = dayConfig.day,
                 entireDayOff = !checkBox.isChecked,
                 reverse = false, // The current UI does not manage that feature yet
@@ -129,7 +129,7 @@ internal class ActivationHoursDayViewHolder(
         rangeSlider.setValues(newFrom, newTo)
     }
 
-    private fun initDayLabel(dayConfig: DKActivationHoursDayConfiguration) {
+    private fun initDayLabel(dayConfig: DKWorkingHoursDayConfiguration) {
         val cal = Calendar.getInstance(Locale.getDefault())
         cal[Calendar.DAY_OF_WEEK] = dayConfig.day.toDay()
         labelDay.text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)

@@ -61,6 +61,6 @@
     <string name="vehicle_odometer_list_button">Mileage tracking</string>
 
 
-    <string name="activation_hours_button">Activation Hours</string>
+    <string name="working_hours_button">Working Hours</string>
 
 </resources>

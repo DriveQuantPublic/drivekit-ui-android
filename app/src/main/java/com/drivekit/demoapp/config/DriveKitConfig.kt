@@ -92,9 +92,6 @@ internal object DriveKitConfig : ContentMail {
         })
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
-
-        // TODO remove before release
-        DriveKitTripAnalysisUI.logbookSorting = true
     }
 
     private fun configureDriverData() {

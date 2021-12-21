@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, LastTripsCardActivity::class.java))
     }
 
-    fun onTripAnalysisActivationHoursClicked(view: View) {
-        DriveKitNavigationController.tripAnalysisUIEntryPoint?.startActivationHoursActivity(applicationContext)
+    fun onTripAnalysisWorkingHoursClicked(view: View) {
+        DriveKitNavigationController.tripAnalysisUIEntryPoint?.startWorkingHoursActivity(applicationContext)
     }
 
     fun onDriverStreaksClicked(view: View) {

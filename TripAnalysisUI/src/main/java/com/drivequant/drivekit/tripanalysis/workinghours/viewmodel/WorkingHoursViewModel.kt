@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis.activationhours.viewmodel
+package com.drivequant.drivekit.tripanalysis.workinghours.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,15 +7,15 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
-import com.drivequant.drivekit.tripanalysis.service.activationhours.*
+import com.drivequant.drivekit.tripanalysis.service.workinghours.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class ActivationHoursViewModel : ViewModel() {
+internal class WorkingHoursViewModel : ViewModel() {
 
-    var config: DKActivationHours? = null
-    var updatedDaysConfig: MutableList<DKActivationHoursDayConfiguration>? = mutableListOf()
+    var config: DKWorkingHours? = null
+    var updatedDaysConfig: MutableList<DKWorkingHoursDayConfiguration>? = mutableListOf()
     var syncDataStatus: MutableLiveData<Boolean> = MutableLiveData()
         private set
     var updateDataStatus: MutableLiveData<Boolean> = MutableLiveData()
@@ -23,45 +23,50 @@ internal class ActivationHoursViewModel : ViewModel() {
 
     fun synchronizeData() {
         if (DriveKit.isConfigured()) {
-            DriveKitTripAnalysis.getActivationHours(object : SyncActivationHoursQueryListener {
+            DriveKitTripAnalysis.getWorkingHours(object : SyncWorkingHoursQueryListener {
                 override fun onResponse(
-                    status: SyncActivationHoursStatus,
-                    activationHours: DKActivationHours?
+                    status: SyncWorkingHoursStatus,
+                    workingHours: DKWorkingHours?
                 ) {
                     val value = when (status) {
-                        SyncActivationHoursStatus.SUCCESS -> true
-                        SyncActivationHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
+                        SyncWorkingHoursStatus.SUCCESS -> true
+                        SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    config = activationHours
-                    updatedDaysConfig = activationHours?.dayConfiguration?.toMutableList()
+                    config = workingHours
+                    updatedDaysConfig = workingHours?.dayConfiguration?.toMutableList()
                     syncDataStatus.postValue(value)
                 }
             })
         }
     }
 
-    fun updateConfig(enable: Boolean, enableSorting: Boolean) {
+    fun updateConfig(enable: Boolean, insideHours: TripStatus, outsideHours: TripStatus) {
         if (DriveKit.isConfigured()) {
-            buildData(enable, enableSorting)?.let {
+            buildData(enable, insideHours, outsideHours)?.let {
                 if (it != config) {
-                    DriveKitTripAnalysis.updateActivationHours(it,
-                        object : UpdateActivationHoursQueryListener {
-                            override fun onResponse(status: UpdateActivationHoursStatus) {
+                    DriveKitTripAnalysis.updateWorkingHours(it,
+                        object : UpdateWorkingHoursQueryListener {
+                            override fun onResponse(status: UpdateWorkingHoursStatus) {
                                 val value = when (status) {
-                                    UpdateActivationHoursStatus.SUCCESS -> true
-                                    UpdateActivationHoursStatus.FAILED -> false
+                                    UpdateWorkingHoursStatus.SUCCESS -> true
+                                    UpdateWorkingHoursStatus.FAILED,
+                                    UpdateWorkingHoursStatus.INVALID_DAY_OF_WEEK,
+                                    UpdateWorkingHoursStatus.INVALID_START_OR_END_TIME,
+                                    UpdateWorkingHoursStatus.START_TIME_GREATER_THAN_END_TIME,
+                                    UpdateWorkingHoursStatus.DUPLICATED_DAY,
+                                    UpdateWorkingHoursStatus.INVALID_DAY_COUNT -> false
                                 }
                                 updateDataStatus.postValue(value)
                             }
                         })
                 } else {
-                    DriveKitLog.i(DriveKitTripAnalysisUI.TAG, "No need to update activation hours")
+                    DriveKitLog.i(DriveKitTripAnalysisUI.TAG, "No need to update working hours hours")
                 }
             }
         }
     }
 
-    fun updateDayConfig(dayConfiguration: DKActivationHoursDayConfiguration) {
+    fun updateDayConfig(dayConfiguration: DKWorkingHoursDayConfiguration) {
         config?.dayConfiguration?.indexOfFirst {
             it.day == dayConfiguration.day
         }?.let { index ->
@@ -69,14 +74,13 @@ internal class ActivationHoursViewModel : ViewModel() {
         }
     }
 
-    fun displayLogbook() = DriveKitTripAnalysisUI.logbookSorting
-
-    private fun buildData(enable: Boolean, outsideHours: Boolean): DKActivationHours? {
+    private fun buildData(enable: Boolean, insideHours: TripStatus, outsideHours: TripStatus): DKWorkingHours? {
         return updatedDaysConfig?.let {
-            DKActivationHours(
+            DKWorkingHours(
                 enable = enable,
+                insideHours = insideHours,
                 outsideHours = outsideHours,
-                dayConfiguration = it.toList()
+                dayConfiguration = it
             )
         }
     }

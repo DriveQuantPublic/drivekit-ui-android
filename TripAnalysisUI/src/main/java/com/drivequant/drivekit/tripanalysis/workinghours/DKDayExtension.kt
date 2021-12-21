@@ -1,6 +1,6 @@
-package com.drivequant.drivekit.tripanalysis.activationhours
+package com.drivequant.drivekit.tripanalysis.workinghours
 
-import com.drivequant.drivekit.tripanalysis.service.activationhours.DKDay
+import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import java.util.*
 
 fun DKDay.toDay(): Int {

@@ -3,7 +3,7 @@
     package="com.drivekit.tripanalysis.ui">
     <application>
         <activity
-            android:name="com.drivequant.drivekit.tripanalysis.activationhours.activity.ActivationHoursActivity"
+            android:name="com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

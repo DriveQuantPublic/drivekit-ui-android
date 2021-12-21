@@ -53,7 +53,7 @@
                 android:valueFrom="0.0"
                 android:valueTo="24.0"
                 android:stepSize="0.5"
-                app:values="@array/initial_range_slider_activation_hours_values" />
+                app:values="@array/initial_range_slider_working_hours_values" />
 
             <TextView
                 android:id="@+id/textMin"
