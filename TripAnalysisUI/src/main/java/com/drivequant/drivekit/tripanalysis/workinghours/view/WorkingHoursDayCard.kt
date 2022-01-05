@@ -7,11 +7,10 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.FrameLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.widget.CompoundButtonCompat
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
@@ -59,6 +58,7 @@ internal class WorkingHoursDayCard : FrameLayout {
         checkbox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 listener?.onDayChecked(isChecked)
+                manageCheckboxStyle(isChecked)
                 manageSliderVisibility(isChecked)
             }
             isChecked = !dayConfig.entireDayOff
@@ -122,6 +122,15 @@ internal class WorkingHoursDayCard : FrameLayout {
             startTime = rangeSlider.values[0],
             endTime = rangeSlider.values[1]
         )
+
+    private fun manageCheckboxStyle(isChecked: Boolean) {
+        CompoundButtonCompat.getButtonDrawable(checkbox)?.let { wrapped ->
+            wrapped.mutate()
+            val tintColor = if (isChecked) DriveKitUI.colors.secondaryColor() else DriveKitUI.colors.complementaryFontColor()
+            DrawableCompat.setTint(wrapped, tintColor)
+            checkbox.buttonDrawable = wrapped
+        }
+    }
 
     private fun manageSliderVisibility(display: Boolean) {
         val alpha = if (display) 1.0f else 0.15f

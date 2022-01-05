@@ -29,7 +29,8 @@
                 <CheckBox
                     android:id="@+id/checkbox_select_day"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/dk_custom_checkbox"/>
 
                 <TextView
                     android:id="@+id/card_view_day_textview"
