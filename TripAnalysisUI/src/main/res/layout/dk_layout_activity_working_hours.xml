@@ -33,7 +33,7 @@
                     android:layout_marginStart="@dimen/dk_margin"
                     android:layout_marginEnd="@dimen/dk_margin"/>
 
-                <com.drivequant.drivekit.tripanalysis.workinghours.view.SpinnerSettings
+                <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
                     android:id="@+id/inside_hours_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -42,7 +42,7 @@
                     android:layout_marginStart="@dimen/dk_margin"
                     android:layout_marginEnd="@dimen/dk_margin"/>
 
-                <com.drivequant.drivekit.tripanalysis.workinghours.view.SpinnerSettings
+                <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
                     android:id="@+id/outside_hours_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -51,15 +51,13 @@
                     style="@style/Separator.Horizontal"
                     android:layout_marginStart="@dimen/dk_margin"
                     android:layout_marginEnd="@dimen/dk_margin"/>
+
+                <LinearLayout
+                    android:id="@+id/days_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
             </LinearLayout>
         </ScrollView>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/day_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/dk_margin_half" />
     </LinearLayout>
 </LinearLayout>

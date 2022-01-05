@@ -16,10 +16,10 @@ import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
-import com.drivequant.drivekit.tripanalysis.workinghours.adapter.HoursSpinnerAdapter
+import com.drivequant.drivekit.tripanalysis.workinghours.adapter.WorkingHoursSpinnerAdapter
 import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinnerItem
 
-internal class SpinnerSettings : LinearLayout {
+internal class WorkingHoursSpinnerSettings : LinearLayout {
 
     private var items: List<HoursSpinnerItem> = buildTripStatusItems()
     private var touched: Boolean = false
@@ -44,7 +44,7 @@ internal class SpinnerSettings : LinearLayout {
         spinnerContainer = view.findViewById(R.id.spinner_container)
         spinner = view.findViewById(R.id.spinner)
 
-        spinner.adapter = HoursSpinnerAdapter(context, items)
+        spinner.adapter = WorkingHoursSpinnerAdapter(context, items)
 
         spinnerContainer.setBackgroundColor(DriveKitUI.colors.neutralColor())
 

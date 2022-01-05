@@ -10,7 +10,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinnerItem
 
-internal class HoursSpinnerAdapter(
+internal class WorkingHoursSpinnerAdapter(
     context: Context,
     list: List<HoursSpinnerItem>
 ) : ArrayAdapter<HoursSpinnerItem>(context, R.layout.dk_simple_list_item_spinner, list) {
