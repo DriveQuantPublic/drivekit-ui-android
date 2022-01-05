@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.adapter.HoursSpinnerAdapter
 import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinnerItem
@@ -65,11 +66,16 @@ internal class SpinnerSettings : LinearLayout {
                 position: Int,
                 id: Long
             ) {
+                val selected = items[position].tripStatus
+                if (selected == TripStatus.DISABLED) {
+                    setDescription(DKResource.convertToString(context, "dk_working_hours_slot_disabled_desc"))
+                } else {
+                    setDescription(null)
+                }
                 if (touched) {
-                    listener?.onItemSelected(items[position].tripStatus)
+                    listener?.onItemSelected(selected)
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
@@ -113,6 +119,8 @@ internal class SpinnerSettings : LinearLayout {
     fun setListener(listener: SpinnerListener) {
         this.listener = listener
     }
+
+    fun getSelectedTripStatus() = (spinner.selectedItem as HoursSpinnerItem).tripStatus
 
     fun selectItem(tripStatus: TripStatus) {
         items.forEachIndexed { index, hoursSpinnerItem ->

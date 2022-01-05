@@ -68,22 +68,14 @@ class WorkingHoursActivity : AppCompatActivity() {
         insideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_inside_title"))
         insideHours.setListener(object : SpinnerSettings.SpinnerListener {
             override fun onItemSelected(item: TripStatus) {
-                if (item == TripStatus.DISABLED) {
-                    insideHours.setDescription(DKResource.convertToString(applicationContext, "dk_working_hours_slot_disabled_desc"))
-                } else {
-                    insideHours.setDescription(null)
-                }
+                // TODO update viewmodel ?
             }
         })
 
         outsideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_outside_title"))
         outsideHours.setListener(object : SpinnerSettings.SpinnerListener {
             override fun onItemSelected(item: TripStatus) {
-                if (item == TripStatus.DISABLED) {
-                    outsideHours.setDescription(DKResource.convertToString(applicationContext, "dk_working_hours_slot_disabled_desc"))
-                } else {
-                    outsideHours.setDescription(null)
-                }
+                // TODO update viewmodel ?
             }
         })
 
@@ -137,7 +129,11 @@ class WorkingHoursActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         // TODO MOCK
-        viewModel.updateConfig(switch_enable.isChecked(), TripStatus.PERSONAL, TripStatus.BUSINESS)
+        viewModel.updateConfig(
+            switch_enable.isChecked(),
+            insideHours.getSelectedTripStatus(),
+            outsideHours.getSelectedTripStatus()
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {
