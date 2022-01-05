@@ -55,6 +55,10 @@ class WorkingHoursActivity : AppCompatActivity() {
             viewModel = ViewModelProviders.of(this).get(WorkingHoursViewModel::class.java)
         }
 
+        separator_enable.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        separator_inside.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        separator_outside.setBackgroundColor(DriveKitUI.colors.neutralColor())
+
         switch_enable.apply {
             setTitle(DKResource.convertToString(context, "dk_working_hours_enable_title"))
             setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
@@ -119,7 +123,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     }
 
     private fun configureDays() {
-        DKDay.values().forEachIndexed { index, dkDay ->
+        DKDay.values().forEachIndexed { index, _ ->
             // TODO might not work first time when user has no config yet
             viewModel.config?.dayConfiguration?.get(index)?.let {
                 val day = WorkingHoursDayCard(this, it)
