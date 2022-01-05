@@ -57,12 +57,6 @@ class SwitchSettings : LinearLayout {
         )
     }
 
-    fun onCreateView(view: View) {
-        textViewTitle = view.findViewById(R.id.text_view_title)
-        textViewDescription = view.findViewById(R.id.text_view_description)
-        switchView = view.findViewById(R.id.switch_view)
-    }
-
     fun setTitle(title: String) {
         textViewTitle.text = title
     }

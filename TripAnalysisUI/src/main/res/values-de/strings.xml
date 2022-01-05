@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_working_hours_enable_desc">Mit dieser Funktion können Sie die Zeiten für die Aktivierung des automatischen Modus einstellen und Fahrten mit einem Label versehen.</string>
+   <string name="dk_working_hours_enable_title">Arbeitszeiten freigeben</string>
+   <string name="dk_working_hours_slot_disabled_desc">Fahrten werden nicht aufgezeichnet</string>
+   <string name="dk_working_hours_slot_inside_title">In der Zeitspanne</string>
+   <string name="dk_working_hours_slot_mode_business_title">Professionell</string>
+   <string name="dk_working_hours_slot_mode_disabled_title">Deaktiviert</string>
+   <string name="dk_working_hours_slot_mode_personal_title">Persönlich</string>
+   <string name="dk_working_hours_slot_outside_title">Außerhalb des Zeitraums</string>
+   <string name="dk_working_hours_sync_failed">Die Synchronisierung der Einstellungen ist fehlgeschlagen, bitte versuchen Sie es später noch einmal.</string>
+   <string name="dk_working_hours_title">Arbeitszeit</string>
+   <string name="dk_working_hours_update_failed">Die Aktualisierung der Einstellungen ist fehlgeschlagen, bitte versuchen Sie es später noch einmal.</string>
+   <string name="dk_working_hours_update_succeed">Die Einstellungen wurden aktualisiert.</string>
+</resources>

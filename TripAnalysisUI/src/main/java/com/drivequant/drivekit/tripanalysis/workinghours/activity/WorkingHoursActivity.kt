@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.tripanalysis.workinghours.view.SpinnerSettings
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
@@ -22,6 +23,8 @@ import kotlinx.android.synthetic.main.dk_activity_working_hours.*
 class WorkingHoursActivity : AppCompatActivity() {
 
     private lateinit var viewModel: WorkingHoursViewModel
+    private lateinit var insideHours: SpinnerSettings
+    private lateinit var outsideHours: SpinnerSettings
     private var adapter: WorkingHoursListAdapter? = null
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -33,6 +36,8 @@ class WorkingHoursActivity : AppCompatActivity() {
         )
 
         setContentView(R.layout.dk_activity_working_hours)
+        insideHours = findViewById(R.id.inside_hours_container)
+        outsideHours = findViewById(R.id.outside_hours_container)
         setToolbar()
         setContent()
     }
@@ -51,14 +56,36 @@ class WorkingHoursActivity : AppCompatActivity() {
         }
 
         switch_enable.apply {
-            setTitle(DKResource.convertToString(context, "dk_working_enable_title"))
-            setDescription(DKResource.convertToString(context, "dk_working_enable_description"))
+            setTitle(DKResource.convertToString(context, "dk_working_hours_enable_title"))
+            setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
             setListener(object : SwitchSettings.SwitchListener {
                 override fun onSwitchChanged(isChecked: Boolean) {
                     manageDaysVisibility(isChecked)
                 }
             })
         }
+
+        insideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_inside_title"))
+        insideHours.setListener(object : SpinnerSettings.SpinnerListener {
+            override fun onItemSelected(item: TripStatus) {
+                if (item == TripStatus.DISABLED) {
+                    insideHours.setDescription(DKResource.convertToString(applicationContext, "dk_working_hours_slot_disabled_desc"))
+                } else {
+                    insideHours.setDescription(null)
+                }
+            }
+        })
+
+        outsideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_outside_title"))
+        outsideHours.setListener(object : SpinnerSettings.SpinnerListener {
+            override fun onItemSelected(item: TripStatus) {
+                if (item == TripStatus.DISABLED) {
+                    outsideHours.setDescription(DKResource.convertToString(applicationContext, "dk_working_hours_slot_disabled_desc"))
+                } else {
+                    outsideHours.setDescription(null)
+                }
+            }
+        })
 
         day_list.layoutManager = LinearLayoutManager(this)
 
@@ -74,6 +101,8 @@ class WorkingHoursActivity : AppCompatActivity() {
             }
             viewModel.config?.let {
                 switch_enable.setChecked(it.enable)
+                insideHours.selectItem(it.insideHours)
+                outsideHours.selectItem(it.outsideHours)
                 manageDaysVisibility(switch_enable.isChecked())
                 adapter = WorkingHoursListAdapter(this, viewModel)
                 day_list.adapter = adapter
@@ -99,9 +128,9 @@ class WorkingHoursActivity : AppCompatActivity() {
 
     private fun manageDaysVisibility(isEnabledChecked: Boolean) {
         if (isEnabledChecked) {
-            day_list.visibility = View.VISIBLE
+            scrollview.visibility = View.VISIBLE
         } else {
-            day_list.visibility = View.GONE
+            scrollview.visibility = View.GONE
         }
     }
 

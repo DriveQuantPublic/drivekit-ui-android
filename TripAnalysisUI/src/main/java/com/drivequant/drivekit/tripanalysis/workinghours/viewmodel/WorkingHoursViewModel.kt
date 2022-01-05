@@ -32,8 +32,9 @@ internal class WorkingHoursViewModel : ViewModel() {
                         SyncWorkingHoursStatus.SUCCESS -> true
                         SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    config = workingHours
-                    updatedDaysConfig = workingHours?.dayConfiguration?.toMutableList()
+                    val shouldDefault = value && workingHours?.dayConfiguration?.isNullOrEmpty() == true
+                    config = if (!shouldDefault) workingHours else DriveKitTripAnalysisUI.defaultWorkHoursConfig
+                    updatedDaysConfig = if (!shouldDefault) workingHours?.dayConfiguration?.toMutableList() else DriveKitTripAnalysisUI.defaultWorkHoursConfig.dayConfiguration
                     syncDataStatus.postValue(value)
                 }
             })
@@ -86,25 +87,12 @@ internal class WorkingHoursViewModel : ViewModel() {
     }
 
     fun rawHoursValueToDate(hours: Float): String? {
-        val df: DateFormat = getDateFormat(hours)
+        val df: DateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
         val cal = Calendar.getInstance()
         cal[Calendar.HOUR_OF_DAY] = 0
         cal[Calendar.MINUTE] = 0
         cal[Calendar.SECOND] = 0
         cal.add(Calendar.MINUTE, (60 * hours).toInt())
         return df.format(cal.time)
-    }
-
-    private fun getDateFormat(hours: Float): SimpleDateFormat {
-        val pattern = if (hasMinutes(hours)) {
-            DKDatePattern.HOUR_MINUTE_LETTER
-        } else {
-            DKDatePattern.HOUR_ONLY
-        }
-        return SimpleDateFormat(pattern.getPattern(), Locale.getDefault())
-    }
-
-    private fun hasMinutes(hours: Float): Boolean {
-        return (hours % 1) != 0.0f
     }
 }

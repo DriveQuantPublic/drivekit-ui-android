@@ -20,12 +20,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <View
-            android:id="@+id/view_separator_before_logbook"
-            style="@style/Separator.Horizontal"
-            android:layout_marginStart="@dimen/dk_margin"
-            android:layout_marginEnd="@dimen/dk_margin"
-            android:visibility="gone"/>
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View style="@style/Separator.Horizontal"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginEnd="@dimen/dk_margin"/>
+
+                <com.drivequant.drivekit.tripanalysis.workinghours.view.SpinnerSettings
+                    android:id="@+id/inside_hours_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View style="@style/Separator.Horizontal"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginEnd="@dimen/dk_margin"/>
+
+                <com.drivequant.drivekit.tripanalysis.workinghours.view.SpinnerSettings
+                    android:id="@+id/outside_hours_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    style="@style/Separator.Horizontal"
+                    android:layout_marginStart="@dimen/dk_margin"
+                    android:layout_marginEnd="@dimen/dk_margin"/>
+            </LinearLayout>
+        </ScrollView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/day_list"
