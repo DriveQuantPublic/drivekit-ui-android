@@ -2,29 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dk_margin">
+    android:padding="@dimen/dk_margin"
+    android:baselineAligned="false">
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical">
         <TextView
             android:id="@+id/spinner_settings_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"/>
+            android:layout_marginEnd="@dimen/dk_margin_quarter"/>
         <TextView
             android:id="@+id/spinner_settings_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dk_margin_quarter"
             android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/spinner_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="end">
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"

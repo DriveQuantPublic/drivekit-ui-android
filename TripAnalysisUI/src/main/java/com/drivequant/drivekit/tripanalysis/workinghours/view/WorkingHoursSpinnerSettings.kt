@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.adapter.WorkingHoursSpinnerAdapter
@@ -85,7 +85,7 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
         }
 
         textViewDescription.apply {
-            normalText(DriveKitUI.colors.warningColor())
+            smallText(DriveKitUI.colors.warningColor())
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
         }
 
