@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_working_hours_back_save_alert">Die Arbeitszeiten sind geändert worden. Möchten Sie sie speichern?</string>
    <string name="dk_working_hours_enable_desc">Mit dieser Funktion können Sie die Zeiten für die Aktivierung des automatischen Modus einstellen und Fahrten mit einem Label versehen.</string>
    <string name="dk_working_hours_enable_title">Arbeitszeiten freigeben</string>
    <string name="dk_working_hours_slot_disabled_desc">Fahrten werden nicht aufgezeichnet</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_working_hours_back_save_alert">Les horaires de travail ont été modifiés. Souhaitez-vous les sauvegarder ?</string>
    <string name="dk_working_hours_enable_desc">Cette fonction permet de configurer les horaires d\'activation du mode automatique et de labelliser les trajets.</string>
    <string name="dk_working_hours_enable_title">Activer la gestion des horaires</string>
    <string name="dk_working_hours_slot_disabled_desc">Les trajets ne seront pas enregistrés</string>

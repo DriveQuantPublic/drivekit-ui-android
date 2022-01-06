@@ -26,11 +26,10 @@ internal class WorkingHoursViewModel : ViewModel() {
                         SyncWorkingHoursStatus.SUCCESS -> true
                         SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    if (workingHours?.dayConfiguration?.isNullOrEmpty() == true) {
-                        config = DriveKitTripAnalysisUI.defaultWorkHoursConfig
-                        dataChanged = true
+                    config = if (workingHours?.dayConfiguration?.isNullOrEmpty() == true) {
+                        DriveKitTripAnalysisUI.defaultWorkHoursConfig
                     } else {
-                        config = workingHours
+                        workingHours
                     }
                     syncDataStatus.postValue(value)
                 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_working_hours_back_save_alert">L\'orario di lavoro è stato cambiato. Volete salvarli?</string>
    <string name="dk_working_hours_enable_desc">Questa funzione permette di configurare i tempi di attivazione della modalità automatica e di etichettare i percorsi.</string>
    <string name="dk_working_hours_enable_title">Abilita l\'orario di lavoro</string>
    <string name="dk_working_hours_slot_disabled_desc">I viaggi non saranno registrati</string>

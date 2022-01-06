@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_working_hours_back_save_alert">The working hours have been changed. Would you like to save them?</string>
    <string name="dk_working_hours_enable_desc">This feature configures the automatic trip recording periods and labels the trips.</string>
    <string name="dk_working_hours_enable_title">Enable working hours</string>
    <string name="dk_working_hours_slot_disabled_desc">Trips will not be recorded</string>
