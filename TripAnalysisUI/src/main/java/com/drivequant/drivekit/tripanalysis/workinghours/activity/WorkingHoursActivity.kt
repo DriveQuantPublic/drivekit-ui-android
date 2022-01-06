@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +14,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
@@ -105,20 +107,17 @@ class WorkingHoursActivity : AppCompatActivity() {
             }
             updateProgressVisibility(false)
         })
-        viewModel.updateDataStatus.observe(this, { success ->
-            val toastMessage = if (success) {
+        viewModel.updateDataStatus.observe(this, { response ->
+            updateProgressVisibility(false)
+            val toastMessage = if (response.first) {
                 "dk_working_hours_update_succeed"
             } else {
                 "dk_working_hours_update_failed"
             }
-            if (applicationContext != null) {
-                Toast.makeText(
-                    applicationContext,
-                    DKResource.convertToString(this, toastMessage),
-                    Toast.LENGTH_SHORT
-                ).show()
+            Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT).show()
+            if (response.second) {
+                finish()
             }
-
         })
         updateProgressVisibility(true)
         viewModel.synchronizeData()
@@ -163,17 +162,38 @@ class WorkingHoursActivity : AppCompatActivity() {
             }
         }
     }
-    override fun onPause() {
-        super.onPause()
+
+    override fun onBackPressed() {
         if (viewModel.dataChanged) {
-            // TODO show alertdialog
-            viewModel.updateConfig(
-                switch_enable.isChecked(),
-                insideHours.getSelectedTripStatus(),
-                outsideHours.getSelectedTripStatus(),
-                days.map { it.getConfig() }
-            )
+            val alert = DKAlertDialog.LayoutBuilder().init(this)
+                .layout(R.layout.template_alert_dialog_layout)
+                .cancelable(false)
+                .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+                    updateConfig(true)
+                }
+                .negativeButton(negativeListener = { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    super.onBackPressed()
+                })
+                .show()
+            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+            title?.text = getString(R.string.app_name)
+            description?.text = DKResource.convertToString(this, "dk_working_hours_back_save_alert")
+        } else {
+            super.onBackPressed()
         }
+    }
+
+    private fun updateConfig(onBackPressed: Boolean) {
+        updateProgressVisibility(true)
+        viewModel.updateConfig(
+            switch_enable.isChecked(),
+            insideHours.getSelectedTripStatus(),
+            outsideHours.getSelectedTripStatus(),
+            days.map { it.getConfig() },
+            onBackPressed
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {

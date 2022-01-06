@@ -12,7 +12,7 @@ internal class WorkingHoursViewModel : ViewModel() {
     var config: DKWorkingHours? = null
     var syncDataStatus: MutableLiveData<Boolean> = MutableLiveData()
         private set
-    var updateDataStatus: MutableLiveData<Boolean> = MutableLiveData()
+    var updateDataStatus: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
         private set
 
     fun synchronizeData() {
@@ -26,8 +26,12 @@ internal class WorkingHoursViewModel : ViewModel() {
                         SyncWorkingHoursStatus.SUCCESS -> true
                         SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    config = if (workingHours?.dayConfiguration?.isNullOrEmpty() == true)
-                        DriveKitTripAnalysisUI.defaultWorkHoursConfig else workingHours
+                    if (workingHours?.dayConfiguration?.isNullOrEmpty() == true) {
+                        config = DriveKitTripAnalysisUI.defaultWorkHoursConfig
+                        dataChanged = true
+                    } else {
+                        config = workingHours
+                    }
                     syncDataStatus.postValue(value)
                 }
             })
@@ -38,7 +42,8 @@ internal class WorkingHoursViewModel : ViewModel() {
         enable: Boolean,
         insideHours: TripStatus,
         outsideHours: TripStatus,
-        days: List<DKWorkingHoursDayConfiguration>
+        days: List<DKWorkingHoursDayConfiguration>,
+        back: Boolean = false
     ) {
         if (DriveKit.isConfigured()) {
             val data = DKWorkingHours(
@@ -50,7 +55,7 @@ internal class WorkingHoursViewModel : ViewModel() {
             DriveKitTripAnalysis.updateWorkingHours(data,
                 object : UpdateWorkingHoursQueryListener {
                     override fun onResponse(status: UpdateWorkingHoursStatus) {
-                        val value = when (status) {
+                        val success = when (status) {
                             UpdateWorkingHoursStatus.SUCCESS -> true
                             UpdateWorkingHoursStatus.FAILED,
                             UpdateWorkingHoursStatus.INVALID_DAY_OF_WEEK,
@@ -59,7 +64,7 @@ internal class WorkingHoursViewModel : ViewModel() {
                             UpdateWorkingHoursStatus.DUPLICATED_DAY,
                             UpdateWorkingHoursStatus.INVALID_DAY_COUNT -> false
                         }
-                        updateDataStatus.postValue(value)
+                        updateDataStatus.postValue(Pair(success, back))
                     }
                 })
         }
