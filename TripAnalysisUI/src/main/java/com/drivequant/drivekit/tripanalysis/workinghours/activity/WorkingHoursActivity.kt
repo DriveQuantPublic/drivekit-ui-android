@@ -126,7 +126,6 @@ class WorkingHoursActivity : AppCompatActivity() {
 
     private fun configureDays() {
         DKDay.values().forEachIndexed { index, _ ->
-            // TODO might not work first time when user has no config yet
             viewModel.config?.dayConfiguration?.get(index)?.let {
                 val day = WorkingHoursDayCard(this, it)
                 days.add(day)

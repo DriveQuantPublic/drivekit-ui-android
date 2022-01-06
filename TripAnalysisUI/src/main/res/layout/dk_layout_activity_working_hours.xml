@@ -28,8 +28,7 @@
                 android:id="@+id/separator_enable"
                 style="@style/Separator.Horizontal"
                 android:layout_marginStart="@dimen/dk_margin"
-                android:layout_marginEnd="@dimen/dk_margin"
-                android:visibility="gone"/>
+                android:layout_marginEnd="@dimen/dk_margin" />
 
             <ScrollView
                 android:id="@+id/scrollview"

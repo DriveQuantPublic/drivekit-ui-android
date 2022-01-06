@@ -26,9 +26,8 @@ internal class WorkingHoursViewModel : ViewModel() {
                         SyncWorkingHoursStatus.SUCCESS -> true
                         SyncWorkingHoursStatus.FAILED_TO_SYNC_CACHE_ONLY -> false
                     }
-                    // TODO rework that part
-                    val useDefaultConfig = value && workingHours?.dayConfiguration?.isNullOrEmpty() == true
-                    config = if (useDefaultConfig) DriveKitTripAnalysisUI.defaultWorkHoursConfig else workingHours
+                    config = if (workingHours?.dayConfiguration?.isNullOrEmpty() == true)
+                        DriveKitTripAnalysisUI.defaultWorkHoursConfig else workingHours
                     syncDataStatus.postValue(value)
                 }
             })
