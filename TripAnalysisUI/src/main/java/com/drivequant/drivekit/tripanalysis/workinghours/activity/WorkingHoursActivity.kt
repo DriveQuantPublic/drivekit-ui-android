@@ -3,6 +3,8 @@ package com.drivequant.drivekit.tripanalysis.workinghours.activity
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -27,6 +29,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     private lateinit var viewModel: WorkingHoursViewModel
     private lateinit var insideHours: WorkingHoursSpinnerSettings
     private lateinit var outsideHours: WorkingHoursSpinnerSettings
+    private lateinit var menu: Menu
     private val days: MutableList<WorkingHoursDayCard> = mutableListOf()
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -42,6 +45,21 @@ class WorkingHoursActivity : AppCompatActivity() {
         outsideHours = findViewById(R.id.outside_hours_container)
         setToolbar()
         setContent()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.dk_working_hours_menu_bar, menu)
+        menu?.let {
+            this.menu = it
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_save){
+            updateConfig(false)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setToolbar() {
@@ -69,14 +87,14 @@ class WorkingHoursActivity : AppCompatActivity() {
         insideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_inside_title"))
         insideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
             override fun onItemSelected(item: TripStatus) {
-                viewModel.dataChanged = true
+                dataUpdated(true)
             }
         })
 
         outsideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_outside_title"))
         outsideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
             override fun onItemSelected(item: TripStatus) {
-                viewModel.dataChanged = true
+                dataUpdated(true)
             }
         })
 
@@ -96,7 +114,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                     setListener(object : SwitchSettings.SwitchListener {
                         override fun onSwitchChanged(isChecked: Boolean) {
                             manageLabelsVisibility()
-                            viewModel.dataChanged = true
+                            dataUpdated(true)
                         }
                     })
                 }
@@ -108,6 +126,7 @@ class WorkingHoursActivity : AppCompatActivity() {
             updateProgressVisibility(false)
         })
         viewModel.updateDataStatus.observe(this, { response ->
+            dataUpdated(false)
             updateProgressVisibility(false)
             val toastMessage = if (response.first) {
                 "dk_working_hours_update_succeed"
@@ -130,11 +149,11 @@ class WorkingHoursActivity : AppCompatActivity() {
                 days.add(day)
                 day.setListener(object : WorkingHoursDayCard.WorkingHoursDayListener {
                     override fun onDayChecked(checked: Boolean) {
-                        viewModel.dataChanged = true
+                        dataUpdated(true)
                     }
 
                     override fun onHoursUpdated(start: Float, end: Float) {
-                        viewModel.dataChanged = true
+                        dataUpdated(true)
                     }
                 })
                 days_container.addView(
@@ -161,6 +180,11 @@ class WorkingHoursActivity : AppCompatActivity() {
                 View.GONE
             }
         }
+    }
+
+    private fun dataUpdated(changed: Boolean) {
+        viewModel.dataChanged = changed
+        menu.findItem(R.id.action_save)?.isVisible = changed
     }
 
     override fun onBackPressed() {
