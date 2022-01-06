@@ -93,16 +93,17 @@ class WorkingHoursActivity : AppCompatActivity() {
                     setChecked(it.enable)
                     setListener(object : SwitchSettings.SwitchListener {
                         override fun onSwitchChanged(isChecked: Boolean) {
-                            manageDaysVisibility(isChecked)
+                            manageLabelsVisibility()
                             viewModel.dataChanged = true
                         }
                     })
                 }
-                manageDaysVisibility(switch_enable.isChecked())
+                manageLabelsVisibility()
                 insideHours.selectItem(it.insideHours)
                 outsideHours.selectItem(it.outsideHours)
                 configureDays()
             }
+            updateProgressVisibility(false)
         })
         viewModel.updateDataStatus.observe(this, { success ->
             val toastMessage = if (success) {
@@ -119,6 +120,7 @@ class WorkingHoursActivity : AppCompatActivity() {
             }
 
         })
+        updateProgressVisibility(true)
         viewModel.synchronizeData()
     }
 
@@ -145,14 +147,23 @@ class WorkingHoursActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageDaysVisibility(isEnabledChecked: Boolean) {
-        if (isEnabledChecked) {
+    private fun manageLabelsVisibility() {
+        if (switch_enable.isChecked()) {
             scrollview.visibility = View.VISIBLE
         } else {
             scrollview.visibility = View.GONE
         }
     }
 
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+    }
     override fun onPause() {
         super.onPause()
         if (viewModel.dataChanged) {
