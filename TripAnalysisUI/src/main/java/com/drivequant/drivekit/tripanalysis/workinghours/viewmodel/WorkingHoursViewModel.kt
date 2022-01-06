@@ -12,7 +12,7 @@ internal class WorkingHoursViewModel : ViewModel() {
     var config: DKWorkingHours? = null
     var syncDataStatus: MutableLiveData<Boolean> = MutableLiveData()
         private set
-    var updateDataStatus: MutableLiveData<Pair<Boolean, Boolean>> = MutableLiveData()
+    var updateDataStatus: MutableLiveData<UpdateDataStatus> = MutableLiveData()
         private set
 
     fun synchronizeData() {
@@ -64,9 +64,14 @@ internal class WorkingHoursViewModel : ViewModel() {
                             UpdateWorkingHoursStatus.DUPLICATED_DAY,
                             UpdateWorkingHoursStatus.INVALID_DAY_COUNT -> false
                         }
-                        updateDataStatus.postValue(Pair(success, back))
+                        updateDataStatus.postValue(UpdateDataStatus(success, back))
                     }
                 })
         }
     }
 }
+
+internal data class UpdateDataStatus(
+    val status: Boolean,
+    val fromBackButton: Boolean
+)

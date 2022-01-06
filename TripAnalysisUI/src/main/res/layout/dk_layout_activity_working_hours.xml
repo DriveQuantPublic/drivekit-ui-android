@@ -74,7 +74,6 @@
             android:id="@+id/progress_circular"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#B3555555"
             android:visibility="gone" >
             <ProgressBar
                 style="@style/Widget.AppCompat.ProgressBar"
@@ -83,5 +82,4 @@
                 android:layout_gravity="center" />
         </FrameLayout>
     </FrameLayout>
-
 </LinearLayout>

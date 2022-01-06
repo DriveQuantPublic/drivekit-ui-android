@@ -109,6 +109,9 @@ class WorkingHoursActivity : AppCompatActivity() {
                 }
             }
             viewModel.config?.let {
+                if (viewModel.dataChanged) {
+                    dataUpdated(true)
+                }
                 switch_enable.apply {
                     setChecked(it.enable)
                     setListener(object : SwitchSettings.SwitchListener {
@@ -128,13 +131,13 @@ class WorkingHoursActivity : AppCompatActivity() {
         viewModel.updateDataStatus.observe(this, { response ->
             dataUpdated(false)
             updateProgressVisibility(false)
-            val toastMessage = if (response.first) {
+            val toastMessage = if (response.status) {
                 "dk_working_hours_update_succeed"
             } else {
                 "dk_working_hours_update_failed"
             }
             Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT).show()
-            if (response.second) {
+            if (response.fromBackButton) {
                 finish()
             }
         })
