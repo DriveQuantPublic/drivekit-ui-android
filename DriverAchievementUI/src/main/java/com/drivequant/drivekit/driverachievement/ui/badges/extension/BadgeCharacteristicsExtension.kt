@@ -10,7 +10,7 @@ import com.drivequant.drivekit.driverachievement.ui.R
 
 fun BadgeCharacteristics.isBadgeAcquired() = progressValue >= threshold
 
-fun BadgeCharacteristics.computePercent() = progressValue.div(threshold) / 10
+fun BadgeCharacteristics.computePercent() = progressValue.div(threshold) * 10
 
 fun BadgeCharacteristics.getName(context: Context) = DKResource.convertToString(context, name)
 
