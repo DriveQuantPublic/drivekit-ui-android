@@ -14,7 +14,7 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
 
     internal const val TAG = "DriveKit TripAnalysis UI"
 
-    var defaultWorkHoursConfig = buildDefaultWorkingHours()
+    var defaultWorkHours = getDefaultWorkingHours()
 
     fun initialize() {
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
@@ -26,13 +26,13 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
         context.startActivity(intent)
     }
 
-    private fun buildDefaultWorkingHours(): DKWorkingHours {
+    private fun getDefaultWorkingHours(): DKWorkingHours {
         val daysConfig = mutableListOf<DKWorkingHoursDayConfiguration>()
         DKDay.values().forEach {
             daysConfig.add(
                 DKWorkingHoursDayConfiguration(
                     it,
-                    entireDayOff = setOf(DKDay.SATURDAY, DKDay.SUNDAY).contains(it),
+                    entireDayOff = it == DKDay.SATURDAY || it == DKDay.SUNDAY,
                     reverse = false,
                     startTime = 8.0f,
                     endTime = 18.0f

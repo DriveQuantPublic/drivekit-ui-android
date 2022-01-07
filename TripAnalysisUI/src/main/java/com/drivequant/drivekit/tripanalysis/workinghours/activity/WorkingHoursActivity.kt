@@ -129,7 +129,9 @@ class WorkingHoursActivity : AppCompatActivity() {
             updateProgressVisibility(false)
         })
         viewModel.updateDataStatus.observe(this, { response ->
-            dataUpdated(false)
+            if (response.status) {
+                dataUpdated(false)
+            }
             updateProgressVisibility(false)
             val toastMessage = if (response.status) {
                 "dk_working_hours_update_succeed"
