@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.trips.fragment
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
+
 import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Color
@@ -40,10 +39,11 @@ class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
     private lateinit var tripsListView : DKTripListView
     private lateinit var tripsList: DKTripList
+    private var shouldSyncTrips = true
+    private lateinit var synchronizationType: SynchronizationType
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        progress_circular.visibility = View.VISIBLE
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(
                 this,
@@ -51,23 +51,20 @@ class TripsListFragment : Fragment() {
             )
                 .get(TripsListViewModel::class.java)
         }
-        viewModel.filterData.observe(this, {
-            configureFilter()
-            updateProgressVisibility(false)
-        })
 
-        initFilter()
-        updateTrips()
         viewModel.tripsData.observe(this, {
             viewModel.getFilterItems(requireContext())
-            setHasOptionsMenu(DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes().isNotEmpty())
+            setHasOptionsMenu(
+                DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes()
+                    .isNotEmpty()
+            )
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
             } else {
                 displayTripsList()
             }
             if (!this::tripsList.isInitialized) {
-               tripsList = object : DKTripList {
+                tripsList = object : DKTripList {
                     override fun onTripClickListener(itinId: String) {
                         TripDetailActivity.launchActivity(
                             requireActivity(),
@@ -92,6 +89,10 @@ class TripsListFragment : Fragment() {
                 }
             }
             tripsListView.configure(tripsList)
+            if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrips) {
+                shouldSyncTrips = false
+                updateTrips()
+            }
         })
 
         viewModel.syncTripsError.observe(this, {
@@ -104,6 +105,14 @@ class TripsListFragment : Fragment() {
             }
             updateProgressVisibility(false)
         })
+
+        synchronizationType = if (viewModel.hasLocalTrips()) {
+            SynchronizationType.CACHE
+        } else {
+            SynchronizationType.DEFAULT
+        }
+        updateTrips(synchronizationType)
+        initFilter()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -196,26 +205,14 @@ class TripsListFragment : Fragment() {
                 DriverDataUI.noTripsRecordedDrawable
             )
         )
-        hideProgressCircular()
+        updateProgressVisibility(false)
     }
 
     private fun displayTripsList() {
+        configureFilter()
         no_trips.visibility = View.GONE
         dk_trips_list_view.visibility = View.VISIBLE
-        hideProgressCircular()
-    }
-
-    private fun hideProgressCircular() {
-        progress_circular?.apply {
-            animate()
-                .alpha(0f)
-                .setDuration(200L)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        visibility = View.GONE
-                    }
-                })
-        }
+        updateProgressVisibility(false)
     }
 
     override fun onCreateView(
@@ -230,11 +227,11 @@ class TripsListFragment : Fragment() {
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+           visibility = if (displayProgress) {
+               View.VISIBLE
+           } else {
+               View.GONE
+           }
         }
         tripsListView.updateSwipeRefreshTripsVisibility(displayProgress)
     }

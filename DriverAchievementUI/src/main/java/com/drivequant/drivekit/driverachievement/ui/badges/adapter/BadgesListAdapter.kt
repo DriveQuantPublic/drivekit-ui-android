@@ -9,12 +9,8 @@ import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.viewholder.BadgeViewHolder
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListViewModel
 
-/**
- * Created by Mohamed on 2020-05-05.
- */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
-class BadgesListAdapter(
+internal class BadgesListAdapter(
     var context: Context?,
     private var badgesListViewModel: BadgesListViewModel
 ) : RecyclerView.Adapter<BadgeViewHolder>() {
@@ -25,9 +21,7 @@ class BadgesListAdapter(
         return BadgeViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return badgesListViewModel.filteredBadgesData.size
-    }
+    override fun getItemCount() = badgesListViewModel.filteredBadgesData.size
 
     override fun onBindViewHolder(parent: BadgeViewHolder, position: Int) {
         val badgesData = badgesListViewModel.filteredBadgesData[position]

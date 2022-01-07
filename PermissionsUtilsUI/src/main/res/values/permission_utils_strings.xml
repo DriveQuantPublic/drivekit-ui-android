@@ -13,6 +13,9 @@
     <string name="dk_perm_utils_app_diag_auto_reset_title">Do not delete permissions</string>
     <string name="dk_perm_utils_app_diag_battery_link_android">Do not optimize the battery</string>
     <string name="dk_perm_utils_app_diag_battery_link_ios">Disable energy saving mode</string>
+    <string name="dk_perm_utils_app_diag_battery_ok">Background task is allowed. The application uses the GPS sensor only driving. It has been optimized to avoid battery drain.</string>
+    <string name="dk_perm_utils_app_diag_battery_optim_tutorial_text">We invite you to take a look to our %s. It will help you to find out how to disable battery optimizations.</string>
+    <string name="dk_perm_utils_app_diag_battery_optim_tutorial_url">tutorials</string>
     <string name="dk_perm_utils_app_diag_battery_text_android_01">On some phone models, Battery Optimization Services may shut down the application when it is running in the background.</string>
     <string name="dk_perm_utils_app_diag_battery_text_android_02">If your phone runs on a native version of Android, you can disable battery optimizations. %s</string>
     <string name="dk_perm_utils_app_diag_battery_text_android_03">If your phone has a version of Android that includes a custom software interface from the manufacturer, we invite you to search the battery menu to disable optimizations.</string>

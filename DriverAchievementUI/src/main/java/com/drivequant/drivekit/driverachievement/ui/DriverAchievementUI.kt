@@ -19,14 +19,7 @@ import com.drivequant.drivekit.driverachievement.ui.streaks.fragment.StreaksList
 object DriverAchievementUI : DriverAchievementUIEntryPoint {
 
     internal var streakThemes: List<StreakTheme> = StreakTheme.values().toList()
-
-    internal var badgeCategories: List<BadgeCategory> = listOf(
-        BadgeCategory.GENERIC,
-        BadgeCategory.SAFETY,
-        BadgeCategory.ECO_DRIVING,
-        BadgeCategory.PHONE_DISTRACTION
-    )
-
+    internal var badgeCategories: List<BadgeCategory> = BadgeCategory.values().toList()
     internal var rankingTypes = listOf(
         RankingType.SAFETY,
         RankingType.ECO_DRIVING,
@@ -39,7 +32,7 @@ object DriverAchievementUI : DriverAchievementUIEntryPoint {
         listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
     )
 
-    internal var rankingDepth:Int = 5
+    internal var rankingDepth: Int = 5
 
     fun initialize() {
         DriveKitNavigationController.driverAchievementUIEntryPoint = this

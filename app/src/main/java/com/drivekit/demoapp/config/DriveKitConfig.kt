@@ -37,26 +37,10 @@ object DriveKitConfig {
 
     fun configureDriverAchievement() {
         DriverAchievementUI.initialize()
-        DriverAchievementUI.configureBadgeCategories(
-            mutableListOf(
-                BadgeCategory.ECO_DRIVING,
-                BadgeCategory.GENERIC,
-                BadgeCategory.SAFETY,
-                BadgeCategory.PHONE_DISTRACTION
-            )
-        )
+        DriverAchievementUI.configureBadgeCategories(BadgeCategory.values().toMutableList())
+        DriverAchievementUI.configureRankingTypes(RankingType.values().toList())
 
-        val rankingTypes =
-            listOf(
-                RankingType.SAFETY,
-                RankingType.ECO_DRIVING,
-                RankingType.DISTRACTION,
-                RankingType.SPEEDING
-            )
-        DriverAchievementUI.configureRankingTypes(rankingTypes)
-
-        val rankingPeriods =
-            listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
+        val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
         val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
         DriverAchievementUI.configureRankingSelector(rankingSelectorType)
 

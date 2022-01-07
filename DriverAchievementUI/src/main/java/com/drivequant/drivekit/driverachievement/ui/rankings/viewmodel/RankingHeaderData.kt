@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.RankingType
+import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.R
 
@@ -83,4 +84,16 @@ class RankingData(
 
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.rankingDriversData
     override fun getBackgroundColor(): Int = Color.parseColor("#FAFAFA")
+    override fun hasInfoButton() = true
+    override fun getInfoPopupMessage(context: Context) =
+        when (viewModel.selectedRankingSelectorData.rankingPeriod) {
+            RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy_info"
+            RankingPeriod.WEEKLY -> "dk_achievements_ranking_week_info"
+            RankingPeriod.MONTHLY -> "dk_achievements_ranking_month_info"
+            RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent_info"
+        }.let {
+            DKResource.convertToString(context, it)
+        }
+
+    override fun getInfoPopupTitle(context: Context) = DKResource.convertToString(context, "app_name")
 }

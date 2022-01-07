@@ -13,6 +13,9 @@
    <string name="dk_perm_utils_app_diag_auto_reset_title">Non cancellare le autorizzazioni</string>
    <string name="dk_perm_utils_app_diag_battery_link_android">Non ottimizzare la batteria</string>
    <string name="dk_perm_utils_app_diag_battery_link_ios">Disabilita la modalità di risparmio energetico.</string>
+   <string name="dk_perm_utils_app_diag_battery_ok">L\'attività in background è consentita. L\'applicazione utilizza il sensore GPS solo per la guida. È stata ottimizzata per evitare il consumo della batteria.</string>
+   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_text">Vi invitiamo a consultare il %s. Questo vi aiuterà a scoprire come disattivare le ottimizzazioni della batteria sul vostro telefono.</string>
+   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_url">tutorial</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_01">Su alcuni modelli di telefono, i servizi di ottimizzazione della batteria possono arrestare l\'applicazione quando è in esecuzione in background.</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_02">Se il tuo telefono funziona su una versione nativa di Android, puoi disabilitare l\'ottimizzazione della batteria. %s</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_03">Se il tuo telefono funziona su una versione di Android con una sovrapposizione software del produttore, ti invitiamo a cercare nel menu batteria per disabilitare le ottimizzazioni.</string>

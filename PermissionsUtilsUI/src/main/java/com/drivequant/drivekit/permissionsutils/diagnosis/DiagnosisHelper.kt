@@ -136,23 +136,21 @@ object DiagnosisHelper {
         }
     }
 
-    fun getNotificationStatus(context: Context): PermissionStatus {
-        return if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
+    fun getNotificationStatus(context: Context) =
+        if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
             PermissionStatus.VALID
         } else {
             PermissionStatus.NOT_VALID
         }
-    }
 
-    fun getPermissionStatus(context: Context, permissionType: PermissionType): PermissionStatus {
-        return when (permissionType) {
+    fun getPermissionStatus(context: Context, permissionType: PermissionType) =
+        when (permissionType) {
             PermissionType.LOCATION -> getLocationStatus(context)
             PermissionType.ACTIVITY -> getActivityStatus(context)
             PermissionType.NOTIFICATION -> getNotificationStatus(context)
             PermissionType.AUTO_RESET -> getAutoResetStatus(context)
             PermissionType.NEARBY -> getNearbyDevicesStatus(context)
         }
-    }
 
     fun buildSettingsIntent(context: Context): Intent {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -161,19 +159,17 @@ object DiagnosisHelper {
         return intent
     }
 
-    fun isSensorActivated(context: Context, sensorType: SensorType): Boolean {
-        return when (sensorType) {
-            SensorType.BLUETOOTH -> {
-                val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-                bluetoothAdapter?.isEnabled ?: false
-            }
-            SensorType.GPS -> {
-                val locationManager =
-                    context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                val isGPSEnabled =
-                    locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
-                isGPSEnabled && isLocationSensorHighAccuracy(context, isGPSEnabled)
-            }
+    fun isSensorActivated(context: Context, sensorType: SensorType) = when (sensorType) {
+        SensorType.BLUETOOTH -> {
+            val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+            bluetoothAdapter?.isEnabled ?: false
+        }
+        SensorType.GPS -> {
+            val locationManager =
+                context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+            val isGPSEnabled =
+                locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
+            isGPSEnabled && isLocationSensorHighAccuracy(context, isGPSEnabled)
         }
     }
 
@@ -196,6 +192,5 @@ object DiagnosisHelper {
         return false
     }
 
-    fun isNetworkReachable(context: Context): Boolean =
-        DKReachability().isConnectedToNetwork(context)
+    fun isNetworkReachable(context: Context) = DKReachability().isConnectedToNetwork(context)
 }

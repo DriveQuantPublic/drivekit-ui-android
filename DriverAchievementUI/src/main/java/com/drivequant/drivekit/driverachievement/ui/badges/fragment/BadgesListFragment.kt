@@ -71,6 +71,14 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+
         if (displayProgress) {
             progress_circular?.visibility = View.VISIBLE
             refresh_badges.isRefreshing = true

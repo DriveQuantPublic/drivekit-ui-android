@@ -120,7 +120,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_bluetooth_link"
-
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_bluetooth_ko"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_bluetooth_ok"
@@ -135,7 +134,6 @@
                 android:layout_marginTop="@dimen/dk_margin_quarter"
                 app:diagnosisLink="@string/dk_perm_utils_app_diag_activity_link"
                 app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
-
                 app:diagnosisTextKO="@string/dk_perm_utils_app_diag_activity_ko"
                 app:diagnosisTextOK="@string/dk_perm_utils_app_diag_activity_ok"
                 app:diagnosisTitle="@string/dk_perm_utils_app_diag_activity_title"
@@ -169,13 +167,26 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_item_connectivity" />
 
+            <com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+                android:id="@+id/diag_item_battery_optimization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_quarter"
+                app:diagnosisLink="@string/dk_perm_utils_permissions_phone_settings_background_button"
+                app:diagnosisSubtitle="@string/dk_perm_utils_app_diag_learn_more"
+                app:diagnosisTextKO="@string/dk_perm_utils_permissions_phone_settings_background_text1"
+                app:diagnosisTextOK="@string/dk_perm_utils_app_diag_battery_ok"
+                app:diagnosisTitle="@string/dk_perm_utils_permissions_phone_settings_background_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
+
             <TextView
                 android:id="@+id/diag_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/diag_item_nearby_devices" />
+                app:layout_constraintTop_toBottomOf="@+id/diag_item_battery_optimization" />
 
             <TextView
                 android:id="@+id/text_view_battery_title"
@@ -215,12 +226,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_2" />
 
             <TextView
+                android:id="@+id/text_view_battery_description_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_3" />
+
+            <TextView
                 android:id="@+id/battery_view_separator"
                 style="@style/Separator.Horizontal"
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_3" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_4" />
 
             <TextView
                 android:id="@+id/text_view_help_title"
