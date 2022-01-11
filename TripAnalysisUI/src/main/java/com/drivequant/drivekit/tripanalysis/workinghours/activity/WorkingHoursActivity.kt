@@ -100,13 +100,11 @@ class WorkingHoursActivity : AppCompatActivity() {
 
         viewModel.syncDataStatus.observe(this, { success ->
             if (!success) {
-                if (applicationContext != null) {
-                    Toast.makeText(
-                        applicationContext,
-                        DKResource.convertToString(this, "dk_working_hours_sync_failed"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                Toast.makeText(
+                    this,
+                    DKResource.convertToString(this, "dk_working_hours_sync_failed"),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             viewModel.config?.let {
                 if (viewModel.dataChanged) {
