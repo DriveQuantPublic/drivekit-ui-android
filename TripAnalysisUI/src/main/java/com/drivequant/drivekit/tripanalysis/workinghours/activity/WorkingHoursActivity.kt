@@ -37,7 +37,7 @@ class WorkingHoursActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(this, "dk_tag_working_hours"), javaClass.simpleName
+            DKResource.convertToString(this, "dk_tag_trip_analysis_working_hours"), javaClass.simpleName
         )
 
         setContentView(R.layout.dk_layout_activity_working_hours)
