@@ -80,6 +80,7 @@ class WorkingHoursActivity : AppCompatActivity() {
         separator_outside.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
         switch_enable.apply {
+            isEnabled = false
             setTitle(DKResource.convertToString(context, "dk_working_hours_enable_title"))
             setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
         }
@@ -111,6 +112,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                     dataUpdated(true)
                 }
                 switch_enable.apply {
+                    isEnabled = true
                     setChecked(it.enable)
                     setListener(object : SwitchSettings.SwitchListener {
                         override fun onSwitchChanged(isChecked: Boolean) {
