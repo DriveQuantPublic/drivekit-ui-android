@@ -139,7 +139,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                 "dk_working_hours_update_failed"
             }
             Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT).show()
-            if (response.fromBackButton) {
+            if (response.fromBackButton && response.status) {
                 finish()
             }
         })
