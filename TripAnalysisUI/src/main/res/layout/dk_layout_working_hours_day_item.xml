@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/dk_margin_half"
+        android:padding="@dimen/dk_margin"
+        android:foreground="?attr/selectableItemBackground"
+        android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:weightSum="1">
+            <!-- LEFT PART -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="vertical">
+                <CheckBox
+                    android:id="@+id/checkbox_select_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/dk_custom_checkbox"/>
+
+                <TextView
+                    android:id="@+id/card_view_day_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/dk_text_small"
+                    tools:text="MON."/>
+            </LinearLayout>
+
+            <!-- RIGHT PART -->
+            <RelativeLayout
+                android:id="@+id/rangeslider_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dk_margin_half"
+                android:layout_weight="0.8">
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/range_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tickVisible="false"
+                    style="@style/SliderStyle"
+                    android:valueFrom="0.0"
+                    android:valueTo="24.0"
+                    android:stepSize="0.5"
+                    app:values="@array/initial_range_slider_working_hours_values" />
+
+                <TextView
+                    android:id="@+id/textMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/range_slider"
+                    android:layout_marginEnd="@dimen/dk_margin_medium"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:textSize="@dimen/dk_text_small"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/textMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/range_slider"
+                    android:layout_marginEnd="@dimen/dk_margin_medium"
+                    android:layout_marginTop="@dimen/dk_margin_half"
+                    android:textSize="@dimen/dk_text_small"
+                    tools:text="1" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

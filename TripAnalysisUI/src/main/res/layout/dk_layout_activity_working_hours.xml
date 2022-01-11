@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.drivequant.drivekit.common.ui.component.SwitchSettings
+                android:id="@+id/switch_enable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/separator_enable"
+                style="@style/Separator.Horizontal"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginEnd="@dimen/dk_margin" />
+
+            <ScrollView
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
+                        android:id="@+id/inside_hours_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:id="@+id/separator_inside"
+                        style="@style/Separator.Horizontal"
+                        android:layout_marginStart="@dimen/dk_margin"
+                        android:layout_marginEnd="@dimen/dk_margin"/>
+
+                    <com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
+                        android:id="@+id/outside_hours_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:id="@+id/separator_outside"
+                        style="@style/Separator.Horizontal"
+                        android:layout_marginStart="@dimen/dk_margin"
+                        android:layout_marginEnd="@dimen/dk_margin"/>
+
+                    <LinearLayout
+                        android:id="@+id/days_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/progress_circular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

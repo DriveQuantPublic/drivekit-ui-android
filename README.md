@@ -32,7 +32,7 @@ You can follow the steps below to install, run and experiment the DriveKit sampl
 ### Install and run the demo app
 
 * The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get an **DriveKit API key**, contact us at: <contact@drivequant.com>.
-* In `configureDriveKit` of the `DriveKitDemoApplication.kt`, set your **DriveKit API Key** where the method `DriveKit.setApiKey(<DRIVEKIT_API_KEY>)` is called.
+* In `configureCore()` of the `DriveKitConfig.kt` class, set your **DriveKit API Key** where the method `DriveKit.setApiKey(<DRIVEKIT_API_KEY>)` is called.
 * Build and run the demo app on your phone.
 
 ### Configure the demo app

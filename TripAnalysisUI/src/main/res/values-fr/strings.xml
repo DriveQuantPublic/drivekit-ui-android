@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_working_hours_back_save_alert">Les horaires de travail ont été modifiés. Souhaitez-vous les sauvegarder ?</string>
+   <string name="dk_working_hours_enable_desc">Cette fonction permet de configurer les horaires d\'activation du mode automatique et de labelliser les trajets.</string>
+   <string name="dk_working_hours_enable_title">Activer la gestion des horaires</string>
+   <string name="dk_working_hours_slot_disabled_desc">Les trajets ne seront pas enregistrés</string>
+   <string name="dk_working_hours_slot_inside_title">Dans la plage horaire</string>
+   <string name="dk_working_hours_slot_mode_business_title">Professionnel</string>
+   <string name="dk_working_hours_slot_mode_disabled_title">Désactivé</string>
+   <string name="dk_working_hours_slot_mode_personal_title">Personnel</string>
+   <string name="dk_working_hours_slot_outside_title">En dehors</string>
+   <string name="dk_working_hours_sync_failed">La synchronisation des réglages a échoué, veuillez réessayer plus tard.</string>
+   <string name="dk_working_hours_title">Horaires de travail</string>
+   <string name="dk_working_hours_update_failed">La mise à jour des réglages a échoué, veuillez réessayer plus tard.</string>
+   <string name="dk_working_hours_update_succeed">Les réglages ont été mis à jour.</string>
+</resources>
