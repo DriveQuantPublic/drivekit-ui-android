@@ -26,7 +26,7 @@
     <string name="dk_achievements_streaks_safety_text">Try to make a series of trips with safety scores higher than 9.8/10.\n \nEach time you succeed, the trip counter increases.\n \nIf you fail, the counter is reset and you must restart from scratch.\n \nThe number of trips in your best sequence of success is memorized and you can try to surpass it.Try to make a series of trips with safety scores higher than 9.8/10.</string>
     <string name="dk_achievements_streaks_safety_title">Safe driving</string>
     <string name="dk_achievements_streaks_since">Since the %s</string>
-    <string name="dk_achievements_streaks_since_to">%s to %s</string>
+    <string name="dk_achievements_streaks_since_to">%1$s to %2$s</string>
     <string name="dk_achievements_streaks_speeding_reset">You exceeded the speed limit on your last trip.</string>
     <string name="dk_achievements_streaks_speeding_text">Try to make a series of trips within the speed limits. The speed limit score must be higher than 9.8/10.\n \nEach time you succeed, the trip counter increases.\n \nIf you fail, the counter is reset and you must restart from scratch.\n \nThe number of trips in your best sequence of success is memorized and you can try to surpass it.</string>
     <string name="dk_achievements_streaks_speeding_title">No speeding</string>
