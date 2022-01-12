@@ -24,14 +24,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "com.google.android.material:material:$material"
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api "com.google.android.material:material:$material"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout"
+    api "androidx.legacy:legacy-preference-v14:$legacy_preference"
+    api "androidx.appcompat:appcompat:$appcompat"
+    api "androidx.gridlayout:gridlayout:$grid_layout"
+    api "androidx.constraintlayout:constraintlayout:$constraint_layout"
     api 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+
+    api 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     implementation "com.drivequant.drivekit:drivekit-core:$drivekit_version"
 }

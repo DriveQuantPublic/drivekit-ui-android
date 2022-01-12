@@ -8,6 +8,7 @@ buildscript {
         constraint_layout = '2.0.4'
         material = '1.4.0'
         legacy_preference = '1.0.0'
+        grid_layout = '1.0.0'
         recycler_view = '1.1.0'
         swipe_refresh_layout = '1.1.0'
     }
