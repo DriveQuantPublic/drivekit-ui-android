@@ -36,7 +36,7 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun configureScore(score: Double) {
-        this.score = score
+        this.score = score.coerceAtMost(maxScore)
         invalidate()
     }
 
