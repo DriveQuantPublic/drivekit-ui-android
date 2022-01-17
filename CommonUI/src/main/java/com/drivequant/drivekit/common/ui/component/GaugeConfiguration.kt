@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -46,6 +47,8 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     override fun getGaugeType(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
+        if (value == 11.0)
+            return R.color.dkGaugeBackColor
         if (value <= steps[0])
             return R.color.dkVeryBad
         if (value <= steps[1])
