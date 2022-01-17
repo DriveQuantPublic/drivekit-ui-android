@@ -71,7 +71,7 @@ internal class WorkingHoursDayCard : FrameLayout {
         }
 
         rangeSlider.apply {
-            setValues(dayConfig.startTime, dayConfig.endTime)
+            setValues(dayConfig.startTime?.toFloat(), dayConfig.endTime?.toFloat())
 
             labelBehavior = LabelFormatter.LABEL_GONE
             trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
@@ -91,7 +91,7 @@ internal class WorkingHoursDayCard : FrameLayout {
                 }
 
                 override fun onStopTrackingTouch(slider: RangeSlider) {
-                    listener?.onHoursUpdated(slider.values[0], slider.values[1])
+                    listener?.onHoursUpdated(slider.values[0].toDouble(), slider.values[1].toDouble())
                 }
             })
         }
@@ -119,8 +119,8 @@ internal class WorkingHoursDayCard : FrameLayout {
         DKWorkingHoursDayConfiguration(
             day = day.day,
             entireDayOff = !checkbox.isChecked,
-            startTime = rangeSlider.values[0],
-            endTime = rangeSlider.values[1]
+            startTime = rangeSlider.values[0].toDouble(),
+            endTime = rangeSlider.values[1].toDouble()
         )
 
     private fun manageCheckboxStyle(isChecked: Boolean) {
@@ -190,6 +190,6 @@ internal class WorkingHoursDayCard : FrameLayout {
 
     interface WorkingHoursDayListener {
         fun onDayChecked(checked: Boolean)
-        fun onHoursUpdated(start: Float, end: Float)
+        fun onHoursUpdated(start: Double, end: Double)
     }
 }

@@ -34,8 +34,8 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
                     it,
                     entireDayOff = it == DKDay.SATURDAY || it == DKDay.SUNDAY,
                     reverse = false,
-                    startTime = 8.0f,
-                    endTime = 18.0f
+                    startTime = 8.0,
+                    endTime = 18.0
                 )
             )
         }

@@ -157,7 +157,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                         dataUpdated(true)
                     }
 
-                    override fun onHoursUpdated(start: Float, end: Float) {
+                    override fun onHoursUpdated(start: Double, end: Double) {
                         dataUpdated(true)
                     }
                 })
