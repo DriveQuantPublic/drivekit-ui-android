@@ -3,7 +3,7 @@ buildscript {
     ext {
         drivekitui_version = version
         drivekit_version = '1.18-beta2'
-        kotlin_version = '1.5.0'
+        kotlin_version = '1.5.21'
         appcompat = '1.2.0'
         constraint_layout = '2.0.4'
         material = '1.4.0'
