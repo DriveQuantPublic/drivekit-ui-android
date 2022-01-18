@@ -135,6 +135,7 @@ class DKSynthesisCardFragment : Fragment() {
         if (viewModel.shouldHideCardInfoContainer(requireContext())) {
             val scoreParams = score_gauge.layoutParams as ConstraintLayout.LayoutParams
             scoreParams.endToEnd = container.id
+            scoreParams.bottomToBottom = container.id
             card_info_container.visibility = View.GONE
         }
     }
