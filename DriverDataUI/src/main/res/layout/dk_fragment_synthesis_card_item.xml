@@ -54,33 +54,34 @@
         <LinearLayout
             android:id="@+id/card_info_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
-            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@id/score_gauge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/score_gauge"
             app:layout_constraintWidth_percent="0.4">
 
-            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                android:id="@+id/top_card_info"
-                style="@style/SynthesisCardInfo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                    android:id="@+id/top_card_info"
+                    style="@style/SynthesisCardInfo"
+                    android:visibility="gone"/>
 
-            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                android:id="@+id/middle_card_info"
-                style="@style/SynthesisCardInfo"
-                android:layout_marginTop="@dimen/dk_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/top_card_info" />
+                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                    android:id="@+id/middle_card_info"
+                    style="@style/SynthesisCardInfo"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/dk_margin" />
 
-            <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
-                android:id="@+id/bottom_card_info"
-                style="@style/SynthesisCardInfo"
-                android:layout_marginTop="@dimen/dk_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/middle_card_info" />
+                <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
+                    android:id="@+id/bottom_card_info"
+                    style="@style/SynthesisCardInfo"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/dk_margin"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

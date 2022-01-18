@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -99,19 +100,28 @@ class DKSynthesisCardFragment : Fragment() {
         val icon = viewModel.getTopSynthesisCardIcon(requireContext())
         val text = viewModel.getTopSynthesisCardInfo(requireContext())
         if (icon != null && text.isNotEmpty()) {
-            top_card_info.init(icon, text)
+            top_card_info.apply {
+                visibility = View.VISIBLE
+                init(icon, text)
+            }
         }
 
         val middleIcon = viewModel.getMiddleSynthesisCardIcon(requireContext())
         val middleText = viewModel.getMiddleSynthesisCardInfo(requireContext())
         if (middleIcon != null && middleText.isNotEmpty()) {
-            middle_card_info.init(middleIcon, middleText)
+            middle_card_info.apply {
+                visibility = View.VISIBLE
+                init(middleIcon, middleText)
+            }
         }
 
         val bottomIcon = viewModel.getBottomSynthesisCardIcon(requireContext())
         val bottomText = viewModel.getBottomSynthesisCardInfo(requireContext())
         if (bottomIcon != null && bottomText.isNotEmpty()) {
-            bottom_card_info.init(bottomIcon, bottomText)
+            bottom_card_info.apply {
+                visibility = View.VISIBLE
+                init(bottomIcon, bottomText)
+            }
         }
 
         val bottomTextValue = viewModel.getBottomText(requireContext())
@@ -120,6 +130,12 @@ class DKSynthesisCardFragment : Fragment() {
             bottom_text.visibility = View.VISIBLE
         } else {
             bottom_text.visibility = View.GONE
+        }
+
+        if (viewModel.shouldHideCardInfoContainer(requireContext())) {
+            val scoreParams = score_gauge.layoutParams as ConstraintLayout.LayoutParams
+            scoreParams.endToEnd = container.id
+            card_info_container.visibility = View.GONE
         }
     }
 }
