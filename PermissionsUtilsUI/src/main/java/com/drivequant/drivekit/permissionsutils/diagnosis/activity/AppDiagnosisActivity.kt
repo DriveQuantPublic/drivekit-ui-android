@@ -21,7 +21,6 @@ import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.TextView
-import com.android.volley.BuildConfig
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
