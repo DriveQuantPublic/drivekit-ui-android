@@ -15,7 +15,7 @@ internal class WorkingHoursSpinnerAdapter(
     list: List<HoursSpinnerItem>
 ) : ArrayAdapter<HoursSpinnerItem>(context, R.layout.dk_simple_list_item_spinner, list) {
 
-    private var tripStatusList: List<HoursSpinnerItem> = list
+    private var tripSlotStatusList: List<HoursSpinnerItem> = list
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
         getCustomView(position, parent)
@@ -26,9 +26,9 @@ internal class WorkingHoursSpinnerAdapter(
     private fun getCustomView(position: Int, parent: ViewGroup): View {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.dk_simple_list_item_spinner, parent, false)
-        val tripStatus = tripStatusList[position]
+        val timeSlotStatus = tripSlotStatusList[position]
         val textView = view.findViewById<TextView>(R.id.text_view)
-        textView.text = tripStatus.toString()
+        textView.text = timeSlotStatus.toString()
         FontUtils.overrideFonts(context, view)
         return view
     }

@@ -15,13 +15,13 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
+import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.adapter.WorkingHoursSpinnerAdapter
 import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinnerItem
 
 internal class WorkingHoursSpinnerSettings : LinearLayout {
 
-    private var items: List<HoursSpinnerItem> = buildTripStatusItems()
+    private var items: List<HoursSpinnerItem> = buildTimeSlotStatusItems()
     private var touched: Boolean = false
     private lateinit var textViewTitle: TextView
     private lateinit var textViewDescription: TextView
@@ -66,8 +66,8 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
                 position: Int,
                 id: Long
             ) {
-                val selected = items[position].tripStatus
-                if (selected == TripStatus.DISABLED) {
+                val selected = items[position].timeSlotStatus
+                if (selected == DKWorkingHoursTimeSlotStatus.DISABLED) {
                     setDescription(DKResource.convertToString(context, "dk_working_hours_slot_disabled_desc"))
                 } else {
                     setDescription(null)
@@ -97,10 +97,10 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
         )
     }
 
-    private fun buildTripStatusItems() = listOf(
-        HoursSpinnerItem(context, TripStatus.DISABLED),
-        HoursSpinnerItem(context, TripStatus.PERSONAL),
-        HoursSpinnerItem(context, TripStatus.BUSINESS),
+    private fun buildTimeSlotStatusItems() = listOf(
+        HoursSpinnerItem(context, DKWorkingHoursTimeSlotStatus.DISABLED),
+        HoursSpinnerItem(context, DKWorkingHoursTimeSlotStatus.PERSONAL),
+        HoursSpinnerItem(context, DKWorkingHoursTimeSlotStatus.BUSINESS),
     )
 
     fun setTitle(title: String) {
@@ -120,17 +120,17 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
         this.listener = listener
     }
 
-    fun getSelectedTripStatus() = (spinner.selectedItem as HoursSpinnerItem).tripStatus
+    fun getSelectedTimeSlotStatus() = (spinner.selectedItem as HoursSpinnerItem).timeSlotStatus
 
-    fun selectItem(tripStatus: TripStatus) {
+    fun selectItem(timeSlotStatus: DKWorkingHoursTimeSlotStatus) {
         items.forEachIndexed { index, hoursSpinnerItem ->
-            if (hoursSpinnerItem.tripStatus == tripStatus) {
+            if (hoursSpinnerItem.timeSlotStatus == timeSlotStatus) {
                 spinner.setSelection(index, false)
             }
         }
     }
 
     interface SpinnerListener {
-        fun onItemSelected(item: TripStatus)
+        fun onItemSelected(item: DKWorkingHoursTimeSlotStatus)
     }
 }

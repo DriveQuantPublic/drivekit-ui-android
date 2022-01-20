@@ -7,7 +7,7 @@ import com.drivequant.drivekit.common.ui.navigation.TripAnalysisUIEntryPoint
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHours
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
-import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
+import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity
 
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
@@ -41,8 +41,8 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
         }
         return DKWorkingHours(
             enable = false,
-            insideHours = TripStatus.BUSINESS,
-            outsideHours = TripStatus.PERSONAL,
+            insideHours = DKWorkingHoursTimeSlotStatus.BUSINESS,
+            outsideHours = DKWorkingHoursTimeSlotStatus.PERSONAL,
             dayConfiguration = daysConfig
         )
     }
