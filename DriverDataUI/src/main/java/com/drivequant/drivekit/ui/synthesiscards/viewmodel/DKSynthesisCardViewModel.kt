@@ -67,6 +67,13 @@ internal class DKSynthesisCardViewModel(
         return spannable.toSpannable()
     }
 
+    fun shouldHideCardInfoContainer(context: Context) = getTopSynthesisCardIcon(context) == null
+                && getMiddleSynthesisCardIcon(context) == null
+                && getBottomSynthesisCardIcon(context) == null
+                && synthesisCard.getTopSynthesisCardInfo(context).getText(context).isEmpty()
+                && synthesisCard.getMiddleSynthesisCardInfo(context).getText(context).isEmpty()
+                && synthesisCard.getBottomSynthesisCardInfo(context).getText(context).isEmpty()
+
     @Suppress("UNCHECKED_CAST")
     class DKSynthesisCardViewModelFactory(
         private val synthesisCard: DKSynthesisCard
