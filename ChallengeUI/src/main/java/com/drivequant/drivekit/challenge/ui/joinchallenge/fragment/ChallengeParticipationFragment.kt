@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.fragment
 
+import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -55,94 +56,97 @@ class ChallengeParticipationFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setStyle()
+            DriveKitUI.analyticsListener?.trackScreen(
+                DKResource.convertToString(
+                    requireContext(),
+                    "dk_tag_challenge_join"
+                ), javaClass.simpleName
+            )
 
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_join"
-            ), javaClass.simpleName
-        )
-
-        (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
-            challengeId = it
-        }
-
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
-                this,
-                ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
-            ).get(ChallengeParticipationViewModel::class.java)
-        }
-
-        viewModel.syncJoinChallengeError.observe(this, {
-            if (it) {
-                if (viewModel.isChallengeStarted()) {
-                    progress()
-                } else {
-                    countDown()
-                }
-            } else {
-                Toast.makeText(
-                    context,
-                    DKResource.convertToString(
-                        requireContext(),
-                        "dk_challenge_failed_to_join"
-                    ),
-                    Toast.LENGTH_SHORT
-                ).show()
+            (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
+                challengeId = it
             }
-            updateProgressVisibility(false)
-        })
 
-        if (!this::challengeHeaderView.isInitialized) {
-            challengeHeaderView = ChallengeHeaderView(requireContext())
-        }
-        challengeHeaderView.configure(viewModel, requireActivity())
-        challenge_header_view_container.addView(challengeHeaderView)
-        
-        dispatch()
-
-        viewModel.challenge?.let { challenge ->
-            text_view_join_challenge.setOnClickListener {
-                challenge.rules?.let { rules ->
-                    if (rules.isNotEmpty()) {
-                        ChallengeRulesActivity.launchActivity(
-                            requireActivity(),
-                            challengeId,
-                            viewModel.isDriverRegistered()
-                        )
+            if (!this::viewModel.isInitialized) {
+                viewModel = ViewModelProviders.of(
+                    this,
+                    ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(
+                        challengeId
+                    )
+                ).get(ChallengeParticipationViewModel::class.java)
+            }
+            context?.let { context ->
+                viewModel.syncJoinChallengeError.observe(this, {
+                    if (it) {
+                        if (viewModel.isChallengeStarted()) {
+                            progress(context)
+                        } else {
+                            countDown(context)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            DKResource.convertToString(
+                                context,
+                                "dk_challenge_failed_to_join"
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                } ?: run {
-                    updateProgressVisibility(true)
-                    viewModel.joinChallenge(challengeId)
+                    updateProgressVisibility(false)
+                })
+            }
+            if (!this::challengeHeaderView.isInitialized) {
+                challengeHeaderView = ChallengeHeaderView(requireContext())
+            }
+            challengeHeaderView.configure(viewModel, requireActivity())
+            challenge_header_view_container.addView(challengeHeaderView)
+
+            dispatch()
+
+            viewModel.challenge?.let { challenge ->
+                text_view_join_challenge.setOnClickListener {
+                    challenge.rules?.let { rules ->
+                        if (rules.isNotEmpty()) {
+                            ChallengeRulesActivity.launchActivity(
+                                requireActivity(),
+                                challengeId,
+                                viewModel.isDriverRegistered()
+                            )
+                        }
+                    } ?: run {
+                        updateProgressVisibility(true)
+                        viewModel.joinChallenge(challengeId)
+                    }
                 }
             }
         }
-    }
 
     fun dispatch() {
-        viewModel.manageChallengeDisplayState()?.let {
-            when (it) {
-                ChallengeParticipationDisplayState.PROGRESS -> progress()
-                ChallengeParticipationDisplayState.JOIN -> join()
-                ChallengeParticipationDisplayState.COUNT_DOWN -> countDown()
+        context?.let { context ->
+            viewModel.manageChallengeDisplayState()?.let {
+                when (it) {
+                    ChallengeParticipationDisplayState.PROGRESS -> progress(context)
+                    ChallengeParticipationDisplayState.JOIN -> join(context)
+                    ChallengeParticipationDisplayState.COUNT_DOWN -> countDown(context)
+                }
             }
         }
     }
 
-    private fun join() {
+    private fun join(context: Context) {
         text_view_join_challenge.apply {
-            text = DKResource.convertToString(requireContext(), "dk_challenge_participate_button")
+            text = DKResource.convertToString(context, "dk_challenge_participate_button")
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             visibility = View.VISIBLE
         }
     }
 
-    private fun progress() {
+    private fun progress(context: Context) {
         container_conditions_info.visibility = View.VISIBLE
         text_view_join_challenge.apply {
             text =
-                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+                DKResource.convertToString(context, "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             visibility = View.VISIBLE
             isEnabled = false
@@ -150,7 +154,7 @@ class ChallengeParticipationFragment : Fragment() {
 
         viewModel.challenge?.let {
             for (key in it.conditions.keys.reversed()) {
-                val progressBar = TitleProgressBar(requireContext())
+                val progressBar = TitleProgressBar(context)
                 val progress = viewModel.computeDriverProgress(it.driverConditions.getValue(key), it.conditions.getValue(key))
                 progressBar.apply {
                     setTitle(
@@ -169,21 +173,21 @@ class ChallengeParticipationFragment : Fragment() {
         }
     }
 
-    private fun countDown() {
+    private fun countDown(context: Context) {
         text_view_join_challenge.apply {
             text =
-                DKResource.convertToString(requireContext(), "dk_challenge_registered_confirmation")
+                DKResource.convertToString(context, "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             isEnabled = false
         }
         if (viewModel.getTimeLeft() > 0) {
-            startCountDown()
+            startCountDown(context)
             timer_container.apply {
                 setBackgroundColor(DriveKitUI.colors.primaryColor())
                 visibility = View.VISIBLE
             }
             challenge_start.apply {
-                text = DKResource.convertToString(requireContext(), "dk_challenge_start")
+                text = DKResource.convertToString(context, "dk_challenge_start")
                 setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
             }
         }
@@ -195,25 +199,25 @@ class ChallengeParticipationFragment : Fragment() {
         }
     }
 
-    private fun startCountDown() {
+    private fun startCountDown(context: Context) {
         val difference = viewModel.getTimeLeft()
         countDownTimer = object : CountDownTimer(difference, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val data =
-                    DKDataFormatter.formatExactDuration(requireContext(), millisUntilFinished)
+                    DKDataFormatter.formatExactDuration(context, millisUntilFinished)
                 val spannable = DKSpannable()
                 data.forEach {
                     when (it) {
                         is FormatType.VALUE -> spannable.append(
                             it.value,
-                            requireContext().resSpans {
+                            context.resSpans {
                                 color(DriveKitUI.colors.fontColorOnPrimaryColor())
                                 typeface(Typeface.BOLD)
                                 size(R.dimen.dk_text_xbig)
                             })
                         is FormatType.UNIT -> spannable.append(
                             it.value,
-                            requireContext().resSpans {
+                            context.resSpans {
                                 color(DriveKitUI.colors.fontColorOnPrimaryColor())
                                 size(R.dimen.dk_text_normal)
                             })
