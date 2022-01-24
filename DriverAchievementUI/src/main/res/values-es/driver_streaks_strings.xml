@@ -26,7 +26,7 @@
    <string name="dk_achievements_streaks_safety_text">Trate de encadenar una serie de viajes con puntuaciones de seguridad superiores a 9,8/10.\n \nCon cada éxito, el contador del número de viajes aumenta.\n \nSi falla, el contador se reinicia y tienes que empezar de nuevo.\n \ nEl número de viajes en su mejor secuencia de pases se almacena en la memoria y puede intentar superarlo.</string>
    <string name="dk_achievements_streaks_safety_title">Conducción segura</string>
    <string name="dk_achievements_streaks_since">Desde el %s</string>
-   <string name="dk_achievements_streaks_since_to">Del %1$s al %2$s</string>
+   <string name="dk_achievements_streaks_since_to">Del %s al %s</string>
    <string name="dk_achievements_streaks_speeding_reset">Excedió el límite de velocidad en su último viaje</string>
    <string name="dk_achievements_streaks_speeding_text">Intente hacer una serie de viajes dentro del límite de velocidad. La puntuación del límite de velocidad debe ser superior a 9,8/10. Con cada éxito, el contador del número de viajes aumenta.\n \nSi falla, el contador se reinicia y tienes que empezar de nuevo.\n \nEl número de viajes en su mejor secuencia de pases se almacena en la memoria y puede intentar superarlo.</string>
    <string name="dk_achievements_streaks_speeding_title">Sin exceso de velocidad</string>

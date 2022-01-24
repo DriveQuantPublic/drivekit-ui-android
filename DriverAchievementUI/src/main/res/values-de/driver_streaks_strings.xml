@@ -26,7 +26,7 @@
    <string name="dk_achievements_streaks_safety_text">Versuchen Sie, eine Reihe von Fahrten mit Sicherheitswerten von über 9,8/10 zu verketten.\n \nMit jedem Erfolg steigt der Zähler der Anzahl der Fahrten.\n \nWenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen.\n \nDie Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
    <string name="dk_achievements_streaks_safety_title">Sicheres Fahren</string>
    <string name="dk_achievements_streaks_since">Seit der %s</string>
-   <string name="dk_achievements_streaks_since_to">Vom %1$s bis zum %2$s</string>
+   <string name="dk_achievements_streaks_since_to">Vom %s bis zum %s</string>
    <string name="dk_achievements_streaks_speeding_reset">Sie haben auf Ihrer letzten Reise die Geschwindigkeitsbegrenzung überschritten</string>
    <string name="dk_achievements_streaks_speeding_text">Versuchen Sie, eine Reihe von Fahrten innerhalb der Geschwindigkeitsbegrenzung zu machen. Das Tempolimit muss höher als 9,8/10 sein.\n \nMit jedem Erfolg steigt der Zähler der Anzahl der Fahrten.\n \nWenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen.\n \nDie Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
    <string name="dk_achievements_streaks_speeding_title">Keine Geschwindigkeitsübertretung</string>
