@@ -56,72 +56,70 @@ class ChallengeParticipationFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setStyle()
-            DriveKitUI.analyticsListener?.trackScreen(
-                DKResource.convertToString(
-                    requireContext(),
-                    "dk_tag_challenge_join"
-                ), javaClass.simpleName
-            )
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_challenge_join"
+            ), javaClass.simpleName
+        )
 
-            (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
-                challengeId = it
-            }
+        (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
+            challengeId = it
+        }
 
-            if (!this::viewModel.isInitialized) {
-                viewModel = ViewModelProviders.of(
-                    this,
-                    ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(
-                        challengeId
-                    )
-                ).get(ChallengeParticipationViewModel::class.java)
-            }
-            context?.let { context ->
-                viewModel.syncJoinChallengeError.observe(this, {
-                    if (it) {
-                        if (viewModel.isChallengeStarted()) {
-                            progress(context)
-                        } else {
-                            countDown(context)
-                        }
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(
+                this,
+                ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
+            ).get(ChallengeParticipationViewModel::class.java)
+        }
+        context?.let { context ->
+            viewModel.syncJoinChallengeError.observe(this, {
+                if (it) {
+                    if (viewModel.isChallengeStarted()) {
+                        progress(context)
                     } else {
-                        Toast.makeText(
+                        countDown(context)
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(
                             context,
-                            DKResource.convertToString(
-                                context,
-                                "dk_challenge_failed_to_join"
-                            ),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    updateProgressVisibility(false)
-                })
-
-                if (!this::challengeHeaderView.isInitialized) {
-                    challengeHeaderView = ChallengeHeaderView(context)
+                            "dk_challenge_failed_to_join"
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+                updateProgressVisibility(false)
+            })
+
+            if (!this::challengeHeaderView.isInitialized) {
+                challengeHeaderView = ChallengeHeaderView(context)
             }
-            challengeHeaderView.configure(viewModel, requireActivity())
-            challenge_header_view_container.addView(challengeHeaderView)
+        }
+        challengeHeaderView.configure(viewModel, requireActivity())
+        challenge_header_view_container.addView(challengeHeaderView)
 
-            dispatch()
+        dispatch()
 
-            viewModel.challenge?.let { challenge ->
-                text_view_join_challenge.setOnClickListener {
-                    challenge.rules?.let { rules ->
-                        if (rules.isNotEmpty()) {
-                            ChallengeRulesActivity.launchActivity(
-                                requireActivity(),
-                                challengeId,
-                                viewModel.isDriverRegistered()
-                            )
-                        }
-                    } ?: run {
-                        updateProgressVisibility(true)
-                        viewModel.joinChallenge(challengeId)
+        viewModel.challenge?.let { challenge ->
+            text_view_join_challenge.setOnClickListener {
+                challenge.rules?.let { rules ->
+                    if (rules.isNotEmpty()) {
+                        ChallengeRulesActivity.launchActivity(
+                            requireActivity(),
+                            challengeId,
+                            viewModel.isDriverRegistered()
+                        )
                     }
+                } ?: run {
+                    updateProgressVisibility(true)
+                    viewModel.joinChallenge(challengeId)
                 }
             }
         }
+    }
 
     fun dispatch() {
         context?.let { context ->
