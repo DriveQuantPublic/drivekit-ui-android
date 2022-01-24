@@ -73,8 +73,9 @@ class ChallengeParticipationFragment : Fragment() {
                 ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
             ).get(ChallengeParticipationViewModel::class.java)
         }
-        context?.let { context ->
-            viewModel.syncJoinChallengeError.observe(this, {
+
+        viewModel.syncJoinChallengeError.observe(this, {
+            context?.let { context ->
                 if (it) {
                     if (viewModel.isChallengeStarted()) {
                         progress(context)
@@ -92,11 +93,11 @@ class ChallengeParticipationFragment : Fragment() {
                     ).show()
                 }
                 updateProgressVisibility(false)
-            })
-
-            if (!this::challengeHeaderView.isInitialized) {
-                challengeHeaderView = ChallengeHeaderView(context)
             }
+        })
+
+        if (!this::challengeHeaderView.isInitialized && context != null) {
+            challengeHeaderView = ChallengeHeaderView(context!!)
         }
         challengeHeaderView.configure(viewModel, requireActivity())
         challenge_header_view_container.addView(challengeHeaderView)
