@@ -39,8 +39,8 @@ internal class WorkingHoursViewModel : ViewModel() {
 
     fun updateConfig(
         enable: Boolean,
-        insideHours: TripStatus,
-        outsideHours: TripStatus,
+        insideHours: DKWorkingHoursTimeSlotStatus,
+        outsideHours: DKWorkingHoursTimeSlotStatus,
         days: List<DKWorkingHoursDayConfiguration>,
         back: Boolean = false
     ) {

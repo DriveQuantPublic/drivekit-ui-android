@@ -24,17 +24,8 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation "com.google.android.material:material:$material"
-    implementation "androidx.legacy:legacy-preference-v14:$legacy_preference"
-
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
     debugApi project(':CommonUI')
+
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
 }

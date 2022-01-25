@@ -54,12 +54,11 @@
                     android:id="@+id/range_slider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tickVisible="false"
                     style="@style/SliderStyle"
+                    app:tickColor="#00000000"
                     android:valueFrom="0.0"
                     android:valueTo="24.0"
-                    android:stepSize="0.5"
-                    app:values="@array/initial_range_slider_working_hours_values" />
+                    android:stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textMin"

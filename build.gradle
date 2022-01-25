@@ -2,19 +2,20 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '1.18-beta1'
-        kotlin_version = '1.5.0'
+        drivekit_version = '1.18.0'
+        kotlin_version = '1.5.21'
         appcompat = '1.2.0'
         constraint_layout = '2.0.4'
         material = '1.4.0'
         legacy_preference = '1.0.0'
+        grid_layout = '1.0.0'
         recycler_view = '1.1.0'
         swipe_refresh_layout = '1.1.0'
     }
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -28,7 +29,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url "https://maven.drivequant.com/repository/android-sdk/"
         }

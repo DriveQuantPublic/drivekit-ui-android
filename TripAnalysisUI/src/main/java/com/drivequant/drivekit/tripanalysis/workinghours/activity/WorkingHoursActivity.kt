@@ -19,7 +19,7 @@ import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
-import com.drivequant.drivekit.tripanalysis.service.workinghours.TripStatus
+import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCard
 import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel
 import kotlinx.android.synthetic.main.dk_layout_activity_working_hours.*
@@ -87,14 +87,14 @@ class WorkingHoursActivity : AppCompatActivity() {
 
         insideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_inside_title"))
         insideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
-            override fun onItemSelected(item: TripStatus) {
+            override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
                 dataUpdated(true)
             }
         })
 
         outsideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_outside_title"))
         outsideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
-            override fun onItemSelected(item: TripStatus) {
+            override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
                 dataUpdated(true)
             }
         })
@@ -157,7 +157,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                         dataUpdated(true)
                     }
 
-                    override fun onHoursUpdated(start: Float, end: Float) {
+                    override fun onHoursUpdated(start: Double, end: Double) {
                         dataUpdated(true)
                     }
                 })
@@ -218,8 +218,8 @@ class WorkingHoursActivity : AppCompatActivity() {
         updateProgressVisibility(true)
         viewModel.updateConfig(
             switch_enable.isChecked(),
-            insideHours.getSelectedTripStatus(),
-            outsideHours.getSelectedTripStatus(),
+            insideHours.getSelectedTimeSlotStatus(),
+            outsideHours.getSelectedTimeSlotStatus(),
             days.map { it.getConfig() },
             onBackPressed
         )
