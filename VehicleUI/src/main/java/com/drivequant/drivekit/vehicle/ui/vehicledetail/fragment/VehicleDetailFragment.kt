@@ -69,6 +69,7 @@ class VehicleDetailFragment : Fragment() {
     private var imageUri : Uri? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
+    private lateinit var menu: Menu
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,14 +83,21 @@ class VehicleDetailFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        val menuInflater = activity?.menuInflater
-        menuInflater?.inflate(R.menu.vehicle_menu_bar, menu)
+        inflater.inflate(R.menu.vehicle_menu_bar, menu)
+        this.menu = menu
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_save) {
+            updateInformations()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        setHasOptionsMenu(true)
         savedInstanceState?.let { bundle ->
             val vehicleId = bundle.getString("vehicleDetailTag")
             vehicleId?.let {
