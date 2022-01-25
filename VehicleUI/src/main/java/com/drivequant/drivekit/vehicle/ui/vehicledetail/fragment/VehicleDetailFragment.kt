@@ -182,7 +182,7 @@ class VehicleDetailFragment : Fragment() {
         editableField.editableText.setOnTextChangedListener(object :
             EditableText.OnTextChangedListener {
             override fun onTextChanged(editableText: EditableText, text: String?) {
-                hasChangesToUpdate = true
+                updateSubmitButtonVisibility(true)
                 viewModel.vehicle?.let { vehicle ->
                     if (text != null) {
                         if (editableField.field.isValid(text, vehicle)) {
@@ -195,6 +195,11 @@ class VehicleDetailFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun updateSubmitButtonVisibility(displaySubmitButton: Boolean) {
+        hasChangesToUpdate = displaySubmitButton
+        menu.findItem(R.id.action_save)?.isVisible = displaySubmitButton
     }
 
     fun onBackPressed() {
@@ -235,8 +240,9 @@ class VehicleDetailFragment : Fragment() {
                                 vehicle,
                                 object : FieldUpdatedListener {
                                     override fun onFieldUpdated(success: Boolean, message: String) {
+                                        if (success)
                                         viewModel.progressBarObserver.postValue(false)
-                                        hasChangesToUpdate = false
+                                        updateSubmitButtonVisibility(success)
                                         Toast.makeText(
                                             context,
                                             message,
