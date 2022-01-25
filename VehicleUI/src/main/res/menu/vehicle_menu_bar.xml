@@ -5,6 +5,6 @@
         android:id="@+id/action_save"
         android:icon="@drawable/dk_common_check"
         android:title="@string/dk_common_save"
-        android:visible="true"
+        android:visible="false"
         app:showAsAction="always"/>
 </menu>

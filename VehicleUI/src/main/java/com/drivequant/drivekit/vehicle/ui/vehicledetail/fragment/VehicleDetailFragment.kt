@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment
 
 import android.Manifest
-import android.app.Activity
 import android.app.Activity.RESULT_OK
-import android.content.Context
+import androidx.lifecycle.Observer
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
@@ -20,7 +20,6 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -71,7 +70,6 @@ class VehicleDetailFragment : Fragment() {
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
     private lateinit var menu: Menu
-    private var collapsingToolbar: CollapsingToolbarLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,8 +90,7 @@ class VehicleDetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save) {
-            updateContent()
-            context?.hideKeyboard(root)
+            updateInformations()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -112,14 +109,12 @@ class VehicleDetailFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        collapsingToolbar = activity?.findViewById(R.id.collapsing_toolbar)
+        val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
         collapsingToolbar?.let {
-            it.apply {
-                title = viewModel.vehicleName
-                setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-                setCollapsedTitleTypeface(DriveKitUI.primaryFont(requireContext()))
-                setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
-            }
+            it.title = viewModel.vehicleName
+            it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(requireContext()))
+            it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
@@ -131,19 +126,15 @@ class VehicleDetailFragment : Fragment() {
             }
             it.backgroundTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
             it.setOnClickListener {
-                context?.let { context ->
-                    manageFabAlertDialog(context)
-                }
+                manageFabAlertDialog()
             }
         }
 
-        fieldsAdapter?.let {
-            it.apply {
-                setGroupFields(viewModel.groupFields)
-                notifyDataSetChanged()
-            }
-        } ?: run {
-            fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel)
+        if (fieldsAdapter != null){
+            fieldsAdapter?.setGroupFields(viewModel.groupFields)
+            fieldsAdapter?.notifyDataSetChanged()
+        } else {
+            fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel, viewModel.groupFields)
             vehicle_fields.adapter = fieldsAdapter
         }
     }
@@ -155,11 +146,10 @@ class VehicleDetailFragment : Fragment() {
                 imageUri = Uri.parse(filePath)
             }
         }
-
-        DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))?.let {
-            imageUri = Uri.parse(it)
+        val vehicleUriSharedPrefs = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s", vehicleId))
+        if (vehicleUriSharedPrefs != null) {
+            imageUri = Uri.parse(vehicleUriSharedPrefs)
         }
-
         imageView = activity?.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
@@ -173,8 +163,11 @@ class VehicleDetailFragment : Fragment() {
                 .into(it)
         }
 
-        vehicle_fields.layoutManager = LinearLayoutManager(view.context)
-        viewModel.newEditableFieldObserver.observe(this, {
+        val linearLayoutManager =
+            LinearLayoutManager(view.context)
+        vehicle_fields.layoutManager = linearLayoutManager
+
+        viewModel.newEditableFieldObserver.observe(this, Observer {
             it?.let { newEditableField ->
                if (!editableFields.contains(newEditableField)){
                    editableFields.add(newEditableField)
@@ -185,8 +178,8 @@ class VehicleDetailFragment : Fragment() {
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_detail"), javaClass.simpleName)
     }
 
-    private fun setupTextListener(editableField: EditableField) {
-        editableField.editableText.setOnTextChangedListener(object : EditableText.OnTextChangedListener {
+    private fun setupTextListener(editableField: EditableField){
+        editableField.editableText.setOnTextChangedListener(object : EditableText.OnTextChangedListener{
             override fun onTextChanged(editableText: EditableText, text: String?) {
                 hasChangesToUpdate = true
                 viewModel.vehicle?.let { vehicle ->
@@ -203,15 +196,16 @@ class VehicleDetailFragment : Fragment() {
         })
     }
 
-    fun onBackPressed() {
-        if (hasChangesToUpdate) {
+    fun onBackPressed(){
+        if (hasChangesToUpdate){
             val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
                 .layout(R.layout.template_alert_dialog_layout)
                 .cancelable(false)
-                .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
-                    updateContent(true)
-                }
-                .negativeButton(negativeListener = { dialogInterface, _ ->
+                .positiveButton(getString(R.string.dk_common_confirm),
+                    DialogInterface.OnClickListener { _, _ ->
+                        updateInformations(true)
+                    })
+                .negativeButton(negativeListener = DialogInterface.OnClickListener { dialogInterface, _ ->
                         dialogInterface.dismiss()
                         activity?.finish()
                     }
@@ -228,47 +222,34 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun updateContent(fromBackButton: Boolean = false) {
-        context?.let { context ->
-            if (hasChangesToUpdate) {
-                if (allFieldsValid()) {
-                    viewModel.progressBarObserver.postValue(true)
-                    viewModel.vehicle?.let { vehicle ->
-                        for (item in editableFields) {
-                            item.field.onFieldUpdated(
-                                context,
-                                item.editableText.text,
-                                vehicle,
-                                object : FieldUpdatedListener {
-                                    override fun onFieldUpdated(success: Boolean, message: String) {
-                                        viewModel.progressBarObserver.postValue(false)
-                                        hasChangesToUpdate = false
-                                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                                        if (success) {
-                                            collapsingToolbar?.title = item.editableText.text
-                                        }
-                                        if (fromBackButton) {
-                                            activity?.finish()
-                                        }
-                                    }
-                                })
-                        }
+    fun updateInformations(fromBackButton: Boolean = false){
+        if (hasChangesToUpdate) {
+            if (allFieldsValid()){
+                viewModel.progressBarObserver.postValue(true)
+                viewModel.vehicle?.let { vehicle ->
+                    for (item in editableFields){
+                        item.field.onFieldUpdated(requireContext(), item.editableText.text, vehicle, object : FieldUpdatedListener {
+                            override fun onFieldUpdated(success: Boolean, message: String) {
+                                viewModel.progressBarObserver.postValue(false)
+                                hasChangesToUpdate = false
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                if (fromBackButton){
+                                    activity?.finish()
+                                }
+                            }
+                        })
                     }
-                } else {
-                    Toast.makeText(
-                        context,
-                        DKResource.convertToString(context, "dk_fields_not_valid"),
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
+            } else {
+                Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_fields_not_valid"), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun allFieldsValid(): Boolean {
+    private fun allFieldsValid() : Boolean {
         viewModel.vehicle?.let { vehicle ->
-            for (item in editableFields) {
-                if (!item.field.isValid(item.editableText.text, vehicle)) {
+            for (item in editableFields){
+                if (!item.field.isValid(item.editableText.text, vehicle)){
                     return false
                 }
             }
@@ -276,9 +257,9 @@ class VehicleDetailFragment : Fragment() {
         return true
     }
 
-    private fun manageFabAlertDialog(context: Context) {
+    private fun manageFabAlertDialog(){
         val alert = DKAlertDialog.LayoutBuilder()
-            .init(context)
+            .init(requireContext())
             .layout(R.layout.alert_dialog_vehicle_detail_fab)
             .cancelable(true)
             .show()
@@ -292,7 +273,7 @@ class VehicleDetailFragment : Fragment() {
 
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
-        title?.text = DKResource.convertToString(context, "dk_common_update_photo_title")
+        title?.text = DKResource.convertToString(requireContext(), "dk_common_update_photo_title")
         title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         title?.setBackgroundColor(primaryColor)
 
@@ -305,11 +286,11 @@ class VehicleDetailFragment : Fragment() {
         cameraTextView?.let {
             it.text = DKResource.convertToString(requireActivity(), "dk_common_take_picture")
             it.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(),
                         arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CAMERA)
                 } else {
-                    if (alert.isShowing) {
+                    if (alert.isShowing){
                         alert.dismiss()
                     }
                     launchCameraIntent()
@@ -317,13 +298,13 @@ class VehicleDetailFragment : Fragment() {
             }
         }
         galleryTextView?.let {
-            it.text = DKResource.convertToString(context, "dk_common_select_image_gallery")
+            it.text = DKResource.convertToString(requireContext(), "dk_common_select_image_gallery")
             it.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
                 } else {
-                    if (alert.isShowing) {
+                    if (alert.isShowing){
                         alert.dismiss()
                     }
                     launchGalleryIntent()
@@ -332,25 +313,24 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun displayRationaleAlert(descriptionIdentifier: String) {
-        context?.let { context ->
-            val cameraDialog = DKAlertDialog.LayoutBuilder().init(context)
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(false)
-                .positiveButton(DKResource.convertToString(context, "dk_common_settings")) { _, _ ->
+    private fun displayRationaleAlert(descriptionIdentifier: String){
+        val cameraDialog = DKAlertDialog.LayoutBuilder().init(requireContext())
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(DKResource.convertToString(requireContext(), "dk_common_settings"),
+                DialogInterface.OnClickListener { _, _ ->
                     launchSettings()
-                }
-                .negativeButton(DKResource.convertToString(context, "dk_common_close"))
-                .show()
+                })
+            .negativeButton(DKResource.convertToString(requireContext(), "dk_common_close"))
+            .show()
 
-            val titleTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_title)
-            val descriptionTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        val titleTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_description)
 
-            titleTextView?.text = DKResource.convertToString(context, "dk_common_permissions")
-            descriptionTextView?.text = DKResource.convertToString(context, descriptionIdentifier)
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
-        }
+        titleTextView?.text = DKResource.convertToString(requireContext(), "dk_common_permissions")
+        descriptionTextView?.text = DKResource.convertToString(requireContext(), descriptionIdentifier)
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 
     private fun launchSettings(){
@@ -394,7 +374,7 @@ class VehicleDetailFragment : Fragment() {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent()
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    displayRationaleAlert("dk_common_permission_storage_rationale")
+                    displayRationaleAlert( "dk_common_permission_storage_rationale")
                 } else {
                     Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_permission_storage_rationale"), Toast.LENGTH_SHORT).show()
                 }
@@ -432,11 +412,5 @@ class VehicleDetailFragment : Fragment() {
         } else {
             imageUri = null
         }
-    }
-
-    fun Context.hideKeyboard(view: View) {
-        val inputMethodManager =
-            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
