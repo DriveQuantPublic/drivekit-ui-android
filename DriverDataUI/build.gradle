@@ -23,18 +23,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
-    implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation 'androidx.preference:preference:1.0.0'
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    implementation "com.google.android.material:material:$material"
-    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
+
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
 }
 

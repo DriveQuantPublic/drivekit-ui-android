@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.drivekit.tripanalysis.ui">
+    <application>
+        <activity
+            android:name="com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+</manifest>

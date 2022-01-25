@@ -24,11 +24,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    implementation "androidx.legacy:legacy-preference-v14:$legacy_preference"
-    implementation "com.google.android.material:material:$material"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -41,6 +36,7 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-challenge:$drivekit_version"
 
     implementation project(':CommonUI')
+    implementation project(':TripAnalysisUI')
     implementation project(':DriverDataUI')
     implementation project(':VehicleUI')
     implementation project(':DriverAchievementUI')
