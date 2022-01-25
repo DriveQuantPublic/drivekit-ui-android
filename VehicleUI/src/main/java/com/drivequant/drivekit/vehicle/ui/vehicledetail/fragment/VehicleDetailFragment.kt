@@ -240,9 +240,10 @@ class VehicleDetailFragment : Fragment() {
                                 vehicle,
                                 object : FieldUpdatedListener {
                                     override fun onFieldUpdated(success: Boolean, message: String) {
-                                        if (success)
                                         viewModel.progressBarObserver.postValue(false)
-                                        updateSubmitButtonVisibility(success)
+                                        if (success) {
+                                            updateSubmitButtonVisibility(false)
+                                        }
                                         Toast.makeText(
                                             context,
                                             message,
