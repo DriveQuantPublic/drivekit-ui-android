@@ -131,11 +131,9 @@ class VehicleDetailFragment : Fragment() {
             }
         }
 
-        fieldsAdapter?.let {
-            it.apply {
-                setGroupFields(viewModel.groupFields)
-                notifyDataSetChanged()
-            }
+        fieldsAdapter?.apply {
+            setGroupFields(viewModel.groupFields)
+            notifyDataSetChanged()
         } ?: run {
             fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel)
             vehicle_fields.adapter = fieldsAdapter
@@ -203,27 +201,30 @@ class VehicleDetailFragment : Fragment() {
     }
 
     fun onBackPressed() {
-        if (hasChangesToUpdate && context != null) {
-            val alert = DKAlertDialog.LayoutBuilder().init(context!!)
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(false)
-                .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
-                    updateContent(true)
-                }
-                .negativeButton(negativeListener = { dialogInterface, _ ->
+        context?.let { context ->
+            if (hasChangesToUpdate) {
+                val alert = DKAlertDialog.LayoutBuilder().init(context)
+                    .layout(R.layout.template_alert_dialog_layout)
+                    .cancelable(false)
+                    .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+                        updateContent(true)
+                    }
+                    .negativeButton(negativeListener = { dialogInterface, _ ->
                         dialogInterface.dismiss()
                         activity?.finish()
                     }
-                )
-                .show()
+                    )
+                    .show()
 
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
-            title?.text = getString(R.string.app_name)
-            description?.text = DKResource.convertToString(context!!, "dk_vehicle_detail_back_edit_alert")
-        } else {
-            activity?.finish()
+                title?.text = getString(R.string.app_name)
+                description?.text =
+                    DKResource.convertToString(context, "dk_vehicle_detail_back_edit_alert")
+            } else {
+                activity?.finish()
+            }
         }
     }
 
