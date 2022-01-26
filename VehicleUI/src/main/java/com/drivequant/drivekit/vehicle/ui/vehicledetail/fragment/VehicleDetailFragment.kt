@@ -22,6 +22,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.EditableText
@@ -69,6 +70,7 @@ class VehicleDetailFragment : Fragment() {
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
     private lateinit var menu: Menu
+    private lateinit var alert: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -280,7 +282,7 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun manageFabAlertDialog(context: Context) {
-        val alert = DKAlertDialog.LayoutBuilder()
+        alert = DKAlertDialog.LayoutBuilder()
             .init(context)
             .layout(R.layout.alert_dialog_vehicle_detail_fab)
             .cancelable(true)
@@ -401,6 +403,9 @@ class VehicleDetailFragment : Fragment() {
             REQUEST_GALLERY -> {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent()
+                    if (this::alert.isInitialized) {
+                        alert.dismiss()
+                    }
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     displayRationaleAlert( "dk_common_permission_storage_rationale")
                 } else {
@@ -411,6 +416,9 @@ class VehicleDetailFragment : Fragment() {
             REQUEST_CAMERA -> {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchCameraIntent()
+                    if (this::alert.isInitialized) {
+                        alert.dismiss()
+                    }
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
                     displayRationaleAlert( "dk_common_permission_camera_rationale")
                 } else {
