@@ -57,21 +57,6 @@ class VehicleDetailActivity : AppCompatActivity() {
             .commit()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.vehicle_menu_bar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_save){
-            val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
-            if (fragment is VehicleDetailFragment){
-                fragment.updateInformations()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun hideProgressCircular() {
         dk_progress_circular?.apply {
             animate()

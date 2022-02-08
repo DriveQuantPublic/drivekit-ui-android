@@ -37,10 +37,13 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view_pager.adapter = DKSynthesisCardFragmentPagerAdapter(
-            childFragmentManager,
-            cards
-        )
+        view_pager.apply {
+            offscreenPageLimit = cards.size
+            adapter = DKSynthesisCardFragmentPagerAdapter(
+                childFragmentManager,
+                cards
+            )
+        }
 
         if (cards.size > 1) {
             tabLayout = view.findViewById(R.id.tabDotsScore)
@@ -48,9 +51,7 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     updateTabLayout(tab.position)
                 }
-
                 override fun onTabUnselected(tab: TabLayout.Tab) {}
-
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
 
