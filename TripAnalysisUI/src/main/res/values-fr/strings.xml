@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_crash_detection_feedback_notif_message">Cliquez sur la notification et dites-nous comment vous allez.</string>
+   <string name="dk_crash_detection_feedback_notif_title">Un accident a été détecté</string>
+   <string name="dk_crash_detection_feedback_step1_description">Vous pouvez annuler ou confirmer l\'alerte avant la fin du compte à rebours</string>
+   <string name="dk_crash_detection_feedback_step1_option_critical_accident">Contacter l\'assistance</string>
+   <string name="dk_crash_detection_feedback_step1_option_no_crash">Je vais bien</string>
+   <string name="dk_crash_detection_feedback_step1_title">Un accident a été détecté, comment allez-vous ?</string>
+   <string name="dk_crash_detection_feedback_step2_description">Que vous est-il arrivé ?</string>
+   <string name="dk_crash_detection_feedback_step2_option_minor_accident">Accident mineur</string>
+   <string name="dk_crash_detection_feedback_step2_option_no_crash">Rien, tout va bien</string>
+   <string name="dk_crash_detection_feedback_step2_title">Nous sommes rassurés de savoir que vous allez bien.</string>
+   <string name="dk_crash_detection_feedback_step2option_critical_accident">Contacter l\'assistance</string>
    <string name="dk_working_hours_back_save_alert">Les horaires de travail ont été modifiés. Souhaitez-vous les sauvegarder ?</string>
    <string name="dk_working_hours_enable_desc">Cette fonction permet de configurer les horaires d\'activation du mode automatique et de labelliser les trajets.</string>
    <string name="dk_working_hours_enable_title">Activer la gestion des horaires</string>
