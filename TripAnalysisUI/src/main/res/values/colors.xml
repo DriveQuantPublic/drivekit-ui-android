@@ -4,6 +4,6 @@
     <color name="dkCrashFeedbackFine_10">#1677E2B0</color>
     <color name="dkCrashFeedbackMinorAccident">#EBD37F</color>
     <color name="dkCrashFeedbackMinorAccident_10">#16EBD37F</color>
-    <color name="dkCrashFeedbackAssistance">#EEB0B2</color>
-    <color name="dkCrashFeedbackAssistance_10">#1677E2B0</color>
+    <color name="dkCrashFeedbackAssistance">#EA676B</color>
+    <color name="dkCrashFeedbackAssistance_10">#16EEB0B2</color>
 </resources>

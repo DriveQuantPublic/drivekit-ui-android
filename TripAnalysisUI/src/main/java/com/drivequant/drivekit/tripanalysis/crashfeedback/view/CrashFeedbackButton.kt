@@ -2,6 +2,7 @@ package com.drivequant.drivekit.tripanalysis.crashfeedback.view
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -135,6 +136,7 @@ class CrashFeedbackButton : FrameLayout {
                 textView.setText(it)
                 borderColor?.let { borderColor ->
                     textView.headLine1(ContextCompat.getColor(context, borderColor))
+                    textView.typeface = Typeface.DEFAULT
                 }
             }
         }
