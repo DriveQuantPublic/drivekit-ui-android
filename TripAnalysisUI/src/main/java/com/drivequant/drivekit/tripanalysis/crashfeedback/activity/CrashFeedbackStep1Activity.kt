@@ -107,32 +107,16 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     }
 
     private fun initTimer() {
-        val entries: MutableList<PieEntry> = ArrayList()
-        entries.add(PieEntry(0f))
-        entries.add(PieEntry(60f))
-
-        val pieDataSet = PieDataSet(entries, null)
-        pieDataSet.setColors(intArrayOf(R.color.dkBadMean, R.color.dkGood), this)
-
-        val pieData = PieData(pieDataSet)
-        pieData.setDrawValues(false)
-        pieDataSet.selectionShift = 2f
-        pieDataSet.sliceSpace = 1f
-
         timer.apply {
             setTouchEnabled(false)
-            data = pieData
             isRotationEnabled = false
             description = null
             setUsePercentValues(true)
             legend.isEnabled = false
-            setEntryLabelColor(R.color.dkBadMean)
-            //transparentCircleRadius = 63f
-            transparentCircleRadius = 1f
-            setTransparentCircleAlpha(255)
-            setTransparentCircleColor(Color.WHITE)
-            holeRadius = 60f
-            setHoleColor(ContextCompat.getColor(context, R.color.dkBadMean)) // TODO care context
+            holeRadius = 90f
+            isDrawHoleEnabled = true
+            transparentCircleRadius = 61f
+            setCenterTextColor(ContextCompat.getColor(context, R.color.dkCrashFeedbackAssistance)) //TODO care context
             invalidate()
         }
     }
@@ -158,17 +142,16 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             highlightValues(arrayOf(h))
             centerText = durationText
             setCenterTextSize(25f)
-            setCenterTextColor(ContextCompat.getColor(context, R.color.dkBadMean)) // TODO care context
         }
         val entries: MutableList<PieEntry> = ArrayList()
         entries.add(PieEntry(nbSecond.toFloat()))
         entries.add(PieEntry((60 - nbSecond).toFloat()))
         val pieDataSet = PieDataSet(entries, null)
-        pieDataSet.setColors(intArrayOf(R.color.dkGood, R.color.dkBadMean), this)
+        pieDataSet.setColors(intArrayOf(R.color.dkCrashFeedbackAssistance, R.color.dkCrashFeedbackAssistance_10), this)
         val pieData = PieData(pieDataSet)
         pieData.setDrawValues(false)
-        pieDataSet.selectionShift = 0.1f
-        pieDataSet.sliceSpace = 0.1f
+        pieDataSet.selectionShift = 0f
+        pieDataSet.sliceSpace = 0f
         timer.data = pieData
         timer.invalidate()
     }

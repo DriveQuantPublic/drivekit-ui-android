@@ -37,12 +37,22 @@
                 app:layout_constraintTop_toBottomOf="@id/text_view_title" />
 
             <!-- TODO fix hardcoded height -->
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/timer"
+            <FrameLayout
+                android:id="@+id/timer_container"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/text_view_description" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_description">
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+                <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CircleView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.drivequant.drivekit.tripanalysis.crashfeedback.view.CircleView>
+            </FrameLayout>
+
 
             <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
                 android:id="@+id/button_no_accident"
@@ -52,7 +62,7 @@
                 app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackFine"
                 app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_no_accident"
                 app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_no_crash"
-                app:layout_constraintTop_toBottomOf="@id/timer"
+                app:layout_constraintTop_toBottomOf="@id/timer_container"
                 android:layout_marginTop="@dimen/dk_margin_double" />
 
             <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton

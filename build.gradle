@@ -31,6 +31,9 @@ allprojects {
         google()
         mavenCentral()
         maven {
+            url "https://jitpack.io"
+        }
+        maven {
             url "https://maven.drivequant.com/repository/android-sdk/"
         }
     }
