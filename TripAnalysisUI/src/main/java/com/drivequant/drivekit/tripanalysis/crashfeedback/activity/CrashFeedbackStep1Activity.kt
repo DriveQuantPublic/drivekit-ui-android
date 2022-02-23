@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -11,6 +10,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.tripanalysis.crashfeedback.view.RoundedSlicesPieChartRenderer
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import kotlinx.android.synthetic.main.dk_layout_activity_crash_feedback_step1.*
 import java.util.*
+
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
@@ -117,6 +118,11 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             isDrawHoleEnabled = true
             transparentCircleRadius = 61f
             setCenterTextColor(ContextCompat.getColor(context, R.color.dkCrashFeedbackAssistance)) //TODO care context
+            renderer = RoundedSlicesPieChartRenderer(
+                this,
+                this.animator,
+                this.viewPortHandler
+            )
             invalidate()
         }
     }
