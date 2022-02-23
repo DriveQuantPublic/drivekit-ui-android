@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -38,15 +39,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             ), javaClass.simpleName
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            setShowWhenLocked(true)
-            setTurnScreenOn(true)
-        } else {
-            this.window.addFlags(
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-            )
-        }
         /*fromFullScreenIntent = intent.getBooleanExtra(IS_FULL_SCREEN_INTENT_EXTRA_KEY, false)
         if (fromFullScreenIntent) {
             DriveKitTripAnalysis.setCrashFeedbackTimer(10 * 60) // 10 minutes
@@ -189,7 +181,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     fun onNoCrashButtonClicked(view: View) {
         //DriveKitTripAnalysis.stopCrashFeedbackTimer()
-        //startActivity(Intent(this, CrashScreenConfirmationActivity::class.java))
+        startActivity(Intent(this, CrashFeedbackStep2Activity::class.java)) // TODO clear flag ?
         finish()
     }
 

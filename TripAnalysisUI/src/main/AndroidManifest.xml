@@ -13,5 +13,11 @@
             android:screenOrientation="portrait"
             android:showOnLockScreen="true"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep2Activity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:showOnLockScreen="true"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
