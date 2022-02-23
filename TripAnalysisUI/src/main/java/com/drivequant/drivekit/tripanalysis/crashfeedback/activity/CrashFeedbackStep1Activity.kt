@@ -34,7 +34,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 this,
-                "dk_tag_rankings" //TODO
+                "dk_tag_trip_analysis_crash_feedback_step1"
             ), javaClass.simpleName
         )
 

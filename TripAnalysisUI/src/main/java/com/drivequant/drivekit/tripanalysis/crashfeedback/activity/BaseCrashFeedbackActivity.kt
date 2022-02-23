@@ -12,20 +12,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 
 open class BaseCrashFeedbackActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setToolbar()
-
-    }
-
-    private fun setToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
-        title = "Titre"
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-    }
-
     fun dismissKeyguard() {
         val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

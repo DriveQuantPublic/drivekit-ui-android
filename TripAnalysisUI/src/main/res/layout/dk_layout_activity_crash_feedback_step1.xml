@@ -8,10 +8,6 @@
     android:weightSum="1"
     tools:context="com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar" />
-
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
