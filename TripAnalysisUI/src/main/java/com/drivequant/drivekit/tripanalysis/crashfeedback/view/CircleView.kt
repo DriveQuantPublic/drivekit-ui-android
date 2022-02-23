@@ -16,7 +16,7 @@ internal class CircleView(context: Context?, attrs: AttributeSet?) : View(contex
         canvas.drawCircle(
             (width/2).toFloat(),
             (height/2).toFloat(),
-            (width/2.8).toFloat(),
+            (width/2.5).toFloat(),
             drawPaint
         )
     }

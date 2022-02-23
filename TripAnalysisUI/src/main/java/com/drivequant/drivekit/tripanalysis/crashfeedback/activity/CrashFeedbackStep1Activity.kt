@@ -1,15 +1,18 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.tripanalysis.crashfeedback.view.RoundedSlicesPieChartRenderer
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
 import com.github.mikephil.charting.data.PieData
@@ -72,7 +75,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         })*/
 
 
-
         initTitle()
         initDescription()
         initTimer()
@@ -100,7 +102,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             private var counter = 0
             override fun run() {
                 runOnUiThread {
-                    updateTimer(counter)
+                    updateTimer(counter, 60) // TODO total seconds
                     counter++
                 }
             }
@@ -112,12 +114,10 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             setTouchEnabled(false)
             isRotationEnabled = false
             description = null
-            setUsePercentValues(true)
             legend.isEnabled = false
             holeRadius = 90f
             isDrawHoleEnabled = true
             transparentCircleRadius = 61f
-            setCenterTextColor(ContextCompat.getColor(context, R.color.dkCrashFeedbackAssistance)) //TODO care context
             renderer = RoundedSlicesPieChartRenderer(
                 this,
                 this.animator,
@@ -127,8 +127,10 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         }
     }
 
-    private fun updateTimer(duration: Int) {
-        val nbSecond = (duration % 60).toInt()
+    private fun updateTimer(duration: Int, total: Int) {
+        val nbSecond = (duration % 60)
+
+        /*val nbMinute = (duration/60).toInt()
         //var durationText: String = Utils.convertSecondeToString(duration, true, false)
         var durationText = "test"
         when {
@@ -141,17 +143,40 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             nbSecond == 0 -> {
                 durationText += ":00"
             }
+        }*/
+        val data = DKDataFormatter.formatExactDuration(this, (total - nbSecond) * 1000L)
+        val spannable = DKSpannable()
+        data.forEach {
+            when (it) {
+                is FormatType.VALUE -> spannable.append(
+                    it.value,
+                    this.resSpans {
+                        color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                        typeface(Typeface.BOLD)
+                        size(R.dimen.dk_text_xbig)
+                    })
+                is FormatType.UNIT -> spannable.append(
+                    it.value,
+                    this.resSpans {
+                        color(DriveKitUI.colors.fontColorOnPrimaryColor())
+                        size(R.dimen.dk_text_normal)
+                    })
+                is FormatType.SEPARATOR -> spannable.append(it.value)
+            }
         }
-        val h = Highlight(0f, 0f, 0)
 
+        val h = Highlight(0f, 0f, 0)
         timer.apply {
             highlightValues(arrayOf(h))
-            centerText = durationText
-            setCenterTextSize(25f)
+            centerText = spannable.toSpannable().toString()
+            val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
+            setCenterTextColor(DriveKitUI.colors.mainFontColor())
+            setCenterTextTypeface(DriveKitUI.primaryFont(context))
+            setCenterTextSize(textSize)
         }
         val entries: MutableList<PieEntry> = ArrayList()
+        entries.add(PieEntry((60-nbSecond).toFloat()))
         entries.add(PieEntry(nbSecond.toFloat()))
-        entries.add(PieEntry((60 - nbSecond).toFloat()))
         val pieDataSet = PieDataSet(entries, null)
         pieDataSet.setColors(intArrayOf(R.color.dkCrashFeedbackAssistance, R.color.dkCrashFeedbackAssistance_10), this)
         val pieData = PieData(pieDataSet)
