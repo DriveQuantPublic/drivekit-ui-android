@@ -113,7 +113,7 @@ class CrashFeedbackButton : FrameLayout {
                 val drawable: Drawable? = ContextCompat.getDrawable(context, it)
                 if (drawable != null) {
                     val bitmap = (drawable as BitmapDrawable).bitmap
-                    val size = context.resources.getDimension(R.dimen.dk_ic_big).toInt()
+                    val size = context.resources.getDimension(R.dimen.dk_ic_xbig).toInt()
                     BitmapDrawable(
                         context.resources,
                         Bitmap.createScaledBitmap(bitmap, size, size, true)

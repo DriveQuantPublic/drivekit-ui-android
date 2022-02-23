@@ -18,6 +18,7 @@
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:textAllCaps="false"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/dk_margin_half"/>
     </LinearLayout>
 </FrameLayout>
