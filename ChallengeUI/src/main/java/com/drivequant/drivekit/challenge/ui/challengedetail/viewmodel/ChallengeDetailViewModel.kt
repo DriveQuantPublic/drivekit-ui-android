@@ -82,6 +82,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         in 301..305 -> TripData.DISTANCE
         in 306..309 -> TripData.DURATION
         221 -> TripData.DISTRACTION
+        401 -> TripData.SPEEDING
         else -> TripData.SAFETY
     }
 
@@ -289,6 +290,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_nb_trip"
         in 306..309 -> "dk_challenge_driving_time"
         in 302..305 -> "dk_challenge_traveled_distance"
+        401 -> "dk_challenge_speeding_score"
         else -> "-"
     }
 
@@ -395,6 +397,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_leaderboard_trips_number"
         in 306..309 -> "dk_challenge_leaderboard_duration"
         in 302..305 -> "dk_challenge_leaderboard_distance"
+        401 -> "dk_challenge_leaderboard_speeding"
         else -> "-"
     }.let {
         DKResource.convertToDrawable(context, it)
