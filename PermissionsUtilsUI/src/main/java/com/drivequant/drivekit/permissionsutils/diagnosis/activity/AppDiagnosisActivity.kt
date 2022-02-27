@@ -26,14 +26,14 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionType
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
 import com.drivequant.drivekit.common.ui.utils.ContactType
+import com.drivequant.drivekit.core.utils.ConnectivityType
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
+import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
+import com.drivequant.drivekit.core.utils.PermissionStatus
+import com.drivequant.drivekit.core.utils.PermissionType
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
 
 
@@ -107,7 +107,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun checkBluetooth() =
-        if (DiagnosisHelper.isSensorActivated(this, SensorType.BLUETOOTH)) {
+        if (DiagnosisHelper.isActivated(this, ConnectivityType.BLUETOOTH)) {
             diag_item_bluetooth.setNormalState()
         } else {
             if (PermissionsUtilsUI.isBluetoothNeeded) {
@@ -119,7 +119,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
                     .positiveButton(diag_item_bluetooth.getDiagnosisLink()) { _, _ ->
-                        enableSensor(SensorType.BLUETOOTH)
+                        enableSensor(ConnectivityType.BLUETOOTH)
                     }
                     .show()
 
@@ -137,7 +137,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
 
     private fun checkGPS() {
-        if (DiagnosisHelper.isSensorActivated(this, SensorType.GPS)) {
+        if (DiagnosisHelper.isActivated(this, ConnectivityType.GPS)) {
             diag_item_location_sensor.setNormalState()
         } else {
             errorsCount++
@@ -147,7 +147,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
                     .positiveButton(diag_item_location_sensor.getDiagnosisLink()) { _, _ ->
-                        enableSensor(SensorType.GPS)
+                        enableSensor(ConnectivityType.GPS)
                     }
                     .show()
 
@@ -368,10 +368,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             }
     }
 
-    private fun enableSensor(sensorType: SensorType) {
+    private fun enableSensor(sensorType: ConnectivityType) {
         when (sensorType) {
-            SensorType.GPS -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            SensorType.BLUETOOTH -> startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+            ConnectivityType.GPS -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            ConnectivityType.BLUETOOTH -> startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
         }
     }
 

@@ -13,8 +13,8 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 
 open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequestPermissionsResultCallback {
