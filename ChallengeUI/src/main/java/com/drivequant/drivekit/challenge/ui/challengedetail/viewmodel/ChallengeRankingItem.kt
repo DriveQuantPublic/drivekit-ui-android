@@ -42,7 +42,8 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
 
     override fun getScore(context: Context, textColor: Int): Spannable {
         return when (viewModel.challenge.themeCode) {
-            in 101..221 -> return if (driverScore == 10.0) {
+            in 101..221,
+            401 -> return if (driverScore == 10.0) {
                 driverScore.removeZeroDecimal()
             } else {
                 driverScore.format(2)
