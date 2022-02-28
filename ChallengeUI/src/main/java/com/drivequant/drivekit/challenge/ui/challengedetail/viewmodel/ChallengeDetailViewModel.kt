@@ -93,10 +93,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 progress = 100
             } else {
                 progress = when (challenge.themeCode) {
-                    in 101..301 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
-                        it.challengeStats.maxScore - it.challengeStats.minScore
-                    ).roundToInt()
-                    in 306..309 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
+                    in 101..301,
+                    in 306..309,
+                    401 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
                         it.challengeStats.maxScore - it.challengeStats.minScore
                     ).roundToInt()
                     in 302..305 -> {
@@ -106,9 +105,6 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                         val maxDuration = (it.challengeStats.maxScore * 3600 / 60).roundToInt()
                         numeratorDuration / (maxDuration - minDuration)
                     }
-                    401 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
-                        it.challengeStats.maxScore - it.challengeStats.minScore
-                    ).roundToInt()
                     else -> 0
                 }
             }
