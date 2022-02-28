@@ -3,8 +3,8 @@ package com.drivequant.drivekit.permissionsutils.permissions.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.SensorType
+import com.drivequant.drivekit.core.utils.ConnectivityType
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
 
 /**
  * Created by Mohamed on 2020-04-16.
@@ -27,9 +27,9 @@ abstract class SensorsReceiver : BroadcastReceiver() {
         intent?.let { it ->
             context?.let { context ->
                 when (it.action) {
-                    LOCATION_INTENT_ACTION  -> getGpsState(DiagnosisHelper.isSensorActivated(context, SensorType.GPS))
+                    LOCATION_INTENT_ACTION  -> getGpsState(DiagnosisHelper.isActivated(context, ConnectivityType.GPS))
                     CONNECTIVITY_INTENT_ACTION -> getConnectivityState(DiagnosisHelper.isNetworkReachable(context))
-                    BLUETOOTH_INTENT_ACTION -> getBluetoothState(DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH))
+                    BLUETOOTH_INTENT_ACTION -> getBluetoothState(DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH))
                 }
             }
         }
@@ -45,8 +45,8 @@ abstract class SensorsReceiver : BroadcastReceiver() {
     abstract fun onSensorBroadcastReceived()
 
     private fun init(context: Context) {
-        getGpsState(DiagnosisHelper.isSensorActivated(context, SensorType.GPS))
+        getGpsState(DiagnosisHelper.isActivated(context, ConnectivityType.GPS))
         getConnectivityState(DiagnosisHelper.isNetworkReachable(context))
-        getBluetoothState(DiagnosisHelper.isSensorActivated(context, SensorType.BLUETOOTH))
+        getBluetoothState(DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH))
     }
 }
