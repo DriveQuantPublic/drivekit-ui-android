@@ -82,6 +82,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         in 301..305 -> TripData.DISTANCE
         in 306..309 -> TripData.DURATION
         221 -> TripData.DISTRACTION
+        401 -> TripData.SPEEDING
         else -> TripData.SAFETY
     }
 
@@ -92,10 +93,9 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 progress = 100
             } else {
                 progress = when (challenge.themeCode) {
-                    in 101..301 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
-                        it.challengeStats.maxScore - it.challengeStats.minScore
-                    ).roundToInt()
-                    in 306..309 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
+                    in 101..301,
+                    in 306..309,
+                    401 -> ((it.driverStats.score - it.challengeStats.minScore) * 100).div(
                         it.challengeStats.maxScore - it.challengeStats.minScore
                     ).roundToInt()
                     in 302..305 -> {
@@ -121,7 +121,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getBestPerformance(context: Context): String {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> {
+                in 101..221,
+                401 -> {
                     val score = if (it.challengeStats.maxScore == 10.0) {
                         it.challengeStats.maxScore.removeZeroDecimal()
                     } else {
@@ -143,9 +144,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getWorstPerformance(context: Context): String {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> "${it.challengeStats.minScore.format(2)}/10"
-                in 306..309 -> formatChallengeDuration(it.challengeStats.minScore, context).convertToString()
-                in 302..305 -> formatChallengeDistance(it.challengeStats.minScore, context).convertToString()
+                in 101..221,
+                401 -> "${it.challengeStats.minScore.format(2)}/10"
+                in 306..309,
+                in 302..305,
                 301 -> "${it.challengeStats.minScore.removeZeroDecimal()} ${context.resources.getQuantityString(
                     R.plurals.trip_plural,
                     it.challengeStats.numberTrip
@@ -158,7 +160,8 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getMainScore(context: Context): Spannable {
         return challengeDetailData?.let {
             return when (challenge.themeCode) {
-                in 101..221 -> {
+                in 101..221,
+                401 -> {
                     val score = if (it.driverStats.score == 10.0) {
                         it.driverStats.score.removeZeroDecimal()
                     } else {
@@ -289,6 +292,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_nb_trip"
         in 306..309 -> "dk_challenge_driving_time"
         in 302..305 -> "dk_challenge_traveled_distance"
+        401 -> "dk_challenge_speeding_score"
         else -> "-"
     }
 
@@ -395,6 +399,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         301 -> "dk_challenge_leaderboard_trips_number"
         in 306..309 -> "dk_challenge_leaderboard_duration"
         in 302..305 -> "dk_challenge_leaderboard_distance"
+        401 -> "dk_challenge_leaderboard_speeding"
         else -> "-"
     }.let {
         DKResource.convertToDrawable(context, it)
