@@ -1,8 +1,12 @@
 package com.drivekit.demoapp.config
 
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.activity.MainActivity
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -13,7 +17,9 @@ import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -52,14 +58,22 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureCore(application: Application) {
-        DriveKit.initialize(application)
+        DriveKit.initialize(application, object : DriveKitListener {
+            override fun onDisconnected() {
+                DriveKitLog.i("DriveKit App", "Disconnected from DriveKit")
+            }
+
+            override fun onAuthenticationError() {
+                DriveKitLog.i("DriveKit App", "DriveKit authentication error")
+            }
+        })
         //TODO: Push your api key here
-        //DriveKit.setApiKey("Your API key here")
+        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
     }
 
     private fun configureCommonUI() {
         DriveKitUI.initialize()
-        DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener{
+        DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener {
             override fun trackScreen(screen: String, className: String) {
                 // TODO: manage screen tracking here
             }
@@ -144,9 +158,20 @@ internal object DriveKitConfig : ContentMail {
             context.getString(R.string.trip_started),
             R.drawable.ic_launcher_background
         )
-        notification.enableCancel = true
-        notification.cancel = context.getString(R.string.cancel_trip)
-        notification.cancelIconId = R.drawable.ic_launcher_background
+        val intent = Intent(context, MainActivity::class.java)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }.let {
+            PendingIntent.getActivity(context, 0, intent, it)
+        }
+        notification.apply {
+            enableCancel = true
+            cancel = context.getString(R.string.cancel_trip)
+            cancelIconId = R.drawable.ic_launcher_background
+            contentIntent = pendingIntent
+        }
         return notification
     }
 
