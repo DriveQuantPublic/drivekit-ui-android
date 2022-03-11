@@ -1,12 +1,14 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
 import android.app.KeyguardManager
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 
 open class BaseCrashFeedbackActivity : AppCompatActivity() {
 
@@ -32,9 +34,13 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
 
     fun launchPhoneCall() {
         val intentTel = Intent(Intent.ACTION_VIEW)
-        val dataTel = Uri.parse("tel:+33600112233") // TODO
+        val dataTel = Uri.parse("tel:" + DriveKitTripAnalysisUI.crashFeedbackRoadsideAssistanceNumber)
         intentTel.data = dataTel
-        startActivity(intentTel)
+        try {
+            startActivity(intentTel)
+        } catch (e: ActivityNotFoundException) {
+            // TODO DriveKitLog.e()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

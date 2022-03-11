@@ -1,16 +1,21 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep2ViewModel
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashFeedbackStatus
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashUserFeedbackListener
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.DKCrashFeedbackListener
 import kotlinx.android.synthetic.main.dk_layout_activity_crash_feedback_step1.*
-import java.util.*
-
 
 class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
@@ -32,27 +37,26 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             viewModel = ViewModelProviders.of(this).get(CrashFeedbackStep2ViewModel::class.java)
         }
 
-        /*DriveKitTripAnalysis.setCrashFeedbackTimer(60)
+        DriveKitTripAnalysis.setCrashFeedbackTimer(60 * 5) // 5 minutes
         DriveKitTripAnalysis.setCrashFeedbackListener(object : DKCrashFeedbackListener {
             override fun onProgress(currentSecond: Int, timeoutSecond: Int) {
                 runOnUiThread {
-                    text_view_progress.text = "$currentSecond"
-                    text_view_total.text = "$timeoutSecond"
+                    // TODO do nothing
                 }
             }
 
             override fun timeoutReached() {
                 runOnUiThread {
-                    Toast.makeText(DriveKit.applicationContext!!, "Timeout reached !", Toast.LENGTH_SHORT).show()
+                    applicationContext?.let {
+                        Toast.makeText(it , "Timeout reached !", Toast.LENGTH_SHORT).show() // TODO remove
+                    }
                     sendNoCrash()
                 }
             }
-        })*/
+        })
 
         initTitle()
         initDescription()
-
-        // TODO setup 60" timer
     }
 
     private fun initTitle() {
@@ -69,7 +73,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
         }
     }
 
-    /*fun onNoCrashButtonClicked(view: View) {
+    fun onNoCrashButtonClicked(view: View) {
         sendNoCrash()
     }
 
@@ -80,7 +84,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             listener = object : CrashUserFeedbackListener {
                 override fun onFeedbackSent(status: CrashFeedbackStatus) {
                     view.context?.let {
-                        Toast.makeText(it, "Minor crash feedback status: $status", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Minor crash feedback status: $status", Toast.LENGTH_SHORT).show() // TODO remove
                         finish()
                     }
                 }
@@ -90,19 +94,19 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
     fun onCriticalCrashButtonClicked(view: View) {
         dismissKeyguard()
-        launchPhoneCall() // Do not wait the webservice response to make the phone call !
         DriveKitTripAnalysis.sendUserFeedback(
             feedbackType = CrashFeedbackType.CRASH_CONFIRMED,
             severity = CrashFeedbackSeverity.CRITICAL,
             listener = object : CrashUserFeedbackListener {
                 override fun onFeedbackSent(status: CrashFeedbackStatus) {
                     view.context?.let {
-                        Toast.makeText(it, "Critical crash feedback status: $status", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Critical crash feedback status: $status", Toast.LENGTH_SHORT).show()  // TODO remove
                         finish()
                     }
                 }
             }
         )
+        launchPhoneCall() // Do not wait the webservice response to make the phone call !
     }
 
     private fun sendNoCrash() {
@@ -111,15 +115,17 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             severity = CrashFeedbackSeverity.NONE,
             listener = object : CrashUserFeedbackListener {
                 override fun onFeedbackSent(status: CrashFeedbackStatus) {
-                    Toast.makeText(DriveKit.applicationContext!!, "No crash feedback status: $status", Toast.LENGTH_SHORT).show()
+                    applicationContext?.let {
+                        Toast.makeText(it, "No crash feedback status: $status", Toast.LENGTH_SHORT).show()
+                    }
                     finish()
                 }
             }
         )
-    }*/
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        //DriveKitTripAnalysis.setCrashFeedbackListener(null)
+        DriveKitTripAnalysis.setCrashFeedbackListener(null)
     }
 }

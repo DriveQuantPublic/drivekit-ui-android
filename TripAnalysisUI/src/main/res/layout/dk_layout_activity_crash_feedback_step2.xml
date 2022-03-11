@@ -45,7 +45,8 @@
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackFine_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackFine"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_no_accident"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash" />
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash"
+            android:onClick="onNoCrashButtonClicked" />
         <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
             android:id="@+id/button_minor_accident"
             android:layout_width="match_parent"
@@ -54,7 +55,8 @@
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackMinorAccident_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackMinorAccident"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_minor_accident"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash" />
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash"
+            android:onClick="onMinorCrashButtonClicked" />
         <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
             android:id="@+id/button_assistance"
             android:layout_width="match_parent"
@@ -63,6 +65,7 @@
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackAssistance_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackAssistance"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_assistance"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_critical_accident" />
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_critical_accident"
+            android:onClick="onCriticalCrashButtonClicked" />
     </LinearLayout>
 </LinearLayout>

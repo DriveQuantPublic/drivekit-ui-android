@@ -2,10 +2,9 @@ package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -14,8 +13,14 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.view.RoundedSlicesPieChartRenderer
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashFeedbackStatus
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashUserFeedbackListener
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.DKCrashFeedbackListener
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -25,6 +30,8 @@ import java.util.*
 
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
+
+    private val IS_FULL_SCREEN_INTENT_EXTRA_KEY = "fullScreenIntentExtra" // TODO public in internal modules
 
     private lateinit var viewModel: CrashFeedbackStep1ViewModel
     private var fromFullScreenIntent: Boolean = false
@@ -39,10 +46,10 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             ), javaClass.simpleName
         )
 
-        /*fromFullScreenIntent = intent.getBooleanExtra(IS_FULL_SCREEN_INTENT_EXTRA_KEY, false)
+        fromFullScreenIntent = intent.getBooleanExtra(IS_FULL_SCREEN_INTENT_EXTRA_KEY, false)
         if (fromFullScreenIntent) {
             DriveKitTripAnalysis.setCrashFeedbackTimer(10 * 60) // 10 minutes
-        }*/
+        }
 
         setContentView(R.layout.dk_layout_activity_crash_feedback_step1)
 
@@ -50,11 +57,10 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             viewModel = ViewModelProviders.of(this).get(CrashFeedbackStep1ViewModel::class.java)
         }
 
-        /*DriveKitTripAnalysis.setCrashFeedbackListener(object : DKCrashFeedbackListener {
+        DriveKitTripAnalysis.setCrashFeedbackListener(object : DKCrashFeedbackListener {
             override fun onProgress(currentSecond: Int, timeoutSecond: Int) {
                 runOnUiThread {
-                    //text_view_progress.text = "$currentSecond"
-                    //text_view_total.text = "$timeoutSecond"
+                    updateTimer(currentSecond, timeoutSecond)
                 }
             }
 
@@ -63,9 +69,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                     finish()
                 }
             }
-
-        })*/
-
+        })
 
         initTitle()
         initDescription()
@@ -115,6 +119,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                 this.animator,
                 this.viewPortHandler
             )
+            setNoDataText("")
             invalidate()
         }
     }
@@ -180,7 +185,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     }
 
     fun onNoCrashButtonClicked(view: View) {
-        //DriveKitTripAnalysis.stopCrashFeedbackTimer()
+        DriveKitTripAnalysis.stopCrashFeedbackTimer()
         startActivity(Intent(this, CrashFeedbackStep2Activity::class.java)) // TODO clear flag ?
         finish()
     }
@@ -188,18 +193,18 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     fun onAssistanceButtonClicked(view: View) {
         dismissKeyguard()
         launchPhoneCall() // Do not wait the webservice response to make the phone call !
-        /*DriveKitTripAnalysis.stopCrashFeedbackTimer()
+        DriveKitTripAnalysis.stopCrashFeedbackTimer()
         DriveKitTripAnalysis.sendUserFeedback(
             feedbackType = CrashFeedbackType.CRASH_CONFIRMED,
             severity = CrashFeedbackSeverity.CRITICAL,
             listener = object : CrashUserFeedbackListener {
                 override fun onFeedbackSent(status: CrashFeedbackStatus) {
                     view.context?.let {
-                        Toast.makeText(it, "Critical crash feedback status: $status", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(it, "Critical crash feedback status: $status", Toast.LENGTH_SHORT).show() // TODO remove
                         finish()
                     }
                 }
             }
-        )*/
+        )
     }
 }
