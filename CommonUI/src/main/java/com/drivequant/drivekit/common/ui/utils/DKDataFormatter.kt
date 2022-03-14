@@ -58,7 +58,6 @@ object DKDataFormatter {
                             listOf(
                                 FormatType.SEPARATOR(),
                                 FormatType.VALUE(nbHour.toString()),
-                                FormatType.SEPARATOR(),
                                 FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
                             )
                         )
@@ -68,7 +67,6 @@ object DKDataFormatter {
                     formattingTypes.addAll(
                         listOf(
                             FormatType.VALUE(nbHour.toString()),
-                            FormatType.SEPARATOR(),
                             FormatType.UNIT(context.getString(R.string.dk_common_unit_hour))
                         )
                     )
