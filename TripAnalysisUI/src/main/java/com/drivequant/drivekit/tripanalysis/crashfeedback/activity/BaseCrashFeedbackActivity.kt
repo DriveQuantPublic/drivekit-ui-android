@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 
 open class BaseCrashFeedbackActivity : AppCompatActivity() {
@@ -38,8 +39,8 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
         intentTel.data = dataTel
         try {
             startActivity(intentTel)
-        } catch (e: ActivityNotFoundException) {
-            // TODO DriveKitLog.e()
+        } catch (activityNotFoundException: ActivityNotFoundException) {
+            DriveKitLog.e(DriveKitTripAnalysisUI.TAG, "Crash Feedback - Could not launch phone call : $activityNotFoundException")
         }
     }
 

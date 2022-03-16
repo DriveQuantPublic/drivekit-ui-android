@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -132,9 +131,8 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             }
         }
 
-        val h = Highlight(0f, 0f, 0)
         timer.apply {
-            highlightValues(arrayOf(h))
+            highlightValues(arrayOf(Highlight(0f, 0f, 0)))
             centerText = spannable.toSpannable().toString()
             val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
             setCenterTextColor(DriveKitUI.colors.mainFontColor())
@@ -156,7 +154,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     fun onNoCrashButtonClicked(view: View) {
         DriveKitTripAnalysis.stopCrashFeedbackTimer()
-        startActivity(Intent(this, CrashFeedbackStep2Activity::class.java)) // TODO clear flag ?
+        startActivity(Intent(this, CrashFeedbackStep2Activity::class.java))
         finish()
     }
 
@@ -169,10 +167,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             severity = CrashFeedbackSeverity.CRITICAL,
             listener = object : CrashUserFeedbackListener {
                 override fun onFeedbackSent(status: CrashFeedbackStatus) {
-                    view.context?.let {
-                        Toast.makeText(it, "Critical crash feedback status: $status", Toast.LENGTH_SHORT).show() // TODO remove
-                        finish()
-                    }
+                    finish()
                 }
             }
         )

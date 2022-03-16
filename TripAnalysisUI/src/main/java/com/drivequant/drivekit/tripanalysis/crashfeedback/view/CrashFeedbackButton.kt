@@ -15,8 +15,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.extension.headLine1
 
 
-// TODO : set internal
-class CrashFeedbackButton : FrameLayout {
+internal class CrashFeedbackButton : FrameLayout {
 
     private lateinit var container: FrameLayout
     private lateinit var button: LinearLayout

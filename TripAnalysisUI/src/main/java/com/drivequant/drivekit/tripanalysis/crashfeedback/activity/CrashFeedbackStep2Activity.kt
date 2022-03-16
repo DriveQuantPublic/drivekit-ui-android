@@ -39,9 +39,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
         DriveKitTripAnalysis.setCrashFeedbackTimer(60 * 5) // 5 minutes
         DriveKitTripAnalysis.setCrashFeedbackListener(object : DKCrashFeedbackListener {
             override fun onProgress(currentSecond: Int, timeoutSecond: Int) {
-                runOnUiThread {
-                    // do nothing
-                }
+                // do nothing
             }
 
             override fun timeoutReached() {
