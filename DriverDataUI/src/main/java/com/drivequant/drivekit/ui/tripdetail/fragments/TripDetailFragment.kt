@@ -238,10 +238,7 @@ class TripDetailFragment : Fragment() {
         })
         viewModel.reverseGeocoderObserver.observe(this, {
             if (it) {
-                val data = Intent()
-                requireActivity().apply {
-                    setResult(RESULT_OK, data)
-                }
+                requireActivity().setResult(RESULT_OK, Intent())
             }
         })
         viewModel.fetchTripData(requireContext())
