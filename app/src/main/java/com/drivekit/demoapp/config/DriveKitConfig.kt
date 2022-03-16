@@ -112,7 +112,7 @@ internal object DriveKitConfig : ContentMail {
                     title = context.getString(R.string.dk_crash_detection_feedback_notif_title),
                     message = context.getString(R.string.dk_crash_detection_feedback_notif_message),
                     activity = CrashFeedbackStep1Activity::class.java,
-                    crashAlert = DKCrashAlert.SOUND_AND_VIBRATION
+                    crashAlert = DKCrashAlert.SILENCE
                 ),
                 crashVelocityThreshold = 0.0
             )
