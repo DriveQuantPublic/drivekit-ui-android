@@ -55,7 +55,7 @@
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackMinorAccident_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackMinorAccident"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_minor_accident"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash"
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_minor_accident"
             android:onClick="onMinorCrashButtonClicked" />
         <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
             android:id="@+id/button_assistance"
