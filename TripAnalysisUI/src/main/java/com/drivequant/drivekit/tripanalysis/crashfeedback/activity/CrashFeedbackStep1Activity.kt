@@ -31,7 +31,7 @@ import java.util.*
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
-    private val IS_FULL_SCREEN_INTENT_EXTRA_KEY = "fullScreenIntentExtra" // TODO public in internal modules
+    private val IS_FULL_SCREEN_INTENT_EXTRA_KEY = "fullScreenIntentExtra"
 
     private lateinit var viewModel: CrashFeedbackStep1ViewModel
     private var fromFullScreenIntent: Boolean = false
@@ -74,8 +74,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         initTitle()
         initDescription()
         initTimer()
-
-        startTimer() // TODO mock seconds
     }
 
     private fun initTitle() {
@@ -90,19 +88,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             text_view_description.text = this.getText(it)
             text_view_description.normalText(DriveKitUI.colors.complementaryFontColor())
         }
-    }
-
-    private fun startTimer() {
-        val timer = Timer()
-        timer.schedule(object : TimerTask() {
-            private var counter = 0
-            override fun run() {
-                runOnUiThread {
-                    updateTimer(counter, 60) // TODO total seconds
-                    counter++
-                }
-            }
-        }, 0, 1000) //Update text every second
     }
 
     private fun initTimer() {
@@ -126,21 +111,6 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     private fun updateTimer(duration: Int, total: Int) {
         val nbSecond = (duration % 60)
-
-        /*val nbMinute = (duration/60).toInt()
-        //var durationText: String = Utils.convertSecondeToString(duration, true, false)
-        var durationText = "test"
-        when {
-            nbSecond in 1..9 -> {
-                durationText += ":0$nbSecond"
-            }
-            nbSecond >= 10 -> {
-                durationText += ":$nbSecond"
-            }
-            nbSecond == 0 -> {
-                durationText += ":00"
-            }
-        }*/
         val data = DKDataFormatter.formatExactDuration(this, (total - nbSecond) * 1000L)
         val spannable = DKSpannable()
         data.forEach {

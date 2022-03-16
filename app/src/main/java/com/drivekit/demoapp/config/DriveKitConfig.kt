@@ -6,7 +6,6 @@ import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
@@ -30,6 +29,9 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -95,6 +97,8 @@ internal object DriveKitConfig : ContentMail {
             override fun beaconDetected() {}
             override fun sdkStateChanged(state: State) {}
             override fun potentialTripStart(startMode: StartMode) {}
+            override fun crashDetected(crashInfo: DKCrashInfo) {}
+            override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
         })
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
