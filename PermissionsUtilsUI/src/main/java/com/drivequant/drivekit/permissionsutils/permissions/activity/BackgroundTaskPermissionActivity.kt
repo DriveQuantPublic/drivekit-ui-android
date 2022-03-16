@@ -7,10 +7,10 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
+import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
-import com.drivequant.drivekit.permissionsutils.diagnosis.model.PermissionStatus
 import kotlinx.android.synthetic.main.activity_background_task_permission.*
 
 class BackgroundTaskPermissionActivity : BasePermissionActivity() {
