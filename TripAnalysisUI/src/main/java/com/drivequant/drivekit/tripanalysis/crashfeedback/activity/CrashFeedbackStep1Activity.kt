@@ -30,10 +30,7 @@ import java.util.*
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
-    private val IS_FULL_SCREEN_INTENT_EXTRA_KEY = "fullScreenIntentExtra"
-
     private lateinit var viewModel: CrashFeedbackStep1ViewModel
-    private var fromFullScreenIntent: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +42,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             ), javaClass.simpleName
         )
 
-        fromFullScreenIntent = intent.getBooleanExtra(IS_FULL_SCREEN_INTENT_EXTRA_KEY, false)
-        if (fromFullScreenIntent) {
-            DriveKitTripAnalysis.setCrashFeedbackTimer(10 * 60) // 10 minutes
-        }
+        DriveKitTripAnalysis.setCrashFeedbackTimer(60) // 1 minute
 
         setContentView(R.layout.dk_layout_activity_crash_feedback_step1)
 
