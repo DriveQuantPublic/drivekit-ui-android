@@ -110,7 +110,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     private fun updateTimer(duration: Int, total: Int) {
         val nbSecond = (duration % 60)
-        val data = DKDataFormatter.formatExactDuration(this, (total - nbSecond) * 1000L)
+        val data = DKDataFormatter.formatExactDuration(this, (total - duration) * 1000L)
         val spannable = DKSpannable()
         data.forEach {
             when (it) {
