@@ -8,10 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.*
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.crashfeedback.view.RoundedSlicesPieChartRenderer
 import com.drivequant.drivekit.tripanalysis.crashfeedback.viewmodel.CrashFeedbackStep1ViewModel
@@ -103,8 +100,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     }
 
     private fun updateTimer(duration: Int, total: Int) {
-        val nbSecond = (duration % 60)
-        val data = DKDataFormatter.formatExactDuration(this, (total - duration) * 1000L)
+        val data = DKDataFormatter.formatDuration(this, (total - duration).toDouble(), maxUnit = DurationUnit.SECOND)
         val spannable = DKSpannable()
         data.forEach {
             when (it) {
@@ -115,13 +111,9 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                         typeface(Typeface.BOLD)
                         size(R.dimen.dk_text_xbig)
                     })
-                is FormatType.UNIT -> spannable.append(
-                    it.value,
-                    this.resSpans {
-                        color(DriveKitUI.colors.fontColorOnPrimaryColor())
-                        size(R.dimen.dk_text_normal)
-                    })
-                is FormatType.SEPARATOR -> spannable.append(it.value)
+                else -> {
+                    // do nothing
+                }
             }
         }
 
@@ -134,8 +126,8 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             setCenterTextSize(textSize)
         }
         val entries: MutableList<PieEntry> = ArrayList()
-        entries.add(PieEntry((60-nbSecond).toFloat()))
-        entries.add(PieEntry(nbSecond.toFloat()))
+        entries.add(PieEntry((60-duration).toFloat()))
+        entries.add(PieEntry(duration.toFloat()))
         val pieDataSet = PieDataSet(entries, null)
         pieDataSet.setColors(intArrayOf(R.color.dkCrashFeedbackAssistance, R.color.dkCrashFeedbackAssistance_10), this)
         val pieData = PieData(pieDataSet)
