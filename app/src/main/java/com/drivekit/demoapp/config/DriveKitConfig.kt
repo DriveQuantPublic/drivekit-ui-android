@@ -23,8 +23,15 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
+import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -32,6 +39,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
+import kotlin.random.Random
 
 /**
  * Created by Mohamed on 2020-05-14.
@@ -89,9 +97,26 @@ internal object DriveKitConfig : ContentMail {
             override fun beaconDetected() {}
             override fun sdkStateChanged(state: State) {}
             override fun potentialTripStart(startMode: StartMode) {}
+            override fun crashDetected(crashInfo: DKCrashInfo) {}
+            override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
         })
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
+        DriveKitTripAnalysisUI.enableCrashFeedback(
+            roadsideAssistanceNumber = "+33600112233",
+            DKCrashFeedbackConfig(
+                notification = DKCrashFeedbackNotification(
+                    icon = R.drawable.ic_launcher_background,
+                    channelName = "${R.string.app_name} - Crash Detection Feedback",
+                    notificationId = Random.nextInt(1, Integer.MAX_VALUE),
+                    title = context.getString(R.string.dk_crash_detection_feedback_notif_title),
+                    message = context.getString(R.string.dk_crash_detection_feedback_notif_message),
+                    activity = CrashFeedbackStep1Activity::class.java,
+                    crashAlert = DKCrashAlert.SILENCE
+                ),
+                crashVelocityThreshold = 0.0
+            )
+        )
     }
 
     private fun configureDriverData() {
