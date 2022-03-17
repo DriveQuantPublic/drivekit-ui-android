@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep2Activity">
+
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/dk_margin_double"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin_double" />
+
+        <TextView
+            android:id="@+id/text_view_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dk_margin_double"
+        android:layout_marginBottom="@dimen/dk_margin_double"
+        android:orientation="vertical">
+        <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
+            android:id="@+id/button_no_accident"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackFine_10"
+            app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackFine"
+            app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_no_accident"
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_no_crash"
+            android:onClick="onNoCrashButtonClicked" />
+        <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
+            android:id="@+id/button_minor_accident"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackMinorAccident_10"
+            app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackMinorAccident"
+            app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_minor_accident"
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step2_option_minor_accident"
+            android:onClick="onMinorCrashButtonClicked" />
+        <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
+            android:id="@+id/button_assistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin"
+            app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackAssistance_10"
+            app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackAssistance"
+            app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_assistance"
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_critical_accident"
+            android:onClick="onCriticalCrashButtonClicked" />
+    </LinearLayout>
+</LinearLayout>

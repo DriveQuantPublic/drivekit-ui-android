@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_crash_detection_feedback_notif_message">Click on the notification and tell us how you are doing.</string>
+   <string name="dk_crash_detection_feedback_notif_title">An accident was detected</string>
+   <string name="dk_crash_detection_feedback_step1_description">You can cancel or confirm the alert before the countdown ends</string>
+   <string name="dk_crash_detection_feedback_step1_option_critical_accident">Contact assistance</string>
+   <string name="dk_crash_detection_feedback_step1_option_no_crash">I am fine</string>
+   <string name="dk_crash_detection_feedback_step1_title">An accident was detected, how are you?</string>
+   <string name="dk_crash_detection_feedback_step2_description">What happened to you?</string>
+   <string name="dk_crash_detection_feedback_step2_option_minor_accident">Minor accident</string>
+   <string name="dk_crash_detection_feedback_step2_option_no_crash">Nothing, everything is fine</string>
+   <string name="dk_crash_detection_feedback_step2_title">We are reassured to know that you are doing well.</string>
+   <string name="dk_crash_detection_feedback_step2option_critical_accident">Contact assistance</string>
    <string name="dk_working_hours_back_save_alert">The working hours have been changed. Would you like to save them?</string>
    <string name="dk_working_hours_enable_desc">This feature configures the automatic trip recording periods and labels the trips.</string>
    <string name="dk_working_hours_enable_title">Enable working hours</string>

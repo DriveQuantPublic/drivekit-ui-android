@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DKCrashFeedbackButtonItemView">
+        <attr name="dkCrashFeedbackButtonItemTitle" format="string" />
+        <attr name="dkCrashFeedbackButtonItemDrawable" format="integer" />
+        <attr name="dkCrashFeedbackButtonBorder" format="integer" />
+        <attr name="dkCrashFeedbackButtonBackground" format="integer" />
+    </declare-styleable>
+</resources>
