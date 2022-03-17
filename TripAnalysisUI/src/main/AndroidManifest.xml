@@ -9,13 +9,13 @@
 
         <activity
             android:name="com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:showOnLockScreen="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep2Activity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:showOnLockScreen="true"
             android:theme="@style/AppTheme.NoActionBar" />
