@@ -49,4 +49,8 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
+    override fun onBackPressed() {
+        // do nothing
+    }
 }
