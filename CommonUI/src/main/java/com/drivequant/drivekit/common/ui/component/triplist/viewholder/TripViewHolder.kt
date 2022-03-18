@@ -145,6 +145,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             tripInfoContainer.visibility = View.VISIBLE
         } else {
             tripInfoContainer.removeAllViews()
+            tripInfoContainer.visibility = View.INVISIBLE
         }
     }
 }
