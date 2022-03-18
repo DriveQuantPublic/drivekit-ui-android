@@ -138,7 +138,9 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
     override fun getStartDate(): Date? = trip.startDate
     override fun getEndDate(): Date = trip.endDate
     override fun getDepartureCity(): String = trip.departureCity
+    override fun getDepartureAddress(): String = trip.departureAddress
     override fun getArrivalCity(): String = trip.arrivalCity
+    override fun getArrivalAddress(): String = trip.arrivalAddress
     override fun isScored(tripData: TripData): Boolean =
         when (tripData) {
             TripData.SAFETY, TripData.ECO_DRIVING -> !trip.unscored

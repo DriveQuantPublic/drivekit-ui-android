@@ -103,6 +103,7 @@
         android:layout_marginStart="4dp"
         android:lines="1"
         android:ellipsize="end"
+        android:paddingEnd="@dimen/dk_margin_half"
         app:layout_constraintStart_toEndOf="@id/text_view_departure_time"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"
@@ -139,6 +140,7 @@
         android:lines="1"
         tools:text="Arrival city"
         android:ellipsize="end"
+        android:paddingEnd="@dimen/dk_margin_half"
         app:layout_constraintBottom_toBottomOf="@id/view_group_trip_data"
         app:layout_constraintStart_toEndOf="@id/text_view_arrival_time"
         app:layout_constraintEnd_toStartOf="@id/container_trip_info"/>

@@ -3,6 +3,7 @@ package com.drivequant.drivekit.common.ui.component.triplist.extension
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.extension.isSameDay
+import com.drivequant.drivekit.core.geocoder.DKAddress
 import java.util.*
 
 fun DKTripListItem.getOrComputeStartDate(): Date? {
@@ -85,3 +86,17 @@ fun List<DKTripListItem>.orderByDay(orderDesc: Boolean): MutableList<DKTripsByDa
     }
     return tripsSorted
 }
+
+fun DKTripListItem.computeDepartureInfo() =
+    if (this.getDepartureCity().isBlank() || this.getDepartureCity() == DKAddress.unknownValue) {
+        this.getDepartureAddress()
+    } else {
+        this.getDepartureCity()
+    }
+
+fun DKTripListItem.computeArrivalInfo() =
+    if (this.getArrivalCity().isBlank() || this.getArrivalCity() == DKAddress.unknownValue) {
+        this.getArrivalAddress()
+    } else {
+        this.getArrivalCity()
+    }
