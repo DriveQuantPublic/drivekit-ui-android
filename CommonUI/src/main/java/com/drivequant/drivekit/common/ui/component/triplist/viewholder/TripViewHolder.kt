@@ -26,6 +26,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 
+
 internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textViewDepartureTime =
         itemView.findViewById<TextView>(R.id.text_view_departure_time)
@@ -134,16 +135,16 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     }
 
     private fun computeTripInfo(trip: DKTripListItem) {
-        tripInfoContainer.addView(
-            TripInfoView(
-                itemView.context,
-                trip
-            )
-        )
         if (trip.isInfoDisplayable()) {
+            tripInfoContainer.addView(
+                TripInfoView(
+                    itemView.context,
+                    trip
+                )
+            )
             tripInfoContainer.visibility = View.VISIBLE
         } else {
-            tripInfoContainer.visibility = View.INVISIBLE
+            tripInfoContainer.removeAllViews()
         }
     }
 }
