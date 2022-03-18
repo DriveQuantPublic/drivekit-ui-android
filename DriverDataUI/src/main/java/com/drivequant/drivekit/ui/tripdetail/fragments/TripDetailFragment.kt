@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
@@ -149,15 +148,14 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun deleteTrip() {
-        viewModel.deleteTripObserver.observe(this, Observer {
+        viewModel.deleteTripObserver.observe(this, {
             hideProgressCircular()
             context?.let { context ->
                 if (it != null) {
                     val alert = DKAlertDialog.LayoutBuilder()
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(positiveListener =
-                            DialogInterface.OnClickListener { dialog, _ ->
+                        .positiveButton(positiveListener = { dialog, _ ->
                                 dialog.dismiss()
                                 val data = Intent()
                                 requireActivity().apply {
@@ -184,19 +182,29 @@ class TripDetailFragment : Fragment() {
         viewModel.deleteTrip()
     }
 
-    private fun sendTripAdviceFeedback(mapItem: DKMapItem, evaluation: Boolean, feedback: Int, comment: String? = null ){
-        viewModel.sendAdviceFeedbackObserver.observe(this, Observer { status ->
+    private fun sendTripAdviceFeedback(
+        mapItem: DKMapItem,
+        evaluation: Boolean,
+        feedback: Int,
+        comment: String? = null) {
+        viewModel.sendAdviceFeedbackObserver.observe(this, { status ->
             hideProgressCircular()
-            if (status != null){
+            if (status != null) {
                 adviceAlertDialog?.hide()
-                Toast.makeText(context, if (status) context?.getString(R.string.dk_driverdata_advice_feedback_success) else context?.getString(R.string.dk_driverdata_advice_feedback_error), Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    if (status) context?.getString(R.string.dk_driverdata_advice_feedback_success) else context?.getString(
+                        R.string.dk_driverdata_advice_feedback_error
+                    ),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
         viewModel.sendTripAdviceFeedback(mapItem, evaluation, feedback, comment)
     }
 
-    private fun loadTripData(){
-        viewModel.tripEventsObserver.observe(this, Observer {
+    private fun loadTripData() {
+        viewModel.tripEventsObserver.observe(this, {
             if (viewModel.events.isNotEmpty()) {
                 setMapController()
                 setViewPager()
@@ -206,7 +214,7 @@ class TripDetailFragment : Fragment() {
                 displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
         })
-        viewModel.unScoredTrip.observe(this, Observer{ routeAvailable ->
+        viewModel.unScoredTrip.observe(this, { routeAvailable ->
             routeAvailable?.let {
                 if (it){
                     setMapController()
@@ -219,19 +227,24 @@ class TripDetailFragment : Fragment() {
 
             hideProgressCircular()
         })
-        viewModel.noRoute.observe(this, Observer{
+        viewModel.noRoute.observe(this, {
             setViewPager()
             hideProgressCircular()
             setHeaderSummary()
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
         })
-        viewModel.noData.observe(this, Observer{
+        viewModel.noData.observe(this, {
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
+        })
+        viewModel.reverseGeocoderObserver.observe(this, {
+            if (it) {
+                requireActivity().setResult(RESULT_OK, Intent())
+            }
         })
         viewModel.fetchTripData(requireContext())
     }
 
-    private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true){
+    private fun displayErrorMessageAndGoBack(stringResId: Int, goBack: Boolean = true) {
         AlertDialog.Builder(context)
             .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
@@ -245,8 +258,8 @@ class TripDetailFragment : Fragment() {
             .show()
     }
 
-    private fun displayAdviceFromTripInfo(){
-        if (openAdvice){
+    private fun displayAdviceFromTripInfo() {
+        if (openAdvice) {
             val index = viewModel.getFirstMapItemIndexWithAdvice()
             if (index > -1) {
                 view_pager.currentItem = index
@@ -258,7 +271,7 @@ class TripDetailFragment : Fragment() {
     }
 
     fun displayAdvice(mapItem: DKMapItem) {
-        if (viewModel.shouldDisplayAdvice(mapItem)){
+        if (viewModel.shouldDisplayAdvice(mapItem)) {
             val adviceView = View.inflate(context, R.layout.view_trip_advice_message, null)
             val headerText = adviceView.findViewById<TextView>(R.id.text_view_advice_header)
             val feedbackButtonsLayout = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_feedback)
@@ -271,7 +284,7 @@ class TripDetailFragment : Fragment() {
                 adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
 
-            if (viewModel.shouldDisplayFeedbackButtons(mapItem)){
+            if (viewModel.shouldDisplayFeedbackButtons(mapItem)) {
                 val disagreeButton = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_negative)
                 val disagreeText = adviceView.findViewById<TextView>(R.id.advice_disagree_textview)
                 val disagreeImage = adviceView.findViewById<ImageView>(R.id.advice_disagree_image)
@@ -368,10 +381,10 @@ class TripDetailFragment : Fragment() {
         }
     }
 
-    private fun buildFeedbackData(mapItem: DKMapItem, feedbackView: View, radioGroup: RadioGroup){
+    private fun buildFeedbackData(mapItem: DKMapItem, feedbackView: View, radioGroup: RadioGroup) {
         showProgressCircular()
         var comment: String? = null
-        val feedback = when (radioGroup.checkedRadioButtonId){
+        val feedback = when (radioGroup.checkedRadioButtonId) {
             R.id.radio_button_choice_01 -> 1
             R.id.radio_button_choice_02 -> 2
             R.id.radio_button_choice_03 -> 3
@@ -386,7 +399,7 @@ class TripDetailFragment : Fragment() {
         sendTripAdviceFeedback(mapItem, false, feedback, comment)
     }
 
-    private fun setMapController(){
+    private fun setMapController() {
         mapFragment?.getMapAsync {
                 googleMap -> mapFragment
             tripMapViewHolder =
