@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.core.geocoder.CheckReverseGeocodeListener
 import com.drivequant.drivekit.databaseutils.entity.Call
 import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -86,9 +87,10 @@ internal class TripDetailViewModel(
     var deleteTripObserver: MutableLiveData<Boolean> = MutableLiveData()
     var sendAdviceFeedbackObserver: MutableLiveData<Boolean> = MutableLiveData()
     var selectedMapTraceType: MutableLiveData<MapTraceType> = MutableLiveData()
+    var reverseGeocoderObserver: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun fetchTripData(context: Context){
-        if (DriveKitDriverData.isConfigured()){
+    fun fetchTripData(context: Context) {
+        if (DriveKitDriverData.isConfigured()) {
             DriveKitDriverData.getTrip(itinId, object: TripQueryListener {
                 override fun onResponse(status: TripsSyncStatus, trip: Trip?) {
                     tripSyncStatus = status
@@ -111,11 +113,15 @@ internal class TripDetailViewModel(
         }
     }
 
-    private fun updateTripAdvice(adviceId: String, evaluation: Int, feedback: Int, comment: String?){
-        if (DriveKitDriverData.isConfigured()){
+    private fun updateTripAdvice(
+        adviceId: String,
+        evaluation: Int,
+        feedback: Int,
+        comment: String?) {
+        if (DriveKitDriverData.isConfigured()) {
             trip?.let {
-                for (tripAdvice in it.tripAdvices){
-                    if (tripAdvice.id == adviceId){
+                for (tripAdvice in it.tripAdvices) {
+                    if (tripAdvice.id == adviceId) {
                         tripAdvice.evaluation = evaluation
                         tripAdvice.feedback = feedback
                         tripAdvice.comment = comment
@@ -130,7 +136,7 @@ internal class TripDetailViewModel(
     }
 
     fun getFirstMapItemIndexWithAdvice(): Int {
-        for ((loopIndex, value) in configurableMapItems.withIndex()){
+        for ((loopIndex, value) in configurableMapItems.withIndex()) {
             trip?.let {
                 val advice = value.getAdvice(it)
                 if (advice != null) {
@@ -141,24 +147,33 @@ internal class TripDetailViewModel(
         return -1
     }
 
-    private fun computeTripEvents(context: Context){
-        if (routeSyncStatus != null && tripSyncStatus != null){
+    private fun computeTripEvents(context: Context) {
+        if (routeSyncStatus != null && tripSyncStatus != null) {
             if (trip != null && route != null) {
-                DriveKitDriverData.checkReverseGeocode(context, trip, route)
+                DriveKitDriverData.checkReverseGeocode(
+                    context,
+                    trip,
+                    route,
+                    object : CheckReverseGeocodeListener {
+                        override fun onFinished(updated: Boolean) {
+                            reverseGeocoderObserver.postValue(updated)
+                        }
+                    }
+                )
                 computeTripEvent(trip!!, route!!)
-                if (trip!!.unscored && tripListConfiguration != TripListConfiguration.ALTERNATIVE()){
+                if (trip!!.unscored && tripListConfiguration != TripListConfiguration.ALTERNATIVE()) {
                     unScoredTrip.postValue(true)
-                }else{
+                } else {
                     tripEventsObserver.postValue(events)
                 }
-            }else{
-                if (trip != null){
-                    if (trip!!.unscored){
+            } else {
+                if (trip != null) {
+                    if (trip!!.unscored) {
                         unScoredTrip.postValue(false)
-                    }else{
+                    } else {
                         noRoute.postValue(true)
                     }
-                }else{
+                } else {
                     noData.postValue(true)
                 }
             }
@@ -264,9 +279,9 @@ internal class TripDetailViewModel(
 
     fun getCallFromIndex(position: Int): Call? = trip?.calls?.get((position / 2))
 
-    fun deleteTrip(){
-        if (DriveKitDriverData.isConfigured()){
-            DriveKitDriverData.deleteTrip(itinId, object: TripDeleteQueryListener {
+    fun deleteTrip() {
+        if (DriveKitDriverData.isConfigured()) {
+            DriveKitDriverData.deleteTrip(itinId, object : TripDeleteQueryListener {
                 override fun onResponse(status: Boolean) {
                     deleteTripObserver.postValue(status)
                 }

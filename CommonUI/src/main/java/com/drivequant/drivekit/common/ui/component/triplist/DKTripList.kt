@@ -26,7 +26,9 @@ interface DKTripListItem {
     fun getStartDate(): Date?
     fun getEndDate(): Date
     fun getDepartureCity(): String
+    fun getDepartureAddress(): String
     fun getArrivalCity(): String
+    fun getArrivalAddress(): String
     fun isScored(tripData: TripData): Boolean
     fun getScore(tripData: TripData): Double?
     fun getTransportationModeResource(context: Context): Drawable?
