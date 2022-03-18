@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.TripAnalysisUIEntryPoint
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHours
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
@@ -15,6 +17,7 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
     internal const val TAG = "DriveKit TripAnalysis UI"
 
     var defaultWorkHours = getDefaultWorkingHours()
+    internal var crashFeedbackRoadsideAssistanceNumber: String? = null
 
     fun initialize() {
         DriveKitNavigationController.tripAnalysisUIEntryPoint = this
@@ -45,5 +48,15 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
             outsideHours = DKWorkingHoursTimeSlotStatus.PERSONAL,
             dayConfiguration = daysConfig
         )
+    }
+
+    fun enableCrashFeedback(roadsideAssistanceNumber: String, config: DKCrashFeedbackConfig) {
+        this.crashFeedbackRoadsideAssistanceNumber = roadsideAssistanceNumber
+        DriveKitTripAnalysis.enableCrashFeedback(config)
+    }
+
+    fun disableCrashFeedback() {
+        this.crashFeedbackRoadsideAssistanceNumber = null
+        DriveKitTripAnalysis.disableCrashFeedback()
     }
 }

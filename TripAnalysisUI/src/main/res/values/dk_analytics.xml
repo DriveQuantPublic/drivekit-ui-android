@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_tag_trip_analysis_working_hours" translatable="false">drivekit-trip-analysis-working-hours</string>
+    <string name="dk_tag_trip_analysis_crash_feedback_step1" translatable="false">drivekit-trip-analysis-crash-feedback-step1</string>
+    <string name="dk_tag_trip_analysis_crash_feedback_step2" translatable="false">drivekit-trip-analysis-crash-feedback-step2</string>
 </resources>

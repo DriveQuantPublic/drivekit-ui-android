@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_crash_detection_feedback_notif_message">Klicken Sie auf die Benachrichtigung und teilen Sie uns mit, wie es Ihnen geht.</string>
+   <string name="dk_crash_detection_feedback_notif_title">Ein Unfall wurde festgestellt</string>
+   <string name="dk_crash_detection_feedback_step1_description">Sie können die Warnung vor Ablauf des Countdowns abbrechen oder bestätigen.</string>
+   <string name="dk_crash_detection_feedback_step1_option_critical_accident">Unterstützung kontaktieren</string>
+   <string name="dk_crash_detection_feedback_step1_option_no_crash">Mir geht es gut</string>
+   <string name="dk_crash_detection_feedback_step1_title">Ein Unfall wurde festgestellt, wie geht es Ihnen?</string>
+   <string name="dk_crash_detection_feedback_step2_description">Was ist mit Ihnen passiert?</string>
+   <string name="dk_crash_detection_feedback_step2_option_minor_accident">Geringfügiger Unfall</string>
+   <string name="dk_crash_detection_feedback_step2_option_no_crash">Nichts, alles in Ordnung</string>
+   <string name="dk_crash_detection_feedback_step2_title">Es beruhigt uns zu wissen, dass es Ihnen gut geht.</string>
+   <string name="dk_crash_detection_feedback_step2option_critical_accident">Unterstützung kontaktieren</string>
    <string name="dk_working_hours_back_save_alert">Die Arbeitszeiten sind geändert worden. Möchten Sie sie speichern?</string>
    <string name="dk_working_hours_enable_desc">Mit dieser Funktion können Sie die Zeiten für die Aktivierung des automatischen Modus einstellen und Fahrten mit einem Label versehen.</string>
    <string name="dk_working_hours_enable_title">Arbeitszeiten freigeben</string>
