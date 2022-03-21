@@ -143,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="8dp"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trip_buttons_container">
             <TextView
@@ -154,13 +155,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Start TripSimulator"
-                android:onClick="onCrashSimulatorConfirmed30kmh"/>
+                android:onClick="onTripSimulatorStart"/>
             <Button
                 android:id="@+id/trip_simulator_stop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Stop TripSimulator"
-                android:onClick="onCrashSimulatorStop"/>
+                android:onClick="onTripSimulatorStop"/>
         </LinearLayout>
 
         <Button
