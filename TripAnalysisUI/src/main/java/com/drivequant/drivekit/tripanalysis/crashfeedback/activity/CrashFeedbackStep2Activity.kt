@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
@@ -52,16 +53,24 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
     }
 
     private fun initTitle() {
-        viewModel.getTitleResId().let {
-            text_view_title.text = this.getText(it)
-            text_view_title.highlightMedium()
+        viewModel.getTitleResId().let { titleResId ->
+            text_view_title.apply {
+                setText(titleResId)
+                pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
+                setTextColor(DriveKitUI.colors.mainFontColor())
+                setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+            }
         }
     }
 
     private fun initDescription() {
-        viewModel.getDescriptionResId().let {
-            text_view_description.text = this.getText(it)
-            text_view_description.highlightMedium()
+        viewModel.getDescriptionResId().let { descriptionResId ->
+            text_view_description.apply {
+                setText(descriptionResId)
+                pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
+                setTextColor(DriveKitUI.colors.mainFontColor())
+                setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+            }
         }
     }
 

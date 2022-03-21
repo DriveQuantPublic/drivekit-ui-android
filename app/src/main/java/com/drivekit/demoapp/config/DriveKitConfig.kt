@@ -103,7 +103,7 @@ internal object DriveKitConfig : ContentMail {
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
-            roadsideAssistanceNumber = "+33600112233",
+            roadsideAssistanceNumber = "0000000000",
             DKCrashFeedbackConfig(
                 notification = DKCrashFeedbackNotification(
                     icon = R.drawable.ic_launcher_background,
