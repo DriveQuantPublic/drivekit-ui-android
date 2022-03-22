@@ -34,6 +34,7 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-challenge:$drivekit_version"
+    debugImplementation "com.drivequant.drivekit:drivekit-trip-simulator:$drivekit_version" // This module MUST be used only during tests !
 
     implementation project(':CommonUI')
     implementation project(':TripAnalysisUI')
