@@ -16,7 +16,6 @@ import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursD
 import com.drivequant.drivekit.tripanalysis.workinghours.toDay
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -184,12 +183,13 @@ internal class WorkingHoursDayCard : FrameLayout {
         calendar[Calendar.HOUR_OF_DAY] = 0
         calendar[Calendar.MINUTE] = 0
         calendar[Calendar.SECOND] = 0
-        val amount = if (hours == 24.0f) {
-            ((60 * hours) - 1).toInt()
-        } else {
-            (60 * hours).toInt()
+
+        when (hours) {
+            24f -> ((60 * hours) - 1).toInt()
+            else -> (60 * hours).toInt()
+        }.let { amount ->
+            calendar.add(Calendar.MINUTE, amount)
         }
-        calendar.add(Calendar.MINUTE, amount)
         return dateFormat.format(calendar.time)
     }
 
