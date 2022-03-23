@@ -179,13 +179,18 @@ internal class WorkingHoursDayCard : FrameLayout {
     }
 
     private fun rawHoursValueToDate(hours: Float): String? {
-        val df: DateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
-        val cal = Calendar.getInstance()
-        cal[Calendar.HOUR_OF_DAY] = 0
-        cal[Calendar.MINUTE] = 0
-        cal[Calendar.SECOND] = 0
-        cal.add(Calendar.MINUTE, (60 * hours).toInt())
-        return df.format(cal.time)
+        val dateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        val amount = if (hours == 24.0f) {
+            ((60 * hours) - 1).toInt()
+        } else {
+            (60 * hours).toInt()
+        }
+        calendar.add(Calendar.MINUTE, amount)
+        return dateFormat.format(calendar.time)
     }
 
     interface WorkingHoursDayListener {
