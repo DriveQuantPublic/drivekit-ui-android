@@ -1,7 +1,5 @@
 package com.drivequant.drivekit.tripanalysis.workinghours.view
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
@@ -59,7 +57,7 @@ internal class WorkingHoursDayCard : FrameLayout {
             setOnCheckedChangeListener { _, isChecked ->
                 listener?.onDayChecked(isChecked)
                 manageCheckboxStyle(isChecked)
-                manageSliderVisibility(isChecked)
+                manageSlider(isChecked)
             }
             isChecked = !dayConfig.entireDayOff
         }
@@ -70,32 +68,7 @@ internal class WorkingHoursDayCard : FrameLayout {
             text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
         }
 
-        rangeSlider.apply {
-            setValues(dayConfig.startTime?.toFloat(), dayConfig.endTime?.toFloat())
-
-            labelBehavior = LabelFormatter.LABEL_GONE
-            trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
-            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
-            thumbTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
-            addOnChangeListener(RangeSlider.OnChangeListener(fun(
-                _: RangeSlider,
-                _: Float,
-                _: Boolean
-            ) {
-                manageMinSeparation()
-                updateHoursLabels()
-            }))
-            addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-                override fun onStartTrackingTouch(slider: RangeSlider) {
-                    // do nothing
-                }
-
-                override fun onStopTrackingTouch(slider: RangeSlider) {
-                    listener?.onHoursUpdated(slider.values[0].toDouble(), slider.values[1].toDouble())
-                }
-            })
-        }
-        manageSliderVisibility(checkbox.isChecked)
+        manageSlider(checkbox.isChecked)
 
         labelMin.setTextColor(DriveKitUI.colors.primaryColor())
         labelMax.setTextColor(DriveKitUI.colors.primaryColor())
@@ -132,17 +105,44 @@ internal class WorkingHoursDayCard : FrameLayout {
         }
     }
 
-    private fun manageSliderVisibility(display: Boolean) {
-        val alpha = if (display) 1.0f else 0.15f
-        sliderContainer.animate().alpha(alpha)
-            .setDuration(context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                    rangeSlider.isClickable = display
-                    rangeSlider.isEnabled = display
+    private fun manageSlider(display: Boolean) {
+        rangeSlider.apply {
+            setValues(day.startTime?.toFloat(), day.endTime?.toFloat())
+            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            labelBehavior = LabelFormatter.LABEL_GONE
+
+            addOnChangeListener(RangeSlider.OnChangeListener(fun(
+                _: RangeSlider,
+                _: Float,
+                _: Boolean
+            ) {
+                manageMinSeparation()
+                updateHoursLabels()
+            }))
+            addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(slider: RangeSlider) {
+                    // do nothing
+                }
+
+                override fun onStopTrackingTouch(slider: RangeSlider) {
+                    listener?.onHoursUpdated(
+                        slider.values[0].toDouble(),
+                        slider.values[1].toDouble()
+                    )
                 }
             })
+
+            isClickable = display
+            isEnabled = display
+            if (!display) {
+                thumbRadius = 0
+                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+                setValues(0f, 24f)
+            } else {
+                thumbRadius = 25
+                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+            }
+        }
     }
 
     // Fix minSeparation property that is not working
