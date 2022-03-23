@@ -67,16 +67,24 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     }
 
     private fun initTitle() {
-        viewModel.getTitleResId().let {
-            text_view_title.text = this.getText(it)
-            text_view_title.highlightMedium()
+        viewModel.getTitleResId().let { titleResId ->
+            text_view_title.apply {
+                setText(titleResId)
+                pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
+                setTextColor(DriveKitUI.colors.mainFontColor())
+                setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+            }
         }
     }
 
     private fun initDescription() {
-        viewModel.getDescriptionResId().let {
-            text_view_description.text = this.getText(it)
-            text_view_description.normalText(DriveKitUI.colors.complementaryFontColor())
+        viewModel.getDescriptionResId().let { descriptionResId ->
+            text_view_description.apply {
+                setText(descriptionResId)
+                pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal))
+                setLineSpacing(25f, 1f)
+                setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
+            }
         }
     }
 
@@ -109,7 +117,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                     this.resSpans {
                         color(DriveKitUI.colors.fontColorOnPrimaryColor())
                         typeface(Typeface.BOLD)
-                        size(R.dimen.dk_text_xbig)
+                        size(R.dimen.dk_text_medium)
                     })
                 else -> {
                     // do nothing
@@ -120,7 +128,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         timer.apply {
             highlightValues(arrayOf(Highlight(0f, 0f, 0)))
             centerText = spannable.toSpannable().toString()
-            val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
+            val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
             setCenterTextColor(DriveKitUI.colors.mainFontColor())
             setCenterTextTypeface(DriveKitUI.primaryFont(context))
             setCenterTextSize(textSize)

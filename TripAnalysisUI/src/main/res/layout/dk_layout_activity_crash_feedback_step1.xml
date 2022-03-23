@@ -39,7 +39,7 @@
                 android:id="@+id/timer_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="48dp">
+                android:layout_marginHorizontal="36dp">
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/timer"
@@ -74,7 +74,8 @@
             android:id="@+id/button_assistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin"
+            android:layout_marginTop="@dimen/dk_margin_double"
+            android:layout_marginBottom="@dimen/dk_margin_half"
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackAssistance_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackAssistance"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_assistance"
