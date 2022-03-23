@@ -31,6 +31,7 @@
     <string name="dk_challenge_score_alert_message">The results of this challenge are being analysed, please try again later.</string>
     <string name="dk_challenge_score_alert_title">Challenge under analysis</string>
     <string name="dk_challenge_signin_in_progress">Signing up…</string>
+    <string name="dk_challenge_speeding_score">Speeding score</string>
     <string name="dk_challenge_start">Start of challenge in</string>
     <string name="dk_challenge_traveled_distance">Distance traveled</string>
     <string name="dk_challenge_unranked_conditions_info">To enter the leaderboard, you must fulfill the conditions below:</string>

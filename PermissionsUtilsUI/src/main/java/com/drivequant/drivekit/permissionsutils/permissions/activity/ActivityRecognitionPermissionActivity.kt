@@ -8,8 +8,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.R
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_recognition_permission.*
 

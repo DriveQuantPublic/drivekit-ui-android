@@ -11,8 +11,8 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
-import com.drivequant.drivekit.permissionsutils.diagnosis.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import kotlinx.android.synthetic.main.activity_nearby_devices_permission.*
 

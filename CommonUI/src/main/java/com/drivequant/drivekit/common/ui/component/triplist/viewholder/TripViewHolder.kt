@@ -13,8 +13,10 @@ import com.drivequant.drivekit.common.ui.component.GaugeIndicator
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.DisplayType
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeArrivalInfo
 import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.component.triplist.extension.computeCeilDuration
+import com.drivequant.drivekit.common.ui.component.triplist.extension.computeDepartureInfo
 import com.drivequant.drivekit.common.ui.component.triplist.extension.getOrComputeStartDate
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -44,9 +46,9 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
     fun bind(trip: DKTripListItem, tripData: TripData, isLastChild: Boolean) {
         textViewDepartureTime.text =
             trip.getOrComputeStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
-        textViewDepartureCity.text = trip.getDepartureCity()
+        textViewDepartureCity.text = trip.computeDepartureInfo()
         textViewArrivalTime.text = trip.getEndDate().formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
-        textViewArrivalCity.text = trip.getArrivalCity()
+        textViewArrivalCity.text = trip.computeArrivalInfo()
         viewSeparator.visibility = if (isLastChild) View.GONE else View.VISIBLE
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
@@ -143,7 +145,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             tripInfoContainer.visibility = View.VISIBLE
         } else {
             tripInfoContainer.removeAllViews()
-            tripInfoContainer.visibility = View.GONE
+            tripInfoContainer.visibility = View.INVISIBLE
         }
     }
 }

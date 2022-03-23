@@ -50,18 +50,13 @@ enum class MapItem : DKMapItem {
             }
         }
 
-    override fun canShowMapItem(trip: Trip): Boolean? =
-        when (this) {
-            ECO_DRIVING -> trip.ecoDriving?.let { it.score <= 10 }
-            SAFETY -> trip.safety?.let { it.safetyScore <= 10 }
-            INTERACTIVE_MAP, SYNTHESIS -> true
-            DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 }
-            SPEEDING -> trip.speedingStatistics?.let {
-                it.score <= 10 && DriveKitAccess.hasAccess(
-                    AccessType.SPEEDING
-                )
-            }
-        }
+    override fun canShowMapItem(trip: Trip): Boolean? = when (this) {
+        ECO_DRIVING -> trip.ecoDriving?.let { it.score <= 10 && DriveKitAccess.hasAccess(AccessType.ECODRIVING) }
+        SAFETY -> trip.safety?.let { it.safetyScore <= 10 && DriveKitAccess.hasAccess(AccessType.SAFETY) }
+        DISTRACTION -> trip.driverDistraction?.let { it.score <= 10 && DriveKitAccess.hasAccess(AccessType.PHONE_DISTRACTION) }
+        SPEEDING -> trip.speedingStatistics?.let { it.score <= 10 && DriveKitAccess.hasAccess(AccessType.SPEEDING) }
+        INTERACTIVE_MAP, SYNTHESIS -> true
+    }
 
     override fun getAdviceImageResource(): Int? =
         when (this) {
