@@ -31,7 +31,7 @@ internal class WorkingHoursDayCard : FrameLayout {
     private lateinit var labelMin: TextView
     private lateinit var labelMax: TextView
     private var previousMin: Float = -1f
-    private var previousMax: Float = -2f
+    private var previousMax: Float = -1f
 
     private var listener: WorkingHoursDayListener? = null
 
