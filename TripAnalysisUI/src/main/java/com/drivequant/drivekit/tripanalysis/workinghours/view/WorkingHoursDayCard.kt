@@ -70,9 +70,10 @@ internal class WorkingHoursDayCard : FrameLayout {
         }
 
         rangeSlider.apply {
-            setValues(day.startTime?.toFloat(), day.endTime?.toFloat())
-            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            setValues(dayConfig.startTime?.toFloat(), dayConfig.endTime?.toFloat())
             labelBehavior = LabelFormatter.LABEL_GONE
+            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            thumbTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
             addOnChangeListener(RangeSlider.OnChangeListener(fun(
                 _: RangeSlider,
                 _: Float,
