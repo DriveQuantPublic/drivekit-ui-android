@@ -13,6 +13,7 @@
     <dimen name="dk_text_medium">18sp</dimen>
     <dimen name="dk_text_big">20sp</dimen>
     <dimen name="dk_text_xbig">24sp</dimen>
+    <dimen name="dk_text_xbigger">26sp</dimen>
     <dimen name="dk_text_xxbig">32sp</dimen>
     <dimen name="dk_text_xxxbig">46sp</dimen>
 
