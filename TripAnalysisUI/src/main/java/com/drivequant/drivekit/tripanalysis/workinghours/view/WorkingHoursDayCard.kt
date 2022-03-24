@@ -69,6 +69,34 @@ internal class WorkingHoursDayCard : FrameLayout {
             text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
         }
 
+        rangeSlider.apply {
+            setValues(day.startTime?.toFloat(), day.endTime?.toFloat())
+            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+            labelBehavior = LabelFormatter.LABEL_GONE
+            addOnChangeListener(RangeSlider.OnChangeListener(fun(
+                _: RangeSlider,
+                _: Float,
+                _: Boolean
+            ) {
+                manageMinSeparation()
+                updateHoursLabels()
+            }))
+            addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(slider: RangeSlider) {
+                    // do nothing
+                }
+
+                override fun onStopTrackingTouch(slider: RangeSlider) {
+                    previousMin = slider.values[0]
+                    previousMax = slider.values[1]
+                    listener?.onHoursUpdated(
+                        slider.values[0].toDouble(),
+                        slider.values[1].toDouble()
+                    )
+                }
+            })
+        }
+
         manageSlider(checkbox.isChecked)
 
         labelMin.setTextColor(DriveKitUI.colors.primaryColor())
@@ -108,33 +136,6 @@ internal class WorkingHoursDayCard : FrameLayout {
 
     private fun manageSlider(display: Boolean) {
         rangeSlider.apply {
-            setValues(day.startTime?.toFloat(), day.endTime?.toFloat())
-            trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
-            labelBehavior = LabelFormatter.LABEL_GONE
-
-            addOnChangeListener(RangeSlider.OnChangeListener(fun(
-                _: RangeSlider,
-                _: Float,
-                _: Boolean
-            ) {
-                manageMinSeparation()
-                updateHoursLabels()
-            }))
-            addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-                override fun onStartTrackingTouch(slider: RangeSlider) {
-                    // do nothing
-                }
-
-                override fun onStopTrackingTouch(slider: RangeSlider) {
-                    previousMin = slider.values[0]
-                    previousMax = slider.values[1]
-                    listener?.onHoursUpdated(
-                        slider.values[0].toDouble(),
-                        slider.values[1].toDouble()
-                    )
-                }
-            })
-
             isClickable = display
             isEnabled = display
             if (!display) {
