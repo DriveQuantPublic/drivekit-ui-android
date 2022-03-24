@@ -30,6 +30,8 @@ internal class WorkingHoursDayCard : FrameLayout {
     private lateinit var labelDay: TextView
     private lateinit var labelMin: TextView
     private lateinit var labelMax: TextView
+    private var previousMin: Float = -1f
+    private var previousMax: Float = -2f
 
     private var listener: WorkingHoursDayListener? = null
 
@@ -124,6 +126,8 @@ internal class WorkingHoursDayCard : FrameLayout {
                 }
 
                 override fun onStopTrackingTouch(slider: RangeSlider) {
+                    previousMin = slider.values[0]
+                    previousMax = slider.values[1]
                     listener?.onHoursUpdated(
                         slider.values[0].toDouble(),
                         slider.values[1].toDouble()
@@ -140,6 +144,9 @@ internal class WorkingHoursDayCard : FrameLayout {
             } else {
                 thumbRadius = 25
                 trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+                if (previousMax != -1f && previousMin != -1f) {
+                    setValues(previousMin, previousMax)
+                }
             }
         }
     }
