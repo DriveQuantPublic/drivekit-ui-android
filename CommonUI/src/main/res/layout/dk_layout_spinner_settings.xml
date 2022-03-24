@@ -23,7 +23,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/dk_margin_half"
                 android:background="@drawable/dk_secondary_color_circle"
-                android:contentDescription="@string/app_name" />
+                android:contentDescription="image" />
 
             <TextView
                 android:id="@+id/spinner_settings_title"
