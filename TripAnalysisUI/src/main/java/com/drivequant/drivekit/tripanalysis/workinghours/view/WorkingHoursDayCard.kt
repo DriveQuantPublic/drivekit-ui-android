@@ -1,7 +1,5 @@
 package com.drivequant.drivekit.tripanalysis.workinghours.view
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
@@ -18,7 +16,6 @@ import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursD
 import com.drivequant.drivekit.tripanalysis.workinghours.toDay
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +30,8 @@ internal class WorkingHoursDayCard : FrameLayout {
     private lateinit var labelDay: TextView
     private lateinit var labelMin: TextView
     private lateinit var labelMax: TextView
+    private var previousMin: Float = -1f
+    private var previousMax: Float = -1f
 
     private var listener: WorkingHoursDayListener? = null
 
@@ -59,7 +58,7 @@ internal class WorkingHoursDayCard : FrameLayout {
             setOnCheckedChangeListener { _, isChecked ->
                 listener?.onDayChecked(isChecked)
                 manageCheckboxStyle(isChecked)
-                manageSliderVisibility(isChecked)
+                manageSlider(isChecked)
             }
             isChecked = !dayConfig.entireDayOff
         }
@@ -72,9 +71,7 @@ internal class WorkingHoursDayCard : FrameLayout {
 
         rangeSlider.apply {
             setValues(dayConfig.startTime?.toFloat(), dayConfig.endTime?.toFloat())
-
             labelBehavior = LabelFormatter.LABEL_GONE
-            trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
             trackInactiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
             thumbTintList = ColorStateList.valueOf(DriveKitUI.colors.primaryColor())
             addOnChangeListener(RangeSlider.OnChangeListener(fun(
@@ -91,11 +88,17 @@ internal class WorkingHoursDayCard : FrameLayout {
                 }
 
                 override fun onStopTrackingTouch(slider: RangeSlider) {
-                    listener?.onHoursUpdated(slider.values[0].toDouble(), slider.values[1].toDouble())
+                    previousMin = slider.values[0]
+                    previousMax = slider.values[1]
+                    listener?.onHoursUpdated(
+                        slider.values[0].toDouble(),
+                        slider.values[1].toDouble()
+                    )
                 }
             })
         }
-        manageSliderVisibility(checkbox.isChecked)
+
+        manageSlider(checkbox.isChecked)
 
         labelMin.setTextColor(DriveKitUI.colors.primaryColor())
         labelMax.setTextColor(DriveKitUI.colors.primaryColor())
@@ -132,17 +135,22 @@ internal class WorkingHoursDayCard : FrameLayout {
         }
     }
 
-    private fun manageSliderVisibility(display: Boolean) {
-        val alpha = if (display) 1.0f else 0.15f
-        sliderContainer.animate().alpha(alpha)
-            .setDuration(context.resources.getInteger(android.R.integer.config_shortAnimTime).toLong())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                    rangeSlider.isClickable = display
-                    rangeSlider.isEnabled = display
+    private fun manageSlider(display: Boolean) {
+        rangeSlider.apply {
+            isClickable = display
+            isEnabled = display
+            if (!display) {
+                thumbRadius = 0
+                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.neutralColor())
+                setValues(0f, 24f)
+            } else {
+                thumbRadius = 25
+                trackActiveTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
+                if (previousMax != -1f && previousMin != -1f) {
+                    setValues(previousMin, previousMax)
                 }
-            })
+            }
+        }
     }
 
     // Fix minSeparation property that is not working
@@ -179,13 +187,19 @@ internal class WorkingHoursDayCard : FrameLayout {
     }
 
     private fun rawHoursValueToDate(hours: Float): String? {
-        val df: DateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
-        val cal = Calendar.getInstance()
-        cal[Calendar.HOUR_OF_DAY] = 0
-        cal[Calendar.MINUTE] = 0
-        cal[Calendar.SECOND] = 0
-        cal.add(Calendar.MINUTE, (60 * hours).toInt())
-        return df.format(cal.time)
+        val dateFormat = SimpleDateFormat(DKDatePattern.HOUR_MINUTE_LETTER.getPattern(), Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+
+        when (hours) {
+            24f -> ((60 * hours) - 1).toInt()
+            else -> (60 * hours).toInt()
+        }.let { amount ->
+            calendar.add(Calendar.MINUTE, amount)
+        }
+        return dateFormat.format(calendar.time)
     }
 
     interface WorkingHoursDayListener {
