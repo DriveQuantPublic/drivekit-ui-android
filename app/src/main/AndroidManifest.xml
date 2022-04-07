@@ -12,27 +12,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
-
-        <activity android:name="com.drivekit.demoapp.activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.ApiKeyActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.UserIdActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.drivekit.demoapp.activity.SettingsActivity"
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw" />
+
+        <activity
+            android:name="com.drivekit.demoapp.activity.MainActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name="com.drivekit.demoapp.activity.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
+        <activity
+            android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"  />
-        <activity android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"  />
+            tools:ignore="LockedOrientationActivity" />
     </application>
+
 </manifest>

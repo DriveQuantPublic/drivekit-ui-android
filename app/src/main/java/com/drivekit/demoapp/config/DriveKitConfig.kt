@@ -2,7 +2,10 @@ package com.drivekit.demoapp.config
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.widget.Toast
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.onboarding.UserInfoActivity
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -14,6 +17,8 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
+import com.drivequant.drivekit.core.networking.DriveKitListener
+import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -60,7 +65,31 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureCore(application: Application) {
-        DriveKit.initialize(application)
+        DriveKit.initialize(application, object: DriveKitListener{
+            override fun onAuthenticationError(errorType: RequestError) {
+                //TODO key strings to be created
+                when (errorType) {
+                    RequestError.NO_NETWORK -> ""
+                    RequestError.UNAUTHENTICATED -> "Invalid identifier"
+                    RequestError.FORBIDDEN -> ""
+                    RequestError.SERVER_ERROR -> ""
+                    RequestError.CLIENT_ERROR -> ""
+                    RequestError.UNKNOWN_ERROR -> ""
+                }.let {
+                    Toast.makeText(application, it, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onConnected() {
+                val intent = Intent(application, UserInfoActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                application.startActivity(intent)
+            }
+
+            override fun onDisconnected() {
+                Toast.makeText(application, "Disconnected", Toast.LENGTH_LONG).show()
+            }
+        })
         //TODO: Push your api key here
         //DriveKit.setApiKey("Your API key here")
     }

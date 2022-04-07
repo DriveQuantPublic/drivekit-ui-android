@@ -62,5 +62,12 @@
 
 
     <string name="working_hours_button">Working Hours</string>
+    <string name="text_button_next">Étape suivante</string>
+    <string name="text_button_documentation">Voir la documentation</string>
+    <string name="text_title_api_key_error">Votre clé API n\’est pas configurée</string>
+    <string name="text_title_api_key">Bienvenue sur l\’application de démonstration du SDK DriveKit </string>
+    <string name="text_descrption_api_key_error">Pour utiliser cette application de démonstration, il est indispensable de configurer une clé API valide.\n\nPour plus d\’informations sur la configuration de la clé API, suivez les instructions de notre documentation.\n\nSi vous n\'avez pas de clé API, contactez nous par email à contact@drivequant.com.</string>
+    <string name="text_descrption_identifiant">Pour initilaliser le SDK DriveKit, il est indispensable de configurer un identifiant unique pour chaque utilisateur.\n\nNous vous recommandons de saisir un identifiant anonyme et de ne jamais utiliser un numéro de téléphone ou une adresse email.</string>
+    <string name="text_description_api_key">Bravo, vous venuez d\’installer l\’application de démonstration de DriveKit 🎉 \n \n \n Cette application présente le fonctionnement des composants de DriveKit et vous guide pour les installer dans votre application. \n\n\n Votre clé API est :\n %s \n\n\n Elle ne doit dans aucun cas être partagée ou utilisée dans plusieurs applications.</string>
 
 </resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dk_margin"
+    tools:context="com.drivekit.demoapp.onboarding.UserIdActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:text="Veuillez renseigner un identifiant unique d’utilisateur"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:text="@string/text_descrption_identifiant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_user_id"
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_view_user_id_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#9E9E9E"
+            android:textSize="@dimen/dk_text_normal"
+            android:hint="Identifiant unique"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/button_validate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="@string/dk_common_validate"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white" />
+</LinearLayout>
