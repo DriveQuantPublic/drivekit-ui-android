@@ -277,7 +277,14 @@ internal class TripDetailViewModel(
         events.add(endTripEvent)
     }
 
-    fun getCallFromIndex(position: Int): Call? = trip?.calls?.get((position / 2))
+    fun getCallFromIndex(position: Int): Call? {
+        trip?.calls?.let { calls ->
+            if (calls.isNotEmpty() && position < 2 * calls.size) {
+                return calls[position / 2]
+            }
+        }
+        return null
+    }
 
     fun deleteTrip() {
         if (DriveKitDriverData.isConfigured()) {
