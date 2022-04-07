@@ -85,19 +85,35 @@ class WorkingHoursActivity : AppCompatActivity() {
             setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
         }
 
-        insideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_inside_title"))
-        insideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
-            override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
-                dataUpdated(true)
-            }
-        })
+        insideHours.apply {
+            setIndicatorColor(DriveKitUI.colors.secondaryColor())
+            setTitle(
+                DKResource.convertToString(
+                    this@WorkingHoursActivity,
+                    "dk_working_hours_slot_inside_title"
+                )
+            )
+            setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
+                override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
+                    dataUpdated(true)
+                }
+            })
+        }
 
-        outsideHours.setTitle(DKResource.convertToString(this, "dk_working_hours_slot_outside_title"))
-        outsideHours.setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
-            override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
-                dataUpdated(true)
-            }
-        })
+        outsideHours.apply {
+            setIndicatorColor(DriveKitUI.colors.neutralColor())
+            setTitle(
+                DKResource.convertToString(
+                    this@WorkingHoursActivity,
+                    "dk_working_hours_slot_outside_title"
+                )
+            )
+            setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
+                override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
+                    dataUpdated(true)
+                }
+            })
+        }
 
         viewModel.syncDataStatus.observe(this, { success ->
             if (!success) {
