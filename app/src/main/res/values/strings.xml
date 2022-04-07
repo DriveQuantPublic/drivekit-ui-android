@@ -62,6 +62,8 @@
 
 
     <string name="working_hours_button">Working Hours</string>
+    <string name="startup_menu">Démarrage de DriveKit</string>
+    <string name="create_user_menu">Création d\'un utilisateur</string>
     <string name="text_button_next">Étape suivante</string>
     <string name="text_button_documentation">Voir la documentation</string>
     <string name="text_title_api_key_error">Votre clé API n\’est pas configurée</string>

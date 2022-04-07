@@ -1,6 +1,7 @@
 package com.drivekit.demoapp.onboarding
 
 import android.content.Context
+import com.drivekit.demoapp.config.DriveKitConfig.PLACEHOLDER
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
@@ -8,7 +9,9 @@ import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 
 class DriveKitConfigViewModel {
 
-    fun isApiKeyValid() = DriveKit.isApiKey()
+    fun isApiKeyValid() = DriveKit.config.apiKey?.let {
+        it.isNotBlank() && it != PLACEHOLDER
+    }?: false
 
     fun getButtonText(context: Context) = if (isApiKeyValid()) {
         "text_button_next"

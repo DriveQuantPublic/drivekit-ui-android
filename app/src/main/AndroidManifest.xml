@@ -14,13 +14,16 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.drivekit.demoapp.onboarding.UserInfoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.ApiKeyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.UserIdActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.SplashScreenActivity"
             android:exported="true"

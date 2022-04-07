@@ -53,6 +53,8 @@ import kotlin.random.Random
 
 internal object DriveKitConfig : ContentMail {
 
+    const val PLACEHOLDER = "Your API key here"
+
     fun configure(application: Application) {
         configureCore(application)
         configureCommonUI()
@@ -82,7 +84,7 @@ internal object DriveKitConfig : ContentMail {
 
             override fun onConnected() {
                 val intent = Intent(application, UserInfoActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 application.startActivity(intent)
             }
 
@@ -91,7 +93,7 @@ internal object DriveKitConfig : ContentMail {
             }
         })
         //TODO: Push your api key here
-        //DriveKit.setApiKey("Your API key here")
+        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
     }
 
     private fun configureCommonUI() {

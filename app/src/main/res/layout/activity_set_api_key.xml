@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/dk_margin"
     tools:context="com.drivekit.demoapp.onboarding.ApiKeyActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dk_margin"
-        android:src="@drawable/drivequant_logo" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
 
-    <TextView
-        android:id="@+id/text_view_title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
-        android:layout_marginBottom="@dimen/dk_margin"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dk_margin">
 
-    <TextView
-        android:id="@+id/text_view_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:contentDescription="image"
+            android:src="@drawable/drivequant_logo" />
 
-    <TextView
-        android:id="@+id/button_next"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:text="Étape suivante"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dk_margin"
+            android:layout_marginEnd="@dimen/dk_margin"
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/text_view_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dk_margin" />
+
+        <TextView
+            android:id="@+id/button_next"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Étape suivante"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </LinearLayout>
