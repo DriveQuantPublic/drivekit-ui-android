@@ -94,7 +94,7 @@ internal object DriveKitConfig : ContentMail {
             }
         })
         //TODO Push your API_KEY here
-        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
+        DriveKit.setApiKey(PLACEHOLDER)
     }
 
     private fun configureCommonUI() {
