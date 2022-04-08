@@ -11,10 +11,13 @@ import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
 class TripReceiver : TripAnalysedReceiver() {
 
-    override fun onTripReceived(context: Context, post: PostGeneric, response: PostGenericResponse) {
+    override fun onTripReceived(
+        context: Context,
+        post: PostGeneric,
+        response: PostGenericResponse) {
         var messageResId = R.string.trip_finished
         response.itineraryStatistics?.let {
-            if (it.transportationMode == TransportationMode.TRAIN.value){
+            if (it.transportationMode == TransportationMode.TRAIN.value) {
                 messageResId = R.string.train_trip
             }
         }
@@ -22,17 +25,13 @@ class TripReceiver : TripAnalysedReceiver() {
     }
 
     override fun onTripCancelled(context: Context, status: CancelTrip) {
-        val messageResId = when (status){
-            CancelTrip.USER -> R.string.trip_cancelled_user
-            CancelTrip.HIGHSPEED -> R.string.trip_cancelled_highspeed
-            CancelTrip.NO_SPEED -> R.string.trip_cancelled_no_speed
-            CancelTrip.NO_BEACON -> R.string.trip_cancelled_no_beacon
-            CancelTrip.MISSING_CONFIGURATION -> R.string.trip_cancelled_missing_config
+        when (status) {
+            CancelTrip.NO_SPEED -> R.string.trip_cancelled_highspeed
             CancelTrip.NO_GPS_DATA -> R.string.trip_cancelled_no_gps_data
-            CancelTrip.RESET -> R.string.trip_cancelled_reset
-            CancelTrip.BEACON_NO_SPEED -> R.string.trip_cancelled_beacon_no_speed
+            CancelTrip.NO_BEACON -> R.string.trip_cancelled_no_beacon
             else -> R.string.trip_cancelled_reset
+        }.let { messageResId ->
+            showNotification(context, context.getString(messageResId))
         }
-        showNotification(context, context.getString(messageResId))
     }
 }

@@ -12,28 +12,42 @@
         layout="@layout/dk_layout_toolbar" />
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/dk_margin">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dk_margin"
-            android:layout_marginEnd="@dimen/dk_margin"
-            android:layout_marginBottom="@dimen/dk_margin"
-            android:text="Veuillez renseigner un identifiant unique d’utilisateur"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:layout_weight="2"
+                android:text="@string/authentication_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dk_text_medium"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/image_view_info"
+                android:layout_width="@dimen/dk_ic_small"
+                android:layout_height="@dimen/dk_ic_small"
+                android:contentDescription="image"
+                android:src="@drawable/dk_common_info"
+                app:tint="@color/colorAccent" />
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dk_margin"
-            android:text="@string/text_descrption_identifiant" />
+            android:text="@string/authentication_description" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_user_id"
@@ -45,9 +59,8 @@
                 android:id="@+id/text_view_user_id_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Identifiant unique"
+                android:hint="@string/authentication_unique_identifier"
                 android:inputType="textPersonName"
-                android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/dk_text_normal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,6 +74,5 @@
             android:text="@string/dk_common_validate"
             android:textAllCaps="true"
             android:textColor="@android:color/white" />
-
     </LinearLayout>
 </LinearLayout>

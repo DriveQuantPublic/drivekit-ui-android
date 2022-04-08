@@ -1,43 +1,43 @@
 package com.drivekit.demoapp.onboarding
 
 import android.content.Context
-import com.drivekit.demoapp.config.DriveKitConfig.PLACEHOLDER
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 
 class DriveKitConfigViewModel {
 
     fun isApiKeyValid() = DriveKit.config.apiKey?.let {
-        it.isNotBlank() && it != PLACEHOLDER
+        it.isNotBlank() && it != DriveKitConfig.PLACEHOLDER
     }?: false
 
     fun getButtonText(context: Context) = if (isApiKeyValid()) {
-        "text_button_next"
+        "button_next_step"
     } else {
-        "text_button_documentation"
+        "button_see_documentation"
     }.let {
         DKResource.convertToString(context, it)
     }
 
     fun getDescription(context: Context) = if (isApiKeyValid()) {
-        val apiKey = DriveKitSharedPreferencesUtils.getString("drivekit-api-key")
-        DKResource.buildString(
-            context,
-            DriveKitUI.colors.complementaryFontColor(),
-            DriveKitUI.colors.complementaryFontColor(),
-            "text_description_api_key",
-            apiKey!!
-        )
+        DriveKit.config.apiKey.let {
+            DKResource.buildString(
+                context,
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.primaryColor(),
+                "welcome_ok_description",
+                it!!
+            )
+        }
     } else {
-        DKResource.convertToString(context, "text_descrption_api_key_error")
+        DKResource.convertToString(context, "welcome_ko_description")
     }
 
     fun getTitle(context: Context) = if (isApiKeyValid()) {
-        "text_title_api_key"
+        "welcome_ok_title"
     } else {
-        "text_title_api_key_error"
+        "welcome_ko_title"
     }.let {
         DKResource.convertToString(context, it)
     }

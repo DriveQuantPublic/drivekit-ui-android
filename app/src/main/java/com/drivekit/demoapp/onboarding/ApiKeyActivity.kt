@@ -15,7 +15,7 @@ class ApiKeyActivity : AppCompatActivity() {
         setContentView(R.layout.activity_set_api_key)
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = DKResource.convertToString(this, "startup_menu")
+        title = DKResource.convertToString(this, "welcome_header")
 
         val viewModel = DriveKitConfigViewModel()
         text_view_description.text = viewModel.getDescription(this)

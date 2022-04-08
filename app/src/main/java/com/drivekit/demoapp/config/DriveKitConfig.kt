@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -53,7 +54,7 @@ import kotlin.random.Random
 
 internal object DriveKitConfig : ContentMail {
 
-    const val PLACEHOLDER = "Your API key here"
+    const val PLACEHOLDER = "ENTER_YOUR_API_KEY_HERE"
 
     fun configure(application: Application) {
         configureCore(application)
@@ -69,16 +70,16 @@ internal object DriveKitConfig : ContentMail {
     private fun configureCore(application: Application) {
         DriveKit.initialize(application, object: DriveKitListener{
             override fun onAuthenticationError(errorType: RequestError) {
-                //TODO key strings to be created
                 when (errorType) {
-                    RequestError.NO_NETWORK -> ""
-                    RequestError.UNAUTHENTICATED -> "Invalid identifier"
-                    RequestError.FORBIDDEN -> ""
-                    RequestError.SERVER_ERROR -> ""
-                    RequestError.CLIENT_ERROR -> ""
-                    RequestError.UNKNOWN_ERROR -> ""
+                    RequestError.NO_NETWORK -> "network_ko_error"
+                    RequestError.UNAUTHENTICATED -> "authentication_error"
+                    RequestError.FORBIDDEN -> "forbidden_error"
+                    RequestError.SERVER_ERROR -> "server_error"
+                    RequestError.CLIENT_ERROR -> "client_error"
+                    RequestError.UNKNOWN_ERROR -> "unknown_error"
                 }.let {
-                    Toast.makeText(application, it, Toast.LENGTH_LONG).show()
+                    val message = DKResource.convertToString(application, it)
+                    Toast.makeText(application, message, Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -92,8 +93,8 @@ internal object DriveKitConfig : ContentMail {
                 Toast.makeText(application, "Disconnected", Toast.LENGTH_LONG).show()
             }
         })
-        //TODO: Push your api key here
-        DriveKit.setApiKey(PLACEHOLDER)
+        //TODO Push your API_KEY here
+        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
     }
 
     private fun configureCommonUI() {
@@ -176,7 +177,7 @@ internal object DriveKitConfig : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
             override fun getMailBody(): String = "Mail body"
             override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
+            override fun getSubject(): String = "${context.getString(R.string.app_name)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
     }
