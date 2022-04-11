@@ -6,10 +6,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
@@ -27,6 +25,7 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
     private lateinit var textViewDescription: TextView
     private lateinit var spinnerContainer: LinearLayout
     private lateinit var spinner: Spinner
+    private lateinit var circleIndicator: ImageView
     private var listener: SpinnerListener? = null
 
     constructor(context: Context) : super(context) {
@@ -43,6 +42,7 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
         textViewDescription = view.findViewById(R.id.spinner_settings_description)
         spinnerContainer = view.findViewById(R.id.spinner_container)
         spinner = view.findViewById(R.id.spinner)
+        circleIndicator = view.findViewById(R.id.image_view_circle_indicator)
 
         spinner.adapter = WorkingHoursSpinnerAdapter(context, items)
 
@@ -118,6 +118,10 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
 
     fun setListener(listener: SpinnerListener) {
         this.listener = listener
+    }
+
+    fun setIndicatorColor(color: Int) {
+        DrawableCompat.setTint(circleIndicator.background, color)
     }
 
     fun getSelectedTimeSlotStatus() = (spinner.selectedItem as HoursSpinnerItem).timeSlotStatus

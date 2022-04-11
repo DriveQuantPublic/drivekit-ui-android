@@ -10,11 +10,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical">
-        <TextView
-            android:id="@+id/spinner_settings_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dk_margin_quarter"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image_view_circle_indicator"
+                android:layout_width="@dimen/dk_margin"
+                android:layout_height="@dimen/dk_margin"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dk_margin_half"
+                android:background="@drawable/dk_secondary_color_circle"
+                android:contentDescription="image" />
+
+            <TextView
+                android:id="@+id/spinner_settings_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dk_margin_quarter" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/spinner_settings_description"
             android:layout_width="wrap_content"
