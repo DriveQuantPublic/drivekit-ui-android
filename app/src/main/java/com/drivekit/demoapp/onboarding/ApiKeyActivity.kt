@@ -25,19 +25,9 @@ class ApiKeyActivity : AppCompatActivity() {
             text = viewModel.getButtonText(context)
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {
-                    startActivity(
-                        Intent(
-                            this@ApiKeyActivity,
-                            UserIdActivity::class.java
-                        )
-                    )
+                    startActivity(Intent(this@ApiKeyActivity, UserIdActivity::class.java))
                 } else {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("https://github.com/DriveQuantPublic/drivekit-ui-android")
-                        )
-                    )
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DriveQuantPublic/drivekit-ui-android")))
                 }
             }
         }
