@@ -142,9 +142,9 @@ internal object DriveKitConfig : ContentMail {
         PermissionsUtilsUI.initialize()
         PermissionsUtilsUI.configureBluetooth(true)
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
+            override fun getBccRecipients(): List<String> = listOf("")
             override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
+            override fun getRecipients(): List<String> = listOf("") // TODO : put your mail support
             override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
             override fun overrideMailBodyContent(): Boolean = false
         }))
