@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/dk_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dk_margin_half">
+
+            <FrameLayout
+                android:id="@+id/container_synthesis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@+id/container_last_trips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.drivekit.demoapp.component.FeatureCard
+                android:id="@+id/card_features"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="@string/start_trip"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="2dp"
+        /> <!-- set it dynamically -->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:text="@string/start_trip"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="2dp" /> <!-- set it dynamically + TODO MISS KEY Simuler un trajet-->
+</LinearLayout>
