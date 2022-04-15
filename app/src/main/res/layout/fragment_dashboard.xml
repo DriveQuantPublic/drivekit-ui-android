@@ -35,7 +35,7 @@
 
     <include
         android:id="@+id/button_start_stop_trip"
-        layout="@layout/layout_button_action" />
+        layout="@layout/layout_button_action"/>
 
     <View
         android:layout_width="wrap_content"

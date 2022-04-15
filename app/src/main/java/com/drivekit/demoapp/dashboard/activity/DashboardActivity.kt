@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import com.drivekit.demoapp.activity.SettingsActivity
 import com.drivekit.demoapp.dashboard.fragment.DashboardFragment
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 
 internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
@@ -63,4 +65,9 @@ internal class DashboardActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun onClickStartStopTrip(view: View) {
+        DriveKitTripAnalysis.startTrip()
+    }
+
 }
