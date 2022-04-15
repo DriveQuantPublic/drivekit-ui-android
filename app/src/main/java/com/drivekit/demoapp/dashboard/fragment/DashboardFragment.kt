@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
@@ -71,17 +70,17 @@ internal class DashboardFragment : Fragment() {
     }
 
     private fun initStartStopTripButton() {
-        button_start_stop_trip.findViewById<Button>(R.id.button_action).setOnClickListener {
-            DriveKitTripAnalysis.startTrip()
+        button_start_stop_trip.findViewById<Button>(R.id.button_action).apply {
+            setOnClickListener {
+                viewModel.manageStartStopTripButton()
+            }
+            text = "" // TODO
         }
     }
 
-    fun onClickStartStopTrip(view: View) {
-        DriveKitTripAnalysis.startTrip()
-
-    }
-
     private fun initStartStopTripSimulatorButton() {
-
+        button_start_stop_trip_simulator.findViewById<Button>(R.id.button_action).setOnClickListener {
+            viewModel.manageStartStopTripSimulatorButton()
+        }
     }
 }
