@@ -10,13 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.activity.SettingsActivity
+import com.drivekit.demoapp.dashboard.fragment.DashboardFragment
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.ui.DriverDataUI
-import com.drivequant.drivekit.ui.SynthesisCardsViewListener
-import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
-import kotlinx.android.synthetic.main.activity_dashboard.*
 
 internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
@@ -30,42 +26,28 @@ internal class DashboardActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = "MOCK" // TODO miss "Dashboard" string key
-
-        initFeatureCard()
     }
 
     override fun onResume() {
         super.onResume()
+        showFragment()
+    }
+
+    private fun showFragment() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         }
 
-        DriverDataUI.getLastTripsSynthesisCardsView(listener = object : SynthesisCardsViewListener {
-            override fun onViewLoaded(fragment: DKSynthesisCardViewPagerFragment) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container_synthesis, fragment)
-                    .commit()
-            }
-        })
+        title = getString(viewModel.getTitleResId())
 
-        DriverDataUI.getLastTripsView(HeaderDay.DURATION).let {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container_last_trips, it)
-                .commit()
-        }
-    }
-
-    private fun initFeatureCard() {
-        card_features.configureTitle(R.string.feature_list)
-        card_features.configureDescription(R.string.feature_list_description)
-        card_features.configureTextButton(R.string.button_see_features)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, DashboardFragment())
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_action_bar_menu, menu)
+        menuInflater.inflate(R.menu.dashboard_action_bar_menu, menu)
         this.menu = menu
         return super.onCreateOptionsMenu(menu)
     }

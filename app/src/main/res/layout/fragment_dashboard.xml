@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dk_margin_half">
+
+            <FrameLayout
+                android:id="@+id/container_synthesis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <FrameLayout
+                android:id="@+id/container_last_trips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.drivekit.demoapp.component.FeatureCard
+                android:id="@+id/card_features"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/button_start_stop_trip"
+        layout="@layout/layout_button_action" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"/>
+
+    <include
+        android:id="@+id/button_start_stop_trip_simulator"
+        layout="@layout/layout_button_action" />
+</LinearLayout>

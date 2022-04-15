@@ -191,4 +191,6 @@
     <string name="welcome_ok_description">Congratulations, you have built the DriveKit demo application 🎉\n\nThis application shows you how the DriveKit components work and guides you to install them in your application.\n\nYour API key is:\n\n%s\n\nUnder no circumstances it shouldn\'t be shared or used in multiple applications.</string>
     <string name="welcome_ok_title">Welcome to the DriveKit demo application</string>
 
+
+    <string name="dashboard_header">Dashboard</string>
 </resources>
