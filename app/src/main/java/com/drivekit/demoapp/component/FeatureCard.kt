@@ -5,9 +5,9 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -15,7 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.buttonText
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 
-internal class FeatureCard : CardView {
+internal class FeatureCard : FrameLayout {
 
     private var listener: FeatureCardButtonClickListener? = null
     private lateinit var ctx: Context
@@ -59,7 +59,7 @@ internal class FeatureCard : CardView {
     fun configureTitle(textResId: Int) {
         textTitle.apply {
             text = ctx.getString(textResId)
-            headLine2()
+            headLine2(DriveKitUI.colors.complementaryFontColor())
         }
     }
 
