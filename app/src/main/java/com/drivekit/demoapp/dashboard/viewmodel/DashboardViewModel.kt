@@ -13,7 +13,7 @@ import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPag
 
 internal class DashboardViewModel: ViewModel() {
     var sdkStateObserver: MutableLiveData<Any> = MutableLiveData()
-    private var sdkStateChangeListener: TripListenerController.SdkStateChangeListener = object : TripListenerController.SdkStateChangeListener {
+    var sdkStateChangeListener: TripListenerController.SdkStateChangeListener = object : TripListenerController.SdkStateChangeListener {
         override fun sdkStateChanged(state: State) {
             sdkStateObserver.postValue(Any())
         }

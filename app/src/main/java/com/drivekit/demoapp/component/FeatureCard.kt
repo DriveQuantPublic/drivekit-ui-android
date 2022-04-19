@@ -17,7 +17,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 
 internal class FeatureCard : FrameLayout {
 
-    private var listener: FeatureCardButtonClickListener? = null
     private lateinit var ctx: Context
 
     private lateinit var iconTitle: ImageView
@@ -72,18 +71,17 @@ internal class FeatureCard : FrameLayout {
         }
     }
 
-    fun configureTextButton(textResId: Int) {
+    fun configureTextButton(textResId: Int, listener: FeatureCardButtonClickListener) {
         buttonTitle.apply {
             text = ctx.getString(textResId)
             buttonText(
                 textColor = DriveKitUI.colors.secondaryColor(),
                 backgroundColor = Color.parseColor("#00ffffff")
             )
+            setOnClickListener {
+                listener.onButtonClicked()
+            }
         }
-    }
-
-    fun setButtonClickListener(listener: FeatureCardButtonClickListener) {
-        this.listener = listener
     }
 
     interface FeatureCardButtonClickListener {

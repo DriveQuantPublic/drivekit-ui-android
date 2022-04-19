@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.activity.SettingsActivity
+import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
+import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -41,14 +43,14 @@ internal class DashboardActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        }
+        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
         showContent()
     }
 
     private fun showContent() {
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        }
-
         initSynthesisTripsCard()
         initLastTripsCard()
         initStartStopTripButton()
@@ -79,7 +81,11 @@ internal class DashboardActivity : AppCompatActivity() {
         card_features.apply {
             configureTitle(R.string.feature_list)
             configureDescription(R.string.feature_list_description)
-            configureTextButton(R.string.button_see_features)
+            configureTextButton(R.string.button_see_features, object : FeatureCard.FeatureCardButtonClickListener{
+                override fun onButtonClicked() {
+                    // TODO launch features list on next ticket
+                }
+            })
         }
     }
 
@@ -105,6 +111,11 @@ internal class DashboardActivity : AppCompatActivity() {
                 // TODO launch Trip Simulator screen
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        TripListenerController.removeSdkStateChangeListener(viewModel.sdkStateChangeListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
