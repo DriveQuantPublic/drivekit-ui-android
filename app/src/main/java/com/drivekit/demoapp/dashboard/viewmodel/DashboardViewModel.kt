@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.dashboard.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.drivekitdemoapp.R
@@ -17,7 +18,7 @@ import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 
 internal class DashboardViewModel: ViewModel() {
-
+    var sdkStateObserver: MutableLiveData<Any> = MutableLiveData()
     private var tripListener: TripListener = object : TripListener {
         override fun beaconDetected() {
 
@@ -46,15 +47,13 @@ internal class DashboardViewModel: ViewModel() {
         }
 
         override fun sdkStateChanged(state: State) {
-            // TODO post live data value so Fragment can update
+            sdkStateObserver.postValue(Any())
         }
     }
 
     init {
         TripListenerController.addListener(tripListener)
     }
-
-    fun getTitleResId() = R.string.dashboard_header
 
     fun getSynthesisCardsView(listener: SynthesisCardsViewListener) {
         DriverDataUI.getLastTripsSynthesisCardsView(listener = object : SynthesisCardsViewListener {
@@ -74,7 +73,13 @@ internal class DashboardViewModel: ViewModel() {
         }
     }
 
+    fun getStartStopTripButtonTitleResId() = if (DriveKitTripAnalysis.isTripRunning()) {
+        R.string.stop_trip
+    } else {
+        R.string.start_trip
+    }
+
     fun manageStartStopTripSimulatorButton() {
-        // TODO lancer l'activité
+        // TODO launch trip simulator activity
     }
 }

@@ -63,6 +63,8 @@ internal class FeatureCard : CardView {
         }
     }
 
+    // TODO configure INFO
+
     fun configureDescription(textResId: Int) {
         description.apply {
             text = ctx.getText(textResId)

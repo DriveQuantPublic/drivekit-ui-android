@@ -15,6 +15,5 @@
         android:clickable="true"
         android:focusable="true"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="2dp"
-        />
+        android:layout_marginVertical="8dp" />
 </FrameLayout>
