@@ -1,4 +1,4 @@
-package com.drivekit.demoapp.onboarding
+package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
 import com.drivekit.demoapp.config.DriveKitConfig
@@ -6,7 +6,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 
-class DriveKitConfigViewModel {
+class ApiKeyViewModel {
 
     fun isApiKeyValid() = DriveKit.config.apiKey?.let {
         it.isNotBlank() && it != DriveKitConfig.PLACEHOLDER

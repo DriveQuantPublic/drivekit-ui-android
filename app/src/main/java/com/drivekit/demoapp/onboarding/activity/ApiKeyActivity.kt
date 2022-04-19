@@ -1,10 +1,11 @@
-package com.drivekit.demoapp.onboarding
+package com.drivekit.demoapp.onboarding.activity
 
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.activity_set_api_key.*
@@ -17,7 +18,7 @@ class ApiKeyActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         title = DKResource.convertToString(this, "welcome_header")
 
-        val viewModel = DriveKitConfigViewModel()
+        val viewModel = ApiKeyViewModel()
         text_view_description.text = viewModel.getDescription(this)
         text_view_title.text = viewModel.getTitle(this)
 
@@ -27,7 +28,7 @@ class ApiKeyActivity : AppCompatActivity() {
                 if (viewModel.isApiKeyValid()) {
                     startActivity(Intent(this@ApiKeyActivity, UserIdActivity::class.java))
                 } else {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/DriveQuantPublic/drivekit-ui-android")))
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(DKResource.convertToString(this@ApiKeyActivity, "drivekit_doc_android_github_ui"))))
                 }
             }
         }

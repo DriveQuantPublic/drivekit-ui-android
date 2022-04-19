@@ -1,4 +1,4 @@
-package com.drivekit.demoapp.onboarding
+package com.drivekit.demoapp.onboarding.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

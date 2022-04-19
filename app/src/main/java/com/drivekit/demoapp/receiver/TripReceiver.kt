@@ -18,7 +18,7 @@ class TripReceiver : TripAnalysedReceiver() {
         var messageResId = R.string.trip_finished
         response.itineraryStatistics?.let {
             if (it.transportationMode == TransportationMode.TRAIN.value) {
-                messageResId = R.string.train_trip
+                messageResId = R.string.trip_train_detected
             }
         }
         showNotification(context, context.getString(messageResId))
@@ -26,7 +26,6 @@ class TripReceiver : TripAnalysedReceiver() {
 
     override fun onTripCancelled(context: Context, status: CancelTrip) {
         when (status) {
-            CancelTrip.NO_SPEED -> R.string.trip_cancelled_highspeed
             CancelTrip.NO_GPS_DATA -> R.string.trip_cancelled_no_gps_data
             CancelTrip.NO_BEACON -> R.string.trip_cancelled_no_beacon
             else -> R.string.trip_cancelled_reset

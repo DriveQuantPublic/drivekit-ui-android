@@ -1,4 +1,4 @@
-package com.drivekit.demoapp.onboarding
+package com.drivekit.demoapp.onboarding.activity
 
 import android.content.Intent
 import android.net.Uri
