@@ -81,7 +81,7 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureTripAnalysis(context: Context) {
-        TripListenerController.addListener(object : TripListener {
+        TripListenerController.addTripListener(object : TripListener {
             override fun tripStarted(startMode: StartMode) {
                 // Call when a trip start
             }

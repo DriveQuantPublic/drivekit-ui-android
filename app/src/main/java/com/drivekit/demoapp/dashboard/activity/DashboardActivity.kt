@@ -34,6 +34,8 @@ internal class DashboardActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
+        title = getString(R.string.dashboard_header)
+
         initFeatureCard()
     }
 
@@ -46,8 +48,6 @@ internal class DashboardActivity : AppCompatActivity() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         }
-
-        title = getString(R.string.dashboard_header)
 
         initSynthesisTripsCard()
         initLastTripsCard()
@@ -88,7 +88,7 @@ internal class DashboardActivity : AppCompatActivity() {
             startStopTripButton = this
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
             setOnClickListener {
-                viewModel.manageStartStopTripButton()
+                viewModel.startStopTrip()
             }
         }
 
@@ -102,7 +102,7 @@ internal class DashboardActivity : AppCompatActivity() {
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.start_trip) // TODO change key
             setOnClickListener {
-                viewModel.manageStartStopTripSimulatorButton()
+                // TODO launch Trip Simulator screen
             }
         }
     }

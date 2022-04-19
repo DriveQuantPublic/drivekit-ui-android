@@ -63,7 +63,7 @@ internal class FeatureCard : CardView {
         }
     }
 
-    // TODO configure INFO
+    // TODO configure INFO in the next ticket (features list)
 
     fun configureDescription(textResId: Int) {
         description.apply {

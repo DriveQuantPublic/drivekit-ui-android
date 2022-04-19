@@ -10,17 +10,33 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import java.lang.ref.WeakReference
 
 internal object TripListenerController : TripListener {
-    private val listeners: MutableList<WeakReference<TripListener>> = mutableListOf()
+    private val tripListeners: MutableList<WeakReference<TripListener>> = mutableListOf()
+    private val sdkStateChangeListeners: MutableList<WeakReference<SdkStateChangeListener>> = mutableListOf()
 
-    fun addListener(listener: TripListener) {
-        listeners.add(WeakReference(listener))
+    fun addTripListener(listener: TripListener) {
+        tripListeners.add(WeakReference(listener))
     }
 
-    fun removeListener(listener: TripListener) {
-        val iterator = listeners.iterator()
+    fun removeTripListener(tripListener: TripListener) {
+        val iterator = tripListeners.iterator()
         while (iterator.hasNext()) {
             iterator.next().get()?.let {
-                if (it === listener) {
+                if (it === tripListener) {
+                    iterator.remove()
+                }
+            }
+        }
+    }
+
+    fun addSdkStateChangeListener(sdkStateChangeListener: SdkStateChangeListener) {
+        sdkStateChangeListeners.add(WeakReference(sdkStateChangeListener))
+    }
+
+    fun removeSdkStateChangeListener(sdkStateChangeListener: SdkStateChangeListener) {
+        val iterator = sdkStateChangeListeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().get()?.let {
+                if (it === sdkStateChangeListener) {
                     iterator.remove()
                 }
             }
@@ -28,19 +44,22 @@ internal object TripListenerController : TripListener {
     }
 
     override fun sdkStateChanged(state: State) {
-        listeners.forEach {
+        tripListeners.forEach {
+            it.get()?.sdkStateChanged(state)
+        }
+        sdkStateChangeListeners.forEach {
             it.get()?.sdkStateChanged(state)
         }
     }
 
     override fun beaconDetected() {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.beaconDetected()
         }
     }
 
     override fun crashDetected(crashInfo: DKCrashInfo) {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.crashDetected(crashInfo)
         }
     }
@@ -50,32 +69,36 @@ internal object TripListenerController : TripListener {
         feedbackType: CrashFeedbackType,
         severity: CrashFeedbackSeverity
     ) {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.crashFeedbackSent(crashInfo, feedbackType, severity)
         }
     }
 
     override fun potentialTripStart(startMode: StartMode) {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.potentialTripStart(startMode)
         }
     }
 
     override fun tripPoint(tripPoint: TripPoint) {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.tripPoint(tripPoint)
         }
     }
 
     override fun tripSavedForRepost() {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.tripSavedForRepost()
         }
     }
 
     override fun tripStarted(startMode: StartMode) {
-        listeners.forEach {
+        tripListeners.forEach {
             it.get()?.tripStarted(startMode)
         }
+    }
+
+    interface SdkStateChangeListener {
+        fun sdkStateChanged(state: State)
     }
 }
