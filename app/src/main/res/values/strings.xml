@@ -193,4 +193,5 @@
 
 
     <string name="dashboard_header">Dashboard</string>
+    <string name="simulate_trip">Lancer la simulation</string>
 </resources>

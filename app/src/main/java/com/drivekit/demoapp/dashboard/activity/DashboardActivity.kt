@@ -100,7 +100,7 @@ internal class DashboardActivity : AppCompatActivity() {
     private fun initTripSimulatorButton() {
         button_trip_simulator.findViewById<Button>(R.id.button_action).apply {
             tripSimulatorButton = this
-            tripSimulatorButton.text = getString(R.string.start_trip) // TODO change key
+            tripSimulatorButton.text = getString(R.string.simulate_trip)
             setOnClickListener {
                 // TODO launch Trip Simulator screen
             }
