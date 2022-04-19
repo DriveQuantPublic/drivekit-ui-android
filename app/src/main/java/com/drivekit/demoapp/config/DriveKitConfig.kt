@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.drivekit.demoapp.DriveKitDemoApplication
-import com.drivekit.demoapp.onboarding.UserInfoActivity
+import com.drivekit.demoapp.onboarding.activity.UserInfoActivity
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -68,31 +68,7 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureCore(application: Application) {
-        DriveKit.initialize(application, object: DriveKitListener{
-            override fun onAuthenticationError(errorType: RequestError) {
-                when (errorType) {
-                    RequestError.NO_NETWORK -> "network_ko_error"
-                    RequestError.UNAUTHENTICATED -> "authentication_error"
-                    RequestError.FORBIDDEN -> "forbidden_error"
-                    RequestError.SERVER_ERROR -> "server_error"
-                    RequestError.CLIENT_ERROR -> "client_error"
-                    RequestError.UNKNOWN_ERROR -> "unknown_error"
-                }.let {
-                    val message = DKResource.convertToString(application, it)
-                    Toast.makeText(application, message, Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onConnected() {
-                val intent = Intent(application, UserInfoActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                application.startActivity(intent)
-            }
-
-            override fun onDisconnected() {
-                Toast.makeText(application, "Disconnected", Toast.LENGTH_LONG).show()
-            }
-        })
+        DriveKit.initialize(application, DriveKitListenerController)
         //TODO Push your API_KEY here
         DriveKit.setApiKey(PLACEHOLDER)
     }

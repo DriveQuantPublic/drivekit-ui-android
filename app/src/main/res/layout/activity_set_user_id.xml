@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,37 +16,22 @@
         android:orientation="vertical"
         android:padding="@dimen/dk_margin">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/text_view_user_id_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
-                android:layout_weight="2"
-                android:text="@string/authentication_title"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dk_text_medium"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/image_view_info"
-                android:layout_width="@dimen/dk_ic_small"
-                android:layout_height="@dimen/dk_ic_small"
-                android:contentDescription="image"
-                android:src="@drawable/dk_common_info"
-                app:tint="@color/colorAccent" />
-        </LinearLayout>
-
+            android:layout_marginBottom="@dimen/dk_margin"
+            tools:text="@string/authentication_title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/dk_text_medium"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/text_view_user_id_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dk_margin"
-            android:text="@string/authentication_description" />
+            tools:text="@string/authentication_description" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_user_id"
