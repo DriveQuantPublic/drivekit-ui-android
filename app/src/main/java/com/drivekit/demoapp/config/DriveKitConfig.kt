@@ -62,7 +62,7 @@ internal object DriveKitConfig : ContentMail {
     private fun configureCore(application: Application) {
         DriveKit.initialize(application, DriveKitListenerController)
         //TODO: ENTER_YOUR_API_KEY_HERE
-        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
+        DriveKit.setApiKey("ENTER_YOUR_API_KEY_HERE")
     }
 
     private fun configureCommonUI() {
