@@ -4,12 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import com.drivekit.demoapp.manager.ModulesSyncListener
-import com.drivekit.demoapp.manager.StepResultListener
-import com.drivekit.demoapp.manager.SyncModuleManager
+import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
@@ -67,39 +64,36 @@ class UserIdActivity : AppCompatActivity() {
 
         } else {
             text_input_layout_user_id.isErrorEnabled = false
-            //TODO show loader
             viewModel.sendUserId(userId, object : UserIdDriveKitListener {
                 override fun onSetUserId(status: Boolean, requestError: RequestError?) {
-                    //TODO hide loader
                     if (status) {
-                        //TODO show loader with message "sync_user_info_loading_message"
+                        progress_bar_message.show(DKResource.convertToString(this@UserIdActivity, "sync_user_info_loading_message"))
                         SyncModuleManager.syncModules(
                             mutableListOf(
-                                SyncModuleManager.DKModule.USER_INFO,
-                                SyncModuleManager.DKModule.VEHICLE,
-                                SyncModuleManager.DKModule.WORKING_HOURS,
-                                SyncModuleManager.DKModule.TRIPS), stepResultListener = object :StepResultListener {
+                                DKModule.USER_INFO,
+                                DKModule.VEHICLE,
+                                DKModule.WORKING_HOURS,
+                                DKModule.TRIPS), stepResultListener = object :StepResultListener {
                                 override fun onStepFinished(
-                                    syncStatus: SyncModuleManager.SyncStatus,
-                                    remainingModules: List<SyncModuleManager.DKModule>) {
+                                    syncStatus: SyncStatus,
+                                    remainingModules: List<DKModule>) {
                                     remainingModules.firstOrNull()?.let {
                                         when (it) {
-                                            SyncModuleManager.DKModule.VEHICLE -> "sync_vehicles_loading_message"
-                                            SyncModuleManager.DKModule.WORKING_HOURS -> "sync_working_hours_loading_message"
-                                            SyncModuleManager.DKModule.TRIPS -> "sync_trips_loading_message"
+                                            DKModule.VEHICLE -> "sync_vehicles_loading_message"
+                                            DKModule.WORKING_HOURS -> "sync_working_hours_loading_message"
+                                            DKModule.TRIPS -> "sync_trips_loading_message"
                                             else -> null
                                         }?.let { identifier ->
-                                            val message =
-                                                DKResource.convertToString(this@UserIdActivity, identifier)
-                                            Log.e("OYYYYYY", message)
-                                            //TODO show loader with message
+                                            val message = DKResource.convertToString(this@UserIdActivity, identifier)
+                                            progress_bar_message.show(message)
                                         }
                                     }
                                 }
                             }, listener = object: ModulesSyncListener {
-                                override fun onModulesSyncResult(results: MutableList<SyncModuleManager.SyncStatus>) {
+                                override fun onModulesSyncResult(results: MutableList<SyncStatus>) {
                                     if (results.isNotEmpty()) {
-                                        if (results.first() == SyncModuleManager.SyncStatus.SUCCESS) {
+                                        if (results.first() == SyncStatus.SUCCESS) {
+                                            progress_bar_message.hide()
                                             startUserInfoActivity(results.first())
                                         }
                                     }
@@ -107,8 +101,8 @@ class UserIdActivity : AppCompatActivity() {
                             }
                         )
                     } else {
+                        progress_bar_message.hide()
                         val message = requestError?.getErrorMessage(this@UserIdActivity)
-                        //TODO show error message
                         Toast.makeText(this@UserIdActivity, message, Toast.LENGTH_LONG).show()
                     }
                 }
@@ -116,8 +110,8 @@ class UserIdActivity : AppCompatActivity() {
         }
     }
 
-    private fun startUserInfoActivity(syncStatus: SyncModuleManager.SyncStatus) {
-        if (syncStatus == SyncModuleManager.SyncStatus.SUCCESS) {
+    private fun startUserInfoActivity(syncStatus: SyncStatus) {
+        if (syncStatus == SyncStatus.SUCCESS) {
             SynchronizationType.CACHE
         } else {
             SynchronizationType.DEFAULT
@@ -125,6 +119,7 @@ class UserIdActivity : AppCompatActivity() {
             //TODO show loader
             DriveKit.getUserInfo(object : GetUserInfoQueryListener {
                 override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
+                    startActivity(Intent(this@UserIdActivity, UserInfoActivity::class.java))
                     //TODO hide loader
                     //TODO Sync userInfo data from local / put userInfoViewModel inside activity with userInfo data
                     //TODO start UserInfo activity

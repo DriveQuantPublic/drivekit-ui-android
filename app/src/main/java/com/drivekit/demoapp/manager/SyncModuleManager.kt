@@ -25,20 +25,20 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 
+enum class DKModule {
+    USER_INFO,
+    VEHICLE,
+    WORKING_HOURS,
+    TRIPS,
+    BADGE,
+    CHALLENGE;
+}
+
+enum class SyncStatus {
+    SUCCESS, FAILED
+}
+
 object SyncModuleManager {
-
-    enum class DKModule {
-        USER_INFO,
-        VEHICLE,
-        WORKING_HOURS,
-        TRIPS,
-        BADGE,
-        CHALLENGE;
-    }
-
-    enum class SyncStatus {
-        SUCCESS, FAILED
-    }
 
     private fun syncModule(module: DKModule, listener: ModuleSyncListener? = null) {
         when (module) {
@@ -174,13 +174,13 @@ object SyncModuleManager {
 }
 
 interface ModuleSyncListener {
-    fun onModuleSyncResult(status: SyncModuleManager.SyncStatus)
+    fun onModuleSyncResult(status: SyncStatus)
 }
 
 interface StepResultListener {
-    fun onStepFinished(syncStatus: SyncModuleManager.SyncStatus, remainingModules: List<SyncModuleManager.DKModule>)
+    fun onStepFinished(syncStatus: SyncStatus, remainingModules: List<DKModule>)
 }
 
 interface ModulesSyncListener {
-    fun onModulesSyncResult(results: MutableList<SyncModuleManager.SyncStatus>)
+    fun onModulesSyncResult(results: MutableList<SyncStatus>)
 }

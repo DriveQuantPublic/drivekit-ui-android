@@ -2,10 +2,7 @@ package com.drivekit.demoapp.config
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import com.drivekit.demoapp.DriveKitDemoApplication
-import com.drivekit.demoapp.onboarding.activity.UserInfoActivity
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -15,11 +12,8 @@ import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.core.networking.DriveKitListener
-import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -54,8 +48,6 @@ import kotlin.random.Random
 
 internal object DriveKitConfig : ContentMail {
 
-    const val PLACEHOLDER = "ENTER_YOUR_API_KEY_HERE"
-
     fun configure(application: Application) {
         configureCore(application)
         configureCommonUI()
@@ -69,8 +61,8 @@ internal object DriveKitConfig : ContentMail {
 
     private fun configureCore(application: Application) {
         DriveKit.initialize(application, DriveKitListenerController)
-        //TODO Push your API_KEY here
-        DriveKit.setApiKey(PLACEHOLDER)
+        //TODO: ENTER_YOUR_API_KEY_HERE
+        DriveKit.setApiKey("W4nDvNst9r7Cd1xmIB1eiZiE")
     }
 
     private fun configureCommonUI() {

@@ -6,23 +6,26 @@ import java.lang.ref.WeakReference
 
 object DriveKitListenerController : DriveKitListener {
 
-    private val listeners: MutableList<WeakReference<DriveKitListener>> = mutableListOf()
+    private var listeners: MutableList<WeakReference<DriveKitListener>> = mutableListOf()
 
     override fun onAuthenticationError(errorType: RequestError) {
-        for (listener in listeners) {
-            listener.get()?.onAuthenticationError(errorType)
+        val iterator = listeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().get()?.onAuthenticationError(errorType)
         }
     }
 
     override fun onConnected() {
-        for (listener in listeners) {
-            listener.get()?.onConnected()
+        val iterator = listeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().get()?.onConnected()
         }
     }
 
     override fun onDisconnected() {
-        for (listener in listeners) {
-            listener.get()?.onDisconnected()
+        val iterator = listeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().get()?.onDisconnected()
         }
     }
 
@@ -42,6 +45,6 @@ object DriveKitListenerController : DriveKitListener {
     }
 
     fun reset() {
-        listeners.clear()
+        listeners = mutableListOf()
     }
 }
