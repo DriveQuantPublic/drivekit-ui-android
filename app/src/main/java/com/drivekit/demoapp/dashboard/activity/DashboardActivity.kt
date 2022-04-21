@@ -14,6 +14,7 @@ import com.drivekit.demoapp.activity.SettingsActivity
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
+import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -83,7 +84,7 @@ internal class DashboardActivity : AppCompatActivity() {
             configureDescription(R.string.feature_list_description)
             configureTextButton(R.string.button_see_features, object : FeatureCard.FeatureCardButtonClickListener{
                 override fun onButtonClicked() {
-                    // TODO launch features list on next ticket
+                    startActivity(Intent(context, FeatureListActivity::class.java))
                 }
             })
         }

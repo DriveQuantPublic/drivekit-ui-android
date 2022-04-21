@@ -11,5 +11,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/features_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dk_margin_half" />
 </LinearLayout>

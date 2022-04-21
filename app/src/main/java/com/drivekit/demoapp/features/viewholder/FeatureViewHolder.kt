@@ -13,6 +13,11 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         feature.apply {
             cardView.configureTitle(getTitleResId())
             cardView.configureDescription(getDescriptionResId())
+            cardView.configureTextButton(getActionButtonTitleResId(), object : FeatureCard.FeatureCardButtonClickListener {
+                override fun onButtonClicked() {
+                    // TODO redirect to the related screen
+                }
+            })
             // TODO le reste
         }
     }

@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.drivekit.demoapp.featurelist.activity.FeatureListActivity"
+        <activity android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="false">
         </activity>
