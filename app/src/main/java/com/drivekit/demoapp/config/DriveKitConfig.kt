@@ -3,6 +3,7 @@ package com.drivekit.demoapp.config
 import android.app.Application
 import android.content.Context
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -80,7 +81,7 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureTripAnalysis(context: Context) {
-        DriveKitTripAnalysis.initialize(createForegroundNotification(context), object : TripListener {
+        TripListenerController.addTripListener(object : TripListener {
             override fun tripStarted(startMode: StartMode) {
                 // Call when a trip start
             }
@@ -100,6 +101,7 @@ internal object DriveKitConfig : ContentMail {
             override fun crashDetected(crashInfo: DKCrashInfo) {}
             override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
         })
+        DriveKitTripAnalysis.initialize(createForegroundNotification(context), TripListenerController)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
