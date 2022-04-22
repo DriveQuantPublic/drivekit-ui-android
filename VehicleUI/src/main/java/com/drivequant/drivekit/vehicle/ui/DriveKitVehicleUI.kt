@@ -192,6 +192,11 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
         OdometerVehicleListActivity.launchActivity(activity, vehicleId)
     }
 
+    @JvmOverloads
+    fun startOdometerUIActivity(context: Context, vehicleId: String? = null) {
+        OdometerVehicleListActivity.launchActivity(context, vehicleId)
+    }
+
     override fun vehiclesUpdated() {
         vehiclesListFragment?.updateVehicles(SynchronizationType.CACHE)
     }

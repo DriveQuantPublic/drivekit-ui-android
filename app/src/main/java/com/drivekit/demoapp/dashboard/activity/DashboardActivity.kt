@@ -86,7 +86,7 @@ internal class DashboardActivity : AppCompatActivity() {
         card_features.apply {
             configureTitle(viewModel.getFeatureCardTitleResId())
             configureDescription(viewModel.getFeatureCardDescriptionResId())
-            configureTextButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardButtonClickListener{
+            configureActionButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardActionClickListener{
                 override fun onButtonClicked() {
                     startActivity(Intent(context, FeatureListActivity::class.java))
                 }

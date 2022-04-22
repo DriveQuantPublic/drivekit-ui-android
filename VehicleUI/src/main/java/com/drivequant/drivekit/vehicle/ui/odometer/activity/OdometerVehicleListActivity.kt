@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,15 @@ class OdometerVehicleListActivity : AppCompatActivity() {
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             activity.startActivity(intent)
+        }
+
+        fun launchActivity(
+            context: Context,
+            vehicleId: String? = null) {
+            val intent = Intent(context, OdometerVehicleListActivity::class.java)
+            intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
         }
     }
 

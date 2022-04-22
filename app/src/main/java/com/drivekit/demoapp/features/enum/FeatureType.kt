@@ -3,7 +3,7 @@ package com.drivekit.demoapp.features.enum
 import com.drivekit.drivekitdemoapp.R
 
 internal enum class FeatureType {
-    ALL, // TODO reuse it in dashboard viewmodel
+    ALL,
     DRIVERDATA_TRIPS,
     PERMISSIONSUTILS_ONBOARDING,
     PERMISSIONSUTILS_DIAGNOSIS,
@@ -15,7 +15,19 @@ internal enum class FeatureType {
     DRIVERACHIEVEMENT_STREAKS,
     TRIPANALYSIS_WORKINGHOURS;
 
-    fun getIcon() = R.drawable.dk_leaf_tab_icon
+    fun getIcon() = when (this) {
+        ALL -> null
+        DRIVERDATA_TRIPS -> R.drawable.dk_leaf_tab_icon
+        PERMISSIONSUTILS_ONBOARDING -> R.drawable.dk_leaf_tab_icon
+        PERMISSIONSUTILS_DIAGNOSIS -> R.drawable.dk_leaf_tab_icon
+        VEHICLE_LIST -> R.drawable.dk_leaf_tab_icon
+        VEHICLE_ODOMETER -> R.drawable.dk_leaf_tab_icon
+        CHALLENGE_LIST -> R.drawable.dk_leaf_tab_icon
+        DRIVERACHIEVEMENT_RANKING -> R.drawable.dk_leaf_tab_icon
+        DRIVERACHIEVEMENT_BADGES -> R.drawable.dk_leaf_tab_icon
+        DRIVERACHIEVEMENT_STREAKS -> R.drawable.dk_leaf_tab_icon
+        TRIPANALYSIS_WORKINGHOURS -> R.drawable.dk_leaf_tab_icon
+    }
 
     fun getTitleResId() = when (this) {
         ALL -> R.string.feature_list
@@ -45,6 +57,4 @@ internal enum class FeatureType {
     }
 
     fun getActionButtonTitleResId() = R.string.button_see_feature
-
-    fun hasInfo() = true
 }
