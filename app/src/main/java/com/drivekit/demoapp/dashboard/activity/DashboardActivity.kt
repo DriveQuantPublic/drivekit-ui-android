@@ -38,17 +38,20 @@ internal class DashboardActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         title = getString(R.string.dashboard_header)
-
         initFeatureCard()
     }
 
     override fun onResume() {
         super.onResume()
+        checkViewModelInitialization()
+        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
+        showContent()
+    }
+
+    private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         }
-        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
-        showContent()
     }
 
     private fun showContent() {
@@ -79,10 +82,11 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initFeatureCard() {
+        checkViewModelInitialization()
         card_features.apply {
-            configureTitle(R.string.feature_list)
-            configureDescription(R.string.feature_list_description)
-            configureTextButton(R.string.button_see_features, object : FeatureCard.FeatureCardButtonClickListener{
+            configureTitle(viewModel.getFeatureCardTitleResId())
+            configureDescription(viewModel.getFeatureCardDescriptionResId())
+            configureTextButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardButtonClickListener{
                 override fun onButtonClicked() {
                     startActivity(Intent(context, FeatureListActivity::class.java))
                 }

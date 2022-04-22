@@ -11,6 +11,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun bind(feature: FeatureType) {
         feature.apply {
+            cardView.configureIcon(getIcon())
             cardView.configureTitle(getTitleResId())
             cardView.configureDescription(getDescriptionResId())
             cardView.configureTextButton(getActionButtonTitleResId(), object : FeatureCard.FeatureCardButtonClickListener {
