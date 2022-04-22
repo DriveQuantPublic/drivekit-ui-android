@@ -1,15 +1,126 @@
 package com.drivekit.demoapp.onboarding.activity
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.config.DriveKitListenerController
+import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
+import kotlinx.android.synthetic.main.activity_user_info.*
+import kotlinx.android.synthetic.main.activity_user_info.button_validate
+import kotlinx.android.synthetic.main.activity_user_info.progress_circular
 
 class UserInfoActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: UserInfoViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_info)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(UserInfoViewModel::class.java)
+        }
+
+        title = getString(R.string.user_info_header)
+        text_view_user_info_title.text = viewModel.getTitle(this)
+        text_view_user_info_description.text = viewModel.getDescriptionContent(this)
+
+        text_input_layout_firstname.editText?.setText(viewModel.getFirstName())
+        text_input_layout_lastname.editText?.setText(viewModel.getLastName())
+        text_input_layout_pseudo.editText?.setText(viewModel.getPseudo())
+
+        text_view_user_info_title.setOnClickListener {
+            openDriveKitUserInfoDoc()
+        }
+
+        button_next_step.setOnClickListener {
+            goToNext()
+        }
+
+        button_validate.setOnClickListener {
+            val firstName = text_view_firstname_field.editableText.toString()
+            val lastName = text_view_lastname_field.editableText.toString()
+            val pseudo = text_view_pseudo_field.editableText.toString()
+
+            if (firstName.isNotBlank() ||
+                lastName.isNotBlank() ||
+                pseudo.isNotBlank()
+            ) {
+                text_input_layout_firstname.isErrorEnabled = false
+                text_input_layout_lastname.isErrorEnabled = false
+                text_input_layout_pseudo.isErrorEnabled = false
+                updateProgressVisibility(true)
+                viewModel.updateUser(firstName, lastName, pseudo)
+            } else {
+                text_input_layout_firstname.apply {
+                    isErrorEnabled = true
+                    error = getString(R.string.user_id_error)
+                }
+                text_input_layout_lastname.apply {
+                    isErrorEnabled = true
+                    error = getString(R.string.user_id_error)
+                }
+                text_input_layout_pseudo.apply {
+                    isErrorEnabled = true
+                    error = getString(R.string.user_id_error)
+                }
+                //TODO generate string key
+                Toast.makeText(this, "Make sure you filled at least one entry", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+        viewModel.userInfoUpdated.observe(this, {
+            if (it) {
+                goToNext()
+            }
+            updateProgressVisibility(false)
+        })
+    }
+
+    private fun goToNext() {
+        if (viewModel.shouldDisplayPermissions(this)) {
+            //TODO start permissions activity
+        } else {
+            viewModel.shouldDisplayVehicle()
+            viewModel.shouldDisplayVehicle.observe(this, {
+                if (it) {
+                    //TODO start vehicles activity
+                } else {
+                    //TODO start dashboard activity
+                }
+            })
+        }
+    }
+
+    private fun openDriveKitUserInfoDoc() {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    this.getString(R.string.drivekit_doc_android_update_user_info)
+                )
+            )
+        )
+    }
+
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
     }
 
     override fun onBackPressed() {
