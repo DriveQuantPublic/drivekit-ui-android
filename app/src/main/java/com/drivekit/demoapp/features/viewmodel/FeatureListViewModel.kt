@@ -6,5 +6,4 @@ import com.drivekit.demoapp.features.enum.FeatureType
 internal class FeatureListViewModel : ViewModel() {
 
     val features = FeatureType.values().filterNot { it == FeatureType.ALL }
-
 }

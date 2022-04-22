@@ -17,16 +17,16 @@ internal enum class FeatureType {
 
     fun getIcon() = when (this) {
         ALL -> null
-        DRIVERDATA_TRIPS -> R.drawable.dk_leaf_tab_icon
-        PERMISSIONSUTILS_ONBOARDING -> R.drawable.dk_leaf_tab_icon
-        PERMISSIONSUTILS_DIAGNOSIS -> R.drawable.dk_leaf_tab_icon
-        VEHICLE_LIST -> R.drawable.dk_leaf_tab_icon
-        VEHICLE_ODOMETER -> R.drawable.dk_leaf_tab_icon
-        CHALLENGE_LIST -> R.drawable.dk_leaf_tab_icon
-        DRIVERACHIEVEMENT_RANKING -> R.drawable.dk_leaf_tab_icon
-        DRIVERACHIEVEMENT_BADGES -> R.drawable.dk_leaf_tab_icon
-        DRIVERACHIEVEMENT_STREAKS -> R.drawable.dk_leaf_tab_icon
-        TRIPANALYSIS_WORKINGHOURS -> R.drawable.dk_leaf_tab_icon
+        DRIVERDATA_TRIPS -> R.drawable.dk_leaf_tab_icon // TODO récupérer la bonne image
+        PERMISSIONSUTILS_ONBOARDING,
+        PERMISSIONSUTILS_DIAGNOSIS -> R.drawable.ic_feature_permissionsutils
+        VEHICLE_LIST,
+        VEHICLE_ODOMETER -> R.drawable.ic_feature_vehicle
+        CHALLENGE_LIST -> R.drawable.ic_feature_challenge
+        DRIVERACHIEVEMENT_RANKING -> R.drawable.ic_feature_driverachievement_ranking
+        DRIVERACHIEVEMENT_BADGES -> R.drawable.ic_feature_driverachievement_badges
+        DRIVERACHIEVEMENT_STREAKS -> R.drawable.ic_feature_driverachievement_streaks
+        TRIPANALYSIS_WORKINGHOURS -> R.drawable.ic_feature_tripanalysis_workinghours
     }
 
     fun getTitleResId() = when (this) {
