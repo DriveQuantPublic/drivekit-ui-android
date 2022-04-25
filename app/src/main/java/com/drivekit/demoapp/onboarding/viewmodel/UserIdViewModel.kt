@@ -15,7 +15,7 @@ import com.drivequant.drivekit.core.driver.UserInfoGetStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.core.networking.RequestError
 
-class UserIdViewModel : ViewModel(), DriveKitListener {
+internal class UserIdViewModel : ViewModel(), DriveKitListener {
 
     private var listener: UserIdDriveKitListener? = null
     var messageIdentifier: MutableLiveData<Int> = MutableLiveData()

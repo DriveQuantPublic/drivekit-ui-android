@@ -99,6 +99,14 @@ class UserInfoActivity : AppCompatActivity() {
             }
             updateProgressVisibility(false)
         })
+
+        viewModel.shouldDisplayVehicle.observe(this, {
+            if (it) {
+                VehiclesActivity.launchActivity(this)
+            } else {
+                //TODO start dashboard activity
+            }
+        })
     }
 
     private fun goToNext() {
@@ -106,13 +114,6 @@ class UserInfoActivity : AppCompatActivity() {
             PermissionsActivity.launchActivity(this)
         } else {
             viewModel.shouldDisplayVehicle()
-            viewModel.shouldDisplayVehicle.observe(this, {
-                if (it) {
-                    VehiclesActivity.launchActivity(this)
-                } else {
-                    //TODO start dashboard activity
-                }
-            })
         }
     }
 

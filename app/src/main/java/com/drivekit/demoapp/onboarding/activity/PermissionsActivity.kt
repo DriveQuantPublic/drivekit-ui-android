@@ -61,15 +61,16 @@ class PermissionsActivity : AppCompatActivity() {
                     }
                 })
         }
-    }
 
-    fun startDriveKitVehicles() {
-        viewModel.shouldDisplayVehicle()
         viewModel.shouldDisplayVehicle.observe(this,{
             if (it) {
                 VehiclesActivity.launchActivity(this)
             }
         })
+    }
+
+    fun startDriveKitVehicles() {
+        viewModel.shouldDisplayVehicle()
     }
 
     private fun openDriveKitPermissionsDoc() {

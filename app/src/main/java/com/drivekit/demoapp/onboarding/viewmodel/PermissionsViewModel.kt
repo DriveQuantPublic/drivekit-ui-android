@@ -7,7 +7,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 
-class PermissionsViewModel {
+internal class PermissionsViewModel {
 
     var shouldDisplayVehicle: MutableLiveData<Boolean> = MutableLiveData()
 

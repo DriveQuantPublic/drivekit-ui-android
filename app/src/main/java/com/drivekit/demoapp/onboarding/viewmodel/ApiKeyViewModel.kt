@@ -6,7 +6,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 
-class ApiKeyViewModel {
+internal class ApiKeyViewModel {
 
     fun isApiKeyValid() = DriveKit.config.apiKey?.isNotBlank() ?: false
 

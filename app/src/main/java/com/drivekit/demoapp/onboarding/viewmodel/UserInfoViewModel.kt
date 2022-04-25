@@ -18,7 +18,7 @@ import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
 
-class UserInfoViewModel: ViewModel() {
+internal class UserInfoViewModel: ViewModel() {
 
     private var userInfo: UserInfo? = null
     var shouldDisplayVehicle: MutableLiveData<Boolean> = MutableLiveData()
@@ -55,8 +55,7 @@ class UserInfoViewModel: ViewModel() {
                 return true
         }
 
-        if (DiagnosisHelper.getBatteryOptimizationsStatus(context) == PermissionStatus.NOT_VALID
-            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (DiagnosisHelper.getBatteryOptimizationsStatus(context) == PermissionStatus.NOT_VALID) {
             return true
         }
         return false
