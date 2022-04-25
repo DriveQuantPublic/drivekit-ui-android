@@ -2,12 +2,14 @@ package com.drivekit.demoapp.dashboard.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
-import com.drivekit.demoapp.activity.BaseActivity
 import com.drivekit.demoapp.activity.SettingsActivity
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
@@ -20,7 +22,7 @@ import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
-internal class DashboardActivity : BaseActivity() {
+internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
     private var menu: Menu? = null
     private lateinit var startStopTripButton: Button
@@ -29,7 +31,11 @@ internal class DashboardActivity : BaseActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         setContentView(R.layout.activity_dashboard)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
         title = getString(R.string.dashboard_header)
         initFeatureCard()
     }
