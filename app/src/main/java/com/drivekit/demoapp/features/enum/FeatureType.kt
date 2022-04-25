@@ -15,7 +15,7 @@ internal enum class FeatureType {
     DRIVERACHIEVEMENT_STREAKS,
     TRIPANALYSIS_WORKINGHOURS;
 
-    fun getIcon() = when (this) {
+    fun getIconResId() = when (this) {
         ALL -> null
         DRIVERDATA_TRIPS -> R.drawable.ic_feature_driverdata_trips
         PERMISSIONSUTILS_ONBOARDING,
@@ -42,6 +42,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_STREAKS -> R.string.feature_streaks_title
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_title
     }
+
     fun getDescriptionResId() = when (this) {
         ALL -> R.string.feature_list_description
         DRIVERDATA_TRIPS -> R.string.feature_trip_list_description
@@ -60,7 +61,7 @@ internal enum class FeatureType {
         ALL -> null
         DRIVERDATA_TRIPS -> R.string.drivekit_doc_android_driver_data
         PERMISSIONSUTILS_ONBOARDING -> R.string.drivekit_doc_android_permission_management
-        PERMISSIONSUTILS_DIAGNOSIS -> R.string.drivekit_doc_android_permission_utils
+        PERMISSIONSUTILS_DIAGNOSIS -> R.string.drivekit_doc_android_diag
         VEHICLE_LIST -> R.string.drivekit_doc_android_vehicle_list
         VEHICLE_ODOMETER -> R.string.drivekit_doc_android_odometer
         CHALLENGE_LIST -> R.string.drivekit_doc_android_challenges

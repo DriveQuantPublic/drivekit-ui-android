@@ -29,7 +29,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun bind(feature: FeatureType) {
         feature.apply {
-            getIcon()?.let {
+            getIconResId()?.let {
                 cardView.configureIcon(it)
             }
             cardView.configureTitle(getTitleResId())
@@ -39,6 +39,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                     manageClickedButton(feature)
                 }
             })
+
             cardView.configureInfoButton(object : FeatureCard.FeatureCardInfoClickListener {
                 override fun onInfoClicked() {
                     manageClickedInfoButton(feature)
@@ -64,7 +65,6 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                 DriverDataUI.startTripListActivity(context)
             }
             FeatureType.PERMISSIONSUTILS_ONBOARDING -> {
-
                 if (showPermissionUtilsOnboarding()) {
                     PermissionsUtilsUI.showPermissionViews(context, ArrayList(PermissionView.values().toMutableList()), object : PermissionViewListener {
                         override fun onFinish() {
