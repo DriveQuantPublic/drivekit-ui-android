@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
@@ -14,17 +15,12 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
-import com.drivequant.drivekit.core.driver.UserInfo
-import com.drivequant.drivekit.core.driver.UserInfoGetStatus
 import com.drivequant.drivekit.core.networking.RequestError
 import kotlinx.android.synthetic.main.activity_set_user_id.*
 
 class UserIdActivity : AppCompatActivity() {
 
-    private val viewModel = UserIdViewModel()
+    private lateinit var viewModel: UserIdViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +28,10 @@ class UserIdActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         title = getString( R.string.authentication_header)
+
+        if (!this::viewModel.isInitialized) {
+            viewModel = ViewModelProviders.of(this).get(UserIdViewModel::class.java)
+        }
 
         text_view_user_id_description.text = getString(R.string.authentication_description)
         text_view_user_id_title.apply {
@@ -52,6 +52,20 @@ class UserIdActivity : AppCompatActivity() {
         button_validate.setOnClickListener {
             validateUserId()
         }
+
+        viewModel.messageIdentifier.observe(this, {
+            progress_bar_message.show(getString(it))
+        })
+        viewModel.syncStatus.observe(this, {
+            startUserInfoActivity(it)
+            progress_bar_message.hide()
+        })
+
+        viewModel.syncUserInfo.observe(this, {
+            if (it) {
+                startActivity(Intent(this@UserIdActivity, UserInfoActivity::class.java))
+            }
+        })
     }
 
     private fun openDriveKitUserIdDoc() {
@@ -78,38 +92,7 @@ class UserIdActivity : AppCompatActivity() {
                 override fun onSetUserId(status: Boolean, requestError: RequestError?) {
                     if (status) {
                         progress_bar_message.show(getString(R.string.sync_user_info_loading_message))
-                        SyncModuleManager.syncModules(
-                            mutableListOf(
-                                DKModule.USER_INFO,
-                                DKModule.VEHICLE,
-                                DKModule.WORKING_HOURS,
-                                DKModule.TRIPS), stepResultListener = object :StepResultListener {
-                                override fun onStepFinished(
-                                    syncStatus: SyncStatus,
-                                    remainingModules: List<DKModule>) {
-                                    remainingModules.firstOrNull()?.let {
-                                        when (it) {
-                                            DKModule.VEHICLE -> R.string.sync_vehicles_loading_message
-                                            DKModule.WORKING_HOURS ->  R.string.sync_working_hours_loading_message
-                                            DKModule.TRIPS ->  R.string.sync_trips_loading_message
-                                            else -> null
-                                        }?.let { identifier ->
-                                            val message = getString(identifier)
-                                            progress_bar_message.show(message)
-                                        }
-                                    }
-                                }
-                            }, listener = object: ModulesSyncListener {
-                                override fun onModulesSyncResult(results: MutableList<SyncStatus>) {
-                                    if (results.isNotEmpty()) {
-                                        if (results.first() == SyncStatus.SUCCESS) {
-                                            progress_bar_message.hide()
-                                            startUserInfoActivity(results.first())
-                                        }
-                                    }
-                                }
-                            }
-                        )
+                        viewModel.syncDriveKitModules()
                     } else {
                         progress_bar_message.hide()
                         val message = requestError?.getErrorMessage(this@UserIdActivity)
@@ -121,20 +104,6 @@ class UserIdActivity : AppCompatActivity() {
     }
 
     private fun startUserInfoActivity(syncStatus: SyncStatus) {
-        if (syncStatus == SyncStatus.SUCCESS) {
-            SynchronizationType.CACHE
-        } else {
-            SynchronizationType.DEFAULT
-        }.let {
-            //TODO show loader
-            DriveKit.getUserInfo(object : GetUserInfoQueryListener {
-                override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
-                    startActivity(Intent(this@UserIdActivity, UserInfoActivity::class.java))
-                    //TODO hide loader
-                    //TODO Sync userInfo data from local / put userInfoViewModel inside activity with userInfo data
-                    //TODO start UserInfo activity
-                }
-            }, it)
-        }
+        viewModel.getUserInfo(syncStatus)
     }
 }

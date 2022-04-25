@@ -1,7 +1,6 @@
 package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
-import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
