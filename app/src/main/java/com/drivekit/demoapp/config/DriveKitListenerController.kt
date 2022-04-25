@@ -4,7 +4,7 @@ import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.core.networking.RequestError
 import java.lang.ref.WeakReference
 
-object DriveKitListenerController : DriveKitListener {
+internal object DriveKitListenerController : DriveKitListener {
 
     private var listeners: MutableList<WeakReference<DriveKitListener>> = mutableListOf()
 

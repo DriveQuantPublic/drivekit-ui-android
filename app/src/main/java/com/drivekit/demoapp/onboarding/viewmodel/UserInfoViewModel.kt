@@ -4,10 +4,6 @@ import android.content.Context
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -35,15 +31,6 @@ class UserInfoViewModel: ViewModel() {
             }
         }, SynchronizationType.CACHE)
     }
-
-    fun getTitle(context: Context) = DKSpannable().append(
-        context.getString(R.string.user_info_title), context.resSpans {
-            color(DriveKitUI.colors.mainFontColor())
-        }).append(" ").append("ⓘ", context.resSpans {
-        color(DriveKitUI.colors.secondaryColor())
-    }).toSpannable()
-
-    fun getDescriptionContent(context: Context) = context.getString(R.string.user_info_description)
 
     fun updateUser(firstName: String, lastName: String, pseudo: String) {
         DriveKit.updateUserInfo(firstName, lastName, pseudo, object : UpdateUserInfoQueryListener {

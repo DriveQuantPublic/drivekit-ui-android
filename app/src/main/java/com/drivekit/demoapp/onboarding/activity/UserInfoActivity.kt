@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.config.DriveKitListenerController
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKit
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info.button_validate
@@ -31,8 +34,16 @@ class UserInfoActivity : AppCompatActivity() {
         }
 
         title = getString(R.string.user_info_header)
-        text_view_user_info_title.text = viewModel.getTitle(this)
-        text_view_user_info_description.text = viewModel.getDescriptionContent(this)
+        text_view_user_info_title.text = DKSpannable().append(
+            getString(R.string.user_info_title), resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+                size(R.dimen.dk_text_medium)
+            }).append(" ").append("ⓘ", resSpans {
+            color(DriveKitUI.colors.secondaryColor())
+            size(R.dimen.dk_text_medium)
+        }).toSpannable()
+
+        text_view_user_info_description.text = getString(R.string.user_info_description)
 
         text_input_layout_firstname.editText?.setText(viewModel.getFirstName())
         text_input_layout_lastname.editText?.setText(viewModel.getLastName())
@@ -89,12 +100,12 @@ class UserInfoActivity : AppCompatActivity() {
 
     private fun goToNext() {
         if (viewModel.shouldDisplayPermissions(this)) {
-            //TODO start permissions activity
+            PermissionsActivity.launchActivity(this)
         } else {
             viewModel.shouldDisplayVehicle()
             viewModel.shouldDisplayVehicle.observe(this, {
                 if (it) {
-                    //TODO start vehicles activity
+                    VehiclesActivity.launchActivity(this)
                 } else {
                     //TODO start dashboard activity
                 }

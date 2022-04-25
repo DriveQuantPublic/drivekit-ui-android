@@ -2,6 +2,7 @@ package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
 import com.drivekit.demoapp.config.DriveKitListenerController
+import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -13,19 +14,6 @@ import com.drivequant.drivekit.core.networking.RequestError
 class UserIdViewModel : DriveKitListener {
 
     private var listener: UserIdDriveKitListener? = null
-
-    fun getTitle(context: Context) = DKSpannable().append(
-        DKResource.convertToString(
-            context,
-            "authentication_title"
-        ), context.resSpans {
-            color(DriveKitUI.colors.mainFontColor())
-        }).append(" ").append("ⓘ", context.resSpans {
-        color(DriveKitUI.colors.secondaryColor())
-    }).toSpannable()
-
-    fun getDescription(context: Context) =
-        DKResource.convertToString(context, "authentication_description")
 
     fun sendUserId(userId: String, listener: UserIdDriveKitListener) {
         DriveKitListenerController.registerListener(this)

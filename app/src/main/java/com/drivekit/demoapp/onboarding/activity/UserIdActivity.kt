@@ -11,7 +11,9 @@ import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -29,11 +31,19 @@ class UserIdActivity : AppCompatActivity() {
         setContentView(R.layout.activity_set_user_id)
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = DKResource.convertToString(this, "authentication_header")
+        title = getString( R.string.authentication_header)
 
-        text_view_user_id_description.text = viewModel.getDescription(this)
+        text_view_user_id_description.text = getString(R.string.authentication_description)
         text_view_user_id_title.apply {
-            text = viewModel.getTitle(this@UserIdActivity)
+            text = DKSpannable().append(
+                getString(R.string.authentication_title), resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_medium)
+                }).append(" ").append("ⓘ", resSpans {
+                color(DriveKitUI.colors.secondaryColor())
+                size(R.dimen.dk_text_medium)
+            }).toSpannable()
+
             setOnClickListener {
                 openDriveKitUserIdDoc()
             }
@@ -48,7 +58,7 @@ class UserIdActivity : AppCompatActivity() {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(DKResource.convertToString(this@UserIdActivity, "drivekit_doc_android_user_id"))
+                Uri.parse(getString(R.string.drivekit_doc_android_user_id))
             )
         )
     }
@@ -59,7 +69,7 @@ class UserIdActivity : AppCompatActivity() {
         if (isEditTextUserIdBlank) {
             text_input_layout_user_id.apply {
                 isErrorEnabled = true
-                error = DKResource.convertToString(this@UserIdActivity, "user_id_error")
+                error = getString(R.string.user_id_error)
             }
 
         } else {
@@ -67,7 +77,7 @@ class UserIdActivity : AppCompatActivity() {
             viewModel.sendUserId(userId, object : UserIdDriveKitListener {
                 override fun onSetUserId(status: Boolean, requestError: RequestError?) {
                     if (status) {
-                        progress_bar_message.show(DKResource.convertToString(this@UserIdActivity, "sync_user_info_loading_message"))
+                        progress_bar_message.show(getString(R.string.sync_user_info_loading_message))
                         SyncModuleManager.syncModules(
                             mutableListOf(
                                 DKModule.USER_INFO,
@@ -79,12 +89,12 @@ class UserIdActivity : AppCompatActivity() {
                                     remainingModules: List<DKModule>) {
                                     remainingModules.firstOrNull()?.let {
                                         when (it) {
-                                            DKModule.VEHICLE -> "sync_vehicles_loading_message"
-                                            DKModule.WORKING_HOURS -> "sync_working_hours_loading_message"
-                                            DKModule.TRIPS -> "sync_trips_loading_message"
+                                            DKModule.VEHICLE -> R.string.sync_vehicles_loading_message
+                                            DKModule.WORKING_HOURS ->  R.string.sync_working_hours_loading_message
+                                            DKModule.TRIPS ->  R.string.sync_trips_loading_message
                                             else -> null
                                         }?.let { identifier ->
-                                            val message = DKResource.convertToString(this@UserIdActivity, identifier)
+                                            val message = getString(identifier)
                                             progress_bar_message.show(message)
                                         }
                                     }
