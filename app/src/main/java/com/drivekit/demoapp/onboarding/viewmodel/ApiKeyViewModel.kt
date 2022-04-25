@@ -8,9 +8,7 @@ import com.drivequant.drivekit.core.DriveKit
 
 class ApiKeyViewModel {
 
-    fun isApiKeyValid() = DriveKit.config.apiKey?.let {
-        it.isNotBlank() && !it.isKeyPlaceHolder()
-    }?: false
+    fun isApiKeyValid() = DriveKit.config.apiKey?.isNotBlank() ?: false
 
     fun getButtonText() = if (isApiKeyValid()) {
         R.string.button_next_step
@@ -37,9 +35,4 @@ class ApiKeyViewModel {
     } else {
         R.string.welcome_ko_title
     }
-}
-
-fun String.isKeyPlaceHolder(): Boolean {
-    val keyPlaceHolderRegEx = "[A-Z]{5}(_[A-Z]{3,4}){4}"
-    return keyPlaceHolderRegEx.toRegex().matches(this)
 }

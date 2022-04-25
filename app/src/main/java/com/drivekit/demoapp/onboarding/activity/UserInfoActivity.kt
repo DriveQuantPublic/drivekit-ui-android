@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.config.DriveKitListenerController
@@ -81,19 +80,16 @@ class UserInfoActivity : AppCompatActivity() {
             } else {
                 text_input_layout_firstname.apply {
                     isErrorEnabled = true
-                    error = getString(R.string.user_id_error)
+                    error = getString(R.string.empty_firstname_error)
                 }
                 text_input_layout_lastname.apply {
                     isErrorEnabled = true
-                    error = getString(R.string.user_id_error)
+                    error = getString(R.string.empty_lastname_error)
                 }
                 text_input_layout_pseudo.apply {
                     isErrorEnabled = true
-                    error = getString(R.string.user_id_error)
+                    error = getString(R.string.empty_pseudo_error)
                 }
-                //TODO generate string key
-                Toast.makeText(this, "Make sure you filled at least one entry", Toast.LENGTH_LONG)
-                    .show()
             }
         }
 
