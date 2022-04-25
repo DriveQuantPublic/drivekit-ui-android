@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.drivekitdemoapp.R
@@ -104,7 +105,7 @@ class UserInfoActivity : AppCompatActivity() {
             if (it) {
                 VehiclesActivity.launchActivity(this)
             } else {
-                //TODO start dashboard activity
+                DashboardActivity.launchActivity(this)
             }
         })
     }

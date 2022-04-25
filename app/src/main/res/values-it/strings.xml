@@ -15,6 +15,7 @@
    <string name="button_validation">VALIDO</string>
    <string name="cancel_trip">Annulla il viaggio</string>
    <string name="client_error">Si è verificato un errore, si prega di riprovare più tardi.</string>
+   <string name="dashboard_header">Dashboard</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
    <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -41,7 +42,7 @@
    <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
    <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
    <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios#update-users-information</string>
-   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user </string>
+   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user</string>
    <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface</string>
    <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
    <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
@@ -49,8 +50,6 @@
    <string name="feature_badges_title">Driver Achievement | Badges</string>
    <string name="feature_challenges_description">La sfida di guida è un evento unico in cui i piloti competono per ottenere il miglior punteggio di guida. La componente Challenge offre diversi temi: eco-guida, sicurezza, distrazione e limite di velocità.</string>
    <string name="feature_challenges_title">Challenge | Elenco e risultati</string>
-   <string name="feature_description_beacon_diag">Il componente Vehicle include una funzione per visualizzare la distanza analizzata e una distanza annuale stimata. L\'utente può anche inserire il chilometraggio letto dal tachimetro dell\'auto.</string>
-   <string name="feature_description_vehicle_odometer">Vehicle | Tracciamento del chilometraggio</string>
    <string name="feature_list">Elenco delle caratteristiche</string>
    <string name="feature_list_description">DriveKit è un SDK versatile che contiene l\'analisi dei sensori del telefono, la visualizzazione dei dati di guida, il coaching del conducente e le funzioni di gamification. Impara di più su di loro prima di integrarli nella tua app 🚀.</string>
    <string name="feature_permission_onboarding_ok">La raccolta dei permessi non è disponibile perché hai già concesso tutti i permessi.</string>
@@ -65,6 +64,8 @@
    <string name="feature_trip_list_description">Il componente Driver Data presenta i risultati dell\'analisi dei dati di guida. Include una lista di viaggi e una visualizzazione della mappa con punteggi presentati per tema: sicurezza, eco-guida, distrazione e limite di velocità.</string>
    <string name="feature_trip_list_title">Driver Data | Elenco e visualizzazione dei viaggi</string>
    <string name="feature_vehicle_description">Il componente Vehicle visualizza l\'elenco dei veicoli e le loro caratteristiche. Permette di aggiungere, sostituire o eliminare un veicolo. La modalità di attivazione è configurabile per veicolo (GPS, iBeacon o dispositivo Bluetooth).</string>
+   <string name="feature_vehicle_odometer_description">Il componente Vehicle include una funzione per visualizzare la distanza analizzata e una distanza annuale stimata. L\'utente può anche inserire il chilometraggio letto dal tachimetro dell\'auto.</string>
+   <string name="feature_vehicle_odometer_title">Vehicle | Tracciamento del chilometraggio</string>
    <string name="feature_vehicle_title">Vehicle | Visualizzazione e configurazione</string>
    <string name="feature_working_hours_description">Il componente Trip Analysis offre la possibilità di impostare il tempo di registrazione dei viaggi. È anche possibile etichettare i viaggi per ogni fascia oraria configurata (affari o personale).</string>
    <string name="feature_working_hours_title">Trip Analysis | Gestione degli orari</string>
@@ -96,8 +97,10 @@
    <string name="pseudo">Nickname</string>
    <string name="see_settings">Vedere le impostazioni</string>
    <string name="server_error">Errore del server, si prega di riprovare più tardi</string>
+   <string name="simulate_trip">Simulare un viaggio</string>
    <string name="start_trip">Inizia un viaggio</string>
    <string name="stop_trip">Interrompi il viaggio</string>
+   <string name="sync_challenge_loading_message">Recupero delle sfide...</string>
    <string name="sync_trips_loading_message">Recupero di rotte esistenti...</string>
    <string name="sync_user_info_loading_message">Recuperare le informazioni dell\'utente...</string>
    <string name="sync_vehicles_loading_message">Recuperare la configurazione del veicolo...</string>

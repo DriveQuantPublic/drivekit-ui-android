@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -50,7 +51,7 @@ class VehiclesActivity : AppCompatActivity() {
                 null,
                 object : VehiclePickerCompleteListener {
                     override fun onVehiclePickerFinished(vehicleId: String) {
-                            //TODO go to Dashboard
+                        DashboardActivity.launchActivity(this@VehiclesActivity)
                     }
                 })
         }

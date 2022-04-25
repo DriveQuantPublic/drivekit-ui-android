@@ -15,6 +15,7 @@
     <string name="button_validation">VALIDATE</string>
     <string name="cancel_trip">Cancel the trip</string>
     <string name="client_error">An error has occurred, please try again later.</string>
+    <string name="dashboard_header">Dashboard</string>
     <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
     <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
     <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -41,7 +42,7 @@
     <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
     <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
     <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios#update-users-information</string>
-    <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user </string>
+    <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user</string>
     <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface</string>
     <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
     <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
@@ -49,8 +50,6 @@
     <string name="feature_badges_title">Driver Achievement | Badges</string>
     <string name="feature_challenges_description">The driving challenge is a one-time event during which drivers compete to get the best driving score. The Challenge component includes several themes: eco-driving, safety, distraction and speed limit.</string>
     <string name="feature_challenges_title">Challenge | List and results</string>
-    <string name="feature_description_beacon_diag">The Vehicle component includes a function to display the analyzed distance and an estimation of the annual distance. The user can also enter the mileage read from the car\'s odometer.</string>
-    <string name="feature_description_vehicle_odometer">Vehicle | Mileage tracking</string>
     <string name="feature_list">List of features</string>
     <string name="feature_list_description">DriveKit is a rich and versatile SDK that includes phone sensor analysis, driving data display, driver coaching and gamification features. Discover these features before embedding in your app 🚀.</string>
     <string name="feature_permission_onboarding_ok">The onboarding permissions is not available because you have already granted all permissions.</string>
@@ -65,6 +64,8 @@
     <string name="feature_trip_list_description">The Driver Data component shows the results of the driving data analysis. It includes a list of trips and a map display with scores presented by theme: safety, eco-driving, distraction and speed limit.</string>
     <string name="feature_trip_list_title">Driver Data | List and display of trips</string>
     <string name="feature_vehicle_description">The Vehicle component displays the list of vehicles and their characteristics. It allows to add, replace or delete a vehicle. The activation mode is configurable per vehicle (GPS, iBeacon or Bluetooth device).</string>
+    <string name="feature_vehicle_odometer_description">The Vehicle component includes a function to display the analyzed distance and an estimation of the annual distance. The user can also enter the mileage read from the car\'s odometer.</string>
+    <string name="feature_vehicle_odometer_title">Vehicle | Mileage tracking</string>
     <string name="feature_vehicle_title">Vehicle | Display and configuration</string>
     <string name="feature_working_hours_description">The Trip Analysis component offers the option of adjusting the trip recording hours. It is also possible to label the trips for each configured time slot (business or personal).</string>
     <string name="feature_working_hours_title">Trip Analysis | Working Hours</string>
@@ -96,8 +97,10 @@
     <string name="pseudo">Pseudo</string>
     <string name="see_settings">Go to the settings</string>
     <string name="server_error">Server error, please try later</string>
+    <string name="simulate_trip">Simulate a trip</string>
     <string name="start_trip">Start a trip</string>
     <string name="stop_trip">Stop the trip</string>
+    <string name="sync_challenge_loading_message">Retrieving challenges...</string>
     <string name="sync_trips_loading_message">Retrieving the existing trips...</string>
     <string name="sync_user_info_loading_message">Retrieving user information...</string>
     <string name="sync_vehicles_loading_message">Retrieving the vehicle setup...</string>

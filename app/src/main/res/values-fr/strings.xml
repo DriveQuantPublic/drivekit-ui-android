@@ -15,6 +15,7 @@
    <string name="button_validation">VALIDER</string>
    <string name="cancel_trip">Annuler le trajet</string>
    <string name="client_error">Une erreur est survenue, veuillez réessayer ultérieurement.</string>
+   <string name="dashboard_header">Tableau de bord</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
    <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -26,7 +27,7 @@
    <string name="drivekit_doc_android_ranking">https://docs.drivequant.com/driver-achievement/user-interface/android#select-ranking-themes</string>
    <string name="drivekit_doc_android_streaks">https://docs.drivequant.com/driver-achievement/user-interface/android#select-streak-themes</string>
    <string name="drivekit_doc_android_update_user_info">https://docs.drivequant.com/get-started-drivekit/android#update-users-information</string>
-   <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android#identify-user </string>
+   <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android#identify-user</string>
    <string name="drivekit_doc_android_vehicle">https://docs.drivequant.com/vehicle/user-interface</string>
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
    <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
@@ -41,7 +42,7 @@
    <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
    <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
    <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios#update-users-information</string>
-   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user </string>
+   <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user</string>
    <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface</string>
    <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
    <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
@@ -49,8 +50,6 @@
    <string name="feature_badges_title">Driver Achievement | Badges</string>
    <string name="feature_challenges_description">Le challenge de conduite est un événement ponctuel pendant lequel des conducteurs concourent pour obtenir le meilleur score de conduite. Le composant Challenge propose plusieurs thèmes : éco-conduite, sécurité, distraction et limitation de vitesse.</string>
    <string name="feature_challenges_title">Challenge | Liste et résultats</string>
-   <string name="feature_description_beacon_diag">Le composant Vehicle comprend une fonction pour afficher la distance analysée et une estimation de la distance annuelle. L\'utilisateur peut également saisir le kilométrage lu sur le compteur de sa voiture.</string>
-   <string name="feature_description_vehicle_odometer">Vehicle | Suivi kilométrique</string>
    <string name="feature_list">Liste des fonctionnalités</string>
    <string name="feature_list_description">DriveKit est un SDK polyvalent qui contient des fonctions d\'analyse des capteurs du téléphone, d\'affichage des données de conduite, de coaching du conducteur et de gamification. Découvrez-les avant de les intégrer dans votre app 🚀.</string>
    <string name="feature_permission_onboarding_ok">Le recueil des permissions n\’est pas disponible car vous avez déjà accordé toutes les permissions.</string>
@@ -65,6 +64,8 @@
    <string name="feature_trip_list_description">Le composant Driver Data présente les résultats de l\'analyse de données de conduite. Il comprend une liste des trajets et un affichage cartographique accompagné des scores présentés par thématique : sécurité, éco-conduite, distraction et limite de vitesse.</string>
    <string name="feature_trip_list_title">Driver Data | Liste et affichage des trajets</string>
    <string name="feature_vehicle_description">Le composant Vehicle affiche la liste des véhicules et leurs caractéristiques. Il permet d\'ajouter, de remplacer ou de supprimer un véhicule. Le mode de déclenchement est configurable par véhicule (GPS, iBeacon ou appareil Bluetooth).</string>
+   <string name="feature_vehicle_odometer_description">Le composant Vehicle comprend une fonction pour afficher la distance analysée et une estimation de la distance annuelle. L\'utilisateur peut également saisir le kilométrage lu sur le compteur de sa voiture.</string>
+   <string name="feature_vehicle_odometer_title">Vehicle | Suivi kilométrique</string>
    <string name="feature_vehicle_title">Vehicle | Affichage et configuration</string>
    <string name="feature_working_hours_description">Le composant Trip Analysis offre la possibilité de régler les horaire d\'enregistrement des trajets. Il est également possible de labeliser les trajets pour chaque plage horaire configurée (professionnel ou personnel).</string>
    <string name="feature_working_hours_title">Trip Analysis | Gestion des horaires</string>
@@ -96,8 +97,10 @@
    <string name="pseudo">Pseudo</string>
    <string name="see_settings">Voir les réglages</string>
    <string name="server_error">Erreur serveur, veuillez réssayez plus tard</string>
+   <string name="simulate_trip">Simuler un trajet</string>
    <string name="start_trip">Démarrer un trajet</string>
    <string name="stop_trip">Stopper le trajet</string>
+   <string name="sync_challenge_loading_message">Récupération des challenges…</string>
    <string name="sync_trips_loading_message">Récupération des trajets…</string>
    <string name="sync_user_info_loading_message">Récupération des informations utilisateur…</string>
    <string name="sync_vehicles_loading_message">Récupération de la configuration véhicule…</string>
