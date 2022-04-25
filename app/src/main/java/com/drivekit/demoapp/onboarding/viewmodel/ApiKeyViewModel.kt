@@ -1,23 +1,19 @@
 package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
-import com.drivekit.demoapp.config.DriveKitConfig
+import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 
-class ApiKeyViewModel {
+internal class ApiKeyViewModel {
 
-    fun isApiKeyValid() = DriveKit.config.apiKey?.let {
-        it.isNotBlank() && !it.isKeyPlaceHolder()
-    }?: false
+    fun isApiKeyValid() = DriveKit.config.apiKey?.isNotBlank() ?: false
 
-    fun getButtonText(context: Context) = if (isApiKeyValid()) {
-        "button_next_step"
+    fun getButtonText() = if (isApiKeyValid()) {
+        R.string.button_next_step
     } else {
-        "button_see_documentation"
-    }.let {
-        DKResource.convertToString(context, it)
+        R.string.button_see_documentation
     }
 
     fun getDescription(context: Context) = if (isApiKeyValid()) {
@@ -31,19 +27,12 @@ class ApiKeyViewModel {
             )
         }
     } else {
-        DKResource.convertToString(context, "welcome_ko_description")
+        context.getString(R.string.welcome_ko_description)
     }
 
-    fun getTitle(context: Context) = if (isApiKeyValid()) {
-        "welcome_ok_title"
+    fun getTitle() = if (isApiKeyValid()) {
+        R.string.welcome_ok_title
     } else {
-        "welcome_ko_title"
-    }.let {
-        DKResource.convertToString(context, it)
+        R.string.welcome_ko_title
     }
-}
-
-fun String.isKeyPlaceHolder(): Boolean {
-    val keyPlaceHolderRegEx = "[A-Z]{5}(_[A-Z]{3,4}){4}"
-    return keyPlaceHolderRegEx.toRegex().matches(this)
 }

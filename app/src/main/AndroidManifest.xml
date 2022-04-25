@@ -25,11 +25,19 @@
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.UserInfoActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.UserIdActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.PermissionsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

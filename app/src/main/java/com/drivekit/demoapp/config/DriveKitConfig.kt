@@ -3,6 +3,7 @@ package com.drivekit.demoapp.config
 import android.app.Application
 import android.content.Context
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -44,9 +45,11 @@ import kotlin.random.Random
 /**
  * Created by Mohamed on 2020-05-14.
  */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
 internal object DriveKitConfig : ContentMail {
+
+    // TODO: ENTER YOUR API KEY HERE
+    private const val apiKey = ""
 
     fun configure(application: Application) {
         configureCore(application)
@@ -60,9 +63,8 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureCore(application: Application) {
-        DriveKit.initialize(application, DriveKitListenerController)
-        //TODO: ENTER_YOUR_API_KEY_HERE
-        DriveKit.setApiKey("ENTER_YOUR_API_KEY_HERE")
+        DriveKit.initialize(application, DriveKitListenerManager)
+        DriveKit.setApiKey(apiKey)
     }
 
     private fun configureCommonUI() {
@@ -145,7 +147,7 @@ internal object DriveKitConfig : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
             override fun getMailBody(): String = "Mail body"
             override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String = "${context.getString(R.string.app_name)}"
+            override fun getSubject(): String = context.getString(R.string.app_name)
             override fun overrideMailBodyContent(): Boolean = false
         }))
     }
