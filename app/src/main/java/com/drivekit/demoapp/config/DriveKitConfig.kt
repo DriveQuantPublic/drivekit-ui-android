@@ -45,9 +45,9 @@ import kotlin.random.Random
  * Created by Mohamed on 2020-05-14.
  */
 
-// TODO: ENTER YOUR API KEY HERE
 internal object DriveKitConfig : ContentMail {
 
+    // TODO: ENTER YOUR API KEY HERE
     private const val apiKey = ""
 
     fun configure(application: Application) {
