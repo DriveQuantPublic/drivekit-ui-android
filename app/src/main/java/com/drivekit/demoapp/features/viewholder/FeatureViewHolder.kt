@@ -3,11 +3,17 @@ package com.drivekit.demoapp.features.viewholder
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -42,68 +48,76 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     }
 
     private fun manageClickedInfoButton(feature: FeatureType) {
-        when (feature) {
-            FeatureType.ALL -> null
-            FeatureType.DRIVERDATA_TRIPS -> R.string.drivekit_doc_android_driver_data
-            FeatureType.PERMISSIONSUTILS_ONBOARDING -> R.string.drivekit_doc_android_permission_management // TODO vérifier les deux clés
-            FeatureType.PERMISSIONSUTILS_DIAGNOSIS -> R.string.drivekit_doc_android_permission_utils // TODO vérifier les deux clés
-            FeatureType.VEHICLE_LIST -> R.string.drivekit_doc_android_vehicle_list
-            FeatureType.VEHICLE_ODOMETER -> R.string.drivekit_doc_android_odometer
-            FeatureType.CHALLENGE_LIST -> R.string.drivekit_doc_android_challenges
-            FeatureType.DRIVERACHIEVEMENT_RANKING -> R.string.drivekit_doc_android_ranking
-            FeatureType.DRIVERACHIEVEMENT_BADGES -> R.string.drivekit_doc_android_badges
-            FeatureType.DRIVERACHIEVEMENT_STREAKS -> R.string.drivekit_doc_android_streaks
-            FeatureType.TRIPANALYSIS_WORKINGHOURS -> R.string.drivekit_doc_android_working_hours
-        }?.let {
+        feature.getInfoUrlResId()?.let {
             val url = itemView.context.getString(it)
             itemView.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
 
     private fun manageClickedButton(feature: FeatureType) {
+        val context = cardView.context
         when (feature) {
             FeatureType.ALL -> {
                 // do nothing
             }
             FeatureType.DRIVERDATA_TRIPS -> {
-                DriverDataUI.startTripListActivity(itemView.context)
+                DriverDataUI.startTripListActivity(context)
             }
             FeatureType.PERMISSIONSUTILS_ONBOARDING -> {
-                if (PermissionsUtilsUI.hasError(itemView.context)) {
-                    PermissionsUtilsUI.showPermissionViews(itemView.context, ArrayList(PermissionView.values().toMutableList()), object : PermissionViewListener {
-                        override fun onFinish() {
 
+                if (showPermissionUtilsOnboarding()) {
+                    PermissionsUtilsUI.showPermissionViews(context, ArrayList(PermissionView.values().toMutableList()), object : PermissionViewListener {
+                        override fun onFinish() {
+                            // do nothing
                         }
                     })
                 } else {
-                    // TODO afficher l'AlertDialog quand le ticket UserId sera mergé
+                    val alertDialog = DKAlertDialog.LayoutBuilder()
+                        .init(context)
+                        .layout(R.layout.template_alert_dialog_layout)
+                        .positiveButton()
+                        .show()
+
+                    val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    val descriptionTextView =
+                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    titleTextView?.text = context.getString(R.string.app_name)
+                    descriptionTextView?.text = context.getString(R.string.feature_permission_onboarding_ok)
+                    titleTextView?.headLine1()
+                    descriptionTextView?.normalText()
                 }
             }
             FeatureType.PERMISSIONSUTILS_DIAGNOSIS -> {
-                PermissionsUtilsUI.startAppDiagnosisActivity(itemView.context)
+                PermissionsUtilsUI.startAppDiagnosisActivity(context)
             }
             FeatureType.VEHICLE_LIST -> {
-                DriveKitVehicleUI.startVehicleListActivity(itemView.context)
+                DriveKitVehicleUI.startVehicleListActivity(context)
             }
             FeatureType.VEHICLE_ODOMETER -> {
-                DriveKitVehicleUI.startOdometerUIActivity(itemView.context)
+                DriveKitVehicleUI.startOdometerUIActivity(context)
             }
             FeatureType.CHALLENGE_LIST -> {
-                ChallengeUI.startChallengeActivity(itemView.context)
+                ChallengeUI.startChallengeActivity(context)
             }
             FeatureType.DRIVERACHIEVEMENT_RANKING -> {
-                DriverAchievementUI.startRankingActivity(itemView.context)
+                DriverAchievementUI.startRankingActivity(context)
             }
             FeatureType.DRIVERACHIEVEMENT_BADGES -> {
-                val intent = Intent(itemView.context, BadgeListActivity::class.java)
-                itemView.context.startActivity(intent)
+                val intent = Intent(context, BadgeListActivity::class.java)
+                context.startActivity(intent)
             }
             FeatureType.DRIVERACHIEVEMENT_STREAKS -> {
-                DriverAchievementUI.startStreakListActivity(itemView.context)
+                DriverAchievementUI.startStreakListActivity(context)
             }
             FeatureType.TRIPANALYSIS_WORKINGHOURS -> {
-                DriveKitTripAnalysisUI.startWorkingHoursActivity(itemView.context)
+                DriveKitTripAnalysisUI.startWorkingHoursActivity(context)
             }
         }
     }
+
+    private fun showPermissionUtilsOnboarding() =
+        DiagnosisHelper.getLocationStatus(itemView.context) == PermissionStatus.NOT_VALID
+                || DiagnosisHelper.getActivityStatus(itemView.context) == PermissionStatus.NOT_VALID
+                || DiagnosisHelper.getBatteryOptimizationsStatus(itemView.context) == PermissionStatus.NOT_VALID
+                || DiagnosisHelper.getNearbyDevicesStatus(itemView.context) == PermissionStatus.NOT_VALID
 }

@@ -18,7 +18,6 @@ internal class FeatureListAdapter(
     }
 
     override fun onBindViewHolder(holder: FeatureViewHolder, position: Int) {
-        // TODO gérer le clic ?
         holder.bind(items[position])
     }
 

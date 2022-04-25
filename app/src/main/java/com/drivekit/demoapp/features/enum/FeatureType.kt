@@ -17,7 +17,7 @@ internal enum class FeatureType {
 
     fun getIcon() = when (this) {
         ALL -> null
-        DRIVERDATA_TRIPS -> R.drawable.dk_leaf_tab_icon // TODO récupérer la bonne image
+        DRIVERDATA_TRIPS -> R.drawable.ic_feature_driverdata_trips
         PERMISSIONSUTILS_ONBOARDING,
         PERMISSIONSUTILS_DIAGNOSIS -> R.drawable.ic_feature_permissionsutils
         VEHICLE_LIST,
@@ -56,5 +56,22 @@ internal enum class FeatureType {
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_description
     }
 
-    fun getActionButtonTitleResId() = R.string.button_see_feature
+    fun getInfoUrlResId() = when (this) {
+        ALL -> null
+        DRIVERDATA_TRIPS -> R.string.drivekit_doc_android_driver_data
+        PERMISSIONSUTILS_ONBOARDING -> R.string.drivekit_doc_android_permission_management
+        PERMISSIONSUTILS_DIAGNOSIS -> R.string.drivekit_doc_android_permission_utils
+        VEHICLE_LIST -> R.string.drivekit_doc_android_vehicle_list
+        VEHICLE_ODOMETER -> R.string.drivekit_doc_android_odometer
+        CHALLENGE_LIST -> R.string.drivekit_doc_android_challenges
+        DRIVERACHIEVEMENT_RANKING -> R.string.drivekit_doc_android_ranking
+        DRIVERACHIEVEMENT_BADGES -> R.string.drivekit_doc_android_badges
+        DRIVERACHIEVEMENT_STREAKS -> R.string.drivekit_doc_android_streaks
+        TRIPANALYSIS_WORKINGHOURS -> R.string.drivekit_doc_android_working_hours
+    }
+
+    fun getActionButtonTitleResId() = when (this) {
+        ALL -> R.string.button_see_features
+        else -> R.string.button_see_feature
+    }
 }
