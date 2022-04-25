@@ -3,6 +3,7 @@ package com.drivekit.demoapp.config
 import android.app.Application
 import android.content.Context
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -62,7 +63,7 @@ internal object DriveKitConfig : ContentMail {
     }
 
     private fun configureCore(application: Application) {
-        DriveKit.initialize(application, DriveKitListenerController)
+        DriveKit.initialize(application, DriveKitListenerManager)
         DriveKit.setApiKey(apiKey)
     }
 

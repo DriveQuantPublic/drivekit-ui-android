@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
-import com.drivekit.demoapp.config.DriveKitListenerController
+import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -139,7 +139,7 @@ class UserInfoActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        DriveKitListenerController.reset()
+        DriveKitListenerManager.reset()
         DriveKit.config.apiKey?.let {
             DriveKit.setApiKey(it)
         }

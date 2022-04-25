@@ -3,7 +3,7 @@ package com.drivekit.demoapp.onboarding.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivekit.demoapp.config.DriveKitListenerController
+import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.manager.*
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -23,25 +23,25 @@ class UserIdViewModel : ViewModel(), DriveKitListener {
     var syncUserInfo: MutableLiveData<Boolean> = MutableLiveData()
 
     fun sendUserId(userId: String, listener: UserIdDriveKitListener) {
-        DriveKitListenerController.registerListener(this)
+        DriveKitListenerManager.registerListener(this)
         DriveKit.setUserId(userId)
         this.listener = listener
     }
 
     override fun onConnected() {
-        DriveKitListenerController.unregisterListener(this)
+        DriveKitListenerManager.unregisterListener(this)
         this.listener?.onSetUserId(true, null)
         this.listener = null
     }
 
     override fun onAuthenticationError(errorType: RequestError) {
-        DriveKitListenerController.unregisterListener(this)
+        DriveKitListenerManager.unregisterListener(this)
         this.listener?.onSetUserId(false, errorType)
         this.listener = null
     }
 
     override fun onDisconnected() {
-        DriveKitListenerController.unregisterListener(this)
+        DriveKitListenerManager.unregisterListener(this)
         this.listener?.onSetUserId(false, null)
         this.listener = null
     }
