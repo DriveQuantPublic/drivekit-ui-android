@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.onboarding.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,13 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import kotlinx.android.synthetic.main.activity_set_api_key.*
 
 class ApiKeyActivity : AppCompatActivity() {
+
+    companion object {
+        fun launchActivity(activity: Activity) {
+            activity.startActivity(Intent(activity, ApiKeyActivity::class.java))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_api_key)
@@ -28,7 +36,7 @@ class ApiKeyActivity : AppCompatActivity() {
             text = getString(viewModel.getButtonText())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {
-                    startActivity(Intent(this@ApiKeyActivity, UserIdActivity::class.java))
+                    UserIdActivity.launchActivity(this@ApiKeyActivity)
                 } else {
                     startActivity(
                         Intent(

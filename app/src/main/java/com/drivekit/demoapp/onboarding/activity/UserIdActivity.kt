@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.onboarding.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,12 @@ import kotlinx.android.synthetic.main.activity_set_user_id.*
 class UserIdActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserIdViewModel
+
+    companion object {
+        fun launchActivity(activity: Activity) {
+            activity.startActivity(Intent(activity, UserIdActivity::class.java))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +64,13 @@ class UserIdActivity : AppCompatActivity() {
             progress_bar_message.show(getString(it))
         })
         viewModel.syncStatus.observe(this, {
-            startUserInfoActivity(it)
+            syncUserInfo(it)
             progress_bar_message.hide()
         })
 
         viewModel.syncUserInfo.observe(this, {
             if (it) {
-                startActivity(Intent(this@UserIdActivity, UserInfoActivity::class.java))
+                UserInfoActivity.launchActivity(this@UserIdActivity)
             }
         })
     }
@@ -103,7 +110,7 @@ class UserIdActivity : AppCompatActivity() {
         }
     }
 
-    private fun startUserInfoActivity(syncStatus: SyncStatus) {
+    private fun syncUserInfo(syncStatus: SyncStatus) {
         viewModel.getUserInfo(syncStatus)
     }
 }

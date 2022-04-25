@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.onboarding.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,12 @@ import kotlinx.android.synthetic.main.activity_user_info.progress_circular
 class UserInfoActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserInfoViewModel
+
+    companion object {
+        fun launchActivity(activity: Activity) {
+            activity.startActivity(Intent(activity, UserInfoActivity::class.java))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
