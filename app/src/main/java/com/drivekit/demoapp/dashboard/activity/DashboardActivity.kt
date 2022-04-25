@@ -1,6 +1,7 @@
 package com.drivekit.demoapp.dashboard.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -10,7 +11,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
-import com.drivekit.demoapp.activity.SettingsActivity
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
@@ -27,6 +27,14 @@ internal class DashboardActivity : AppCompatActivity() {
     private var menu: Menu? = null
     private lateinit var startStopTripButton: Button
     private lateinit var tripSimulatorButton: Button
+
+    companion object {
+        fun launchActivity(activity: Activity) {
+            val intent = Intent(activity, DashboardActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            activity.startActivity(intent)
+        }
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,7 +139,8 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                //TODO create settings activity
+                //startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
             else -> {

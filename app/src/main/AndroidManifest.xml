@@ -13,19 +13,16 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
-
-        <activity android:name="com.drivekit.demoapp.activity.MainActivity"
-            android:exported="false">
-        </activity>
-
         <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:exported="false"/>
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.ApiKeyActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,5 +40,22 @@
         <activity android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"  />
+
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.UserInfoActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.UserIdActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.PermissionsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

@@ -1,59 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="activity_permission">Motion</string>
-    <string name="add_beacon_off">Beacon is not configured</string>
-    <string name="add_beacon_on">Beacon is configured</string>
-    <string name="add_beacon_title">Beacon configuration</string>
-    <string name="ask_for_request">Technical support request</string>
-    <string name="auto_start_off">Activate to automatically detect your trips</string>
-    <string name="autostart_on">Trips will be automatically detected</string>
-    <string name="autostart_title">Auto start</string>
-    <string name="battery_permission">Battery</string>
-    <string name="beacon_required_off">Beacon is not required to validate a trip</string>
-    <string name="beacon_required_on">Beacon is required to validate a trip</string>
-    <string name="beacon_required_title">Beacon required ?</string>
-    <string name="challenge_explanation">An implementation example of the DriveKit Challenge component and its user interface</string>
-    <string name="challenge_list_button">Launch challenge list</string>
-    <string name="driver_achievement_button">Launch Driver Achievement</string>
-    <string name="driver_achievement_explanation">An implementation example of the DriveKit Driver Achievements component and its user interface</string>
-    <string name="driver_badges_button">My badges</string>
-    <string name="driver_data_button">Launch DriverData</string>
-    <string name="driver_data_explanation">An example of DriveKit DriverData implementation with its UI for the Trip List and the Trip Detail</string>
-    <string name="driver_data_synthesis_cards_button">Launch Driver Data Synthesis Cards</string>
-    <string name="driver_data_last_trips_cards_button">Launch Driver Data Last Trips Cards</string>
-    <string name="driver_streaks_button">Streak of hits</string>
-    <string name="enable_share_position_off">Enable this setting to share your position during the trip</string>
-    <string name="enable_share_position_on">Disable this setting no to share your position during the trip</string>
-    <string name="enable_share_position_title">Share position ?</string>
-    <string name="external_storage_logging_permission">Logging</string>
-    <string name="global_config_settings">General Settings</string>
-    <string name="location_permission">Allow access to the location.</string>
-    <string name="notification_permission">Notifications</string>
-    <string name="permission_utils_diagnosis_button">Launch app diagnosis</string>
-    <string name="permission_utils_permissions_button">Launch permissions</string>
-    <string name="permissions_utils_explanation">An example of DriveKit Permissions Utils implementation with its UI for the on boarding permissions and application diagnosis</string>
-    <string name="sandbox_mode_off">DriveKit is connected to DriveQuant production environment</string>
-    <string name="sandbox_mode_on">DriveKit is connected to DriveQuant integration environment</string>
-    <string name="sandbox_mode_title">Sandbox mode</string>
-    <string name="stop_timeout_title">Stop trip timeout (in minutes)</string>
-    <string name="train_trip">Your trip was made by train</string>
-    <string name="trip_analysis_settings">Trip Analysis Configuration</string>
-    <string name="trip_cancelled_beacon_no_speed">Your trip was cancelled because no speed was detected in the presence of the beacon</string>
-    <string name="trip_cancelled_highspeed">Your trip has been canceled because you are traveling by train or plane</string>
-    <string name="trip_cancelled_missing_config">Your trip has been cancelled because the SDK configuration is invalid.</string>
-    <string name="trip_cancelled_no_speed">Your trip was cancelled because no speed was detected</string>
-    <string name="trip_cancelled_user">Trip cancelled by the user</string>
-    <string name="user_id_description">Tap to fill your user id</string>
-    <string name="user_id_title">User id</string>
-    <string name="vehicle_explanation">An example of DriveKit Vehicle implementation with UI for the vehicle picker, vehicles list, vehicle detail, beacon and Bluetooth device pairing</string>
-    <string name="vehicle_list_button">Vehicles list</string>
-    <string name="vehicle_picker_button">Add a vehicle</string>
-    <string name="vehicle_odometer_list_button">Mileage tracking</string>
-
-
-    <string name="working_hours_button">Working Hours</string>
-
-
     <string name="app_name">DriveKit Demo App</string>
     <string name="authentication_description">To initialize the DriveKit SDK, it is essential to configure a unique identifier for each user.\n\nWe recommend that you enter an anonymous identifier and never use a phone number or an email address.</string>
     <string name="authentication_error">Invalid login</string>
@@ -224,4 +170,9 @@
     <string name="welcome_ok_button">NEXT STEP</string>
     <string name="welcome_ok_description">Congratulations, you have built the DriveKit demo application 🎉\n\nThis application shows you how the DriveKit components work and guides you to install them in your application.\n\nYour API key is:\n\n%s\n\nUnder no circumstances it shouldn\'t be shared or used in multiple applications.</string>
     <string name="welcome_ok_title">Welcome to the DriveKit demo application</string>
+
+  
+    <string name="empty_firstname_error">Please fill your first name</string>
+    <string name="empty_lastname_error">Please fill your last name</string>
+    <string name="empty_pseudo_error">Please write a nickname</string>
 </resources>

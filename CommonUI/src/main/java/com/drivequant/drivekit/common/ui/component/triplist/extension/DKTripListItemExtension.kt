@@ -3,8 +3,9 @@ package com.drivequant.drivekit.common.ui.component.triplist.extension
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.extension.isSameDay
-import com.drivequant.drivekit.core.geocoder.DKAddress
 import java.util.*
+
+const val unknownValue = "N/A" // This is a legacy value we set in trip fields when city or address were null
 
 fun DKTripListItem.getOrComputeStartDate(): Date? {
     if (this.getStartDate() != null) {
@@ -88,14 +89,14 @@ fun List<DKTripListItem>.orderByDay(orderDesc: Boolean): MutableList<DKTripsByDa
 }
 
 fun DKTripListItem.computeDepartureInfo() =
-    if (this.getDepartureCity().isBlank() || this.getDepartureCity() == DKAddress.unknownValue) {
+    if (this.getDepartureCity().isBlank() || this.getDepartureCity() == unknownValue) {
         this.getDepartureAddress()
     } else {
         this.getDepartureCity()
     }
 
 fun DKTripListItem.computeArrivalInfo() =
-    if (this.getArrivalCity().isBlank() || this.getArrivalCity() == DKAddress.unknownValue) {
+    if (this.getArrivalCity().isBlank() || this.getArrivalCity() == unknownValue) {
         this.getArrivalAddress()
     } else {
         this.getArrivalCity()
