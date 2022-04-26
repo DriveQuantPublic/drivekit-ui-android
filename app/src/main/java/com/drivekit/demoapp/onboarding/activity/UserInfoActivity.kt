@@ -114,7 +114,7 @@ class UserInfoActivity : AppCompatActivity() {
         if (viewModel.shouldDisplayPermissions(this)) {
             PermissionsActivity.launchActivity(this)
         } else {
-            viewModel.shouldDisplayVehicle()
+            viewModel.fetchLocalVehicles()
         }
     }
 
