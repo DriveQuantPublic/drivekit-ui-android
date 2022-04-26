@@ -94,20 +94,20 @@ class UserInfoActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.userInfoUpdated.observe(this, {
+        viewModel.userInfoUpdated.observe(this) {
             if (it) {
                 goToNext()
             }
             updateProgressVisibility(false)
-        })
+        }
 
-        viewModel.shouldDisplayVehicle.observe(this, {
+        viewModel.shouldDisplayVehicle.observe(this) {
             if (it) {
                 VehiclesActivity.launchActivity(this)
             } else {
                 DashboardActivity.launchActivity(this)
             }
-        })
+        }
     }
 
     private fun goToNext() {

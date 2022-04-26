@@ -60,19 +60,19 @@ class UserIdActivity : AppCompatActivity() {
             validateUserId()
         }
 
-        viewModel.messageIdentifier.observe(this, {
+        viewModel.messageIdentifier.observe(this) {
             progress_bar_message.show(getString(it))
-        })
-        viewModel.syncStatus.observe(this, {
+        }
+        viewModel.syncStatus.observe(this) {
             syncUserInfo(it)
             progress_bar_message.hide()
-        })
+        }
 
-        viewModel.syncUserInfo.observe(this, {
+        viewModel.syncUserInfo.observe(this) {
             if (it) {
                 UserInfoActivity.launchActivity(this@UserIdActivity)
             }
-        })
+        }
     }
 
     private fun openDriveKitUserIdDoc() {
@@ -92,7 +92,6 @@ class UserIdActivity : AppCompatActivity() {
                 isErrorEnabled = true
                 error = getString(R.string.user_id_error)
             }
-
         } else {
             text_input_layout_user_id.isErrorEnabled = false
             viewModel.sendUserId(userId, object : UserIdDriveKitListener {

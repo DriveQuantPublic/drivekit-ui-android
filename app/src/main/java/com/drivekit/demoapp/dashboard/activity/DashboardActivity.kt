@@ -140,7 +140,6 @@ internal class DashboardActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 //TODO create settings activity
-                //startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
             else -> {
