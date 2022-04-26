@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -57,20 +58,18 @@ class PermissionsActivity : AppCompatActivity() {
                 permissions,
                 object : PermissionViewListener {
                     override fun onFinish() {
-                        startDriveKitVehicles()
+                        viewModel.shouldDisplayVehicle()
                     }
                 })
         }
 
-        viewModel.shouldDisplayVehicle.observe(this,{
-            if (it) {
+        viewModel.shouldDisplayVehicle.observe(this) { displayVehicle ->
+            if (displayVehicle) {
                 VehiclesActivity.launchActivity(this)
+            } else {
+                DashboardActivity.launchActivity(this)
             }
-        })
-    }
-
-    fun startDriveKitVehicles() {
-        viewModel.shouldDisplayVehicle()
+        }
     }
 
     private fun openDriveKitPermissionsDoc() {

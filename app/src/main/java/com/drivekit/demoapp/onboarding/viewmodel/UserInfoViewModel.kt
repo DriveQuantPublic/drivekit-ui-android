@@ -61,7 +61,7 @@ internal class UserInfoViewModel: ViewModel() {
         return false
     }
 
-    fun shouldDisplayVehicle() {
+    fun fetchLocalVehicles() {
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 shouldDisplayVehicle.postValue(vehicles.isEmpty())

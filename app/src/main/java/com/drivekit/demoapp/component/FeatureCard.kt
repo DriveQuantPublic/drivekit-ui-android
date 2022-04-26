@@ -21,9 +21,9 @@ internal class FeatureCard : FrameLayout {
 
     private lateinit var iconTitle: ImageView
     private lateinit var textTitle: TextView
+    private lateinit var infoImage: ImageView
     private lateinit var description: TextView
     private lateinit var buttonTitle: TextView
-
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -38,6 +38,7 @@ internal class FeatureCard : FrameLayout {
         val view = View.inflate(ctx, R.layout.dk_layout_feature_cardview, null)
         iconTitle = view.findViewById(R.id.icon_title)
         textTitle = view.findViewById(R.id.text_view_title)
+        infoImage = view.findViewById(R.id.info_button)
         description = view.findViewById(R.id.text_view_description)
         buttonTitle = view.findViewById(R.id.text_view_button)
         addView(
@@ -62,7 +63,14 @@ internal class FeatureCard : FrameLayout {
         }
     }
 
-    // TODO configure INFO in the next ticket (features list)
+    fun configureInfoButton(listener : FeatureCardInfoClickListener) {
+        infoImage.apply {
+            visibility = VISIBLE
+            setOnClickListener {
+                listener.onInfoClicked()
+            }
+        }
+    }
 
     fun configureDescription(textResId: Int) {
         description.apply {
@@ -71,7 +79,7 @@ internal class FeatureCard : FrameLayout {
         }
     }
 
-    fun configureTextButton(textResId: Int, listener: FeatureCardButtonClickListener) {
+    fun configureActionButton(textResId: Int, listener: FeatureCardActionClickListener) {
         buttonTitle.apply {
             text = ctx.getString(textResId)
             buttonText(
@@ -84,7 +92,11 @@ internal class FeatureCard : FrameLayout {
         }
     }
 
-    interface FeatureCardButtonClickListener {
+    interface FeatureCardInfoClickListener {
+        fun onInfoClicked()
+    }
+
+    interface FeatureCardActionClickListener {
         fun onButtonClicked()
     }
 }
