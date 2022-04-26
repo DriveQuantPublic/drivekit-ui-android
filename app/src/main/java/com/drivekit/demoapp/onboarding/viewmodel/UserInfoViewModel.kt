@@ -1,7 +1,6 @@
 package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
-import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.DriveKit

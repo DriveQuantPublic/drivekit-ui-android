@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -65,6 +66,8 @@ class PermissionsActivity : AppCompatActivity() {
         viewModel.shouldDisplayVehicle.observe(this,{
             if (it) {
                 VehiclesActivity.launchActivity(this)
+            } else {
+                DashboardActivity.launchActivity(this)
             }
         })
     }
