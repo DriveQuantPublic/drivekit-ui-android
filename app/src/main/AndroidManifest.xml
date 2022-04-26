@@ -13,9 +13,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.ApiKeyActivity"
             android:exported="true"
@@ -26,20 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false">
-        </activity>
-        <activity android:name="com.drivekit.demoapp.activity.SettingsActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity android:name="com.drivekit.demoapp.activity.SynthesisCardExampleActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"  />
-        <activity android:name="com.drivekit.demoapp.activity.LastTripsCardActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"  />
 
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.UserInfoActivity"
@@ -57,5 +43,12 @@
             android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false"/>
+        <activity android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
+        </activity>
     </application>
 </manifest>
