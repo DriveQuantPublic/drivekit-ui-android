@@ -35,7 +35,8 @@ class UserInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_info)
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(UserInfoViewModel::class.java)
         }
@@ -145,5 +146,10 @@ class UserInfoActivity : AppCompatActivity() {
         DriveKit.config.apiKey?.let {
             DriveKit.setApiKey(it)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

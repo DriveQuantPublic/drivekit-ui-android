@@ -11,7 +11,7 @@ internal class ApiKeyViewModel {
     fun isApiKeyValid() = DriveKit.config.apiKey?.isNotBlank() ?: false
 
     fun getButtonText() = if (isApiKeyValid()) {
-        R.string.button_next_step
+        R.string.welcome_ok_button
     } else {
         R.string.button_see_documentation
     }
