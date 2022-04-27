@@ -45,12 +45,17 @@
             android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false"/>
-        <activity android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false">
-        </activity>
+        <activity
+            android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

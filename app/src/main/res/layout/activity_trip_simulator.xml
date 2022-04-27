@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trip_simulator_description"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/text_view_developer_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_description" />
+
+    <TextView
+        android:id="@+id/text_view_select_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trip_simulator_select_trip"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_developer_error" />
+
+    <com.drivequant.drivekit.common.ui.component.FilterView
+        android:id="@+id/trips_dropdown_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_select_trip" />
+
+    <TextView
+        android:id="@+id/text_view_trip_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trips_dropdown_spinner" />
+
+    <TextView
+        android:id="@+id/button_simulate_trip"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:text="@string/trip_simulator_start_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

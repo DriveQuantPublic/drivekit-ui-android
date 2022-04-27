@@ -15,6 +15,7 @@ import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
+import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -120,7 +121,7 @@ internal class DashboardActivity : AppCompatActivity() {
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.simulate_trip)
             setOnClickListener {
-                // TODO launch Trip Simulator screen
+                TripSimulatorActivity.launchActivity(this@DashboardActivity)
             }
         }
     }
