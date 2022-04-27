@@ -88,7 +88,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:background="@color/colorAccent"
+                tools:background="@color/colorAccent"
                 android:gravity="center"
                 android:text="@string/dk_common_validate"
                 android:textAllCaps="true"
@@ -100,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/button_next_step"
+                android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/dk_text_normal" />
         </LinearLayout>

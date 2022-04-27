@@ -56,8 +56,11 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        button_validate.setOnClickListener {
-            validateUserId()
+        button_validate.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                validateUserId()
+            }
         }
 
         viewModel.messageIdentifier.observe(this) {

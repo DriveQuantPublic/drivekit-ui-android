@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import kotlinx.android.synthetic.main.activity_set_api_key.*
 
@@ -34,6 +35,7 @@ class ApiKeyActivity : AppCompatActivity() {
         }
         button_next.apply {
             text = getString(viewModel.getButtonText())
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isApiKeyValid()) {
                     UserIdActivity.launchActivity(this@ApiKeyActivity)

@@ -50,17 +50,20 @@ class PermissionsActivity : AppCompatActivity() {
             }
         }
         text_view_description.text = getString(R.string.permissions_intro_description)
-        button_request_permissions.setOnClickListener {
-            val permissions: ArrayList<PermissionView> = ArrayList()
-            permissions.addAll(PermissionView.values())
-            PermissionsUtilsUI.showPermissionViews(
-                this,
-                permissions,
-                object : PermissionViewListener {
-                    override fun onFinish() {
-                        viewModel.shouldDisplayVehicle()
-                    }
-                })
+        button_request_permissions.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                val permissions: ArrayList<PermissionView> = ArrayList()
+                permissions.addAll(PermissionView.values())
+                PermissionsUtilsUI.showPermissionViews(
+                    this@PermissionsActivity,
+                    permissions,
+                    object : PermissionViewListener {
+                        override fun onFinish() {
+                            viewModel.shouldDisplayVehicle()
+                        }
+                    })
+            }
         }
 
         viewModel.shouldDisplayVehicle.observe(this) { displayVehicle ->
