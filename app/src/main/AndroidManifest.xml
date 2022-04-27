@@ -25,10 +25,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
-
-        <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="false"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.ApiKeyActivity"
             android:exported="false"
@@ -49,9 +45,12 @@
             android:name="com.drivekit.demoapp.onboarding.activity.VehiclesActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw" />
+        <activity android:name="com.drivekit.demoapp.dashboard.activity.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false"/>
+        <activity android:name="com.drivekit.demoapp.features.activity.FeatureListActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
+        </activity>
     </application>
 </manifest>

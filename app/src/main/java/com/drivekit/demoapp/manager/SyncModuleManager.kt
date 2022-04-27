@@ -30,7 +30,7 @@ enum class DKModule {
     VEHICLE,
     WORKING_HOURS,
     TRIPS,
-    BADGE,
+    BADGES,
     CHALLENGE;
 }
 
@@ -43,7 +43,7 @@ object SyncModuleManager {
     private fun syncModule(module: DKModule, listener: ModuleSyncListener? = null) {
         when (module) {
             DKModule.CHALLENGE -> syncChallengeModule(listener)
-            DKModule.BADGE -> syncBadgeModule(listener)
+            DKModule.BADGES -> syncBadgeModule(listener)
             DKModule.WORKING_HOURS -> syncWorkingHours(listener)
             DKModule.USER_INFO -> syncUserInfo(listener)
             DKModule.VEHICLE -> syncVehicles(listener)

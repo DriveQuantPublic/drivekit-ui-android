@@ -58,22 +58,18 @@ class PermissionsActivity : AppCompatActivity() {
                 permissions,
                 object : PermissionViewListener {
                     override fun onFinish() {
-                        startDriveKitVehicles()
+                        viewModel.shouldDisplayVehicle()
                     }
                 })
         }
 
-        viewModel.shouldDisplayVehicle.observe(this,{
-            if (it) {
+        viewModel.shouldDisplayVehicle.observe(this) { displayVehicle ->
+            if (displayVehicle) {
                 VehiclesActivity.launchActivity(this)
             } else {
                 DashboardActivity.launchActivity(this)
             }
-        })
-    }
-
-    fun startDriveKitVehicles() {
-        viewModel.shouldDisplayVehicle()
+        }
     }
 
     private fun openDriveKitPermissionsDoc() {

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
+import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -38,24 +39,26 @@ internal class DashboardActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+        setContentView(R.layout.activity_dashboard)
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-
         title = getString(R.string.dashboard_header)
-
         initFeatureCard()
     }
 
     override fun onResume() {
         super.onResume()
+        checkViewModelInitialization()
+        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
+        showContent()
+    }
+
+    private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         }
-        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
-        showContent()
     }
 
     private fun showContent() {
@@ -86,12 +89,13 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initFeatureCard() {
+        checkViewModelInitialization()
         card_features.apply {
-            configureTitle(R.string.feature_list)
-            configureDescription(R.string.feature_list_description)
-            configureTextButton(R.string.button_see_features, object : FeatureCard.FeatureCardButtonClickListener{
+            configureTitle(viewModel.getFeatureCardTitleResId())
+            configureDescription(viewModel.getFeatureCardDescriptionResId())
+            configureActionButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardActionClickListener{
                 override fun onButtonClicked() {
-                    // TODO launch features list on next ticket
+                    startActivity(Intent(context, FeatureListActivity::class.java))
                 }
             })
         }
@@ -136,7 +140,6 @@ internal class DashboardActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 //TODO create settings activity
-                //startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
             else -> {
