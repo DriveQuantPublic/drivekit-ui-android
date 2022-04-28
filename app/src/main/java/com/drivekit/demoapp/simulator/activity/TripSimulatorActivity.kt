@@ -40,7 +40,14 @@ class TripSimulatorActivity : AppCompatActivity() {
         button_simulate_trip.apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                //TODO: start TripSimulatorDetailActivity
+                if (!viewModel.shouldShowDeveloperModeErrorMessage() && !viewModel.shouldShowMockLocationErrorMessage()) {
+                    viewModel.selectedPresetTripType.value?.let { presetTripType ->
+                        TripSimulatorDetailActivity.launchActivity(
+                            this@TripSimulatorActivity,
+                            presetTripType
+                        )
+                    }
+                }
             }
         }
 
