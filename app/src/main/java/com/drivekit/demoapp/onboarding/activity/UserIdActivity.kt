@@ -56,8 +56,11 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        button_validate.setOnClickListener {
-            validateUserId()
+        button_validate.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                validateUserId()
+            }
         }
 
         viewModel.messageIdentifier.observe(this) {
@@ -111,5 +114,9 @@ class UserIdActivity : AppCompatActivity() {
 
     private fun syncUserInfo(syncStatus: SyncStatus) {
         viewModel.getUserInfo(syncStatus)
+    }
+
+    override fun onBackPressed() {
+        //Do nothing
     }
 }

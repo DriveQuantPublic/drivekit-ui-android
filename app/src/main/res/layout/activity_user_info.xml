@@ -15,16 +15,18 @@
             layout="@layout/dk_layout_toolbar" />
 
         <LinearLayout
+            android:layout_marginTop="@dimen/dk_margin_double"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/dk_margin">
+            android:paddingStart="@dimen/dk_margin"
+            android:paddingEnd="@dimen/dk_margin">
 
             <TextView
                 android:id="@+id/text_view_user_info_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin_double"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/dk_text_medium"
                 android:textStyle="bold"
@@ -88,7 +90,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:background="@color/colorAccent"
+                tools:background="@color/colorAccent"
                 android:gravity="center"
                 android:text="@string/dk_common_validate"
                 android:textAllCaps="true"
@@ -100,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/button_next_step"
+                android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/dk_text_normal" />
         </LinearLayout>

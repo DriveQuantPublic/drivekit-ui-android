@@ -9,7 +9,6 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -65,33 +64,14 @@ class UserInfoActivity : AppCompatActivity() {
             goToNext()
         }
 
-        button_validate.setOnClickListener {
-            val firstName = text_view_firstname_field.editableText.toString()
-            val lastName = text_view_lastname_field.editableText.toString()
-            val pseudo = text_view_pseudo_field.editableText.toString()
-
-            if (firstName.isNotBlank() ||
-                lastName.isNotBlank() ||
-                pseudo.isNotBlank()
-            ) {
-                text_input_layout_firstname.isErrorEnabled = false
-                text_input_layout_lastname.isErrorEnabled = false
-                text_input_layout_pseudo.isErrorEnabled = false
+        button_validate.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                val firstName = text_view_firstname_field.editableText.toString()
+                val lastName = text_view_lastname_field.editableText.toString()
+                val pseudo = text_view_pseudo_field.editableText.toString()
                 updateProgressVisibility(true)
                 viewModel.updateUser(firstName, lastName, pseudo)
-            } else {
-                text_input_layout_firstname.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.empty_firstname_error)
-                }
-                text_input_layout_lastname.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.empty_lastname_error)
-                }
-                text_input_layout_pseudo.apply {
-                    isErrorEnabled = true
-                    error = getString(R.string.empty_pseudo_error)
-                }
             }
         }
 
@@ -142,9 +122,10 @@ class UserInfoActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        DriveKitListenerManager.reset()
-        DriveKit.config.apiKey?.let {
-            DriveKit.setApiKey(it)
+        val apiKey = DriveKit.config.apiKey
+        apiKey?.let {
+            DriveKit.reset()
+            DriveKit.setApiKey(apiKey)
         }
     }
 

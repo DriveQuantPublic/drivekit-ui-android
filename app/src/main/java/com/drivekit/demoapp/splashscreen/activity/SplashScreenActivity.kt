@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.activity.ApiKeyActivity
+import com.drivekit.demoapp.onboarding.activity.VehiclesActivity
 import com.drivekit.demoapp.splashscreen.viewmodel.SplashScreenViewModel
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -25,7 +26,7 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel.syncFinished.observe(this, {
+        viewModel.syncFinished.observe(this) {
             val permissions: ArrayList<PermissionView> = ArrayList()
             permissions.addAll(PermissionView.values())
             PermissionsUtilsUI.showPermissionViews(
@@ -33,10 +34,18 @@ class SplashScreenActivity : AppCompatActivity() {
                 permissions,
                 object : PermissionViewListener {
                     override fun onFinish() {
-                        DashboardActivity.launchActivity(this@SplashScreenActivity)
-                        finish()
+                        viewModel.shouldShowVehicles()
                     }
                 })
-        })
+        }
+
+        viewModel.shouldShowVehicles.observe(this) {
+            if (it) {
+                VehiclesActivity.launchActivity(this)
+            } else {
+                DashboardActivity.launchActivity(this)
+            }
+            finish()
+        }
     }
 }

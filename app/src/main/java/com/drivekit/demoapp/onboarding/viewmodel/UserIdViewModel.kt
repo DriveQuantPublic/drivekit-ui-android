@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.manager.*
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -99,12 +98,12 @@ interface UserIdDriveKitListener {
 }
 
 fun RequestError.getErrorMessage(context: Context) = when (this) {
-    RequestError.NO_NETWORK -> "network_ko_error"
-    RequestError.UNAUTHENTICATED -> "authentication_error"
-    RequestError.FORBIDDEN -> "forbidden_error"
-    RequestError.SERVER_ERROR -> "server_error"
-    RequestError.CLIENT_ERROR -> "client_error"
-    RequestError.UNKNOWN_ERROR -> "unknown_error"
+    RequestError.NO_NETWORK -> R.string.network_ko_error
+    RequestError.UNAUTHENTICATED -> R.string.authentication_error
+    RequestError.FORBIDDEN -> R.string.forbidden_error
+    RequestError.SERVER_ERROR -> R.string.server_error
+    RequestError.CLIENT_ERROR -> R.string.client_error
+    RequestError.UNKNOWN_ERROR -> R.string.unknown_error
 }.let {
-    DKResource.convertToString(context, it)
+    context.getString(it)
 }

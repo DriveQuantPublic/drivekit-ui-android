@@ -15,7 +15,9 @@ import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
+import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
@@ -103,6 +105,7 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun initStartStopTripButton() {
         button_start_stop_trip.findViewById<Button>(R.id.button_action).apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             startStopTripButton = this
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
             setOnClickListener {
@@ -117,10 +120,11 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun initTripSimulatorButton() {
         button_trip_simulator.findViewById<Button>(R.id.button_action).apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.simulate_trip)
             setOnClickListener {
-                // TODO launch Trip Simulator screen
+                TripSimulatorActivity.launchActivity(this@DashboardActivity)
             }
         }
     }

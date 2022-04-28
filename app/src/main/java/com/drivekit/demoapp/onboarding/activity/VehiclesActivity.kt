@@ -45,15 +45,18 @@ class VehiclesActivity : AppCompatActivity() {
             }
         }
         text_view_description.text = getString(R.string.vehicle_intro_description)
-        button_add_vehicle.setOnClickListener {
-            VehiclePickerActivity.launchActivity(
-                this,
-                null,
-                object : VehiclePickerCompleteListener {
-                    override fun onVehiclePickerFinished(vehicleId: String) {
-                        DashboardActivity.launchActivity(this@VehiclesActivity)
-                    }
-                })
+        button_add_vehicle.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                VehiclePickerActivity.launchActivity(
+                    this@VehiclesActivity,
+                    null,
+                    object : VehiclePickerCompleteListener {
+                        override fun onVehiclePickerFinished(vehicleId: String) {
+                            DashboardActivity.launchActivity(this@VehiclesActivity)
+                        }
+                    })
+            }
         }
     }
 
@@ -61,8 +64,12 @@ class VehiclesActivity : AppCompatActivity() {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.drivekit_doc_android_vehicle_list))
+                Uri.parse(getString(R.string.drivekit_doc_android_vehicle))
             )
         )
+    }
+
+    override fun onBackPressed() {
+        //Do nothing
     }
 }
