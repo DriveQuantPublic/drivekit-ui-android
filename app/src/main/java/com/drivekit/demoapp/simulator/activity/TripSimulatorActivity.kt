@@ -56,7 +56,7 @@ class TripSimulatorActivity : AppCompatActivity() {
     private fun initFilter() {
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.trip_simulator_item,
             viewModel.presetTripItems.map { getString(it.getTitleResId()) }
         )
 

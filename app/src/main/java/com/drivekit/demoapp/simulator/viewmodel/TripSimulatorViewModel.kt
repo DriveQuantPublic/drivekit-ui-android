@@ -9,5 +9,4 @@ class TripSimulatorViewModel {
 
     fun shouldShowWarningMessage() =
         !DriveKitTripSimulator.isDeveloperModeEnabled() && !DriveKitTripSimulator.isMockLocationEnabled()
-
 }
