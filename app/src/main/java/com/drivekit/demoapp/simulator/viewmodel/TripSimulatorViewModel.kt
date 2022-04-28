@@ -7,6 +7,7 @@ class TripSimulatorViewModel {
     val presetTripItems = PresetTripType.values()
     var selectedPresetTripType: MutableLiveData<PresetTripType> = MutableLiveData()
 
-    fun shouldShowWarningMessage() =
-        !DriveKitTripSimulator.isDeveloperModeEnabled() && !DriveKitTripSimulator.isMockLocationEnabled()
+    fun shouldShowDeveloperModeErrorMessage() = !DriveKitTripSimulator.isDeveloperModeEnabled()
+
+    fun shouldShowMockLocationErrorMessage() = !DriveKitTripSimulator.isMockLocationEnabled()
 }

@@ -33,19 +33,40 @@ class TripSimulatorActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
 
-        text_view_developer_error.apply {
-            setTextColor(DriveKitUI.colors.warningColor())
-            visibility = if (viewModel.shouldShowWarningMessage()) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        }
         text_view_select_trip.highlightSmall()
         initFilter()
+        checkSimulationError()
+
+        button_simulate_trip.apply {
+            setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            setOnClickListener {
+                //TODO: start TripSimulatorDetailActivity
+            }
+        }
+
         viewModel.selectedPresetTripType.observe(this) {
             updateTripDescription()
         }
+    }
+
+    private fun checkSimulationError() {
+        text_view_error_message.apply {
+            setTextColor(DriveKitUI.colors.warningColor())
+            if (viewModel.shouldShowMockLocationErrorMessage()) {
+                visibility = View.VISIBLE
+                text = getString(R.string.trip_simulator_error_mock_location)
+                if (viewModel.shouldShowDeveloperModeErrorMessage()) {
+                    text = getString(R.string.trip_simulator_error_dev_mode)
+                }
+            } else {
+                visibility = View.GONE
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkSimulationError()
     }
 
     override fun onSupportNavigateUp(): Boolean {
