@@ -83,4 +83,8 @@ class PermissionsActivity : AppCompatActivity() {
             )
         )
     }
+
+    override fun onBackPressed() {
+        //Do nothing
+    }
 }

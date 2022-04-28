@@ -70,30 +70,8 @@ class UserInfoActivity : AppCompatActivity() {
                 val firstName = text_view_firstname_field.editableText.toString()
                 val lastName = text_view_lastname_field.editableText.toString()
                 val pseudo = text_view_pseudo_field.editableText.toString()
-
-                if (firstName.isNotBlank() ||
-                    lastName.isNotBlank() ||
-                    pseudo.isNotBlank()
-                ) {
-                    text_input_layout_firstname.isErrorEnabled = false
-                    text_input_layout_lastname.isErrorEnabled = false
-                    text_input_layout_pseudo.isErrorEnabled = false
-                    updateProgressVisibility(true)
-                    viewModel.updateUser(firstName, lastName, pseudo)
-                } else {
-                    text_input_layout_firstname.apply {
-                        isErrorEnabled = true
-                        error = getString(R.string.empty_firstname_error)
-                    }
-                    text_input_layout_lastname.apply {
-                        isErrorEnabled = true
-                        error = getString(R.string.empty_lastname_error)
-                    }
-                    text_input_layout_pseudo.apply {
-                        isErrorEnabled = true
-                        error = getString(R.string.empty_pseudo_error)
-                    }
-                }
+                updateProgressVisibility(true)
+                viewModel.updateUser(firstName, lastName, pseudo)
             }
         }
 

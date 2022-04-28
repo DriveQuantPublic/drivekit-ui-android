@@ -115,4 +115,8 @@ class UserIdActivity : AppCompatActivity() {
     private fun syncUserInfo(syncStatus: SyncStatus) {
         viewModel.getUserInfo(syncStatus)
     }
+
+    override fun onBackPressed() {
+        //Do nothing
+    }
 }

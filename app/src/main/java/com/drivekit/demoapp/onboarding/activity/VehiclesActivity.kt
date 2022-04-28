@@ -68,4 +68,8 @@ class VehiclesActivity : AppCompatActivity() {
             )
         )
     }
+
+    override fun onBackPressed() {
+        //Do nothing
+    }
 }
