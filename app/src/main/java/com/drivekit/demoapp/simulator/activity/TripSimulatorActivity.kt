@@ -9,8 +9,10 @@ import android.widget.AdapterView
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import kotlinx.android.synthetic.main.activity_trip_simulator.*
+import android.widget.ArrayAdapter
 
 class TripSimulatorActivity : AppCompatActivity() {
 
@@ -31,14 +33,19 @@ class TripSimulatorActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
 
-        text_view_developer_error.visibility = if (viewModel.shouldShowWarningMessage()) {
-            View.VISIBLE
-        } else {
-            View.GONE
+        text_view_developer_error.apply {
+            setTextColor(DriveKitUI.colors.warningColor())
+            visibility = if (viewModel.shouldShowWarningMessage()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
-        updateTripDescription()
-        text_view_select_trip.headLine1()
+        text_view_select_trip.highlightSmall()
         initFilter()
+        viewModel.selectedPresetTripType.observe(this) {
+            updateTripDescription()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -47,16 +54,21 @@ class TripSimulatorActivity : AppCompatActivity() {
     }
 
     private fun initFilter() {
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            viewModel.presetTripItems.map { getString(it.getTitleResId()) }
+        )
+
         trips_dropdown_spinner.apply {
-            setItems(viewModel.getTripSimulatorItems())
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            setAdapter(adapter)
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     adapterView: AdapterView<*>?,
                     view: View,
                     position: Int,
                     l: Long) {
-                    viewModel.selectItem(position)
-                    updateTripDescription()
+                    viewModel.selectedPresetTripType.postValue(viewModel.presetTripItems[position])
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}
             }
@@ -64,6 +76,8 @@ class TripSimulatorActivity : AppCompatActivity() {
     }
 
     private fun updateTripDescription() {
-        text_view_trip_description.text = getString(viewModel.getSelectedItem().getDescription())
+        viewModel.selectedPresetTripType.value?.let {
+            text_view_trip_description.text = getString(it.getDescriptionResId())
+        }
     }
 }

@@ -29,7 +29,8 @@
         android:id="@+id/text_view_developer_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_double"
+        android:layout_marginTop="@dimen/dk_margin"
+        android:text="@string/trip_simulator_error_dev_mode"
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         android:visibility="gone"
@@ -42,32 +43,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/trip_simulator_select_trip"
-        android:layout_marginTop="@dimen/dk_margin_double"
+        android:layout_marginTop="@dimen/dk_margin"
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_developer_error" />
 
-    <com.drivequant.drivekit.common.ui.component.FilterView
-        android:id="@+id/trips_dropdown_spinner"
+    <FrameLayout
+        android:id="@+id/spinner_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_marginStart="@dimen/dk_margin"
         android:layout_marginTop="@dimen/dk_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/spinner_background"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_select_trip">
+    <Spinner
+        android:id="@+id/trips_dropdown_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_select_trip" />
-
+    </FrameLayout>
     <TextView
         android:id="@+id/text_view_trip_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_double"
+        android:layout_marginTop="@dimen/dk_margin"
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trips_dropdown_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_container" />
 
     <TextView
         android:id="@+id/button_simulate_trip"

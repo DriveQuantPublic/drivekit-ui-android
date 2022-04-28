@@ -18,7 +18,7 @@ enum class PresetTripType {
     TRIP_WITH_CRASH_CONFIRMED_30KMH,
     TRIP_WITH_CRASH_UNCONFIRMED_0KMH;
 
-    fun getTitle() = when (this) {
+    fun getTitleResId() = when (this) {
         SHORT_TRIP -> R.string.trip_simulator_short_trip_title
         MIXED_TRIP -> R.string.trip_simulator_city_suburban_title
         CITY_TRIP -> R.string.trip_simulator_city_title
@@ -32,7 +32,7 @@ enum class PresetTripType {
         TRIP_WITH_CRASH_UNCONFIRMED_0KMH -> R.string.trip_simulator_crash_0_title
     }
 
-    fun getDescription() = when (this) {
+    fun getDescriptionResId() = when (this) {
         SHORT_TRIP -> R.string.trip_simulator_short_trip_description
         MIXED_TRIP -> R.string.trip_simulator_city_suburban_description
         CITY_TRIP -> R.string.trip_simulator_city_description
