@@ -32,6 +32,7 @@ class DriveKitDemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        com.drivekit.demoapp.notification.controller.NotificationManager.createChannels(this)
         DriveKitConfig.configure(this)
         registerReceiver()
     }
