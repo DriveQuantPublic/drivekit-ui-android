@@ -56,27 +56,33 @@ class TripSimulatorDetailActivity : AppCompatActivity() {
         }
 
         text_view_description.text = getString(presetTripType.getDescriptionResId())
-
         button_stop_simulation.apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                val alertDialog = DKAlertDialog.LayoutBuilder()
-                    .init(this@TripSimulatorDetailActivity)
-                    .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(getString(R.string.button_stop)) { _, _ ->
-                       viewModel.stopSimulation()
-                        finish()
-                    }
-                    .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-                    .show()
+                if (viewModel.isSimulating) {
+                    val alertDialog = DKAlertDialog.LayoutBuilder()
+                        .init(this@TripSimulatorDetailActivity)
+                        .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
+                        .positiveButton(getString(R.string.button_stop)) { _, _ ->
+                            viewModel.stopSimulation()
+                            updateContent()
+                            text = getString(R.string.trip_simulator_restart_button)
+                        }
+                        .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+                        .show()
 
-                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                titleTextView?.text = getString(R.string.app_name)
-                descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_content)
-                titleTextView?.headLine1()
-                descriptionTextView?.normalText()
+                    val titleTextView =
+                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    val descriptionTextView =
+                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    titleTextView?.text = getString(R.string.app_name)
+                    descriptionTextView?.text =
+                        getString(R.string.trip_simulator_stop_simulation_content)
+                    titleTextView?.headLine1()
+                    descriptionTextView?.normalText()
+                } else {
+                    viewModel.startSimulation()
+                }
             }
         }
 
@@ -117,6 +123,38 @@ class TripSimulatorDetailActivity : AppCompatActivity() {
             }
             setItemValue(viewModel.getRemainingTimeToStop())
             setItemTitle(getString(R.string.trip_simulator_automatic_stop_in))
+        }
+
+        if (viewModel.isSimulating) {
+            R.string.trip_simulator_stop_button
+        } else {
+            R.string.trip_simulator_restart_button
+        }.let {
+            button_stop_simulation.text = getString(it)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (viewModel.isSimulating) {
+            val alertDialog = DKAlertDialog.LayoutBuilder()
+                .init(this@TripSimulatorDetailActivity)
+                .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
+                .positiveButton(getString(R.string.button_stop)) { _, _ ->
+                    viewModel.stopSimulation()
+                    finish()
+                }
+                .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+                .show()
+
+            val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+            val descriptionTextView =
+                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+            titleTextView?.text = getString(R.string.app_name)
+            descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_content)
+            titleTextView?.headLine1()
+            descriptionTextView?.normalText()
+        } else {
+            super.onBackPressed()
         }
     }
 

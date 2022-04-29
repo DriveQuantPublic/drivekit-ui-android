@@ -23,7 +23,7 @@ class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
 
     var currentSpeed: MutableLiveData<Float> = MutableLiveData()
     var currentDuration: Long = 0
-    private var isSimulating: Boolean = true
+    var isSimulating: Boolean = true
     private var timeWhenEnteredStoppingState: Date? = null
 
     fun startSimulation() {

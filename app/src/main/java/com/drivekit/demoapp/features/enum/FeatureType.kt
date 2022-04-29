@@ -60,7 +60,7 @@ internal enum class FeatureType {
     fun getInfoUrlResId() = when (this) {
         ALL -> null
         DRIVERDATA_TRIPS -> R.string.drivekit_doc_android_driver_data
-        PERMISSIONSUTILS_ONBOARDING -> R.string.drivekit_doc_android_permission_management
+        PERMISSIONSUTILS_ONBOARDING -> R.string.drivekit_doc_android_permissions_management
         PERMISSIONSUTILS_DIAGNOSIS -> R.string.drivekit_doc_android_diag
         VEHICLE_LIST -> R.string.drivekit_doc_android_vehicle_list
         VEHICLE_ODOMETER -> R.string.drivekit_doc_android_odometer

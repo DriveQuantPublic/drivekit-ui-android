@@ -111,7 +111,7 @@
         android:layout_marginBottom="@dimen/dk_margin"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:text="@string/trip_simulator_stop_button"
+        tools:text="@string/trip_simulator_stop_button"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         android:textStyle="bold"
