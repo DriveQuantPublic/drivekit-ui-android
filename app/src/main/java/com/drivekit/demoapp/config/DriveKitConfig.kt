@@ -91,7 +91,7 @@ internal object DriveKitConfig {
             override fun tripSavedForRepost() {
                 DriveKitDemoApplication.showNotification(
                     context,
-                    context.getString(R.string.trip_save_for_repost)
+                    context.getString(R.string.notif_trip_save_for_repost)
                 )
             }
             override fun beaconDetected() {}
@@ -171,7 +171,7 @@ internal object DriveKitConfig {
     private fun createForegroundNotification(context: Context): TripNotification {
         val notification = TripNotification(
             context.getString(R.string.app_name),
-            context.getString(R.string.trip_started),
+            context.getString(R.string.notif_trip_started),
             R.drawable.ic_launcher_background
         )
         notification.enableCancel = true
