@@ -4,17 +4,25 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
+import com.drivekit.demoapp.component.ChartEntry
+import com.drivekit.demoapp.component.TripSimulatorGraphView
 import com.drivekit.demoapp.simulator.viewmodel.PresetTripType
+import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import kotlinx.android.synthetic.main.activity_trip_simulator_detail.*
 
 class TripSimulatorDetailActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: TripSimulatorDetailViewModel
 
     companion object {
         const val PRESET_TYPE_EXTRA = "preset-extra"
@@ -37,7 +45,16 @@ class TripSimulatorDetailActivity : AppCompatActivity() {
         title = getString(R.string.trip_simulator_header)
 
         val presetTripType = intent.getSerializableExtra(PRESET_TYPE_EXTRA) as PresetTripType
-        text_view_title.text = getString(presetTripType.getTitleResId())
+
+        viewModel = ViewModelProviders.of(
+            this,
+            TripSimulatorDetailViewModel.TripSimulatorDetailViewModelFactory(presetTripType)).get(TripSimulatorDetailViewModel::class.java)
+
+        text_view_title.apply {
+           text = getString(presetTripType.getTitleResId())
+            headLine1()
+        }
+
         text_view_description.text = getString(presetTripType.getDescriptionResId())
 
         button_stop_simulation.apply {
@@ -46,8 +63,9 @@ class TripSimulatorDetailActivity : AppCompatActivity() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@TripSimulatorDetailActivity)
                     .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(getString(R.string.button_stop)) { dialog, _ ->
-                        //TODO stop simulation
+                    .positiveButton(getString(R.string.button_stop)) { _, _ ->
+                       viewModel.stopSimulation()
+                        finish()
                     }
                     .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
                     .show()
@@ -62,27 +80,43 @@ class TripSimulatorDetailActivity : AppCompatActivity() {
             }
         }
 
+        val graphView = TripSimulatorGraphView(this)
+        graph_container.addView(graphView)
+        viewModel.startSimulation()
+        viewModel.currentSpeed.observe(this) {
+            updateContent()
+            graphView.configure(ChartEntry(it, getString(R.string.trip_simulator_graph_velocity), R.color.colorPrimary))
+        }
+
+    }
+
+    private fun updateContent() {
         simulation_run_duration.apply {
             setItemTitle(getString(R.string.trip_simulator_run_duration))
-            setItemValue("08:52")
+            setItemValue(viewModel.getTotalDuration())
         }
 
         simulation_run_time.apply {
             setItemTitle(getString(R.string.trip_simulator_run_time))
-            setItemValue("00:53")
+            setItemValue(viewModel.getSpentDuration())
         }
         simulation_run_velocity.apply {
             setItemTitle(getString(R.string.trip_simulator_run_velocity))
-            setItemValue("35 km/h")
+            setItemValue(viewModel.getVelocity(this@TripSimulatorDetailActivity))
         }
 
         simulation_run_sdk_state.apply {
             setItemTitle(getString(R.string.trip_simulator_run_sdk_state))
-            setItemValue("RUNNING")
+            setItemValue(viewModel.getState())
         }
         simulation_automatic_stop_in.apply {
+            visibility = if (viewModel.shouldDisplayStoppingMessage()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            setItemValue(viewModel.getRemainingTimeToStop())
             setItemTitle(getString(R.string.trip_simulator_automatic_stop_in))
-            setItemValue("04:20")
         }
     }
 

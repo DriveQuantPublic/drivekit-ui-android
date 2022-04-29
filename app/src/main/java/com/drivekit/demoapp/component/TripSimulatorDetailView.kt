@@ -16,8 +16,6 @@ class TripSimulatorDetailView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    private lateinit var viewModel: TripSimulatorDetailViewModel
-
     init {
         val view = View.inflate(context, R.layout.trip_simulator_detail_item, null)
 
@@ -33,7 +31,7 @@ class TripSimulatorDetailView @JvmOverloads constructor(
 
     private fun setStyle() {
         text_view_item_title.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_item_value.headLine1(DriveKitUI.colors.complementaryFontColor())
+        text_view_item_value.headLine1(DriveKitUI.colors.mainFontColor())
     }
 
     fun setItemTitle(title: String) {

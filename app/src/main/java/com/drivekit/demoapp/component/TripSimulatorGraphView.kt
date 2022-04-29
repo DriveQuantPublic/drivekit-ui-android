@@ -12,6 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.YAxis
 import androidx.core.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 
@@ -32,29 +33,36 @@ class TripSimulatorGraphView @JvmOverloads constructor(
         )
         lineChart.apply {
             data = LineData()
-            isDragEnabled = true
-            setScaleEnabled(true)
+            isDragEnabled = false
+            setScaleEnabled(false)
             setPinchZoom(false)
-            xAxis.isEnabled = false
+            xAxis.apply {
+                isEnabled = true
+                position = XAxis.XAxisPosition.BOTTOM
+            }
             axisRight.isEnabled = false
+
             legend.apply {
                 isEnabled = true
-                horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 orientation = Legend.LegendOrientation.HORIZONTAL
                 setDrawInside(false)
             }
-        }
 
-        lineChart.axisLeft.apply {
-            textSize = 9.0f
-            textColor = Color.BLACK
-            setLabelCount(6, false)
-            setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            axisLineColor = Color.BLACK
+            axisLeft.apply {
+                isEnabled = true
+                textSize = 9.0f
+                textColor = Color.BLACK
+                setLabelCount(6, false)
+                setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+                axisLineColor = Color.BLACK
+            }
+
+            description.isEnabled = true
+            description.text = context.getString(R.string.trip_simulator_graph_time)
+            isAutoScaleMinMaxEnabled = true
         }
-        lineChart.description.isEnabled = false
-        lineChart.isAutoScaleMinMaxEnabled = true
     }
 
     private fun addEntry(value: Float, title: String, color: Int) {
@@ -73,37 +81,9 @@ class TripSimulatorGraphView @JvmOverloads constructor(
             data.notifyDataChanged()
             lineChart.apply {
                 notifyDataSetChanged()
-                setVisibleXRangeMaximum(200f)
+                setVisibleXRangeMaximum(30f)
                 moveViewToX(lineChart.data.entryCount.toFloat())
             }
-        }
-    }
-
-    private fun addEntries(context: Context, entries: List<ChartEntry>) {
-        val data = lineChart.data
-        if (data != null) {
-            for (i in entries.indices) {
-                var current = data.getDataSetByIndex(i)
-                if (current == null) {
-                    current = createSet(
-                        entries[i].title,
-                        ContextCompat.getColor(context, entries[i].colorResId)
-                    )
-                    data.addDataSet(current)
-                }
-                data.addEntry(
-                    Entry(
-                        current.entryCount.toFloat(), entries[i].value
-                    ), i
-                )
-                data.notifyDataChanged()
-            }
-            lineChart.data = data
-            lineChart.legend.isWordWrapEnabled = true
-            lineChart.notifyDataSetChanged()
-            lineChart.setVisibleXRangeMaximum(200f)
-            lineChart.moveViewToX(lineChart.data.entryCount.toFloat())
-            lineChart.invalidate()
         }
     }
 
@@ -113,14 +93,18 @@ class TripSimulatorGraphView @JvmOverloads constructor(
         lineDataSet.lineWidth = 1.8f
         lineDataSet.fillColor = Color.BLACK
         lineDataSet.fillAlpha = 1
-        lineDataSet.color = color
+        lineDataSet.color = ContextCompat.getColor(context, color)
         lineDataSet.isHighlightEnabled = false
         lineDataSet.setDrawValues(false)
         return lineDataSet
     }
+
+    fun configure(chartEntry: ChartEntry) {
+        addEntry(chartEntry.value, chartEntry.title, chartEntry.colorResId)
+    }
 }
 
-internal data class ChartEntry(
+data class ChartEntry(
     val value: Float,
     val title: String,
     val colorResId: Int

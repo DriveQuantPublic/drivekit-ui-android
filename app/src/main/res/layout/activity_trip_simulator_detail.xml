@@ -21,7 +21,6 @@
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -30,7 +29,7 @@
         android:id="@+id/text_view_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_double"
+        android:layout_marginTop="@dimen/dk_margin"
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +38,8 @@
 
 
     <FrameLayout
+        android:paddingStart="@dimen/dk_margin"
+        android:paddingEnd="@dimen/dk_margin"
         android:id="@+id/graph_container"
         android:layout_width="match_parent"
         android:layout_height="200dp"
