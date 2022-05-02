@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import kotlinx.android.synthetic.main.activity_trip_simulator.*
 import android.widget.ArrayAdapter
+import android.widget.Button
 
 class TripSimulatorActivity : AppCompatActivity() {
 
@@ -37,7 +38,8 @@ class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        button_simulate_trip.apply {
+        button_simulate_trip.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.trip_simulator_start_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (!viewModel.shouldShowDeveloperModeErrorMessage() && !viewModel.shouldShowMockLocationErrorMessage()) {
@@ -93,7 +95,7 @@ class TripSimulatorActivity : AppCompatActivity() {
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     adapterView: AdapterView<*>?,
-                    view: View,
+                    view: View?,
                     position: Int,
                     l: Long) {
                     viewModel.selectedPresetTripType.postValue(viewModel.presetTripItems[position])

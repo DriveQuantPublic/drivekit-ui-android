@@ -2,9 +2,9 @@ package com.drivekit.demoapp.simulator.viewmodel
 
 import android.content.Context
 import android.location.Location
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
@@ -17,73 +17,110 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.tripsimulator.DriveKitTripSimulator
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) : ViewModel(),
+internal interface TripSimulatorDetailViewModelListener {
+    fun updateNeeded(updatedValue: Double?, timestamp: Double?)
+}
+
+internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) : ViewModel(),
     DriveKitTripSimulator.DKTripSimulatorListener, TripListener {
 
-    var currentSpeed: MutableLiveData<Float> = MutableLiveData()
-    var currentDuration: Long = 0
-    var isSimulating: Boolean = true
+    var isSimulating: Boolean = false
+    private var listener: TripSimulatorDetailViewModelListener? = null
+    private var currentDuration: Long = 0
+    private var currentSpeed: Double? = 0.0
     private var timeWhenEnteredStoppingState: Date? = null
+    private var stoppingTimer: Timer? = null
+
+    init {
+        TripListenerController.addTripListener(this)
+    }
+
+    fun registerListener(listener: TripSimulatorDetailViewModelListener) {
+        this.listener = listener
+    }
+
+    fun unregisterListener() {
+        this.listener = null
+        TripListenerController.removeTripListener(this)
+    }
 
     fun startSimulation() {
-        currentDuration = 0
+        currentSpeed = null
         timeWhenEnteredStoppingState = null
+        stoppingTimer = null
         DriveKitTripSimulator.start(PresetTripType.getPresetTrip(presetTripType), this)
         isSimulating = true
     }
 
     fun stopSimulation() {
         DriveKitTripSimulator.stop()
+        currentDuration = 0
         isSimulating = false
     }
 
     fun getState() = DriveKitTripAnalysis.getRecorderState().name
 
-    private fun formatDuration(duration: Double): String {
-        val durationInt = duration.toInt()
-        val seconds = durationInt % 60
-        val minutes = (durationInt - seconds) / 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
-
-
     fun shouldDisplayStoppingMessage() = DriveKitTripAnalysis.getRecorderState() == State.STOPPING
 
     fun getRemainingTimeToStop() = timeWhenEnteredStoppingState?.let {
         val timeout = TripAnalysisConfig.stopTimeOut
-        val remainingDuration = timeout.toDouble() - (Date().time - it.time)
-        formatDuration(remainingDuration)
+        val diff = TimeUnit.SECONDS.convert(Date().time - it.time, TimeUnit.MILLISECONDS)
+        val remainingDuration = TimeUnit.SECONDS.convert(timeout - diff, TimeUnit.SECONDS)
+        remainingDuration.toDouble().formatSimulatorDuration()
     } ?: ""
 
-    fun getTotalDuration() = PresetTripType.getPresetTrip(presetTripType).getSimulationDuration().let { formatDuration(it) }
+    private fun updateStoppingTime(state: State) {
+        if (state == State.STOPPING) {
+            if (timeWhenEnteredStoppingState == null) {
+                timeWhenEnteredStoppingState = Date()
+                val timerTask = object : TimerTask() {
+                    override fun run() {
+                       updateNeeded()
+                    }
+                }
+                if (stoppingTimer == null) {
+                    stoppingTimer = Timer()
+                    stoppingTimer?.scheduleAtFixedRate(timerTask, 0, 1000)
+                }
+            }
+            if (currentDuration >= PresetTripType.getPresetTrip(presetTripType).getSimulationDuration()) {
+                currentSpeed = null
+            }
+        } else {
+            stoppingTimer?.cancel()
+            stoppingTimer = null
+            timeWhenEnteredStoppingState = null
+        }
+    }
+
+    fun getTotalDuration() = PresetTripType.getPresetTrip(presetTripType).getSimulationDuration().formatSimulatorDuration()
 
     fun getSpentDuration() = if (isSimulating) {
-        formatDuration(currentDuration.toDouble())
+        currentDuration.toDouble().formatSimulatorDuration()
     } else {
         "-"
     }
 
-    fun getVelocity(context: Context) = currentSpeed.value?.let {
-        DKDataFormatter.formatSpeedMean(context, it.toDouble())
-    } ?: ""
+    fun getVelocity(context: Context) = if (isSimulating) {
+        currentSpeed?.let {
+            DKDataFormatter.formatSpeedMean(context, it)
+        } ?: "-"
+    } else {
+        "-"
+    }
+
+    private fun updateNeeded(updatedValue: Double? = null, timestamp: Double? = null) {
+        listener?.updateNeeded(updatedValue, timestamp)
+    }
 
     override fun onLocationSent(location: Location, durationSinceStart: Long) {
         currentDuration = durationSinceStart + 1
-        currentSpeed.postValue(location.speed * 3600 / 1000)
+        currentSpeed = (location.speed.toDouble() * 3600).div(1000)
 
         updateStoppingTime(DriveKitTripAnalysis.getRecorderState())
-    }
-
-    private fun updateStoppingTime(state: State) {
-        if (state == State.STOPPING) {
-            timeWhenEnteredStoppingState?.let {
-                timeWhenEnteredStoppingState = Date()
-
-            } ?: run {
-
-            }
-        }
+        updateNeeded(currentSpeed, currentDuration.toDouble())
     }
 
     override fun beaconDetected() {}
@@ -99,6 +136,10 @@ class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
     override fun tripPoint(tripPoint: TripPoint) {}
     override fun tripSavedForRepost() {}
     override fun tripStarted(startMode: StartMode) {}
+    override fun sdkStateChanged(state: State) {
+        updateStoppingTime(state)
+        updateNeeded()
+    }
 
     @Suppress("UNCHECKED_CAST")
     class TripSimulatorDetailViewModelFactory(private val presetTripType: PresetTripType) :
@@ -107,4 +148,11 @@ class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
             return TripSimulatorDetailViewModel(presetTripType) as T
         }
     }
+}
+
+fun Double.formatSimulatorDuration(): String {
+    val durationInt = this.toInt()
+    val seconds = durationInt % 60
+    val minutes = (durationInt - seconds) / 60
+    return String.format("%02d:%02d", minutes, seconds)
 }

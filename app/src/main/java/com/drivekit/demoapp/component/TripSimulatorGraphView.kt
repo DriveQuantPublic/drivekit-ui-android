@@ -67,10 +67,10 @@ class TripSimulatorGraphView @JvmOverloads constructor(
 
     private fun addEntry(value: Float, title: String, color: Int) {
         val data = lineChart.data
-        if (data != null) {
+        data?.let {
             var lineDataSet = data.getDataSetByIndex(0)
             if (lineDataSet == null) {
-                lineDataSet = createSet(title, color)
+                lineDataSet = createDataSet(title, color)
                 data.addDataSet(lineDataSet)
             }
             data.addEntry(
@@ -87,20 +87,27 @@ class TripSimulatorGraphView @JvmOverloads constructor(
         }
     }
 
-    private fun createSet(title: String, color: Int): LineDataSet {
+    private fun createDataSet(title: String, color: Int): LineDataSet {
         val lineDataSet = LineDataSet(null, title)
-        lineDataSet.setDrawCircles(false)
-        lineDataSet.lineWidth = 1.8f
-        lineDataSet.fillColor = Color.BLACK
-        lineDataSet.fillAlpha = 1
-        lineDataSet.color = ContextCompat.getColor(context, color)
-        lineDataSet.isHighlightEnabled = false
-        lineDataSet.setDrawValues(false)
+        lineDataSet.apply {
+            setDrawCircles(false)
+            lineWidth = 1.8f
+            fillColor = Color.BLACK
+            fillAlpha = 1
+            setColor(ContextCompat.getColor(context, color))
+            isHighlightEnabled = false
+            setDrawValues(false)
+        }
         return lineDataSet
     }
 
-    fun configure(chartEntry: ChartEntry) {
+    fun updateGraph(chartEntry: ChartEntry) {
         addEntry(chartEntry.value, chartEntry.title, chartEntry.colorResId)
+    }
+
+    fun clean() {
+        lineChart.data.clearValues()
+        lineChart.invalidate()
     }
 }
 
