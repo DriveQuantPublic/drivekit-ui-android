@@ -16,7 +16,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
-import com.drivequant.drivekit.databaseutils.entity.TransportationMode.Companion.getEnum
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
@@ -66,7 +65,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             }
             val contentIntent = buildContentIntent(
                 context,
-                getEnum(response.itineraryStatistics!!.transportationMode),
+                null,
                 null,
                 response.itinId
             )
@@ -122,7 +121,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
 
     private fun buildContentIntent(
         context: Context,
-        transportationMode: TransportationMode,
+        transportationMode: TransportationMode?,
         tripAdvices: List<TripAdvice>?,
         itinId: String
     ): PendingIntent? {
@@ -131,7 +130,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             val hasTripAdvices = !CollectionUtils.isEmpty(tripAdvices)
             intent.putExtra(TripDetailActivity.ITINID_EXTRA, itinId)
             intent.putExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, hasTripAdvices)
-            if (transportationMode.isAlternative()) {
+            if (transportationMode != null && transportationMode.isAlternative()) {
                 if (DriverDataUI.enableAlternativeTrips) {
                     intent.putExtra(
                         TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA,
