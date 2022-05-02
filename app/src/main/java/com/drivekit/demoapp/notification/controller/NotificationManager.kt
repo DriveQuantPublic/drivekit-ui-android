@@ -25,11 +25,10 @@ internal object NotificationManager {
     fun sendNotification(
         context: Context,
         notificationType: NotificationType,
-        contentIntent: PendingIntent?,
-        title: String?,
-        content: String?
+        contentIntent: PendingIntent? = null,
+        additionalBody: String? = null
     ) {
-       notificationType.createNotification(context, contentIntent, title, content).let { notification ->
+       notificationType.createNotification(context, contentIntent, additionalBody).let { notification ->
            (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)?.let { manager ->
                if (notificationType.getChannel().isEnabled(context)) {
                    val notificationId = Random.nextInt(1, Integer.MAX_VALUE)
