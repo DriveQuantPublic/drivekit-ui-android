@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import com.drivekit.demoapp.notification.enum.NotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
-import kotlin.random.Random
 
 internal object NotificationManager {
 
@@ -22,6 +21,28 @@ internal object NotificationManager {
         }
     }
 
+    fun createChannel(context: Context, channel: NotificationChannel) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && manager != null) {
+            if (manager.getNotificationChannel(channel.getChannelId()) != null) {
+                deleteChannel(context, channel)
+            }
+            val notificationChannel = android.app.NotificationChannel(
+                channel.getChannelId(),
+                context.getString(channel.getChannelNameResId()),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            manager.createNotificationChannel(notificationChannel)
+        }
+    }
+
+    fun deleteChannel(context: Context, channel: NotificationChannel) {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && manager != null) {
+            manager.deleteNotificationChannel(channel.getChannelId())
+        }
+    }
+
     fun sendNotification(
         context: Context,
         notificationType: NotificationType,
@@ -31,8 +52,7 @@ internal object NotificationManager {
        notificationType.createNotification(context, contentIntent, additionalBody).let { notification ->
            (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)?.let { manager ->
                if (notificationType.getChannel().isEnabled(context)) {
-                   val notificationId = Random.nextInt(1, Integer.MAX_VALUE)
-                   manager.notify(notificationId, notification.build())
+                   manager.notify(notificationType.getNotificationId(), notification.build())
                }
            }
        }

@@ -177,6 +177,7 @@ internal object DriveKitConfig {
         notification.enableCancel = true
         notification.cancel = context.getString(R.string.cancel_trip)
         notification.cancelIconId = R.drawable.ic_launcher_background
+        notification.channelId = NotificationChannel.TRIP_STARTED.getChannelId()
         return notification
     }
 }

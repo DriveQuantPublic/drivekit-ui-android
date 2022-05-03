@@ -57,5 +57,9 @@
             android:name="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

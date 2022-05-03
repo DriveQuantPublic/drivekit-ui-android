@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 
 internal class NotificationButton : LinearLayout {
 
@@ -30,7 +32,21 @@ internal class NotificationButton : LinearLayout {
         textViewDescription = view.findViewById(R.id.text_view_description)
         arrowForward = view.findViewById(R.id.image_view_arrow)
 
-        // TODO
+        if (attrs != null) {
+            val a = context.obtainStyledAttributes(attrs, R.styleable.NotificationButton, 0, 0)
+            try {
+                a.getString(R.styleable.NotificationButton_notificationButtonTitle)?.let {
+                    textViewTitle.text = it
+                }
+                a.getString(R.styleable.NotificationButton_notificationButtonDescription)?.let {
+                    textViewDescription.text = it
+                }
+            } finally {
+                a.recycle()
+            }
+        }
+
+        DrawableCompat.setTint(arrowForward.drawable, DriveKitUI.colors.mainFontColor())
 
         addView(
             view, ViewGroup.LayoutParams(

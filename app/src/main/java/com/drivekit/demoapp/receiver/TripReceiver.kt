@@ -12,6 +12,7 @@ import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivekit.demoapp.notification.enum.TripCancellationReason
 import com.drivekit.demoapp.utils.getImmutableFlag
+import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
@@ -100,7 +101,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
         dkTrip?.let {
             val contentIntent = buildContentIntent(context, dkTrip.transportationMode, dkTrip.tripAdvices, dkTrip.itinId)
             if (errorCode == 0) {
-                if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isManaged()) {
+                if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isAlternativeNotificationManaged()) {
                     NotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
                 } else {
                     val additionalBody = when (DriverDataUI.tripData) {
@@ -148,18 +149,6 @@ internal class TripReceiver : TripAnalysedReceiver() {
             .addNextIntentWithParentStack(intent)
             .getPendingIntent(Random().nextInt(Int.MAX_VALUE), getImmutableFlag())
     }
-}
-
-fun TransportationMode.isManaged() = when (this) {
-    TransportationMode.TRAIN, TransportationMode.BOAT, TransportationMode.BIKE, TransportationMode.SKIING, TransportationMode.IDLE -> true
-    TransportationMode.UNKNOWN,
-    TransportationMode.CAR,
-    TransportationMode.MOTO,
-    TransportationMode.TRUCK,
-    TransportationMode.BUS,
-    TransportationMode.FLIGHT,
-    TransportationMode.ON_FOOT,
-    TransportationMode.OTHER -> false
 }
 
 fun PostGenericResponse.isTripValid() =

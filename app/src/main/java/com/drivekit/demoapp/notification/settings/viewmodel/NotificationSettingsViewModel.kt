@@ -1,18 +1,30 @@
 package com.drivekit.demoapp.notification.settings.viewmodel
 
-import android.os.Build
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.drivekit.demoapp.notification.controller.NotificationManager
+import com.drivekit.demoapp.notification.enum.NotificationChannel
+import com.drivekit.drivekitdemoapp.R
 
 internal class NotificationSettingsViewModel : ViewModel() {
-    private val isPreOreo = Build.VERSION.SDK_INT < Build.VERSION_CODES.O
 
-    fun isFinishedChannelEnabled(): Boolean {
-        // TODO
-        return true
+    fun isChannelEnabled(context: Context, notificationChannel: NotificationChannel) = notificationChannel.isEnabled(context)
+
+    fun getChannelTitleResId(notificationChannel: NotificationChannel) = notificationChannel.getTitleResId()
+
+    fun getChannelDescriptionResId(notificationChannel: NotificationChannel) = notificationChannel.getDescriptionResId()
+
+    fun getTripStartedChannelDescriptionResId(context: Context) = if (isChannelEnabled(context, NotificationChannel.TRIP_STARTED)) {
+        R.string.notification_trip_in_progress_description_enabled
+    } else {
+        R.string.notification_trip_in_progress_description_disabled
     }
 
-    fun isCancelledChannelEnabled(): Boolean {
-        // TODO
-        return true
+    fun manageChannel(context: Context, enable: Boolean, channel: NotificationChannel) {
+        if (enable) {
+            NotificationManager.createChannel(context, channel)
+        } else {
+            NotificationManager.deleteChannel(context, channel)
+        }
     }
 }

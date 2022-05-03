@@ -3,12 +3,13 @@ package com.drivekit.demoapp.notification.enum
 import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
+import com.drivekit.demoapp.utils.getAlternativeNotificationBodyResId
+import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 
 internal sealed class NotificationType {
-    object TRIP_STARTED : NotificationType()
     data class TRIP_ENDED(
         val transportationMode: TransportationMode,
         val advices: Int,
@@ -27,14 +28,44 @@ internal sealed class NotificationType {
         }
         is TRIP_CANCELLED -> NotificationChannel.TRIP_CANCELLED
         is TRIP_ENDED -> {
-            if (transportationMode.isAlternative() && DriverDataUI.enableAlternativeTrips) {
+            if (!transportationMode.isAlternative() || (transportationMode.isAlternativeNotificationManaged() && DriverDataUI.enableAlternativeTrips)) {
                 NotificationChannel.TRIP_ENDED
             } else {
                 NotificationChannel.TRIP_CANCELLED
             }
         }
-        TRIP_STARTED -> NotificationChannel.TRIP_STARTED
         TRIP_TOO_SHORT -> NotificationChannel.TRIP_ENDED
+    }
+
+    fun getNotificationId(): Int = when (this) {
+        is TRIP_ANALYSIS_ERROR -> when (this.error) {
+            TripAnalysisError.DUPLICATE_TRIP -> 203
+            TripAnalysisError.NO_NETWORK -> 205
+            TripAnalysisError.NO_API_KEY -> 204
+            TripAnalysisError.NO_BEACON -> 252
+        }
+        is TRIP_CANCELLED -> when (this.reason) {
+            TripCancellationReason.NO_BEACON -> 252
+            TripCancellationReason.HIGH_SPEED -> 250
+            TripCancellationReason.NO_GPS_POINT -> 251
+        }
+        is TRIP_ENDED -> {
+            when (transportationMode) {
+                TransportationMode.TRAIN -> 300
+                TransportationMode.BOAT -> 301
+                TransportationMode.BIKE -> 302
+                TransportationMode.SKIING -> 303
+                TransportationMode.IDLE -> 304
+                else -> {
+                    if (advices > 0) {
+                        201
+                    } else {
+                        200
+                    }
+                }
+            }
+        }
+        TRIP_TOO_SHORT -> 202
     }
 
     private fun getIconResId() = R.mipmap.ic_launcher
@@ -52,7 +83,6 @@ internal sealed class NotificationType {
             TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data_title
         }
         is TRIP_ENDED -> R.string.notif_trip_finished_title
-        TRIP_STARTED -> R.string.notif_trip_started_title
         TRIP_TOO_SHORT -> R.string.notif_trip_too_short_title
     }
 
@@ -88,27 +118,12 @@ internal sealed class NotificationType {
                 }
                 body
             } else {
-                when (this.transportationMode) {
-                    TransportationMode.TRAIN -> R.string.notif_trip_train_detected
-                    TransportationMode.BOAT -> R.string.notif_trip_boat_detected
-                    TransportationMode.BIKE -> R.string.notif_trip_bike_detected
-                    TransportationMode.SKIING -> R.string.notif_trip_skiing_detected
-                    TransportationMode.IDLE -> R.string.notif_trip_idle_detected
-                    TransportationMode.UNKNOWN,
-                    TransportationMode.CAR,
-                    TransportationMode.MOTO,
-                    TransportationMode.TRUCK,
-                    TransportationMode.BUS,
-                    TransportationMode.FLIGHT,
-                    TransportationMode.ON_FOOT,
-                    TransportationMode.OTHER -> null
-                }?.let {
+                this.transportationMode.getAlternativeNotificationBodyResId()?.let {
                     body = context.getString(it)
                 }
                 body
             }
         }
-        TRIP_STARTED -> context.getString(R.string.notif_trip_started)
         TRIP_TOO_SHORT -> context.getString(R.string.notif_trip_too_short)
     }
 
