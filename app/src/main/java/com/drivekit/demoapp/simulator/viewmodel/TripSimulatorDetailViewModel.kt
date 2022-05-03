@@ -116,7 +116,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     }
 
     override fun onLocationSent(location: Location, durationSinceStart: Long) {
-        currentDuration = durationSinceStart + 1
+        currentDuration = durationSinceStart
         currentSpeed = (location.speed.toDouble() * 3600).div(1000)
 
         updateStoppingTime(DriveKitTripAnalysis.getRecorderState())

@@ -9,11 +9,11 @@
         android:id="@+id/text_view_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Durée de la simulation" />
+        tools:text="Duration" />
 
     <TextView
-        android:textSize="@dimen/dk_text_xbig"
-        android:textStyle="bold"
+        tools:textSize="@dimen/dk_text_xbig"
+        tools:textStyle="bold"
         android:id="@+id/text_view_item_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
