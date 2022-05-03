@@ -17,6 +17,7 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelList
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -73,10 +74,7 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
             graph_container.addView(graphView)
         }
 
-        viewModel.apply {
-            registerListener(this@TripSimulatorDetailActivity)
-            startSimulation()
-        }
+        viewModel.registerListener(this@TripSimulatorDetailActivity)
 
         initContent()
         startStopSimulation()
@@ -86,9 +84,12 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
     private fun initContent() {
         text_view_title.apply {
             text = getString(presetTripType.getTitleResId())
-            headLine1()
+            highlightSmall()
         }
-        text_view_description.text = getString(presetTripType.getDescriptionResId())
+        text_view_description.apply {
+            text = getString(presetTripType.getDescriptionResId())
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
         simulation_run_duration.setItemTitle(getString(R.string.trip_simulator_run_duration))
         simulation_run_time.setItemTitle(getString(R.string.trip_simulator_run_time))
         simulation_run_velocity.setItemTitle(getString(R.string.trip_simulator_run_velocity))

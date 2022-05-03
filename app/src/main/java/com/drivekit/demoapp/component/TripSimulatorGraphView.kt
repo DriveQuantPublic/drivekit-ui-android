@@ -12,6 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.YAxis
 import androidx.core.content.ContextCompat
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
@@ -62,6 +63,7 @@ class TripSimulatorGraphView @JvmOverloads constructor(
             description.isEnabled = true
             description.text = context.getString(R.string.trip_simulator_graph_time)
             isAutoScaleMinMaxEnabled = true
+            setBackgroundColor(DriveKitUI.colors.transparentColor())
         }
     }
 

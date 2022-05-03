@@ -25,7 +25,7 @@
                 android:id="@+id/text_view_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_double"
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
                 android:textColor="@android:color/black" />
@@ -92,7 +92,7 @@
                 android:id="@+id/simulation_automatic_stop_in"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="@dimen/dk_margin_medium"
+                android:layout_marginTop="@dimen/dk_margin"
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
                 android:visibility="visible" />
@@ -105,5 +105,5 @@
         layout="@layout/layout_button_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin" />
+        android:layout_marginBottom="@dimen/dk_margin_double" />
 </LinearLayout>

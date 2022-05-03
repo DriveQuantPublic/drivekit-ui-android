@@ -35,6 +35,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
 
     init {
         TripListenerController.addTripListener(this)
+        startSimulation()
     }
 
     fun registerListener(listener: TripSimulatorDetailViewModelListener) {
@@ -116,7 +117,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     }
 
     override fun onLocationSent(location: Location, durationSinceStart: Long) {
-        currentDuration = durationSinceStart
+        currentDuration = durationSinceStart + 1
         currentSpeed = (location.speed.toDouble() * 3600).div(1000)
 
         updateStoppingTime(DriveKitTripAnalysis.getRecorderState())

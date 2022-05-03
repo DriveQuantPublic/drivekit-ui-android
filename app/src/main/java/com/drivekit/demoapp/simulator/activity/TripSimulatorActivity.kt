@@ -14,6 +14,9 @@ import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import kotlinx.android.synthetic.main.activity_trip_simulator.*
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.normalText
+
 
 class TripSimulatorActivity : AppCompatActivity() {
 
@@ -35,6 +38,8 @@ class TripSimulatorActivity : AppCompatActivity() {
         title = getString(R.string.trip_simulator_header)
 
         text_view_select_trip.highlightSmall()
+        text_view_description.normalText(DriveKitUI.colors.complementaryFontColor())
+        text_view_trip_description.normalText(DriveKitUI.colors.complementaryFontColor())
         initFilter()
         checkSimulationError()
 
@@ -49,6 +54,8 @@ class TripSimulatorActivity : AppCompatActivity() {
                             presetTripType
                         )
                     }
+                } else {
+                    //TODO: Show toast or popup to explain one more time that developers must activate developer mode or
                 }
             }
         }
@@ -98,6 +105,7 @@ class TripSimulatorActivity : AppCompatActivity() {
                     view: View?,
                     position: Int,
                     l: Long) {
+                    (adapterView?.getChildAt(0) as TextView).setTextColor(DriveKitUI.colors.mainFontColor())
                     viewModel.selectedPresetTripType.postValue(viewModel.presetTripItems[position])
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}
