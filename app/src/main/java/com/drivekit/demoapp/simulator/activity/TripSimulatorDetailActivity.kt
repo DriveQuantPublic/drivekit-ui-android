@@ -23,7 +23,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_trip_simulator_detail.*
 
-class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
+internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
 
     private lateinit var viewModel: TripSimulatorDetailViewModel
     private lateinit var graphView: TripSimulatorGraphView
@@ -101,25 +101,7 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isSimulating) {
-                    val alertDialog = DKAlertDialog.LayoutBuilder()
-                        .init(this@TripSimulatorDetailActivity)
-                        .layout(R.layout.template_alert_dialog_layout)
-                        .positiveButton(getString(R.string.button_stop)) { _, _ ->
-                            viewModel.stopSimulation()
-                            updateContent()
-                        }
-                        .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-                        .show()
-
-                    val titleTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-                    val descriptionTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                    titleTextView?.text = getString(R.string.app_name)
-                    descriptionTextView?.text =
-                        getString(R.string.trip_simulator_stop_simulation_content)
-                    titleTextView?.headLine1()
-                    descriptionTextView?.normalText()
+                    showStopSimulationPopup { updateContent() }
                 } else {
                     viewModel.startSimulation()
                     graphView.clean()
@@ -127,6 +109,26 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
                 updateContent()
             }
         }
+    }
+
+    private fun showStopSimulationPopup(onStopSimulation: () -> Unit) {
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(this@TripSimulatorDetailActivity)
+            .layout(R.layout.template_alert_dialog_layout)
+            .positiveButton(getString(R.string.button_stop)) { _, _ ->
+                viewModel.stopSimulation()
+                onStopSimulation.invoke()
+            }
+            .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+            .show()
+
+        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView =
+            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        titleTextView?.text = getString(R.string.app_name)
+        descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_content)
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 
     private fun updateContent() {
@@ -155,23 +157,7 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
 
     override fun onBackPressed() {
         if (viewModel.isSimulating) {
-            val alertDialog = DKAlertDialog.LayoutBuilder()
-                .init(this@TripSimulatorDetailActivity)
-                .layout(R.layout.template_alert_dialog_layout)
-                .positiveButton(getString(R.string.button_stop)) { _, _ ->
-                    viewModel.stopSimulation()
-                    finish()
-                }
-                .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-                .show()
-
-            val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-            val descriptionTextView =
-                alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-            titleTextView?.text = getString(R.string.app_name)
-            descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_content)
-            titleTextView?.headLine1()
-            descriptionTextView?.normalText()
+           showStopSimulationPopup { finish() }
         } else {
             super.onBackPressed()
         }

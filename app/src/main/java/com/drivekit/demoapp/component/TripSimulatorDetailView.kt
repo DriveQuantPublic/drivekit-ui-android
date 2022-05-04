@@ -11,7 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import kotlinx.android.synthetic.main.trip_simulator_detail_item.view.*
 
-class TripSimulatorDetailView @JvmOverloads constructor(
+internal class TripSimulatorDetailView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 

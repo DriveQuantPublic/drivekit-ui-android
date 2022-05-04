@@ -5,7 +5,7 @@ import com.drivequant.drivekit.tripsimulator.PresetTrip
 import com.drivequant.drivekit.tripsimulator.model.PresetTripCrash1
 
 
-enum class PresetTripType {
+internal enum class PresetTripType {
     SHORT_TRIP,
     MIXED_TRIP,
     CITY_TRIP,

@@ -53,13 +53,13 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         currentSpeed = null
         timeWhenEnteredStoppingState = null
         stoppingTimer = null
+        currentDuration = 0
         DriveKitTripSimulator.start(PresetTripType.getPresetTrip(presetTripType), this)
         isSimulating = true
     }
 
     fun stopSimulation() {
         DriveKitTripSimulator.stop()
-        currentDuration = 0
         isSimulating = false
     }
 
@@ -118,14 +118,6 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         listener?.updateNeeded(updatedValue, timestamp)
     }
 
-    override fun onLocationSent(location: Location, durationSinceStart: Long) {
-        currentDuration = durationSinceStart + 1
-        currentSpeed = (location.speed.toDouble() * 3600).div(1000)
-
-        updateStoppingTime(DriveKitTripAnalysis.getRecorderState())
-        updateNeeded(currentSpeed, currentDuration.toDouble())
-    }
-
     override fun beaconDetected() {}
     override fun crashDetected(crashInfo: DKCrashInfo) {}
     override fun crashFeedbackSent(
@@ -141,13 +133,21 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     override fun tripStarted(startMode: StartMode) {}
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
         if (currentDuration >= PresetTripType.getPresetTrip(presetTripType).getSimulationDuration()) {
-            isSimulating = false
+            stopSimulation()
             updateNeeded()
         }
     }
     override fun sdkStateChanged(state: State) {
         updateStoppingTime(state)
         updateNeeded()
+    }
+
+    override fun onLocationSent(location: Location, durationSinceStart: Long) {
+        currentDuration = durationSinceStart + 1
+        currentSpeed = (location.speed.toDouble() * 3600).div(1000)
+
+        updateStoppingTime(DriveKitTripAnalysis.getRecorderState())
+        updateNeeded(currentSpeed, currentDuration.toDouble())
     }
 
     @Suppress("UNCHECKED_CAST")

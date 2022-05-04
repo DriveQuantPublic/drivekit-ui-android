@@ -17,7 +17,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
 
-class TripSimulatorActivity : AppCompatActivity() {
+internal class TripSimulatorActivity : AppCompatActivity() {
 
     val viewModel = TripSimulatorViewModel()
 
@@ -106,7 +106,9 @@ class TripSimulatorActivity : AppCompatActivity() {
                     view: View?,
                     position: Int,
                     l: Long) {
-                    (adapterView?.getChildAt(0) as TextView).setTextColor(DriveKitUI.colors.mainFontColor())
+                    adapterView?.getChildAt(0)?.let {
+                        (it as TextView).setTextColor(DriveKitUI.colors.mainFontColor())
+                    }
                     viewModel.selectedPresetTripType.postValue(viewModel.presetTripItems[position])
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {}

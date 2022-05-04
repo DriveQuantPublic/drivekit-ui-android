@@ -17,7 +17,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 
-class TripSimulatorGraphView @JvmOverloads constructor(
+internal class TripSimulatorGraphView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
@@ -113,7 +113,7 @@ class TripSimulatorGraphView @JvmOverloads constructor(
     }
 }
 
-data class ChartEntry(
+internal data class ChartEntry(
     val value: Float,
     val title: String,
     val colorResId: Int
