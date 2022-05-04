@@ -1,26 +1,19 @@
 package com.drivekit.demoapp.notification.enum
 
-import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
-import androidx.core.app.NotificationManagerCompat
+import androidx.preference.PreferenceManager
 import com.drivekit.drivekitdemoapp.R
 
-internal enum class NotificationChannel {
+internal enum class DKNotificationChannel {
     TRIP_STARTED,
     TRIP_CANCELLED,
     TRIP_ENDED;
 
     fun isEnabled(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).let { manager ->
-                manager.getNotificationChannel(getChannelId())?.let { channel ->
-                    return channel.importance != NotificationManager.IMPORTANCE_NONE
-                }
-            }
-            false
-        } else {
-            NotificationManagerCompat.from(context).areNotificationsEnabled()
+        return getSharedPreferencesKey()?.let {
+            PreferenceManager.getDefaultSharedPreferences(context).getBoolean(it, true)
+        } ?: run {
+            true
         }
     }
 

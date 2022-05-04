@@ -11,7 +11,7 @@ import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
-import com.drivekit.demoapp.notification.enum.NotificationChannel
+import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.settings.viewmodel.NotificationSettingsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -54,7 +54,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
         text_view_notifications_description.normalText(DriveKitUI.colors.complementaryFontColor())
 
         notification_start_trip.apply {
-            if (viewModel.isChannelEnabled(context, NotificationChannel.TRIP_STARTED)) {
+            if (viewModel.isChannelEnabled(context, DKNotificationChannel.TRIP_STARTED)) {
                 hideWarning()
             } else {
                 setWarning()
@@ -64,8 +64,8 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
                 redirectTripStartedSettings(context)
             }
         }
-        configureSwitchSettings(notification_trip_cancelled, NotificationChannel.TRIP_CANCELLED)
-        configureSwitchSettings(notification_trip_finished, NotificationChannel.TRIP_ENDED)
+        configureSwitchSettings(notification_trip_cancelled, DKNotificationChannel.TRIP_CANCELLED)
+        configureSwitchSettings(notification_trip_finished, DKNotificationChannel.TRIP_ENDED)
 
         separator_first.setBackgroundColor(DriveKitUI.colors.neutralColor())
         separator_second.setBackgroundColor(DriveKitUI.colors.neutralColor())
@@ -73,7 +73,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
 
     private fun configureSwitchSettings(
         switchSettings: SwitchSettings,
-        notificationChannel: NotificationChannel
+        notificationChannel: DKNotificationChannel
     ) {
         switchSettings.apply {
             setTitle(getString(viewModel.getChannelTitleResId(notificationChannel)))
@@ -93,7 +93,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
                 intent.action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
-                intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotificationChannel.TRIP_STARTED.getChannelId())
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, DKNotificationChannel.TRIP_STARTED.getChannelId())
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
             }
             else -> {

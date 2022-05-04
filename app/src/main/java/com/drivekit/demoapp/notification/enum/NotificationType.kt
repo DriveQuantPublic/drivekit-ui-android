@@ -23,18 +23,18 @@ internal sealed class NotificationType {
         is TRIP_ANALYSIS_ERROR -> when (this.error) {
             TripAnalysisError.DUPLICATE_TRIP,
             TripAnalysisError.NO_NETWORK,
-            TripAnalysisError.NO_API_KEY -> NotificationChannel.TRIP_ENDED
-            TripAnalysisError.NO_BEACON -> NotificationChannel.TRIP_CANCELLED
+            TripAnalysisError.NO_API_KEY -> DKNotificationChannel.TRIP_ENDED
+            TripAnalysisError.NO_BEACON -> DKNotificationChannel.TRIP_CANCELLED
         }
-        is TRIP_CANCELLED -> NotificationChannel.TRIP_CANCELLED
+        is TRIP_CANCELLED -> DKNotificationChannel.TRIP_CANCELLED
         is TRIP_ENDED -> {
             if (!transportationMode.isAlternative() || (transportationMode.isAlternativeNotificationManaged() && DriverDataUI.enableAlternativeTrips)) {
-                NotificationChannel.TRIP_ENDED
+                DKNotificationChannel.TRIP_ENDED
             } else {
-                NotificationChannel.TRIP_CANCELLED
+                DKNotificationChannel.TRIP_CANCELLED
             }
         }
-        TRIP_TOO_SHORT -> NotificationChannel.TRIP_ENDED
+        TRIP_TOO_SHORT -> DKNotificationChannel.TRIP_ENDED
     }
 
     fun getNotificationId(): Int = when (this) {
