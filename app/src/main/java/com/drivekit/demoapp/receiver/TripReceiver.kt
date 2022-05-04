@@ -7,7 +7,7 @@ import android.content.Intent
 import android.text.TextUtils
 import com.drivekit.demoapp.DriveKitDemoApplication.Companion.showNotification
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.notification.controller.NotificationManager
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivekit.demoapp.notification.enum.TripCancellationReason
@@ -70,7 +70,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
                 null,
                 response.itinId
             )
-            NotificationManager.sendNotification(context, notificationType, contentIntent)
+            DKNotificationManager.sendNotification(context, notificationType, contentIntent)
         }
     }
 
@@ -92,7 +92,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             CancelTrip.RESET,
             CancelTrip.BEACON_NO_SPEED -> null
         }?.let {
-            NotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
+            DKNotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
         }
     }
 
@@ -102,7 +102,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             val contentIntent = buildContentIntent(context, dkTrip.transportationMode, dkTrip.tripAdvices, dkTrip.itinId)
             if (errorCode == 0) {
                 if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isManaged()) {
-                    NotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
+                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
                 } else {
                     val additionalBody = when (DriverDataUI.tripData) {
                         TripData.SAFETY -> "${context.getString(R.string.notif_trip_finished_safety)} : ${dkTrip.safety!!.safetyScore.removeZeroDecimal()}/10"
@@ -112,10 +112,10 @@ internal class TripReceiver : TripAnalysedReceiver() {
                         TripData.DURATION -> null
                         TripData.DISTANCE -> null
                     }
-                    NotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
+                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
                 }
             } else {
-                NotificationManager.sendNotification(context, NotificationType.TRIP_TOO_SHORT, contentIntent)
+                DKNotificationManager.sendNotification(context, NotificationType.TRIP_TOO_SHORT, contentIntent)
             }
         }
     }

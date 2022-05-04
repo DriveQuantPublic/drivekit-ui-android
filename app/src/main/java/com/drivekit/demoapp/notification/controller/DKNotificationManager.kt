@@ -8,7 +8,7 @@ import com.drivekit.demoapp.notification.enum.NotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import kotlin.random.Random
 
-internal object NotificationManager {
+internal object DKNotificationManager {
 
     fun createChannels(context: Context) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
