@@ -24,6 +24,12 @@ internal enum class NotificationChannel {
         }
     }
 
+    fun getSharedPreferencesKey() = when (this) {
+        TRIP_STARTED -> null // This channel is already managed in TripAnalysis
+        TRIP_CANCELLED -> "drivekit_channel_trip_cancelled_pref"
+        TRIP_ENDED -> "drivekit_channel_trip_ended_pref"
+    }
+
     fun getChannelId() = when (this) {
         TRIP_STARTED -> "drivekit_demo_trip_started"
         TRIP_CANCELLED -> "drivekit_demo_trip_cancelled_channel"
