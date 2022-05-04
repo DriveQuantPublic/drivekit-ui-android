@@ -9,6 +9,8 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
@@ -137,6 +139,12 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     override fun tripPoint(tripPoint: TripPoint) {}
     override fun tripSavedForRepost() {}
     override fun tripStarted(startMode: StartMode) {}
+    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
+        if (currentDuration >= PresetTripType.getPresetTrip(presetTripType).getSimulationDuration()) {
+            isSimulating = false
+            updateNeeded()
+        }
+    }
     override fun sdkStateChanged(state: State) {
         updateStoppingTime(state)
         updateNeeded()

@@ -26,6 +26,8 @@ import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
@@ -97,6 +99,7 @@ internal object DriveKitConfig : ContentMail {
                     context.getString(R.string.notif_trip_save_for_repost)
                 )
             }
+            override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {}
             override fun beaconDetected() {}
             override fun sdkStateChanged(state: State) {}
             override fun potentialTripStart(startMode: StartMode) {}

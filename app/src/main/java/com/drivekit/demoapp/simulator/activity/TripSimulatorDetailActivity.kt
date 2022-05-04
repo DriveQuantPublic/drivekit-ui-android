@@ -103,7 +103,7 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
                 if (viewModel.isSimulating) {
                     val alertDialog = DKAlertDialog.LayoutBuilder()
                         .init(this@TripSimulatorDetailActivity)
-                        .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
+                        .layout(R.layout.template_alert_dialog_layout)
                         .positiveButton(getString(R.string.button_stop)) { _, _ ->
                             viewModel.stopSimulation()
                             updateContent()
@@ -157,7 +157,7 @@ class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailView
         if (viewModel.isSimulating) {
             val alertDialog = DKAlertDialog.LayoutBuilder()
                 .init(this@TripSimulatorDetailActivity)
-                .layout(com.drivequant.drivekit.challenge.ui.R.layout.template_alert_dialog_layout)
+                .layout(R.layout.template_alert_dialog_layout)
                 .positiveButton(getString(R.string.button_stop)) { _, _ ->
                     viewModel.stopSimulation()
                     finish()

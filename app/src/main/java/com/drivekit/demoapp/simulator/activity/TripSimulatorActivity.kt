@@ -5,17 +5,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import kotlinx.android.synthetic.main.activity_trip_simulator.*
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 
 
 class TripSimulatorActivity : AppCompatActivity() {
@@ -47,15 +46,17 @@ class TripSimulatorActivity : AppCompatActivity() {
             text = getString(R.string.trip_simulator_start_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                if (!viewModel.shouldShowDeveloperModeErrorMessage() && !viewModel.shouldShowMockLocationErrorMessage()) {
-                    viewModel.selectedPresetTripType.value?.let { presetTripType ->
-                        TripSimulatorDetailActivity.launchActivity(
-                            this@TripSimulatorActivity,
-                            presetTripType
-                        )
+                when {
+                    viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)
+                    viewModel.shouldShowMockLocationErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_mock_location)
+                    else -> {
+                        viewModel.selectedPresetTripType.value?.let { presetTripType ->
+                            TripSimulatorDetailActivity.launchActivity(
+                                this@TripSimulatorActivity,
+                                presetTripType
+                            )
+                        }
                     }
-                } else {
-                    //TODO: Show toast or popup to explain one more time that developers must activate developer mode or
                 }
             }
         }
@@ -117,5 +118,24 @@ class TripSimulatorActivity : AppCompatActivity() {
         viewModel.selectedPresetTripType.value?.let {
             text_view_trip_description.text = getString(it.getDescriptionResId())
         }
+    }
+
+    private fun showErrorPopup(errorMessageResId: Int) {
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(this)
+            .layout(R.layout.template_alert_dialog_layout)
+            .positiveButton(getString(R.string.dk_common_ok)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+        val titleTextView =
+            alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView =
+            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        titleTextView?.text = getString(R.string.app_name)
+        descriptionTextView?.text = getString(errorMessageResId)
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
     }
 }
