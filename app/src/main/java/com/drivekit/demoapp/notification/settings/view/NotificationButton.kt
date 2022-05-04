@@ -56,12 +56,12 @@ internal class NotificationButton : LinearLayout {
         )
     }
 
-    fun setNotificationTitle(title: String?) {
-        if (title != null) textViewTitle.text = title
+    fun setNotificationTitle(title: String) {
+        textViewTitle.text = title
     }
 
-    fun setNotificationDescription(description: String?) {
-        if (description != null) textViewDescription.text = description
+    fun setNotificationDescription(description: String) {
+        textViewDescription.text = description
     }
 
     fun setWarning() {
