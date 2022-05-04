@@ -79,7 +79,7 @@ class PermissionsActivity : AppCompatActivity() {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.drivekit_doc_android_permission_management))
+                Uri.parse(getString(R.string.drivekit_doc_android_permissions_management))
             )
         )
     }
