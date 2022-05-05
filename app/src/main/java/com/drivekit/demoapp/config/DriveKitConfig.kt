@@ -107,6 +107,7 @@ internal object DriveKitConfig {
             override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
         })
         DriveKitTripAnalysis.initialize(createForegroundNotification(context), TripListenerController)
+        DriveKitTripAnalysis.activateAutoStart(true)
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
