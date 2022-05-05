@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dk_margin_half">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_notifications_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_description"
+                android:layout_margin="@dimen/dk_margin"/>
+
+            <com.drivekit.demoapp.notification.settings.view.NotificationButton
+                android:id="@+id/notification_start_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:notificationButtonDescription="@string/notification_trip_in_progress_description_enabled"
+                app:notificationButtonTitle="@string/notification_trip_in_progress_title" />
+
+            <View
+                android:id="@+id/separator_first"
+                style="@style/Separator.Horizontal"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginEnd="@dimen/dk_margin" />
+
+            <com.drivequant.drivekit.common.ui.component.SwitchSettings
+                android:id="@+id/notification_trip_cancelled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/separator_second"
+                style="@style/Separator.Horizontal"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginEnd="@dimen/dk_margin" />
+
+            <com.drivequant.drivekit.common.ui.component.SwitchSettings
+                android:id="@+id/notification_trip_finished"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

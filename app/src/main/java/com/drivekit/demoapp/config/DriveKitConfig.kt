@@ -5,6 +5,7 @@ import android.content.Context
 import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.manager.DriveKitListenerManager
+import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -15,7 +16,6 @@ import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -49,7 +49,7 @@ import kotlin.random.Random
  * Created by Mohamed on 2020-05-14.
  */
 
-internal object DriveKitConfig : ContentMail {
+internal object DriveKitConfig {
 
     // TODO: ENTER YOUR API KEY HERE
     private const val apiKey = ""
@@ -60,9 +60,8 @@ internal object DriveKitConfig : ContentMail {
         configureTripAnalysis(application)
         configureDriverData()
         configureDriverAchievement()
-        configurePermissionsUtils(application)
+        configurePermissionsUtils()
         configureVehicle()
-        initFirstLaunch()
     }
 
     private fun configureCore(application: Application) {
@@ -81,7 +80,6 @@ internal object DriveKitConfig : ContentMail {
                 // TODO: manage event tracking here
             }
         })
-        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }
 
     private fun configureTripAnalysis(context: Context) {
@@ -140,19 +138,17 @@ internal object DriveKitConfig : ContentMail {
         val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
         val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
         DriverAchievementUI.configureRankingSelector(rankingSelectorType)
-
-        val rankingDepthValue = 5
-        DriverAchievementUI.configureRankingDepth(rankingDepthValue)
+        DriverAchievementUI.configureRankingDepth(rankingDepth = 5)
     }
 
-    private fun configurePermissionsUtils(context: Context) {
+    private fun configurePermissionsUtils() {
         PermissionsUtilsUI.initialize()
         PermissionsUtilsUI.configureBluetooth(true)
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
-            override fun getBccRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("support@drivequant.com")
-            override fun getSubject(): String = context.getString(R.string.app_name)
+            override fun getBccRecipients(): List<String> = listOf("")
+            override fun getMailBody() = "Mock mail body"
+            override fun getRecipients(): List<String> = listOf("")
+            override fun getSubject() = "Mock subject"
             override fun overrideMailBodyContent(): Boolean = false
         }))
     }
@@ -166,7 +162,13 @@ internal object DriveKitConfig : ContentMail {
             GroupField.CHARACTERISTICS,
             listOf(DemoPtacTrailerTruckField())
         )
-        DriveKitVehicleUI.configureBeaconDetailEmail(this)
+        DriveKitVehicleUI.configureBeaconDetailEmail(object : ContentMail {
+            override fun getRecipients() = listOf("")
+            override fun getBccRecipients() = listOf("")
+            override fun getSubject() = "Mock subject"
+            override fun getMailBody() = "Mock mail body"
+            override fun overrideMailBodyContent() = true
+        })
         DriveKitVehicleUI.enableOdometer(true)
     }
 
@@ -179,22 +181,7 @@ internal object DriveKitConfig : ContentMail {
         notification.enableCancel = true
         notification.cancel = context.getString(R.string.cancel_trip)
         notification.cancelIconId = R.drawable.ic_launcher_background
+        notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
         return notification
     }
-
-    private fun initFirstLaunch() {
-        val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
-        if (firstLaunch) {
-            DriveKitTripAnalysis.activateAutoStart(true)
-            DriveKit.enableLogging("/DriveKit")
-            DriveKitTripAnalysis.setStopTimeOut(4 * 60)
-            DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
-        }
-    }
-
-    override fun getRecipients() = listOf("recipient1@email.com")
-    override fun getBccRecipients() = listOf("bcc_test1@email.com")
-    override fun getSubject() = "Mock subject"
-    override fun getMailBody() = "Mock mail body in DriveKitDemoApplication.kt"
-    override fun overrideMailBodyContent() = true
 }

@@ -22,6 +22,8 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 internal class DashboardActivity : AppCompatActivity() {
@@ -48,6 +50,8 @@ internal class DashboardActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         title = getString(R.string.dashboard_header)
         initFeatureCard()
+
+        manageTripDetailRedirection()
     }
 
     override fun onResume() {
@@ -125,6 +129,17 @@ internal class DashboardActivity : AppCompatActivity() {
             tripSimulatorButton.text = getString(R.string.simulate_trip)
             setOnClickListener {
                 TripSimulatorActivity.launchActivity(this@DashboardActivity)
+            }
+        }
+    }
+
+    private fun manageTripDetailRedirection() {
+        intent?.let {
+            val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
+            val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
+            val tripListConfigurationType = intent.getSerializableExtra(TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA) as TripListConfigurationType? ?: TripListConfigurationType.MOTORIZED
+            if (!itinId.isNullOrBlank()) {
+                TripDetailActivity.launchActivity(this, itinId, openAdvice, tripListConfigurationType)
             }
         }
     }
