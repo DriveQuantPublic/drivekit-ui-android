@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -62,13 +63,15 @@ internal class SettingsActivity: AppCompatActivity() {
         checkViewModelInitialization()
         initUserInfoSection()
         initAutostartSection()
+        initNotificationSection()
+        initLogoutSection()
+        listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5).forEach {
+            it.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        }
     }
 
     private fun initUserInfoSection() {
         initTitle(title_account, R.string.parameters_account_title, R.drawable.ic_account)
-        listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4).forEach {
-            it.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        }
         description_account.normalText()
 
         label_user_id.headLine2()
@@ -92,6 +95,7 @@ internal class SettingsActivity: AppCompatActivity() {
         initTitle(title_autostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
         description_autostart.apply {
             text = getString(R.string.parameters_auto_start_enabled)
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
         switch_autostart.apply {
             isChecked = viewModel.isAutoStartEnabled()
@@ -99,6 +103,19 @@ internal class SettingsActivity: AppCompatActivity() {
                 viewModel.activateAutoStart(isChecked)
             }
         }
+    }
+
+    private fun initNotificationSection() {
+        initTitle(title_notifications, R.string.parameters_notification_title, R.drawable.ic_notifications)
+        description_notifications.normalText(DriveKitUI.colors.complementaryFontColor())
+        button_notifications.headLine2(DriveKitUI.colors.secondaryColor())
+        button_notifications.setOnClickListener {
+            NotificationSettingsActivity.launchActivity(this)
+        }
+    }
+
+    private fun initLogoutSection() {
+
     }
 
     private fun initTitle(view: TextView, titleResId: Int, iconResId: Int) {
