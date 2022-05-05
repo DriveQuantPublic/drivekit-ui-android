@@ -14,7 +14,7 @@ internal object DKNotificationManager {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && manager != null) {
             DKNotificationChannel.values().forEach { channel ->
-                if (channel.isEnabled(context)) {
+                if (channel.create() && channel.isEnabled(context)) {
                     createChannel(context, channel)
                 }
             }

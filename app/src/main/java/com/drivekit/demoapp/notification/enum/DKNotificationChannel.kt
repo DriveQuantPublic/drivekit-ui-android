@@ -9,6 +9,11 @@ internal enum class DKNotificationChannel {
     TRIP_CANCELLED,
     TRIP_ENDED;
 
+    fun create() = when (this) {
+        TRIP_STARTED -> false
+        else -> true
+    }
+
     fun isEnabled(context: Context): Boolean {
         return getSharedPreferencesKey()?.let {
             PreferenceManager.getDefaultSharedPreferences(context).getBoolean(it, true)
