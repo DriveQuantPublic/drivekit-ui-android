@@ -4,24 +4,20 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
-import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
@@ -64,6 +60,11 @@ internal class SettingsActivity: AppCompatActivity() {
 
     private fun initConfiguration() {
         checkViewModelInitialization()
+        initUserInfoSection()
+        initAutostartSection()
+    }
+
+    private fun initUserInfoSection() {
         initTitle(title_account, R.string.parameters_account_title, R.drawable.ic_account)
         listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
@@ -85,6 +86,19 @@ internal class SettingsActivity: AppCompatActivity() {
                 initUserInfoData(UserInfoType.PSEUDO, text_pseudo, userInfo?.pseudo)
             }
         })
+    }
+
+    private fun initAutostartSection() {
+        initTitle(title_autostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
+        description_autostart.apply {
+            text = getString(R.string.parameters_auto_start_enabled)
+        }
+        switch_autostart.apply {
+            isChecked = viewModel.isAutoStartEnabled()
+            setOnClickListener {
+                viewModel.activateAutoStart(isChecked)
+            }
+        }
     }
 
     private fun initTitle(view: TextView, titleResId: Int, iconResId: Int) {

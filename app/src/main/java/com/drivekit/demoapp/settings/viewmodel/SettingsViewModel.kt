@@ -6,6 +6,8 @@ import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 
 internal class SettingsViewModel: ViewModel() {
 
@@ -16,4 +18,8 @@ internal class SettingsViewModel: ViewModel() {
             listener.onResponse(status, userInfo)
         }
     }, SynchronizationType.CACHE)
+
+    fun isAutoStartEnabled() = TripAnalysisConfig.autostart
+
+    fun activateAutoStart(activate: Boolean) = DriveKitTripAnalysis.activateAutoStart(activate)
 }
