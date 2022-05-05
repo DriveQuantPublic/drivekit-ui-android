@@ -66,7 +66,9 @@ internal object DriveKitConfig {
 
     private fun configureCore(application: Application) {
         DriveKit.initialize(application, DriveKitListenerManager)
-        DriveKit.setApiKey(apiKey)
+        if (apiKey.isNotBlank()) {
+            DriveKit.setApiKey(apiKey)
+        }
     }
 
     private fun configureCommonUI() {
