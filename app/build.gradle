@@ -28,6 +28,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "com.github.PhilJay:MPAndroidChart:$mp_chart"
 
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"

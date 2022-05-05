@@ -1,6 +1,8 @@
 package com.drivekit.demoapp.drivekit
 
 import com.drivequant.drivekit.tripanalysis.TripListener
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
@@ -95,6 +97,12 @@ internal object TripListenerController : TripListener {
     override fun tripStarted(startMode: StartMode) {
         tripListeners.forEach {
             it.get()?.tripStarted(startMode)
+        }
+    }
+
+    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
+        tripListeners.forEach {
+            it.get()?.tripFinished(post, response)
         }
     }
 

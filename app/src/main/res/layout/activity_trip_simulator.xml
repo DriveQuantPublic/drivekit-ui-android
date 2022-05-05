@@ -80,20 +80,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_container" />
 
-    <TextView
+
+    <include
         android:id="@+id/button_simulate_trip"
+        layout="@layout/layout_button_action"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/dk_margin_double"
-        tools:background="@color/colorAccent"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:text="@string/trip_simulator_start_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

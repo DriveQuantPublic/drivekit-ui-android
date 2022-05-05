@@ -3,7 +3,7 @@ package com.drivekit.demoapp.notification.settings.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
-import com.drivekit.demoapp.notification.controller.NotificationManager
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.drivekitdemoapp.R
 
@@ -24,9 +24,9 @@ internal class NotificationSettingsViewModel : ViewModel() {
     fun manageChannel(context: Context, enable: Boolean, channel: DKNotificationChannel) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(channel.getSharedPreferencesKey(), enable).apply()
         if (enable) {
-            NotificationManager.createChannel(context, channel)
+            DKNotificationManager.createChannel(context, channel)
         } else {
-            NotificationManager.deleteChannel(context, channel)
+            DKNotificationManager.deleteChannel(context, channel)
         }
     }
 }
