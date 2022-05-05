@@ -2,18 +2,23 @@ package com.drivekit.demoapp.settings.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.InputType
+import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
+import com.drivekit.demoapp.settings.enum.UserInfoType
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
 import com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity
 import com.drivekit.drivekitdemoapp.R
@@ -25,6 +30,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_settings.*
 
 internal class SettingsActivity: AppCompatActivity() {
@@ -70,6 +76,15 @@ internal class SettingsActivity: AppCompatActivity() {
         initLogoutSection()
         listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        }
+        viewModel.updateUserInfoLiveData.observe(this) {
+            initUserInfoSection()
+        }
+        viewModel.logoutLiveData.observe(this) {
+            val intent = Intent(this, SplashScreenActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 
@@ -154,6 +169,46 @@ internal class SettingsActivity: AppCompatActivity() {
                 normalText(DriveKitUI.colors.secondaryColor())
                 data
             }
+            setOnClickListener {
+                manageEditUserInfo(type, data)
+            }
+        }
+    }
+
+    private fun manageEditUserInfo(type: UserInfoType, data: String?) {
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.dk_alert_dialog_edit_value, null)
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setView(view)
+        val alertDialog = builder.create()
+        val titleTextView = view.findViewById<TextView>(R.id.text_view_title)
+        val editText = view.findViewById<TextInputEditText>(R.id.edit_text_field)
+        titleTextView.apply {
+            text = when (type) {
+                UserInfoType.FIRST_NAME -> R.string.parameters_enter_firstname
+                UserInfoType.LAST_NAME -> R.string.parameters_enter_lastname
+                UserInfoType.PSEUDO -> R.string.parameters_enter_pseudo
+            }.let {
+                getString(it)
+            }
+            normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            setBackgroundColor(DriveKitUI.colors.primaryColor())
+        }
+        editText.apply {
+            inputType = InputType.TYPE_CLASS_TEXT
+            setText(data)
+            requestFocus()
+        }
+        alertDialog.apply {
+            setCancelable(true)
+            setButton(
+                DialogInterface.BUTTON_POSITIVE,
+                getString(R.string.dk_common_validate)) { dialog, _ ->
+                    viewModel.updateUserInfo(type, editText.text.toString())
+                dialog.dismiss()
+            }
+            setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
+            show()
         }
     }
 
@@ -177,21 +232,10 @@ internal class SettingsActivity: AppCompatActivity() {
 
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
-
-        viewModel.logoutLiveData.observe(this@SettingsActivity) {
-            val intent = Intent(this@SettingsActivity, SplashScreenActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    enum class UserInfoType {
-        FIRST_NAME, LAST_NAME, PSEUDO
     }
 }
