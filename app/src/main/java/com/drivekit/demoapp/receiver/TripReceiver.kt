@@ -46,7 +46,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             }
             manageTrip(context, response, errorCode)
         } else {
-            lateinit var notificationType: NotificationType
+            var notificationType: NotificationType? = null
             for (comment in response.comments) {
                 if (comment.errorCode == 21) {
                     notificationType =
@@ -70,7 +70,9 @@ internal class TripReceiver : TripAnalysedReceiver() {
                 null,
                 response.itinId
             )
-            DKNotificationManager.sendNotification(context, notificationType, contentIntent)
+            notificationType?.let {
+                DKNotificationManager.sendNotification(context, it, contentIntent)
+            }
         }
     }
 
