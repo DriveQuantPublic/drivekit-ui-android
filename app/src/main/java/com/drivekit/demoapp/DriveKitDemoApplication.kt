@@ -32,7 +32,6 @@ class DriveKitDemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         DKNotificationManager.createChannels(this)
         DriveKitConfig.configure(this)
         registerReceiver()

@@ -7,16 +7,16 @@ import android.content.Intent
 import android.text.TextUtils
 import com.drivekit.demoapp.DriveKitDemoApplication.Companion.showNotification
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.notification.controller.DKNotificationManager
+import com.drivekit.demoapp.notification.controller.NotificationManager
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivekit.demoapp.notification.enum.TripCancellationReason
 import com.drivekit.demoapp.utils.getImmutableFlag
+import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
-import com.drivequant.drivekit.databaseutils.entity.TransportationMode.Companion.getEnum
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
@@ -66,11 +66,11 @@ internal class TripReceiver : TripAnalysedReceiver() {
             }
             val contentIntent = buildContentIntent(
                 context,
-                getEnum(response.itineraryStatistics!!.transportationMode),
+                null,
                 null,
                 response.itinId
             )
-            DKNotificationManager.sendNotification(context, notificationType, contentIntent)
+            NotificationManager.sendNotification(context, notificationType, contentIntent)
         }
     }
 
@@ -92,7 +92,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             CancelTrip.RESET,
             CancelTrip.BEACON_NO_SPEED -> null
         }?.let {
-            DKNotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
+            NotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
         }
     }
 
@@ -101,8 +101,8 @@ internal class TripReceiver : TripAnalysedReceiver() {
         dkTrip?.let {
             val contentIntent = buildContentIntent(context, dkTrip.transportationMode, dkTrip.tripAdvices, dkTrip.itinId)
             if (errorCode == 0) {
-                if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isManaged()) {
-                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
+                if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isAlternativeNotificationManaged()) {
+                    NotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
                 } else {
                     val additionalBody = when (DriverDataUI.tripData) {
                         TripData.SAFETY -> "${context.getString(R.string.notif_trip_finished_safety)} : ${dkTrip.safety!!.safetyScore.removeZeroDecimal()}/10"
@@ -112,17 +112,17 @@ internal class TripReceiver : TripAnalysedReceiver() {
                         TripData.DURATION -> null
                         TripData.DISTANCE -> null
                     }
-                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
+                    NotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
                 }
             } else {
-                DKNotificationManager.sendNotification(context, NotificationType.TRIP_TOO_SHORT, contentIntent)
+                NotificationManager.sendNotification(context, NotificationType.TRIP_TOO_SHORT, contentIntent)
             }
         }
     }
 
     private fun buildContentIntent(
         context: Context,
-        transportationMode: TransportationMode,
+        transportationMode: TransportationMode?,
         tripAdvices: List<TripAdvice>?,
         itinId: String
     ): PendingIntent? {
@@ -131,7 +131,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             val hasTripAdvices = !CollectionUtils.isEmpty(tripAdvices)
             intent.putExtra(TripDetailActivity.ITINID_EXTRA, itinId)
             intent.putExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, hasTripAdvices)
-            if (transportationMode.isAlternative()) {
+            if (transportationMode != null && transportationMode.isAlternative()) {
                 if (DriverDataUI.enableAlternativeTrips) {
                     intent.putExtra(
                         TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA,
@@ -149,18 +149,6 @@ internal class TripReceiver : TripAnalysedReceiver() {
             .addNextIntentWithParentStack(intent)
             .getPendingIntent(Random().nextInt(Int.MAX_VALUE), getImmutableFlag())
     }
-}
-
-fun TransportationMode.isManaged() = when (this) {
-    TransportationMode.TRAIN, TransportationMode.BOAT, TransportationMode.BIKE, TransportationMode.SKIING, TransportationMode.IDLE -> true
-    TransportationMode.UNKNOWN,
-    TransportationMode.CAR,
-    TransportationMode.MOTO,
-    TransportationMode.TRUCK,
-    TransportationMode.BUS,
-    TransportationMode.FLIGHT,
-    TransportationMode.ON_FOOT,
-    TransportationMode.OTHER -> false
 }
 
 fun PostGenericResponse.isTripValid() =

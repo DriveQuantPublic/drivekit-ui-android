@@ -5,6 +5,7 @@ import android.content.Context
 import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.manager.DriveKitListenerManager
+import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.vehicle.DemoCustomField
 import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
@@ -177,6 +178,7 @@ internal object DriveKitConfig {
         notification.enableCancel = true
         notification.cancel = context.getString(R.string.cancel_trip)
         notification.cancelIconId = R.drawable.ic_launcher_background
+        notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
         return notification
     }
 }

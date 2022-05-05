@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.drivekit.drivekitdemoapp.R
 
-internal enum class NotificationChannel {
+internal enum class DKNotificationChannel {
     TRIP_STARTED,
     TRIP_CANCELLED,
     TRIP_ENDED;
@@ -15,6 +15,12 @@ internal enum class NotificationChannel {
         } ?: run {
             true
         }
+    }
+
+    fun getSharedPreferencesKey() = when (this) {
+        TRIP_STARTED -> null // This channel is already managed in TripAnalysis
+        TRIP_CANCELLED -> "drivekit_channel_trip_cancelled_pref"
+        TRIP_ENDED -> "drivekit_channel_trip_ended_pref"
     }
 
     fun getChannelId() = when (this) {
@@ -39,11 +45,5 @@ internal enum class NotificationChannel {
         TRIP_STARTED -> R.string.notification_trip_in_progress_description_enabled
         TRIP_CANCELLED -> R.string.notification_trip_cancelled_description
         TRIP_ENDED -> R.string.notification_trip_finished_description
-    }
-
-    private fun getSharedPreferencesKey() = when (this) {
-        TRIP_STARTED -> null
-        TRIP_CANCELLED -> "dk_trip_cancelled_pref"
-        TRIP_ENDED -> "dk_trip_ended_pref"
     }
 }
