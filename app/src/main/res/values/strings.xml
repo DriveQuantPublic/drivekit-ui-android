@@ -199,4 +199,5 @@
     <string name="parameters_enter_firstname">Entrez votre prénom</string>
     <string name="parameters_enter_lastname">Entrez votre nom</string>
     <string name="parameters_enter_pseudo">Entrez votre pseudo</string>
+    <string name="logout_confirmation">Etes-vous sûr de vouloir vous déconnecter ?</string>
 </resources>

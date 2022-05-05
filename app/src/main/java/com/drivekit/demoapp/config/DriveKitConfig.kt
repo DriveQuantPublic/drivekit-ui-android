@@ -40,7 +40,6 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import kotlin.random.Random
 
 /**

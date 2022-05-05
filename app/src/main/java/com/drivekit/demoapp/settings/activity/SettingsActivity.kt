@@ -2,6 +2,7 @@ package com.drivekit.demoapp.settings.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -14,11 +15,13 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
+import com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
@@ -115,7 +118,12 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun initLogoutSection() {
-
+        button_delete_account.apply {
+            normalText(DriveKitUI.colors.criticalColor())
+            setOnClickListener {
+                manageLogoutClick()
+            }
+        }
     }
 
     private fun initTitle(view: TextView, titleResId: Int, iconResId: Int) {
@@ -146,6 +154,35 @@ internal class SettingsActivity: AppCompatActivity() {
                 normalText(DriveKitUI.colors.secondaryColor())
                 data
             }
+        }
+    }
+
+    private fun manageLogoutClick() {
+        val alertDialog = DKAlertDialog.LayoutBuilder()
+            .init(this)
+            .layout(R.layout.template_alert_dialog_layout)
+            .positiveButton(getString(R.string.dk_common_confirm), positiveListener = object : DialogInterface.OnClickListener{
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    viewModel.reset(this@SettingsActivity)
+                }
+            })
+            .negativeButton(getString(R.string.dk_common_cancel))
+            .show()
+
+        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+
+        titleTextView?.text = getString(R.string.app_name)
+        descriptionTextView?.text = getString(R.string.logout_confirmation)
+
+        titleTextView?.headLine1()
+        descriptionTextView?.normalText()
+
+        viewModel.logoutLiveData.observe(this@SettingsActivity) {
+            val intent = Intent(this@SettingsActivity, SplashScreenActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 
