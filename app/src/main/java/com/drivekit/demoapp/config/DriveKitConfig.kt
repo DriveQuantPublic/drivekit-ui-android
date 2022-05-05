@@ -6,8 +6,6 @@ import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
-import com.drivekit.demoapp.vehicle.DemoCustomField
-import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
@@ -160,11 +158,6 @@ internal object DriveKitConfig {
         DriveKitVehicleUI.initialize()
         DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.CAR, VehicleType.TRUCK))
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
-        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.addCustomFieldsToGroup(
-            GroupField.CHARACTERISTICS,
-            listOf(DemoPtacTrailerTruckField())
-        )
         DriveKitVehicleUI.configureBeaconDetailEmail(object : ContentMail {
             override fun getRecipients() = listOf("")
             override fun getBccRecipients() = listOf("")

@@ -15,6 +15,7 @@ import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
+import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -158,7 +159,7 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                //TODO create settings activity
+                SettingsActivity.launchActivity(this)
                 true
             }
             else -> {
