@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
 import com.drivekit.demoapp.settings.enum.UserInfoType
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
-import com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -81,10 +80,7 @@ internal class SettingsActivity: AppCompatActivity() {
             initUserInfoSection()
         }
         viewModel.logoutLiveData.observe(this) {
-            val intent = Intent(this, SplashScreenActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
+            restartApplication()
         }
     }
 
@@ -240,6 +236,15 @@ internal class SettingsActivity: AppCompatActivity() {
 
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
+    }
+
+    private fun restartApplication() {
+        val intent = packageManager.getLaunchIntentForPackage(packageName)
+        if (intent != null) {
+            val mainIntent = Intent.makeRestartActivityTask(intent.component)
+            startActivity(mainIntent)
+            Runtime.getRuntime().exit(0)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
