@@ -18,6 +18,7 @@ import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
+import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
 internal object DKNotificationManager : TripListener {
 
@@ -89,6 +90,8 @@ internal object DKNotificationManager : TripListener {
         feedbackType: CrashFeedbackType,
         severity: CrashFeedbackSeverity
     ) {}
+
+    override fun sdkStateChanged(state: State) {}
 
     override fun potentialTripStart(startMode: StartMode) {}
 
