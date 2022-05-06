@@ -119,7 +119,7 @@
     <string name="parameters_auto_start_disabled">The automatic mode is in idle mode. Enable this function if you want the application to automatically detect and analyze your trips.</string>
     <string name="parameters_auto_start_enabled">The automatic mode is activated. In this configuration, the application analyzes your trips without any manual action even if it is in the background.</string>
     <string name="parameters_auto_start_title">Auto Start</string>
-    <string name="parameters_enter_firstname">Enter yout first name</string>
+    <string name="parameters_enter_firstname">Enter your first name</string>
     <string name="parameters_enter_lastname">Enter your last name</string>
     <string name="parameters_enter_pseudo">Enter your pseudo</string>
     <string name="parameters_header">Parameters</string>

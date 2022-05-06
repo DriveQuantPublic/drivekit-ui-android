@@ -5,10 +5,25 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
+import com.drivekit.demoapp.notification.enum.TripAnalysisError
+import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.tripanalysis.TripListener
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
+import com.drivequant.drivekit.tripanalysis.entity.TripPoint
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 
-internal object DKNotificationManager {
+internal object DKNotificationManager : TripListener {
+
+    fun configure() {
+        TripListenerController.addTripListener(this)
+    }
 
     fun createChannels(context: Context) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
@@ -63,4 +78,27 @@ internal object DKNotificationManager {
             }
         }
     }
+
+    override fun beaconDetected() {
+    }
+
+    override fun crashDetected(crashInfo: DKCrashInfo) {}
+
+    override fun crashFeedbackSent(
+        crashInfo: DKCrashInfo,
+        feedbackType: CrashFeedbackType,
+        severity: CrashFeedbackSeverity
+    ) {}
+
+    override fun potentialTripStart(startMode: StartMode) {}
+
+    override fun tripPoint(tripPoint: TripPoint) {}
+
+    override fun tripFinished(postGeneric: PostGeneric, response: PostGenericResponse) {}
+
+    override fun tripSavedForRepost() {
+        sendNotification(DriveKit.applicationContext!!, NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_NETWORK))
+    }
+
+    override fun tripStarted(startMode: StartMode) {}
 }

@@ -11,8 +11,6 @@ import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UpdateUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
-import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
-import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 
 internal class SettingsViewModel: ViewModel() {
 
