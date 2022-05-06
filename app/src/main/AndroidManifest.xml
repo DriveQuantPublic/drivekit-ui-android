@@ -10,8 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
         <activity
             android:name="com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity"
             android:theme="@style/SplashTheme"
@@ -21,10 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
         <activity
             android:name="com.drivekit.demoapp.onboarding.activity.ApiKeyActivity"
             android:exported="false"
@@ -59,6 +57,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.drivekit.demoapp.simulator.activity.TripSimulatorDetailActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.drivekit.demoapp.settings.activity.SettingsActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

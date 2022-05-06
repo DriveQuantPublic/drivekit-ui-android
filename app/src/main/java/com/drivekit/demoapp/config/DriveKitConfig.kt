@@ -2,13 +2,14 @@ package com.drivekit.demoapp.config
 
 import android.app.Application
 import android.content.Context
+import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.DriveKitDemoApplication
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.manager.DriveKitListenerManager
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
-import com.drivekit.demoapp.vehicle.DemoCustomField
-import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
@@ -17,6 +18,7 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.databaseutils.entity.*
+import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
@@ -39,10 +41,10 @@ import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.Cras
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import kotlin.random.Random
 
 /**
@@ -50,9 +52,12 @@ import kotlin.random.Random
  */
 
 internal object DriveKitConfig {
-
-    // TODO: ENTER YOUR API KEY HERE
+    // ===============================
+    // ↓↓↓ ENTER YOUR API KEY HERE ↓↓↓
+    // ===============================
     private const val apiKey = ""
+
+    private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
 
     fun configure(application: Application) {
         configureCore(application)
@@ -62,6 +67,15 @@ internal object DriveKitConfig {
         configureDriverAchievement()
         configurePermissionsUtils()
         configureVehicle()
+    }
+
+    fun isTripAnalysisAutoStartedEnabled(context: Context) =
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, true)
+
+    fun enableTripAnalysisAutoStart(context: Context, activate: Boolean) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
+        DriveKitTripAnalysis.activateAutoStart(activate)
     }
 
     private fun configureCore(application: Application) {
@@ -107,7 +121,7 @@ internal object DriveKitConfig {
             override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
         })
         DriveKitTripAnalysis.initialize(createForegroundNotification(context), TripListenerController)
-        DriveKitTripAnalysis.activateAutoStart(true)
+        DriveKitTripAnalysis.activateAutoStart(isTripAnalysisAutoStartedEnabled(context))
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
         DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
@@ -160,11 +174,6 @@ internal object DriveKitConfig {
         DriveKitVehicleUI.initialize()
         DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.CAR, VehicleType.TRUCK))
         DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
-        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.addCustomFieldsToGroup(
-            GroupField.CHARACTERISTICS,
-            listOf(DemoPtacTrailerTruckField())
-        )
         DriveKitVehicleUI.configureBeaconDetailEmail(object : ContentMail {
             override fun getRecipients() = listOf("")
             override fun getBccRecipients() = listOf("")
@@ -186,5 +195,22 @@ internal object DriveKitConfig {
         notification.cancelIconId = R.drawable.ic_launcher_background
         notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
         return notification
+    }
+
+    fun reset(context: Context) {
+        // RESET DRIVEKIT
+        DriveKit.reset()
+        DriveKitTripAnalysis.reset()
+        DriveKitDriverData.reset()
+        DriveKitVehicle.reset()
+        DriveKitDriverAchievement.reset()
+        DriveKitChallenge.reset()
+
+        // DELETE NOTIFICATION CHANNELS
+        DKNotificationManager.deleteChannels(context)
+
+        // CLEAR SHARED PREFERENCES OF THE DEMO APP
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences.edit().clear().apply()
     }
 }
