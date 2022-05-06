@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.drivekitdemoapp.R
@@ -14,7 +15,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
-import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import kotlinx.android.synthetic.main.activity_permissions.*
 
 class PermissionsActivity : AppCompatActivity() {
@@ -53,11 +53,9 @@ class PermissionsActivity : AppCompatActivity() {
         button_request_permissions.apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                val permissions: ArrayList<PermissionView> = ArrayList()
-                permissions.addAll(PermissionView.values())
                 PermissionsUtilsUI.showPermissionViews(
                     this@PermissionsActivity,
-                    permissions,
+                    DriveKitConfig.getPermissionsViews(),
                     object : PermissionViewListener {
                         override fun onFinish() {
                             viewModel.shouldDisplayVehicle()

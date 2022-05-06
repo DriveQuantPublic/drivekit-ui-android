@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.demoapp.component.FeatureCard
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -18,11 +19,9 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
-import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import kotlin.collections.ArrayList
 
 internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val cardView = itemView.findViewById<FeatureCard>(R.id.feature_card)
@@ -66,7 +65,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             }
             FeatureType.PERMISSIONSUTILS_ONBOARDING -> {
                 if (showPermissionUtilsOnboarding()) {
-                    PermissionsUtilsUI.showPermissionViews(context, ArrayList(PermissionView.values().toMutableList()), object : PermissionViewListener {
+                    PermissionsUtilsUI.showPermissionViews(context, DriveKitConfig.getPermissionsViews(), object : PermissionViewListener {
                         override fun onFinish() {
                             // do nothing
                         }

@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
 
 internal class NotificationButton : LinearLayout {
 
@@ -61,7 +62,10 @@ internal class NotificationButton : LinearLayout {
     }
 
     fun setNotificationDescription(description: String) {
-        textViewDescription.text = description
+        textViewDescription.apply {
+            text = description
+            normalText()
+        }
     }
 
     fun setWarning() {
