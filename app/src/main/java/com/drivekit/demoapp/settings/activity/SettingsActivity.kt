@@ -13,6 +13,7 @@ import android.text.InputType
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -76,8 +77,12 @@ internal class SettingsActivity: AppCompatActivity() {
         listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
         }
-        viewModel.updateUserInfoLiveData.observe(this) {
-            initUserInfoSection()
+        viewModel.updateUserInfoLiveData.observe(this) { success ->
+            if (success) {
+                initUserInfoSection()
+            } else {
+                Toast.makeText(this, getString(R.string.client_error), Toast.LENGTH_SHORT).show()
+            }
         }
         viewModel.logoutLiveData.observe(this) {
             restartApplication()
