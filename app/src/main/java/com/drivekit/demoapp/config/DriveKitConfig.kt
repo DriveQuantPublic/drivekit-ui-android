@@ -198,8 +198,12 @@ internal object DriveKitConfig {
     }
 
     private fun isBluetoothNeeded(): Boolean {
-        val vehicles = DriveKitVehicle.vehiclesQuery().noFilter().query().execute()
-        return vehicles.map { it.detectionMode == DetectionMode.BEACON || it.detectionMode == DetectionMode.BLUETOOTH }.count() > 0
+        DriveKitVehicle.vehiclesQuery().noFilter().query().execute().forEach {
+            if (it.detectionMode == DetectionMode.BEACON || it.detectionMode == DetectionMode.BLUETOOTH) {
+                return true
+            }
+        }
+        return false
     }
 
     fun reset(context: Context) {
