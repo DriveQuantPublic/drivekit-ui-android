@@ -107,11 +107,11 @@ internal class SettingsActivity: AppCompatActivity() {
 
     private fun initAutostartSection() {
         initTitle(title_autostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
-        manageAutoStartDescription(viewModel.isAutoStartEnabled())
+        manageAutoStartDescription(viewModel.isAutoStartEnabled(this))
         switch_autostart.apply {
-            isChecked = viewModel.isAutoStartEnabled()
+            isChecked = viewModel.isAutoStartEnabled(this@SettingsActivity)
             setOnClickListener {
-                viewModel.activateAutoStart(isChecked)
+                viewModel.activateAutoStart(this@SettingsActivity, isChecked)
                 manageAutoStartDescription(isChecked)
             }
         }
