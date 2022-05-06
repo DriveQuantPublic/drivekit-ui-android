@@ -111,14 +111,24 @@ internal class SettingsActivity: AppCompatActivity() {
 
     private fun initAutostartSection() {
         initTitle(title_autostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
-        description_autostart.apply {
-            text = getString(R.string.parameters_auto_start_enabled)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
+        manageAutoStartDescription(viewModel.isAutoStartEnabled())
         switch_autostart.apply {
             isChecked = viewModel.isAutoStartEnabled()
             setOnClickListener {
                 viewModel.activateAutoStart(isChecked)
+                manageAutoStartDescription(isChecked)
+            }
+        }
+    }
+
+    private fun manageAutoStartDescription(isEnabled: Boolean) {
+        description_autostart.apply {
+            if (isEnabled) {
+                text = getString(R.string.parameters_auto_start_enabled)
+                normalText(DriveKitUI.colors.complementaryFontColor())
+            } else {
+                text = getString(R.string.parameters_auto_start_disabled)
+                normalText(DriveKitUI.colors.warningColor())
             }
         }
     }
