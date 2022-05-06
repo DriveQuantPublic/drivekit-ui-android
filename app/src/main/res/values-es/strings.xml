@@ -46,9 +46,6 @@
    <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-picker-in-navigation-controller</string>
    <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
    <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
-   <string name="empty_firstname_error">Introduzca su apellido</string>
-   <string name="empty_lastname_error">Introduzca su nombre</string>
-   <string name="empty_pseudo_error">Escriba un nick</string>
    <string name="feature_badges_description">El componente Driver Achievements contiene una función para premiar los logros del conductor con insignias. Las insignias se conceden en función de las puntuaciones de conducción.</string>
    <string name="feature_badges_title">Driver Achievement | Insignias</string>
    <string name="feature_challenges_description">El reto de conducción es un evento único en el que los conductores compiten para conseguir la mejor puntuación de conducción. El componente Challenge ofrece varios temas: conducción ecológica, seguridad, distracción y límite de velocidad.</string>
@@ -75,6 +72,7 @@
    <string name="firstname">Primer nombre</string>
    <string name="forbidden_error">No tiene los derechos necesarios</string>
    <string name="lastname">Apellido</string>
+   <string name="logout_confirmation">¿Estás seguro de que quieres desconectarte?</string>
    <string name="network_ko_error">Los datos móviles no están activados</string>
    <string name="notif_trip_analysis_continue">Continuar el análisis</string>
    <string name="notif_trip_analysis_not_driving">Yo no manejo</string>
@@ -121,6 +119,9 @@
    <string name="parameters_auto_start_disabled">El modo automático está en espera. Active esta función si desea que la aplicación detecte y analice automáticamente sus rutas.</string>
    <string name="parameters_auto_start_enabled">El modo automático está activado. En esta configuración, la aplicación analiza sus rutas sin intervención manual, incluso si está en segundo plano.</string>
    <string name="parameters_auto_start_title">Inicio automático</string>
+   <string name="parameters_enter_firstname">Introduzca su nombre de pila</string>
+   <string name="parameters_enter_lastname">Introduzca su apellido</string>
+   <string name="parameters_enter_pseudo">Introduzca su seudónimo</string>
    <string name="parameters_header">Parámetros</string>
    <string name="parameters_notification_description">Descubra cómo configurar las notificaciones que envía el SDK de DriveKit durante y después del análisis de un viaje.</string>
    <string name="parameters_notification_title">Gestión de las notificaciones</string>
@@ -173,7 +174,8 @@
    <string name="trip_simulator_short_trip_title">Viaje corto (menos de 2 km)</string>
    <string name="trip_simulator_start_button">INICIAR LA SIMULACIÓN</string>
    <string name="trip_simulator_stop_button">DETENER LA SIMULACIÓN</string>
-   <string name="trip_simulator_stop_simulation_content">¿Detener la simulación? \n\nEsto detendrá el viaje actual.</string>
+   <string name="trip_simulator_stop_simulation_alert_content">Esto detendrá el viaje actual.</string>
+   <string name="trip_simulator_stop_simulation_alert_title">¿Detener la simulación?</string>
    <string name="trip_simulator_suburban_description">Este ejemplo simula un trayecto principalmente extraurbano de 30 minutos. La velocidad media es de 62 km/h.</string>
    <string name="trip_simulator_suburban_title">Vía extraurbana (30 km)</string>
    <string name="trip_simulator_train_description">Esta vía corresponde a un viaje en tren. Puede utilizarse para probar la detección de modos de transporte alternativos.</string>

@@ -46,9 +46,6 @@
     <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-picker-in-navigation-controller</string>
     <string name="drivekit_doc_ios_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-list-in-navigation-controller</string>
     <string name="drivekit_doc_ios_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/ios/get-started#working-hours</string>
-    <string name="empty_firstname_error">Please fill your last name</string>
-    <string name="empty_lastname_error">Please fill your first name</string>
-    <string name="empty_pseudo_error">Please write a nickname</string>
     <string name="feature_badges_description">The Driver Achievement component contains a function to reward driver achievements with badges. Badges are awarded according to driving scores.</string>
     <string name="feature_badges_title">Driver Achievement | Badges</string>
     <string name="feature_challenges_description">The driving challenge is a one-time event during which drivers compete to get the best driving score. The Challenge component includes several themes: eco-driving, safety, distraction and speed limit.</string>
@@ -75,6 +72,7 @@
     <string name="firstname">First name</string>
     <string name="forbidden_error">You do not have the required rights</string>
     <string name="lastname">Last name</string>
+    <string name="logout_confirmation">Are you sure you want to logout?</string>
     <string name="network_ko_error">Mobile data is not enabled</string>
     <string name="notif_trip_analysis_continue">Continue analysis</string>
     <string name="notif_trip_analysis_not_driving">I do not drive</string>
@@ -121,6 +119,9 @@
     <string name="parameters_auto_start_disabled">The automatic mode is in idle mode. Enable this function if you want the application to automatically detect and analyze your trips.</string>
     <string name="parameters_auto_start_enabled">The automatic mode is activated. In this configuration, the application analyzes your trips without any manual action even if it is in the background.</string>
     <string name="parameters_auto_start_title">Auto Start</string>
+    <string name="parameters_enter_firstname">Enter yout first name</string>
+    <string name="parameters_enter_lastname">Enter your last name</string>
+    <string name="parameters_enter_pseudo">Enter your pseudo</string>
     <string name="parameters_header">Parameters</string>
     <string name="parameters_notification_description">Find out how to configure the notifications sent by the DriveKit SDK during and after the analysis of a trip.</string>
     <string name="parameters_notification_title">Notification management</string>
@@ -173,7 +174,8 @@
     <string name="trip_simulator_short_trip_title">Short trip (less than 2 km)</string>
     <string name="trip_simulator_start_button">START THE SIMULATION</string>
     <string name="trip_simulator_stop_button">STOP THE SIMULATION</string>
-    <string name="trip_simulator_stop_simulation_content">Stop the simulation?\n\nThis will stop the current trip.</string>
+    <string name="trip_simulator_stop_simulation_alert_content">This will stop the current trip.</string>
+    <string name="trip_simulator_stop_simulation_alert_title">Stop the simulation?</string>
     <string name="trip_simulator_suburban_description">This example simulates a suburban trip lasting 30 minutes. The average speed is 62 km/h.</string>
     <string name="trip_simulator_suburban_title">Suburban trip (30 km)</string>
     <string name="trip_simulator_train_description">This trip corresponds to a train commute and can be used to test the alternative transportation modes detection.</string>
@@ -195,9 +197,4 @@
     <string name="welcome_ok_button">NEXT STEP</string>
     <string name="welcome_ok_description">Congratulations, you have built the DriveKit demo application 🎉\n\nThis application shows you how the DriveKit components work and guides you to install them in your application.\n\nYour API key is:\n\n%s\n\nUnder no circumstances it shouldn\'t be shared or used in multiple applications.</string>
     <string name="welcome_ok_title">Welcome to the DriveKit demo application</string>
-
-    <string name="parameters_enter_firstname">Entrez votre prénom</string>
-    <string name="parameters_enter_lastname">Entrez votre nom</string>
-    <string name="parameters_enter_pseudo">Entrez votre pseudo</string>
-    <string name="logout_confirmation">Etes-vous sûr de vouloir vous déconnecter ?</string>
 </resources>
