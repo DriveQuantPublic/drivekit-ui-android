@@ -12,13 +12,12 @@
     <ScrollView
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/dk_margin_half">
+        android:layout_height="0dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin_half"
             android:layout_marginHorizontal="@dimen/dk_margin"
+            android:paddingVertical="@dimen/dk_margin"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title_account"
@@ -167,7 +166,6 @@
                 android:textAlignment="viewStart"
                 android:text="@string/see_settings"
                 android:textAllCaps="true" />
-
         </LinearLayout>
     </ScrollView>
 
@@ -176,6 +174,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="@dimen/dk_margin"
         android:layout_marginBottom="@dimen/dk_margin"
         android:text="@string/button_logout" />
 </LinearLayout>

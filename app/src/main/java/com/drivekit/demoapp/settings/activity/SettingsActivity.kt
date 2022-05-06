@@ -226,11 +226,9 @@ internal class SettingsActivity: AppCompatActivity() {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(this)
             .layout(R.layout.template_alert_dialog_layout)
-            .positiveButton(getString(R.string.dk_common_confirm), positiveListener = object : DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    viewModel.reset(this@SettingsActivity)
-                }
-            })
+            .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+                viewModel.reset(this@SettingsActivity)
+            }
             .negativeButton(getString(R.string.dk_common_cancel))
             .show()
 
