@@ -17,7 +17,7 @@ internal class SettingsViewModel: ViewModel() {
     var logoutLiveData = MutableLiveData<Any>()
         private set
 
-    var updateUserInfoLiveData = MutableLiveData<Any>()
+    var updateUserInfoLiveData = MutableLiveData<Boolean>()
         private set
 
     fun getUserId() = DriveKit.config.userId
@@ -39,7 +39,7 @@ internal class SettingsViewModel: ViewModel() {
         }
         DriveKit.updateUserInfo(firstName, lastName, pseudo, object : UpdateUserInfoQueryListener {
             override fun onResponse(status: Boolean) {
-                updateUserInfoLiveData.postValue(Any())
+                updateUserInfoLiveData.postValue(status)
             }
         })
     }
