@@ -220,6 +220,6 @@ internal object DriveKitConfig {
 
         // CLEAR SHARED PREFERENCES OF THE DEMO APP
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        preferences.edit().clear().apply()
+        preferences.edit().clear().commit()
     }
 }
