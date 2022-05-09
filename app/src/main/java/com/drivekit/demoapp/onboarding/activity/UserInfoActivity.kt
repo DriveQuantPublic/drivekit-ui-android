@@ -100,14 +100,7 @@ class UserInfoActivity : AppCompatActivity() {
     }
 
     private fun openDriveKitUserInfoDoc() {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(
-                    this.getString(R.string.drivekit_doc_android_update_user_info)
-                )
-            )
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(this.getString(R.string.drivekit_doc_android_update_user_info))))
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
@@ -121,12 +114,8 @@ class UserInfoActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        viewModel.resetDriveKit(this)
         super.onBackPressed()
-        val apiKey = DriveKit.config.apiKey
-        apiKey?.let {
-            DriveKit.reset()
-            DriveKit.setApiKey(apiKey)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

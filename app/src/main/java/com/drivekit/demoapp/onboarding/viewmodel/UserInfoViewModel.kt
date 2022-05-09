@@ -3,6 +3,7 @@ package com.drivekit.demoapp.onboarding.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -66,5 +67,13 @@ internal class UserInfoViewModel: ViewModel() {
                 shouldDisplayVehicle.postValue(vehicles.isEmpty())
             }
         }, SynchronizationType.CACHE)
+    }
+
+    fun resetDriveKit(context: Context) {
+        val apiKey = DriveKit.config.apiKey
+        apiKey?.let {
+            DriveKitConfig.reset(context)
+            DriveKit.setApiKey(apiKey)
+        }
     }
 }
