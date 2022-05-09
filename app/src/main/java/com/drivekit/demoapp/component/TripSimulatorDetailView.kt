@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.smallText
 import kotlinx.android.synthetic.main.trip_simulator_detail_item.view.*
 
 internal class TripSimulatorDetailView @JvmOverloads constructor(
@@ -29,8 +29,8 @@ internal class TripSimulatorDetailView @JvmOverloads constructor(
     }
 
     private fun setStyle() {
-        text_view_item_title.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_item_value.headLine2(DriveKitUI.colors.mainFontColor())
+        text_view_item_title.smallText(DriveKitUI.colors.complementaryFontColor())
+        text_view_item_value.headLine1(DriveKitUI.colors.mainFontColor())
     }
 
     fun setItemTitle(title: String) {
