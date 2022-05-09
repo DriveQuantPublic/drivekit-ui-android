@@ -161,7 +161,7 @@ internal object DriveKitConfig {
             roadsideAssistanceNumber = "0000000000",
             DKCrashFeedbackConfig(
                 notification = DKCrashFeedbackNotification(
-                    icon = R.mipmap.ic_launcher, // TODO ic_notification
+                    icon = R.mipmap.ic_launcher,
                     channelName = "${R.string.app_name} - Crash Detection Feedback",
                     notificationId = Random.nextInt(1, Integer.MAX_VALUE),
                     title = context.getString(R.string.dk_crash_detection_feedback_notif_title),
@@ -203,11 +203,11 @@ internal object DriveKitConfig {
         val notification = TripNotification(
             context.getString(R.string.app_name),
             context.getString(R.string.notif_trip_started),
-            R.mipmap.ic_launcher // TODO ic_notification
+            R.drawable.ic_notification
         )
         notification.enableCancel = true
         notification.cancel = context.getString(R.string.cancel_trip)
-        notification.cancelIconId = R.mipmap.ic_launcher // TODO ic_notification
+        notification.cancelIconId = R.drawable.ic_notification
         notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
         return notification
     }
