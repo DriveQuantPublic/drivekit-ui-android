@@ -17,7 +17,7 @@ class DriveKitDemoApplication : Application() {
     companion object {
         fun showNotification(context: Context, message: String) {
             val builder = NotificationCompat.Builder(context, "notif_channel")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher) // TODO ic_notification
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(message)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
