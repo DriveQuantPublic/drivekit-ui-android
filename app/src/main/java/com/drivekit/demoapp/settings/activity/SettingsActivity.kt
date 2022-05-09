@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
@@ -146,6 +148,7 @@ internal class SettingsActivity: AppCompatActivity() {
     private fun initLogoutSection() {
         button_delete_account.apply {
             normalText(DriveKitUI.colors.criticalColor())
+            setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
                 manageLogoutClick()
             }
