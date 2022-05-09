@@ -223,7 +223,7 @@ internal object DriveKitConfig {
 
     @SuppressLint("ApplySharedPref")
     fun reset(context: Context) {
-        // RESET DRIVEKIT
+        // Reset DriveKit
         DriveKit.reset()
         DriveKitTripAnalysis.reset()
         DriveKitDriverData.reset()
@@ -231,10 +231,10 @@ internal object DriveKitConfig {
         DriveKitDriverAchievement.reset()
         DriveKitChallenge.reset()
 
-        // DELETE NOTIFICATION CHANNELS
+        // Delete Notification Channels
         DKNotificationManager.deleteChannels(context)
 
-        // CLEAR SHARED PREFERENCES OF THE DEMO APP
+        // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().commit()
     }
