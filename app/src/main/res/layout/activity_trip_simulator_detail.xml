@@ -41,12 +41,12 @@
                 android:id="@+id/graph_container"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:layout_width="match_parent"
-                android:layout_height="165dp"
+                android:layout_height="198dp"
                 android:paddingStart="@dimen/dk_margin_half"
                 android:paddingEnd="@dimen/dk_margin_half" />
 
             <LinearLayout
-                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_double"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -67,7 +67,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_double"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

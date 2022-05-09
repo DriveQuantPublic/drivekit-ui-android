@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity">
 
     <include
@@ -13,73 +14,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_view_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/trip_simulator_description"
-        android:layout_marginTop="@dimen/dk_margin_double"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/text_view_error_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        tools:text="@string/trip_simulator_error_dev_mode"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_description" />
-
-    <TextView
-        android:id="@+id/text_view_select_trip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/trip_simulator_select_trip"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_error_message" />
-
-    <FrameLayout
-        android:id="@+id/spinner_container"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginEnd="@dimen/dk_margin"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginTop="@dimen/dk_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/spinner_background"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_select_trip">
-    <Spinner
-        android:id="@+id/trips_dropdown_spinner"
+    <ScrollView
+        android:paddingBottom="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_select_trip" />
-    </FrameLayout>
-    <TextView
-        android:id="@+id/text_view_trip_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin"
-        android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_container" />
+        android:layout_weight="1">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:text="@string/trip_simulator_description" />
+
+            <TextView
+                android:id="@+id/text_view_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:visibility="gone"
+                tools:text="@string/trip_simulator_error_dev_mode" />
+
+            <TextView
+                android:id="@+id/text_view_select_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:text="@string/trip_simulator_select_trip" />
+
+            <FrameLayout
+                android:id="@+id/spinner_container"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginStart="@dimen/dk_margin"
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:layout_marginEnd="@dimen/dk_margin"
+                android:background="@drawable/spinner_background">
+
+                <Spinner
+                    android:id="@+id/trips_dropdown_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/text_view_trip_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <include
         android:id="@+id/button_simulate_trip"
@@ -87,9 +88,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/dk_margin_double"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginBottom="@dimen/dk_margin_double" />
+</LinearLayout>

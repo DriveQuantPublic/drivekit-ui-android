@@ -40,6 +40,7 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
             xAxis.apply {
                 isEnabled = true
                 position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
             }
             axisRight.isEnabled = false
 
@@ -48,6 +49,7 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
                 horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
                 verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 orientation = Legend.LegendOrientation.HORIZONTAL
+                form = Legend.LegendForm.NONE
                 setDrawInside(false)
             }
 
@@ -83,7 +85,7 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
             data.notifyDataChanged()
             lineChart.apply {
                 notifyDataSetChanged()
-                setVisibleXRangeMaximum(30f)
+                setVisibleXRangeMaximum(90f)
                 moveViewToX(lineChart.data.entryCount.toFloat())
             }
         }
@@ -93,7 +95,7 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
         val lineDataSet = LineDataSet(null, title)
         lineDataSet.apply {
             setDrawCircles(false)
-            lineWidth = 1.8f
+            lineWidth = 2f
             fillColor = Color.BLACK
             fillAlpha = 1
             setColor(ContextCompat.getColor(context, color))
