@@ -30,6 +30,6 @@ internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
 
     private fun setStyle() {
         challengeTitle.setTextColor(DriveKitUI.colors.mainFontColor())
-        challengeDate.normalText(Color.parseColor("#9E9E9E"))
+        challengeDate.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 }
