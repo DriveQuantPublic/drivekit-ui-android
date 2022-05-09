@@ -10,16 +10,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
+import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.DriveKit
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info.button_validate
 import kotlinx.android.synthetic.main.activity_user_info.progress_circular
 
-class UserInfoActivity : AppCompatActivity() {
+internal class UserInfoActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserInfoViewModel
 
@@ -41,14 +42,11 @@ class UserInfoActivity : AppCompatActivity() {
         }
 
         title = getString(R.string.user_info_header)
-        text_view_user_info_title.text = DKSpannable().append(
-            getString(R.string.user_info_title), resSpans {
-                color(DriveKitUI.colors.mainFontColor())
-                size(R.dimen.dk_text_medium)
-            }).append(" ").append("ⓘ", resSpans {
-            color(DriveKitUI.colors.secondaryColor())
-            size(R.dimen.dk_text_medium)
-        }).toSpannable()
+        text_view_user_info_title.apply {
+            text = getString(R.string.user_info_title)
+            headLine1()
+            addInfoIconAtTheEnd(this@UserInfoActivity)
+        }
 
         text_view_user_info_description.text = getString(R.string.user_info_description)
 

@@ -7,15 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
+import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_vehicles.*
 
-class VehiclesActivity : AppCompatActivity() {
+internal class VehiclesActivity : AppCompatActivity() {
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -31,14 +33,9 @@ class VehiclesActivity : AppCompatActivity() {
         title = getString(R.string.vehicle_intro_header)
 
         text_view_title.apply {
-            text = DKSpannable().append(
-                getString(R.string.vehicle_intro_title), resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
-                }).append(" ").append("ⓘ", context.resSpans {
-                color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_medium)
-            }).toSpannable()
+            text = getString(R.string.vehicle_intro_title)
+            headLine1()
+            this.addInfoIconAtTheEnd(this@VehiclesActivity)
 
             setOnClickListener {
                 openDriveKitVehiclesDoc()

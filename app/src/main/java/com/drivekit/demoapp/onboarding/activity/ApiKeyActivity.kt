@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import kotlinx.android.synthetic.main.activity_set_api_key.*
 
-class ApiKeyActivity : AppCompatActivity() {
+internal class ApiKeyActivity : AppCompatActivity() {
 
     companion object {
         fun launchActivity(activity: Activity) {
