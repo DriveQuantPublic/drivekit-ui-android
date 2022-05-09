@@ -216,9 +216,12 @@ internal class SettingsActivity: AppCompatActivity() {
         alertDialog.apply {
             setCancelable(true)
             setButton(
-                DialogInterface.BUTTON_POSITIVE,
-                getString(R.string.dk_common_validate)) { dialog, _ ->
-                    viewModel.updateUserInfo(type, editText.text.toString())
+                DialogInterface.BUTTON_POSITIVE, getString(R.string.dk_common_validate)) { dialog, _ ->
+                viewModel.updateUserInfo(type, editText.text.toString())
+                dialog.dismiss()
+            }
+            setButton(
+                DialogInterface.BUTTON_NEGATIVE, getString(R.string.dk_common_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
