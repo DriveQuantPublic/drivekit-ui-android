@@ -81,6 +81,7 @@ class OdometerInitFragment : Fragment() {
 
                 text_view_vehicle_distance_field.apply {
                     hint = DKResource.convertToString(context, "dk_vehicle_odometer_enter_mileage")
+                    setHintTextColor(DriveKitUI.colors.complementaryFontColor())
                     normalText()
                 }
                 viewModel.odometerActionObserver.observe(requireActivity(), {

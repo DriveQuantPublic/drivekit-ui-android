@@ -3,6 +3,5 @@
     <color name="dkMapTraceMainColor">#116EA9</color>
     <color name="dkMapTraceWarningColor">#ED4F3B</color>
     <color name="dkMapTraceAuthorizedCallColor">#93C47D</color>
-    <color name="dkDistractionContentCallColor">#9E9E9E</color>
     <color name="dkDistractionSelectorColor">#F3F3F3</color>
 </resources>

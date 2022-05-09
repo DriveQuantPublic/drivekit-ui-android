@@ -25,10 +25,7 @@ internal class DistractionItem : LinearLayout {
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_item, null)
         view.text_view_distraction_event.headLine2()
-        view.text_view_distraction_content.smallText(ContextCompat.getColor(
-            context,
-            R.color.dkDistractionContentCallColor
-        ))
+        view.text_view_distraction_content.smallText(DriveKitUI.colors.complementaryFontColor())
         view.line_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         addView(
             view, ViewGroup.LayoutParams(
@@ -44,11 +41,12 @@ internal class DistractionItem : LinearLayout {
     }
 
     fun setDistractionContentColor(selected: Boolean) {
-        text_view_distraction_content.setTextColor(
-            if (selected) DriveKitUI.colors.secondaryColor() else ContextCompat.getColor(
-                context,
-                R.color.dkDistractionContentCallColor
-            )
-        )
+        if (selected) {
+            DriveKitUI.colors.secondaryColor()
+        } else {
+            DriveKitUI.colors.complementaryFontColor()
+        }.let {
+            text_view_distraction_content.setTextColor(it)
+        }
     }
 }
