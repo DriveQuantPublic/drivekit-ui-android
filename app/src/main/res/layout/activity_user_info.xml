@@ -92,7 +92,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_marginTop="@dimen/dk_margin_double"
+            android:layout_marginTop="@dimen/dk_margin_medium"
             android:id="@+id/button_next_step"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

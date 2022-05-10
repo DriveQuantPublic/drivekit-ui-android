@@ -15,6 +15,7 @@ import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import kotlinx.android.synthetic.main.activity_user_info.*
@@ -48,8 +49,10 @@ internal class UserInfoActivity : AppCompatActivity() {
             headLine1()
             addInfoIconAtTheEnd(this@UserInfoActivity)
         }
-
-        text_view_user_info_description.text = getString(R.string.user_info_description)
+        text_view_user_info_description.apply {
+            text = getString(R.string.user_info_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
 
         text_input_layout_firstname.editText?.setText(viewModel.getFirstName())
         text_input_layout_lastname.editText?.setText(viewModel.getLastName())

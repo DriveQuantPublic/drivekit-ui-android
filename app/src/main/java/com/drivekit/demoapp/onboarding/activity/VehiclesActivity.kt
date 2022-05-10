@@ -11,6 +11,7 @@ import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
@@ -41,7 +42,10 @@ internal class VehiclesActivity : AppCompatActivity() {
                 openDriveKitVehiclesDoc()
             }
         }
-        text_view_description.text = getString(R.string.vehicle_intro_description)
+        text_view_description.apply {
+            text = getString(R.string.vehicle_intro_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
         button_add_vehicle.apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

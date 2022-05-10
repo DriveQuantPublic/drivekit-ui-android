@@ -15,6 +15,7 @@ import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.networking.RequestError
@@ -41,7 +42,10 @@ class UserIdActivity : AppCompatActivity() {
             viewModel = ViewModelProviders.of(this).get(UserIdViewModel::class.java)
         }
 
-        text_view_user_id_description.text = getString(R.string.authentication_description)
+        text_view_user_id_description.apply {
+            text = getString(R.string.authentication_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
         text_view_user_id_title.apply {
             text = DKSpannable().append(
                 getString(R.string.authentication_title), resSpans {
@@ -56,7 +60,6 @@ class UserIdActivity : AppCompatActivity() {
                 openDriveKitUserIdDoc()
             }
         }
-
         button_validate.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())

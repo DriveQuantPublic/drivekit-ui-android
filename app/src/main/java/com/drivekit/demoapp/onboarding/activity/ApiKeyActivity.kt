@@ -11,6 +11,7 @@ import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import kotlinx.android.synthetic.main.activity_set_api_key.*
 
 internal class ApiKeyActivity : AppCompatActivity() {
@@ -29,7 +30,10 @@ internal class ApiKeyActivity : AppCompatActivity() {
         title = getString(R.string.welcome_header)
 
         val viewModel = ApiKeyViewModel()
-        text_view_description.text = viewModel.getDescription(this)
+        text_view_description.apply {
+            text = viewModel.getDescription(this@ApiKeyActivity)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
         text_view_title.apply {
             text = getString(viewModel.getTitle())
             headLine1()
