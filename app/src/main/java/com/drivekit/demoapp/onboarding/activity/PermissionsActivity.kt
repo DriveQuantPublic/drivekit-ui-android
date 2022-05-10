@@ -9,15 +9,15 @@ import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
+import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import kotlinx.android.synthetic.main.activity_permissions.*
 
-class PermissionsActivity : AppCompatActivity() {
+internal class PermissionsActivity : AppCompatActivity() {
 
     private val viewModel = PermissionsViewModel()
 
@@ -36,15 +36,9 @@ class PermissionsActivity : AppCompatActivity() {
         title = getString(R.string.permissions_intro_header)
 
         text_view_title.apply {
-            text = DKSpannable().append(
-                context.getString(R.string.permissions_intro_title), resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
-                }).append(" ").append("ⓘ", resSpans {
-                color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_medium)
-            }).toSpannable()
-
+            text = getString(R.string.permissions_intro_title)
+            headLine1()
+            addInfoIconAtTheEnd(this@PermissionsActivity)
             setOnClickListener {
                 openDriveKitPermissionsDoc()
             }
