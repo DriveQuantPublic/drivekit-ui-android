@@ -1,6 +1,7 @@
 package com.drivekit.demoapp.dashboard.enum
 
 import android.content.Context
+import android.graphics.Color
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -10,6 +11,10 @@ internal enum class InfoBannerType {
 
     fun shouldDisplay(context: Context) = when (this) {
         DIAGNOSIS -> PermissionsUtilsUI.hasError(context)
+    }
+
+    fun getColor() = when (this) {
+        DIAGNOSIS -> Color.WHITE
     }
 
     fun getBackgroundColorResId() = when (this) {

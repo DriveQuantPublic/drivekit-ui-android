@@ -20,8 +20,7 @@
             android:layout_height="@dimen/dk_ic_big"
             tools:src="@drawable/ic_feature_permissionsutils"
             android:layout_gravity="start|center_vertical"
-            android:layout_weight="0.15"
-            app:tint="@android:color/white" />
+            android:layout_weight="0.15" />
         <TextView
             android:id="@+id/text_view_info_banner_title"
             android:layout_width="0dp"
@@ -31,7 +30,6 @@
             android:layout_marginRight="@dimen/dk_margin_half"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="@android:color/white"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.7"/>
@@ -45,8 +43,7 @@
             android:paddingBottom="@dimen/dk_margin_quarter"
             android:layout_weight="0.15"
             android:visibility="gone"
-            tools:visibility="visible"
-            app:tint="@android:color/white" />
+            tools:visibility="visible" />
     </LinearLayout>
     <View style="@style/Separator.Horizontal"/>
 </LinearLayout>

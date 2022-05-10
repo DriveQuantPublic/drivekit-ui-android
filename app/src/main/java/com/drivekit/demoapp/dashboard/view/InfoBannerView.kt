@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.drivekitdemoapp.R
 
@@ -39,14 +40,21 @@ internal class InfoBannerView : LinearLayout {
             setOnClickListener { listener?.onInfoBannerClicked() }
         }
         ContextCompat.getDrawable(context, infoBannerType.getIconResId())?.let {
+            it.mutate()
+            DrawableCompat.setTint(it, infoBannerType.getColor())
             icon.setImageDrawable(it)
         }
 
-        title.text = context.getString(infoBannerType.getTitleResId())
+        title.apply {
+            text = context.getString(infoBannerType.getTitleResId())
+            setTextColor(infoBannerType.getColor())
+        }
 
         if (infoBannerType.displayArrow()) {
             ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_forward)?.let {
                 arrow.apply {
+                    it.mutate()
+                    DrawableCompat.setTint(it, infoBannerType.getColor())
                     setImageDrawable(it)
                     visibility = View.VISIBLE
                 }
