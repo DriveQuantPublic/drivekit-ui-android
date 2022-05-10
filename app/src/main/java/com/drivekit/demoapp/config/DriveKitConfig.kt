@@ -62,20 +62,38 @@ internal object DriveKitConfig {
     private val vehicleBrands: List<VehicleBrand> = VehicleBrand.values().toList()
     private const val enableVehicleOdometer: Boolean = true
 
-    fun configure(application: Application) {
+    fun initialize(application: Application) {
         // Manage trips saved for repost notification
         DKNotificationManager.configure()
 
+        // DriveKit modules initialization:
+        initializeModules(application)
+
+        // DriveKit modules configuration:
+        configureModules(application)
+    }
+
+    private fun initializeModules(application: Application) {
+        // DriveKit Core Initialization:
+        DriveKit.initialize(application, DriveKitListenerManager)
+
+        // TripAnalysis initialization:
+        DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
+
+        // Initialize DriverData:
+        DriveKitDriverData.initialize()
+    }
+
+    private fun configureModules(context: Context) {
         // Internal modules configuration:
-        configureCore(application)
-        configureTripAnalysis(application)
-        configureDriverData()
+        configureCore()
+        configureTripAnalysis(context)
 
         // UI modules configuration:
         configureCommonUI()
         configureDriverDataUI()
         configureVehicleUI()
-        configureTripAnalysisUI(application)
+        configureTripAnalysisUI(context)
         configureDriverAchievementUI()
         configurePermissionsUtilsUI()
         configureChallengeUI()
@@ -103,24 +121,18 @@ internal object DriveKitConfig {
         return items
     }
 
-    private fun configureCore(application: Application) {
-        DriveKit.initialize(application, DriveKitListenerManager)
+    private fun configureCore() {
         if (apiKey.isNotBlank()) {
             DriveKit.setApiKey(apiKey)
         }
     }
 
     private fun configureTripAnalysis(context: Context) {
-        DriveKitTripAnalysis.initialize(createForegroundNotification(context), TripListenerController)
         DriveKitTripAnalysis.activateAutoStart(isTripAnalysisAutoStartedEnabled(context))
         DriveKitTripAnalysis.activateCrashDetection(enableTripAnalysisCrashDetection)
 
         // You must call this method if you use DriveKit Vehicle component:
         DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
-    }
-
-    private fun configureDriverData() {
-        DriveKitDriverData.initialize()
     }
 
     private fun configureCommonUI() {
@@ -219,6 +231,14 @@ internal object DriveKitConfig {
             }
         }
         return false
+    }
+
+    fun logout(context: Context) {
+        // Reset DriveKit modules:
+        reset(context)
+
+        // Reconfigure modules:
+        configureModules(context)
     }
 
     @SuppressLint("ApplySharedPref")

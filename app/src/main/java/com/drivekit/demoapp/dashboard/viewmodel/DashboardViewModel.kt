@@ -40,7 +40,7 @@ internal class DashboardViewModel: ViewModel() {
             })
     }
 
-    fun getLastTripsCardsView() = DriverDataUI.getLastTripsView(HeaderDay.DURATION)
+    fun getLastTripsCardsView() = DriverDataUI.getLastTripsView(HeaderDay.DISTANCE)
 
     fun getFeatureCardTitleResId() = FeatureType.ALL.getTitleResId()
 

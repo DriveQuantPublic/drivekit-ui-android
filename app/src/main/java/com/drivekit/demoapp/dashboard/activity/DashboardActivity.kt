@@ -107,7 +107,7 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initLastTripsCard() {
-        DriverDataUI.getLastTripsView(HeaderDay.DURATION).let {
+        DriverDataUI.getLastTripsView(HeaderDay.DISTANCE).let {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.container_last_trips, viewModel.getLastTripsCardsView())

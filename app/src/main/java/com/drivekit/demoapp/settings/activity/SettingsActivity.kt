@@ -233,7 +233,7 @@ internal class SettingsActivity: AppCompatActivity() {
             .init(this)
             .layout(R.layout.template_alert_dialog_layout)
             .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
-                viewModel.reset(this@SettingsActivity)
+                viewModel.logout(this@SettingsActivity)
             }
             .negativeButton(getString(R.string.dk_common_cancel))
             .show()

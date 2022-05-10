@@ -69,11 +69,7 @@ internal class UserInfoViewModel: ViewModel() {
         }, SynchronizationType.CACHE)
     }
 
-    fun resetDriveKit(context: Context) {
-        val apiKey = DriveKit.config.apiKey
-        apiKey?.let {
-            DriveKitConfig.reset(context)
-            DriveKit.setApiKey(apiKey)
-        }
+    fun logout(context: Context) {
+        DriveKitConfig.logout(context)
     }
 }

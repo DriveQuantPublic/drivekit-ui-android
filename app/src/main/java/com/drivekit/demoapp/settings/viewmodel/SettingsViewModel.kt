@@ -48,8 +48,8 @@ internal class SettingsViewModel: ViewModel() {
 
     fun activateAutoStart(context: Context, activate: Boolean) = DriveKitConfig.enableTripAnalysisAutoStart(context, activate)
 
-    fun reset(context: Context) {
-        DriveKitConfig.reset(context)
+    fun logout(context: Context) {
+        DriveKitConfig.logout(context)
         logoutLiveData.postValue(Any())
     }
 }

@@ -16,8 +16,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import kotlinx.android.synthetic.main.activity_user_info.*
 import kotlinx.android.synthetic.main.activity_user_info.button_validate
 import kotlinx.android.synthetic.main.activity_user_info.progress_circular
@@ -117,7 +115,7 @@ internal class UserInfoActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        viewModel.resetDriveKit(this)
+        viewModel.logout(this)
         super.onBackPressed()
     }
 
