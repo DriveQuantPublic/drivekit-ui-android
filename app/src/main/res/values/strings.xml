@@ -200,4 +200,5 @@
 
     <string name="trip_simulator_error_auto_mode">The automatic mode is disabled. Enable this function in the app settings if you want to simulate trips.</string>
     <string name="trip_simulator_error_vehicle_disabled">The vehicle is disabled. Make sure auto-start mode configuration is associated with the vehicle if you want to simulate trips.</string>
+    <string name="info_banner_diagnosis_title">Un problème a été détecté ! Vous devez régler votre téléphone.</string>
 </resources>

@@ -4,8 +4,5 @@
     <color name="colorPrimaryDark">#083B54</color>
     <color name="colorAccent">#77E2B2</color>
 
-    <color name="gray200">#F0F0F0</color>
-    <color name="gray300">#E0E0E0</color>
-    <color name="gray500_40">#409E9E9E</color>
-    <color name="gray700">#616161</color>
+    <color name="white">#FFFFFF</color>
 </resources>
