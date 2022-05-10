@@ -30,10 +30,7 @@ internal class ApiKeyActivity : AppCompatActivity() {
         title = getString(R.string.welcome_header)
 
         val viewModel = ApiKeyViewModel()
-        text_view_description.apply {
-            text = viewModel.getDescription(this@ApiKeyActivity)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
+        text_view_description.text = viewModel.getDescription(this@ApiKeyActivity)
         text_view_title.apply {
             text = getString(viewModel.getTitle())
             headLine1()
