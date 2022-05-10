@@ -43,7 +43,6 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
                 setDrawGridLines(false)
             }
             axisRight.isEnabled = false
-
             legend.apply {
                 isEnabled = true
                 horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
@@ -60,6 +59,7 @@ internal class TripSimulatorGraphView @JvmOverloads constructor(
                 setLabelCount(6, false)
                 setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
                 axisLineColor = Color.BLACK
+                axisMinimum = 0f
             }
 
             description.isEnabled = true
