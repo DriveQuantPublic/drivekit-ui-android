@@ -15,7 +15,6 @@ import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import kotlinx.android.synthetic.main.activity_trip_simulator.*
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.core.DriveKit
 
 
 internal class TripSimulatorActivity : AppCompatActivity() {
@@ -51,7 +50,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
                     viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)
                     viewModel.shouldShowMockLocationErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_mock_location)
                     !viewModel.isAutoStartEnabled(this@TripSimulatorActivity) -> showErrorPopup(R.string.trip_simulator_error_auto_mode)
-                    !viewModel.hasGpsVehicle() -> showErrorPopup(R.string.trip_simulator_error_no_gps_vehicle)
+                    !viewModel.hasVehicleAutoModeConfigured() -> showErrorPopup(R.string.trip_simulator_error_vehicle_disabled)
                     else -> {
                         viewModel.selectedPresetTripType.value?.let { presetTripType ->
                             TripSimulatorDetailActivity.launchActivity(
