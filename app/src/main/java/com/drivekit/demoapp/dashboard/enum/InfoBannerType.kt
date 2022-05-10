@@ -8,13 +8,23 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 internal enum class InfoBannerType {
     DIAGNOSIS;
 
-    fun shouldDisplay(context: Context) = PermissionsUtilsUI.hasError(context)
+    fun shouldDisplay(context: Context) = when (this) {
+        DIAGNOSIS -> PermissionsUtilsUI.hasError(context)
+    }
 
-    fun getBackgroundColorResId() = DriveKitUI.colors.warningColor()
+    fun getBackgroundColorResId() = when (this) {
+        DIAGNOSIS -> DriveKitUI.colors.warningColor()
+    }
 
-    fun getIconResId() = R.drawable.dk_perm_utils_diagnosis_system
+    fun getIconResId() = when (this) {
+        DIAGNOSIS -> R.drawable.dk_perm_utils_diagnosis_system
+    }
 
-    fun getTitleResId() = R.string.info_banner_diagnosis_title
+    fun getTitleResId() = when (this) {
+        DIAGNOSIS -> R.string.info_banner_diagnosis_title
+    }
 
-    fun getArrowIconResId() = R.drawable.dk_common_arrow_forward
+    fun displayArrow() = when (this) {
+        DIAGNOSIS -> true
+    }
 }
