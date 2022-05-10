@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -14,6 +15,7 @@ import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import kotlinx.android.synthetic.main.activity_user_info.*
@@ -47,8 +49,10 @@ internal class UserInfoActivity : AppCompatActivity() {
             headLine1()
             addInfoIconAtTheEnd(this@UserInfoActivity)
         }
-
-        text_view_user_info_description.text = getString(R.string.user_info_description)
+        text_view_user_info_description.apply {
+            text = getString(R.string.user_info_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
 
         text_input_layout_firstname.editText?.setText(viewModel.getFirstName())
         text_input_layout_lastname.editText?.setText(viewModel.getLastName())
@@ -62,7 +66,8 @@ internal class UserInfoActivity : AppCompatActivity() {
             goToNext()
         }
 
-        button_validate.apply {
+        button_validate.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 val firstName = text_view_firstname_field.editableText.toString()

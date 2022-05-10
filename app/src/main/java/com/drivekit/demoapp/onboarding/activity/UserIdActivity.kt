@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
@@ -12,16 +13,15 @@ import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
-import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.networking.RequestError
 import kotlinx.android.synthetic.main.activity_set_user_id.*
 
-internal class UserIdActivity : AppCompatActivity() {
+class UserIdActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserIdViewModel
 
@@ -42,18 +42,26 @@ internal class UserIdActivity : AppCompatActivity() {
             viewModel = ViewModelProviders.of(this).get(UserIdViewModel::class.java)
         }
 
-        text_view_user_id_description.text = getString(R.string.authentication_description)
+        text_view_user_id_description.apply {
+            text = getString(R.string.authentication_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
         text_view_user_id_title.apply {
-            text = getString(R.string.authentication_title)
-            this.addInfoIconAtTheEnd(this@UserIdActivity)
-            headLine1()
+            text = DKSpannable().append(
+                getString(R.string.authentication_title), resSpans {
+                    color(DriveKitUI.colors.mainFontColor())
+                    size(R.dimen.dk_text_medium)
+                }).append(" ").append("ⓘ", resSpans {
+                color(DriveKitUI.colors.secondaryColor())
+                size(R.dimen.dk_text_medium)
+            }).toSpannable()
 
             setOnClickListener {
                 openDriveKitUserIdDoc()
             }
         }
-
-        button_validate.apply {
+        button_validate.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 validateUserId()

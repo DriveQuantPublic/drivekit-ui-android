@@ -38,20 +38,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
 
-    <TextView
+    <include
         android:id="@+id/button_request_permissions"
+        layout="@layout/layout_button_action"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="@dimen/dk_margin"
-        android:layout_marginEnd="@dimen/dk_margin"
-        android:layout_marginBottom="@dimen/dk_margin"
-        tools:background="@color/colorAccent"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:text="@string/permissions_intro_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dk_margin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

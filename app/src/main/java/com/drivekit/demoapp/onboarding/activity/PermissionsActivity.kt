@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -13,6 +14,7 @@ import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import kotlinx.android.synthetic.main.activity_permissions.*
@@ -43,8 +45,12 @@ internal class PermissionsActivity : AppCompatActivity() {
                 openDriveKitPermissionsDoc()
             }
         }
-        text_view_description.text = getString(R.string.permissions_intro_description)
-        button_request_permissions.apply {
+        text_view_description.apply {
+            text = getString(R.string.permissions_intro_description)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
+        button_request_permissions.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.permissions_intro_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(
