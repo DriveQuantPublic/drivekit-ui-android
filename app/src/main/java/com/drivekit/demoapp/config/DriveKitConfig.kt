@@ -173,7 +173,7 @@ internal object DriveKitConfig {
             roadsideAssistanceNumber = "0000000000",
             DKCrashFeedbackConfig(
                 notification = DKCrashFeedbackNotification(
-                    icon = R.mipmap.ic_launcher,
+                    icon = R.drawable.ic_notification,
                     channelName = "${R.string.app_name} - Crash Detection Feedback",
                     notificationId = Random.nextInt(1, Integer.MAX_VALUE),
                     title = context.getString(R.string.dk_crash_detection_feedback_notif_title),

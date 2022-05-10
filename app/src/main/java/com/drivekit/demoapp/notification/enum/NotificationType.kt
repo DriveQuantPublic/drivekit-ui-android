@@ -68,7 +68,7 @@ internal sealed class NotificationType {
         TRIP_TOO_SHORT -> 202
     }
 
-    private fun getIconResId() = R.mipmap.ic_launcher
+    private fun getIconResId() = R.drawable.ic_notification
 
     private fun getTitleResId() = when (this) {
         is TRIP_ANALYSIS_ERROR -> when (this.error) {
