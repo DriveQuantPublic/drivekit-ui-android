@@ -21,8 +21,8 @@ class TripTimelineItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun bind(tripEvent : TripEvent, isFirst: Boolean, isLast: Boolean, listener :OnItemClickListener){
         eventHour.text = tripEvent.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
         eventDescription.text = tripEvent.getTitle(itemView.context)
-        eventHour.setTextColor(DriveKitUI.colors.mainFontColor())
         eventDescription.setTextColor(DriveKitUI.colors.mainFontColor())
         eventImage.setImageResource(tripEvent.getEventImageResource())
         if (isFirst) lineTop.visibility = View.INVISIBLE else lineTop.visibility = View.VISIBLE

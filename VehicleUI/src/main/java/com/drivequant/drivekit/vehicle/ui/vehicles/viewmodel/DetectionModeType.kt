@@ -90,12 +90,12 @@ enum class DetectionModeType(
                 }
             }
         }
-        val parameteredString = DKResource.buildString(context,  DriveKitUI.colors.mainFontColor(),
+        val parameteredString = DKResource.buildString(context, DriveKitUI.colors.mainFontColor(),
             DriveKitUI.colors.mainFontColor(),stringIdentifier, parameter)
 
         return if (configured){
             DKSpannable().append(parameteredString, context.resSpans {
-                color(DriveKitUI.colors.mainFontColor())
+                color(DriveKitUI.colors.complementaryFontColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
             }).toSpannable()
