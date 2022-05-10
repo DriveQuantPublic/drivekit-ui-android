@@ -21,7 +21,7 @@
             tools:src="@drawable/ic_feature_permissionsutils"
             android:layout_gravity="start|center_vertical"
             android:layout_weight="0.15"
-            app:tint="@color/white" />
+            app:tint="@android:color/white" />
         <TextView
             android:id="@+id/text_view_info_banner_title"
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
             android:layout_marginRight="@dimen/dk_margin_half"
             android:maxLines="2"
             android:ellipsize="end"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:layout_weight="0.7"/>
@@ -46,7 +46,7 @@
             android:layout_weight="0.15"
             android:visibility="gone"
             tools:visibility="visible"
-            app:tint="@color/white" />
+            app:tint="@android:color/white" />
     </LinearLayout>
     <View style="@style/Separator.Horizontal"/>
 </LinearLayout>
