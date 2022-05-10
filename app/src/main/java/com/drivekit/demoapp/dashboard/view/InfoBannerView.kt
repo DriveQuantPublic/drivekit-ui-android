@@ -44,12 +44,16 @@ internal class InfoBannerView : LinearLayout {
 
         title.text = context.getString(infoBannerType.getTitleResId())
 
-        ContextCompat.getDrawable(context, infoBannerType.getArrowIconResId())?.let {
-            arrow.apply {
-                setImageDrawable(it)
-                visibility = View.VISIBLE
+        if (infoBannerType.displayArrow()) {
+            ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_forward)?.let {
+                arrow.apply {
+                    setImageDrawable(it)
+                    visibility = View.VISIBLE
+                }
+            } ?: run {
+                visibility = View.GONE
             }
-        } ?: run {
+        } else {
             visibility = View.GONE
         }
 
