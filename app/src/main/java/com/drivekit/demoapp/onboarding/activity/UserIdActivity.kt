@@ -13,8 +13,10 @@ import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
+import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -47,15 +49,9 @@ class UserIdActivity : AppCompatActivity() {
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
         text_view_user_id_title.apply {
-            text = DKSpannable().append(
-                getString(R.string.authentication_title), resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
-                }).append(" ").append("ⓘ", resSpans {
-                color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_medium)
-            }).toSpannable()
-
+            text = getString(R.string.authentication_title)
+            this.addInfoIconAtTheEnd(this@UserIdActivity)
+            headLine1()
             setOnClickListener {
                 openDriveKitUserIdDoc()
             }
