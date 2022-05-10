@@ -97,7 +97,7 @@ internal object DKNotificationManager : TripListener {
 
     override fun tripPoint(tripPoint: TripPoint) {}
 
-    override fun tripFinished(postGeneric: PostGeneric, response: PostGenericResponse) {}
+    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {}
 
     override fun tripSavedForRepost() {
         sendNotification(DriveKit.applicationContext!!, NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_NETWORK))

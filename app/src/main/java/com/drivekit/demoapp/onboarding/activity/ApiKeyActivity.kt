@@ -11,7 +11,6 @@ import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import kotlinx.android.synthetic.main.activity_set_api_key.*
 
 internal class ApiKeyActivity : AppCompatActivity() {
@@ -42,14 +41,7 @@ internal class ApiKeyActivity : AppCompatActivity() {
                 if (viewModel.isApiKeyValid()) {
                     UserIdActivity.launchActivity(this@ApiKeyActivity)
                 } else {
-                    startActivity(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(
-                                getString(R.string.drivekit_doc_android_github_ui)
-                            )
-                        )
-                    )
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.drivekit_doc_android_github_ui))))
                 }
             }
         }

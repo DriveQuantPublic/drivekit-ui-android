@@ -12,8 +12,6 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import kotlinx.android.synthetic.main.activity_vehicles.*
@@ -62,12 +60,7 @@ internal class VehiclesActivity : AppCompatActivity() {
     }
 
     private fun openDriveKitVehiclesDoc() {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(getString(R.string.drivekit_doc_android_vehicle))
-            )
-        )
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.drivekit_doc_android_vehicle))))
     }
 
     override fun onBackPressed() {
