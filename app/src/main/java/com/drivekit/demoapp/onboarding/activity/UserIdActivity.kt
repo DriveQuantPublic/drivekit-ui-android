@@ -12,14 +12,16 @@ import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
+import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.networking.RequestError
 import kotlinx.android.synthetic.main.activity_set_user_id.*
 
-class UserIdActivity : AppCompatActivity() {
+internal class UserIdActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserIdViewModel
 
@@ -42,14 +44,9 @@ class UserIdActivity : AppCompatActivity() {
 
         text_view_user_id_description.text = getString(R.string.authentication_description)
         text_view_user_id_title.apply {
-            text = DKSpannable().append(
-                getString(R.string.authentication_title), resSpans {
-                    color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
-                }).append(" ").append("ⓘ", resSpans {
-                color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_medium)
-            }).toSpannable()
+            text = getString(R.string.authentication_title)
+            this.addInfoIconAtTheEnd(this@UserIdActivity)
+            headLine1()
 
             setOnClickListener {
                 openDriveKitUserIdDoc()

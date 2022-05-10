@@ -59,7 +59,7 @@ internal class FeatureCard : FrameLayout {
     fun configureTitle(textResId: Int) {
         textTitle.apply {
             text = ctx.getString(textResId)
-            headLine2(DriveKitUI.colors.complementaryFontColor())
+            headLine2()
         }
     }
 

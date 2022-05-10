@@ -27,7 +27,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
@@ -93,7 +92,7 @@ internal class SettingsActivity: AppCompatActivity() {
 
     private fun initUserInfoSection() {
         initTitle(title_account, R.string.parameters_account_title, R.drawable.ic_account)
-        description_account.normalText()
+        description_account.normalText(DriveKitUI.colors.complementaryFontColor())
 
         label_user_id.headLine2()
         label_firstname.headLine2()

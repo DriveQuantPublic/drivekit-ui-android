@@ -53,7 +53,7 @@ class GaugeIndicator(context: Context, attrs: AttributeSet) : ConstraintLayout(c
                 resources.getDimensionPixelSize(R.dimen.dk_text_normal)
             ).toFloat()
         )
-        textView.setTextColor(DriveKitUI.colors.complementaryFontColor())
+        textView.setTextColor(DriveKitUI.colors.mainFontColor())
         attributes.recycle()
     }
 
