@@ -17,7 +17,12 @@ internal class TripSimulatorViewModel {
 
     fun isAutoStartEnabled(context: Context) = DriveKitConfig.isTripAnalysisAutoStartedEnabled(context)
 
-    fun hasVehicleAutoModeConfigured() =
-        DbVehicleAccess.vehiclesQuery().whereEqualTo("detectionMode", DetectionMode.DISABLED)
-            .query().execute().isEmpty()
+    fun hasVehicleAutoStartMode(): Boolean {
+        DbVehicleAccess.vehiclesQuery().noFilter().query().execute().forEach {
+            if (it.detectionMode != DetectionMode.DISABLED) {
+                return true
+            }
+        }
+        return false
+    }
 }

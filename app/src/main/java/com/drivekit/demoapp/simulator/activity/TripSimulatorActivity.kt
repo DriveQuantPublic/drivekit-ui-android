@@ -50,7 +50,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
                     viewModel.shouldShowDeveloperModeErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_dev_mode)
                     viewModel.shouldShowMockLocationErrorMessage() -> showErrorPopup(R.string.trip_simulator_error_mock_location)
                     !viewModel.isAutoStartEnabled(this@TripSimulatorActivity) -> showErrorPopup(R.string.trip_simulator_error_auto_mode)
-                    !viewModel.hasVehicleAutoModeConfigured() -> showErrorPopup(R.string.trip_simulator_error_vehicle_disabled)
+                    !viewModel.hasVehicleAutoStartMode() -> showErrorPopup(R.string.trip_simulator_error_vehicle_disabled)
                     else -> {
                         viewModel.selectedPresetTripType.value?.let { presetTripType ->
                             TripSimulatorDetailActivity.launchActivity(

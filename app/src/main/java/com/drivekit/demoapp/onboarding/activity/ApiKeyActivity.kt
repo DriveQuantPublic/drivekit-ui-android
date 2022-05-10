@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
@@ -33,7 +34,7 @@ internal class ApiKeyActivity : AppCompatActivity() {
             text = getString(viewModel.getTitle())
             headLine1()
         }
-        button_next.apply {
+        button_next.findViewById<Button>(R.id.button_action).apply {
             text = getString(viewModel.getButtonText())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

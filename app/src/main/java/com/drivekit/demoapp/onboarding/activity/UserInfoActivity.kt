@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -62,7 +63,8 @@ internal class UserInfoActivity : AppCompatActivity() {
             goToNext()
         }
 
-        button_validate.apply {
+        button_validate.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 val firstName = text_view_firstname_field.editableText.toString()

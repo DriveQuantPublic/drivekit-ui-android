@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_marginTop="@dimen/dk_margin_double"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingEnd="@dimen/dk_margin"
             android:paddingStart="@dimen/dk_margin">
@@ -53,18 +53,13 @@
                     android:textSize="@dimen/dk_text_normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/button_validate"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                tools:background="@color/colorAccent"
-                android:gravity="center"
-                android:text="@string/dk_common_validate"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white" />
         </LinearLayout>
 
+        <include
+            android:id="@+id/button_validate"
+            layout="@layout/layout_button_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <com.drivequant.drivekit.common.ui.utils.DKProgressBar

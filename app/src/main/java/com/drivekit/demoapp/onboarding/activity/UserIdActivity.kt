@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
@@ -56,7 +57,8 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
 
-        button_validate.apply {
+        button_validate.findViewById<Button>(R.id.button_action).apply {
+            text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 validateUserId()
