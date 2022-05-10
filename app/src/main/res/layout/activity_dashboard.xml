@@ -8,6 +8,12 @@
         android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
+    <LinearLayout
+        android:id="@+id/info_banners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

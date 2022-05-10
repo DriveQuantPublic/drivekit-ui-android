@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.component.FeatureCard
+import com.drivekit.demoapp.dashboard.enum.InfoBannerType
+import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
@@ -20,6 +22,7 @@ import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
@@ -69,10 +72,27 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun showContent() {
+        initInfoBanners()
         initSynthesisTripsCard()
         initLastTripsCard()
         initStartStopTripButton()
         initTripSimulatorButton()
+    }
+
+    private fun initInfoBanners() {
+        info_banners.removeAllViews()
+        InfoBannerType.values().forEach {
+            if (it.shouldDisplay(this)) {
+                val view = InfoBannerView(this, it, object : InfoBannerView.InfoBannerListener {
+                    override fun onInfoBannerClicked() {
+                        when (it) {
+                            InfoBannerType.DIAGNOSIS -> PermissionsUtilsUI.startAppDiagnosisActivity(this@DashboardActivity)
+                        }
+                    }
+                })
+                info_banners.addView(view)
+            }
+        }
     }
 
     private fun initSynthesisTripsCard() {
