@@ -71,6 +71,7 @@
    <string name="feature_working_hours_title">Trip Analysis | Fahrplanmanagement</string>
    <string name="firstname">Vorname</string>
    <string name="forbidden_error">Sie haben nicht die nötigen Rechte</string>
+   <string name="info_banner_diagnosis_title">Ein Problem wurde erkannt! Sie müssen Ihr Telefon einrichten.</string>
    <string name="lastname">Nachname</string>
    <string name="logout_confirmation">Möchten Sie die Verbindung wirklich trennen?</string>
    <string name="network_ko_error">Mobile Daten sind nicht aktiviert</string>
@@ -158,8 +159,10 @@ Um Ihnen bei der Implementierung eines.\n\nTBerechtigungspfads zu helfen, haben 
    <string name="trip_simulator_crash_30_description">Bei diesem Beispiel handelt es sich um eine kurze Strecke mit einem bestätigten Unfall bei einer Geschwindigkeit von 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Unfall bei 30 km/h bestätigt</string>
    <string name="trip_simulator_description">Der Simulator soll Ihnen helfen, eine Fahrt nachzuvollziehen und den Lebenszyklus der DriveKit-Komponente Trip Analysis zu verstehen. Wir empfehlen Ihnen, ihn nach der Integration des SDK zu verwenden. Es reproduziert echte GPS-Daten für verschiedene Arten von Fahrten.\n\nEs ist ein Testwerkzeug und sollte nicht in eine Produktionsanwendung eingebaut werden.\n\nWir empfehlen Ihnen außerdem, Ihre Anwendung immer unter realen Bedingungen zu testen, bevor Sie sie veröffentlichen.</string>
+   <string name="trip_simulator_error_auto_mode">Der automatische Modus ist deaktiviert. Es können keine Fahrten automatisch analysiert werden.</string>
    <string name="trip_simulator_error_dev_mode">Sie müssen den Entwicklermodus aktivieren, um auf die Option zuzugreifen, eine fiktive Anwendung auszuwählen, und damit die Anwendung ordnungsgemäß funktionieren kann. Folgen Sie dazu der offiziellen Dokumentation.</string>
    <string name="trip_simulator_error_mock_location">Damit der Simulator richtig funktioniert, müssen Sie diese Anwendung als Mock-Position-Anwendung auswählen. Geben Sie dazu in der Parametersuche \"Mockposition\" ein und wählen Sie diese Anwendung aus.</string>
+   <string name="trip_simulator_error_vehicle_disabled">Bei allen Fahrzeugen ist der Autostartmodus deaktiviert. Es können keine Fahrten automatisch analysiert werden.</string>
    <string name="trip_simulator_graph_time">Zeit (s)</string>
    <string name="trip_simulator_graph_velocity">Geschwindigkeit (km/h)</string>
    <string name="trip_simulator_header">Fahrtensimulator</string>

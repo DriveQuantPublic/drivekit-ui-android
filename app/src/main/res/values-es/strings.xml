@@ -71,6 +71,7 @@
    <string name="feature_working_hours_title">Trip Analysis | Gestión de horarios</string>
    <string name="firstname">Primer nombre</string>
    <string name="forbidden_error">No tiene los derechos necesarios</string>
+   <string name="info_banner_diagnosis_title">Se ha detectado un problema! Debe configurar su teléfono.</string>
    <string name="lastname">Apellido</string>
    <string name="logout_confirmation">¿Estás seguro de que quieres desconectarte?</string>
    <string name="network_ko_error">Los datos móviles no están activados</string>
@@ -157,8 +158,10 @@
    <string name="trip_simulator_crash_30_description">Este ejemplo es un viaje corto con un accidente confirmado a una velocidad de 30 km/h.</string>
    <string name="trip_simulator_crash_30_title">Accidente confirmado a 30 km/h</string>
    <string name="trip_simulator_description">El simulador tiene como objetivo ayudarle a reproducir un viaje y a comprender el ciclo de vida del componente de análisis de viajes de DriveKit. Le aconsejamos que lo utilice después de la integración del SDK. Reproduce datos GPS reales para varios tipos de viajes.\n\nSe trata de una herramienta de prueba, no debe incrustarla en una aplicación de producción.\n\nTambién le recomendamos que siempre pruebe su aplicación en condiciones reales antes de publicarla.</string>
+   <string name="trip_simulator_error_auto_mode">El modo automático está desactivado. Ningún viaje puede ser analizado automáticamente.</string>
    <string name="trip_simulator_error_dev_mode">Debe activar el modo de desarrollador para acceder a la opción de seleccionar una aplicación ficticia y permitir que la aplicación se ejecute. Para ello, siga la documentación oficial.</string>
    <string name="trip_simulator_error_mock_location">Para que el simulador funcione correctamente, debe seleccionar esta aplicación como aplicación de posición ficticia. Para ello, escriba \"posición ficticia\" en la búsqueda de parámetros y seleccione esta aplicación.</string>
+   <string name="trip_simulator_error_vehicle_disabled">Todos los vehículos tienen desactivado el modo de arranque automático. Ningún viaje puede ser analizado automáticamente.</string>
    <string name="trip_simulator_graph_time">Tiempo (s)</string>
    <string name="trip_simulator_graph_velocity">Velocidad (km/h)</string>
    <string name="trip_simulator_header">Simulador de viaje</string>
