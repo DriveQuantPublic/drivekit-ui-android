@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.common.ui.extension.normalText
 
 internal class InfoBannerView : LinearLayout {
 
@@ -47,7 +48,7 @@ internal class InfoBannerView : LinearLayout {
 
         title.apply {
             text = context.getString(infoBannerType.getTitleResId())
-            setTextColor(infoBannerType.getColor())
+            normalText(infoBannerType.getColor())
         }
 
         if (infoBannerType.displayArrow()) {

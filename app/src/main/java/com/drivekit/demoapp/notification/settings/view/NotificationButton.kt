@@ -64,7 +64,7 @@ internal class NotificationButton : LinearLayout {
     fun setNotificationDescription(description: String) {
         textViewDescription.apply {
             text = description
-            normalText()
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
     }
 
