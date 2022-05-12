@@ -37,6 +37,7 @@ dependencies {
     implementation "com.drivequant.drivekit:drivekit-challenge:$drivekit_version"
     debugImplementation "com.drivequant.drivekit:drivekit-trip-simulator:$drivekit_version" // This module MUST be used only during tests !
 
+    // In this project we can locally build DriveKit UI modules:
     implementation project(':CommonUI')
     implementation project(':TripAnalysisUI')
     implementation project(':DriverDataUI')
@@ -44,4 +45,13 @@ dependencies {
     implementation project(':DriverAchievementUI')
     implementation project(':PermissionsUtilsUI')
     implementation project(':ChallengeUI')
+
+    // In your app, you must implement DriveKit UI modules like that:
+    //implementation "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-trip-analysis-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-driver-data-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-vehicle-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-driver-achievement-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-permissions-utils-ui:$drivekitui_version"
+    //implementation "com.drivequant.drivekit:drivekit-challenge-ui:$drivekitui_version"
 }
