@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.drivekit.demoapp.config.DriveKitConfig
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
 import java.util.*
@@ -16,7 +17,7 @@ class DriveKitDemoApplication : Application() {
     companion object {
         fun showNotification(context: Context, message: String) {
             val builder = NotificationCompat.Builder(context, "notif_channel")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(message)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
@@ -31,8 +32,8 @@ class DriveKitDemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        DriveKitConfig.configure(this)
+        DKNotificationManager.createChannels(this)
+        DriveKitConfig.initialize(this)
         registerReceiver()
     }
 

@@ -58,8 +58,8 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
         textViewDepartureCity.normalText(DriveKitUI.colors.mainFontColor())
         textViewArrivalCity.normalText(DriveKitUI.colors.mainFontColor())
-        textViewDepartureTime.normalText(Color.parseColor("#9E9E9E"))
-        textViewArrivalTime.normalText(Color.parseColor("#9E9E9E"))
+        textViewDepartureTime.normalText(DriveKitUI.colors.complementaryFontColor())
+        textViewArrivalTime.normalText(DriveKitUI.colors.complementaryFontColor())
 
         computeTripData(trip, tripData)
         computeTripInfo(trip)

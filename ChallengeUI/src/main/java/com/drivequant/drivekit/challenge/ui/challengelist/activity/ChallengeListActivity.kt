@@ -7,7 +7,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeFragment
 import com.drivequant.drivekit.common.ui.utils.DKResource
 
-class ChallengeListActivity : AppCompatActivity() {
+internal class ChallengeListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_challenge_list)

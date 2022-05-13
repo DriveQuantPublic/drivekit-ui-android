@@ -27,7 +27,7 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
         return DKSpannable().append(text, context.resSpans {
             size(R.dimen.dk_text_xxbig)
             typeface(Typeface.BOLD)
-            color(DriveKitUI.colors.complementaryFontColor())
+            color(DriveKitUI.colors.mainFontColor())
         }).toSpannable()
     }
 

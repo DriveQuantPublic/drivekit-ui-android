@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorDetailActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/text_view_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin" />
+
+            <FrameLayout
+                android:id="@+id/graph_container"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_width="match_parent"
+                android:layout_height="198dp"
+                android:paddingStart="@dimen/dk_margin_half"
+                android:paddingEnd="@dimen/dk_margin_half" />
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dk_margin_double"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.drivekit.demoapp.component.TripSimulatorDetailView
+                    android:id="@+id/simulation_run_duration"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/dk_margin"
+                    android:paddingEnd="@dimen/dk_margin" />
+
+                <com.drivekit.demoapp.component.TripSimulatorDetailView
+                    android:id="@+id/simulation_run_time"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.drivekit.demoapp.component.TripSimulatorDetailView
+                    android:id="@+id/simulation_run_velocity"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:paddingStart="@dimen/dk_margin"
+                    android:paddingEnd="@dimen/dk_margin" />
+
+                <com.drivekit.demoapp.component.TripSimulatorDetailView
+                    android:id="@+id/simulation_run_sdk_state"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <com.drivekit.demoapp.component.TripSimulatorDetailView
+                android:id="@+id/simulation_automatic_stop_in"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:paddingStart="@dimen/dk_margin"
+                android:paddingEnd="@dimen/dk_margin"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/button_stop_start_trip_simulator"
+        layout="@layout/layout_button_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin_double" />
+</LinearLayout>

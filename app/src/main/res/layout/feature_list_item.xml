@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.drivekit.demoapp.component.FeatureCard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/feature_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dk_margin"/>

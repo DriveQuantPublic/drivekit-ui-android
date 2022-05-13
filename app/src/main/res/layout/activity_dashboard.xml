@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/dk_layout_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/info_banners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dk_margin_half"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/container_synthesis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+            <FrameLayout
+                android:id="@+id/container_last_trips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.drivekit.demoapp.component.FeatureCard
+                android:id="@+id/card_features"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/button_start_stop_trip"
+        layout="@layout/layout_button_action" />
+
+    <include
+        android:id="@+id/button_trip_simulator"
+        layout="@layout/layout_button_action"
+        android:layout_marginBottom="@dimen/dk_margin_medium"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+</LinearLayout>

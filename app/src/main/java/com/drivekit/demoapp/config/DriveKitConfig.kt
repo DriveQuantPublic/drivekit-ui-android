@@ -1,68 +1,138 @@
 package com.drivekit.demoapp.config
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import com.drivekit.demoapp.DriveKitDemoApplication
-import com.drivekit.demoapp.vehicle.DemoCustomField
-import com.drivekit.demoapp.vehicle.DemoPtacTrailerTruckField
+import androidx.preference.PreferenceManager
+import com.drivekit.demoapp.drivekit.TripListenerController
+import com.drivekit.demoapp.manager.DriveKitListenerManager
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
+import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.drivekitdemoapp.R
+import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.entity.*
+import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
-import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
-import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
-import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
-import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.GroupField
 import kotlin.random.Random
 
 /**
  * Created by Mohamed on 2020-05-14.
  */
-// Copyright (c) 2020 DriveQuant. All rights reserved.
 
-internal object DriveKitConfig : ContentMail {
+internal object DriveKitConfig {
+    // ===============================
+    // ↓↓↓ ENTER YOUR API KEY HERE ↓↓↓
+    // ===============================
+    private const val apiKey = ""
 
-    fun configure(application: Application) {
-        configureCore(application)
-        configureCommonUI()
-        configureTripAnalysis(application)
-        configureDriverData()
-        configureDriverAchievement()
-        configurePermissionsUtils(application)
-        configureVehicle()
-        initFirstLaunch()
+    private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
+
+    private const val enableTripAnalysisCrashDetection: Boolean = true
+
+    private val tripData: TripData = TripData.SAFETY
+    private const val enableAlternativeTrips: Boolean = true
+
+    private val vehicleTypes: List<VehicleType> = VehicleType.values().toList()
+    private val vehicleBrands: List<VehicleBrand> = VehicleBrand.values().toList()
+    private const val enableVehicleOdometer: Boolean = true
+
+    fun initialize(application: Application) {
+        // Manage trips saved for repost notification
+        DKNotificationManager.configure()
+
+        // DriveKit modules initialization:
+        initializeModules(application)
+
+        // DriveKit modules configuration:
+        configureModules(application)
     }
 
-    private fun configureCore(application: Application) {
-        DriveKit.initialize(application)
-        //TODO: Push your api key here
-        //DriveKit.setApiKey("Your API key here")
+    private fun initializeModules(application: Application) {
+        // DriveKit Core Initialization:
+        DriveKit.initialize(application, DriveKitListenerManager)
+
+        // TripAnalysis initialization:
+        DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
+
+        // Initialize DriverData:
+        DriveKitDriverData.initialize()
+    }
+
+    private fun configureModules(context: Context) {
+        // Internal modules configuration:
+        configureCore()
+        configureTripAnalysis(context)
+
+        // UI modules configuration:
+        configureCommonUI()
+        configureDriverDataUI()
+        configureVehicleUI()
+        configureTripAnalysisUI(context)
+        configureDriverAchievementUI()
+        configurePermissionsUtilsUI()
+        configureChallengeUI()
+    }
+
+    fun isTripAnalysisAutoStartedEnabled(context: Context) =
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, true)
+
+    fun enableTripAnalysisAutoStart(context: Context, activate: Boolean) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
+        DriveKitTripAnalysis.activateAutoStart(activate)
+    }
+
+    fun getPermissionsViews(): ArrayList<PermissionView> {
+        val items = ArrayList<PermissionView>()
+        items.addAll(
+            listOf(
+                PermissionView.LOCATION,
+                PermissionView.ACTIVITY,
+                PermissionView.BACKGROUND_TASK,
+                PermissionView.NEARBY_DEVICES
+            )
+        )
+        return items
+    }
+
+    private fun configureCore() {
+        if (apiKey.isNotBlank()) {
+            DriveKit.setApiKey(apiKey)
+        }
+    }
+
+    private fun configureTripAnalysis(context: Context) {
+        DriveKitTripAnalysis.activateAutoStart(isTripAnalysisAutoStartedEnabled(context))
+        DriveKitTripAnalysis.activateCrashDetection(enableTripAnalysisCrashDetection)
+
+        // You must call this method if you use DriveKit Vehicle component:
+        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
     }
 
     private fun configureCommonUI() {
@@ -76,37 +146,34 @@ internal object DriveKitConfig : ContentMail {
                 // TODO: manage event tracking here
             }
         })
-        //DriveKitUI.initialize(fonts = FontConfig(), colors = ColorConfig(context))
     }
 
-    private fun configureTripAnalysis(context: Context) {
-        DriveKitTripAnalysis.initialize(createForegroundNotification(context), object : TripListener {
-            override fun tripStarted(startMode: StartMode) {
-                // Call when a trip start
-            }
+    private fun configureDriverDataUI() {
+        DriverDataUI.initialize(tripData = tripData)
+        DriverDataUI.enableAlternativeTrips(enableAlternativeTrips)
+    }
 
-            override fun tripPoint(tripPoint: TripPoint) {
-                // Call for each location registered during a trip
-            }
-            override fun tripSavedForRepost() {
-                DriveKitDemoApplication.showNotification(
-                    context,
-                    context.getString(R.string.trip_save_for_repost)
-                )
-            }
-            override fun beaconDetected() {}
-            override fun sdkStateChanged(state: State) {}
-            override fun potentialTripStart(startMode: StartMode) {}
-            override fun crashDetected(crashInfo: DKCrashInfo) {}
-            override fun crashFeedbackSent(crashInfo: DKCrashInfo, feedbackType: CrashFeedbackType, severity: CrashFeedbackSeverity) {}
+    private fun configureVehicleUI() {
+        DriveKitVehicleUI.initialize()
+        DriveKitVehicleUI.enableOdometer(enableVehicleOdometer)
+        DriveKitVehicleUI.configureVehiclesTypes(vehicleTypes)
+        DriveKitVehicleUI.configureBrands(vehicleBrands)
+        DriveKitVehicleUI.configureBeaconDetailEmail(object : ContentMail {
+            override fun getRecipients() = listOf("recipient_to_configure@mail.com")
+            override fun getBccRecipients() = listOf("")
+            override fun getSubject() = "Subject to configure"
+            override fun getMailBody() = "Mail body to configure"
+            override fun overrideMailBodyContent() = true
         })
-        DriveKitTripAnalysis.setVehiclesConfigTakeover(true)
+    }
+
+    private fun configureTripAnalysisUI(context: Context) {
         DriveKitTripAnalysisUI.initialize()
         DriveKitTripAnalysisUI.enableCrashFeedback(
             roadsideAssistanceNumber = "0000000000",
             DKCrashFeedbackConfig(
                 notification = DKCrashFeedbackNotification(
-                    icon = R.drawable.ic_launcher_background,
+                    icon = R.drawable.ic_notification,
                     channelName = "${R.string.app_name} - Crash Detection Feedback",
                     notificationId = Random.nextInt(1, Integer.MAX_VALUE),
                     title = context.getString(R.string.dk_crash_detection_feedback_notif_title),
@@ -119,75 +186,76 @@ internal object DriveKitConfig : ContentMail {
         )
     }
 
-    private fun configureDriverData() {
-        DriveKitDriverData.initialize()
-        DriverDataUI.initialize()
-        DriverDataUI.enableAlternativeTrips(true)
-    }
-
-    private fun configureDriverAchievement() {
+    private fun configureDriverAchievementUI() {
         DriverAchievementUI.initialize()
-        DriverAchievementUI.configureBadgeCategories(BadgeCategory.values().toMutableList())
         DriverAchievementUI.configureRankingTypes(RankingType.values().toList())
-
         val rankingPeriods = listOf(RankingPeriod.WEEKLY, RankingPeriod.MONTHLY, RankingPeriod.ALL_TIME)
-        val rankingSelectorType = RankingSelectorType.PERIOD(rankingPeriods)
-        DriverAchievementUI.configureRankingSelector(rankingSelectorType)
-
-        val rankingDepthValue = 5
-        DriverAchievementUI.configureRankingDepth(rankingDepthValue)
+        DriverAchievementUI.configureRankingSelector(RankingSelectorType.PERIOD(rankingPeriods))
+        DriverAchievementUI.configureBadgeCategories(BadgeCategory.values().toMutableList())
+        DriverAchievementUI.configureRankingDepth(rankingDepth = 5)
     }
 
-    private fun configurePermissionsUtils(context: Context) {
+    private fun configurePermissionsUtilsUI() {
         PermissionsUtilsUI.initialize()
-        PermissionsUtilsUI.configureBluetooth(true)
+        PermissionsUtilsUI.configureBluetooth(isBluetoothNeeded())
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("")
-            override fun getMailBody(): String = "Mail body"
-            override fun getRecipients(): List<String> = listOf("") // TODO : put your mail support
-            override fun getSubject(): String = "${context.getString(R.string.app_name)} - ${context.getString(R.string.ask_for_request)}"
+            override fun getMailBody() = "Mail body to configure"
+            override fun getRecipients(): List<String> = listOf("recipient_to_configure@mail.com")
+            override fun getSubject() = "Subject to configure"
             override fun overrideMailBodyContent(): Boolean = false
         }))
     }
 
-    private fun configureVehicle() {
-        DriveKitVehicleUI.initialize()
-        DriveKitVehicleUI.configureVehiclesTypes(listOf(VehicleType.CAR, VehicleType.TRUCK))
-        DriveKitVehicleUI.configureBrands(VehicleBrand.values().asList())
-        DriveKitVehicleUI.addCustomFieldsToGroup(GroupField.GENERAL, listOf(DemoCustomField()))
-        DriveKitVehicleUI.addCustomFieldsToGroup(
-            GroupField.CHARACTERISTICS,
-            listOf(DemoPtacTrailerTruckField())
-        )
-        DriveKitVehicleUI.configureBeaconDetailEmail(this)
-        DriveKitVehicleUI.enableOdometer(true)
+    private fun configureChallengeUI() {
+        ChallengeUI.initialize()
     }
 
     private fun createForegroundNotification(context: Context): TripNotification {
         val notification = TripNotification(
             context.getString(R.string.app_name),
-            context.getString(R.string.trip_started),
-            R.drawable.ic_launcher_background
+            context.getString(R.string.notif_trip_started),
+            R.drawable.ic_notification
         )
         notification.enableCancel = true
         notification.cancel = context.getString(R.string.cancel_trip)
-        notification.cancelIconId = R.drawable.ic_launcher_background
+        notification.cancelIconId = R.drawable.ic_notification
+        notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
         return notification
     }
 
-    private fun initFirstLaunch() {
-        val firstLaunch = DriveKitSharedPreferencesUtils.getBoolean("dk_demo_firstLaunch", true)
-        if (firstLaunch) {
-            DriveKitTripAnalysis.activateAutoStart(true)
-            DriveKit.enableLogging("/DriveKit")
-            DriveKitTripAnalysis.setStopTimeOut(4 * 60)
-            DriveKitSharedPreferencesUtils.setBoolean("dk_demo_firstLaunch", false)
+    private fun isBluetoothNeeded(): Boolean {
+        DriveKitVehicle.vehiclesQuery().noFilter().query().execute().forEach {
+            if (it.detectionMode == DetectionMode.BEACON || it.detectionMode == DetectionMode.BLUETOOTH) {
+                return true
+            }
         }
+        return false
     }
 
-    override fun getRecipients() = listOf("recipient1@email.com")
-    override fun getBccRecipients() = listOf("bcc_test1@email.com")
-    override fun getSubject() = "Mock subject"
-    override fun getMailBody() = "Mock mail body in DriveKitDemoApplication.kt"
-    override fun overrideMailBodyContent() = true
+    fun logout(context: Context) {
+        // Reset DriveKit modules:
+        reset(context)
+
+        // Reconfigure modules:
+        configureModules(context)
+    }
+
+    @SuppressLint("ApplySharedPref")
+    fun reset(context: Context) {
+        // Reset DriveKit
+        DriveKit.reset()
+        DriveKitTripAnalysis.reset()
+        DriveKitDriverData.reset()
+        DriveKitVehicle.reset()
+        DriveKitDriverAchievement.reset()
+        DriveKitChallenge.reset()
+
+        // Delete Notification Channels
+        DKNotificationManager.deleteChannels(context)
+
+        // Clear Shared Preferences of the Demo App
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        preferences.edit().clear().commit()
+    }
 }

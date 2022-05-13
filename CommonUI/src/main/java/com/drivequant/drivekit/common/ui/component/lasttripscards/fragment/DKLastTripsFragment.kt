@@ -39,7 +39,7 @@ internal class DKLastTripsFragment : Fragment() {
         context?.let { context ->
             viewModel?.let { viewModel ->
                 text_view_last_trip_header.apply {
-                    headLine2(DriveKitUI.colors.complementaryFontColor())
+                    headLine2()
                     text = viewModel.getTripCardTitle(context)
                 }
                 val view = View.inflate(context, R.layout.item_trip_list, null)
@@ -59,7 +59,7 @@ internal class DKLastTripsFragment : Fragment() {
             } ?: run {
                 text_view_see_more.apply {
                     visibility = View.VISIBLE
-                    headLine1(DriveKitUI.colors.complementaryFontColor())
+                    headLine1()
                     text = DKResource.convertToString(context,"dk_common_see_more_trips")
                 }
                 container.visibility = View.GONE

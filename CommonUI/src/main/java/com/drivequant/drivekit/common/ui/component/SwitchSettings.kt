@@ -44,7 +44,7 @@ class SwitchSettings : LinearLayout {
         }
 
         textViewDescription.apply {
-            normalText(DriveKitUI.colors.mainFontColor())
+            normalText(DriveKitUI.colors.complementaryFontColor())
             setTypeface(DriveKitUI.primaryFont(context), Typeface.NORMAL)
         }
 

@@ -131,7 +131,7 @@ class OdometerHistoryDetailFragment : Fragment() {
     private fun initMileageRecord(context: Context) {
         edit_text_distance.apply {
             if (viewModel.canEditOrAddHistory()) {
-                setEditTextTitle(viewModel.getHistoryDistance(context), ContextCompat.getColor(context,R.color.dkOdometerHistoryDateColor))
+                setEditTextTitle(viewModel.getHistoryDistance(context), DriveKitUI.colors.complementaryFontColor())
             } else {
                 setEditTextTitle(viewModel.getHistoryDistance(context))
             }
