@@ -59,7 +59,7 @@ class DKSynthesisCardFragment : Fragment() {
 
     private fun updateContent() {
         title.text = viewModel.getTitle(requireContext())
-        title.headLine2(DriveKitUI.colors.complementaryFontColor())
+        title.headLine2()
 
         viewModel.getExplanationContent(requireContext())?.let { explanation ->
             explanation_content.visibility = View.VISIBLE

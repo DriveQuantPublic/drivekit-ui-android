@@ -61,7 +61,7 @@ internal class OdometerVehicleDetailView : LinearLayout {
         }
         text_view_odometer_distance_value.apply {
             text = viewModel.getDistance(context, odometerItemType)
-            setTextColor(ContextCompat.getColor(context, R.color.dkGrayColor))
+            setTextColor(DriveKitUI.colors.mainFontColor())
         }
 
         image_view_info.apply {

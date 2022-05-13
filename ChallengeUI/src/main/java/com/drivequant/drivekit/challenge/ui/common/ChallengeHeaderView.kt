@@ -73,7 +73,7 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
 
     private fun setStyle() {
         text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
-        text_view_date.smallText(Color.parseColor("#9E9E9E"))
+        text_view_date.smallText(DriveKitUI.colors.complementaryFontColor())
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         text_view_conditions.normalText()
         text_view_rules.normalText()

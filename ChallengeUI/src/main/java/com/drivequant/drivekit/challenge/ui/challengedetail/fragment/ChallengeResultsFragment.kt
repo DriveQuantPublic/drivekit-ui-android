@@ -109,7 +109,6 @@ class ChallengeResultsFragment : Fragment() {
 
 
     private fun displayCards() {
-        val competitorTextColor = Color.parseColor("#9E9E9E")
         DKResource.convertToDrawable(requireContext(), "dk_common_road")?.let { drawable ->
             card_view_distance.icon_distance.setImageDrawable(drawable)
         }
@@ -124,7 +123,7 @@ class ChallengeResultsFragment : Fragment() {
 
             card_view_distance.text_view_competitor_value.text = DKResource.buildString(
                 requireContext(),
-                competitorTextColor,
+                DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_competitors_distance",
                 viewModel.getCompetitorDistance(requireContext())
@@ -145,7 +144,7 @@ class ChallengeResultsFragment : Fragment() {
 
             card_view_duration.text_view_competitor_value.text = DKResource.buildString(
                 requireContext(),
-                competitorTextColor,
+                DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_competitors_duration",
                 viewModel.getCompetitorDuration(requireContext())
@@ -166,7 +165,7 @@ class ChallengeResultsFragment : Fragment() {
 
             card_view_trips_number.text_view_competitor_value.text = DKResource.buildString(
                 requireContext(),
-                competitorTextColor,
+                DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
                 "dk_challenge_competitors_trips",
                 viewModel.getCompetitorTripsNumber(requireContext()))

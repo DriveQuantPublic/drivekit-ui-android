@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.drivekit.demoapp.onboarding.activity.UserIdActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/dk_layout_toolbar" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/dk_margin_double"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/dk_margin"
+            android:paddingStart="@dimen/dk_margin">
+
+            <TextView
+                android:id="@+id/text_view_user_id_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_double"
+                tools:text="@string/authentication_title"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_user_id_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin"
+                tools:text="@string/authentication_description" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_view_user_id_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/authentication_unique_identifier"
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/dk_text_normal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/button_validate"
+            layout="@layout/layout_button_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.drivequant.drivekit.common.ui.utils.DKProgressBar
+        android:id="@+id/progress_bar_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

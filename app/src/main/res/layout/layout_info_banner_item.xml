@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dk_margin_half"
+        android:padding="@dimen/dk_margin_half"
+        android:weightSum="1"
+        android:layout_gravity="center_vertical"
+        android:foreground="?android:attr/selectableItemBackground">
+        <ImageView
+            android:id="@+id/image_view_info_banner_icon"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dk_ic_big"
+            tools:src="@drawable/ic_feature_permissionsutils"
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight="0.15" />
+        <TextView
+            android:id="@+id/text_view_info_banner_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:text="@string/info_banner_diagnosis_title"
+            android:layout_marginLeft="@dimen/dk_margin_half"
+            android:layout_marginRight="@dimen/dk_margin_half"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"/>
+        <ImageView
+            android:id="@+id/image_view_info_banner_arrow"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dk_ic_big"
+            tools:src="@drawable/dk_common_arrow_forward"
+            android:layout_gravity="end|center_vertical"
+            android:paddingTop="@dimen/dk_margin_quarter"
+            android:paddingBottom="@dimen/dk_margin_quarter"
+            android:layout_weight="0.15"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+    <View style="@style/Separator.Horizontal"/>
+</LinearLayout>
