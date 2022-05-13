@@ -69,14 +69,14 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 
 
 ### ⚙️ Configure the Demo app
-1- Ensure that you have set the API Key during the previous step. Otherwise, the interface will display an error message.
-2- Set your unique user identifier. We recommend **never** using an email address or phone number to define the unique user ID. It is recommended that you set up a unique, universal and anonymous user ID. For example, you can generate a globally unique identifier 
+1. Ensure that you have set the API Key during the previous step. Otherwise, the interface will display an error message.
+1. Set your unique user identifier. We recommend **never** using an email address or phone number to define the unique user ID. It is recommended that you set up a unique, universal and anonymous user ID. For example, you can generate a globally unique identifier 
 
-3- Enter some information such as firstname, last name or pseudo. You can skip this step and set information later.
-4- Grant every required permission to allow the application to access the smartphone’s sensors.
-5- Add your first vehicle to your account.
-6- In order for the app to work properly, it is recommended to disable the battery optimization functions for the application. This is especially important for some Android smartphone models such as Huawei, Samsung, OnePlus, Asus and Xiaomi. You can find more information about it in [our FAQ](https://drivequant.zendesk.com/hc/en-gb/articles/360007407020-How-to-disable-battery-optimization-on-your-smartphone-).
-That’s it!
+1. Enter some information such as firstname, last name or pseudo. You can skip this step and set information later.
+1. Grant every required permission to allow the application to access the smartphone’s sensors.
+1. Add your first vehicle to your account.
+1. In order for the app to work properly, it is recommended to disable the battery optimization functions for the application. This is especially important for some Android smartphone models such as Huawei, Samsung, OnePlus, Asus and Xiaomi. You can find more information about it in [our FAQ](https://drivequant.zendesk.com/hc/en-gb/articles/360007407020-How-to-disable-battery-optimization-on-your-smartphone-).
+1. That’s it!
 
 
 ### 🚗 Test the Demo app
@@ -84,14 +84,10 @@ That’s it!
 Congratulations! The application is now configured and ready to run!
 
 You can now discover the main screens of the app:
-
-1- Dashboard: gives access to all the features
-
-2- Parameters: accessible by the ⚙️ icon, it permits to manage user data, auto mode, notifications and disconnection.
-
-3- Feature list: Each card contains a feature of the DriveKit SDK. Explore them all to get a complete view of the SDK.
-
-4- Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
+1. Dashboard: gives access to all the features
+1. Parameters: accessible by the ⚙️ icon, it permits to manage user data, auto mode, notifications and disconnection.
+1. Feature list: Each card contains a feature of the DriveKit SDK. Explore them all to get a complete view of the SDK.
+1. Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
 
 ![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Screenshots.png)
 
