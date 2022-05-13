@@ -142,7 +142,7 @@
    <string name="dk_driverdata_urban">%s en zone urbaine</string>
    <string name="dk_driverdata_value">Valeur =</string>
    <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
-   <string name="dk_driverdata_weak_accel">Freinage faible</string>
+   <string name="dk_driverdata_weak_accel">Accélération faible</string>
    <string name="dk_driverdata_weak_decel">Freinage faible</string>
    <string name="dk_driverdata_weak_maintain">Vitesse irrégulière</string>
    <string name="dk_driverdata_weather_cloud">Temps nuageux</string>
