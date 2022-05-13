@@ -84,14 +84,16 @@ That’s it!
 Congratulations! The application is now configured and ready to run!
 
 You can now discover the main screens of the app:
-1 - Dashboard: gives access to all the features
-2 - Parameters: accessible by the ⚙️ icon, it permits to manage user data, auto mode, notifications and disconnection.
-3 - Feature list: Each card contains a feature of the DriveKit SDK. Explore them all to get a complete view of the SDK.
-4 - Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
 
+1- Dashboard: gives access to all the features
+
+2- Parameters: accessible by the ⚙️ icon, it permits to manage user data, auto mode, notifications and disconnection.
+
+3- Feature list: Each card contains a feature of the DriveKit SDK. Explore them all to get a complete view of the SDK.
+
+4- Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
 
 ![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Screenshots.png)
-
 
 The best way to become familiar with smartphone telematics is to try the app in real conditions when travelling by car or public transport.
 
