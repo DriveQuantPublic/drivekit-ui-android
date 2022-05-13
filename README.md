@@ -40,7 +40,7 @@ We encourage you to use the code of this application which has been open-sourced
 
 You can follow the steps below to install, run and experiment with the DriveKit Demo app.
 
-### ✅ Prerequisites (Android)
+### ✅ Prerequisites
 For an integration on Android you will need the following elements:
 * Latest stable version of Android Studio
 * Git
