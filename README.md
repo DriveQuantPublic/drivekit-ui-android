@@ -7,7 +7,7 @@ The DriveKit SDK includes open source graphics libraries for trip data display, 
 
 To integrate the **DriveKit SDK** in your application, follow the installation guidelines: [docs.drivequant.com](https://docs.drivequant.com)
 
-![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Illustration.png)
+![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop/Demo%20App%20-%20Illustration.png)
 
 # Why use the Demo application?
 
@@ -89,7 +89,7 @@ You can now discover the main screens of the app:
 1. Feature list: Each card contains a feature of the DriveKit SDK. Explore them all to get a complete view of the SDK.
 1. Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
 
-![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Screenshots.png)
+![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop/Demo%20App%20-%20Screenshots.png)
 
 The best way to become familiar with smartphone telematics is to try the app in real conditions when travelling by car or public transport.
 
