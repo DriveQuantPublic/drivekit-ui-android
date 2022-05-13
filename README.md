@@ -7,7 +7,7 @@ The DriveKit SDK includes open source graphics libraries for trip data display, 
 
 To integrate the **DriveKit SDK** in your application, follow the installation guidelines: [docs.drivequant.com](https://docs.drivequant.com)
 
-![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-Illustrations.png)
+![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Illustration.png)
 
 # Why use the Demo application?
 
@@ -43,31 +43,26 @@ You can follow the steps below to install, run and experiment with the DriveKit 
 ### ✅ Prerequisites (Android)
 For an integration on Android you will need the following elements:
 * Latest stable version of Android Studio
-
-
-### ✅ Prerequisites (Android)
-For an integration on Android you will need the following elements:
-* Latest stable version of Android Studio
 * Git
 * An Android smartphone with developer mode enabled connected to the computer 
 * A valid DriveKit API key
 
 Your project must be configured as follows: 
-* minSdkVersion = 21
-* compileSdkVersion = 31
-* targetSdkVersion = 31
+* `minSdkVersion = 21`
+* `compileSdkVersion = 31`
+* `targetSdkVersion = 31`
 
 The DriveKit SDK uses the libraries listed below. These are minimal required versions. Check that they are compatible with your application.
-* Kotlin = 1.5.21
-* Gson = 2.7
-* Volley = 1.2.1
-* Room = 2.4.1
-* WorkManager = 2.7.0-rc01
-* Play Services = 16.0.0
+* `Kotlin = 1.5.21`
+* `Gson = 2.7`
+* `Volley = 1.2.1`
+* `Room = 2.4.1`
+* `WorkManager = 2.7.0-rc01`
+* `Play Services = 16.0.0`
 
 
 ### 🧑‍💻 Install and run the Demo app
-Android
+
 * The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get a **DriveKit API key**, contact us at: <contact@drivequant.com>.
 * At the beginning of `DriveKitConfig` class, add your **DriveKit API Key** in the `apiKey` property.
 * Build and run the Demo app on your phone
@@ -76,7 +71,6 @@ Android
 ### ⚙️ Configure the Demo app
 1- Ensure that you have set the API Key during the previous step. Otherwise, the interface will display an error message.
 2- Set your unique user identifier. We recommend **never** using an email address or phone number to define the unique user ID. It is recommended that you set up a unique, universal and anonymous user ID. For example, you can generate a globally unique identifier 
-
 
 3- Enter some information such as firstname, last name or pseudo. You can skip this step and set information later.
 4- Grant every required permission to allow the application to access the smartphone’s sensors.
@@ -96,7 +90,7 @@ You can now discover the main screens of the app:
 4 - Trip Simulator: feature that allows to reproduce a trip and understand the life cycle of the Trip Analysis component. It should not be embedded in a production application.
 
 
-![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-Screenshots.png)
+![Android Demo App - Illustrations](https://github.com/DriveQuantPublic/drivekit-ui-android/blob/develop-refacto/Demo%20App%20-%20Screenshots.png)
 
 
 The best way to become familiar with smartphone telematics is to try the app in real conditions when travelling by car or public transport.
