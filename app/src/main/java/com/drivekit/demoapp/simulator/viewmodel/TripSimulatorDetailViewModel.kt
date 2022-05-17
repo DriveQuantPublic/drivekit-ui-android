@@ -25,7 +25,8 @@ internal interface TripSimulatorDetailViewModelListener {
     fun updateNeeded(updatedValue: Double?, timestamp: Double?)
 }
 
-internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) : ViewModel(),
+internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTripType) :
+    ViewModel(),
     DriveKitTripSimulator.DKTripSimulatorListener, TripListener {
 
     var isSimulating: Boolean = false
@@ -50,10 +51,6 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     }
 
     fun startSimulation() {
-        currentSpeed = null
-        timeWhenEnteredStoppingState = null
-        stoppingTimer = null
-        currentDuration = 0
         DriveKitTripSimulator.start(PresetTripType.getPresetTrip(presetTripType), this)
         isSimulating = true
     }
@@ -61,6 +58,11 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     fun stopSimulation() {
         DriveKitTripSimulator.stop()
         isSimulating = false
+        currentSpeed = null
+        timeWhenEnteredStoppingState = null
+        stoppingTimer = null
+        currentDuration = 0
+        updateNeeded()
     }
 
     fun getState() = DriveKitTripAnalysis.getRecorderState().name
@@ -80,7 +82,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
                 timeWhenEnteredStoppingState = Date()
                 val timerTask = object : TimerTask() {
                     override fun run() {
-                       updateNeeded()
+                        updateNeeded()
                     }
                 }
                 if (stoppingTimer == null) {
@@ -126,16 +128,14 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         severity: CrashFeedbackSeverity
     ) {
     }
-
     override fun potentialTripStart(startMode: StartMode) {}
     override fun tripPoint(tripPoint: TripPoint) {}
-    override fun tripSavedForRepost() {}
+    override fun tripSavedForRepost() {
+        stopSimulation()
+    }
     override fun tripStarted(startMode: StartMode) {}
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
-        if (currentDuration >= PresetTripType.getPresetTrip(presetTripType).getSimulationDuration()) {
-            stopSimulation()
-            updateNeeded()
-        }
+        stopSimulation()
     }
     override fun sdkStateChanged(state: State) {
         updateStoppingTime(state)
