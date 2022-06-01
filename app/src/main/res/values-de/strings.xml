@@ -73,6 +73,7 @@
    <string name="forbidden_error">Sie haben nicht die nötigen Rechte</string>
    <string name="info_banner_diagnosis_title">Ein Problem wurde erkannt! Sie müssen Ihr Telefon einrichten.</string>
    <string name="lastname">Nachname</string>
+   <string name="limit_reached_error">Die maximale Anzahl an Fahrern auf diesem API-Schlüssel wurde erreicht</string>
    <string name="logout_confirmation">Möchten Sie die Verbindung wirklich trennen?</string>
    <string name="network_ko_error">Mobile Daten sind nicht aktiviert</string>
    <string name="notif_trip_analysis_continue">Analyse fortsetzen</string>
