@@ -54,9 +54,7 @@ internal class PermissionsActivity : AppCompatActivity() {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(
-                    this@PermissionsActivity,
-                    DriveKitConfig.getPermissionsViews(),
-                    object : PermissionViewListener {
+                    this@PermissionsActivity, object : PermissionViewListener {
                         override fun onFinish() {
                             viewModel.shouldDisplayVehicle()
                         }
