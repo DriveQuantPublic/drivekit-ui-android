@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -26,10 +25,6 @@ internal class DistractionSelectorItem : LinearLayout {
 
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_selector_item, null)
-        view.distraction_selector.smallText(
-            textColor = DriveKitUI.colors.primaryColor(),
-            isTypeFaceBold = true
-        )
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -46,8 +41,12 @@ internal class DistractionSelectorItem : LinearLayout {
         val drawable = (distraction_selector.background as GradientDrawable).mutate()
         DrawableCompat.setTint(
             drawable,
-            if (selected) ColorUtils.setAlphaComponent(DriveKitUI.colors.secondaryColor(), 102)
+            if (selected) DriveKitUI.colors.secondaryColor()
             else ContextCompat.getColor(context, R.color.dkDistractionSelectorColor)
+        )
+        distraction_selector.smallText(
+            textColor = if (selected) DriveKitUI.colors.fontColorOnSecondaryColor() else DriveKitUI.colors.primaryColor(),
+            isTypeFaceBold = true
         )
     }
 }
