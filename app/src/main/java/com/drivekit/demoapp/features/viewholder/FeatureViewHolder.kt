@@ -65,7 +65,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             }
             FeatureType.PERMISSIONSUTILS_ONBOARDING -> {
                 if (showPermissionUtilsOnboarding()) {
-                    PermissionsUtilsUI.showPermissionViews(context, DriveKitConfig.getPermissionsViews(), object : PermissionViewListener {
+                    PermissionsUtilsUI.showPermissionViews(context, object : PermissionViewListener {
                         override fun onFinish() {
                             // do nothing
                         }
