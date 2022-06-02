@@ -34,13 +34,34 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         permissionsUtilsUIEntryPoint = this
     }
 
+    @Deprecated("The method is deprecated: permissionView parameter is now ignored",
+        ReplaceWith(
+        "PermissionsUtilsUI.showPermissionViews(context, permissionViewListener)",
+        "com.drivequant.drivekit.permissionsutils")
+    )
     fun showPermissionViews(
         context: Context,
         permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener
     ) {
+        showPermissionViews(context, permissionViewListener)
+    }
+
+    fun showPermissionViews(
+        context: Context,
+        permissionViewListener: PermissionViewListener
+    ) {
         this.permissionViewListener = permissionViewListener
-        permissionView.first().launchActivity(context, permissionView)
+        val permissions = ArrayList<PermissionView>()
+        permissions.addAll(
+            listOf(
+                PermissionView.LOCATION,
+                PermissionView.ACTIVITY,
+                PermissionView.BACKGROUND_TASK,
+                PermissionView.NEARBY_DEVICES
+            )
+        )
+        permissions.first().launchActivity(context, permissions)
     }
 
     override fun startAppDiagnosisActivity(context: Context) =
