@@ -73,6 +73,7 @@
    <string name="forbidden_error">Non hai i diritti necessari</string>
    <string name="info_banner_diagnosis_title">È stato rilevato un problema! Devi configurare il tuo telefono.</string>
    <string name="lastname">Cognome</string>
+   <string name="limit_reached_error">È stato raggiunto il numero massimo di conducenti su questa chiave API.</string>
    <string name="logout_confirmation">Sei sicuro di voler disconnettere?</string>
    <string name="network_ko_error">I dati mobili non sono attivati</string>
    <string name="notif_trip_analysis_continue">Continua analisi</string>
