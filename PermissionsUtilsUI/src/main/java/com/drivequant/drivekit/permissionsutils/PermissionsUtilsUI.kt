@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
