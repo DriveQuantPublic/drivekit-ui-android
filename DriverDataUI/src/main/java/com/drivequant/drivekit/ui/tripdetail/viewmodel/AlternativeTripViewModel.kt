@@ -10,6 +10,7 @@ import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.ui.extension.image
@@ -98,10 +99,14 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
     }
 
     fun getMeanSpeed(context: Context): String {
-        trip.tripStatistics?.let {
-            return DKDataFormatter.formatSpeedMean(context, it.speedMean)
-        } ?: run {
-            return DKResource.convertToString(context, "dk_driverdata_unknown")
+        return if (isIdleTrip()) {
+            "-"
+        } else {
+            trip.tripStatistics?.let {
+                DKDataFormatter.formatSpeedMean(context, it.speedMean)
+            } ?: run {
+                DKResource.convertToString(context, "dk_driverdata_unknown")
+            }
         }
     }
 
@@ -112,6 +117,9 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
         }
         return transportationMode.image(context)
     }
+
+    private fun isIdleTrip() = trip.transportationMode == TransportationMode.IDLE
+        || trip.declaredTransportationMode?.transportationMode == TransportationMode.IDLE
 
     @Suppress("UNCHECKED_CAST")
     class AlternativeTripViewModelFactory(private val trip: Trip) :
