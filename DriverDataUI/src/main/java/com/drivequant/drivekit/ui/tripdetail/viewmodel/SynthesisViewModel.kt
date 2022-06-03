@@ -6,6 +6,7 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -82,13 +83,24 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getFuelConsumption(context: Context): String {
-        val fuelConsumption = trip.fuelEstimation?.fuelConsumption
-        return fuelConsumption?.let {
-            DKDataFormatter.formatConsumption(context, it)
-        } ?: run {
-            notAvailableText
-        }
+    fun getConsumption(context: Context) = if (isVehicleElectric()) {
+        trip.energyEstimation?.energyConsumption?.let {
+            DKDataFormatter.formatEnergyUsed(context, it)
+        } ?: notAvailableText
+    } else {
+        trip.fuelEstimation?.fuelConsumption?.let {
+            DKDataFormatter.formatFuelConsumption(context, it)
+        } ?: notAvailableText
+    }
+
+    private fun isVehicleElectric() = trip.energyEstimation != null
+
+    fun getConsumptionTitle(context: Context) = if (isVehicleElectric()) {
+        "dk_driverdata_synthesis_energy_consumption"
+    } else {
+        "dk_driverdata_synthesis_fuel_consumption"
+    }.let { resourceId ->
+        DKResource.convertToString(context, resourceId)
     }
 
     fun getIdlingDuration(context: Context): String {

@@ -19,9 +19,15 @@ enum class EngineField : Field {
     }
 
     override fun getValue(context: Context, vehicle: Vehicle): String? {
-        return when (this){
+        return when (this) {
             MOTOR -> vehicle.getEngineTypeName(context)
-            CONSUMPTION -> DKDataFormatter.formatConsumption(context, vehicle.consumption)
+            CONSUMPTION -> {
+                if (vehicle.engineIndex == 3) {
+                    DKDataFormatter.formatEnergyUsed(context, vehicle.consumption)
+                } else {
+                    DKDataFormatter.formatFuelConsumption(context, vehicle.consumption)
+                }
+            }
         }
     }
 

@@ -95,6 +95,7 @@
    <string name="dk_driverdata_synthesis_co2_emissions">Emissions de CO2</string>
    <string name="dk_driverdata_synthesis_co2_mass">Masse de CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
+   <string name="dk_driverdata_synthesis_energy_consumption">Energie consommée</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Consommation</string>
    <string name="dk_driverdata_synthesis_info_distraction">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu\'il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>
    <string name="dk_driverdata_synthesis_info_ecodriving">Le score affiché sur la carte correspond à la moyenne des trajets réalisés sur 7 jours glissants à partir de la date du dernier trajet. Si le score n\'apparaît pas, cela signifie qu’il n\'y a pas suffisamment de données pour évaluer votre conduite.</string>

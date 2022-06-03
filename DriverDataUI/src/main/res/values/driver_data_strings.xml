@@ -95,6 +95,7 @@
    <string name="dk_driverdata_synthesis_co2_emissions">CO2 emissions</string>
    <string name="dk_driverdata_synthesis_co2_mass">Mass of CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
+   <string name="dk_driverdata_synthesis_energy_consumption">Energy used</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Fuel consumption</string>
    <string name="dk_driverdata_synthesis_info_distraction">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
    <string name="dk_driverdata_synthesis_info_ecodriving">The score displayed on the card is the average of the trips made over 7 rolling days from the date of the last trip. If the score does not appear, it means that there is not enough data to evaluate your driving.</string>
