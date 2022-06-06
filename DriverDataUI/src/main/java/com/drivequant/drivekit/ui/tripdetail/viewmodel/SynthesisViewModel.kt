@@ -16,7 +16,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     var vehicleName: String? = null
     var liteConfig: Boolean? = null
-    var consumptionType: DKConsumptionType = trip.energyEstimation?.let {
+    private val consumptionType: DKConsumptionType = trip.energyEstimation?.let {
         DKConsumptionType.ELECTRIC
     } ?: DKConsumptionType.FUEL
 
