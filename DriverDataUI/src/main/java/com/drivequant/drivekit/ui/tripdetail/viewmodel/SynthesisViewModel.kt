@@ -7,7 +7,6 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
@@ -102,10 +101,11 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
     }
 
-    fun getConsumptionTitle(context: Context) = trip.energyEstimation?.let {
-        "dk_driverdata_synthesis_energy_consumption"
-    } ?: "dk_driverdata_synthesis_fuel_consumption".let { resourceId ->
-        DKResource.convertToString(context, resourceId)
+    fun getConsumptionTitle(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> R.string.dk_driverdata_synthesis_fuel_consumption
+        DKConsumptionType.ELECTRIC -> R.string.dk_driverdata_synthesis_energy_consumption
+    }.let { resourceId ->
+        context.getString(resourceId)
     }
 
     fun getIdlingDuration(context: Context): String {
