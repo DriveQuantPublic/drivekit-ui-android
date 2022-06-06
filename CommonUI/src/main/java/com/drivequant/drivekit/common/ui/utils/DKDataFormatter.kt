@@ -332,7 +332,7 @@ object DKDataFormatter {
         context: Context,
         consumption: Double,
         type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
-            DKConsumptionType.FUEL -> R.string.dk_common_unit_km_per_hour
+            DKConsumptionType.FUEL -> R.string.dk_common_unit_l_per_100km
             DKConsumptionType.ELECTRIC -> R.string.dk_common_unit_kwh_per_100km
         }.let {
             listOf(
