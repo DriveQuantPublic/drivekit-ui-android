@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
+import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -16,6 +17,9 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     var vehicleName: String? = null
     var liteConfig: Boolean? = null
+    var consumptionType: DKConsumptionType = trip.energyEstimation?.let {
+        DKConsumptionType.ELECTRIC
+    } ?: DKConsumptionType.FUEL
 
     private val notAvailableText = "-"
 
@@ -83,23 +87,24 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getConsumption(context: Context) = if (isVehicleElectric()) {
+    private fun electricConsumptionValue(context: Context) =
         trip.energyEstimation?.energyConsumption?.let {
-            DKDataFormatter.formatEnergyUsed(context, it)
+            DKDataFormatter.formatConsumption(context, it, DKConsumptionType.ELECTRIC)
+                .convertToString()
         } ?: notAvailableText
-    } else {
-        trip.fuelEstimation?.fuelConsumption?.let {
-            DKDataFormatter.formatFuelConsumption(context, it)
-        } ?: notAvailableText
+
+    private fun fuelConsumptionValue(context: Context) = trip.fuelEstimation?.fuelConsumption?.let {
+        DKDataFormatter.formatConsumption(context, it).convertToString()
+    } ?: notAvailableText
+
+    fun getConsumptionValue(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
+        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
     }
 
-    private fun isVehicleElectric() = trip.energyEstimation != null
-
-    fun getConsumptionTitle(context: Context) = if (isVehicleElectric()) {
+    fun getConsumptionTitle(context: Context) = trip.energyEstimation?.let {
         "dk_driverdata_synthesis_energy_consumption"
-    } else {
-        "dk_driverdata_synthesis_fuel_consumption"
-    }.let { resourceId ->
+    } ?: "dk_driverdata_synthesis_fuel_consumption".let { resourceId ->
         DKResource.convertToString(context, resourceId)
     }
 

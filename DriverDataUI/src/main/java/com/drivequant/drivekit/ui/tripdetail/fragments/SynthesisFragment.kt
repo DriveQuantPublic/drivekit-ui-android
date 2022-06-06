@@ -70,7 +70,7 @@ class SynthesisFragment : Fragment() {
 
         item_consumption.apply {
             setTitleItem(viewModel.getConsumptionTitle(requireContext()))
-            setValueItem(viewModel.getConsumption(requireContext()))
+            setValueItem(viewModel.getConsumptionValue(requireContext()))
         }
         item_co2_emission.setValueItem(viewModel.getCo2Emission(requireContext()))
         item_co2_mass.setValueItem(viewModel.getCO2Mass(requireContext()))
