@@ -59,6 +59,7 @@
     <string name="dk_common_unit_kg">kg</string>
     <string name="dk_common_unit_kilometer">km</string>
     <string name="dk_common_unit_km_per_hour">km/h</string>
+    <string name="dk_common_unit_kwh_per_100km">kWh/100km</string>
     <string name="dk_common_unit_l_per_100km">l/100 km</string>
     <string name="dk_common_unit_liter">l</string>
     <string name="dk_common_unit_meter">m</string>

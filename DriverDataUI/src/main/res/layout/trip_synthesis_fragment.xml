@@ -32,12 +32,11 @@
         app:tripSynthesisTitle="@string/dk_driverdata_synthesis_stop_time" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
-        android:id="@+id/item_fuel_consumption"
+        android:id="@+id/item_consumption"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_columnWeight="1"
-        app:layout_rowWeight="1"
-        app:tripSynthesisTitle="@string/dk_driverdata_synthesis_fuel_consumption" />
+        app:layout_rowWeight="1" />
 
     <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
         android:id="@+id/item_co2_emission"

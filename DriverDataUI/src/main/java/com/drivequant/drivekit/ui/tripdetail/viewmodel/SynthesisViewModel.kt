@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
+import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -15,6 +16,9 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     var vehicleName: String? = null
     var liteConfig: Boolean? = null
+    private val consumptionType: DKConsumptionType = trip.energyEstimation?.let {
+        DKConsumptionType.ELECTRIC
+    } ?: DKConsumptionType.FUEL
 
     private val notAvailableText = "-"
 
@@ -82,13 +86,26 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
         }
     }
 
-    fun getFuelConsumption(context: Context): String {
-        val fuelConsumption = trip.fuelEstimation?.fuelConsumption
-        return fuelConsumption?.let {
-            DKDataFormatter.formatConsumption(context, it)
-        } ?: run {
-            notAvailableText
-        }
+    private fun electricConsumptionValue(context: Context) =
+        trip.energyEstimation?.energyConsumption?.let {
+            DKDataFormatter.formatConsumption(context, it, DKConsumptionType.ELECTRIC)
+                .convertToString()
+        } ?: notAvailableText
+
+    private fun fuelConsumptionValue(context: Context) = trip.fuelEstimation?.fuelConsumption?.let {
+        DKDataFormatter.formatConsumption(context, it).convertToString()
+    } ?: notAvailableText
+
+    fun getConsumptionValue(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> fuelConsumptionValue(context)
+        DKConsumptionType.ELECTRIC -> electricConsumptionValue(context)
+    }
+
+    fun getConsumptionTitle(context: Context) = when (consumptionType) {
+        DKConsumptionType.FUEL -> R.string.dk_driverdata_synthesis_fuel_consumption
+        DKConsumptionType.ELECTRIC -> R.string.dk_driverdata_synthesis_energy_consumption
+    }.let { resourceId ->
+        context.getString(resourceId)
     }
 
     fun getIdlingDuration(context: Context): String {
