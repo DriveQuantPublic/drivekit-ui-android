@@ -95,6 +95,7 @@
    <string name="dk_driverdata_synthesis_co2_emissions">CO2-Emissionen</string>
    <string name="dk_driverdata_synthesis_co2_mass">CO2-Masse</string>
    <string name="dk_driverdata_synthesis_condition">Bedingung</string>
+   <string name="dk_driverdata_synthesis_energy_consumption">Energieverbrauch</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Kraftstoffverbrauch</string>
    <string name="dk_driverdata_synthesis_info_distraction">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 Tage, an denen das Fahrzeug bewegt wurde, ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>
    <string name="dk_driverdata_synthesis_info_ecodriving">Die auf der Karte angezeigte Punktzahl ist der Durchschnitt der Fahrten über 7 Tage, an denen das Fahrzeug bewegt wurde, ab dem Datum der letzten Fahrt. Wenn die Punktzahl nicht angezeigt wird, bedeutet dies, dass nicht genügend Daten vorhanden sind, um Ihre Fahrweise zu bewerten.</string>

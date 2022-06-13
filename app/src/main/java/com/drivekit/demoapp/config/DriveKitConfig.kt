@@ -26,7 +26,6 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
@@ -106,19 +105,6 @@ internal object DriveKitConfig {
     fun enableTripAnalysisAutoStart(context: Context, activate: Boolean) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
         DriveKitTripAnalysis.activateAutoStart(activate)
-    }
-
-    fun getPermissionsViews(): ArrayList<PermissionView> {
-        val items = ArrayList<PermissionView>()
-        items.addAll(
-            listOf(
-                PermissionView.LOCATION,
-                PermissionView.ACTIVITY,
-                PermissionView.BACKGROUND_TASK,
-                PermissionView.NEARBY_DEVICES
-            )
-        )
-        return items
     }
 
     private fun configureCore() {

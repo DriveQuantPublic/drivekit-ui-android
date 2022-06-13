@@ -328,16 +328,24 @@ object DKDataFormatter {
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_km_per_hour))
 
-    fun formatConsumption(context: Context, consumption: Double): String =
-        consumption.removeZeroDecimal()
-            .plus(nbsp)
-            .plus(context.getString(R.string.dk_common_unit_l_per_100km))
+    fun formatConsumption(
+        context: Context,
+        consumption: Double,
+        type: DKConsumptionType = DKConsumptionType.FUEL) = when (type) {
+            DKConsumptionType.FUEL -> R.string.dk_common_unit_l_per_100km
+            DKConsumptionType.ELECTRIC -> R.string.dk_common_unit_kwh_per_100km
+        }.let {
+            listOf(
+                FormatType.VALUE(consumption.removeZeroDecimal()),
+                FormatType.SEPARATOR(),
+                FormatType.UNIT(context.getString(it))
+            )
+        }
 
     fun formatMass(context: Context, mass: Double): String =
         mass.removeZeroDecimal()
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_kg))
-
 
     fun formatMassInTon(context: Context, mass: Double): String =
         (mass / 1000).removeZeroDecimal()

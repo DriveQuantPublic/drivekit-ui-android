@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.demoapp.component.FeatureCard
-import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -65,7 +64,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
             }
             FeatureType.PERMISSIONSUTILS_ONBOARDING -> {
                 if (showPermissionUtilsOnboarding()) {
-                    PermissionsUtilsUI.showPermissionViews(context, DriveKitConfig.getPermissionsViews(), object : PermissionViewListener {
+                    PermissionsUtilsUI.showPermissionViews(context, object : PermissionViewListener {
                         override fun onFinish() {
                             // do nothing
                         }

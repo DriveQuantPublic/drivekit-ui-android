@@ -59,7 +59,7 @@ class TripSynthesisItem: LinearLayout {
         )
     }
 
-    private fun setTitleItem(title: String) {
+    fun setTitleItem(title: String) {
         textViewTitle.text = title
     }
 

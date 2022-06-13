@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.manager
 
+import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.core.networking.RequestError
 import java.lang.ref.WeakReference
@@ -26,6 +27,13 @@ internal object DriveKitListenerManager : DriveKitListener {
         val iterator = listeners.iterator()
         while (iterator.hasNext()) {
             iterator.next().get()?.onDisconnected()
+        }
+    }
+
+    override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {
+        val iterator = listeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().get()?.userIdUpdateStatus(status, userId)
         }
     }
 

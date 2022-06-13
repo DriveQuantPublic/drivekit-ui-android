@@ -95,6 +95,7 @@
    <string name="dk_driverdata_synthesis_co2_emissions">Emissioni di CO2</string>
    <string name="dk_driverdata_synthesis_co2_mass">Massa di CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condizione</string>
+   <string name="dk_driverdata_synthesis_energy_consumption">Energia consumata</string>
    <string name="dk_driverdata_synthesis_fuel_consumption">Consumo di carburante</string>
    <string name="dk_driverdata_synthesis_info_distraction">Il punteggio visualizzato sulla scheda è la media dei viaggi effettuati in 7 giorni consecutivi dalla data dell\'ultimo viaggio. Se il punteggio non appare, significa che non ci sono abbastanza dati per valutare la tua guida.</string>
    <string name="dk_driverdata_synthesis_info_ecodriving">Il punteggio visualizzato sulla scheda è la media dei viaggi effettuati in 7 giorni consecutivi dalla data dell\'ultimo viaggio. Se il punteggio non appare, significa che non ci sono abbastanza dati per valutare la tua guida.</string>

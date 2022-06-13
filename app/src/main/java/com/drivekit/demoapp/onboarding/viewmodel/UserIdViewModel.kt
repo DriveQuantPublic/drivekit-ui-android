@@ -9,6 +9,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
+import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -43,6 +44,10 @@ internal class UserIdViewModel : ViewModel(), DriveKitListener {
         DriveKitListenerManager.unregisterListener(this)
         this.listener?.onSetUserId(false, null)
         this.listener = null
+    }
+
+    override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {
+        // do nothing
     }
 
     fun syncDriveKitModules() {
@@ -104,6 +109,7 @@ fun RequestError.getErrorMessage(context: Context) = when (this) {
     RequestError.SERVER_ERROR -> R.string.server_error
     RequestError.CLIENT_ERROR -> R.string.client_error
     RequestError.UNKNOWN_ERROR -> R.string.unknown_error
+    RequestError.LIMIT_REACHED -> R.string.limit_reached_error
 }.let {
     context.getString(it)
 }

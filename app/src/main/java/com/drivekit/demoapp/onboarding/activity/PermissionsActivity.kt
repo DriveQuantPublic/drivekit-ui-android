@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
-import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
@@ -54,9 +53,7 @@ internal class PermissionsActivity : AppCompatActivity() {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 PermissionsUtilsUI.showPermissionViews(
-                    this@PermissionsActivity,
-                    DriveKitConfig.getPermissionsViews(),
-                    object : PermissionViewListener {
+                    this@PermissionsActivity, object : PermissionViewListener {
                         override fun onFinish() {
                             viewModel.shouldDisplayVehicle()
                         }

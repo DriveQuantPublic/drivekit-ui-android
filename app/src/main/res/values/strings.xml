@@ -73,6 +73,7 @@
     <string name="forbidden_error">You do not have the required rights</string>
     <string name="info_banner_diagnosis_title">A problem has been detected! You must set up your phone.</string>
     <string name="lastname">Last name</string>
+    <string name="limit_reached_error">The maximum number of drivers on this API key has been reached</string>
     <string name="logout_confirmation">Are you sure you want to logout?</string>
     <string name="network_ko_error">Mobile data is not enabled</string>
     <string name="notif_trip_analysis_continue">Continue analysis</string>
