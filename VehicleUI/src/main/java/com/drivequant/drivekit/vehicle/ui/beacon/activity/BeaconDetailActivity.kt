@@ -43,20 +43,17 @@ class BeaconDetailActivity : AppCompatActivity() {
         fun launchActivity(context: Context,
                            vehicleId: String,
                            vehicleName: String,
-                           batteryLevel: Int,
-                           estimatedDistance: Double,
-                           rssi: Int,
-                           txPower: Int,
+                           dkBeaconInfo: DKBeaconInfo,
                            beaconInfo: BeaconInfo) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
             intent.apply {
                 putExtra(VEHICLE_ID_EXTRA, vehicleId)
                 putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-                putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
+                putExtra(BATTERY_LEVEL_EXTRA, dkBeaconInfo.batteryLevel)
+                putExtra(BEACON_RSSI_EXTRA, dkBeaconInfo.rssi)
+                putExtra(BEACON_DISTANCE_EXTRA, dkBeaconInfo.estimatedDistance)
+                putExtra(BEACON_TX_POWER_EXTRA, dkBeaconInfo.txPower)
                 putExtra(BEACON_INFO_EXTRA, beaconInfo)
-                putExtra(BEACON_RSSI_EXTRA, rssi)
-                putExtra(BEACON_DISTANCE_EXTRA, estimatedDistance)
-                putExtra(BEACON_TX_POWER_EXTRA, txPower)
                 context.startActivity(intent)
             }
         }

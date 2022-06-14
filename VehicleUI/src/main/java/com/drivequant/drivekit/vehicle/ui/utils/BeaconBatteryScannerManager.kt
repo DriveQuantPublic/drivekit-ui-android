@@ -11,15 +11,16 @@ internal class BeaconInfoScannerManager(
     private val listener: DKBeaconInfoListener
 ) : BeaconInfoReaderListener {
 
-    private var beaconBatteryReaderScanner: BeaconInfoReaderScanner =
-        BeaconInfoReaderScanner()
+    private var beaconBatteryReaderScanner: BeaconInfoReaderScanner? = null
 
     fun startBatteryReaderScanner() {
-        beaconBatteryReaderScanner.registerListener(this, context)
+        beaconBatteryReaderScanner = BeaconInfoReaderScanner()
+        beaconBatteryReaderScanner?.registerListener(this, context)
     }
 
     fun stopBatteryReaderScanner() {
-        beaconBatteryReaderScanner.unregisterListener(context)
+        beaconBatteryReaderScanner?.unregisterListener(context)
+        beaconBatteryReaderScanner = null
     }
 
     override fun onBeaconInfoRetrieved(

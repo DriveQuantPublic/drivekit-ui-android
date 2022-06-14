@@ -66,7 +66,7 @@ class BeaconScannerInfoFragment : Fragment() {
                 viewModel.init(requireContext())
             }
         }
-
+        updateProgressVisibility(true)
         viewModel.seenBeacon?.let { beacon ->
             context?.let { context ->
                 beaconBatteryScannerManager = BeaconInfoScannerManager(
@@ -75,6 +75,8 @@ class BeaconScannerInfoFragment : Fragment() {
                     object : DKBeaconInfoListener {
                         override fun onBeaconInfoRetrieved(dkBeaconInfo: DKBeaconInfo) {
                             beaconBatteryScannerManager?.stopBatteryReaderScanner()
+                            updateProgressVisibility(false)
+                            button_beacon_info.visibility = View.VISIBLE
                             viewModel.apply {
                                 this.batteryLevel = dkBeaconInfo.batteryLevel
                                 this.estimatedDistance = dkBeaconInfo.estimatedDistance
@@ -185,5 +187,15 @@ class BeaconScannerInfoFragment : Fragment() {
                 size(R.dimen.dk_text_small)
             })
             .toSpannable()
+    }
+
+    private fun updateProgressVisibility(displayProgress: Boolean) {
+        progress_circular?.apply {
+            visibility = if (displayProgress) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
     }
 }
