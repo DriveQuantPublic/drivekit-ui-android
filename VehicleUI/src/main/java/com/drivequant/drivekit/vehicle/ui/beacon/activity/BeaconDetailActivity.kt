@@ -24,7 +24,9 @@ class BeaconDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: BeaconDetailViewModel
     private var vehicleId: String? = null
     private var vehicleName: String? = null
-    private var batterylevel: Int = 0
+    private var batteryLevel: Int = 0
+    private var estimatedDistance: Double = 0.0
+    private var rssi: Int = 0
     private var beaconInfo: BeaconInfo? = null
 
     companion object  {
@@ -32,11 +34,15 @@ class BeaconDetailActivity : AppCompatActivity() {
         private const val VEHICLE_NAME_EXTRA = "vehicleName-extra"
         private const val BATTERY_LEVEL_EXTRA = "battery-level-extra"
         private const val BEACON_INFO_EXTRA = "beacon-info-extra"
+        private const val BEACON_RSSI_EXTRA = "beacon-rssi-extra"
+        private const val BEACON_DISTANCE_EXTRA = "beacon-estimated-distance-extra"
 
         fun launchActivity(context: Context,
                            vehicleId: String,
                            vehicleName: String,
                            batteryLevel: Int,
+                           estimatedDistance: Double,
+                           rssi: Int,
                            beaconInfo: BeaconInfo
         ) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
@@ -44,6 +50,8 @@ class BeaconDetailActivity : AppCompatActivity() {
             intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
             intent.putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
             intent.putExtra(BEACON_INFO_EXTRA, beaconInfo)
+            intent.putExtra(BEACON_RSSI_EXTRA, rssi)
+            intent.putExtra(BEACON_DISTANCE_EXTRA, estimatedDistance)
             context.startActivity(intent)
         }
     }
@@ -60,11 +68,15 @@ class BeaconDetailActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.apply {
+            setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
-        batterylevel = intent.getIntExtra(BATTERY_LEVEL_EXTRA, 0)
+        batteryLevel = intent.getIntExtra(BATTERY_LEVEL_EXTRA, 0)
+        estimatedDistance = intent.getDoubleExtra(BEACON_DISTANCE_EXTRA, 0.0)
+        rssi = intent.getIntExtra(BEACON_RSSI_EXTRA, 0)
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
         beaconInfo = intent.getSerializableExtra(BEACON_INFO_EXTRA) as BeaconInfo?
@@ -72,9 +84,17 @@ class BeaconDetailActivity : AppCompatActivity() {
         vehicleId?.let {vehicleId ->
             beaconInfo?.let { beaconInfo ->
                 vehicleName?.let { vehicleName ->
-                    viewModel = ViewModelProviders.of(this,
-                        BeaconDetailViewModel.BeaconDetailViewModelFactory(vehicleId, vehicleName, batterylevel, beaconInfo))
-                        .get(BeaconDetailViewModel::class.java)
+                    viewModel = ViewModelProviders.of(
+                        this,
+                        BeaconDetailViewModel.BeaconDetailViewModelFactory(
+                            vehicleId,
+                            vehicleName,
+                            batteryLevel,
+                            estimatedDistance,
+                            rssi,
+                            beaconInfo
+                        )
+                    ).get(BeaconDetailViewModel::class.java)
                 }
             }
         }

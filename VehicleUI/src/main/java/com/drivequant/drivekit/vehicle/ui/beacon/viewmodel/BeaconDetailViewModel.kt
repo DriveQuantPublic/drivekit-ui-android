@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -17,12 +18,14 @@ class BeaconDetailViewModel(
     val vehicleId: String,
     val vehicleName: String,
     val batteryLevel: Int,
+    val estimatedDistance: Double,
+    val rssi: Int,
     val seenBeacon: BeaconInfo
 ) : ViewModel() {
 
     var data: MutableList<BeaconDetailField> = mutableListOf()
 
-    fun buildListData(context: Context){
+    fun buildListData(context: Context) {
         DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", vehicleId).queryOne().executeOne()?.let { vehicle ->
             vehicle.beacon?.let { beacon ->
                 if (beacon.proximityUuid.equals(seenBeacon.proximityUuid, true)
@@ -44,36 +47,37 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_major"),
-                        DKSpannable().append(seenBeacon.major.toString()).toSpannable()
+                        DKSpannable().append("${seenBeacon.major}").toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_minor"),
-                        DKSpannable().append(seenBeacon.minor.toString()).toSpannable()
+                        DKSpannable().append("${seenBeacon.minor}").toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_battery"),
-                        buildValue(context, batteryLevel.toString(), "%")
+                        buildValue(context, "$batteryLevel", "%")
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_distance"),
-                        buildValue(context, seenBeacon.accuracy.toString(), "dk_common_unit_meter")
+                        buildValue(context, estimatedDistance.format(1), "dk_common_unit_meter")
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_rssi"),
-                        buildValue(context, seenBeacon.rssi.toString(), "dBm"))
+                        buildValue(context, "$rssi", "dBm"))
                 )
+                //TODO beacon Tx
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_tx"),
-                        buildValue(context, seenBeacon.txPower.toString(), "dBm"))
+                        buildValue(context, "beacon Tx", "dBm"))
                 )
             }
         }
@@ -107,10 +111,12 @@ class BeaconDetailViewModel(
         private val vehicleId: String,
         private val vehicleName: String,
         private val batteryLevel: Int,
+        private val estimatedDistance: Double,
+        private val rssi: Int,
         private val seenBeacon: BeaconInfo
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return BeaconDetailViewModel(vehicleId, vehicleName, batteryLevel, seenBeacon) as T
+            return BeaconDetailViewModel(vehicleId, vehicleName, batteryLevel, estimatedDistance, rssi,  seenBeacon) as T
         }
     }
 }

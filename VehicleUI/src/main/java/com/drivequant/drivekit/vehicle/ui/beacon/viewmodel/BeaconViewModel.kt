@@ -33,6 +33,8 @@ class BeaconViewModel(
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
     var batteryLevel: Int = 0
+    var estimatedDistance: Double = 0.0
+    var rssi: Int = 0
         set(value) {
             field = value
             beacon?.let {

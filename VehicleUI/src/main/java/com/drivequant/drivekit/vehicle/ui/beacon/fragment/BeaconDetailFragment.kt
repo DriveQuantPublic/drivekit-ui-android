@@ -40,6 +40,8 @@ class BeaconDetailFragment : Fragment() {
             outState.putString("vehicleName", viewModel.vehicleName)
             outState.putString("vehicleId", viewModel.vehicleId)
             outState.putInt("batteryLevel", viewModel.batteryLevel)
+            outState.putDouble("estimatedDistance", viewModel.estimatedDistance)
+            outState.putInt("rssi", viewModel.rssi)
             outState.putSerializable("seenBeacon", viewModel.seenBeacon)
         }
         super.onSaveInstanceState(outState)
@@ -51,6 +53,8 @@ class BeaconDetailFragment : Fragment() {
             val vehicleName = it.getString("vehicleName")
             val vehicleId = it.getString("vehicleId")
             val batteryLevel = it.getInt("batteryLevel")
+            val estimatedDistance = it.getDouble("estimatedDistance")
+            val rssi = it.getInt("rssi")
             val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo ?
             if (vehicleId != null && vehicleName != null && seenBeacon != null) {
                 viewModel = ViewModelProviders.of(
@@ -59,8 +63,9 @@ class BeaconDetailFragment : Fragment() {
                         vehicleId,
                         vehicleName,
                         batteryLevel,
-                        seenBeacon
-                    )
+                        estimatedDistance,
+                        rssi,
+                        seenBeacon)
                 ).get(BeaconDetailViewModel::class.java)
             }
         }

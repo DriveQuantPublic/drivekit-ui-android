@@ -1,18 +1,18 @@
 package com.drivequant.drivekit.vehicle.ui.utils
 
 import android.content.Context
-import com.drivequant.beaconutils.BeaconBatteryReaderListener
-import com.drivequant.beaconutils.BeaconBatteryReaderScanner
 import com.drivequant.beaconutils.BeaconData
+import com.drivequant.beaconutils.BeaconInfoReaderListener
+import com.drivequant.beaconutils.BeaconInfoReaderScanner
 
-internal class BeaconBatteryScannerManager(
+internal class BeaconInfoScannerManager(
     private val context: Context,
     private val beaconData: BeaconData,
-    private val listener: BatteryLevelReadListener
-) : BeaconBatteryReaderListener {
+    private val listener: DKBeaconInfoListener
+) : BeaconInfoReaderListener {
 
-    private var beaconBatteryReaderScanner: BeaconBatteryReaderScanner =
-        BeaconBatteryReaderScanner()
+    private var beaconBatteryReaderScanner: BeaconInfoReaderScanner =
+        BeaconInfoReaderScanner()
 
     fun startBatteryReaderScanner() {
         beaconBatteryReaderScanner.registerListener(this, context)
@@ -22,13 +22,13 @@ internal class BeaconBatteryScannerManager(
         beaconBatteryReaderScanner.unregisterListener(context)
     }
 
-    override fun onBatteryLevelRead(batteryLevel: Int) {
-        listener.onBatteryLevelRead(batteryLevel)
+    override fun onBeaconInfoRetrieved(batteryLevel: Int, estimatedDistance: Double, rssi: Int) {
+        listener.onBeaconInfoRetrieved(batteryLevel, estimatedDistance, rssi)
     }
 
     override fun getBeacon(): BeaconData = beaconData
 }
 
-interface BatteryLevelReadListener {
-    fun onBatteryLevelRead(batteryLevel: Int)
+interface DKBeaconInfoListener {
+    fun onBeaconInfoRetrieved(batteryLevel: Int, estimatedDistance: Double, rssi: Int)
 }
