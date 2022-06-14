@@ -25,20 +25,14 @@ class BeaconDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: BeaconDetailViewModel
     private var vehicleId: String? = null
     private var vehicleName: String? = null
-    private var batteryLevel: Int = 0
-    private var estimatedDistance: Double = 0.0
-    private var rssi: Int = 0
-    private var txPower: Int = 0
+    private var beaconRetrievedInfo: DKBeaconRetrievedInfo? = null
     private var beaconInfo: BeaconInfo? = null
 
     companion object  {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
         private const val VEHICLE_NAME_EXTRA = "vehicleName-extra"
-        private const val BATTERY_LEVEL_EXTRA = "battery-level-extra"
         private const val BEACON_INFO_EXTRA = "beacon-info-extra"
-        private const val BEACON_RSSI_EXTRA = "beacon-rssi-extra"
-        private const val BEACON_DISTANCE_EXTRA = "beacon-estimated-distance-extra"
-        private const val BEACON_TX_POWER_EXTRA = "beacon-tx-power-extra"
+        private const val BEACON_RETRIEVED_INFO_EXTRA = "beacon-retrieved-info-extra"
 
         fun launchActivity(context: Context,
                            vehicleId: String,
@@ -49,11 +43,8 @@ class BeaconDetailActivity : AppCompatActivity() {
             intent.apply {
                 putExtra(VEHICLE_ID_EXTRA, vehicleId)
                 putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-                putExtra(BATTERY_LEVEL_EXTRA, beaconRetrievedInfo.batteryLevel)
-                putExtra(BEACON_RSSI_EXTRA, beaconRetrievedInfo.rssi)
-                putExtra(BEACON_DISTANCE_EXTRA, beaconRetrievedInfo.estimatedDistance)
-                putExtra(BEACON_TX_POWER_EXTRA, beaconRetrievedInfo.txPower)
                 putExtra(BEACON_INFO_EXTRA, beaconInfo)
+                putExtra(BEACON_RETRIEVED_INFO_EXTRA, beaconRetrievedInfo)
                 context.startActivity(intent)
             }
         }
@@ -77,31 +68,25 @@ class BeaconDetailActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
 
-        batteryLevel = intent.getIntExtra(BATTERY_LEVEL_EXTRA, 0)
-        estimatedDistance = intent.getDoubleExtra(BEACON_DISTANCE_EXTRA, 0.0)
-        rssi = intent.getIntExtra(BEACON_RSSI_EXTRA, 0)
-        txPower = intent.getIntExtra(BEACON_TX_POWER_EXTRA, 0)
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
         beaconInfo = intent.getSerializableExtra(BEACON_INFO_EXTRA) as BeaconInfo?
+        beaconRetrievedInfo = intent.getSerializableExtra(BEACON_RETRIEVED_INFO_EXTRA) as DKBeaconRetrievedInfo?
 
-        vehicleId?.let {vehicleId ->
+        vehicleId?.let { vehicleId ->
             beaconInfo?.let { beaconInfo ->
-                vehicleName?.let { vehicleName ->
-                    viewModel = ViewModelProviders.of(
-                        this,
-                        BeaconDetailViewModel.BeaconDetailViewModelFactory(
-                            vehicleId,
-                            vehicleName,
-                            DKBeaconRetrievedInfo(
-                                batteryLevel,
-                                estimatedDistance,
-                                rssi,
-                                txPower
-                            ),
-                            beaconInfo
-                        )
-                    ).get(BeaconDetailViewModel::class.java)
+                beaconRetrievedInfo?.let { beaconRetrievedInfo ->
+                    vehicleName?.let { vehicleName ->
+                        viewModel = ViewModelProviders.of(
+                            this,
+                            BeaconDetailViewModel.BeaconDetailViewModelFactory(
+                                vehicleId,
+                                vehicleName,
+                                beaconRetrievedInfo,
+                                beaconInfo
+                            )
+                        ).get(BeaconDetailViewModel::class.java)
+                    }
                 }
             }
         }

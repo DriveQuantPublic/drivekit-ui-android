@@ -4,6 +4,7 @@ import android.content.Context
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.beaconutils.BeaconInfoReaderListener
 import com.drivequant.beaconutils.BeaconInfoReaderScanner
+import java.io.Serializable
 
 internal class BeaconInfoScannerManager(
     private val context: Context,
@@ -42,4 +43,4 @@ data class DKBeaconRetrievedInfo(
     val estimatedDistance: Double,
     val rssi: Int,
     val txPower: Int
-)
+) : Serializable
