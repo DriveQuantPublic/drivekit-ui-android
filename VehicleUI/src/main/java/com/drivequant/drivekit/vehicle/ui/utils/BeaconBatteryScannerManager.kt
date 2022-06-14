@@ -27,17 +27,17 @@ internal class BeaconInfoScannerManager(
         batteryLevel: Int,
         estimatedDistance: Double, rssi: Int, txPower: Int
     ) {
-        listener.onBeaconInfoRetrieved(DKBeaconInfo(batteryLevel, estimatedDistance, rssi, txPower))
+        listener.onBeaconInfoRetrieved(DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower))
     }
 
     override fun getBeacon(): BeaconData = beaconData
 }
 
 interface DKBeaconInfoListener {
-    fun onBeaconInfoRetrieved(dkBeaconInfo: DKBeaconInfo)
+    fun onBeaconInfoRetrieved(beaconRetrievedInfo: DKBeaconRetrievedInfo)
 }
 
-class DKBeaconInfo(
+data class DKBeaconRetrievedInfo(
     val batteryLevel: Int,
     val estimatedDistance: Double,
     val rssi: Int,

@@ -13,12 +13,12 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 
 class BeaconDetailViewModel(
     val vehicleId: String,
     val vehicleName: String,
-    val beaconInfo: DKBeaconInfo,
+    val beaconRetrievedInfo: DKBeaconRetrievedInfo,
     val seenBeacon: BeaconInfo
 ) : ViewModel() {
 
@@ -58,24 +58,24 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_battery"),
-                        buildValue(context, "${beaconInfo.batteryLevel}", "%")
+                        buildValue(context, "${beaconRetrievedInfo.batteryLevel}", "%")
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_distance"),
-                        buildValue(context, beaconInfo.estimatedDistance.format(1), "dk_common_unit_meter")
+                        buildValue(context, beaconRetrievedInfo.estimatedDistance.format(1), "dk_common_unit_meter")
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_rssi"),
-                        buildValue(context, "${beaconInfo.rssi}", "dBm"))
+                        buildValue(context, "${beaconRetrievedInfo.rssi}", "dBm"))
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_tx"),
-                        buildValue(context, "${beaconInfo.txPower}", "dBm"))
+                        buildValue(context, "${beaconRetrievedInfo.txPower}", "dBm"))
                 )
             }
         }
@@ -108,7 +108,7 @@ class BeaconDetailViewModel(
     class BeaconDetailViewModelFactory(
         private val vehicleId: String,
         private val vehicleName: String,
-        private val beaconInfo: DKBeaconInfo,
+        private val beaconInfo: DKBeaconRetrievedInfo,
         private val seenBeacon: BeaconInfo
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

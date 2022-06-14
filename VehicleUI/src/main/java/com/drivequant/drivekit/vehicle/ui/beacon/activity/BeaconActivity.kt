@@ -21,7 +21,7 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import kotlinx.android.synthetic.main.activity_beacon.*
 
@@ -96,7 +96,7 @@ class BeaconActivity : AppCompatActivity() {
                             this,
                             vehicleId,
                             vehicleName,
-                            DKBeaconInfo(
+                            DKBeaconRetrievedInfo(
                             viewModel.batteryLevel,
                             viewModel.estimatedDistance,
                             viewModel.rssi,

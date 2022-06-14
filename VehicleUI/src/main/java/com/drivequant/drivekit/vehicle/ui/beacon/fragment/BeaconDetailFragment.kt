@@ -14,7 +14,7 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
-import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import kotlinx.android.synthetic.main.fragment_beacon_detail.*
 import java.lang.StringBuilder
 
@@ -41,10 +41,10 @@ class BeaconDetailFragment : Fragment() {
             outState.apply {
                 putString("vehicleName", viewModel.vehicleName)
                 putString("vehicleId", viewModel.vehicleId)
-                putInt("batteryLevel", viewModel.beaconInfo.batteryLevel)
-                putDouble("estimatedDistance", viewModel.beaconInfo.estimatedDistance)
-                putInt("rssi", viewModel.beaconInfo.rssi)
-                putInt("txPower", viewModel.beaconInfo.txPower)
+                putInt("batteryLevel", viewModel.beaconRetrievedInfo.batteryLevel)
+                putDouble("estimatedDistance", viewModel.beaconRetrievedInfo.estimatedDistance)
+                putInt("rssi", viewModel.beaconRetrievedInfo.rssi)
+                putInt("txPower", viewModel.beaconRetrievedInfo.txPower)
                 putSerializable("seenBeacon", viewModel.seenBeacon)
             }
         }
@@ -67,7 +67,7 @@ class BeaconDetailFragment : Fragment() {
                     BeaconDetailViewModel.BeaconDetailViewModelFactory(
                         vehicleId,
                         vehicleName,
-                        DKBeaconInfo(batteryLevel, estimatedDistance, rssi, txPower),
+                        DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower),
                         seenBeacon)
                 ).get(BeaconDetailViewModel::class.java)
             }

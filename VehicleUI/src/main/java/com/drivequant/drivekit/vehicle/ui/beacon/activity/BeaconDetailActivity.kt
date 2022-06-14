@@ -17,7 +17,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
-import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 
 class BeaconDetailActivity : AppCompatActivity() {
@@ -43,16 +43,16 @@ class BeaconDetailActivity : AppCompatActivity() {
         fun launchActivity(context: Context,
                            vehicleId: String,
                            vehicleName: String,
-                           dkBeaconInfo: DKBeaconInfo,
+                           beaconRetrievedInfo: DKBeaconRetrievedInfo,
                            beaconInfo: BeaconInfo) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
             intent.apply {
                 putExtra(VEHICLE_ID_EXTRA, vehicleId)
                 putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-                putExtra(BATTERY_LEVEL_EXTRA, dkBeaconInfo.batteryLevel)
-                putExtra(BEACON_RSSI_EXTRA, dkBeaconInfo.rssi)
-                putExtra(BEACON_DISTANCE_EXTRA, dkBeaconInfo.estimatedDistance)
-                putExtra(BEACON_TX_POWER_EXTRA, dkBeaconInfo.txPower)
+                putExtra(BATTERY_LEVEL_EXTRA, beaconRetrievedInfo.batteryLevel)
+                putExtra(BEACON_RSSI_EXTRA, beaconRetrievedInfo.rssi)
+                putExtra(BEACON_DISTANCE_EXTRA, beaconRetrievedInfo.estimatedDistance)
+                putExtra(BEACON_TX_POWER_EXTRA, beaconRetrievedInfo.txPower)
                 putExtra(BEACON_INFO_EXTRA, beaconInfo)
                 context.startActivity(intent)
             }
@@ -93,7 +93,7 @@ class BeaconDetailActivity : AppCompatActivity() {
                         BeaconDetailViewModel.BeaconDetailViewModelFactory(
                             vehicleId,
                             vehicleName,
-                            DKBeaconInfo(
+                            DKBeaconRetrievedInfo(
                                 batteryLevel,
                                 estimatedDistance,
                                 rssi,
