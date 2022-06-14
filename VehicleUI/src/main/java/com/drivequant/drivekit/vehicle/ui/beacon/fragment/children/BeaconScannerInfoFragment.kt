@@ -23,6 +23,7 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.utils.BeaconInfoScannerManager
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfoListener
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
@@ -72,29 +73,26 @@ class BeaconScannerInfoFragment : Fragment() {
                     context,
                     BeaconData(beacon.proximityUuid, beacon.major, beacon.minor),
                     object : DKBeaconInfoListener {
-                        override fun onBeaconInfoRetrieved(
-                            batteryLevel: Int,
-                            estimatedDistance: Double,
-                            rssi: Int
-                        ) {
+                        override fun onBeaconInfoRetrieved(dkBeaconInfo: DKBeaconInfo) {
                             beaconBatteryScannerManager?.stopBatteryReaderScanner()
                             viewModel.apply {
-                                this.batteryLevel = batteryLevel
-                                this.estimatedDistance = estimatedDistance
-                                this.rssi = rssi
+                                this.batteryLevel = dkBeaconInfo.batteryLevel
+                                this.estimatedDistance = dkBeaconInfo.estimatedDistance
+                                this.rssi = dkBeaconInfo.rssi
+                                this.txPower = dkBeaconInfo.txPower
                             }
                             if (isAdded) {
-                                text_view_battery.text = buildBeaconCharacteristics("$batteryLevel", "%")
-                                computeBatteryDrawable(batteryLevel)?.let { drawable ->
+                                text_view_battery.text = buildBeaconCharacteristics("${dkBeaconInfo.batteryLevel}", "%")
+                                computeBatteryDrawable(dkBeaconInfo.batteryLevel)?.let { drawable ->
                                     text_view_battery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
-                                text_view_distance.text = buildBeaconCharacteristics(estimatedDistance.format(1), "dk_common_unit_meter")
+                                text_view_distance.text = buildBeaconCharacteristics(dkBeaconInfo.estimatedDistance.format(1), "dk_common_unit_meter")
                                 DKResource.convertToDrawable(requireContext(), "dk_beacon_distance")?.let { drawable ->
                                     text_view_distance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
-                                text_view_signal_intensity.text = buildBeaconCharacteristics("$rssi", "dBm")
+                                text_view_signal_intensity.text = buildBeaconCharacteristics("${dkBeaconInfo.rssi}", "dBm")
                                 DKResource.convertToDrawable(requireContext(), "dk_beacon_signal_intensity")?.let { drawable ->
                                     text_view_signal_intensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }

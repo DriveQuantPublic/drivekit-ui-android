@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 
 class BeaconDetailActivity : AppCompatActivity() {
@@ -27,6 +28,7 @@ class BeaconDetailActivity : AppCompatActivity() {
     private var batteryLevel: Int = 0
     private var estimatedDistance: Double = 0.0
     private var rssi: Int = 0
+    private var txPower: Int = 0
     private var beaconInfo: BeaconInfo? = null
 
     companion object  {
@@ -36,6 +38,7 @@ class BeaconDetailActivity : AppCompatActivity() {
         private const val BEACON_INFO_EXTRA = "beacon-info-extra"
         private const val BEACON_RSSI_EXTRA = "beacon-rssi-extra"
         private const val BEACON_DISTANCE_EXTRA = "beacon-estimated-distance-extra"
+        private const val BEACON_TX_POWER_EXTRA = "beacon-tx-power-extra"
 
         fun launchActivity(context: Context,
                            vehicleId: String,
@@ -43,16 +46,19 @@ class BeaconDetailActivity : AppCompatActivity() {
                            batteryLevel: Int,
                            estimatedDistance: Double,
                            rssi: Int,
-                           beaconInfo: BeaconInfo
-        ) {
+                           txPower: Int,
+                           beaconInfo: BeaconInfo) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
-            intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-            intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-            intent.putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
-            intent.putExtra(BEACON_INFO_EXTRA, beaconInfo)
-            intent.putExtra(BEACON_RSSI_EXTRA, rssi)
-            intent.putExtra(BEACON_DISTANCE_EXTRA, estimatedDistance)
-            context.startActivity(intent)
+            intent.apply {
+                putExtra(VEHICLE_ID_EXTRA, vehicleId)
+                putExtra(VEHICLE_NAME_EXTRA, vehicleName)
+                putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
+                putExtra(BEACON_INFO_EXTRA, beaconInfo)
+                putExtra(BEACON_RSSI_EXTRA, rssi)
+                putExtra(BEACON_DISTANCE_EXTRA, estimatedDistance)
+                putExtra(BEACON_TX_POWER_EXTRA, txPower)
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -77,6 +83,7 @@ class BeaconDetailActivity : AppCompatActivity() {
         batteryLevel = intent.getIntExtra(BATTERY_LEVEL_EXTRA, 0)
         estimatedDistance = intent.getDoubleExtra(BEACON_DISTANCE_EXTRA, 0.0)
         rssi = intent.getIntExtra(BEACON_RSSI_EXTRA, 0)
+        txPower = intent.getIntExtra(BEACON_TX_POWER_EXTRA, 0)
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
         beaconInfo = intent.getSerializableExtra(BEACON_INFO_EXTRA) as BeaconInfo?
@@ -89,9 +96,12 @@ class BeaconDetailActivity : AppCompatActivity() {
                         BeaconDetailViewModel.BeaconDetailViewModelFactory(
                             vehicleId,
                             vehicleName,
-                            batteryLevel,
-                            estimatedDistance,
-                            rssi,
+                            DKBeaconInfo(
+                                batteryLevel,
+                                estimatedDistance,
+                                rssi,
+                                txPower
+                            ),
                             beaconInfo
                         )
                     ).get(BeaconDetailViewModel::class.java)

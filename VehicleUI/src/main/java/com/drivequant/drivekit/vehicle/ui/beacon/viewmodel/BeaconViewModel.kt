@@ -32,9 +32,10 @@ class BeaconViewModel(
     var vehicleName: String? = null
     var vehiclePaired: Vehicle? = null
     var seenBeacon: BeaconInfo? = null
-    var batteryLevel: Int = 0
     var estimatedDistance: Double = 0.0
     var rssi: Int = 0
+    var txPower: Int = 0
+    var batteryLevel: Int = 0
         set(value) {
             field = value
             beacon?.let {
@@ -80,21 +81,21 @@ class BeaconViewModel(
         }
     }
 
-    fun computeVehicleName(context: Context){
+    fun computeVehicleName(context: Context) {
         vehicle?.let {
             vehicleName = it.buildFormattedName(context)
         }
     }
 
-    fun onConnectButtonClicked(){
+    fun onConnectButtonClicked() {
         fragmentDispatcher.postValue(BeaconInputIdFragment.newInstance(this))
     }
 
-    fun onCodeValid(){
+    fun onCodeValid() {
         fragmentDispatcher.postValue(BeaconScannerFragment.newInstance(this@BeaconViewModel, BeaconStep.SCAN))
     }
 
-    fun checkCode(codeValue: String){
+    fun checkCode(codeValue: String) {
         progressBarObserver.postValue(true)
         DriveKitVehicle.getBeaconByUniqueId(codeValue, object : VehicleGetBeaconQueryListener {
             override fun onResponse(status: VehicleBeaconInfoStatus, beacon: Beacon) {
@@ -105,11 +106,11 @@ class BeaconViewModel(
         })
     }
 
-    fun addBeaconToVehicle(){
+    fun addBeaconToVehicle() {
         progressBarObserver.postValue(true)
         beacon?.let { beacon ->
             vehicle?.let { vehicle ->
-                DriveKitVehicle.addBeaconToVehicle(beacon, vehicle, object : VehicleAddBeaconQueryListener{
+                DriveKitVehicle.addBeaconToVehicle(beacon, vehicle, object : VehicleAddBeaconQueryListener {
                     override fun onResponse(status: VehicleBeaconStatus) {
                         progressBarObserver.postValue(false)
                         beaconAddObserver.postValue(status)
@@ -119,7 +120,7 @@ class BeaconViewModel(
         }
     }
 
-    fun changeBeaconToVehicle(){
+    fun changeBeaconToVehicle() {
         progressBarObserver.postValue(true)
         beacon?.let { beacon ->
             vehicle?.let { vehicle ->
@@ -133,7 +134,7 @@ class BeaconViewModel(
         }
     }
 
-    fun checkVehiclePaired(listener: ServiceListeners){
+    fun checkVehiclePaired(listener: ServiceListeners) {
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 if (status == VehicleSyncStatus.NO_ERROR){
@@ -147,7 +148,7 @@ class BeaconViewModel(
                         }
                     }
 
-                    when (scanType){
+                    when (scanType) {
                         PAIRING, VERIFY -> {
                             vehicle?.let { vehicle ->
                                 vehiclePaired?.let { vehiclePaired ->
@@ -166,7 +167,7 @@ class BeaconViewModel(
         })
     }
 
-    fun launchDetailFragment(){
+    fun launchDetailFragment() {
         beaconDetailObserver.postValue(null)
     }
 
@@ -174,7 +175,7 @@ class BeaconViewModel(
         listener?.onStateUpdated(beaconStep)
     }
 
-    fun scanValidationFinished(){
+    fun scanValidationFinished() {
         listener?.onScanFinished()
     }
 

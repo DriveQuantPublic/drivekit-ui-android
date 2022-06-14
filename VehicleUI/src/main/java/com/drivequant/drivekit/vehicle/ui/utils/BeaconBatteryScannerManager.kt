@@ -22,13 +22,23 @@ internal class BeaconInfoScannerManager(
         beaconBatteryReaderScanner.unregisterListener(context)
     }
 
-    override fun onBeaconInfoRetrieved(batteryLevel: Int, estimatedDistance: Double, rssi: Int) {
-        listener.onBeaconInfoRetrieved(batteryLevel, estimatedDistance, rssi)
+    override fun onBeaconInfoRetrieved(
+        batteryLevel: Int,
+        estimatedDistance: Double, rssi: Int, txPower: Int
+    ) {
+        listener.onBeaconInfoRetrieved(DKBeaconInfo(batteryLevel, estimatedDistance, rssi, txPower))
     }
 
     override fun getBeacon(): BeaconData = beaconData
 }
 
 interface DKBeaconInfoListener {
-    fun onBeaconInfoRetrieved(batteryLevel: Int, estimatedDistance: Double, rssi: Int)
+    fun onBeaconInfoRetrieved(dkBeaconInfo: DKBeaconInfo)
 }
+
+class DKBeaconInfo(
+    val batteryLevel: Int,
+    val estimatedDistance: Double,
+    val rssi: Int,
+    val txPower: Int
+)

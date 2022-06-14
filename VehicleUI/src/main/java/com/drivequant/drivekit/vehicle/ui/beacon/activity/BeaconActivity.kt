@@ -98,6 +98,7 @@ class BeaconActivity : AppCompatActivity() {
                             viewModel.batteryLevel,
                             viewModel.estimatedDistance,
                             viewModel.rssi,
+                            viewModel.txPower,
                             seenBeacon
                         )
                     }
