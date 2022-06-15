@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 
 class BeaconDetailActivity : AppCompatActivity() {
@@ -24,27 +25,28 @@ class BeaconDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: BeaconDetailViewModel
     private var vehicleId: String? = null
     private var vehicleName: String? = null
-    private var batterylevel: Int = 0
+    private var beaconRetrievedInfo: DKBeaconRetrievedInfo? = null
     private var beaconInfo: BeaconInfo? = null
 
     companion object  {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
         private const val VEHICLE_NAME_EXTRA = "vehicleName-extra"
-        private const val BATTERY_LEVEL_EXTRA = "battery-level-extra"
         private const val BEACON_INFO_EXTRA = "beacon-info-extra"
+        private const val BEACON_RETRIEVED_INFO_EXTRA = "beacon-retrieved-info-extra"
 
         fun launchActivity(context: Context,
                            vehicleId: String,
                            vehicleName: String,
-                           batteryLevel: Int,
-                           beaconInfo: BeaconInfo
-        ) {
+                           beaconRetrievedInfo: DKBeaconRetrievedInfo,
+                           beaconInfo: BeaconInfo) {
             val intent = Intent(context, BeaconDetailActivity::class.java)
-            intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
-            intent.putExtra(VEHICLE_NAME_EXTRA, vehicleName)
-            intent.putExtra(BATTERY_LEVEL_EXTRA, batteryLevel)
-            intent.putExtra(BEACON_INFO_EXTRA, beaconInfo)
-            context.startActivity(intent)
+            intent.apply {
+                putExtra(VEHICLE_ID_EXTRA, vehicleId)
+                putExtra(VEHICLE_NAME_EXTRA, vehicleName)
+                putExtra(BEACON_INFO_EXTRA, beaconInfo)
+                putExtra(BEACON_RETRIEVED_INFO_EXTRA, beaconRetrievedInfo)
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -60,21 +62,31 @@ class BeaconDetailActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.apply {
+            setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
-        batterylevel = intent.getIntExtra(BATTERY_LEVEL_EXTRA, 0)
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
         beaconInfo = intent.getSerializableExtra(BEACON_INFO_EXTRA) as BeaconInfo?
+        beaconRetrievedInfo = intent.getSerializableExtra(BEACON_RETRIEVED_INFO_EXTRA) as DKBeaconRetrievedInfo?
 
-        vehicleId?.let {vehicleId ->
+        vehicleId?.let { vehicleId ->
             beaconInfo?.let { beaconInfo ->
-                vehicleName?.let { vehicleName ->
-                    viewModel = ViewModelProviders.of(this,
-                        BeaconDetailViewModel.BeaconDetailViewModelFactory(vehicleId, vehicleName, batterylevel, beaconInfo))
-                        .get(BeaconDetailViewModel::class.java)
+                beaconRetrievedInfo?.let { beaconRetrievedInfo ->
+                    vehicleName?.let { vehicleName ->
+                        viewModel = ViewModelProviders.of(
+                            this,
+                            BeaconDetailViewModel.BeaconDetailViewModelFactory(
+                                vehicleId,
+                                vehicleName,
+                                beaconRetrievedInfo,
+                                beaconInfo
+                            )
+                        ).get(BeaconDetailViewModel::class.java)
+                    }
                 }
             }
         }

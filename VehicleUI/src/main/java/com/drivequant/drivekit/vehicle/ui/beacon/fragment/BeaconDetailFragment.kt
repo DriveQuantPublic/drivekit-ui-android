@@ -14,6 +14,7 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import kotlinx.android.synthetic.main.fragment_beacon_detail.*
 import java.lang.StringBuilder
 
@@ -37,10 +38,15 @@ class BeaconDetailFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putString("vehicleName", viewModel.vehicleName)
-            outState.putString("vehicleId", viewModel.vehicleId)
-            outState.putInt("batteryLevel", viewModel.batteryLevel)
-            outState.putSerializable("seenBeacon", viewModel.seenBeacon)
+            outState.apply {
+                putString("vehicleName", viewModel.vehicleName)
+                putString("vehicleId", viewModel.vehicleId)
+                putInt("batteryLevel", viewModel.beaconRetrievedInfo.batteryLevel)
+                putDouble("estimatedDistance", viewModel.beaconRetrievedInfo.estimatedDistance)
+                putInt("rssi", viewModel.beaconRetrievedInfo.rssi)
+                putInt("txPower", viewModel.beaconRetrievedInfo.txPower)
+                putSerializable("seenBeacon", viewModel.seenBeacon)
+            }
         }
         super.onSaveInstanceState(outState)
     }
@@ -51,14 +57,17 @@ class BeaconDetailFragment : Fragment() {
             val vehicleName = it.getString("vehicleName")
             val vehicleId = it.getString("vehicleId")
             val batteryLevel = it.getInt("batteryLevel")
-            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo ?
+            val estimatedDistance = it.getDouble("estimatedDistance")
+            val rssi = it.getInt("rssi")
+            val txPower = it.getInt("txPower")
+            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo?
             if (vehicleId != null && vehicleName != null && seenBeacon != null) {
                 viewModel = ViewModelProviders.of(
                     this,
                     BeaconDetailViewModel.BeaconDetailViewModelFactory(
                         vehicleId,
                         vehicleName,
-                        batteryLevel,
+                        DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower),
                         seenBeacon
                     )
                 ).get(BeaconDetailViewModel::class.java)

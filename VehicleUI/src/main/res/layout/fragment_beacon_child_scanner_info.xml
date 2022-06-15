@@ -29,6 +29,7 @@
                         android:padding="@dimen/dk_margin_half"
                         android:textStyle="bold" />
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/button_beacon_info"
                         android:layout_width="@dimen/dk_ic_big"
                         android:layout_height="@dimen/dk_ic_big"
@@ -74,6 +75,9 @@
                             android:padding="@dimen/dk_margin_half"/>
                     </LinearLayout>
                 </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                 <LinearLayout style="@style/MW">
                     <TextView
                         android:id="@+id/text_view_distance"
@@ -104,6 +108,14 @@
                         tools:text="42 dbm"
                         />
                 </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/progress_circular"
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
