@@ -60,7 +60,7 @@ class BeaconDetailFragment : Fragment() {
             val estimatedDistance = it.getDouble("estimatedDistance")
             val rssi = it.getInt("rssi")
             val txPower = it.getInt("txPower")
-            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo ?
+            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo?
             if (vehicleId != null && vehicleName != null && seenBeacon != null) {
                 viewModel = ViewModelProviders.of(
                     this,
@@ -68,7 +68,8 @@ class BeaconDetailFragment : Fragment() {
                         vehicleId,
                         vehicleName,
                         DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower),
-                        seenBeacon)
+                        seenBeacon
+                    )
                 ).get(BeaconDetailViewModel::class.java)
             }
         }

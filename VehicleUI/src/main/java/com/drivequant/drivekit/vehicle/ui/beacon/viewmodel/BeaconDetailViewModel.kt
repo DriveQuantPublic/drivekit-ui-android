@@ -46,19 +46,19 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_major"),
-                        DKSpannable().append("${seenBeacon.major}").toSpannable()
+                        DKSpannable().append(seenBeacon.major.toString()).toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_minor"),
-                        DKSpannable().append("${seenBeacon.minor}").toSpannable()
+                        DKSpannable().append(seenBeacon.minor.toString()).toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_battery"),
-                        buildValue(context, "${beaconRetrievedInfo.batteryLevel}", "%")
+                        buildValue(context, beaconRetrievedInfo.batteryLevel.toString(), "%")
                     )
                 )
                 data.add(
@@ -70,12 +70,12 @@ class BeaconDetailViewModel(
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_rssi"),
-                        buildValue(context, "${beaconRetrievedInfo.rssi}", "dBm"))
+                        buildValue(context, beaconRetrievedInfo.rssi.toString(), "dBm"))
                 )
                 data.add(
                     BeaconDetailField(
                         getTitle(context, "dk_beacon_tx"),
-                        buildValue(context, "${beaconRetrievedInfo.txPower}", "dBm"))
+                        buildValue(context, beaconRetrievedInfo.txPower.toString(), "dBm"))
                 )
             }
         }

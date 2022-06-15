@@ -97,10 +97,11 @@ class BeaconActivity : AppCompatActivity() {
                             vehicleId,
                             vehicleName,
                             DKBeaconRetrievedInfo(
-                            viewModel.batteryLevel,
-                            viewModel.estimatedDistance,
-                            viewModel.rssi,
-                            viewModel.txPower),
+                                viewModel.batteryLevel,
+                                viewModel.estimatedDistance,
+                                viewModel.rssi,
+                                viewModel.txPower
+                            ),
                             seenBeacon
                         )
                     }
