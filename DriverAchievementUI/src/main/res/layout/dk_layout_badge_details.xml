@@ -11,8 +11,7 @@
         android:layout_height="48dp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dk_margin"
-        android:paddingEnd="@dimen/dk_margin"
-        android:textAlignment="center" />
+        android:paddingEnd="@dimen/dk_margin" />
 
     <ScrollView
         android:layout_width="match_parent"

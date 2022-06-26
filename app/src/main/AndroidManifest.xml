@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.drivekit.drivekitdemoapp">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+
     <application
         android:name="com.drivekit.demoapp.DriveKitDemoApplication"
         android:allowBackup="false"
