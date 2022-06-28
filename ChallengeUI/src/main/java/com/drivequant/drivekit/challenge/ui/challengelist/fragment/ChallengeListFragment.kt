@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -78,8 +77,6 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
-
-
 
         dk_swipe_refresh_challenge.setOnRefreshListener {
             updateSwipeRefreshChallengesVisibility(true)
