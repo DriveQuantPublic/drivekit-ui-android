@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
@@ -34,7 +35,7 @@ class EcoDrivingFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.eco_driving_fragment, container, false)
         FontUtils.overrideFonts(context, view)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 

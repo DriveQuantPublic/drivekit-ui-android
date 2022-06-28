@@ -84,7 +84,7 @@ class TripDetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 
@@ -100,7 +100,7 @@ class TripDetailFragment : Fragment() {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
-                        .positiveButton(positiveListener = DialogInterface.OnClickListener { _, _ ->
+                        .positiveButton(positiveListener = { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
                         .negativeButton()
@@ -472,7 +472,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary() {
-        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalize()
+        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.replaceFirstChar { it -> it.uppercaseChar() }
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =

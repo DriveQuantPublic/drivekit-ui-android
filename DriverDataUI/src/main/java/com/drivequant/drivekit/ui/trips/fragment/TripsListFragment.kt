@@ -21,6 +21,7 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -52,7 +53,7 @@ class TripsListFragment : Fragment() {
                 .get(TripsListViewModel::class.java)
         }
 
-        viewModel.tripsData.observe(this, {
+        viewModel.tripsData.observe(this) {
             viewModel.getFilterItems(requireContext())
             setHasOptionsMenu(
                 DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes()
@@ -93,9 +94,9 @@ class TripsListFragment : Fragment() {
                 shouldSyncTrips = false
                 updateTrips()
             }
-        })
+        }
 
-        viewModel.syncTripsError.observe(this, {
+        viewModel.syncTripsError.observe(this) {
             it?.let {
                 Toast.makeText(
                     context,
@@ -104,7 +105,7 @@ class TripsListFragment : Fragment() {
                 ).show()
             }
             updateProgressVisibility(false)
-        })
+        }
 
         synchronizationType = if (viewModel.hasLocalTrips()) {
             SynchronizationType.CACHE
@@ -178,6 +179,7 @@ class TripsListFragment : Fragment() {
             ), javaClass.simpleName
         )
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
+        FontUtils.overrideFonts(context, view)
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
