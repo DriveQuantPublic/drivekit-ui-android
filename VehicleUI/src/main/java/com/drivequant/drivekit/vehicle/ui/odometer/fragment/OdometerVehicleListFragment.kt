@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
@@ -72,7 +73,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
         context?.let { context ->
             viewModel.getVehicleListItems(context)
-            viewModel.vehicleOdometerData.observe(this, {
+            viewModel.vehicleOdometerData.observe(this) {
                 if (it) {
                     viewModel.selection.value?.let { vehicleId ->
                         val viewModel = OdometerItemViewModel(vehicleId)
@@ -101,11 +102,14 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                         updateOdometer(vehicleId, SynchronizationType.DEFAULT)
                     }
                 }
-            })
-            viewModel.selection.observe(this, {
+            }
+            viewModel.selection.observe(this) {
                 it?.let {
-                    val vehicleOdometer = DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne().executeOne()
-                    synchronizationType = if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
+                    val vehicleOdometer =
+                        DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne()
+                            .executeOne()
+                    synchronizationType =
+                        if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
                     updateOdometer(it, synchronizationType)
                 } ?: run {
                     root.visibility = View.GONE
@@ -115,15 +119,13 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                         visibility = View.VISIBLE
                     }
                 }
-            })
+            }
         }
 
-        viewModel.filterData.observe(this, { position ->
+        viewModel.filterData.observe(this) { position ->
             vehicle_filter.setItems(viewModel.filterItems, position)
             initVehicleFilter()
-        })
-
-
+        }
     }
 
     private fun updateOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
@@ -150,9 +152,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false).apply {
-        setBackgroundColor(Color.WHITE)
-    }
+    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false).setDKStyle(Color.WHITE)
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         progress_circular?.apply {
