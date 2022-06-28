@@ -60,8 +60,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         textViewTitle.headLine1(mainFontColor)
         textViewSubtitle.smallText(complementaryFontColor)
-        textViewDetectionModeTitle.normalText(mainFontColor)
-        textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
+        textViewDetectionModeTitle.headLine2()
         textViewDetectionModeDescription.normalText()
 
         popup.setImageDrawable(DKResource.convertToDrawable(itemView.context, "dk_common_dots"))

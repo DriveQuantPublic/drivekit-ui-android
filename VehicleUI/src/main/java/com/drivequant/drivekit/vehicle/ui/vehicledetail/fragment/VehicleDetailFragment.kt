@@ -115,7 +115,6 @@ class VehicleDetailFragment : Fragment() {
             it.title = viewModel.vehicleName
             it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
             it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(requireContext()))
-            it.setCollapsedTitleTypeface(Typeface.DEFAULT_BOLD)
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)

@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
@@ -33,7 +32,7 @@ class VehiclesListFragment : Fragment() {
     private lateinit var synchronizationType: SynchronizationType
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
+        inflater.inflate(R.layout.fragment_vehicles_list, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -50,7 +49,7 @@ class VehiclesListFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
         viewModel.apply {
-            progressBarObserver.observe(this@VehiclesListFragment, {
+            progressBarObserver.observe(this@VehiclesListFragment) {
                 it?.let { displayProgressCircular ->
                     if (displayProgressCircular) {
                         showProgressCircular()
@@ -58,11 +57,11 @@ class VehiclesListFragment : Fragment() {
                         hideProgressCircular()
                     }
                 }
-            })
+            }
 
-            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment, {
+            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment) {
                 viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
-            })
+            }
         }
     }
 
@@ -84,7 +83,7 @@ class VehiclesListFragment : Fragment() {
 
     fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
-        viewModel.vehiclesData.observe(this, {
+        viewModel.vehiclesData.observe(this) {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
                 Toast.makeText(
                     context,
@@ -100,7 +99,7 @@ class VehiclesListFragment : Fragment() {
                 adapter?.let { adapter ->
                     adapter.setVehicles(it)
                     adapter.notifyDataSetChanged()
-                }?:run {
+                } ?: run {
                     adapter = VehiclesListAdapter(requireContext(), viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter
                 }
@@ -115,7 +114,7 @@ class VehiclesListFragment : Fragment() {
                 shouldSyncVehicles = false
                 updateVehicles(SynchronizationType.DEFAULT)
             }
-        })
+        }
         refresh_vehicles.isRefreshing = true
         viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }

@@ -68,7 +68,10 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             bigText(DriveKitUI.colors.mainFontColor())
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
         }
-        code_wrapper.hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
+        code_wrapper.apply {
+            hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
+            typeface = DriveKitUI.primaryFont(context)
+        }
         button_validate.apply {
             button()
             text = DKResource.convertToString(requireContext(), "dk_common_validate")
