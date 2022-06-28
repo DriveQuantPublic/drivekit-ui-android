@@ -244,6 +244,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             } ?: run {
                 visibility = View.GONE
             }
+            typeface = DriveKitUI.primaryFont(context)
         }
     }
 
