@@ -72,7 +72,7 @@ class TripSynthesisItem: LinearLayout {
     }
 
     fun setValueTypeFace() {
-        textViewValue.typeface = Typeface.DEFAULT_BOLD
+        textViewValue.typeface = DriveKitUI.primaryFont(context)
     }
 
     fun onTripItemSynthesisClick(context: Context, vehicleId: String?, liteConfig: Boolean?) {

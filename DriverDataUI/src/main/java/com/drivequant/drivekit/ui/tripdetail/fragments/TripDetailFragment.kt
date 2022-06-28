@@ -322,8 +322,11 @@ class TripDetailFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
             adviceAlertDialog = builder.show()
+            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                setTextColor(DriveKitUI.colors.secondaryColor())
+                typeface = DriveKitUI.primaryFont(context)
+            }
         }
     }
 
@@ -389,7 +392,10 @@ class TripDetailFragment : Fragment() {
                 }
             }
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
-                ?.setTextColor(DriveKitUI.colors.secondaryColor())
+                ?.apply {
+                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    typeface = DriveKitUI.primaryFont(context)
+                }
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
         }
