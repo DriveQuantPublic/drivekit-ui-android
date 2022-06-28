@@ -32,8 +32,8 @@ class ChallengeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.syncChallengesError.observe(this, {
-            if(!it){
+        viewModel.syncChallengesError.observe(this) {
+            if (!it) {
                 Toast.makeText(
                     context,
                     DKResource.convertToString(
@@ -45,7 +45,7 @@ class ChallengeFragment : Fragment() {
             }
             viewModel.filterChallenges()
             updateProgressVisibility(false)
-        })
+        }
         setViewPager()
     }
 
@@ -59,9 +59,14 @@ class ChallengeFragment : Fragment() {
                 childFragmentManager,
                 viewModel, requireContext()
             )
-        tab_layout_challenge.setupWithViewPager(view_pager_challenge)
-        tab_layout_challenge.setBackgroundColor(Color.WHITE)
-        tab_layout_challenge.setTabTextColors(DriveKitUI.colors.complementaryFontColor(), DriveKitUI.colors.secondaryColor())
+        tab_layout_challenge.apply {
+            setupWithViewPager(view_pager_challenge)
+            setBackgroundColor(Color.WHITE)
+            setTabTextColors(
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor()
+            )
+        }
     }
 
     override fun onCreateView(

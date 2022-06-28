@@ -2,7 +2,6 @@ package com.drivequant.drivekit.challenge.ui.common
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -72,7 +71,10 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
     }
 
     private fun setStyle() {
-        text_view_title.setTextColor(DriveKitUI.colors.mainFontColor())
+        text_view_title.apply {
+            setTextColor(DriveKitUI.colors.mainFontColor())
+            typeface = DriveKitUI.primaryFont(context)
+        }
         text_view_date.smallText(DriveKitUI.colors.complementaryFontColor())
         view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         text_view_conditions.normalText()

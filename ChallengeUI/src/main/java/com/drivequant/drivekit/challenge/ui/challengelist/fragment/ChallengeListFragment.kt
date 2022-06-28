@@ -86,8 +86,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel.fetchChallengeList()
         }
 
-        viewModel.syncChallengesError.observe(this, Observer {
-            if(!it){
+        viewModel.syncChallengesError.observe(this) {
+            if (!it) {
                 Toast.makeText(
                     context,
                     DKResource.convertToString(
@@ -125,7 +125,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 }
             }
             updateSwipeRefreshChallengesVisibility(false)
-        })
+        }
     }
 
     private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {

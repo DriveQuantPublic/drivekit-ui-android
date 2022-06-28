@@ -29,10 +29,9 @@ internal class ChallengesFragmentPagerAdapter(
 
     override fun getItem(position: Int): Fragment = fragments[position]
 
-    override fun getPageTitle(position: Int): CharSequence? = DKResource.convertToString(
+    override fun getPageTitle(position: Int): CharSequence = DKResource.convertToString(
         context,
         titles[position]
     )
-
     override fun getCount(): Int = fragments.size
 }

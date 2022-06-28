@@ -67,7 +67,7 @@ class ChallengeDetailFragment : Fragment() {
             ).get(ChallengeDetailViewModel::class.java)
         }
         startSyncType = if (viewModel.getLocalChallengeDetail() != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-        viewModel.syncChallengeDetailError.observe(this, {
+        viewModel.syncChallengeDetailError.observe(this) {
             if (!it) {
                 Toast.makeText(
                     requireContext(),
@@ -86,7 +86,7 @@ class ChallengeDetailFragment : Fragment() {
                 shouldSyncDetail = false
                 updateChallengeDetail(SynchronizationType.DEFAULT)
             }
-        })
+        }
         updateChallengeDetail(startSyncType)
     }
 
