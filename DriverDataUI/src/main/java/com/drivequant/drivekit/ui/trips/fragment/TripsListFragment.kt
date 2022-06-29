@@ -1,25 +1,29 @@
 package com.drivequant.drivekit.ui.trips.fragment
 
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
-import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.SynchronizationType
@@ -119,6 +123,9 @@ class TripsListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.trip_list_menu_bar, menu)
+        context?.let {
+            menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

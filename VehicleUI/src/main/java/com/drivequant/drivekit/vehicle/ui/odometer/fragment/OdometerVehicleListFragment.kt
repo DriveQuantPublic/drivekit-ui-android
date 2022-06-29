@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
@@ -181,6 +182,9 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 i,
                 DKSpannable().append(itemsList[i].getTitle(view.context), view.context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
+                    DriveKitUI.primaryFont(view.context)?.let { typeface ->
+                        typeface(CustomTypefaceSpan(typeface))
+                    }
                 }).toSpannable()
             )
         }
