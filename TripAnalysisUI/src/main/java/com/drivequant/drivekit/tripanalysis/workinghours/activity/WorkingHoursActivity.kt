@@ -223,8 +223,15 @@ class WorkingHoursActivity : AppCompatActivity() {
                 .show()
             val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
             val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            title?.text = getString(R.string.app_name)
-            description?.text = DKResource.convertToString(this, "dk_working_hours_back_save_alert")
+            title?.apply {
+                text = getString(R.string.app_name)
+                typeface = DriveKitUI.primaryFont(context)
+            }
+            description?.apply {
+                text = DKResource.convertToString(this@WorkingHoursActivity, "dk_working_hours_back_save_alert")
+                typeface = DriveKitUI.primaryFont(context)
+            }
+
         } else {
             super.onBackPressed()
         }

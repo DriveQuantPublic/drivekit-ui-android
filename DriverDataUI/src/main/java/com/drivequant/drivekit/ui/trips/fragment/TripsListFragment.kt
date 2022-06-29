@@ -3,10 +3,7 @@ package com.drivequant.drivekit.ui.trips.fragment
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -23,9 +20,9 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -186,7 +183,6 @@ class TripsListFragment : Fragment() {
             ), javaClass.simpleName
         )
         activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
-        FontUtils.overrideFonts(context, view)
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
@@ -230,7 +226,7 @@ class TripsListFragment : Fragment() {
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
         tripsListView = view.findViewById(R.id.dk_trips_list_view)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 

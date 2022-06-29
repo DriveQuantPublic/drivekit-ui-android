@@ -28,9 +28,9 @@ import com.drivequant.drivekit.ui.transportationmode.viewmodel.TransportationPro
 import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.*
 
 
-internal class TransportationModeFragment : Fragment() {
+internal class TransportationModeFragment : Fragment(){
 
-    private lateinit var viewModel: TransportationModeViewModel
+    private lateinit var viewModel : TransportationModeViewModel
     private lateinit var itinId: String
 
     private val transportationModesViews = mutableListOf<CircularButtonItemView>()
@@ -49,46 +49,30 @@ internal class TransportationModeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.dk_fragment_transportation_mode, container, false)
-            .setDKStyle()
+        return inflater.inflate(R.layout.dk_fragment_transportation_mode, container, false).setDKStyle()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_trips_detail_transportation_mode"
-            ), javaClass.simpleName
-        )
-        savedInstanceState?.getString("itinId")?.let {
+        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail_transportation_mode"), javaClass.simpleName)
+        savedInstanceState?.getString("itinId")?.let{
             itinId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
-                this,
+            viewModel = ViewModelProviders.of(this,
                 TransportationModeViewModel.TransportationModeViewModelFactory(itinId)
             ).get(TransportationModeViewModel::class.java)
         }
 
         (description_title.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
         description_title.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        description_title.text = DKResource.convertToString(
-            requireContext(),
-            "dk_driverdata_transportation_mode_declaration_text"
-        )
+        description_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
 
         transportation_profile_title.normalText()
-        transportation_profile_title.text = DKResource.convertToString(
-            requireContext(),
-            "dk_driverdata_transportation_mode_passenger_driver"
-        )
+        transportation_profile_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_passenger_driver")
 
         comment_title.normalText()
-        comment_title.text = DKResource.convertToString(
-            requireContext(),
-            "dk_driverdata_transportation_mode_declaration_comment"
-        )
+        comment_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
 
         val editTextBackground = edit_text_comment.background as GradientDrawable
         editTextBackground.setStroke(4, DriveKitUI.colors.neutralColor())
@@ -98,7 +82,7 @@ internal class TransportationModeFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                text_comment_error.visibility = if (viewModel.isCommentValid(s.toString())) {
+                text_comment_error.visibility = if (viewModel.isCommentValid(s.toString())){
                     View.GONE
                 } else {
                     View.VISIBLE
@@ -106,10 +90,7 @@ internal class TransportationModeFragment : Fragment() {
             }
         })
         text_comment_error.smallText(DriveKitUI.colors.criticalColor())
-        text_comment_error.text = DKResource.convertToString(
-            requireContext(),
-            "dk_driverdata_transportation_mode_declaration_comment_error"
-        )
+        text_comment_error.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error")
 
         button_validate.button()
         button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
@@ -117,10 +98,10 @@ internal class TransportationModeFragment : Fragment() {
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(this) { status ->
+        viewModel.updateObserver.observe(this, { status ->
             hideProgressCircular()
-            if (status != null) {
-                when (status) {
+            if (status != null){
+                when (status){
                     TransportationModeUpdateStatus.NO_ERROR -> {
                         requireActivity().apply {
                             setResult(Activity.RESULT_OK)
@@ -130,26 +111,20 @@ internal class TransportationModeFragment : Fragment() {
                     TransportationModeUpdateStatus.FAILED_TO_UPDATE_STATUS -> {
                         Toast.makeText(
                             requireContext(),
-                            DKResource.convertToString(
-                                requireContext(),
-                                "dk_driverdata_failed_to_declare_transportation"
-                            ),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                     TransportationModeUpdateStatus.COMMENT_TOO_LONG -> {
                         Toast.makeText(
                             requireContext(),
-                            DKResource.convertToString(
-                                requireContext(),
-                                "dk_driverdata_transportation_mode_declaration_comment_error"
-                            ),
+                            DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error"),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
             }
-        }
+        })
         initDefaultValues()
     }
 
@@ -180,8 +155,7 @@ internal class TransportationModeFragment : Fragment() {
 
     private fun bindTransportationModeItems() {
         for (item in viewModel.buildTransportationModes()) {
-            val itemView: CircularButtonItemView? =
-                view?.findViewById(getItemIdByTransportationMode(item))
+            val itemView: CircularButtonItemView? = view?.findViewById(getItemIdByTransportationMode(item))
             itemView?.let {
                 transportationModesViews.add(it)
             }
@@ -190,8 +164,7 @@ internal class TransportationModeFragment : Fragment() {
 
     private fun bindTransportationProfileItems() {
         for (item in viewModel.buildTransportationProfiles()) {
-            val itemView: CircularButtonItemView? =
-                view?.findViewById(getItemIdByTransportationProfile(item))
+            val itemView: CircularButtonItemView? = view?.findViewById(getItemIdByTransportationProfile(item))
             itemView?.let {
                 transportationProfilesViews.add(it)
             }
@@ -200,17 +173,15 @@ internal class TransportationModeFragment : Fragment() {
 
     fun onTransportationModeClicked(view: View) {
         for (transportationModeItemView in transportationModesViews) {
-            val transportationMode: TransportationMode? =
-                getTransportationModeByItemId(transportationModeItemView.id)
+            val transportationMode: TransportationMode? = getTransportationModeByItemId(transportationModeItemView.id)
             if (view.id == transportationModeItemView.id) {
                 if (transportationMode != null) {
                     if (transportationMode != TransportationMode.CAR) {
                         viewModel.selectedProfileDriver = null
                     }
-                    viewModel.selectedTransportationMode = transportationMode
+                    viewModel.selectedTransportationMode  = transportationMode
                     transportationModeItemView.setItemSelectedState(true)
-                    transportation_mode_title.text =
-                        viewModel.buildSelectedTransportationModeTitle(requireContext())
+                    transportation_mode_title.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
                 }
             } else {
                 transportationModeItemView.setItemSelectedState(false)
@@ -222,8 +193,7 @@ internal class TransportationModeFragment : Fragment() {
     fun onTransportationProfileClicked(view: View) {
         for (transportationProfileItemView in transportationProfilesViews) {
             if (view.id == transportationProfileItemView.id) {
-                val transportationProfile: TransportationProfile? =
-                    getTransportationProfileByItemId(transportationProfileItemView.id)
+                val transportationProfile: TransportationProfile? = getTransportationProfileByItemId(transportationProfileItemView.id)
                 if (transportationProfile != null) {
                     viewModel.selectedProfileDriver = transportationProfile
                     transportationProfileItemView.setItemSelectedState(true)
@@ -234,7 +204,7 @@ internal class TransportationModeFragment : Fragment() {
         }
     }
 
-    fun onValidate() {
+    fun onValidate(){
         viewModel.comment = edit_text_comment.text.toString()
         if (viewModel.checkFieldsValidity()) {
             showProgressCircular()
@@ -242,10 +212,7 @@ internal class TransportationModeFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireContext(),
-                DKResource.convertToString(
-                    requireContext(),
-                    "dk_driverdata_failed_to_declare_transportation"
-                ),
+                DKResource.convertToString(requireContext(), "dk_driverdata_failed_to_declare_transportation"),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -256,10 +223,7 @@ internal class TransportationModeFragment : Fragment() {
             val declaredTransportationMode = trip.declaredTransportationMode?.transportationMode
             if (declaredTransportationMode != null) {
                 for (transportationViewItem in transportationModesViews) {
-                    if (declaredTransportationMode === getTransportationModeByItemId(
-                            transportationViewItem.id
-                        )
-                    ) {
+                    if (declaredTransportationMode === getTransportationModeByItemId(transportationViewItem.id)) {
                         viewModel.selectedTransportationMode = declaredTransportationMode
                         transportationViewItem.setItemSelectedState(true)
                     } else {
@@ -269,13 +233,9 @@ internal class TransportationModeFragment : Fragment() {
                 if (viewModel.displayPassengerOption()) {
                     updateTransportationProfileVisibility()
                     trip.declaredTransportationMode?.passenger?.let {
-                        val transportationProfile =
-                            if (it) TransportationProfile.PASSENGER else TransportationProfile.DRIVER
+                        val transportationProfile = if (it) TransportationProfile.PASSENGER else TransportationProfile.DRIVER
                         for (declaredTransportationProfileItem in transportationProfilesViews) {
-                            if (transportationProfile == getTransportationProfileByItemId(
-                                    declaredTransportationProfileItem.id
-                                )
-                            ) {
+                            if (transportationProfile == getTransportationProfileByItemId(declaredTransportationProfileItem.id)) {
                                 viewModel.selectedProfileDriver = transportationProfile
                                 declaredTransportationProfileItem.setItemSelectedState(true)
                             } else {
@@ -289,49 +249,52 @@ internal class TransportationModeFragment : Fragment() {
                     edit_text_comment.setText(it)
                 }
             }
-            transportation_mode_title.text =
-                viewModel.buildSelectedTransportationModeTitle(requireContext())
+            transportation_mode_title.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
         }
     }
 
-    private fun getItemIdByTransportationMode(transportationMode: TransportationMode) =
-        when (transportationMode) {
+    private fun getItemIdByTransportationMode(transportationMode: TransportationMode): Int {
+        return when (transportationMode) {
             TransportationMode.CAR -> R.id.transportation_mode_car
             TransportationMode.MOTO -> R.id.transportation_mode_motorcycle
             TransportationMode.TRUCK -> R.id.transportation_mode_truck
             TransportationMode.BUS -> R.id.transportation_mode_bus
-            TransportationMode.TRAIN -> R.id.transportation_mode_train
+            TransportationMode.TRAIN ->  R.id.transportation_mode_train
             TransportationMode.BOAT -> R.id.transportation_mode_boat
             TransportationMode.BIKE -> R.id.transportation_mode_bike
-            TransportationMode.FLIGHT -> R.id.transportation_mode_flight
+            TransportationMode.FLIGHT ->  R.id.transportation_mode_flight
             TransportationMode.SKIING -> R.id.transportation_mode_skiing
             TransportationMode.ON_FOOT -> R.id.transportation_mode_on_foot
             TransportationMode.IDLE -> R.id.transportation_mode_idle
             TransportationMode.OTHER -> R.id.transportation_mode_other
             else -> -1
         }
-
-    private fun getTransportationModeByItemId(itemId: Int) = when (itemId) {
-        R.id.transportation_mode_car -> TransportationMode.CAR
-        R.id.transportation_mode_motorcycle -> TransportationMode.MOTO
-        R.id.transportation_mode_truck -> TransportationMode.TRUCK
-        R.id.transportation_mode_bus -> TransportationMode.BUS
-        R.id.transportation_mode_train -> TransportationMode.TRAIN
-        R.id.transportation_mode_boat -> TransportationMode.BOAT
-        R.id.transportation_mode_bike -> TransportationMode.BIKE
-        R.id.transportation_mode_flight -> TransportationMode.FLIGHT
-        R.id.transportation_mode_skiing -> TransportationMode.SKIING
-        R.id.transportation_mode_on_foot -> TransportationMode.ON_FOOT
-        R.id.transportation_mode_idle -> TransportationMode.IDLE
-        R.id.transportation_mode_other -> TransportationMode.OTHER
-        else -> null
     }
 
-    private fun getItemIdByTransportationProfile(transportationProfile: TransportationProfile) =
-        when (transportationProfile) {
+    private fun getTransportationModeByItemId(itemId: Int): TransportationMode? {
+        return when (itemId) {
+            R.id.transportation_mode_car -> TransportationMode.CAR
+            R.id.transportation_mode_motorcycle -> TransportationMode.MOTO
+            R.id.transportation_mode_truck -> TransportationMode.TRUCK
+            R.id.transportation_mode_bus -> TransportationMode.BUS
+            R.id.transportation_mode_train -> TransportationMode.TRAIN
+            R.id.transportation_mode_boat -> TransportationMode.BOAT
+            R.id.transportation_mode_bike -> TransportationMode.BIKE
+            R.id.transportation_mode_flight -> TransportationMode.FLIGHT
+            R.id.transportation_mode_skiing -> TransportationMode.SKIING
+            R.id.transportation_mode_on_foot -> TransportationMode.ON_FOOT
+            R.id.transportation_mode_idle -> TransportationMode.IDLE
+            R.id.transportation_mode_other -> TransportationMode.OTHER
+            else -> null
+        }
+    }
+
+    private fun getItemIdByTransportationProfile(transportationProfile: TransportationProfile): Int {
+        return when (transportationProfile) {
             TransportationProfile.PASSENGER -> R.id.transportation_profile_passenger
             TransportationProfile.DRIVER -> R.id.transportation_profile_driver
         }
+    }
 
     private fun getTransportationProfileByItemId(itemId: Int): TransportationProfile? {
         when (itemId) {
@@ -344,13 +307,13 @@ internal class TransportationModeFragment : Fragment() {
     private fun showProgressCircular() {
         progress_circular?.apply {
             animate()
-                .alpha(1f)
-                .setDuration(200L)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        visibility = View.VISIBLE
-                    }
-                })
+            .alpha(1f)
+            .setDuration(200L)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    visibility = View.VISIBLE
+                }
+            })
         }
     }
 

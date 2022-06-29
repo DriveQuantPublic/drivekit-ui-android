@@ -36,8 +36,9 @@ class ScoreInfoView : LinearLayout {
                 .layout(R.layout.template_alert_dialog_layout)
                 .cancelable(true)
                 .positiveButton(
-                    DKResource.convertToString(context, "dk_common_ok")
-                ) { dialog, _ -> dialog.dismiss() }
+                    DKResource.convertToString(context, "dk_common_ok"),
+                    DialogInterface.OnClickListener
+                    { dialog, _ -> dialog.dismiss() })
                 .show()
 
             val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -53,7 +54,7 @@ class ScoreInfoView : LinearLayout {
             icon?.setImageResource(gaugeConfiguration.getIcon())
             title?.headLine1()
             description?.normalText()
-            alert.getButton(DialogInterface.BUTTON_POSITIVE)?.typeface = DriveKitUI.primaryFont(context)
+
         }
         addView(
             view, ViewGroup.LayoutParams(
