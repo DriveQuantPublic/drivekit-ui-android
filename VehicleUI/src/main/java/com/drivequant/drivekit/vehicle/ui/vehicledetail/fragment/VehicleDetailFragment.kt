@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Typeface.BOLD
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -25,12 +26,10 @@ import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.EditableText
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
@@ -42,7 +41,9 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.CameraGalleryPick
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.common.EditableField
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.FieldUpdatedListener
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_vehicle_detail.*
+import kotlin.math.abs
 
 class VehicleDetailFragment : Fragment() {
 
@@ -105,15 +106,44 @@ class VehicleDetailFragment : Fragment() {
                 viewModel = VehicleDetailViewModel(it)
             }
         }
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
 
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        val collapsingToolbar =
+            activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        collapsingToolbar?.let { collapsingToolbarLayout ->
+            appBarLayout?.let {
+                viewModel.vehicleName?.let { vehicleName ->
+                    it.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                        if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                            collapsingToolbarLayout.setCollapsedTitleTypeface(
+                                DriveKitUI.secondaryFont(
+                                    requireContext()
+                                )
+                            )
+                            collapsingToolbarLayout.title = vehicleName
+                        } else {
+                            collapsingToolbarLayout.setCollapsedTitleTypeface(
+                                DriveKitUI.primaryFont(
+                                    requireContext()
+                                )
+                            )
 
-        val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
-        collapsingToolbar?.let {
-            it.title = viewModel.vehicleName
-            it.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
-            it.setCollapsedTitleTypeface(DriveKitUI.primaryFont(requireContext()))
+                            context?.let { context ->
+                                collapsingToolbarLayout.title =
+                                    DKSpannable().append(vehicleName, context.resSpans {
+                                        typeface(BOLD)
+                                    }).toSpannable()
+
+                            }
+                        }
+                    })
+                }
+            }
+            collapsingToolbarLayout.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         }
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
