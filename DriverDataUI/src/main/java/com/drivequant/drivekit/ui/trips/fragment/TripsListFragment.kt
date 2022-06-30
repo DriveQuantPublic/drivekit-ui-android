@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -121,7 +122,9 @@ class TripsListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.trip_list_menu_bar, menu)
         context?.let {
-            menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
+            if (menu.isNotEmpty()) {
+                menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
+            }
         }
     }
 

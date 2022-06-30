@@ -12,11 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.size
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
-import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.common.ui.utils.ResSpans
+import com.drivequant.drivekit.common.ui.utils.*
 import com.google.android.material.tabs.TabLayout
 
 
@@ -40,23 +37,25 @@ fun View.setDKStyle(color: Int = DriveKitUI.colors.backgroundViewColor()): View 
 }
 
 fun TabLayout.updateTabsFont() {
-    val viewGroup = this.getChildAt(0) as ViewGroup
-    val tabsCount = viewGroup.childCount
-    for (j in 0 until tabsCount) {
-        val viewGroupTab = viewGroup.getChildAt(j) as ViewGroup
-        val tabChildsCount = viewGroupTab.childCount
-        for (i in 0 until tabChildsCount) {
-            val tabViewChild = viewGroupTab.getChildAt(i)
-            if (tabViewChild is TextView) {
-                tabViewChild.typeface = DriveKitUI.primaryFont(this.context)
+    if (this.childCount > 0) {
+        val viewGroup = this.getChildAt(0) as ViewGroup
+        val tabsCount = viewGroup.childCount
+        for (j in 0 until tabsCount) {
+            val viewGroupTab = viewGroup.getChildAt(j) as ViewGroup
+            val tabChildsCount = viewGroupTab.childCount
+            for (i in 0 until tabChildsCount) {
+                val tabViewChild = viewGroupTab.getChildAt(i)
+                if (tabViewChild is TextView) {
+                    tabViewChild.typeface = DriveKitUI.primaryFont(this.context)
+                }
             }
         }
     }
 }
 
 fun SubMenu.updateSubMenuItemFont(context: Context) {
-(0 until this.size).forEach {
-        val title = SpannableString(this.getItem(it).title.toString())
+    for (position in 0 until this.size()) {
+        val title = SpannableString(this.getItem(position).title.toString())
         DriveKitUI.primaryFont(context)?.let { typeface ->
             title.setSpan(
                 CustomTypefaceSpan(typeface),
@@ -64,7 +63,7 @@ fun SubMenu.updateSubMenuItemFont(context: Context) {
                 title.length,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE
             )
-            this.getItem(it).title = title
+            this.getItem(position).title = title
         }
     }
 }

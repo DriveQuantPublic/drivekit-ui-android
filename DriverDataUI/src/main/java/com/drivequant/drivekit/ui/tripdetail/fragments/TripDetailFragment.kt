@@ -492,7 +492,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary() {
-        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.replaceFirstChar { it -> it.uppercaseChar() }
+        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalizeFirstLetter()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =
