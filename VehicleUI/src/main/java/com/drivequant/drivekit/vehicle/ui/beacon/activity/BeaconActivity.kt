@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import android.view.View
 import androidx.core.app.ActivityCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
@@ -125,8 +126,6 @@ class BeaconActivity : AppCompatActivity() {
             BeaconScanType.VERIFY -> "dk_tag_vehicles_beacon_verify"
         }
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, screenNameResId), javaClass.simpleName)
-
-        updateTitle()
     }
 
     private fun updateTitle() = when (viewModel.scanType) {
@@ -134,7 +133,7 @@ class BeaconActivity : AppCompatActivity() {
         BeaconScanType.DIAGNOSTIC,
         BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
     }.let {
-        this.title = DKResource.convertToString(this, it)
+        setActivityTitle(DKResource.convertToString(this, it))
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -191,5 +190,10 @@ class BeaconActivity : AppCompatActivity() {
                 NearbyDevicesUtils.displayPermissionsError(this, true)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateTitle()
     }
 }

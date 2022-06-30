@@ -3,6 +3,7 @@ package com.drivequant.drivekit.driverachievement.ui.badges.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.fragment.BadgesListFragment
@@ -24,7 +25,6 @@ class BadgeListActivity : AppCompatActivity() {
     private fun setToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = DKResource.convertToString(this, "menu_mybadges")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
@@ -32,5 +32,10 @@ class BadgeListActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "menu_mybadges"))
     }
 }

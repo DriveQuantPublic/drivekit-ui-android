@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.TruckType
@@ -64,8 +65,6 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
-        updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -75,14 +74,14 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             viewModel.vehicleToDelete = it
         }
 
-        viewModel.stepDispatcher.observe(this, {
+        viewModel.stepDispatcher.observe(this) {
             viewModel.stepDispatcher.value?.let {
                 hideProgressCircular()
                 dispatchToScreen(it)
             }
-        })
+        }
 
-        viewModel.progressBarObserver.observe(this, {
+        viewModel.progressBarObserver.observe(this) {
             it?.let {
                 if (it) {
                     showProgressCircular()
@@ -90,21 +89,22 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                     hideProgressCircular()
                 }
             }
-        })
+        }
 
-        viewModel.fetchServiceErrorObserver.observe(this, {
+        viewModel.fetchServiceErrorObserver.observe(this) {
             it?.let {
                 if (it == VehiclePickerStatus.NO_RESULT) {
                     "dk_vehicle_no_data"
                 } else {
                     "dk_vehicle_error_message"
                 }.let { text ->
-                    Toast.makeText(this, DKResource.convertToString(this, text), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, DKResource.convertToString(this, text), Toast.LENGTH_LONG)
+                        .show()
                 }
             }
-        })
+        }
 
-        viewModel.endObserver.observe(this, {
+        viewModel.endObserver.observe(this) {
             it?.let { vehiclePickerStatus ->
                 if (vehiclePickerStatus == VehiclePickerStatus.SUCCESS) {
                     DriveKitVehicleUI.vehiclePickerComplete?.let { listener ->
@@ -119,7 +119,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                             }
                             finish()
                         }
-                    }?: run {
+                    } ?: run {
                         if (DriveKitVehicleUI.hasOdometer) {
                             viewModel.createdVehicleId?.let { vehicleId ->
                                 OdometerInitActivity.launchActivity(
@@ -131,15 +131,22 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                         finish()
                     }
                 } else {
-                    Toast.makeText(this, DKResource.convertToString(this, "dk_vehicle_failed_to_retrieve_vehicle_data"), Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        DKResource.convertToString(
+                            this,
+                            "dk_vehicle_failed_to_retrieve_vehicle_data"
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
-        })
+        }
         viewModel.computeNextScreen(this, null)
     }
 
     fun updateTitle(title: String) {
-        this.title = title
+        setActivityTitle(title)
     }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
@@ -221,7 +228,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             else -> DKResource.convertToString(this, "dk_vehicle_my_vehicle")
         }
         screenTitle?.let {
-            this.title = it
+            setActivityTitle(it)
         }
     }
 
@@ -231,5 +238,10 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         } else {
             supportFragmentManager.popBackStack()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
     }
 }

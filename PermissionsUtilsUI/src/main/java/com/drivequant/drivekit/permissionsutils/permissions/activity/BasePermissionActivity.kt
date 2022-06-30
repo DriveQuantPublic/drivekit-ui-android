@@ -3,12 +3,15 @@ package com.drivequant.drivekit.permissionsutils.permissions.activity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 open class BasePermissionActivity : RequestPermissionActivity() {
+
+    private lateinit var titleResId: String
 
     companion object {
         const val PERMISSION_VIEWS_LIST_EXTRA = "permission-views-list-extra"
@@ -19,7 +22,7 @@ open class BasePermissionActivity : RequestPermissionActivity() {
     protected fun setToolbar(titleResId: String) {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        this.title = DKResource.convertToString(this, titleResId)
+        this.titleResId = titleResId
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -47,6 +50,13 @@ open class BasePermissionActivity : RequestPermissionActivity() {
             PermissionsUtilsUI.permissionViewListener?.onFinish()
         } else {
             nextPermissionViews.first().launchActivity(this, nextPermissionViews)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (this::titleResId.isInitialized) {
+            setActivityTitle(DKResource.convertToString(this, titleResId))
         }
     }
 }

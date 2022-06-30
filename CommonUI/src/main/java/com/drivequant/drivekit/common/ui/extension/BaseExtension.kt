@@ -11,6 +11,7 @@ import android.view.SubMenu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.*
@@ -66,4 +67,14 @@ fun SubMenu.updateSubMenuItemFont(context: Context) {
             this.getItem(position).title = title
         }
     }
+}
+
+fun AppCompatActivity.setActivityTitle(titleString: String) {
+    title = DKSpannable().append(
+        titleString,
+        resSpans {
+            DriveKitUI.secondaryFont(this@setActivityTitle)?.let {
+                typeface(CustomTypefaceSpan(it))
+            }
+        }).toSpannable()
 }
