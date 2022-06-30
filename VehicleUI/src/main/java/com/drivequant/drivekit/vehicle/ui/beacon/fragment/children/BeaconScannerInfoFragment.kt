@@ -11,10 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -110,11 +107,7 @@ class BeaconScannerInfoFragment : Fragment() {
 
         view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
-        val mainFontColor = DriveKitUI.colors.mainFontColor()
-        val neutralColor = DriveKitUI.colors.neutralColor()
-
-        text_view_connected_vehicle_name.normalText(mainFontColor)
-        text_view_connected_vehicle_name.typeface = Typeface.DEFAULT_BOLD
+        text_view_connected_vehicle_name.headLine2()
 
         if (isValid) {
             view_border.setBackgroundColor(DriveKitUI.colors.secondaryColor())
@@ -130,21 +123,24 @@ class BeaconScannerInfoFragment : Fragment() {
 
         configureInfoButton()
 
-        view_separator.setBackgroundColor(neutralColor)
+        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
-        text_view_major_title.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_major_title.text = DKResource.convertToString(requireContext(), "dk_beacon_major")
-
-        text_view_major_value.normalText(mainFontColor)
-        text_view_major_value.typeface = Typeface.DEFAULT_BOLD
-        text_view_major_value.text = viewModel.seenBeacon?.major.toString()
-
-        text_view_minor_title.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_minor_title.text = DKResource.convertToString(requireContext(), "dk_beacon_minor")
-
-        text_view_minor_value.normalText(mainFontColor)
-        text_view_minor_value.typeface = Typeface.DEFAULT_BOLD
-        text_view_minor_value.text = viewModel.seenBeacon?.minor.toString()
+        text_view_major_title.apply {
+            normalText(DriveKitUI.colors.complementaryFontColor())
+            text = DKResource.convertToString(requireContext(), "dk_beacon_major")
+        }
+        text_view_major_value.apply {
+            headLine2()
+            text = viewModel.seenBeacon?.major.toString()
+        }
+        text_view_minor_title.apply {
+            normalText(DriveKitUI.colors.complementaryFontColor())
+            text = DKResource.convertToString(requireContext(), "dk_beacon_minor")
+        }
+        text_view_minor_value.apply {
+            headLine2()
+            text = viewModel.seenBeacon?.minor.toString()
+        }
     }
 
     private fun configureInfoButton() {

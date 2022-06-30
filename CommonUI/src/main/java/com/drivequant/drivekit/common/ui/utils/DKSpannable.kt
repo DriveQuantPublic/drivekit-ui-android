@@ -63,6 +63,8 @@ class ResSpans(private val context: Context) : Iterable<Any> {
 
     fun typeface(style: Int) = spans.add(StyleSpan(style))
 
+    fun typeface(typefaceSpan: CustomTypefaceSpan) = spans.add(typefaceSpan)
+
     fun click(action: () -> Unit) = spans.add(clickableSpan(action))
 
     fun custom(span: Any) = spans.add(span)

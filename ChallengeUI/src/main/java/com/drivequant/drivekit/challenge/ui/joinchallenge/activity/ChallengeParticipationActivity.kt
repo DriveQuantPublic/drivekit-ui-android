@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.fragment.ChallengeParticipationFragment
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 class ChallengeParticipationActivity : AppCompatActivity() {
 
@@ -42,10 +43,6 @@ class ChallengeParticipationActivity : AppCompatActivity() {
             ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
         ).get(ChallengeParticipationViewModel::class.java)
 
-        viewModel.challenge?.let {
-            this@ChallengeParticipationActivity.title = it.title
-        }
-
         fragment = ChallengeParticipationFragment.newInstance(challengeId)
         supportFragmentManager
             .beginTransaction()
@@ -62,6 +59,13 @@ class ChallengeParticipationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == ChallengeRulesActivity.UPDATE_CHALLENGE_REQUEST_CODE) {
             fragment.dispatch()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.challenge?.let {
+            setActivityTitle(it.title)
         }
     }
 }

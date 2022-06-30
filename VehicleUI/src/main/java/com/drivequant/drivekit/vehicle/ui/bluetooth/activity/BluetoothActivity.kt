@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import android.view.View
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
@@ -59,34 +60,38 @@ class BluetoothActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName)).get(BluetoothViewModel::class.java)
 
-        viewModel.fragmentDispatcher.observe(this, { fragment ->
+        viewModel.fragmentDispatcher.observe(this) { fragment ->
             fragment?.let {
                 supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
+                    .setCustomAnimations(
+                        R.animator.slide_in_left,
+                        R.animator.slide_out_right,
+                        R.animator.slide_in_left,
+                        R.animator.slide_out_right
+                    )
                     .addToBackStack(fragment.javaClass.name)
                     .add(R.id.container, it)
                     .commit()
             }
-        })
+        }
 
-        viewModel.nearbyDevicesAlertDialogObserver.observe(this, {
+        viewModel.nearbyDevicesAlertDialogObserver.observe(this) {
             it?.let { displayError ->
                 if (displayError) {
                     NearbyDevicesUtils.displayPermissionsError(this@BluetoothActivity)
                 }
             }
-        })
+        }
 
-        viewModel.progressBarObserver.observe(this, {
-            it?.let {displayProgressCircular ->
-                if (displayProgressCircular){
+        viewModel.progressBarObserver.observe(this) {
+            it?.let { displayProgressCircular ->
+                if (displayProgressCircular) {
                     showProgressCircular()
                 } else {
                     hideProgressCircular()
                 }
             }
-        })
-        updateTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
+        }
     }
 
     private fun hideProgressCircular() {
@@ -115,10 +120,6 @@ class BluetoothActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTitle(title: String){
-        this.title = title
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
@@ -145,5 +146,10 @@ class BluetoothActivity : AppCompatActivity() {
                 NearbyDevicesUtils.displayPermissionsError(this, true)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_vehicle_bluetooth_combination_view_title"))
     }
 }

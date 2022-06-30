@@ -88,8 +88,10 @@ class BeaconDetailFragment : Fragment() {
 
             val item = menu.findItem(R.id.action_mail)
             item?.let {
-                val wrapped = DrawableCompat.wrap(it.icon)
-                DrawableCompat.setTint(wrapped, Color.WHITE)
+                it.icon?.let { icon ->
+                    val wrapped = DrawableCompat.wrap(icon)
+                    DrawableCompat.setTint(wrapped, Color.WHITE)
+                }
             }
     }
 

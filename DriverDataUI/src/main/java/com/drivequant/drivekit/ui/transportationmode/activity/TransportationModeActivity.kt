@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.View
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.fragment.TransportationModeFragment
@@ -38,7 +39,6 @@ internal class TransportationModeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        title = DKResource.convertToString(this, "dk_driverdata_transportation_mode_title")
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
         supportFragmentManager.beginTransaction()
@@ -74,5 +74,10 @@ internal class TransportationModeActivity : AppCompatActivity() {
         } else {
             null
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_driverdata_transportation_mode_title"))
     }
 }

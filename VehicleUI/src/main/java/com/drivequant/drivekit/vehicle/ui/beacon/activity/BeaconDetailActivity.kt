@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
@@ -56,7 +57,6 @@ class BeaconDetailActivity : AppCompatActivity() {
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_beacon_info"), javaClass.simpleName)
 
         setContentView(R.layout.activity_beacon)
-        title = DKResource.convertToString(this, "dk_beacon_diagnostic_title")
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
@@ -129,5 +129,10 @@ class BeaconDetailActivity : AppCompatActivity() {
                 NearbyDevicesUtils.displayPermissionsError(this, true)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_beacon_diagnostic_title"))
     }
 }

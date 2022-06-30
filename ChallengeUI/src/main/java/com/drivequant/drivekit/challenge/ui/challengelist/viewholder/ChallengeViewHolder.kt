@@ -19,7 +19,10 @@ internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     private val challengeIcon = itemView.findViewById<ImageView>(R.id.dk_image_view_icon)
 
     fun bind(challengeListData: ChallengeData) {
-        challengeTitle.text = challengeListData.title
+        challengeTitle.apply {
+            text = challengeListData.title
+            typeface = DriveKitUI.primaryFont(context)
+        }
         challengeDate.text = "${challengeListData.startDate.formatDate(DKDatePattern.STANDARD_DATE)} - ${challengeListData.endDate.formatDate(DKDatePattern.STANDARD_DATE)}"
         DKResource.convertToDrawable(itemView.context, challengeListData.getChallengeResourceId())
             ?.let {

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleDetailFragment
@@ -36,8 +37,6 @@ class OdometerVehicleDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        title = DKResource.convertToString(this, "dk_vehicle_odometer_vehicle_title")
         val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
 
         fragment = OdometerVehicleDetailFragment.newInstance(vehicleId)
@@ -50,5 +49,10 @@ class OdometerVehicleDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_vehicle_odometer_vehicle_title"))
     }
 }

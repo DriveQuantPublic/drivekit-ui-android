@@ -10,8 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.ui.R
@@ -42,7 +42,7 @@ internal class AlternativeTripFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.dk_alternative_trip_fragment, container, false)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         conditionItem = view.findViewById(R.id.item_condition)
         weatherItem = view.findViewById(R.id.item_weather)
         meanSpeedItem = view.findViewById(R.id.item_mean_speed)

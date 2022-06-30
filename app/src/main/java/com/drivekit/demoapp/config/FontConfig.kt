@@ -10,4 +10,5 @@ import com.drivequant.drivekit.common.ui.graphical.DKFonts
 
 class FontConfig : DKFonts() {
     override fun primaryFont(): Int = R.font.sketchy
+    override fun secondaryFont(): Int = R.font.stocky
 }

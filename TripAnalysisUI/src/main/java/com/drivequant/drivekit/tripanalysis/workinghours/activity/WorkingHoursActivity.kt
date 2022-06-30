@@ -16,6 +16,7 @@ import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
@@ -65,7 +66,6 @@ class WorkingHoursActivity : AppCompatActivity() {
     private fun setToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = DKResource.convertToString(this, "dk_working_hours_title")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
@@ -115,7 +115,7 @@ class WorkingHoursActivity : AppCompatActivity() {
             })
         }
 
-        viewModel.syncDataStatus.observe(this, { success ->
+        viewModel.syncDataStatus.observe(this) { success ->
             if (!success) {
                 Toast.makeText(
                     this,
@@ -143,8 +143,8 @@ class WorkingHoursActivity : AppCompatActivity() {
                 configureDays()
             }
             updateProgressVisibility(false)
-        })
-        viewModel.updateDataStatus.observe(this, { response ->
+        }
+        viewModel.updateDataStatus.observe(this) { response ->
             if (response.status) {
                 dataUpdated(false)
             }
@@ -154,11 +154,12 @@ class WorkingHoursActivity : AppCompatActivity() {
             } else {
                 "dk_working_hours_update_failed"
             }
-            Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT)
+                .show()
             if (response.fromBackButton && response.status) {
                 finish()
             }
-        })
+        }
         updateProgressVisibility(true)
         viewModel.synchronizeData()
     }
@@ -223,8 +224,15 @@ class WorkingHoursActivity : AppCompatActivity() {
                 .show()
             val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
             val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            title?.text = getString(R.string.app_name)
-            description?.text = DKResource.convertToString(this, "dk_working_hours_back_save_alert")
+            title?.apply {
+                text = getString(R.string.app_name)
+                typeface = DriveKitUI.primaryFont(context)
+            }
+            description?.apply {
+                text = DKResource.convertToString(this@WorkingHoursActivity, "dk_working_hours_back_save_alert")
+                typeface = DriveKitUI.primaryFont(context)
+            }
+
         } else {
             super.onBackPressed()
         }
@@ -244,5 +252,10 @@ class WorkingHoursActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_working_hours_title"))
     }
 }
