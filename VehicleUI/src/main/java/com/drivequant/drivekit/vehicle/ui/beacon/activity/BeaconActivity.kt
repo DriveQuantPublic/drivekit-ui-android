@@ -21,6 +21,7 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
 import kotlinx.android.synthetic.main.activity_beacon.*
 
@@ -72,37 +73,53 @@ class BeaconActivity : AppCompatActivity() {
             BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
         viewModel.init(this)
 
-        viewModel.fragmentDispatcher.observe(this, { fragment ->
+        viewModel.fragmentDispatcher.observe(this) { fragment ->
             fragment?.let {
                 supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
+                    .setCustomAnimations(
+                        R.animator.slide_in_left,
+                        R.animator.slide_out_right,
+                        R.animator.slide_in_left,
+                        R.animator.slide_out_right
+                    )
                     .addToBackStack(fragment.javaClass.name)
                     .replace(R.id.container, it)
                     .commit()
             }
-        })
+        }
 
-        viewModel.beaconDetailObserver.observe(this, {
+        viewModel.beaconDetailObserver.observe(this) {
             viewModel.vehicleId?.let { vehicleId ->
                 viewModel.seenBeacon?.let { seenBeacon ->
-                    viewModel.vehicleName?.let {vehicleName ->
-                        BeaconDetailActivity.launchActivity(this, vehicleId, vehicleName, viewModel.batteryLevel, seenBeacon)
+                    viewModel.vehicleName?.let { vehicleName ->
+                        BeaconDetailActivity.launchActivity(
+                            this,
+                            vehicleId,
+                            vehicleName,
+                            DKBeaconRetrievedInfo(
+                                viewModel.batteryLevel,
+                                viewModel.estimatedDistance,
+                                viewModel.rssi,
+                                viewModel.txPower
+                            ),
+                            seenBeacon
+                        )
                     }
                 }
             }
-        })
+        }
 
-        viewModel.progressBarObserver.observe(this, {
+        viewModel.progressBarObserver.observe(this) {
             it?.let { displayProgressCircular ->
-                if (displayProgressCircular){
+                if (displayProgressCircular) {
                     showProgressCircular()
                 } else {
                     hideProgressCircular()
                 }
             }
-        })
+        }
 
-        val screenNameResId = when (viewModel.scanType){
+        val screenNameResId = when (viewModel.scanType) {
             BeaconScanType.PAIRING -> "dk_tag_vehicles_beacon_add"
             BeaconScanType.DIAGNOSTIC -> "dk_tag_vehicles_beacon_diagnosis"
             BeaconScanType.VERIFY -> "dk_tag_vehicles_beacon_verify"
@@ -112,13 +129,12 @@ class BeaconActivity : AppCompatActivity() {
         updateTitle()
     }
 
-    private fun updateTitle(){
-        val titleIdentifier = when (viewModel.scanType) {
-            BeaconScanType.PAIRING -> "dk_beacon_paired_title"
-            BeaconScanType.DIAGNOSTIC,
-            BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
-        }
-        this.title = DKResource.convertToString(this, titleIdentifier)
+    private fun updateTitle() = when (viewModel.scanType) {
+        BeaconScanType.PAIRING -> "dk_beacon_paired_title"
+        BeaconScanType.DIAGNOSTIC,
+        BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
+    }.let {
+        this.title = DKResource.convertToString(this, it)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -127,7 +143,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1){
+        if (supportFragmentManager.backStackEntryCount == 1) {
             finish()
         } else {
             supportFragmentManager.popBackStack()
