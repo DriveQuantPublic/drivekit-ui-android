@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_crash_detection_feedback_notif_message">Klik på meddelelsen og fortæl os, hvordan du har det.</string>
+   <string name="dk_crash_detection_feedback_notif_title">En ulykke blev opdaget</string>
+   <string name="dk_crash_detection_feedback_step1_description">Du kan annullere eller bekræfte alarmen, inden nedtællingen slutter</string>
+   <string name="dk_crash_detection_feedback_step1_option_critical_accident">Kontakthjælp</string>
+   <string name="dk_crash_detection_feedback_step1_option_no_crash">jeg har det godt</string>
+   <string name="dk_crash_detection_feedback_step1_title">En ulykke blev opdaget, hvordan har du det?</string>
+   <string name="dk_crash_detection_feedback_step2_description">Hvad skete der med dig?</string>
+   <string name="dk_crash_detection_feedback_step2_option_minor_accident">Mindre ulykke</string>
+   <string name="dk_crash_detection_feedback_step2_option_no_crash">Intet, alt er fint</string>
+   <string name="dk_crash_detection_feedback_step2_title">Vi er beroliget med at vide, at du har det godt.</string>
+   <string name="dk_crash_detection_feedback_step2option_critical_accident">Kontakthjælp</string>
+   <string name="dk_working_hours_back_save_alert">Arbejdstiden er ændret. Vil du gemme dem?</string>
+   <string name="dk_working_hours_enable_desc">Denne funktion konfigurerer de automatiske rejseoptagelsesperioder og analyserer turerne.</string>
+   <string name="dk_working_hours_enable_title">Aktivér arbejdstid</string>
+   <string name="dk_working_hours_slot_disabled_desc">Ture registreres ikke</string>
+   <string name="dk_working_hours_slot_inside_title">Inden for tidsintervallet</string>
+   <string name="dk_working_hours_slot_mode_business_title">Forretning</string>
+   <string name="dk_working_hours_slot_mode_disabled_title">Slået fra</string>
+   <string name="dk_working_hours_slot_mode_personal_title">Personlig</string>
+   <string name="dk_working_hours_slot_outside_title">Uden for tidsintervallet</string>
+   <string name="dk_working_hours_sync_failed">Synkroniseringen af ​​indstillingerne mislykkedes, prøv igen senere.</string>
+   <string name="dk_working_hours_title">Arbejdstimer</string>
+   <string name="dk_working_hours_update_failed">Opdateringen af ​​indstillingerne mislykkedes, prøv igen senere.</string>
+   <string name="dk_working_hours_update_succeed">Indstillingerne er blevet opdateret.</string>
+</resources>
