@@ -9,6 +9,7 @@ import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeDat
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -19,10 +20,7 @@ internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     private val challengeIcon = itemView.findViewById<ImageView>(R.id.dk_image_view_icon)
 
     fun bind(challengeListData: ChallengeData) {
-        challengeTitle.apply {
-            text = challengeListData.title
-            typeface = DriveKitUI.primaryFont(context)
-        }
+        challengeTitle.text = challengeListData.title
         challengeDate.text = "${challengeListData.startDate.formatDate(DKDatePattern.STANDARD_DATE)} - ${challengeListData.endDate.formatDate(DKDatePattern.STANDARD_DATE)}"
         DKResource.convertToDrawable(itemView.context, challengeListData.getChallengeResourceId())
             ?.let {
@@ -32,7 +30,7 @@ internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     }
 
     private fun setStyle() {
-        challengeTitle.setTextColor(DriveKitUI.colors.mainFontColor())
+        challengeTitle.highlightSmall()
         challengeDate.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 }

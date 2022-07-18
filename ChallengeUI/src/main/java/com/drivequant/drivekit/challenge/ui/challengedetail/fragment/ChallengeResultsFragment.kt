@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -173,6 +174,6 @@ class ChallengeResultsFragment : Fragment() {
     }
 
     private fun setStyle() {
-        text_view_card_title.setTextColor(DriveKitUI.colors.mainFontColor())
+        text_view_card_title.headLine1()
     }
 }
