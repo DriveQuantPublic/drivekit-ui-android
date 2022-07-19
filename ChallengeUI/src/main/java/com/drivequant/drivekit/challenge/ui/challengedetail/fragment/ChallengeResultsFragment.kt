@@ -174,6 +174,6 @@ class ChallengeResultsFragment : Fragment() {
     }
 
     private fun setStyle() {
-        text_view_card_title.headLine1()
+        text_view_card_title.setTextColor(DriveKitUI.colors.mainFontColor())
     }
 }

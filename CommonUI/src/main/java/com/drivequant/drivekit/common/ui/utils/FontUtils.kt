@@ -17,7 +17,7 @@ object FontUtils {
                 }
             } else if (v is TextView) {
                 context?.let {
-                    v.typeface = DriveKitUI.primaryFont(it)
+                    v.setTypeface(DriveKitUI.primaryFont(it), v.typeface.style)
                 }
             }
         } catch (e: Exception) {

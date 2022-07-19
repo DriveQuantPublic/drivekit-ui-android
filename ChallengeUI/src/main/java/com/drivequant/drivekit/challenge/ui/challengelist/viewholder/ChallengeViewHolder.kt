@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.viewholder
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
