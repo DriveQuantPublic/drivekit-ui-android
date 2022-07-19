@@ -58,8 +58,8 @@ class SynthesisFragment : Fragment() {
         item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
         viewModel.getVehicleId()?.let {
 
-            item_vehicle_used.setValueColor()
             item_vehicle_used.setValueTypeFace()
+            item_vehicle_used.setValueColor()
 
             item_vehicle_used.setOnClickListener {
                 item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
