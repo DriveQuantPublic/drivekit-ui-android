@@ -20,5 +20,4 @@ fun Button.button(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryColor()
     this.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(R.dimen.dk_text_normal))
     this.isClickable = true
     this.isFocusable = true
-    this.typeface = DriveKitUI.primaryFont(context)
 }
