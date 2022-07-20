@@ -25,8 +25,8 @@ class TripEvent(val type: TripEventType,
     fun getEventImageResource() : Int {
         return when(type){
             SAFETY_BRAKE -> R.drawable.dk_common_safety_decel
-            START -> R.drawable.dk_start_event_black
-            FINISH -> R.drawable.dk_end_event_black
+            START -> R.drawable.dk_departure
+            FINISH -> R.drawable.dk_arrival
             SAFETY_ADHERENCE -> R.drawable.dk_common_safety_adherence
             SAFETY_ACCEL -> R.drawable.dk_common_safety_accel
             PHONE_DISTRACTION_LOCK -> R.drawable.dk_lock_event
@@ -39,8 +39,8 @@ class TripEvent(val type: TripEventType,
     fun getMapImageResource() : Int {
         return when(type){
             SAFETY_BRAKE -> if (isHigh) R.drawable.dk_map_decel_high else R.drawable.dk_map_decel
-            START -> R.drawable.dk_map_start_event
-            FINISH -> R.drawable.dk_map_end_event
+            START -> R.drawable.dk_map_departure
+            FINISH -> R.drawable.dk_map_arrival
             SAFETY_ADHERENCE -> if (isHigh) R.drawable.dk_map_adh_high else R.drawable.dk_map_adh
             SAFETY_ACCEL -> if (isHigh) R.drawable.dk_map_accel_high else R.drawable.dk_map_accel
             PHONE_DISTRACTION_LOCK -> R.drawable.dk_map_lock
