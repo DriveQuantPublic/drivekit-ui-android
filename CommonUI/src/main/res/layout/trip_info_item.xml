@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/dk_trip_info_count"
+        tools:src="@drawable/dk_common_trip_info_count"
         app:tint="@android:color/white" />
     <TextView
         android:id="@+id/text_view_trip_info"
