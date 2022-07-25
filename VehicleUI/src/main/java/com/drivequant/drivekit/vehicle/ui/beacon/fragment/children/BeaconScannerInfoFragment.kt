@@ -99,9 +99,7 @@ class BeaconScannerInfoFragment : Fragment() {
                         }
                     }
                 )
-                if (isValid) {
-                    beaconBatteryScannerManager?.startBatteryReaderScanner()
-                }
+                beaconBatteryScannerManager?.startBatteryReaderScanner()
             }
         }
 
