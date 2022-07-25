@@ -63,9 +63,9 @@ class BeaconScannerInfoFragment : Fragment() {
                 viewModel.init(requireContext())
             }
         }
-        updateProgressVisibility(true)
         viewModel.seenBeacon?.let { beacon ->
             context?.let { context ->
+                updateProgressVisibility(true)
                 beaconBatteryScannerManager = BeaconInfoScannerManager(
                     context,
                     BeaconData(beacon.proximityUuid, beacon.major, beacon.minor),
