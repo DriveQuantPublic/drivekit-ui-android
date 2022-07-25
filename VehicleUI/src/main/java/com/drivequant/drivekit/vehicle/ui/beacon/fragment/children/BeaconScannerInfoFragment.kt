@@ -114,8 +114,10 @@ class BeaconScannerInfoFragment : Fragment() {
             }
         } else {
             view_border.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
-            viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
-                text_view_connected_vehicle_name.text = vehicle.buildFormattedName(requireContext())
+            text_view_connected_vehicle_name.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
+                 vehicle.buildFormattedName(requireContext())
+            }?: run {
+                DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
             }
         }
 
