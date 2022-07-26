@@ -36,7 +36,7 @@ class RankingData(
     override fun getIcon(context: Context): Drawable? =
         when (viewModel.fetchedRanking.rankingType) {
             RankingType.SAFETY -> "dk_achievements_safety"
-            RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
+            RankingType.DISTRACTION -> "dk_achievements_distraction"
             RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
             RankingType.SPEEDING -> "dk_achievements_speeding"
         }.let {

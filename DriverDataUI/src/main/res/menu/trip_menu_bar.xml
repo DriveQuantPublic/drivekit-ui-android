@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/trip_delete"
-        android:icon="@drawable/dk_trash"
+        android:icon="@drawable/ic_trash_white"
         android:title="@string/dk_common_delete"
         app:showAsAction="always" />
 </menu>

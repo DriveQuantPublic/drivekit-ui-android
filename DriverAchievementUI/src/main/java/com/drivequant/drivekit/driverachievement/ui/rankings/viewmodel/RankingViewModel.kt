@@ -28,7 +28,7 @@ class RankingViewModel : ViewModel() {
     init {
         for (rankingType in DriverAchievementUI.rankingTypes) {
             val iconId = when (rankingType) {
-                RankingType.DISTRACTION -> "dk_achievements_phone_distraction"
+                RankingType.DISTRACTION -> "dk_achievements_distraction"
                 RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
                 RankingType.SAFETY -> "dk_achievements_safety"
                 RankingType.SPEEDING -> "dk_achievements_speeding"
