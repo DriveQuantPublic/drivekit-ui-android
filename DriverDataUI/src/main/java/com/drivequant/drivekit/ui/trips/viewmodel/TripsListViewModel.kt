@@ -17,6 +17,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
@@ -46,15 +47,14 @@ internal class TripsListViewModel(
                 handler = Handler(it)
             }
             handler?.post {
+                DriveKit.modules.tripAnalysis?.checkTripToRepost()
+
                 val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
                 if (DriverDataUI.enableAlternativeTrips){
                     transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
                 }
                 DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                     override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
-
-
-
                         if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                             syncTripsError.postValue(Any())
                         }
@@ -77,7 +77,7 @@ internal class TripsListViewModel(
                     configuration.vehicleId?.let { vehicleId -> it.vehicleId == vehicleId }
                         ?: run { !it.transportationMode.isAlternative() }
                 }
-                if (!trips.isNullOrEmpty()) {
+                if (trips.isNotEmpty()) {
                     filteredTrips.addAll(trips)
                 }
             }
@@ -93,7 +93,7 @@ internal class TripsListViewModel(
                         trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
                     }
                 }
-                if (!trips.isNullOrEmpty()) {
+                if (trips.isNotEmpty()) {
                     filteredTrips.addAll(trips)
                 }
             }
