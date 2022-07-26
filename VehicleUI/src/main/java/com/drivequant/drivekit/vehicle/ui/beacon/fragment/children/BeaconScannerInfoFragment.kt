@@ -63,9 +63,9 @@ class BeaconScannerInfoFragment : Fragment() {
                 viewModel.init(requireContext())
             }
         }
-        updateProgressVisibility(true)
         viewModel.seenBeacon?.let { beacon ->
             context?.let { context ->
+                updateProgressVisibility(true)
                 beaconBatteryScannerManager = BeaconInfoScannerManager(
                     context,
                     BeaconData(beacon.proximityUuid, beacon.major, beacon.minor),
@@ -99,9 +99,7 @@ class BeaconScannerInfoFragment : Fragment() {
                         }
                     }
                 )
-                if (isValid) {
-                    beaconBatteryScannerManager?.startBatteryReaderScanner()
-                }
+                beaconBatteryScannerManager?.startBatteryReaderScanner()
             }
         }
 
@@ -116,8 +114,10 @@ class BeaconScannerInfoFragment : Fragment() {
             }
         } else {
             view_border.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
-            viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
-                text_view_connected_vehicle_name.text = vehicle.buildFormattedName(requireContext())
+            text_view_connected_vehicle_name.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
+                 vehicle.buildFormattedName(requireContext())
+            }?: run {
+                DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
             }
         }
 
