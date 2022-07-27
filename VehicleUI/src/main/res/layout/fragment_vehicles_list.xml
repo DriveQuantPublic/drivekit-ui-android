@@ -31,7 +31,7 @@
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <Button
-        android:id="@+id/add_vehicle"
+        android:id="@+id/button_vehicle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
