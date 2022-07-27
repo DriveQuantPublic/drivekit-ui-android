@@ -104,7 +104,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         DriveKitVehicleUI.canAddVehicle && (!maxVehiclesReached() || shouldReplaceVehicle())
 
     fun getAddReplaceButtonTextResId() =
-        if (shouldReplaceVehicle()) "dk_vehicle_replace" else "dk_vehicle_add"
+        if (shouldReplaceVehicle()) "dk_vehicle_replace_button" else "dk_vehicle_add"
 
     fun shouldReplaceVehicle() =
         DriveKitVehicleUI.vehicleActions.contains(VehicleAction.REPLACE) && DriveKitVehicleUI.maxVehicles == 1 && vehiclesList.size == 1
