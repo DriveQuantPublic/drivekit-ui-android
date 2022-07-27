@@ -100,14 +100,14 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         return detectionModeSpinnerItems
     }
 
-    fun shouldDisplayButton() =
+    fun shouldDisplayAddReplaceButton() =
         DriveKitVehicleUI.canAddVehicle && (!maxVehiclesReached() || shouldReplaceVehicle())
 
-    fun getVehicleButtonTextResId() =
+    fun getAddReplaceButtonTextResId() =
         if (shouldReplaceVehicle()) "dk_vehicle_replace" else "dk_vehicle_add"
 
     fun shouldReplaceVehicle() =
-        DriveKitVehicleUI.maxVehicles == 1 && DriveKitVehicleUI.canAddVehicle && vehiclesList.size == 1
+        DriveKitVehicleUI.vehicleActions.contains(VehicleAction.REPLACE) && DriveKitVehicleUI.maxVehicles == 1 && vehiclesList.size == 1
 
     private fun maxVehiclesReached() = DriveKitVehicleUI.maxVehicles?.let {
         vehiclesList.size >= it

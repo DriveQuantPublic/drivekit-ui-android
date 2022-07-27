@@ -108,7 +108,7 @@ class VehiclesListFragment : Fragment() {
                 visibility = View.VISIBLE
                 isRefreshing = false
             }
-            setupVehicleButton()
+            setupAddReplaceButton()
             updateTitle(viewModel.getScreenTitle(requireContext()))
             if (synchronizationType == SynchronizationType.CACHE && shouldSyncVehicles) {
                 shouldSyncVehicles = false
@@ -119,12 +119,12 @@ class VehiclesListFragment : Fragment() {
         viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
-    private fun setupVehicleButton() {
-        if (viewModel.shouldDisplayButton()) {
+    private fun setupAddReplaceButton() {
+        if (viewModel.shouldDisplayAddReplaceButton()) {
             button_vehicle.apply {
                 visibility = View.VISIBLE
                 button()
-                text = DKResource.convertToString(requireContext(), viewModel.getVehicleButtonTextResId())
+                text = DKResource.convertToString(requireContext(), viewModel.getAddReplaceButtonTextResId())
                 setOnClickListener {
                     if (viewModel.shouldReplaceVehicle()) {
                         VehiclePickerActivity.launchActivity(context, vehicleToDelete = viewModel.vehiclesList.first())
