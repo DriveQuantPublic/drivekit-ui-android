@@ -120,7 +120,7 @@ class TripsListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.trip_list_menu_bar, menu)
+        inflater.inflate(R.menu.dk_trip_list_menu_bar, menu)
         context?.let {
             if (menu.isNotEmpty()) {
                 menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
