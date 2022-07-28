@@ -14,7 +14,7 @@
    <string name="dk_perm_utils_app_diag_battery_link_android">Ne pas optimiser la batterie</string>
    <string name="dk_perm_utils_app_diag_battery_link_ios">Désactiver le mode économie d\'énergie</string>
    <string name="dk_perm_utils_app_diag_battery_ok">Le fonctionnement en arrière-plan est autorisé. L\'application utilise le capteur GPS uniquement pendant vos trajets. Elle a été optimisée pour éviter de décharger la batterie du téléphone.</string>
-   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_text">Nous vous invitons à consulter les %s. cela vous permettra de trouver comment désactiver les optimisations de batterie sur votre téléphone.</string>
+   <string name="dk_perm_utils_app_diag_battery_optim_tutorial_text">Nous vous invitons à consulter les %s. Cela vous permettra de trouver comment désactiver les optimisations de batterie sur votre téléphone.</string>
    <string name="dk_perm_utils_app_diag_battery_optim_tutorial_url">tutoriels</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_01">Sur certains modèles de téléphones, les services d\'optimisations de la batterie peuvent stopper l\'application lorsqu\'elle fonctionne en arrière-plan.</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_02">Si votre téléphone fonctionne avec une version native d\'Android, vous pouvez désactiver les optimisations de la batterie. %s</string>
@@ -32,6 +32,8 @@
    <string name="dk_perm_utils_app_diag_email_app_version">Version de l\'application :</string>
    <string name="dk_perm_utils_app_diag_email_auto_reset">Maintien des autorisations :</string>
    <string name="dk_perm_utils_app_diag_email_battery">Optimisation de la batterie :</string>
+   <string name="dk_perm_utils_app_diag_email_battery_disabled">Désactivée</string>
+   <string name="dk_perm_utils_app_diag_email_battery_enabled">Activée</string>
    <string name="dk_perm_utils_app_diag_email_bluetooth">Capteur Bluetooth :</string>
    <string name="dk_perm_utils_app_diag_email_comment">Motif (commentaires) :</string>
    <string name="dk_perm_utils_app_diag_email_email">Email :</string>

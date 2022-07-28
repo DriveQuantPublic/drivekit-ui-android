@@ -91,11 +91,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 return true
         }
 
-        if (!DiagnosisHelper.isActivated(
-                context,
-                ConnectivityType.BLUETOOTH
-            ) && isBluetoothNeeded
-        ) {
+        if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH) && isBluetoothNeeded) {
             return true
         }
 
@@ -104,7 +100,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         if (DiagnosisHelper.getBatteryOptimizationsStatus(context) == PermissionStatus.NOT_VALID
-            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+        ) {
             return true
         }
 
@@ -135,11 +132,10 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
-        val batteryOptimization =
-            when(DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
-                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
-                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
-            }
+        val batteryOptimization = when (DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
+            PermissionStatus.VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_disabled)
+            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_enabled)
+        }
 
         val nearbyDevices = when (DiagnosisHelper.getNearbyDevicesStatus(context)) {
             PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
@@ -153,30 +149,24 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
             "noName"
         }
 
-        val gpsMail =
-            if (DiagnosisHelper.isActivated(context, ConnectivityType.GPS)) context.getString(
+        val gpsMail = if (DiagnosisHelper.isActivated(context, ConnectivityType.GPS)) context.getString(
                 R.string.dk_common_yes
             ) else context.getString(
                 R.string.dk_common_no
             )
 
-        val bluetoothMail =
-            if (DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) context.getString(
+        val bluetoothMail = if (DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) context.getString(
                 R.string.dk_common_yes
             ) else context.getString(
                 R.string.dk_common_no
             )
-        val connectivityMail =
-            if (DiagnosisHelper.isNetworkReachable(context)) context.getString(R.string.dk_common_yes) else context.getString(
+        val connectivityMail = if (DiagnosisHelper.isNetworkReachable(context)) context.getString(R.string.dk_common_yes) else context.getString(
                 R.string.dk_common_no
             )
 
-        var mailBody =
-            "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
+        var mailBody = "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            mailBody +=
-                "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
-
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_activity)} $activityMail \n"
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -194,15 +184,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
             mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_nearby_title)} $nearbyDevices \n"
         }
 
-        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_network)}  $connectivityMail \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_network)} $connectivityMail \n"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_battery)}  $batteryOptimization \n\n"
+            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_battery)} $batteryOptimization \n\n"
         }
 
-        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_model)}   ${Build.MANUFACTURER.toUpperCase(
-            Locale.getDefault()
-        )} ${Build.MODEL} \n"
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_model)} ${Build.MANUFACTURER.uppercase(Locale.getDefault())} ${Build.MODEL}\n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_app_version)} $versionName \n"
