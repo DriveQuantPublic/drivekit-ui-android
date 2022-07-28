@@ -32,6 +32,8 @@
     <string name="dk_perm_utils_app_diag_email_app_version">Version of the application:</string>
     <string name="dk_perm_utils_app_diag_email_auto_reset">Retaining permissions:</string>
     <string name="dk_perm_utils_app_diag_email_battery">Optimization of the battery:</string>
+    <string name="dk_perm_utils_app_diag_email_battery_disabled">Disabled</string>
+    <string name="dk_perm_utils_app_diag_email_battery_enabled">Enabled</string>
     <string name="dk_perm_utils_app_diag_email_bluetooth">Bluetooth sensor:</string>
     <string name="dk_perm_utils_app_diag_email_comment">Comment :</string>
     <string name="dk_perm_utils_app_diag_email_email">Email :</string>
