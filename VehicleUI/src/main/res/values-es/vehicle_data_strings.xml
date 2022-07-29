@@ -190,6 +190,7 @@
    <string name="dk_vehicle_rename_description">Elija un nombre para identificar su vehículo</string>
    <string name="dk_vehicle_rename_title">Renombrar este vehículo</string>
    <string name="dk_vehicle_replace">Reemplazar</string>
+   <string name="dk_vehicle_replace_button">Sustituir el vehículo</string>
    <string name="dk_vehicle_select_bluetooth_description">Seleccione un dispositivo Bluetooth para iniciar la grabación del viaje. \n \n En cuanto el teléfono se conecte a este dispositivo, la aplicación comenzará a analizar su viaje. \n \n Sólo puede seleccionar un dispositivo para este vehículo.</string>
    <string name="dk_vehicle_show">Mostrar</string>
    <string name="dk_vehicle_type_car_title">Vehículos ligeros y comerciales de menos de 3,5 t</string>

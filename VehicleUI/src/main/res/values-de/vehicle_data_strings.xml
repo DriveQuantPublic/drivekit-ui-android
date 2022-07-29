@@ -190,6 +190,7 @@
     <string name="dk_vehicle_rename_description">Wählen Sie einen Namen, um Ihr Fahrzeug zu identifizieren.</string>
     <string name="dk_vehicle_rename_title">Benennen Sie dieses Fahrzeug um</string>
     <string name="dk_vehicle_replace">Ersetzen</string>
+    <string name="dk_vehicle_replace_button">Das Fahrzeug ersetzen</string>
     <string name="dk_vehicle_select_bluetooth_description">Wählen Sie ein Bluetooth-Gerät aus, um die Tourenaufzeichnung zu starten. \n \n Sobald sich das Telefon mit diesem Gerät verbindet, beginnt die Anwendung mit der Analyse Ihrer Reise. \n \n Sie können für dieses Fahrzeug nur ein Gerät auswählen.</string>
     <string name="dk_vehicle_show">Anzeigen</string>
     <string name="dk_vehicle_type_car_title">Leicht- und Nutzfahrzeuge von weniger als 3,5 t</string>
