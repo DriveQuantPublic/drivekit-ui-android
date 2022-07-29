@@ -190,6 +190,7 @@
    <string name="dk_vehicle_rename_description">Choisissez un nom pour identifier votre véhicule</string>
    <string name="dk_vehicle_rename_title">Renommer ce véhicule</string>
    <string name="dk_vehicle_replace">Remplacer</string>
+   <string name="dk_vehicle_replace_button">Remplacer le véhicule</string>
    <string name="dk_vehicle_select_bluetooth_description">Sélectionner un appareil Bluetooth pour déclencher l’enregistrement de vos trajets. \n \nDès que le téléphone se connecte à cet appareil, l\'application démarre l\'analyse de votre trajet. \n \nVous ne pouvez sélectionner qu\'un seul appareil pour ce véhicule.</string>
    <string name="dk_vehicle_show">Afficher</string>
    <string name="dk_vehicle_type_car_title">Véhicules légers et utilitaires de moins de 3,5 t</string>

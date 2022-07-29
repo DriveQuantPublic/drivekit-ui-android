@@ -52,7 +52,7 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     }
 
     fun hasLocalVehicles() = DriveKitVehicle.vehiclesQuery().noFilter().query().execute().isNotEmpty()
-    
+
     fun getScreenTitle(context: Context) = if (vehiclesList.size > 1) {
         "dk_vehicle_my_vehicles"
     } else {
@@ -100,7 +100,16 @@ class VehiclesListViewModel : ViewModel(), Serializable {
         return detectionModeSpinnerItems
     }
 
-    fun maxVehiclesReached() = DriveKitVehicleUI.maxVehicles?.let {
+    fun shouldDisplayAddReplaceButton() =
+        DriveKitVehicleUI.canAddVehicle && (!maxVehiclesReached() || shouldReplaceVehicle())
+
+    fun getAddReplaceButtonTextResId() =
+        if (shouldReplaceVehicle()) "dk_vehicle_replace_button" else "dk_vehicle_add"
+
+    fun shouldReplaceVehicle() =
+        DriveKitVehicleUI.vehicleActions.contains(VehicleAction.REPLACE) && DriveKitVehicleUI.maxVehicles == 1 && vehiclesList.size == 1
+
+    private fun maxVehiclesReached() = DriveKitVehicleUI.maxVehicles?.let {
         vehiclesList.size >= it
     } ?: false
 }
