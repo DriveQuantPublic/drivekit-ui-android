@@ -24,9 +24,13 @@ internal class BeaconInfoScannerManager(
         beaconBatteryReaderScanner = null
     }
 
-    override fun onBeaconInfoRetrieved(batteryLevel: Int, estimatedDistance: Double, rssi: Int) {
-        // TODO get the txPower
-        listener.onBeaconInfoRetrieved(DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, 0))
+    override fun onBeaconInfoRetrieved(
+        batteryLevel: Int,
+        estimatedDistance: Double,
+        rssi: Int,
+        txPower: Int
+    ) {
+        listener.onBeaconInfoRetrieved(DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower))
     }
 
     override fun getBeacon(): BeaconData = beaconData
