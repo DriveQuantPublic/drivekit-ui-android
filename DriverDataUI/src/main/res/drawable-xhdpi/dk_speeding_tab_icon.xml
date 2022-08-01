@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/dk_speeding_filled" android:state_selected="true" />
-    <item android:drawable="@drawable/dk_speeding" android:state_selected="false" />
+    <item android:drawable="@drawable/dk_common_speeding_filled" android:state_selected="true" />
+    <item android:drawable="@drawable/dk_common_speeding" android:state_selected="false" />
 </selector>

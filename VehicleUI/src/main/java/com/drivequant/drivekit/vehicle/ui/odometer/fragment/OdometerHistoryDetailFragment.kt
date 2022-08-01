@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -97,9 +98,13 @@ class OdometerHistoryDetailFragment : Fragment() {
                 onDistanceClicked(context)
                 onCancelButtonClicked(context)
                 vehicle_item.setBackgroundColor(DriveKitUI.colors.neutralColor())
-                viewModel.odometerActionObserver.observe(this, {
+                viewModel.odometerActionObserver.observe(this) {
                     updateProgressVisibility(false)
-                    Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(context, it.first),
+                        Toast.LENGTH_LONG
+                    ).show()
                     if (it.second) {
                         val intentData = Intent()
                         activity?.let { activity ->
@@ -109,7 +114,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                             }
                         }
                     }
-                })
+                }
             }
         }
     }
@@ -207,6 +212,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                                 context,
                                 "dk_vehicle_odometer_mileage_kilometer"
                             )
+                            this.typeface = DriveKitUI.primaryFont(context)
                         } else {
                             this.setText(viewModel.getFormattedMileageDistance(context, false))
                         }
@@ -223,6 +229,9 @@ class OdometerHistoryDetailFragment : Fragment() {
                         }
                         setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
                         show()
+                        getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                            typeface = DriveKitUI.primaryFont(context)
+                        }
                     }
                 }
             }

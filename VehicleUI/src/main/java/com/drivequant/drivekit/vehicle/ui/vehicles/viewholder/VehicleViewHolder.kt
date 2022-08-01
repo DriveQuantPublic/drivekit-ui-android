@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
@@ -60,8 +61,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
         textViewTitle.headLine1(mainFontColor)
         textViewSubtitle.smallText(complementaryFontColor)
-        textViewDetectionModeTitle.normalText(mainFontColor)
-        textViewDetectionModeTitle.typeface = Typeface.DEFAULT_BOLD
+        textViewDetectionModeTitle.headLine2()
         textViewDetectionModeDescription.normalText()
 
         popup.setImageDrawable(DKResource.convertToDrawable(itemView.context, "dk_common_dots"))
@@ -76,10 +76,13 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         popup.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
             val itemsList : List<VehicleActionItem> = DriveKitVehicleUI.vehicleActions
-            for (i in itemsList.indices){
+            for (i in itemsList.indices) {
                 if (itemsList[i].isDisplayable(vehicle)) {
                     popupMenu.menu.add(Menu.NONE, i, i, DKSpannable().append(itemsList[i].getTitle(context),context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
+                        DriveKitUI.primaryFont(context)?.let { typeface ->
+                            typeface(CustomTypefaceSpan(typeface))
+                        }
                     }).toSpannable())
                 }
             }

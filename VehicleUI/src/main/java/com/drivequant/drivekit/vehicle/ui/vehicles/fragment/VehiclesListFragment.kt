@@ -17,7 +17,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
@@ -50,7 +49,7 @@ class VehiclesListFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
         viewModel.apply {
-            progressBarObserver.observe(this@VehiclesListFragment, {
+            progressBarObserver.observe(this@VehiclesListFragment) {
                 it?.let { displayProgressCircular ->
                     if (displayProgressCircular) {
                         showProgressCircular()
@@ -58,11 +57,11 @@ class VehiclesListFragment : Fragment() {
                         hideProgressCircular()
                     }
                 }
-            })
+            }
 
-            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment, {
+            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment) {
                 viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
-            })
+            }
         }
     }
 
@@ -84,7 +83,7 @@ class VehiclesListFragment : Fragment() {
 
     fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
-        viewModel.vehiclesData.observe(this, {
+        viewModel.vehiclesData.observe(this) {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
                 Toast.makeText(
                     context,
@@ -100,7 +99,7 @@ class VehiclesListFragment : Fragment() {
                 adapter?.let { adapter ->
                     adapter.setVehicles(it)
                     adapter.notifyDataSetChanged()
-                }?:run {
+                } ?: run {
                     adapter = VehiclesListAdapter(requireContext(), viewModel, it.toMutableList())
                     vehicles_list.adapter = adapter
                 }
@@ -109,37 +108,33 @@ class VehiclesListFragment : Fragment() {
                 visibility = View.VISIBLE
                 isRefreshing = false
             }
-            setupAddVehicleButton()
+            setupAddReplaceButton()
             updateTitle(viewModel.getScreenTitle(requireContext()))
             if (synchronizationType == SynchronizationType.CACHE && shouldSyncVehicles) {
                 shouldSyncVehicles = false
                 updateVehicles(SynchronizationType.DEFAULT)
             }
-        })
+        }
         refresh_vehicles.isRefreshing = true
         viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
-    private fun setupAddVehicleButton() {
-        if (DriveKitVehicleUI.canAddVehicle) {
-            add_vehicle.apply {
+    private fun setupAddReplaceButton() {
+        if (viewModel.shouldDisplayAddReplaceButton()) {
+            button_vehicle.apply {
                 visibility = View.VISIBLE
                 button()
-                text = DKResource.convertToString(requireContext(), "dk_vehicle_add")
+                text = DKResource.convertToString(requireContext(), viewModel.getAddReplaceButtonTextResId())
                 setOnClickListener {
-                    if (viewModel.maxVehiclesReached()) {
-                        Toast.makeText(
-                            requireContext(),
-                            DKResource.convertToString(requireContext(), "dk_too_many_vehicles_alert"),
-                            Toast.LENGTH_LONG
-                        ).show()
+                    if (viewModel.shouldReplaceVehicle()) {
+                        VehiclePickerActivity.launchActivity(context, vehicleToDelete = viewModel.vehiclesList.first())
                     } else {
                         VehiclePickerActivity.launchActivity(requireContext())
                     }
                 }
             }
         } else {
-            add_vehicle.visibility = View.GONE
+            button_vehicle.visibility = View.GONE
         }
     }
 

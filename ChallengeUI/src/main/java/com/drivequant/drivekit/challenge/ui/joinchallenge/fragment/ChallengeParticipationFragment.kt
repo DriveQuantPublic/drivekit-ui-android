@@ -74,7 +74,7 @@ class ChallengeParticipationFragment : Fragment() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
-        viewModel.syncJoinChallengeError.observe(this, {
+        viewModel.syncJoinChallengeError.observe(this) {
             context?.let { context ->
                 if (it) {
                     if (viewModel.isChallengeStarted()) {
@@ -94,7 +94,7 @@ class ChallengeParticipationFragment : Fragment() {
                 }
                 updateProgressVisibility(false)
             }
-        })
+        }
 
         if (!this::challengeHeaderView.isInitialized && context != null) {
             challengeHeaderView = ChallengeHeaderView(context!!)
@@ -138,6 +138,7 @@ class ChallengeParticipationFragment : Fragment() {
         text_view_join_challenge.apply {
             text = DKResource.convertToString(context, "dk_challenge_participate_button")
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            typeface = DriveKitUI.primaryFont(context)
             visibility = View.VISIBLE
         }
     }
@@ -150,6 +151,7 @@ class ChallengeParticipationFragment : Fragment() {
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             visibility = View.VISIBLE
             isEnabled = false
+            typeface = DriveKitUI.primaryFont(context)
         }
 
         viewModel.challenge?.let {
@@ -179,6 +181,7 @@ class ChallengeParticipationFragment : Fragment() {
                 DKResource.convertToString(context, "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             isEnabled = false
+            typeface = DriveKitUI.primaryFont(context)
         }
         if (viewModel.getTimeLeft() > 0) {
             startCountDown(context)
@@ -189,6 +192,7 @@ class ChallengeParticipationFragment : Fragment() {
             challenge_start.apply {
                 text = DKResource.convertToString(context, "dk_challenge_start")
                 setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+                typeface = DriveKitUI.primaryFont(context)
             }
         }
     }
@@ -244,8 +248,11 @@ class ChallengeParticipationFragment : Fragment() {
     private fun setStyle() {
         text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
         container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        text_view_join_challenge.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        text_view_join_challenge.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        text_view_join_challenge.apply {
+            setBackgroundColor(DriveKitUI.colors.primaryColor())
+            setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+            typeface = DriveKitUI.primaryFont(context)
+        }
         text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 

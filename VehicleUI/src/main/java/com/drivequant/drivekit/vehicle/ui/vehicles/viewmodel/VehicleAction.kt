@@ -107,7 +107,10 @@ enum class VehicleAction(
         descriptionTextView?.setTextColor(DriveKitUI.colors.mainFontColor())
         descriptionTextView?.normalText()
 
-        vehicleFieldInputEditText?.setText(vehicleName)
+        vehicleFieldInputEditText?.apply {
+            setText(vehicleName)
+            typeface = DriveKitUI.primaryFont(context)
+        }
     }
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {

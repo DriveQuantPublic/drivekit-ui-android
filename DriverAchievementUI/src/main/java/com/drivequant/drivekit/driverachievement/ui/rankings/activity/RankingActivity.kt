@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.fragment.RankingFragment
@@ -29,8 +30,6 @@ class RankingActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = DKResource.convertToString(this, "dk_achievements_ranking_menu_ranking")
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, RankingFragment.newInstance(rankingGroupName))
@@ -40,5 +39,10 @@ class RankingActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_achievements_ranking_menu_ranking"))
     }
 }

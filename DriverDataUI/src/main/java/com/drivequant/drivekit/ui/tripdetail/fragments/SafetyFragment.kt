@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
@@ -38,7 +39,7 @@ class SafetyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.safety_fragment, container, false)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 

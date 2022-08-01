@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
@@ -79,15 +78,13 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
         }
 
-
-
         dk_swipe_refresh_challenge.setOnRefreshListener {
             updateSwipeRefreshChallengesVisibility(true)
             viewModel.fetchChallengeList()
         }
 
-        viewModel.syncChallengesError.observe(this, Observer {
-            if(!it){
+        viewModel.syncChallengesError.observe(this) {
+            if (!it) {
                 Toast.makeText(
                     context,
                     DKResource.convertToString(
@@ -125,7 +122,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 }
             }
             updateSwipeRefreshChallengesVisibility(false)
-        })
+        }
     }
 
     private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
@@ -38,7 +39,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 

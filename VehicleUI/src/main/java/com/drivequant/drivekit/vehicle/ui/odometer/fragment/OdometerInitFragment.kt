@@ -84,14 +84,18 @@ class OdometerInitFragment : Fragment() {
                     setHintTextColor(DriveKitUI.colors.complementaryFontColor())
                     normalText()
                 }
-                viewModel.odometerActionObserver.observe(requireActivity(), {
+                viewModel.odometerActionObserver.observe(requireActivity()) {
                     updateProgressVisibility(false)
-                    Toast.makeText(context, DKResource.convertToString(context, it.first), Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(context, it.first),
+                        Toast.LENGTH_LONG
+                    ).show()
                     if (it.second) {
                         DriveKitVehicleUI.vehiclePickerComplete?.onVehiclePickerFinished(vehicleId)
                         activity?.finish()
                     }
-                })
+                }
             }
         }
     }
@@ -118,6 +122,7 @@ class OdometerInitFragment : Fragment() {
                     text_input_layout_distance.apply {
                         isErrorEnabled = true
                         error = DKResource.convertToString(context, "dk_vehicle_odometer_history_error")
+                        typeface = DriveKitUI.primaryFont(context)
                     }
                 } else {
                     updateProgressVisibility(true)

@@ -58,10 +58,12 @@ class SuccessBluetoothFragment: Fragment() {
             DriveKitUI.colors.mainFontColor(), "dk_vehicle_bluetooth_congrats_notice", btDeviceName
         )
 
-        button_finish.text = DKResource.convertToString(view.context, "dk_common_finish")
-        button_finish.button()
-        button_finish.setOnClickListener {
-            activity?.finish()
+        button_finish.apply {
+            text = DKResource.convertToString(view.context, "dk_common_finish")
+            button()
+            setOnClickListener {
+                activity?.finish()
+            }
         }
     }
 }

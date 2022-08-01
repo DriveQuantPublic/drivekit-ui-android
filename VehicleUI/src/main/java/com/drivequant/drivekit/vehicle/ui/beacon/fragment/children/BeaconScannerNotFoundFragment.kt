@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -73,11 +73,12 @@ class BeaconScannerNotFoundFragment : Fragment() {
                 activity?.onBackPressed()
             }
 
-            button_abort.normalText(DriveKitUI.colors.secondaryColor())
-            button_abort.typeface = Typeface.DEFAULT_BOLD
-            button_abort.text = DKResource.convertToString(requireContext(), "dk_common_finish")
-            button_abort.setOnClickListener {
-                viewModel.scanValidationFinished()
+            button_abort.apply {
+                headLine2(DriveKitUI.colors.secondaryColor())
+                text = DKResource.convertToString(requireContext(), "dk_common_finish")
+                setOnClickListener {
+                    viewModel.scanValidationFinished()
+                }
             }
         }
     }

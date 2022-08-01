@@ -42,15 +42,15 @@ class VehicleDetailActivity : AppCompatActivity() {
         ).get(VehicleDetailViewModel::class.java)
         viewModel.init(this)
 
-        viewModel.progressBarObserver.observe(this, {
+        viewModel.progressBarObserver.observe(this) {
             it?.let { displayProgressCircular ->
-                if (displayProgressCircular){
+                if (displayProgressCircular) {
                     showProgressCircular()
                 } else {
                     hideProgressCircular()
                 }
             }
-        })
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, VehicleDetailFragment.newInstance(viewModel, vehicleId), "vehicleDetailTag")

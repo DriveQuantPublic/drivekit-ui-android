@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -57,12 +58,14 @@ object PseudoUtils {
 
         alertDialog.apply {
             setCancelable(false)
-            setButton(DialogInterface.BUTTON_POSITIVE,
+            setButton(
+                DialogInterface.BUTTON_POSITIVE,
                 DKResource.convertToString(context, "dk_common_validate")
             ) { _, _ ->
                 // Do nothing, onClick() callback is overriden in getButton()
             }
-            setButton(DialogInterface.BUTTON_NEGATIVE,
+            setButton(
+                DialogInterface.BUTTON_NEGATIVE,
                 DKResource.convertToString(context, "dk_common_later")
             ) { dialogInterface, _ ->
                 dialogInterface.dismiss()
@@ -71,28 +74,34 @@ object PseudoUtils {
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
             show()
         }
-
-        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val newPseudo = editText.editableText.toString()
-            if (newPseudo.isNotBlank()) {
-                it.isEnabled = false
-                DriveKit.updateUserInfo(
-                    pseudo = newPseudo,
-                    listener = object : UpdateUserInfoQueryListener {
-                        override fun onResponse(status: Boolean) {
-                            it.isEnabled = true
-                            if (status) {
-                                alertDialog.dismiss()
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).typeface = DriveKitUI.primaryFont(context)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
+            typeface = DriveKitUI.primaryFont(context)
+            setOnClickListener {
+                val newPseudo = editText.editableText.toString()
+                if (newPseudo.isNotBlank()) {
+                    it.isEnabled = false
+                    DriveKit.updateUserInfo(
+                        pseudo = newPseudo,
+                        listener = object : UpdateUserInfoQueryListener {
+                            override fun onResponse(status: Boolean) {
+                                it.isEnabled = true
+                                if (status) {
+                                    alertDialog.dismiss()
+                                }
+                                listener.onPseudoChanged(status)
                             }
-                            listener.onPseudoChanged(status)
                         }
-                    }
-                )
-            } else {
-                Toast.makeText(context, DKResource.convertToString(context, "dk_fields_not_valid"), Toast.LENGTH_LONG).show()
+                    )
+                } else {
+                    Toast.makeText(
+                        context,
+                        DKResource.convertToString(context, "dk_fields_not_valid"),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
-
         titleTextView.apply {
             text = DKResource.convertToString(context, "app_name")
             headLine1()
@@ -103,6 +112,7 @@ object PseudoUtils {
         }
         editText.apply {
             hint = DKResource.convertToString(context, "dk_common_pseudo")
+            typeface = DriveKitUI.primaryFont(context)
         }
     }
 
