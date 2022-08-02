@@ -55,6 +55,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         val permissions = ArrayList<PermissionView>()
         permissions.addAll(
             listOf(
+                PermissionView.NOTIFICATIONS,
                 PermissionView.LOCATION,
                 PermissionView.ACTIVITY,
                 PermissionView.BACKGROUND_TASK,

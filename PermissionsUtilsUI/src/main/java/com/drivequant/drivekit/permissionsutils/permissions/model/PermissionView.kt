@@ -6,11 +6,8 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.permissionsutils.permissions.activity.ActivityRecognitionPermissionActivity
-import com.drivequant.drivekit.permissionsutils.permissions.activity.BackgroundTaskPermissionActivity
+import com.drivequant.drivekit.permissionsutils.permissions.activity.*
 import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermissionActivity.Companion.PERMISSION_VIEWS_LIST_EXTRA
-import com.drivequant.drivekit.permissionsutils.permissions.activity.LocationPermissionActivity
-import com.drivequant.drivekit.permissionsutils.permissions.activity.NearbyDevicesPermissionActivity
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -18,7 +15,7 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.NearbyDevic
 // Copyright (c) 2020 DriveQuant. All rights reserved.
 
 enum class PermissionView {
-    ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
+    NOTIFICATIONS, ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
 
     fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(context)) {
@@ -38,6 +35,7 @@ enum class PermissionView {
 
     private fun getCurrentPermissionStatus(context: Context): PermissionStatus {
         return when (this) {
+            NOTIFICATIONS -> DiagnosisHelper.getNotificationStatus(context)
             LOCATION -> DiagnosisHelper.getLocationStatus(context)
             ACTIVITY -> DiagnosisHelper.getActivityStatus(context)
             BACKGROUND_TASK -> DiagnosisHelper.getBatteryOptimizationsStatus(context)
@@ -47,6 +45,7 @@ enum class PermissionView {
 
     private fun buildIntent(context: Context, permissionViews: ArrayList<PermissionView>): Intent {
         val selectedClass = when (this) {
+            NOTIFICATIONS -> NotificationsPermissionActivity::class.java
             LOCATION -> LocationPermissionActivity::class.java
             ACTIVITY -> ActivityRecognitionPermissionActivity::class.java
             BACKGROUND_TASK -> BackgroundTaskPermissionActivity::class.java
