@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.R
 
 /**
@@ -102,26 +103,28 @@ class DiagnosisItemView : LinearLayout {
 
     fun getDiagnosisLink(): String = diagnosisLink
 
-    fun setDiagnosisDrawable(hasProblem: Boolean) {
-        val drawableItem = if (hasProblem) {
-            DKResource.convertToDrawable(context, "dk_perm_utils_high_priority_generic")
-        } else {
-            DKResource.convertToDrawable(context, "dk_perm_utils_checked_generic")
+    fun setDiagnosisDrawable(permissionStatus: PermissionStatus) {
+        val color = when (permissionStatus) {
+            PermissionStatus.VALID -> ContextCompat.getColor(context, R.color.dkValid)
+            PermissionStatus.NOT_VALID -> DriveKitUI.colors.criticalColor()
+            PermissionStatus.WARNING -> DriveKitUI.colors.warningColor()
         }
-
-        val color = if (hasProblem) {
-            DriveKitUI.colors.criticalColor()
-        } else {
-            ContextCompat.getColor(context, R.color.dkValid)
+        val drawableItem = when (permissionStatus) {
+            PermissionStatus.VALID -> "dk_perm_utils_checked_generic"
+            PermissionStatus.NOT_VALID -> "dk_perm_utils_high_priority_generic"
+            PermissionStatus.WARNING -> "dk_perm_utils_checked_generic" // TODO
+        }.let {
+            DKResource.convertToDrawable(context, it)
         }
-
-        val wrapped = DrawableCompat.wrap(drawableItem!!)
-        DrawableCompat.setTint(wrapped, color)
-        imageViewDiagnosis?.setImageDrawable(wrapped)
+        if (drawableItem != null) {
+            val wrapped = DrawableCompat.wrap(drawableItem)
+            DrawableCompat.setTint(wrapped, color)
+            imageViewDiagnosis?.setImageDrawable(wrapped)
+        }
     }
 
     fun setNormalState() {
-        setDiagnosisDrawable(false)
+        setDiagnosisDrawable(PermissionStatus.VALID)
         this.setOnClickListener {
             val infoDiagnosis = DKAlertDialog.LayoutBuilder()
                 .init(context)

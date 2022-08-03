@@ -113,7 +113,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             if (PermissionsUtilsUI.isBluetoothNeeded) {
                 errorsCount++
             }
-            diag_item_bluetooth.setDiagnosisDrawable(true)
+            diag_item_bluetooth.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
             diag_item_bluetooth.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
@@ -141,7 +141,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             diag_item_location_sensor.setNormalState()
         } else {
             errorsCount++
-            diag_item_location_sensor.setDiagnosisDrawable(true)
+            diag_item_location_sensor.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
             diag_item_location_sensor.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
@@ -165,11 +165,14 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun checkPermissionItem(permissionType: PermissionType, diagnosticItem: DiagnosisItemView) {
-        when (DiagnosisHelper.getPermissionStatus(this, permissionType)) {
+        when (val status = DiagnosisHelper.getPermissionStatus(this, permissionType)) {
             PermissionStatus.VALID -> diagnosticItem.setNormalState()
+            PermissionStatus.WARNING,
             PermissionStatus.NOT_VALID -> {
-                errorsCount++
-                setProblemState(diagnosticItem, object : ResolveProblemStateListener {
+                if (status == PermissionStatus.NOT_VALID) {
+                    errorsCount++
+                }
+                setProblemState(diagnosticItem, status, object : ResolveProblemStateListener {
                     override fun onSubmit() {
                         requestPermission(permissionType)
                     }
@@ -183,7 +186,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             diag_item_connectivity.setNormalState()
         } else {
             errorsCount++
-            diag_item_connectivity.setDiagnosisDrawable(true)
+            diag_item_connectivity.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
             diag_item_connectivity.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
@@ -209,10 +212,13 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             when (DiagnosisHelper.getBatteryOptimizationsStatus(this)) {
                 PermissionStatus.VALID -> diag_item_battery_optimization.setNormalState()
+                PermissionStatus.WARNING -> {
+                    // do nothing
+                }
                 PermissionStatus.NOT_VALID -> {
                     errorsCount++
                     setProblemState(
-                        diag_item_battery_optimization, object : ResolveProblemStateListener {
+                        diag_item_battery_optimization, PermissionStatus.NOT_VALID, object : ResolveProblemStateListener {
                             override fun onSubmit() {
                                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
                             }})
@@ -410,17 +416,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             PermissionType.LOCATION -> requestLocationPermission()
             PermissionType.ACTIVITY -> requestActivityPermission()
             PermissionType.AUTO_RESET -> requestAutoResetPermission()
-            PermissionType.NOTIFICATION -> {
-                val notificationIntent = Intent()
-                notificationIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
-                notificationIntent.putExtra("app_package", packageName)
-                notificationIntent.putExtra("app_uid", applicationInfo.uid)
-                notificationIntent.putExtra(
-                    "android.provider.extra.APP_PACKAGE",
-                    packageName
-                )
-                startActivity(notificationIntent)
-            }
+            PermissionType.NOTIFICATION -> requestNotificationPermission()
             PermissionType.NEARBY -> requestNearbyPermission()
         }
     }
@@ -459,6 +455,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             intent.action = Intent.ACTION_AUTO_REVOKE_PERMISSIONS
             startActivityForResult(intent, REQUEST_PERMISSIONS_OPEN_SETTINGS)
         }
+    }
+
+    private fun requestNotificationPermission() {
+        val notificationIntent = Intent()
+        notificationIntent.action = "android.settings.APP_NOTIFICATION_SETTINGS"
+        notificationIntent.putExtra("app_package", packageName)
+        notificationIntent.putExtra("app_uid", applicationInfo.uid)
+        notificationIntent.putExtra("android.provider.extra.APP_PACKAGE", packageName)
+        startActivity(notificationIntent)
     }
 
     private fun requestNearbyPermission() {
@@ -529,9 +534,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun setProblemState(diagnosticItem: DiagnosisItemView, listener: ResolveProblemStateListener) {
+    private fun setProblemState(diagnosticItem: DiagnosisItemView, permissionStatus: PermissionStatus, listener: ResolveProblemStateListener) {
         diagnosticItem.apply {
-            setDiagnosisDrawable(true)
+            setDiagnosisDrawable(permissionStatus)
             setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@AppDiagnosisActivity)

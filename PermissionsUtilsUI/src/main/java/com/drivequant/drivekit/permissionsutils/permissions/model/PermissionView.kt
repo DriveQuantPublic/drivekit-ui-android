@@ -22,6 +22,7 @@ enum class PermissionView {
             PermissionStatus.NOT_VALID -> {
                 context.startActivity(this.buildIntent(context, permissionViews))
             }
+            PermissionStatus.WARNING,
             PermissionStatus.VALID -> {
                 permissionViews.remove(this)
                 if (permissionViews.isEmpty()) {
