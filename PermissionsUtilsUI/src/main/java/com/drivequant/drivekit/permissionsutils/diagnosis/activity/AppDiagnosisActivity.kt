@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import android.Manifest
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
 
 import android.content.Intent
 import android.content.IntentFilter
@@ -378,7 +379,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun enableSensor(sensorType: ConnectivityType) {
         when (sensorType) {
             ConnectivityType.GPS -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            ConnectivityType.BLUETOOTH -> startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+            ConnectivityType.BLUETOOTH -> {
+                @SuppressLint("MissingPermission")
+                if (DiagnosisHelper.getNearbyDevicesStatus(this) == PermissionStatus.VALID) {
+                    startActivity(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
+                }
+            }
         }
     }
 
@@ -591,11 +597,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_PERMISSIONS_OPEN_SETTINGS -> alertDialog?.dismiss()
-            REQUEST_BATTERY_OPTIMIZATION ->
+            REQUEST_BATTERY_OPTIMIZATION -> {
                 if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID &&
                     Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                     text_view_battery_description_2.visibility = View.GONE
                 }
+            }
         }
     }
 

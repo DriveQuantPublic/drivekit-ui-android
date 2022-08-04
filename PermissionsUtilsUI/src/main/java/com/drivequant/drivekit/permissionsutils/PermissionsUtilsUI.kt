@@ -139,10 +139,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
 
         val batteryOptimization = when (DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
             PermissionStatus.VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_disabled)
-<<<<<<< HEAD
             PermissionStatus.WARNING,
-=======
->>>>>>> release/1.29
             PermissionStatus.NOT_VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_enabled)
         }
 
