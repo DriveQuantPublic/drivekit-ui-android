@@ -124,6 +124,7 @@ internal class TripGoogleMapViewHolder(
             if (shouldDisplayAdvice) {
                 mapItem.getAdviceImageResource()?.let {
                     adviceFabButton.setImageResource(it)
+                    adviceFabButton.imageTintList = ColorStateList.valueOf(DriveKitUI.colors.fontColorOnSecondaryColor())
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {

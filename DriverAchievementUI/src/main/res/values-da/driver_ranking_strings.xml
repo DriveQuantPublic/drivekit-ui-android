@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_achievements_failed_to_sync_rankings">Kunne ikke synkronisere placeringer, prøv igen senere.</string>
+    <string name="dk_achievements_ranking_legacy">Hver anden måned</string>
+    <string name="dk_achievements_ranking_legacy_info">Denne placering beregnes ud fra middelresultatet af ture i de sidste to uger. For at optræde i rangeringen skal du have afsluttet mindst en tur i de sidste 14 dage.</string>
+    <string name="dk_achievements_ranking_menu_ranking">Min placering</string>
+    <string name="dk_achievements_ranking_month">Månedlig</string>
+    <string name="dk_achievements_ranking_month_info">Den månedlige placering beregnes ud fra den gennemsnitlige score for alle ture i en måned. For at finde ud af i denne placering skal du køre mindst 20 km og gennemføre 5 ture.</string>
+    <string name="dk_achievements_ranking_no_pseudo_set">Du skal indtaste et kaldenavn for at få adgang til denne side.</string>
+    <string name="dk_achievements_ranking_permanent">Permanent</string>
+    <string name="dk_achievements_ranking_permanent_info">Den permanente placering beregnes ud fra den gennemsnitlige score for alle ture. For at finde ud af i denne placering skal du køre mindst 50 km og gennemføre 10 ture.</string>
+    <string name="dk_achievements_ranking_week">Ugentlig</string>
+    <string name="dk_achievements_ranking_week_info">Den ugentlige placering beregnes ud fra den gennemsnitlige score for alle ture i en uge. For at finde ud af i denne placering skal du køre mindst 10 km og gennemføre 2 ture.</string>
+</resources>

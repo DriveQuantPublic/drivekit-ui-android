@@ -465,7 +465,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 }).toSpannable()
         }
 
-    fun formatChallengeDistance(distance:Double, context: Context) :List<FormatType> =
+    fun formatChallengeDistance(distance:Double, context: Context): List<FormatType> =
         formatMeterDistanceInKm(
             context,
             distance * 1000,

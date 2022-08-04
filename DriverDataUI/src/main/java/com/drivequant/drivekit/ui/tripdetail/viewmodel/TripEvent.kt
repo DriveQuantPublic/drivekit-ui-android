@@ -31,7 +31,7 @@ class TripEvent(val type: TripEventType,
             SAFETY_ACCEL -> R.drawable.dk_common_safety_accel
             PHONE_DISTRACTION_LOCK -> R.drawable.dk_lock_event
             PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_unlock_event
-            PHONE_DISTRACTION_PICK_UP -> R.drawable.dk_begin_call
+            PHONE_DISTRACTION_PICK_UP -> R.drawable.dk_common_call
             PHONE_DISTRACTION_HANG_UP -> R.drawable.dk_end_call
         }
     }
