@@ -13,20 +13,20 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- TODO GENERER L'ICONE dk_perm_utils_nearby_devices_permission -->
             <ImageView
                 android:id="@+id/image_view_permission_notifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin"
                 android:padding="@dimen/dk_margin"
-                android:src="@drawable/dk_perm_utils_nearby_devices_permission"
+                android:src="@drawable/dk_perm_utils_notifications_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"  />
@@ -43,19 +43,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_permission_notifications" />
 
-            <!-- TODO GENERER LA CLE : dk_perm_utils_permissions_notifications_text1 -->
             <TextView
                 android:id="@+id/text_view_notifications_permission_text1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:padding="@dimen/dk_margin"
-                android:text="dk_perm_utils_permissions_notifications_text1"
+                android:text="@string/dk_perm_utils_permissions_notifications_text1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_notifications_permission_title" />
 
-            <!-- TODO GENERER LA CLE : dk_perm_utils_permissions_notifications_text2-->
             <TextView
                 android:id="@+id/text_view_notifications_permission_text2"
                 android:layout_width="0dp"
@@ -63,12 +61,11 @@
                 android:paddingStart="@dimen/dk_margin"
                 android:paddingEnd="@dimen/dk_margin"
                 android:paddingBottom="@dimen/dk_margin"
-                android:text="dk_perm_utils_permissions_notifications_text2"
+                android:text="@string/dk_perm_utils_permissions_notifications_text2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_notifications_permission_text1" />
 
-            <!-- TODO GENERER LA CLE  -->
             <Button
                 android:id="@+id/button_request_notifications_permission"
                 android:layout_width="match_parent"
@@ -77,11 +74,18 @@
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onRequestPermissionClicked"
                 android:padding="@dimen/dk_margin"
-                android:text="dk_perm_utils_permissions_phone_settings_notifications_button"
+                android:text="@string/dk_perm_utils_permissions_phone_settings_notifications_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_notifications_permission_text2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <TextView
+        android:id="@+id/button_skip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dk_margin"
+        android:gravity="center"
+        android:text="@string/dk_perm_utils_permissions_text_button_skip" />
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.drivequant.drivekit.permissionsutils.permissions.model
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
@@ -17,20 +18,46 @@ import com.drivequant.drivekit.permissionsutils.permissions.activity.BasePermiss
 enum class PermissionView {
     NOTIFICATIONS, ACTIVITY, LOCATION, BACKGROUND_TASK, NEARBY_DEVICES;
 
+
     fun launchActivity(context: Context, permissionViews: ArrayList<PermissionView>) {
         when (getCurrentPermissionStatus(context)) {
             PermissionStatus.NOT_VALID -> {
                 context.startActivity(this.buildIntent(context, permissionViews))
             }
-            PermissionStatus.WARNING,
-            PermissionStatus.VALID -> {
-                permissionViews.remove(this)
-                if (permissionViews.isEmpty()) {
-                    PermissionsUtilsUI.permissionViewListener?.onFinish()
-                } else {
-                    permissionViews.first().launchActivity(context, permissionViews)
+            PermissionStatus.WARNING -> {
+                this.getIgnoreSharedPrefsKey()?.let {
+                    if (DriveKitSharedPreferencesUtils.getBoolean(it, false)) {
+                        launchNextPermission(context, permissionViews)
+                    } else {
+                        context.startActivity(this.buildIntent(context, permissionViews))
+                    }
+                } ?: run {
+                    launchNextPermission(context, permissionViews)
                 }
             }
+            PermissionStatus.VALID -> {
+                launchNextPermission(context, permissionViews)
+            }
+        }
+    }
+
+    fun ignore() {
+        getIgnoreSharedPrefsKey()?.let { sharedPrefsKey ->
+            DriveKitSharedPreferencesUtils.setBoolean(sharedPrefsKey, true)
+        }
+    }
+
+    private fun getIgnoreSharedPrefsKey() = when (this) {
+        NOTIFICATIONS -> "dk_ignore_permission_notifications_key"
+        else -> null
+    }
+
+    private fun launchNextPermission(context: Context, permissionViews: ArrayList<PermissionView>) {
+        permissionViews.remove(this)
+        if (permissionViews.isEmpty()) {
+            PermissionsUtilsUI.permissionViewListener?.onFinish()
+        } else {
+            permissionViews.first().launchActivity(context, permissionViews)
         }
     }
 

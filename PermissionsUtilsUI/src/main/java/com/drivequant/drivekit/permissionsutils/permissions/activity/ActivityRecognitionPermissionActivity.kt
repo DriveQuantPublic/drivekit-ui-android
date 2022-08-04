@@ -30,8 +30,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         permissionCallback = object :
             OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-                finish()
-                next()
+                forward()
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {

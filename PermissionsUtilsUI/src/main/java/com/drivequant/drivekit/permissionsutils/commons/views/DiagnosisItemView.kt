@@ -112,7 +112,7 @@ class DiagnosisItemView : LinearLayout {
         val drawableItem = when (permissionStatus) {
             PermissionStatus.VALID -> "dk_perm_utils_checked_generic"
             PermissionStatus.NOT_VALID -> "dk_perm_utils_high_priority_generic"
-            PermissionStatus.WARNING -> "dk_perm_utils_checked_generic" // TODO
+            PermissionStatus.WARNING -> "dk_perm_utils_warning"
         }.let {
             DKResource.convertToDrawable(context, it)
         }
