@@ -186,7 +186,7 @@ internal fun Trip.toDKTripItem() = object : DKTripListItem {
         return DriverDataUI.customTripInfo?.infoImageResource(trip) ?: run {
             val count = trip.tripAdvices.size
             if (count > 1) {
-                return R.drawable.dk_trip_info_count
+                return R.drawable.dk_common_trip_info_count
             } else if (count == 1) {
                 val theme = trip.tripAdvices.first().theme
                 if (theme == "SAFETY") {

@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 
 object DKAlertDialog {
@@ -85,7 +86,15 @@ object DKAlertDialog {
         }
 
         fun show(): AlertDialog {
-            alertDialog?.show()
+            alertDialog?.apply {
+                show()
+                listOf(
+                    DialogInterface.BUTTON_POSITIVE,
+                    DialogInterface.BUTTON_NEGATIVE
+                ).forEach { buttonType ->
+                    getButton(buttonType)?.typeface = DriveKitUI.primaryFont(context)
+                }
+            }
             return alertDialog!!
         }
 

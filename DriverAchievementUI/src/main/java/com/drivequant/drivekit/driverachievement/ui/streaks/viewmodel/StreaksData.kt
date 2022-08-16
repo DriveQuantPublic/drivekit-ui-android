@@ -41,7 +41,7 @@ internal class StreaksData(
         ACCELERATION -> R.drawable.dk_common_safety_accel
         BRAKE -> R.drawable.dk_common_safety_decel
         ADHERENCE -> R.drawable.dk_common_safety_adherence
-        CALL -> R.drawable.dk_common_phone_call
+        CALL -> R.drawable.dk_common_call
     }
 
     private fun getResetText(context: Context) = when (streakTheme) {

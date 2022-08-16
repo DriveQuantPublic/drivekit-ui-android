@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoriesListFragment
@@ -13,6 +14,8 @@ import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoryDetai
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerVehicleListFragment
 
 class OdometerHistoryDetailActivity : AppCompatActivity() {
+
+    private var historyId: Int = -1
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicle-id-extra"
@@ -39,7 +42,6 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_odometer_history_detail)
@@ -50,15 +52,7 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
-        val historyId = intent.getIntExtra(HISTORY_ID_EXTRA, -1)
-
-        if (historyId == -1) {
-            "dk_vehicle_odometer_history_add"
-        } else {
-            "dk_vehicle_odometer_history_update"
-        }.let {
-            title = DKResource.convertToString(this, it)
-        }
+        historyId = intent.getIntExtra(HISTORY_ID_EXTRA, -1)
 
         supportFragmentManager
             .beginTransaction()
@@ -68,5 +62,16 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (historyId == -1) {
+            "dk_vehicle_odometer_history_add"
+        } else {
+            "dk_vehicle_odometer_history_update"
+        }.let {
+            setActivityTitle(DKResource.convertToString(this, it))
+        }
     }
 }

@@ -67,6 +67,7 @@ internal class WorkingHoursDayCard : FrameLayout {
             val cal = Calendar.getInstance(Locale.getDefault())
             cal[Calendar.DAY_OF_WEEK] = dayConfig.day.toDay()
             text = SimpleDateFormat("E", Locale.getDefault()).format(cal.time)
+            typeface = DriveKitUI.primaryFont(context)
         }
 
         rangeSlider.apply {
@@ -182,8 +183,14 @@ internal class WorkingHoursDayCard : FrameLayout {
     }
 
     private fun updateHoursLabels() {
-        labelMin.text = rawHoursValueToDate(rangeSlider.values[0])
-        labelMax.text = rawHoursValueToDate(rangeSlider.values[1])
+        labelMin.apply {
+            text = rawHoursValueToDate(rangeSlider.values[0])
+            typeface = DriveKitUI.primaryFont(context)
+        }
+        labelMax.apply {
+            text = rawHoursValueToDate(rangeSlider.values[1])
+            typeface = DriveKitUI.primaryFont(context)
+        }
     }
 
     private fun rawHoursValueToDate(hours: Float): String? {

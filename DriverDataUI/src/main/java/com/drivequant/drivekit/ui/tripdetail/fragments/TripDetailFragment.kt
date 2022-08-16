@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import androidx.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -84,13 +83,13 @@ class TripDetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
         viewContentTrip = view.findViewById(R.id.container_trip)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.trip_menu_bar, menu)
+        inflater.inflate(R.menu.dk_trip_menu_bar, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -100,7 +99,7 @@ class TripDetailFragment : Fragment() {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
                         .layout(R.layout.template_alert_dialog_layout)
                         .cancelable(true)
-                        .positiveButton(positiveListener = DialogInterface.OnClickListener { _, _ ->
+                        .positiveButton(positiveListener = { _, _ ->
                                 showProgressCircular()
                                 deleteTrip() })
                         .negativeButton()
@@ -148,7 +147,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun deleteTrip() {
-        viewModel.deleteTripObserver.observe(this, {
+        viewModel.deleteTripObserver.observe(this) {
             hideProgressCircular()
             context?.let { context ->
                 if (it != null) {
@@ -156,13 +155,13 @@ class TripDetailFragment : Fragment() {
                         .init(context)
                         .layout(R.layout.template_alert_dialog_layout)
                         .positiveButton(positiveListener = { dialog, _ ->
-                                dialog.dismiss()
-                                val data = Intent()
-                                requireActivity().apply {
-                                    setResult(RESULT_OK, data)
-                                    finish()
-                                }
-                            })
+                            dialog.dismiss()
+                            val data = Intent()
+                            requireActivity().apply {
+                                setResult(RESULT_OK, data)
+                                finish()
+                            }
+                        })
                         .cancelable(false)
                         .show()
 
@@ -178,7 +177,7 @@ class TripDetailFragment : Fragment() {
                     description?.normalText()
                 }
             }
-        })
+        }
         viewModel.deleteTrip()
     }
 
@@ -187,7 +186,7 @@ class TripDetailFragment : Fragment() {
         evaluation: Boolean,
         feedback: Int,
         comment: String? = null) {
-        viewModel.sendAdviceFeedbackObserver.observe(this, { status ->
+        viewModel.sendAdviceFeedbackObserver.observe(this) { status ->
             hideProgressCircular()
             if (status != null) {
                 adviceAlertDialog?.hide()
@@ -199,12 +198,12 @@ class TripDetailFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-        })
+        }
         viewModel.sendTripAdviceFeedback(mapItem, evaluation, feedback, comment)
     }
 
     private fun loadTripData() {
-        viewModel.tripEventsObserver.observe(this, {
+        viewModel.tripEventsObserver.observe(this) {
             if (viewModel.events.isNotEmpty()) {
                 setMapController()
                 setViewPager()
@@ -213,34 +212,37 @@ class TripDetailFragment : Fragment() {
             } else {
                 displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
-        })
-        viewModel.unScoredTrip.observe(this, { routeAvailable ->
+        }
+        viewModel.unScoredTrip.observe(this) { routeAvailable ->
             routeAvailable?.let {
-                if (it){
+                if (it) {
                     setMapController()
-                }else{
-                    displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
+                } else {
+                    displayErrorMessageAndGoBack(
+                        R.string.dk_driverdata_trip_detail_get_road_failed,
+                        false
+                    )
                 }
                 setUnScoredTripFragment()
                 setHeaderSummary()
             }
 
             hideProgressCircular()
-        })
-        viewModel.noRoute.observe(this, {
+        }
+        viewModel.noRoute.observe(this) {
             setViewPager()
             hideProgressCircular()
             setHeaderSummary()
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
-        })
-        viewModel.noData.observe(this, {
+        }
+        viewModel.noData.observe(this) {
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
-        })
-        viewModel.reverseGeocoderObserver.observe(this, {
+        }
+        viewModel.reverseGeocoderObserver.observe(this) {
             if (it) {
                 requireActivity().setResult(RESULT_OK, Intent())
             }
-        })
+        }
         viewModel.fetchTripData(requireContext())
     }
 
@@ -277,11 +279,17 @@ class TripDetailFragment : Fragment() {
             val feedbackButtonsLayout = adviceView.findViewById<LinearLayout>(R.id.linear_layout_advice_feedback)
             val builder = AlertDialog.Builder(context).setView(adviceView)
 
-            headerText.text = viewModel.getAdviceTitle(mapItem)
-            headerText.setBackgroundColor(DriveKitUI.colors.primaryColor())
+            headerText.apply {
+                text = viewModel.getAdviceTitle(mapItem)
+                typeface = DriveKitUI.primaryFont(context)
+                setBackgroundColor(DriveKitUI.colors.primaryColor())
 
+            }
             viewModel.getAdviceMessage(mapItem)?.let {
-                adviceView.findViewById<TextView>(R.id.text_view_advice_content).text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                adviceView.findViewById<TextView>(R.id.text_view_advice_content).apply {
+                    typeface = DriveKitUI.primaryFont(context)
+                    text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                }
             }
 
             if (viewModel.shouldDisplayFeedbackButtons(mapItem)) {
@@ -314,8 +322,11 @@ class TripDetailFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
             adviceAlertDialog = builder.show()
+            adviceAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                setTextColor(DriveKitUI.colors.secondaryColor())
+                typeface = DriveKitUI.primaryFont(context)
+            }
         }
     }
 
@@ -326,8 +337,8 @@ class TripDetailFragment : Fragment() {
         val radioGroup = feedbackView.findViewById<RadioGroup>(R.id.radio_group_trip_feedback)
 
         header.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        header.text =  context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
-            ?.toUpperCase(Locale.getDefault())
+        header.text = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_title)
+            ?.uppercase(Locale.getDefault())
         feedbackView.findViewById<TextView>(R.id.alert_dialog_feedback_text).hint = context?.getString(R.string.dk_driverdata_advice_feedback_disagree_desc)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_01).text = context?.getString(R.string.dk_driverdata_advice_feedback_01)
         feedbackView.findViewById<AppCompatRadioButton>(R.id.radio_button_choice_02).text = context?.getString(R.string.dk_driverdata_advice_feedback_02)
@@ -357,8 +368,14 @@ class TripDetailFragment : Fragment() {
 
         feedbackAlertDialog = builder.show()
         feedbackAlertDialog?.apply {
-            getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-            getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(DriveKitUI.colors.secondaryColor())
+            getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                isEnabled = false
+                typeface = DriveKitUI.primaryFont(context)
+            }
+            getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+                setTextColor(DriveKitUI.colors.secondaryColor())
+                typeface = DriveKitUI.primaryFont(context)
+            }
         }
     }
 
@@ -375,7 +392,10 @@ class TripDetailFragment : Fragment() {
                 }
             }
             feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)
-                ?.setTextColor(DriveKitUI.colors.secondaryColor())
+                ?.apply {
+                    setTextColor(DriveKitUI.colors.secondaryColor())
+                    typeface = DriveKitUI.primaryFont(context)
+                }
         } else {
             feedbackView.findViewById<EditText>(R.id.edit_text_feedback).isEnabled = false
         }
@@ -472,7 +492,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary() {
-        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalize()
+        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalizeFirstLetter()
         trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =

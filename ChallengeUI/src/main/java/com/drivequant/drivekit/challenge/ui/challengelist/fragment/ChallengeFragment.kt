@@ -12,6 +12,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import kotlinx.android.synthetic.main.dk_fragment_challenge.*
@@ -32,8 +33,8 @@ class ChallengeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.syncChallengesError.observe(this, {
-            if(!it){
+        viewModel.syncChallengesError.observe(this) {
+            if (!it) {
                 Toast.makeText(
                     context,
                     DKResource.convertToString(
@@ -45,7 +46,7 @@ class ChallengeFragment : Fragment() {
             }
             viewModel.filterChallenges()
             updateProgressVisibility(false)
-        })
+        }
         setViewPager()
     }
 
@@ -59,9 +60,15 @@ class ChallengeFragment : Fragment() {
                 childFragmentManager,
                 viewModel, requireContext()
             )
-        tab_layout_challenge.setupWithViewPager(view_pager_challenge)
-        tab_layout_challenge.setBackgroundColor(Color.WHITE)
-        tab_layout_challenge.setTabTextColors(DriveKitUI.colors.complementaryFontColor(), DriveKitUI.colors.secondaryColor())
+        tab_layout_challenge.apply {
+            setupWithViewPager(view_pager_challenge)
+            setBackgroundColor(Color.WHITE)
+            setTabTextColors(
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor()
+            )
+            updateTabsFont()
+        }
     }
 
     override fun onCreateView(

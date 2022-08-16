@@ -38,11 +38,14 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
             "nbTrip" -> DKResource.convertToString(context,"dk_challenge_nb_trip")
             else -> ""
         }
-        text_view_title_condition.text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
-            color(DriveKitUI.colors.mainFontColor())
-        }).append(condition, context.resSpans {
-            color(DriveKitUI.colors.primaryColor())
-        }).toSpannable()
+        text_view_title_condition.apply {
+            text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
+                color(DriveKitUI.colors.mainFontColor())
+            }).append(condition, context.resSpans {
+                color(DriveKitUI.colors.primaryColor())
+            }).toSpannable()
+            typeface = DriveKitUI.primaryFont(context)
+        }
     }
 
     private fun setStyle() {

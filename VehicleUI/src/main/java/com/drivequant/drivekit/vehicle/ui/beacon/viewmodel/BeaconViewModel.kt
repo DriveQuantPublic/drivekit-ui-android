@@ -198,14 +198,14 @@ class BeaconViewModel(
 
     fun fetchVehicleFromSeenBeacon(vehicles: List<Vehicle>): Vehicle? {
         var matchedVehicle : Vehicle? = null
-
-        for (vehicle in vehicles) {
-            seenBeacon?.let { seenBeacon ->
+        seenBeacon?.let { seenBeacon ->
+            for (vehicle in vehicles) {
                 if (vehicle.beacon?.proximityUuid.equals(seenBeacon.proximityUuid, true)
                     && vehicle.beacon?.major == seenBeacon.major
                     && vehicle.beacon?.minor == seenBeacon.minor
                 ) {
                     matchedVehicle = vehicle
+                    break
                 }
             }
         }

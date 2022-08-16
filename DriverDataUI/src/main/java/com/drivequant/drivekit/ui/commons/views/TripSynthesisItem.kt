@@ -16,10 +16,10 @@ import com.drivequant.drivekit.ui.R
 class TripSynthesisItem: LinearLayout {
 
     private lateinit var textViewTitle: TextView
-    private lateinit var textViewValue:TextView
-    private lateinit var separator:TextView
+    private lateinit var textViewValue: TextView
+    private lateinit var separator: TextView
 
-    constructor(context: Context): super(context){
+    constructor(context: Context): super(context) {
         init(null)
     }
 
@@ -72,7 +72,7 @@ class TripSynthesisItem: LinearLayout {
     }
 
     fun setValueTypeFace() {
-        textViewValue.typeface = Typeface.DEFAULT_BOLD
+        textViewValue.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
     }
 
     fun onTripItemSynthesisClick(context: Context, vehicleId: String?, liteConfig: Boolean?) {

@@ -54,13 +54,17 @@ class BeaconScannerCongratsFragment : Fragment() {
             }
         }
 
-        text_view_description.normalText()
-        text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_store_notice")
+        text_view_description.apply {
+            normalText()
+            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_store_notice")
+        }
 
-        button_validate.button()
-        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_finish")
-        button_validate.setOnClickListener {
-            viewModel.scanValidationFinished()
+        button_validate.apply {
+            button()
+            text = DKResource.convertToString(requireContext(), "dk_common_finish")
+            setOnClickListener {
+                viewModel.scanValidationFinished()
+            }
         }
     }
 }

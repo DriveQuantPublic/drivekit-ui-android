@@ -16,11 +16,11 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengePar
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import kotlinx.android.synthetic.main.dk_activity_challenge_rules.*
 import kotlinx.android.synthetic.main.dk_activity_challenge_rules.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
@@ -77,9 +77,8 @@ class ChallengeRulesActivity : AppCompatActivity() {
 
         text_view_accept_rule.apply {
             text = DKResource.convertToString(this@ChallengeRulesActivity, acceptRulesText)
-            setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+            headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
-        title = DKResource.convertToString(this, "dk_challenge_rule_title")
         (savedInstanceState?.getString("challengeId"))?.let { it ->
             challengeId = it
         }
@@ -91,7 +90,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ).get(ChallengeParticipationViewModel::class.java)
         }
 
-        viewModel.syncJoinChallengeError.observe(this, {
+        viewModel.syncJoinChallengeError.observe(this) {
             if (it) {
                 setResult(Activity.RESULT_OK)
                 finish()
@@ -106,7 +105,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 ).show()
             }
             updateProgressVisibility(false)
-        })
+        }
 
         viewModel.challenge?.rules?.let {
             if (it.isNotEmpty()) {
@@ -163,5 +162,10 @@ class ChallengeRulesActivity : AppCompatActivity() {
     override fun onBackPressed() {
         setResult(Activity.RESULT_CANCELED)
         super.onBackPressed()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle(DKResource.convertToString(this, "dk_challenge_rule_title"))
     }
 }

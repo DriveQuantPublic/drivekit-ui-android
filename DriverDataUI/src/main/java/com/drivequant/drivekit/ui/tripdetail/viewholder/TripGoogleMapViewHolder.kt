@@ -104,7 +104,7 @@ internal class TripGoogleMapViewHolder(
                     itemView.context,
                     "dk_driverdata_speeding_event_info_content"
                 )
-                icon?.setImageResource(R.drawable.dk_speeding)
+                icon?.setImageResource(R.drawable.dk_common_speeding)
                 title?.headLine1()
                 description?.normalText()
         }
@@ -124,6 +124,7 @@ internal class TripGoogleMapViewHolder(
             if (shouldDisplayAdvice) {
                 mapItem.getAdviceImageResource()?.let {
                     adviceFabButton.setImageResource(it)
+                    adviceFabButton.imageTintList = ColorStateList.valueOf(DriveKitUI.colors.fontColorOnSecondaryColor())
                 }
                 adviceFabButton.show()
                 adviceFabButton.setOnClickListener {

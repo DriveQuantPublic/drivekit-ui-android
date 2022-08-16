@@ -21,6 +21,7 @@ import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
@@ -64,7 +65,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun setToolbar() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
-        title = DKResource.convertToString(this, "dk_perm_utils_app_diag_title")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
@@ -244,6 +244,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             } ?: run {
                 visibility = View.GONE
             }
+            typeface = DriveKitUI.primaryFont(context)
         }
     }
 
@@ -573,6 +574,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver()
+        setActivityTitle(DKResource.convertToString(this, "dk_perm_utils_app_diag_title"))
     }
 
     override fun onPause() {

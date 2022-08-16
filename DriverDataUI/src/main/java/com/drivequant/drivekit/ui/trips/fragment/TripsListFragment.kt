@@ -1,25 +1,28 @@
 package com.drivequant.drivekit.ui.trips.fragment
 
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isNotEmpty
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
+import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
-import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -52,7 +55,7 @@ class TripsListFragment : Fragment() {
                 .get(TripsListViewModel::class.java)
         }
 
-        viewModel.tripsData.observe(this, {
+        viewModel.tripsData.observe(this) {
             viewModel.getFilterItems(requireContext())
             setHasOptionsMenu(
                 DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes()
@@ -93,9 +96,9 @@ class TripsListFragment : Fragment() {
                 shouldSyncTrips = false
                 updateTrips()
             }
-        })
+        }
 
-        viewModel.syncTripsError.observe(this, {
+        viewModel.syncTripsError.observe(this) {
             it?.let {
                 Toast.makeText(
                     context,
@@ -104,7 +107,7 @@ class TripsListFragment : Fragment() {
                 ).show()
             }
             updateProgressVisibility(false)
-        })
+        }
 
         synchronizationType = if (viewModel.hasLocalTrips()) {
             SynchronizationType.CACHE
@@ -117,7 +120,12 @@ class TripsListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.trip_list_menu_bar, menu)
+        inflater.inflate(R.menu.dk_trip_list_menu_bar, menu)
+        context?.let {
+            if (menu.isNotEmpty()) {
+                menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -221,7 +229,7 @@ class TripsListFragment : Fragment() {
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
         tripsListView = view.findViewById(R.id.dk_trips_list_view)
-        view.setBackgroundColor(Color.WHITE)
+        view.setDKStyle(Color.WHITE)
         return view
     }
 

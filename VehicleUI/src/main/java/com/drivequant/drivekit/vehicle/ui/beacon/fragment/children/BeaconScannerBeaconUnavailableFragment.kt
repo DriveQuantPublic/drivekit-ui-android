@@ -62,11 +62,12 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
             activity?.onBackPressed()
         }
 
-        button_abort.normalText(DriveKitUI.colors.secondaryColor())
-        button_abort.typeface = Typeface.DEFAULT_BOLD
-        button_abort.text = DKResource.convertToString(requireContext(), "dk_common_finish")
-        button_abort.setOnClickListener {
-            viewModel.scanValidationFinished()
+        button_abort.apply {
+            normalText(DriveKitUI.colors.secondaryColor())
+            text = DKResource.convertToString(requireContext(), "dk_common_finish")
+            setOnClickListener {
+                viewModel.scanValidationFinished()
+            }
         }
     }
 }

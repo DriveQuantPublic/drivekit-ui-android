@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicleListener
 import com.drivequant.drivekit.vehicle.ui.R
@@ -43,7 +44,7 @@ class VehiclesListActivity : AppCompatActivity(), DriveKitVehicleListener {
     }
 
     fun updateTitle(title: String) {
-        this.title = title
+        setActivityTitle(title)
     }
 
     override fun onSupportNavigateUp(): Boolean {
