@@ -49,7 +49,7 @@
             app:layout_constraintBottom_toBottomOf="@id/text_view_title"
             android:visibility="gone"
             tools:visibility="visible"
-            tools:src="@drawable/dk_safety"/>
+            tools:src="@drawable/dk_common_safety"/>
 
         <TextView
             android:id="@+id/text_view_description"

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.ui.R
@@ -17,10 +16,10 @@ import com.drivequant.drivekit.ui.R
 class TripSynthesisItem: LinearLayout {
 
     private lateinit var textViewTitle: TextView
-    private lateinit var textViewValue:TextView
-    private lateinit var separator:TextView
+    private lateinit var textViewValue: TextView
+    private lateinit var separator: TextView
 
-    constructor(context: Context): super(context){
+    constructor(context: Context): super(context) {
         init(null)
     }
 
@@ -73,7 +72,7 @@ class TripSynthesisItem: LinearLayout {
     }
 
     fun setValueTypeFace() {
-        textViewValue.headLine2()
+        textViewValue.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
     }
 
     fun onTripItemSynthesisClick(context: Context, vehicleId: String?, liteConfig: Boolean?) {
