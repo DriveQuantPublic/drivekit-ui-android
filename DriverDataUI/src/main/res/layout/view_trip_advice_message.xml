@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:padding="@dimen/dk_margin_half"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:textColor="@android:color/white"
         tools:text="Title header"/>
     <ScrollView

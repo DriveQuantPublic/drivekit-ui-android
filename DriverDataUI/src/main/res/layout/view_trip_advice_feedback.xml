@@ -9,7 +9,7 @@
         android:id="@+id/alert_dialog_trip_feedback_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:padding="8dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

@@ -9,7 +9,7 @@
         android:id="@+id/text_view_badge_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingStart="@dimen/dk_margin"
         android:paddingEnd="@dimen/dk_margin" />
 

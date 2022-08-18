@@ -10,7 +10,7 @@
         android:id="@+id/text_view_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:padding="@dimen/dk_margin_half"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

@@ -56,7 +56,6 @@
         tools:text="Conditions"
         tools:visibility="visible" />
 
-    <!-- VERIFY IF removing textAligmenter="center" is not breaking the UI -->
     <TextView
         android:id="@+id/text_view_challenge_rule_consult"
         android:layout_width="match_parent"
