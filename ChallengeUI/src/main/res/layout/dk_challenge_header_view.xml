@@ -62,7 +62,6 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:text="@string/dk_challenge_consult_rule_button"
-        android:textAlignment="center"
         android:visibility="gone"
         tools:text="Voir le règlement"
         tools:visibility="visible" />

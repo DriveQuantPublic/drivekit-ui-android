@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_bluetooth_error.*
 class ErrorBluetoothFragment: Fragment() {
 
     companion object {
+        private const val REQUEST_ENABLE_BT = 1
+
         fun newInstance(vehicleId: String): ErrorBluetoothFragment {
             val fragment = ErrorBluetoothFragment()
             fragment.vehicleId = vehicleId
@@ -49,7 +51,13 @@ class ErrorBluetoothFragment: Fragment() {
         text_view_open_settings.text = DKResource.convertToString(requireContext(), "dk_vehicle_open_bluetooth_settings")
         text_view_open_settings.normalText(secondaryColor)
         text_view_open_settings.setOnClickListener {
-            startActivity(Intent(Settings.ACTION_SETTINGS))
+            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ENABLE_BT) {
             activity?.finish()
         }
     }

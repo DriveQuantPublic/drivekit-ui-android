@@ -82,7 +82,6 @@
                     <TextView
                         android:id="@+id/text_view_distance"
                         android:gravity="center"
-                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
@@ -92,7 +91,6 @@
                     <TextView
                         android:id="@+id/text_view_battery"
                         android:gravity="center"
-                        android:textAlignment="center"
                         android:layout_height="match_parent"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -100,7 +98,6 @@
                     <TextView
                         android:id="@+id/text_view_signal_intensity"
                         android:gravity="center"
-                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:layout_height="match_parent"
                         android:layout_width="0dp"

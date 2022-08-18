@@ -28,7 +28,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal var permissionViewListener: PermissionViewListener? = null
     internal var isBluetoothNeeded: Boolean = false
     internal var contactType: ContactType = ContactType.NONE
-    internal var tutorialUrl:String ? = null
+    internal var tutorialUrl: String? = null
 
     fun initialize() {
         permissionsUtilsUIEntryPoint = this
@@ -58,7 +58,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
                 PermissionView.LOCATION,
                 PermissionView.ACTIVITY,
                 PermissionView.BACKGROUND_TASK,
-                PermissionView.NEARBY_DEVICES
+                PermissionView.NEARBY_DEVICES,
+                PermissionView.NOTIFICATIONS
             )
         )
         permissions.first().launchActivity(context, permissions)
@@ -112,33 +113,39 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         val locationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.LOCATION)) {
                 PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.WARNING,
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val activityMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.ACTIVITY)) {
                 PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.WARNING,
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(context)) {
             PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.WARNING,
             PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
         }
 
         val notificationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.NOTIFICATION)) {
                 PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.WARNING,
                 PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
             }
 
         val batteryOptimization = when (DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
             PermissionStatus.VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_disabled)
+            PermissionStatus.WARNING,
             PermissionStatus.NOT_VALID -> context.getString(R.string.dk_perm_utils_app_diag_email_battery_enabled)
         }
 
         val nearbyDevices = when (DiagnosisHelper.getNearbyDevicesStatus(context)) {
             PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.WARNING,
             PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
         }
 

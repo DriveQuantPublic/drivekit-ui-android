@@ -10,10 +10,9 @@
         android:id="@+id/alert_dialog_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:paddingLeft="@dimen/dk_margin"
-        android:paddingRight="@dimen/dk_margin"
-        android:textAlignment="center" />
+        android:paddingRight="@dimen/dk_margin" />
 
     <TextView
         android:id="@+id/alert_dialog_description"
@@ -21,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_quarter"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
-        android:padding="@dimen/dk_margin"
-        android:textAlignment="center"/>
+        android:gravity="center"
+        android:padding="@dimen/dk_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +43,6 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
-            android:textAlignment="center"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -61,7 +59,6 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
-            android:textAlignment="center"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -78,7 +75,6 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
-            android:textAlignment="center"
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>
