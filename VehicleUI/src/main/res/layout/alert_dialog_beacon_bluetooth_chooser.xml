@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_quarter"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:gravity="center"
         android:padding="@dimen/dk_margin"/>
 
     <LinearLayout
