@@ -13,6 +13,7 @@ internal enum class PresetTripType {
     HIGHWAY_TRIP,
     BOAT_TRIP,
     TRAIN_TRIP,
+    BUS_TRIP,
     TRIP_WITH_CRASH_CONFIRMED_10KMH,
     TRIP_WITH_CRASH_CONFIRMED_20KMH,
     TRIP_WITH_CRASH_CONFIRMED_30KMH,
@@ -26,6 +27,7 @@ internal enum class PresetTripType {
         HIGHWAY_TRIP ->R.string.trip_simulator_highway_title
         BOAT_TRIP -> R.string.trip_simulator_boat_title
         TRAIN_TRIP -> R.string.trip_simulator_train_title
+        BUS_TRIP -> R.string.trip_simulator_bus_title
         TRIP_WITH_CRASH_CONFIRMED_10KMH -> R.string.trip_simulator_crash_10_title
         TRIP_WITH_CRASH_CONFIRMED_20KMH -> R.string.trip_simulator_crash_20_title
         TRIP_WITH_CRASH_CONFIRMED_30KMH -> R.string.trip_simulator_crash_30_title
@@ -40,6 +42,7 @@ internal enum class PresetTripType {
         HIGHWAY_TRIP ->R.string.trip_simulator_highway_description
         BOAT_TRIP -> R.string.trip_simulator_boat_description
         TRAIN_TRIP -> R.string.trip_simulator_train_description
+        BUS_TRIP -> R.string.trip_simulator_bus_description
         TRIP_WITH_CRASH_CONFIRMED_10KMH -> R.string.trip_simulator_crash_10_description
         TRIP_WITH_CRASH_CONFIRMED_20KMH -> R.string.trip_simulator_crash_20_description
         TRIP_WITH_CRASH_CONFIRMED_30KMH -> R.string.trip_simulator_crash_30_description
@@ -55,6 +58,7 @@ internal enum class PresetTripType {
             HIGHWAY_TRIP -> PresetTrip.HIGHWAY_TRIP
             BOAT_TRIP -> PresetTrip.BOAT_TRIP
             TRAIN_TRIP -> PresetTrip.TRAIN_TRIP
+            BUS_TRIP -> PresetTrip.BUS_TRIP
             TRIP_WITH_CRASH_CONFIRMED_10KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.CONFIRMED_10KMH)
             TRIP_WITH_CRASH_CONFIRMED_20KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.CONFIRMED_20KMH)
             TRIP_WITH_CRASH_CONFIRMED_30KMH -> PresetTrip.TRIP_WITH_CRASH_1(PresetTripCrash1.CONFIRMED_30KMH)
