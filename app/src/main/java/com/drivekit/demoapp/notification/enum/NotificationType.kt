@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.drivekit.demoapp.utils.getAlternativeNotificationBodyResId
+import com.drivekit.demoapp.utils.getAlternativeNotificationNotDisplayedBodyResId
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -56,6 +57,7 @@ internal sealed class NotificationType {
                 TransportationMode.BIKE -> 302
                 TransportationMode.SKIING -> 303
                 TransportationMode.IDLE -> 304
+                TransportationMode.BUS -> 305
                 else -> {
                     if (advices > 0) {
                         201
@@ -118,7 +120,11 @@ internal sealed class NotificationType {
                 }
                 body
             } else {
-                this.transportationMode.getAlternativeNotificationBodyResId()?.let {
+                if (DriverDataUI.enableAlternativeTrips) {
+                    this.transportationMode.getAlternativeNotificationBodyResId()
+                } else {
+                    this.transportationMode.getAlternativeNotificationNotDisplayedBodyResId()
+                }?.let {
                     body = context.getString(it)
                 }
                 body
