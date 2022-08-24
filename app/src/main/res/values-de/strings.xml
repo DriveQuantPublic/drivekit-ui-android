@@ -76,6 +76,7 @@
    <string name="limit_reached_error">Die maximale Anzahl an Fahrern auf diesem API-Schlüssel wurde erreicht</string>
    <string name="logout_confirmation">Möchten Sie die Verbindung wirklich trennen?</string>
    <string name="network_ko_error">Mobile Daten sind nicht aktiviert</string>
+   <string name="notif_app_bluetooth_deactivated">Sie müssen den Bluetooth-Sensor aktivieren, um alle Funktionen der %s-Anwendung nutzen zu können.</string>
    <string name="notif_trip_analysis_continue">Analyse fortsetzen</string>
    <string name="notif_trip_analysis_not_driving">Ich fahre nicht</string>
    <string name="notif_trip_analysis_suspend">Stoppen</string>

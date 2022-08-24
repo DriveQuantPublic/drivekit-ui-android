@@ -106,6 +106,12 @@ internal object TripListenerController : TripListener {
         }
     }
 
+    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
+        tripListeners.forEach {
+            it.get()?.onDeviceConfigEvent(deviceConfigEvent)
+        }
+    }
+
     interface SdkStateChangeListener {
         fun sdkStateChanged(state: State)
     }

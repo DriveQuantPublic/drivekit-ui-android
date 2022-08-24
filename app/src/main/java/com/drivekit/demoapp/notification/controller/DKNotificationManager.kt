@@ -10,6 +10,7 @@ import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -104,4 +105,18 @@ internal object DKNotificationManager : TripListener {
     }
 
     override fun tripStarted(startMode: StartMode) {}
+
+    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
+        //TODO
+        // isToken valid à faire côté Core DriveKit.isTokenValid()
+        if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED) {
+            if (TripAnalysisConfig.beaconRequired) {
+                if (deviceConfigEvent.btEnabled) {
+                    // hide notification
+                } else {
+                    // display notification
+                }
+            }
+        }
+    }
 }

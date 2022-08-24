@@ -76,6 +76,7 @@
    <string name="limit_reached_error">È stato raggiunto il numero massimo di conducenti su questa chiave API.</string>
    <string name="logout_confirmation">Sei sicuro di voler disconnettere?</string>
    <string name="network_ko_error">I dati mobili non sono attivati</string>
+   <string name="notif_app_bluetooth_deactivated">Per utilizzare tutte le funzioni dell\'applicazione %s è necessario abilitare il sensore Bluetooth.</string>
    <string name="notif_trip_analysis_continue">Continua analisi</string>
    <string name="notif_trip_analysis_not_driving">Io non guido</string>
    <string name="notif_trip_analysis_suspend">Fermarsi</string>
