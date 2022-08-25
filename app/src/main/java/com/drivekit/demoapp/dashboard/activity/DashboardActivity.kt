@@ -162,7 +162,7 @@ internal class DashboardActivity : AppCompatActivity() {
             val tripListConfigurationType = intent.getSerializableCompat(
                 TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA,
                 TripListConfigurationType::class.java
-            ) as TripListConfigurationType?
+            )
             if (!itinId.isNullOrBlank() && tripListConfigurationType != null) {
                 TripDetailActivity.launchActivity(
                     this,
