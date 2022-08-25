@@ -9,7 +9,9 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
+import com.drivekit.demoapp.utils.getImmutableFlag
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -80,6 +82,10 @@ internal object DKNotificationManager : TripListener {
         }
     }
 
+    private fun cancelNotification(context: Context, notificationType: NotificationType) {
+        notificationType.cancel(context)
+    }
+
     override fun beaconDetected() {
     }
 
@@ -104,4 +110,21 @@ internal object DKNotificationManager : TripListener {
     }
 
     override fun tripStarted(startMode: StartMode) {}
+
+    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
+        DriveKit.applicationContext?.let { context ->
+            if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED && deviceConfigEvent.btRequired) {
+                if (deviceConfigEvent.btEnabled) {
+                    cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)
+                } else {
+                    val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
+                    var contentIntent: PendingIntent? = null
+                    if (intent != null) {
+                        contentIntent = PendingIntent.getActivity(context, 0, intent, getImmutableFlag())
+                    }
+                    sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
+                }
+            }
+        }
+    }
 }
