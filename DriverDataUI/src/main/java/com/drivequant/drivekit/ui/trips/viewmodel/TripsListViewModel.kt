@@ -85,7 +85,7 @@ internal class TripsListViewModel(
 
             is TripListConfiguration.ALTERNATIVE -> {
                 val mode = configuration.transportationMode
-                val trips = if (mode == null) {
+                trips = if (mode == null) {
                     trips.filter { it.transportationMode.isAlternative() }
                 } else {
                     if (!configuration.transportationMode.isAlternative()) {
@@ -93,12 +93,11 @@ internal class TripsListViewModel(
                     } else {
                         trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
                     }
-                }.filter {
-                    if (DriverDataUI.alternativeTripsDepthInDays != -1) {
-                        it.endDate.getDaysDiff() <= DriverDataUI.alternativeTripsDepthInDays
-                    } else {
-                        true
-                    }
+                }
+
+                if (DriverDataUI.alternativeTripsDepthInDays != -1) {
+                    trips =
+                        trips.filter { it.endDate.getDaysDiff() <= DriverDataUI.alternativeTripsDepthInDays }
                 }
 
                 if (trips.isNotEmpty()) {
