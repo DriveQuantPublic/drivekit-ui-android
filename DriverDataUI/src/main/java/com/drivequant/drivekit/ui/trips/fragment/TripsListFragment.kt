@@ -195,8 +195,17 @@ class TripsListFragment : Fragment() {
 
     private fun displayNoTrips() {
         val view = if (tripsListView.isFilterPlacerHolder()) {
-            text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
-            no_car_trips
+            when (viewModel.tripListConfiguration) {
+                is TripListConfiguration.ALTERNATIVE -> {
+                    //TODO()
+                    text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
+                    no_car_trips
+                }
+                is TripListConfiguration.MOTORIZED -> {
+                    text_view_no_car_text.text = DKResource.convertToString(requireContext(), "dk_driverdata_no_trip_placeholder")
+                    no_car_trips
+                }
+            }
         } else {
             no_trips
         }

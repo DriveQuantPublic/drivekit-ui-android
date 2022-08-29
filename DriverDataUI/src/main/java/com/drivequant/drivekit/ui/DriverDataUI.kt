@@ -55,6 +55,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var enableAdviceFeedback: Boolean = true
     internal var enableVehicleFilter: Boolean = true
     internal var headerDay: HeaderDay = HeaderDay.DURATION_DISTANCE
+    internal var alternativeTripsDepthInDays: Int = -1
+        private set
 
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
@@ -114,6 +116,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun setCustomTripInfo(tripInfo: DKTripInfo?) {
         this.customTripInfo = tripInfo
+    }
+
+    fun configureAlternativeTripsDepthInDays(depthInDays: Int) {
+        this.alternativeTripsDepthInDays = depthInDays
     }
 
     override fun startTripListActivity(context: Context) {

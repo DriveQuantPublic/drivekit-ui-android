@@ -4,6 +4,7 @@ package com.drivequant.drivekit.common.ui.extension
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun Date.formatDate(pattern: DKDatePattern): String {
     val dateFormat = SimpleDateFormat(pattern.getPattern(), Locale.getDefault())
@@ -22,3 +23,6 @@ fun Date.isSameDay(date: Date): Boolean {
     return (tripCal.get(Calendar.DAY_OF_YEAR) == currentDateCal.get(Calendar.DAY_OF_YEAR)
             && tripCal.get(Calendar.YEAR) == currentDateCal.get(Calendar.YEAR))
 }
+
+fun Date.getDaysDiff() =
+    TimeUnit.DAYS.convert(Date().time - this.time, TimeUnit.MILLISECONDS).toInt()

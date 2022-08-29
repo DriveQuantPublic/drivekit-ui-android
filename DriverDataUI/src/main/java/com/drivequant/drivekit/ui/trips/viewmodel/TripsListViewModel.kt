@@ -11,6 +11,7 @@ import android.os.Looper
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
+import com.drivequant.drivekit.common.ui.extension.getDaysDiff
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -92,7 +93,14 @@ internal class TripsListViewModel(
                     } else {
                         trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
                     }
+                }.filter {
+                    if (DriverDataUI.alternativeTripsDepthInDays != -1) {
+                        it.endDate.getDaysDiff() <= DriverDataUI.alternativeTripsDepthInDays
+                    } else {
+                        true
+                    }
                 }
+
                 if (trips.isNotEmpty()) {
                     filteredTrips.addAll(trips)
                 }
