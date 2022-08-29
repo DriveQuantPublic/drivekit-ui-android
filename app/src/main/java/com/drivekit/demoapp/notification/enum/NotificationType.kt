@@ -1,9 +1,11 @@
 package com.drivekit.demoapp.notification.enum
 
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.drivekit.demoapp.utils.getAlternativeNotificationBodyResId
+import com.drivekit.demoapp.utils.getAlternativeNotificationNotDisplayedBodyResId
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -13,11 +15,12 @@ internal sealed class NotificationType {
     data class TRIP_ENDED(
         val transportationMode: TransportationMode,
         val advices: Int,
-        val additionalBody: String? = null,
+        val additionalBody: String? = null
     ) : NotificationType()
     data class TRIP_CANCELLED(val reason: TripCancellationReason) : NotificationType()
     data class TRIP_ANALYSIS_ERROR(val error: TripAnalysisError) : NotificationType()
     object TRIP_TOO_SHORT : NotificationType()
+    object SETTINGS_BLUETOOTH_STATE : NotificationType()
 
     fun getChannel() = when (this) {
         is TRIP_ANALYSIS_ERROR -> when (this.error) {
@@ -35,6 +38,7 @@ internal sealed class NotificationType {
             }
         }
         TRIP_TOO_SHORT -> DKNotificationChannel.TRIP_ENDED
+        SETTINGS_BLUETOOTH_STATE -> DKNotificationChannel.DEMO_APP
     }
 
     fun getNotificationId(): Int = when (this) {
@@ -56,6 +60,7 @@ internal sealed class NotificationType {
                 TransportationMode.BIKE -> 302
                 TransportationMode.SKIING -> 303
                 TransportationMode.IDLE -> 304
+                TransportationMode.BUS -> 305
                 else -> {
                     if (advices > 0) {
                         201
@@ -66,6 +71,7 @@ internal sealed class NotificationType {
             }
         }
         TRIP_TOO_SHORT -> 202
+        SETTINGS_BLUETOOTH_STATE -> 401
     }
 
     private fun getIconResId() = R.drawable.ic_notification
@@ -84,6 +90,7 @@ internal sealed class NotificationType {
         }
         is TRIP_ENDED -> R.string.notif_trip_finished_title
         TRIP_TOO_SHORT -> R.string.notif_trip_too_short_title
+        SETTINGS_BLUETOOTH_STATE -> R.string.app_name
     }
 
     private fun getDescription(context: Context, additionalBody: String?): String = when (this) {
@@ -118,13 +125,21 @@ internal sealed class NotificationType {
                 }
                 body
             } else {
-                this.transportationMode.getAlternativeNotificationBodyResId()?.let {
+                if (DriverDataUI.enableAlternativeTrips) {
+                    this.transportationMode.getAlternativeNotificationBodyResId()
+                } else {
+                    this.transportationMode.getAlternativeNotificationNotDisplayedBodyResId()
+                }?.let {
                     body = context.getString(it)
                 }
                 body
             }
         }
         TRIP_TOO_SHORT -> context.getString(R.string.notif_trip_too_short)
+        SETTINGS_BLUETOOTH_STATE -> {
+            val appName = context.getString(R.string.app_name)
+            context.getString(R.string.notif_app_bluetooth_deactivated, appName)
+        }
     }
 
     fun createNotification(
@@ -141,5 +156,11 @@ internal sealed class NotificationType {
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setPriority(3)
             .setAutoCancel(true)
+    }
+
+    fun cancel(context: Context) {
+        (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?)?.cancel(
+            this.getNotificationId()
+        )
     }
 }

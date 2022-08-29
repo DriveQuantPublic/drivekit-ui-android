@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.drivekit
 
+import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -103,6 +104,12 @@ internal object TripListenerController : TripListener {
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
         tripListeners.forEach {
             it.get()?.tripFinished(post, response)
+        }
+    }
+
+    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
+        tripListeners.forEach {
+            it.get()?.onDeviceConfigEvent(deviceConfigEvent)
         }
     }
 

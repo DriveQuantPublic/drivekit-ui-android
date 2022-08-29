@@ -76,7 +76,7 @@
    <string name="dk_perm_utils_app_diag_notification_ko">Pour être informé qu\'un trajet est en cours d’analyse, vous devez autoriser l\'application à afficher des notifications.</string>
    <string name="dk_perm_utils_app_diag_notification_link">Autoriser les notifications</string>
    <string name="dk_perm_utils_app_diag_notification_ok">L\'application affiche des notifications pour vous informer lorsqu\'un trajet est en cours ou qu\'il est terminé. Si vous n\'autorisez pas l\'application à afficher des notifications, vous ne serez jamais informé lorsqu\'un trajet est en cours d’analyse.</string>
-   <string name="dk_perm_utils_app_diag_notification_title">Notification</string>
+   <string name="dk_perm_utils_app_diag_notification_title">Notifications</string>
    <string name="dk_perm_utils_app_diag_title">Diagnostic de l\'app</string>
    <string name="dk_perm_utils_diag_app_ok">Tout est normal</string>
    <string name="dk_perm_utils_diag_app_ok_text">Les réglages de votre téléphone sont bons et les capteurs nécessaires à l\’analyse de vos trajets sont activés.</string>
@@ -100,6 +100,8 @@
    <string name="dk_perm_utils_permissions_location_title">Suivi des trajets</string>
    <string name="dk_perm_utils_permissions_nearby_text1_android12">Pour reconnaitre votre véhicule et analyser vos trajets, il est indispensable d\'activer la détection des appareils à proximité.</string>
    <string name="dk_perm_utils_permissions_nearby_text2_android12">Pour cela, choisissez l\'option \"Autoriser\" après avoir appuyé sur le bouton ci-dessous.</string>
+   <string name="dk_perm_utils_permissions_notifications_text1">Pour être informé lorsqu\'un trajet est analysé et recevoir des conseils, vous devez autoriser l\'application à afficher des notifications.</string>
+   <string name="dk_perm_utils_permissions_notifications_text2">Pour cela, choisissez l\'option \"Autoriser\" après avoir appuyé sur le bouton ci-dessous.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Autoriser le suivi de l\'activité</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_text">Pour améliorer l\'analyse de vos trajets et identifier le mode de transport utilisé, vous devez activer l\'option Mouvements et forme de votre téléphone.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_text_android">Pour améliorer l\'analyse de vos trajets et identifier le mode de transport utilisé, vous devez autoriser l\'application à accéder à l\'activité du téléphone.</string>
@@ -112,8 +114,11 @@
    <string name="dk_perm_utils_permissions_phone_settings_location_step2">Tapez sur position</string>
    <string name="dk_perm_utils_permissions_phone_settings_location_step3">Sélectionnez \"Toujours\"</string>
    <string name="dk_perm_utils_permissions_phone_settings_location_step4">Autorisez la position exacte</string>
+   <string name="dk_perm_utils_permissions_phone_settings_notifications_button">Accepter les notifications</string>
    <string name="dk_perm_utils_permissions_popup_button_settings">Réglages</string>
    <string name="dk_perm_utils_permissions_text_button_activity_settings">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_text_button_location_settings">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_text_button_nearby_devices_settings">Ouvrir les réglages</string>
+   <string name="dk_perm_utils_permissions_text_button_notifications_settings">Ouvrir les réglages</string>
+   <string name="dk_perm_utils_permissions_text_button_skip">Passer et ne plus demander</string>
 </resources>

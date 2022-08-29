@@ -19,6 +19,7 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
+import com.drivekit.demoapp.utils.getSerializableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
@@ -158,9 +159,17 @@ internal class DashboardActivity : AppCompatActivity() {
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
-            val tripListConfigurationType = intent.getSerializableExtra(TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA) as TripListConfigurationType? ?: TripListConfigurationType.MOTORIZED
-            if (!itinId.isNullOrBlank()) {
-                TripDetailActivity.launchActivity(this, itinId, openAdvice, tripListConfigurationType)
+            val tripListConfigurationType = intent.getSerializableCompat(
+                TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA,
+                TripListConfigurationType::class.java
+            )
+            if (!itinId.isNullOrBlank() && tripListConfigurationType != null) {
+                TripDetailActivity.launchActivity(
+                    this,
+                    itinId,
+                    openAdvice,
+                    tripListConfigurationType
+                )
             }
         }
     }

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Typeface.BOLD
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -195,14 +196,14 @@ class VehicleDetailFragment : Fragment() {
         }
 
         vehicle_fields.layoutManager = LinearLayoutManager(view.context)
-        viewModel.newEditableFieldObserver.observe(this, {
+        viewModel.newEditableFieldObserver.observe(this) {
             it?.let { newEditableField ->
-               if (!editableFields.contains(newEditableField)) {
-                   editableFields.add(newEditableField)
-                   setupTextListener(newEditableField)
-               }
+                if (!editableFields.contains(newEditableField)) {
+                    editableFields.add(newEditableField)
+                    setupTextListener(newEditableField)
+                }
             }
-        })
+        }
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_detail"), javaClass.simpleName)
     }
 
@@ -352,14 +353,18 @@ class VehicleDetailFragment : Fragment() {
         galleryTextView?.let {
             it.text = DKResource.convertToString(context, "dk_common_select_image_gallery")
             it.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
-                } else {
-                    if (alert.isShowing) {
-                        alert.dismiss()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_MEDIA_IMAGES), REQUEST_GALLERY)
+                    } else {
+                        launchGalleryIntent()
                     }
-                    launchGalleryIntent()
+                } else {
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY)
+                    } else {
+                        launchGalleryIntent()
+                    }
                 }
             }
         }
@@ -405,6 +410,9 @@ class VehicleDetailFragment : Fragment() {
     }
 
     private fun launchGalleryIntent() {
+        if (this::alert.isInitialized && alert.isShowing) {
+            alert.dismiss()
+        }
         viewModel.vehicle?.let {
             CameraGalleryPickerHelper.openGallery(requireActivity())
         }
@@ -431,9 +439,6 @@ class VehicleDetailFragment : Fragment() {
             REQUEST_GALLERY -> {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent()
-                    if (this::alert.isInitialized) {
-                        alert.dismiss()
-                    }
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     displayRationaleAlert( "dk_common_permission_storage_rationale")
                 } else {

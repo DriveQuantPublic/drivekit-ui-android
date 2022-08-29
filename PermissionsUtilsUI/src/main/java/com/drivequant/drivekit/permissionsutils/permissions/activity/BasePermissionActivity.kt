@@ -39,10 +39,6 @@ open class BasePermissionActivity : RequestPermissionActivity() {
 
     protected fun forward(){
         finish()
-        next()
-    }
-
-    protected fun next() {
         if (nextPermissionViews.isNotEmpty()){
             nextPermissionViews.remove(nextPermissionViews.first())
         }
@@ -51,6 +47,11 @@ open class BasePermissionActivity : RequestPermissionActivity() {
         } else {
             nextPermissionViews.first().launchActivity(this, nextPermissionViews)
         }
+    }
+
+    protected fun skip(permissionView: PermissionView) {
+        permissionView.ignore()
+        forward()
     }
 
     override fun onResume() {

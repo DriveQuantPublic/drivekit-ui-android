@@ -1,11 +1,14 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
+import android.app.Activity.RESULT_OK
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -18,9 +21,12 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import kotlinx.android.synthetic.main.fragment_beacon_connect.*
 
+
 class ConnectBeaconFragment : Fragment() {
 
     companion object {
+        private const val REQUEST_ENABLE_BT = 1
+
         fun newInstance(viewModel: BeaconViewModel) : ConnectBeaconFragment {
             val fragment = ConnectBeaconFragment()
             fragment.viewModel = viewModel
@@ -84,10 +90,8 @@ class ConnectBeaconFragment : Fragment() {
                         DKResource.convertToString(
                             requireContext(), "dk_common_activate")
                     ) { _, _ ->
-                        viewModel.apply {
-                            enableBluetoothSensor()
-                            onConnectButtonClicked()
-                        }
+                        val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                        startActivityForResult(enableIntent, REQUEST_ENABLE_BT)
                     }
                     .negativeButton(DKResource.convertToString(requireContext(), "dk_common_back"))
                     .show()
@@ -105,6 +109,13 @@ class ConnectBeaconFragment : Fragment() {
             } else {
                 viewModel.onConnectButtonClicked()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == REQUEST_ENABLE_BT) {
+            viewModel.onConnectButtonClicked()
         }
     }
 }

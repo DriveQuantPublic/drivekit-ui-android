@@ -12,7 +12,6 @@
         android:padding="@dimen/dk_margin_half"
         android:paddingLeft="@dimen/dk_margin"
         android:paddingRight="@dimen/dk_margin"
-        android:textAlignment="center"
         tools:text="Header title" />
     <LinearLayout
         android:layout_width="match_parent"
