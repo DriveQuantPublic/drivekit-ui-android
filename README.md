@@ -49,8 +49,8 @@ For an integration on Android you will need the following elements:
 
 Your project must be configured as follows: 
 * `minSdkVersion = 21`
-* `compileSdkVersion = 31`
-* `targetSdkVersion = 31`
+* `compileSdkVersion = 33`
+* `targetSdkVersion = 33`
 
 The DriveKit SDK uses the libraries listed below. These are minimal required versions. Check that they are compatible with your application.
 * `Kotlin = 1.5.21`
