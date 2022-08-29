@@ -95,9 +95,8 @@ internal class TripsListViewModel(
                     }
                 }
 
-                if (DriverDataUI.alternativeTripsDepthInDays != -1) {
-                    trips =
-                        trips.filter { it.endDate.getDaysDiff() <= DriverDataUI.alternativeTripsDepthInDays }
+               DriverDataUI.alternativeTripsDepthInDays?.let {  depth ->
+                    trips = trips.filter { it.endDate.getDaysDiff() <= depth }
                 }
 
                 if (trips.isNotEmpty()) {
