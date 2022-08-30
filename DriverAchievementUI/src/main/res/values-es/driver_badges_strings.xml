@@ -9,9 +9,6 @@
    <string name="badge_acceleration_name_1">Adagio</string>
    <string name="badge_acceleration_name_2">Andante</string>
    <string name="badge_acceleration_name_3">Moderato</string>
-   <string name="badge_acceleration_notif_1">¡Acabas de ganar la placa Adagio! (10 viajes sin aceleración fuerte). Felicitaciones!</string>
-   <string name="badge_acceleration_notif_2">¡Acabas de ganar la placa de Andante! (20 viajes sin aceleración fuerte). Felicitaciones!</string>
-   <string name="badge_acceleration_notif_3">¡Acabas de ganar la placa de Moderato! (50 viajes sin aceleración fuerte). Felicitaciones!</string>
    <string name="badge_acceleration_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_acceleration_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_acceleration_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -25,9 +22,6 @@
    <string name="badge_adherence_name_1">Adhesivo</string>
    <string name="badge_adherence_name_2">Velcro</string>
    <string name="badge_adherence_name_3">Súper Pegamento</string>
-   <string name="badge_adherence_notif_1">Acaba de ganar la insignia Adhesivo (10 viajes sin límite de agarre). Felicitaciones!</string>
-   <string name="badge_adherence_notif_2">Acabas de ganar la insignia de Velcro (20 viajes sin límite de agarre). Felicitaciones!</string>
-   <string name="badge_adherence_notif_3">Acabas de ganar la insignia Super Glue (50 viajes sin límite de agarre). Felicitaciones!</string>
    <string name="badge_adherence_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_adherence_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_adherence_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -41,9 +35,6 @@
    <string name="badge_braking_name_1">Pluma</string>
    <string name="badge_braking_name_2">Pie Ligero</string>
    <string name="badge_braking_name_3">Conductor suave</string>
-   <string name="badge_braking_notif_1">Acaba de ganar la insignia Pluma (10 viajes sin frenar a fondo). Felicitaciones!</string>
-   <string name="badge_braking_notif_2">Acaba de ganar la insignia Pie Ligero (20 viajes sin frenar fuerte). Felicitaciones!</string>
-   <string name="badge_braking_notif_3">Acaba de ganar la insignia de Soft Driver (50 viajes sin frenar a fondo). Felicitaciones!</string>
    <string name="badge_braking_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_braking_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_braking_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -58,9 +49,6 @@
    <string name="badge_distance_beginer_name_1">Footing</string>
    <string name="badge_distance_beginer_name_2">Maratón</string>
    <string name="badge_distance_beginer_name_3">Ultra-trail</string>
-   <string name="badge_distance_beginer_notif_1">Acaba de ganar la insignia de pie (10 km). Felicitaciones!</string>
-   <string name="badge_distance_beginer_notif_2">Acaba de ganar la medalla de Maratón (50 km). Felicitaciones!</string>
-   <string name="badge_distance_beginer_notif_3">Acaba de ganar la insignia Ultra-trail (100 km). Felicitaciones!</string>
    <string name="badge_distance_beginer_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_beginer_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_beginer_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -74,9 +62,6 @@
    <string name="badge_distance_expert_name_1">París - Moscú</string>
    <string name="badge_distance_expert_name_2">Ruta 66</string>
    <string name="badge_distance_expert_name_3">París - Tokio</string>
-   <string name="badge_distance_expert_notif_1">Acaba de ganar la insignia París - Moscú (3000 km). Felicitaciones!</string>
-   <string name="badge_distance_expert_notif_2">Acaba de ganar la insignia de la Ruta 66 (5000 km). Felicitaciones!</string>
-   <string name="badge_distance_expert_notif_3">Acaba de ganar la insignia París - Tokio (10.000 km). Felicitaciones!</string>
    <string name="badge_distance_expert_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_expert_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_expert_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -90,9 +75,6 @@
    <string name="badge_distance_intermediate_name_1">Paris - Lyon</string>
    <string name="badge_distance_intermediate_name_2">Nacional 7</string>
    <string name="badge_distance_intermediate_name_3">París - Lisboa</string>
-   <string name="badge_distance_intermediate_notif_1">Acaba de ganar la insignia París-Lyon (500 km). Felicitaciones!</string>
-   <string name="badge_distance_intermediate_notif_2">Acaba de ganar la insignia de la National 7 (1000 km). Felicitaciones!</string>
-   <string name="badge_distance_intermediate_notif_3">Acaba de ganar la insignia París - Lisboa (2000 km). Felicitaciones!</string>
    <string name="badge_distance_intermediate_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_intermediate_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_distance_intermediate_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -106,9 +88,6 @@
    <string name="badge_efficiency_expressway_name_1">Aficionado</string>
    <string name="badge_efficiency_expressway_name_2">Confirmado</string>
    <string name="badge_efficiency_expressway_name_3">Experto</string>
-   <string name="badge_efficiency_expressway_notif_1">Acaba de ganar el distintivo Amateur (100 km en autopistas con una puntuación de conducción ecológica superior a 9,5 sobre 10). Felicitaciones!</string>
-   <string name="badge_efficiency_expressway_notif_2">Acaba de ganar la insignia Confirmado (300 km en autopistas con una puntuación de conducción ecológica superior a 9,5 sobre 10). Felicitaciones!</string>
-   <string name="badge_efficiency_expressway_notif_3">Acaba de ganar la insignia Experto (1000 km en autopistas con una puntuación de conducción ecológica superior a 9,5 sobre 10). Felicitaciones!</string>
    <string name="badge_efficiency_expressway_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_efficiency_expressway_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_efficiency_expressway_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -122,9 +101,6 @@
    <string name="badge_efficiency_extra_urban_name_1">Aficionado</string>
    <string name="badge_efficiency_extra_urban_name_2">Confirmado</string>
    <string name="badge_efficiency_extra_urban_name_3">Experto</string>
-   <string name="badge_efficiency_extra_urban_notif_1">Acabas de ganar la insignia Aficionado (100 km en zonas extra-urbanas con una puntuación de conducción ecológica superior a 8,5 sobre 10). Felicitaciones!</string>
-   <string name="badge_efficiency_extra_urban_notif_2">Acaba de ganar la insignia Confirmado (300 km en zonas extra-urbanas con una puntuación de conducción ecológica superior a 8,5 sobre 10). Felicitaciones!</string>
-   <string name="badge_efficiency_extra_urban_notif_3">Acaba de ganar la insignia Experto (1000 km en zonas extra-urbanas con una puntuación de conducción ecológica de más de 8,5 sobre 10). Felicitaciones!</string>
    <string name="badge_efficiency_extra_urban_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_efficiency_extra_urban_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_efficiency_extra_urban_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -138,9 +114,6 @@
    <string name="badge_efficiency_urban_name_1">Aficionado</string>
    <string name="badge_efficiency_urban_name_2">Confirmado</string>
    <string name="badge_efficiency_urban_name_3">Experto</string>
-   <string name="badge_efficiency_urban_notif_1">Acabas de ganar la insignia Aficionado (100 km en la ciudad con una puntuación de conducción ecológica superior a 8 sobre 10). Felicitaciones!</string>
-   <string name="badge_efficiency_urban_notif_2">Acabas de ganar la insignia Confirmada (100 km en la ciudad con una puntuación de conducción ecológica superior a 8 de 10). Felicitaciones!</string>
-   <string name="badge_efficiency_urban_notif_3">Acaba de ganar la insignia Experto (400 km en la ciudad con una puntuación de conducción ecológica de más de 8 sobre 10). Felicitaciones!</string>
    <string name="badge_efficiency_urban_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_efficiency_urban_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_efficiency_urban_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -154,9 +127,6 @@
    <string name="badge_expressway_distance_name_1">Fast and Serious</string>
    <string name="badge_expressway_distance_name_2">Road Trip</string>
    <string name="badge_expressway_distance_name_3">Easy Rider</string>
-   <string name="badge_expressway_distance_notif_1">Acaba de ganar la insignia Fast and Serious (100 km en autopistas). Felicitaciones!</string>
-   <string name="badge_expressway_distance_notif_2">Acaba de ganar el distintivo Road Trip (300 km en autopistas). Felicitaciones!</string>
-   <string name="badge_expressway_distance_notif_3">Acaba de ganar la insignia Easy Rider (1000 km en autopistas). Felicitaciones!</string>
    <string name="badge_expressway_distance_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_expressway_distance_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_expressway_distance_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -170,9 +140,6 @@
    <string name="badge_extra_urban_distance_name_1">Un paseo</string>
    <string name="badge_extra_urban_distance_name_2">Evasión</string>
    <string name="badge_extra_urban_distance_name_3">Gran Aire</string>
-   <string name="badge_extra_urban_distance_notif_1">Acaba de ganar la insignia de Balade (100 km en un entorno extraurbano). Felicitaciones!</string>
-   <string name="badge_extra_urban_distance_notif_2">Acaba de ganar la insignia de Evasión (300 km en un entorno extra-urbano). Felicitaciones!</string>
-   <string name="badge_extra_urban_distance_notif_3">Acaba de ganar la insignia Gran Aire (1000 km en un entorno extra-urbano). Felicitaciones!</string>
    <string name="badge_extra_urban_distance_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_extra_urban_distance_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_extra_urban_distance_progress_3">Todavía te quedan %s km para ganar esta placa</string>
@@ -186,9 +153,6 @@
    <string name="badge_night_trip_name_1">Luciérnaga</string>
    <string name="badge_night_trip_name_2">Búho</string>
    <string name="badge_night_trip_name_3">Luna llena</string>
-   <string name="badge_night_trip_notif_1">Acabas de ganar la insignia Firefly (10 viajes por la noche). Felicitaciones!</string>
-   <string name="badge_night_trip_notif_2">Acaba de ganar la insignia Búho (20 viajes nocturnos). Felicitaciones!</string>
-   <string name="badge_night_trip_notif_3">Acaba de ganar la insignia de Luna Llena (50 viajes por la noche). Felicitaciones!</string>
    <string name="badge_night_trip_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_night_trip_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_night_trip_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -202,9 +166,6 @@
    <string name="badge_phone_call_name_1">Novato</string>
    <string name="badge_phone_call_name_2">Aprendiz</string>
    <string name="badge_phone_call_name_3">Campeón</string>
-   <string name="badge_phone_call_notif_1">Acabas de ganar la insignia Novato (20 viajes sin hacer una llamada). Enhorabuena.</string>
-   <string name="badge_phone_call_notif_2">Acabas de ganar la insignia Aprendiz (50 viajes sin hacer una llamada). Enhorabuena.</string>
-   <string name="badge_phone_call_notif_3">Acabas de ganar la insignia Campeón (100 viajes sin hacer una llamada). Enhorabuena.</string>
    <string name="badge_phone_call_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_phone_call_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_phone_call_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -218,9 +179,6 @@
    <string name="badge_phone_distraction_name_1">El silencio que conducimos</string>
    <string name="badge_phone_distraction_name_2">No Texto !</string>
    <string name="badge_phone_distraction_name_3">Sin molestias</string>
-   <string name="badge_phone_distraction_notif_1">Acaba de ganar la insignia de Silencio en el ruedo (10 viajes sin manejar su teléfono móvil). Felicitaciones!</string>
-   <string name="badge_phone_distraction_notif_2">¡Acabas de ganar la insignia de No Texto! (20 viajes sin manipular su teléfono móvil). Felicitaciones!</string>
-   <string name="badge_phone_distraction_notif_3">¡Acabas de ganar la insignia de Imperturbable! (50 viajes sin manipular su teléfono móvil). Felicitaciones!</string>
    <string name="badge_phone_distraction_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_phone_distraction_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_phone_distraction_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -234,9 +192,6 @@
    <string name="badge_rain_trip_name_1">Gotitas</string>
    <string name="badge_rain_trip_name_2">Tormenta</string>
    <string name="badge_rain_trip_name_3">Singing in the rain</string>
-   <string name="badge_rain_trip_notif_1">Acabas de ganar la insignia Gotitas (10 viajes bajo la lluvia). Felicitaciones!</string>
-   <string name="badge_rain_trip_notif_2">Acaba de ganar la insignia Tormenta (20 viajes bajo la lluvia). Felicitaciones!</string>
-   <string name="badge_rain_trip_notif_3">Acabas de ganar la insignia Singing in the rain (50 viajes bajo la lluvia). Felicitaciones!</string>
    <string name="badge_rain_trip_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_rain_trip_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_rain_trip_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -250,9 +205,6 @@
    <string name="badge_range_average_name_1">Ocasionalmente</string>
    <string name="badge_range_average_name_2">Recurrente</string>
    <string name="badge_range_average_name_3">Frecuente</string>
-   <string name="badge_range_average_notif_1">Acaba de ganar la insignia de Media Distancia ocasional (10 viajes). Felicitaciones!</string>
-   <string name="badge_range_average_notif_2">Acaba de ganar la insignia de Media Distancia Recurrente (20 viajes). Felicitaciones!</string>
-   <string name="badge_range_average_notif_3">Acaba de ganar la insignia de Media Distancia Frecuente (50 viajes). Felicitaciones!</string>
    <string name="badge_range_average_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_average_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_average_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -266,9 +218,6 @@
    <string name="badge_range_long_name_1">Ocasionalmente</string>
    <string name="badge_range_long_name_2">Recurrente</string>
    <string name="badge_range_long_name_3">Frecuente</string>
-   <string name="badge_range_long_notif_1">Acaba de ganar la Insignia Ocasional de Larga Distancia (10 viajes). Felicitaciones!</string>
-   <string name="badge_range_long_notif_2">Acaba de ganar la insignia de Largas Distancias Recurrentes (20 viajes). Felicitaciones!</string>
-   <string name="badge_range_long_notif_3">Acaba de ganar la insignia de Larga Distancia Frecuente (50 viajes). Felicitaciones!</string>
    <string name="badge_range_long_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_long_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_long_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -282,9 +231,6 @@
    <string name="badge_range_short_name_1">Ocasionalmente</string>
    <string name="badge_range_short_name_2">Recurrente</string>
    <string name="badge_range_short_name_3">Frecuente</string>
-   <string name="badge_range_short_notif_1">Acaba de ganar la insignia de Pequeños viajes ocasionales (10 viajes). Felicitaciones!</string>
-   <string name="badge_range_short_notif_2">Acaba de ganar la insignia de pequeños viajes recurrentes (20 viajes). Felicitaciones!</string>
-   <string name="badge_range_short_notif_3">Acaba de ganar la insignia para viajes cortos frecuentes (50 viajes). Felicitaciones!</string>
    <string name="badge_range_short_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_short_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_range_short_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -298,9 +244,6 @@
    <string name="badge_safety_name_1">Pastor</string>
    <string name="badge_safety_name_2">Sherpa</string>
    <string name="badge_safety_name_3">Ángel de la guarda</string>
-   <string name="badge_safety_notif_1">¡Acabas de ganar la placa Pastor! (10 viajes con una puntuación de seguridad de 10). Felicitaciones!</string>
-   <string name="badge_safety_notif_2">¡Acabas de ganar la placa de Sherpa! (20 viajes con una puntuación de seguridad de 10). Felicitaciones!</string>
-   <string name="badge_safety_notif_3">¡Acabas de ganar la placa del Ángel de la Guarda! (50 viajes con una puntuación de seguridad de 10). Felicitaciones!</string>
    <string name="badge_safety_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_safety_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_safety_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -314,9 +257,6 @@
    <string name="badge_trip_number_name_1">Aficionado</string>
    <string name="badge_trip_number_name_2">Explorador</string>
    <string name="badge_trip_number_name_3">Embajador</string>
-   <string name="badge_trip_number_notif_1">Acabas de ganar la insignia Aficionado (10 viajes). Felicitaciones!</string>
-   <string name="badge_trip_number_notif_2">Acaba de ganar la insignia de Explorador (30 viajes). Felicitaciones!</string>
-   <string name="badge_trip_number_notif_3">Acaba de ganar la insignia de Embajador (100 viajes). Felicitaciones!</string>
    <string name="badge_trip_number_progress_1">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_trip_number_progress_2">Tienes que hacer %s viajes más para ganar esta placa.</string>
    <string name="badge_trip_number_progress_3">Tienes que hacer %s viajes más para ganar esta placa.</string>
@@ -330,9 +270,6 @@
    <string name="badge_urban_distance_name_1">Relax Max</string>
    <string name="badge_urban_distance_name_2">Yoga</string>
    <string name="badge_urban_distance_name_3">Maestro Zen</string>
-   <string name="badge_urban_distance_notif_1">Acaba de ganar la insignia Relax Max (100 km en zonas urbanas). Felicitaciones!</string>
-   <string name="badge_urban_distance_notif_2">Acabas de ganar la insignia de Yoga (300 km en zonas urbanas). Felicitaciones!</string>
-   <string name="badge_urban_distance_notif_3">Acabas de ganar la insignia de Maestro Zen (1000 km en zonas urbanas). Felicitaciones!</string>
    <string name="badge_urban_distance_progress_1">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_urban_distance_progress_2">Todavía te quedan %s km para ganar esta placa</string>
    <string name="badge_urban_distance_progress_3">Todavía te quedan %s km para ganar esta placa</string>

@@ -43,7 +43,6 @@
    <string name="dk_motor">Tipo de motor</string>
    <string name="dk_name">Nombre</string>
    <string name="dk_power">Potencia</string>
-   <string name="dk_too_many_vehicles_alert">Ha excedido el límite del número de vehículos permitidos, por favor, borre uno antes de crear uno nuevo.</string>
    <string name="dk_vehicle_add">Añadir un vehículo</string>
    <string name="dk_vehicle_beacon_already_paired">La beacon no está disponible. Ya está acoplada a otro vehículo.</string>
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">Esta beacon ya está emparejada con este vehículo.</string>

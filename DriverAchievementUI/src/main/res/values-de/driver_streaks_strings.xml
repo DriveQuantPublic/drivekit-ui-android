@@ -11,7 +11,7 @@
    <string name="dk_achievements_streaks_best_title">Beste Sequenz</string>
    <string name="dk_achievements_streaks_brake_reset">Sie haben auf Ihrer letzten Reise gebremst</string>
    <string name="dk_achievements_streaks_brake_text">Versuchen Sie, eine Reihe von Fahrten ohne starkes Bremsen zu machen.\n \nMit jedem Erfolg steigt der Zähler der Anzahl der Fahrten.\n \nWenn es fehlschlägt, wird der Zähler zurückgesetzt und Sie müssen neu beginnen.\n \nDie Anzahl der Fahrten in Ihrer besten Passfolge wird im Speicher abgelegt und Sie können versuchen, diese zu überschreiten.</string>
-   <string name="dk_achievements_streaks_brake_title"/>
+   <string name="dk_achievements_streaks_brake_title">Kein hartes Bremsen</string>
    <string name="dk_achievements_streaks_call_reset">Sie haben auf Ihrer letzten Reise einen Anruf getätigt</string>
    <string name="dk_achievements_streaks_congrats">Bravo!</string>
    <string name="dk_achievements_streaks_congrats_text">Sie machen derzeit Ihre beste Erfolgsserie. Übertreffen Sie sich selbst immer wieder!</string>

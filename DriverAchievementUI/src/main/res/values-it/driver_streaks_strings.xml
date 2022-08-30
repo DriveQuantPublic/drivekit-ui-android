@@ -17,8 +17,7 @@
    <string name="dk_achievements_streaks_congrats_text">Attualmente state facendo la vostra migliore sequenza di successi. Continua a superare te stesso!</string>
    <string name="dk_achievements_streaks_current_title">Corrente</string>
    <string name="dk_achievements_streaks_empty">Non hai ancora fatto nessun viaggio per completare questa sequenza</string>
-   <string name="dk_achievements_streaks_phone_call_text">Prova a fare una serie di viaggi senza telefonare.\n \nAd ogni successo, il contatore del numero di viaggi aumenta.\n \nIn caso di fallimento, il contatore si resetta e si deve ricominciare da capo. Le chiamate effettuate con il kit vivavoce dell\'auto sono consentite.
-\n \nIl numero di viaggi nella vostra migliore sequenza di passaggi è memorizzato e potete tentare di superarlo.</string>
+   <string name="dk_achievements_streaks_phone_call_text">Prova a fare una serie di viaggi senza telefonare.\n \nAd ogni successo, il contatore del numero di viaggi aumenta.\n \nIn caso di fallimento, il contatore si resetta e si deve ricominciare da capo. Le chiamate effettuate con il kit vivavoce dell\'auto sono consentite.\n \nIl numero di viaggi nella vostra migliore sequenza di passaggi è memorizzato e potete tentare di superarlo.</string>
    <string name="dk_achievements_streaks_phone_call_title">Non chiamare</string>
    <string name="dk_achievements_streaks_phone_distraction_reset">Hai maneggiato il tuo telefono durante il tuo ultimo viaggio</string>
    <string name="dk_achievements_streaks_phone_distraction_text">Provate a fare una serie di viaggi senza manipolare il vostro smartphone mentre guidate.\n \nAd ogni successo, il contatore del numero di viaggi aumenta.\n \nIn caso di fallimento, il contatore si resetta e si deve ricominciare da capo.\n \nIl numero di viaggi nella vostra migliore sequenza di passaggi è memorizzato e potete tentare di superarlo.</string>
