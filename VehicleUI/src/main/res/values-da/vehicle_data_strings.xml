@@ -13,7 +13,7 @@
     <string name="dk_beacon_uuid">Uuid</string>
     <string name="dk_beacon_vehicle_unknown">Ukendt køretøj</string>
     <string name="dk_beacon_vehicule_linked">Tilknyttet køretøj</string>
-    <string name="dk_beacon_verify">Inspicere</string>
+    <string name="dk_beacon_verify">Inspicer</string>
     <string name="dk_bluetooth_address">MAC-adresse på Bluetooth-enheden</string>
     <string name="dk_bluetooth_name">Bluetooth-enhedsnavn</string>
     <string name="dk_brand">Mærke</string>
@@ -21,8 +21,8 @@
     <string name="dk_change_success">Ændringerne er gennemført.</string>
     <string name="dk_consumption">Brændstofforbrug</string>
     <string name="dk_detection_mode_beacon_desc_configured">Beacon %s er blevet knyttet til dette køretøj. Applikationen registrerer automatisk din rejse, når Beacon er tæt på din smartphone.</string>
-    <string name="dk_detection_mode_beacon_desc_not_configured">Du skal forbinde et fyrtårn til dette køretøj</string>
-    <string name="dk_detection_mode_beacon_title">ledestjerne</string>
+    <string name="dk_detection_mode_beacon_desc_not_configured">Du skal forbinde et beacon til dette køretøj.</string>
+    <string name="dk_detection_mode_beacon_title">Beacon</string>
     <string name="dk_detection_mode_bluetooth_desc_configured">Bluetooth %s enhed er blevet knyttet til dette køretøj. Applikationen registrerer automatisk din rejse, når din telefon er tilsluttet denne enhed.</string>
     <string name="dk_detection_mode_bluetooth_desc_not_configured">Vælg et Bluetooth system til dette køretøj</string>
     <string name="dk_detection_mode_bluetooth_title">Bluetooth</string>
@@ -30,7 +30,7 @@
     <string name="dk_detection_mode_disabled_title">Slået fra</string>
     <string name="dk_detection_mode_gps_desc">Løsningen bruger telefonens sensorer til automatisk at registrere dine ture. Denne tilstand er optimeret til at begrænse batteriforbruget.</string>
     <string name="dk_detection_mode_gps_title">GPS</string>
-    <string name="dk_empty_vehicle_name">Giv et køretøjs navn</string>
+    <string name="dk_empty_vehicle_name">Navngiv dit køretøj</string>
     <string name="dk_fields_not_valid">Kontroller de data, du har indtastet</string>
     <string name="dk_gearbox">Gearkasse</string>
     <string name="dk_gearbox_automatic">Automatisk</string>
@@ -38,12 +38,11 @@
     <string name="dk_gearbox_manual_6">Manuel 6 gear</string>
     <string name="dk_gearbox_manual_7">Manuel 7 gear</string>
     <string name="dk_gearbox_manual_8">Manuel 8 gear</string>
-    <string name="dk_mass">Masse</string>
+    <string name="dk_mass">Vægt</string>
     <string name="dk_model">Model</string>
     <string name="dk_motor">Motortype</string>
     <string name="dk_name">Navn</string>
     <string name="dk_power">Strøm</string>
-    <string name="dk_too_many_vehicles_alert">Du har overskredet køretøjsgrænsen, slet venligst en, før du opretter en ny.</string>
     <string name="dk_vehicle_add">Tilføj et køretøj</string>
     <string name="dk_vehicle_beacon_already_paired">Beacon er ikke tilgængelig. Det er allerede parret med et andet køretøj.</string>
     <string name="dk_vehicle_beacon_already_paired_to_vehicle">Denne fyr er allerede parret med dette køretøj.</string>
@@ -106,7 +105,7 @@
     <string name="dk_vehicle_category_car_sport_title">Sportsvogn</string>
     <string name="dk_vehicle_category_car_suv_description">Denne kategori svarer til crossover-køretøjer eller off-road køretøjer med firehjulstræk (4x4), og hvis længde varierer i gennemsnit fra 4,10 til 5,20 m.</string>
     <string name="dk_vehicle_category_car_suv_title">4x4, SUV, crossover</string>
-    <string name="dk_vehicle_category_display_brands">Vælg nu mærke og model på dit køretøj</string>
+    <string name="dk_vehicle_category_display_brands">Vælg mærke og model på dit køretøj</string>
     <string name="dk_vehicle_category_truck_selection_title">Hvilken slags lastbil kører du?</string>
     <string name="dk_vehicle_category_truck_straight">Lige lastbil</string>
     <string name="dk_vehicle_category_truck_straight_2_axles">To-akslet lige lastbil</string>
@@ -115,15 +114,15 @@
     <string name="dk_vehicle_category_truck_trailer_2_axles">To-akslet traktor</string>
     <string name="dk_vehicle_category_truck_trailer_3_axles">Tre-akslen traktor</string>
     <string name="dk_vehicle_category_truck_trailer_4_axles">Fire-akslet traktor</string>
-    <string name="dk_vehicle_configure_beacon_desc">En fyr er allerede forbundet med køretøjet %s</string>
-    <string name="dk_vehicle_configure_beacon_title">Konfiguration af fyret</string>
+    <string name="dk_vehicle_configure_beacon_desc">Et beacon er allerede forbundet med køretøjet %s</string>
+    <string name="dk_vehicle_configure_beacon_title">Indstilling af beacon</string>
     <string name="dk_vehicle_configure_bluetooth_desc">Bluetoothenheden er allerede parret med køretøjet.</string>
     <string name="dk_vehicle_configure_bluetooth_title">Konfiguration af Bluetooth</string>
     <string name="dk_vehicle_curbweight">Egenvægt</string>
     <string name="dk_vehicle_delete">Slet</string>
-    <string name="dk_vehicle_delete_confirm">Er du sikker på at du vil slette %s? Overvågning af kilometertal og vedligeholdelsesdata slettes definitivt.</string>
+    <string name="dk_vehicle_delete_confirm">Er du sikker på at du vil slette %s? Overvågning af kilometertal og vedligeholdelsesdata slettes permanent.</string>
     <string name="dk_vehicle_detail_back_edit_alert">Køretøjsdataene er blevet ændret. Vil du gemme dem?</string>
-    <string name="dk_vehicle_detection_mode_title">Automatisk start:</string>
+    <string name="dk_vehicle_detection_mode_title">Autostart</string>
     <string name="dk_vehicle_engine_description">Motortype?</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
     <string name="dk_vehicle_engine_diesel_hybrid">Dieselelektrisk hybrid</string>
@@ -177,7 +176,7 @@
     <string name="dk_vehicle_odometer_last_history_error">Den sidste kilometertæller læsning kan ikke slettes.</string>
     <string name="dk_vehicle_odometer_last_update">Sidst opdateret %s</string>
     <string name="dk_vehicle_odometer_mileage_kilometer">Kilometertal (km)</string>
-    <string name="dk_vehicle_odometer_odometer_history_detail_title">Kilometertal måling</string>
+    <string name="dk_vehicle_odometer_odometer_history_detail_title">Kilometerantal</string>
     <string name="dk_vehicle_odometer_vehicle_title">Køretøjets kilometertal</string>
     <string name="dk_vehicle_open_bluetooth_settings">Åbn Bluetooth indstillinger</string>
     <string name="dk_vehicle_other_brands">Andre mærker</string>
@@ -190,6 +189,7 @@
     <string name="dk_vehicle_rename_description">Vælg et navn for at identificere dit køretøj</string>
     <string name="dk_vehicle_rename_title">Omdøb dette køretøj</string>
     <string name="dk_vehicle_replace">Erstat</string>
+    <string name="dk_vehicle_replace_button">Udskift køretøjet</string>
     <string name="dk_vehicle_select_bluetooth_description">Vælg en Bluetooth-enhed for at starte turoptagelsen.\n\nSå snart telefonen opretter forbindelse til denne enhed, begynder applikationen at analysere din rejse.\n\nDu kan kun vælge én enhed til dette køretøj.</string>
     <string name="dk_vehicle_show">Vis</string>
     <string name="dk_vehicle_type_car_title">Lette og erhvervskøretøjer på mindre end 3,5 t</string>
@@ -200,6 +200,6 @@
     <string name="dk_vehicle_type_truck_tractor_semi_trailer">Semi trailer lastbil</string>
     <string name="dk_vehicle_unknown">Køretøjet er ukendt, vælg et andet køretøj.</string>
     <string name="dk_vehicle_version_description">Version af køretøjet?</string>
-    <string name="dk_vehicle_year_description">År med frigivelse?</string>
+    <string name="dk_vehicle_year_description">Årgang</string>
     <string name="dk_version">Version</string>
 </resources>

@@ -6,22 +6,22 @@
     <string name="dk_common_app_diag_nearby_ko">Du skal give applikationen mulighed for at registrere enheder i nærheden, så den kan analysere dine ture.</string>
     <string name="dk_common_app_diag_nearby_link">Tillad synlighed for enheder tæt på</string>
     <string name="dk_common_back">Tilbage</string>
-    <string name="dk_common_cancel">Afbestille</string>
-    <string name="dk_common_close">Tæt</string>
-    <string name="dk_common_confirm">Bekræfte</string>
+    <string name="dk_common_cancel">Annuller</string>
+    <string name="dk_common_close">Luk OR Ok</string>
+    <string name="dk_common_confirm">Bekræft</string>
     <string name="dk_common_consumption">Forbrug</string>
     <string name="dk_common_day_plural">dage</string>
     <string name="dk_common_day_singular">dag</string>
     <string name="dk_common_delete">Slet</string>
     <string name="dk_common_distance">Afstand</string>
     <string name="dk_common_distraction">Distraktion</string>
-    <string name="dk_common_driving_context_city">bytrafik</string>
+    <string name="dk_common_driving_context_city">Bytrafik</string>
     <string name="dk_common_driving_context_city_dense">Tæt bytrafik</string>
     <string name="dk_common_driving_context_external">Meget tæt bymiljø</string>
     <string name="dk_common_driving_context_fastlane">Motorvej</string>
     <string name="dk_common_duration">Varighed</string>
-    <string name="dk_common_ecodriving">Eco-kørsel</string>
-    <string name="dk_common_edit">Redigere</string>
+    <string name="dk_common_ecodriving">Øko-kørsel</string>
+    <string name="dk_common_edit">Rediger</string>
     <string name="dk_common_error_empty_field">Dette felt kan ikke være tomt</string>
     <string name="dk_common_error_message">Der opstod en fejl under anmodningen, bedes du prøve igen senere.</string>
     <string name="dk_common_finish">Afslut</string>
@@ -31,7 +31,7 @@
     <string name="dk_common_mean_speed">Gennemsnitshastighed</string>
     <string name="dk_common_no">Nej</string>
     <string name="dk_common_no_pseudo_set">For at dele din placering med de andre deltagere inviterer vi dig til at vælge et brugernavn. Uden et brugernavn vises du som anonym.</string>
-    <string name="dk_common_ok">Okay</string>
+    <string name="dk_common_ok">Ok</string>
     <string name="dk_common_permission_camera_rationale">Appen har brug for tilladelse til din smartphones kamera at bruge denne funktion.</string>
     <string name="dk_common_permission_storage_rationale">Appen har brug for tilladelse til din smartphones lagring for at bruge denne funktion.</string>
     <string name="dk_common_permissions">Tilladelser</string>
@@ -40,7 +40,7 @@
     <string name="dk_common_ranking_rank">Rang</string>
     <string name="dk_common_ranking_score">Score</string>
     <string name="dk_common_safety">Sikkerhed</string>
-    <string name="dk_common_save">Optage</string>
+    <string name="dk_common_save">Optag</string>
     <string name="dk_common_see_more_trips">Se flere ture</string>
     <string name="dk_common_select_image_gallery">Vælg et eksisterende foto</string>
     <string name="dk_common_send_mail_error">Din enhed er ikke konfigureret til at sende e -mail</string>
@@ -71,6 +71,6 @@
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_unit_ton">t</string>
     <string name="dk_common_update_photo_title">Rediger billedet</string>
-    <string name="dk_common_validate">Validerer</string>
+    <string name="dk_common_validate">Bekræft</string>
     <string name="dk_common_yes">Ja</string>
 </resources>

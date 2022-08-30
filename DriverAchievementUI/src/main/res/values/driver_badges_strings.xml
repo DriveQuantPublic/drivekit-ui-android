@@ -9,9 +9,6 @@
    <string name="badge_acceleration_name_1">Adagio</string>
    <string name="badge_acceleration_name_2">Andante</string>
    <string name="badge_acceleration_name_3">Moderato</string>
-   <string name="badge_acceleration_notif_1">You\'ve just won the Adagio badge (10 trips without strong acceleration ). Bravo!</string>
-   <string name="badge_acceleration_notif_2">You\'ve just won the Andante badge (20 trips without strong acceleration). Bravo!</string>
-   <string name="badge_acceleration_notif_3">You\'ve just won the Moderato badge (20 trips without strong acceleration). Bravo!</string>
    <string name="badge_acceleration_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_acceleration_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_acceleration_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -25,9 +22,6 @@
    <string name="badge_adherence_name_1">Adhesive</string>
    <string name="badge_adherence_name_2">Velcro</string>
    <string name="badge_adherence_name_3">Super Glue</string>
-   <string name="badge_adherence_notif_1">You\'ve just won the Adhesive badge (10 trips without traction limit). Bravo!</string>
-   <string name="badge_adherence_notif_2">You\'ve just won the Velcro badge (20 trips without traction limit). Bravo!</string>
-   <string name="badge_adherence_notif_3">You\'ve just won the Super Glue badge (50 trips without traction limit). Bravo!</string>
    <string name="badge_adherence_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_adherence_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_adherence_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -41,9 +35,6 @@
    <string name="badge_braking_name_1">Feather</string>
    <string name="badge_braking_name_2">Light Foot</string>
    <string name="badge_braking_name_3">Soft Driver</string>
-   <string name="badge_braking_notif_1">You\'ve just won the Feather badge (10 trips without strong braking). Bravo!</string>
-   <string name="badge_braking_notif_2">You\'ve just won the Light Foot badge (20 trips without strong braking). Bravo!</string>
-   <string name="badge_braking_notif_3">You\'ve just won the Light Foot badge (50 trips without strong braking). Bravo!</string>
    <string name="badge_braking_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_braking_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_braking_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -58,9 +49,6 @@
    <string name="badge_distance_beginer_name_1">Jogging</string>
    <string name="badge_distance_beginer_name_2">Marathon</string>
    <string name="badge_distance_beginer_name_3">Ultra-trail</string>
-   <string name="badge_distance_beginer_notif_1">You\'ve just won the Jogging badge (10 km). Bravo!</string>
-   <string name="badge_distance_beginer_notif_2">You\'ve just won the Marathon badge (50 km). Bravo!</string>
-   <string name="badge_distance_beginer_notif_3">You\'ve just won the Ultra-trail badge (100 km). Bravo!</string>
    <string name="badge_distance_beginer_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_beginer_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_beginer_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -74,9 +62,6 @@
    <string name="badge_distance_expert_name_1">Paris-Moscow</string>
    <string name="badge_distance_expert_name_2">Route 66</string>
    <string name="badge_distance_expert_name_3">Paris - Tokyo</string>
-   <string name="badge_distance_expert_notif_1">You\'ve just won the Paris - Moscow badge (3000 km). Bravo!</string>
-   <string name="badge_distance_expert_notif_2">You\'ve just won the Route 66 badge (5000 km). Bravo !</string>
-   <string name="badge_distance_expert_notif_3">You\'ve just won the Paris - Tokyo badge (10,000 km). Bravo!</string>
    <string name="badge_distance_expert_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_expert_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_expert_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -90,9 +75,6 @@
    <string name="badge_distance_intermediate_name_1">Paris - Lyon</string>
    <string name="badge_distance_intermediate_name_2">Nationale 7</string>
    <string name="badge_distance_intermediate_name_3">Paris - Lisbonne</string>
-   <string name="badge_distance_intermediate_notif_1">You\'ve just won the Paris - Lyon badge (500 km). Bravo!</string>
-   <string name="badge_distance_intermediate_notif_2">You\'ve just won the Nationale 7 badge (1000 km). Bravo!</string>
-   <string name="badge_distance_intermediate_notif_3">You\'ve just won the Paris - Lisbonne badge (2000 km). Bravo !</string>
    <string name="badge_distance_intermediate_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_intermediate_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_distance_intermediate_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -106,9 +88,6 @@
    <string name="badge_efficiency_expressway_name_1">Amateur</string>
    <string name="badge_efficiency_expressway_name_2">Experienced</string>
    <string name="badge_efficiency_expressway_name_3">Expert</string>
-   <string name="badge_efficiency_expressway_notif_1">You\'ve just won the Amateur badge (1000 km in a suburban area with an ecodriving score above 9.5 out of 10). Bravo!</string>
-   <string name="badge_efficiency_expressway_notif_2">You\'ve just won the Experienced badge (300 km on the expressway with an ecodriving score above 9.5 out of 10). Bravo!</string>
-   <string name="badge_efficiency_expressway_notif_3">You\'ve just won the Expert badge (1000 km on the expressway with an ecodriving score above 9.5 out of 10). Bravo!</string>
    <string name="badge_efficiency_expressway_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_expressway_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_expressway_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -122,9 +101,6 @@
    <string name="badge_efficiency_extra_urban_name_1">Amateur</string>
    <string name="badge_efficiency_extra_urban_name_2">Experienced</string>
    <string name="badge_efficiency_extra_urban_name_3">Expert</string>
-   <string name="badge_efficiency_extra_urban_notif_1">You\'ve just won the Amateur badge (100 km in a suburban area with an ecodriving score above 8.5 out of 10). Bravo!</string>
-   <string name="badge_efficiency_extra_urban_notif_2">You\'ve just won the Experienced badge (300 km in a suburban area with an ecodriving score above 8.5 out of 10). Bravo!</string>
-   <string name="badge_efficiency_extra_urban_notif_3">You\'ve just won the Expert badge (1000 km in a suburban area with an ecodriving score above 8.5 out of 10). Bravo!</string>
    <string name="badge_efficiency_extra_urban_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_extra_urban_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_extra_urban_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -138,9 +114,6 @@
    <string name="badge_efficiency_urban_name_1">Amateur</string>
    <string name="badge_efficiency_urban_name_2">Experienced</string>
    <string name="badge_efficiency_urban_name_3">Expert</string>
-   <string name="badge_efficiency_urban_notif_1">You\'ve just won the Amateur badge (100 km in the city with an ecodriving score above 8 out of 10). Bravo!</string>
-   <string name="badge_efficiency_urban_notif_2">You\'ve just won the Experienced badge (100 km in the city with an ecodriving score above 8 out of 10). Bravo!</string>
-   <string name="badge_efficiency_urban_notif_3">You\'ve just won the Expert badge (400 km in the city with an ecodriving score above 8 out of 10). Bravo!</string>
    <string name="badge_efficiency_urban_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_urban_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_efficiency_urban_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -154,9 +127,6 @@
    <string name="badge_expressway_distance_name_1">Fast and serious</string>
    <string name="badge_expressway_distance_name_2">Road Trip</string>
    <string name="badge_expressway_distance_name_3">Easy Rider</string>
-   <string name="badge_expressway_distance_notif_1">You\'ve just won the Fast and Serious badge (100 km on the expressway). Bravo!</string>
-   <string name="badge_expressway_distance_notif_2">You\'ve just won the Road Trip badge (300 km on the expressway). Bravo!</string>
-   <string name="badge_expressway_distance_notif_3">You\'ve just won the Easy Rider badge (1000 km on the expressway). Bravo!</string>
    <string name="badge_expressway_distance_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_expressway_distance_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_expressway_distance_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -170,9 +140,6 @@
    <string name="badge_extra_urban_distance_name_1">Ride</string>
    <string name="badge_extra_urban_distance_name_2">Evasion</string>
    <string name="badge_extra_urban_distance_name_3">Grand Air</string>
-   <string name="badge_extra_urban_distance_notif_1">You\'ve just won the Ride badge (100 km in a suburban environment). Bravo!</string>
-   <string name="badge_extra_urban_distance_notif_2">You\'ve just won the Evasion badge (300 km in a suburban environment). Bravo!</string>
-   <string name="badge_extra_urban_distance_notif_3">You\'ve just won the Grand Air badge (1000 km in a suburban environment). Bravo!</string>
    <string name="badge_extra_urban_distance_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_extra_urban_distance_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_extra_urban_distance_progress_3">You have %s kilometers to go to win this badge.</string>
@@ -186,9 +153,6 @@
    <string name="badge_night_trip_name_1">Firefly</string>
    <string name="badge_night_trip_name_2">Owl</string>
    <string name="badge_night_trip_name_3">Full Moon</string>
-   <string name="badge_night_trip_notif_1">You\'ve just won the Firefly badge (10 trips at night). Bravo!</string>
-   <string name="badge_night_trip_notif_2">You\'ve just won the Owl badge (20 trips at night). Bravo!</string>
-   <string name="badge_night_trip_notif_3">You\'ve just won the Full Moon badge (50 trips at night). Bravo!</string>
    <string name="badge_night_trip_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_night_trip_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_night_trip_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -202,9 +166,6 @@
    <string name="badge_phone_call_name_1">Novice</string>
    <string name="badge_phone_call_name_2">Apprentice</string>
    <string name="badge_phone_call_name_3">Champion</string>
-   <string name="badge_phone_call_notif_1">You\'ve just won the Novice badge (20 trips without making a call). Bravo!</string>
-   <string name="badge_phone_call_notif_2">You\'ve just won the Apprentice badge (50 trips without making a call). Bravo!</string>
-   <string name="badge_phone_call_notif_3">You\'ve just won the Champion badge (100 trips without making a call). Bravo!</string>
    <string name="badge_phone_call_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_phone_call_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_phone_call_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -218,9 +179,6 @@
    <string name="badge_phone_distraction_name_1">Quiet, we\'re driving</string>
    <string name="badge_phone_distraction_name_2">No Texto!</string>
    <string name="badge_phone_distraction_name_3">Imperturbable</string>
-   <string name="badge_phone_distraction_notif_1">You\'ve just won the Quiet, we\'re driving badge ( 10 trips without using your cell phone). Bravo!</string>
-   <string name="badge_phone_distraction_notif_2">You\'ve just won the No Texto badge ( 20 trips without using your cell phone). Bravo!</string>
-   <string name="badge_phone_distraction_notif_3">You\'ve just won the Imperturbable badge (50 trips without using your cell phone). Bravo!</string>
    <string name="badge_phone_distraction_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_phone_distraction_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_phone_distraction_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -234,9 +192,6 @@
    <string name="badge_rain_trip_name_1">Droplet</string>
    <string name="badge_rain_trip_name_2">Downpour</string>
    <string name="badge_rain_trip_name_3">Singing in the rain</string>
-   <string name="badge_rain_trip_notif_1">You\'ve just won the Droplet badge (10 trips under the rain). Bravo!</string>
-   <string name="badge_rain_trip_notif_2">You\'ve just won the Downpour badge (20 trips under the rain). Bravo!</string>
-   <string name="badge_rain_trip_notif_3">You\'ve just won the Singing in the rain badge (20 trips under the rain). Bravo!</string>
    <string name="badge_rain_trip_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_rain_trip_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_rain_trip_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -250,9 +205,6 @@
    <string name="badge_range_average_name_1">Occasional</string>
    <string name="badge_range_average_name_2">Recurring</string>
    <string name="badge_range_average_name_3">Frequent</string>
-   <string name="badge_range_average_notif_1">You\'ve just won the occasional medium distance trips badge (10 trips). Bravo!</string>
-   <string name="badge_range_average_notif_2">You\'ve just won the recurring medium distance trips badge (20 trips). Bravo!</string>
-   <string name="badge_range_average_notif_3">You\'ve just won the frequent medium distance trips badge (20 trips). Bravo!</string>
    <string name="badge_range_average_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_average_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_average_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -266,9 +218,6 @@
    <string name="badge_range_long_name_1">Occasional</string>
    <string name="badge_range_long_name_2">Recurring</string>
    <string name="badge_range_long_name_3">Frequent</string>
-   <string name="badge_range_long_notif_1">You\'ve just won the occasional long distance trips badge (10 trips). Bravo!</string>
-   <string name="badge_range_long_notif_2">You\'ve just won the recurring long distance trips badge (20 trips). Bravo!</string>
-   <string name="badge_range_long_notif_3">You\'ve just won the frequent long distance trips badge (50 trips). Bravo!</string>
    <string name="badge_range_long_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_long_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_long_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -282,9 +231,6 @@
    <string name="badge_range_short_name_1">Occasional</string>
    <string name="badge_range_short_name_2">Recurring</string>
    <string name="badge_range_short_name_3">Frequent</string>
-   <string name="badge_range_short_notif_1">You\'ve just won the Occasional short trips badge (10 trips). Bravo!</string>
-   <string name="badge_range_short_notif_2">You\'ve just won the daily short trips badge (20 trips). Bravo!</string>
-   <string name="badge_range_short_notif_3">You\'ve just won the frequent short trips badge (50 trips). Bravo!</string>
    <string name="badge_range_short_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_short_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_range_short_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -298,9 +244,6 @@
    <string name="badge_safety_name_1">Shepherd</string>
    <string name="badge_safety_name_2">Sherpa</string>
    <string name="badge_safety_name_3">Guardian Angel</string>
-   <string name="badge_safety_notif_1">You\'ve just won the Shepherd badge (10 trips with a safety score of 10). Bravo!</string>
-   <string name="badge_safety_notif_2">You\'ve just won the Shepherd badge (20 trips with a safety score of 10). Bravo!</string>
-   <string name="badge_safety_notif_3">You\'ve just won the Guardian Angel badge (50 trips with a safety score of 10). Bravo!</string>
    <string name="badge_safety_progress_1">Still %s trips before winning this badge.</string>
    <string name="badge_safety_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_safety_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -314,9 +257,6 @@
    <string name="badge_trip_number_name_1">Amateur</string>
    <string name="badge_trip_number_name_2">Explorer</string>
    <string name="badge_trip_number_name_3">Ambassador</string>
-   <string name="badge_trip_number_notif_1">You\'ve just won the Amateur badge (10 trips). Bravo!</string>
-   <string name="badge_trip_number_notif_2">You\'ve just won the Explorer badge (30 trips). Bravo!</string>
-   <string name="badge_trip_number_notif_3">You\'ve just won the Ambassador badge (100 trips). Bravo!</string>
    <string name="badge_trip_number_progress_1">You still have %s trips to complete to win this badge.</string>
    <string name="badge_trip_number_progress_2">You still have %s trips to complete to win this badge.</string>
    <string name="badge_trip_number_progress_3">You still have %s trips to complete to win this badge.</string>
@@ -330,9 +270,6 @@
    <string name="badge_urban_distance_name_1">Relax Max</string>
    <string name="badge_urban_distance_name_2">Yoga</string>
    <string name="badge_urban_distance_name_3">Zen Master</string>
-   <string name="badge_urban_distance_notif_1">You\'ve just won the Relax Max badge (100 trips in an urban environment). Bravo!</string>
-   <string name="badge_urban_distance_notif_2">You\'ve just won the Yoga badge (300 km in an urban environment). Bravo!</string>
-   <string name="badge_urban_distance_notif_3">You\'ve just won the Zen Master badge (1000 km in an urban environment). Bravo!</string>
    <string name="badge_urban_distance_progress_1">You have %s kilometers to go to win this badge.</string>
    <string name="badge_urban_distance_progress_2">You have %s kilometers to go to win this badge.</string>
    <string name="badge_urban_distance_progress_3">You have %s kilometers to go to win this badge.</string>
