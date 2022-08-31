@@ -35,11 +35,15 @@ internal class TripsListViewModel(
     private var trips = listOf<Trip>()
     var filteredTrips = mutableListOf<Trip>()
         private set
+    var filteredTripsByDepth = mutableListOf<Trip>()
+        private set
     var filterItems: MutableList<FilterItem> = mutableListOf()
         private set
     val tripsData: MutableLiveData<List<Trip>> = MutableLiveData()
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
         private set
+
+    val shouldShowFilterMenuOption: MutableLiveData<Boolean> = MutableLiveData()
 
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
@@ -51,7 +55,7 @@ internal class TripsListViewModel(
                 DriveKit.modules.tripAnalysis?.checkTripToRepost()
 
                 val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
-                if (DriverDataUI.enableAlternativeTrips){
+                if (DriverDataUI.enableAlternativeTrips) {
                     transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
                 }
                 DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
@@ -70,6 +74,14 @@ internal class TripsListViewModel(
     }
 
     fun filterTrips(configuration: TripListConfiguration) {
+        filteredTripsByDepth.clear()
+        DriverDataUI.alternativeTripsDepthInDays?.let { depth ->
+            filteredTripsByDepth.addAll(trips.filter { it.endDate.getDaysDiff() <= depth && it.transportationMode.isAlternative() })
+        }?: run {
+            filteredTripsByDepth.addAll(trips)
+        }
+        shouldShowFilterMenuOption.postValue(filteredTripsByDepth.isNotEmpty())
+
         tripListConfiguration = configuration
         filteredTrips.clear()
         when (configuration) {
@@ -85,20 +97,15 @@ internal class TripsListViewModel(
 
             is TripListConfiguration.ALTERNATIVE -> {
                 val mode = configuration.transportationMode
-                trips = if (mode == null) {
-                    trips.filter { it.transportationMode.isAlternative() }
+                val trips = if (mode == null) {
+                    filteredTripsByDepth.filter { it.transportationMode.isAlternative() }
                 } else {
-                    if (!configuration.transportationMode.isAlternative()) {
-                        trips.filter { it.declaredTransportationMode?.transportationMode == mode }
+                    if (!mode.isAlternative()) {
+                        filteredTripsByDepth.filter { it.declaredTransportationMode?.transportationMode == mode }
                     } else {
-                        trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
+                        filteredTripsByDepth.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }
                     }
                 }
-
-               DriverDataUI.alternativeTripsDepthInDays?.let {  depth ->
-                    trips = trips.filter { it.endDate.getDaysDiff() <= depth }
-                }
-
                 if (trips.isNotEmpty()) {
                     filteredTrips.addAll(trips)
                 }
@@ -144,7 +151,7 @@ internal class TripsListViewModel(
         return transportationModeFilterItems
     }
 
-    fun computeFilterTransportationModes(): Set<TransportationMode> {
+    private fun computeFilterTransportationModes(): Set<TransportationMode> {
         val transportationModes = mutableSetOf<TransportationMode>()
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
@@ -156,7 +163,7 @@ internal class TripsListViewModel(
         }
 
         TripListConfiguration.ALTERNATIVE().getTransportationModes().forEach { mode ->
-            val count = trips.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }.size
+            val count = filteredTripsByDepth.filter { (it.transportationMode == mode && it.declaredTransportationMode == null) || it.declaredTransportationMode?.transportationMode == mode }.size
             if (count > 0) {
                 transportationModes.add(mode)
             }

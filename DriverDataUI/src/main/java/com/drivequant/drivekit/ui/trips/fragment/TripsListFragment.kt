@@ -55,12 +55,14 @@ class TripsListFragment : Fragment() {
                 .get(TripsListViewModel::class.java)
         }
 
+        viewModel.shouldShowFilterMenuOption.observe(this) {
+            setHasOptionsMenu(
+                DriverDataUI.enableAlternativeTrips && it
+            )
+        }
+
         viewModel.tripsData.observe(this) {
             viewModel.getFilterItems(requireContext())
-            setHasOptionsMenu(
-                DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes()
-                    .isNotEmpty()
-            )
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
             } else {
