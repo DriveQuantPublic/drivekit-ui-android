@@ -62,10 +62,10 @@ internal class TripsListViewModel(
                         }
 
                         if (DriverDataUI.enableAlternativeTrips) {
-                            val allTrips = mutableListOf<Trip>()
-                            allTrips.addAll(trips)
-                           val alternativeTransportationModes = TripListConfiguration.ALTERNATIVE().getTransportationModes()
-                           val query = DbTripAccess
+                            val allTrips: MutableList<Trip> = trips.toMutableList()
+                            val alternativeTransportationModes =
+                                TripListConfiguration.ALTERNATIVE().getTransportationModes()
+                            val query = DbTripAccess
                                 .tripsQuery()
                                 .whereIn("transportationMode", alternativeTransportationModes.map { it.value })
 
