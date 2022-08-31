@@ -209,7 +209,11 @@ internal class TripsListViewModel(
 
     fun hasLocalTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
 
-    fun getAlternativeTripsLimitDate(depthInDays: Int) = Date(System.currentTimeMillis() - depthInDays * 24 * 60 * 60 * 1000)
+    fun getAlternativeTripsLimitDate(depthInDays: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, - depthInDays)
+        return calendar.time
+    }
 
     @Suppress("UNCHECKED_CAST")
     class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
