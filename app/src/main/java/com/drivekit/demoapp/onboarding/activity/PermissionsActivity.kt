@@ -55,6 +55,7 @@ internal class PermissionsActivity : AppCompatActivity() {
                 PermissionsUtilsUI.showPermissionViews(
                     this@PermissionsActivity, object : PermissionViewListener {
                         override fun onFinish() {
+                            viewModel.configureDriveKit(this@PermissionsActivity)
                             viewModel.shouldDisplayVehicle()
                         }
                     })
