@@ -83,7 +83,7 @@ internal object DriveKitConfig {
         DriveKitDriverData.initialize()
     }
 
-    private fun configureModules(context: Context) {
+    fun configureModules(context: Context) {
         // Internal modules configuration:
         configureCore()
         configureTripAnalysis(context)
