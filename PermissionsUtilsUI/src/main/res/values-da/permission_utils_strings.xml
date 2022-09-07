@@ -2,7 +2,7 @@
 <resources>
    <string name="dk_perm_utils_app_diag_activity_ko">Du skal give appen adgang til at se din fysiske aktivitet, så den kan registrere og analysere dine ture.</string>
    <string name="dk_perm_utils_app_diag_activity_link">Tillad adgang til fysisk aktivitet</string>
-   <string name="dk_perm_utils_app_diag_activity_ok">Appen bruger din telefons data om fysisk aktivitet til at registrere og analysere dine ture. Bilist+ virker ikke, hvis du ikke tillader, at applikationen får adgang til disse data.</string>
+   <string name="dk_perm_utils_app_diag_activity_ok">Appen bruger din telefons data om fysisk aktivitet til at registrere og analysere dine ture. Appen virker ikke, hvis du ikke tillader, at applikationen får adgang til disse data.</string>
    <string name="dk_perm_utils_app_diag_activity_title">Fysisk aktivitet</string>
    <string name="dk_perm_utils_app_diag_app_ko_plural">%d problemer blev opdaget!</string>
    <string name="dk_perm_utils_app_diag_app_ko_singular">%d problem er blevet opdaget!</string>
@@ -20,7 +20,7 @@
    <string name="dk_perm_utils_app_diag_battery_text_android_02">På nogle versioner af Android, kan du deaktivere batterietoptimeringer. %s</string>
    <string name="dk_perm_utils_app_diag_battery_text_android_03">Hvis din mobils version af Android er tilpasset af producenten, kan du søge i batteriindstillingerne for at deaktivere batteritoptimering.</string>
    <string name="dk_perm_utils_app_diag_battery_text_ios_disabled">Appen registrerer automatisk begyndelsen og slutningen af ​​en tur uden at bruge GPS. GPS er kun tændt, hvis der registreres en tur i bil. Dette hjælper med at minimere batteriforbruget.</string>
-   <string name="dk_perm_utils_app_diag_battery_text_ios_enabled">Din telefon har en strømbesparende tilstand for at optimere batteriets levetid. Denne tilstand kan slukke appen, mens den kører i baggrunden.\n\nDeaktiver den strømbesparende tilstand for at sikre optimal ydelse af Bilist+ ved at gå til: Indstillinger> Batteri> Strømbesparende tilstand.</string>
+   <string name="dk_perm_utils_app_diag_battery_text_ios_enabled">Din telefon har en strømbesparende tilstand for at optimere batteriets levetid. Denne tilstand kan slukke appen, mens den kører i baggrunden.\n\nDeaktiver den strømbesparende tilstand for at sikre optimal app-ydelse ved at gå til: Indstillinger> Batteri> Strømbesparende tilstand.</string>
    <string name="dk_perm_utils_app_diag_battery_title">Deaktivering af batterioptimering</string>
    <string name="dk_perm_utils_app_diag_bluetooth_ko">Bluetooth er slukket på din mobil. Dine ture registreres ikke, hvis der ikke er forbindelse til dit Bluetooth-beacon.</string>
    <string name="dk_perm_utils_app_diag_bluetooth_link">Tænd Bluetooth</string>
@@ -59,7 +59,7 @@
    <string name="dk_perm_utils_app_diag_loc_sensor_link">Aktiver lokation.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ok">Lokation er aktiveret. Det måler køretøjets hastighed og retning. Hvis den er deaktiveret, vil applikationen ikke fungere.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_title">Lokation</string>
-   <string name="dk_perm_utils_app_diag_location_full_ko_ios14">Du skal give appen adgang til den nøjagtige placering af telefonen, så den kan analysere dine ture. I \"Placering \" Bilist+ brug \"præcis lokation\"</string>
+   <string name="dk_perm_utils_app_diag_location_full_ko_ios14">Du skal give appen adgang til den nøjagtige placering af telefonen, så den kan analysere dine ture. Aktivér \"Præcis placering\" i indstillingerne \"Placering\".</string>
    <string name="dk_perm_utils_app_diag_location_full_link">Brug præcis lokation</string>
    <string name="dk_perm_utils_app_diag_location_ko_android">For at registrere og analysere dine ture skal appen have adgang til telefonens placering.</string>
    <string name="dk_perm_utils_app_diag_location_ko_android12">For at registrere og analysere dine ture skal appen være i stand til at få adgang til telefonens nøjagtige placering.</string>
@@ -73,9 +73,9 @@
    <string name="dk_perm_utils_app_diag_network_link">Aktivér mobildata</string>
    <string name="dk_perm_utils_app_diag_network_ok">Mobildata er aktiveret. Det er nødvendigt med adgang til et mobilnetværk for at kunne analysere turen, når den afsluttes. Appen kan registrere og gemme din tur uden adgang til mobilnetværk. Men turen bliver først analyseret, når der igen er oprettet forbindelse til et netværk.</string>
    <string name="dk_perm_utils_app_diag_network_title">Mobilnetværk</string>
-   <string name="dk_perm_utils_app_diag_notification_ko">For at få besked om at turen registreres, skal du give Bilist+ lov til at sende notifikationer.</string>
+   <string name="dk_perm_utils_app_diag_notification_ko">For at få besked om at turen registreres, skal du give appen lov til at sende notifikationer.</string>
    <string name="dk_perm_utils_app_diag_notification_link">Tillad notifikationer</string>
-   <string name="dk_perm_utils_app_diag_notification_ok">Bilist+ viser, når en tur er igang eller er afsluttet. Hvis du ikke tillader notifikationer, vil du ikke få disse beskeder.</string>
+   <string name="dk_perm_utils_app_diag_notification_ok">Appen viser, når en tur er igang eller er afsluttet. Hvis du ikke tillader notifikationer, vil du ikke få disse beskeder.</string>
    <string name="dk_perm_utils_app_diag_notification_title">Notifikation</string>
    <string name="dk_perm_utils_app_diag_title">Fejlsøgning</string>
    <string name="dk_perm_utils_diag_app_ok">Alt er som det skal være</string>
