@@ -45,7 +45,7 @@
     <string name="dk_common_select_image_gallery">Select an existing photo</string>
     <string name="dk_common_send_mail_error">Your device isn\'t configured to send email</string>
     <string name="dk_common_settings">Settings</string>
-    <string name="dk_common_speed">Velocity</string>
+    <string name="dk_common_speed">Speeding</string>
     <string name="dk_common_speed_limit">Speed limit</string>
     <string name="dk_common_take_picture">Take a picture</string>
     <string name="dk_common_trip_plural">trips</string>

@@ -56,6 +56,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var enableVehicleFilter: Boolean = true
     internal var headerDay: HeaderDay = HeaderDay.DURATION_DISTANCE
 
+    var alternativeTripsDepthInDays: Int? = null
+
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     internal var mapTraceAuthorizedCallColor: Int = R.color.dkMapTraceAuthorizedCallColor

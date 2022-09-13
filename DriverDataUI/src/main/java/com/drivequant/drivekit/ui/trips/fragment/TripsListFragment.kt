@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.isNotEmpty
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
@@ -55,12 +56,12 @@ class TripsListFragment : Fragment() {
                 .get(TripsListViewModel::class.java)
         }
 
+        viewModel.shouldShowFilterMenuOption.observe(this) {
+            setHasOptionsMenu(it)
+        }
+
         viewModel.tripsData.observe(this) {
             viewModel.getFilterItems(requireContext())
-            setHasOptionsMenu(
-                DriverDataUI.enableAlternativeTrips && viewModel.computeFilterTransportationModes()
-                    .isNotEmpty()
-            )
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
             } else {
@@ -121,9 +122,10 @@ class TripsListFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.dk_trip_list_menu_bar, menu)
-        context?.let {
-            if (menu.isNotEmpty()) {
-                menu.getItem(0).subMenu?.updateSubMenuItemFont(it)
+        context?.let { context ->
+            menu.forEach {
+                it.icon?.mutate()?.tintDrawable(DriveKitUI.colors.fontColorOnPrimaryColor())
+                it.subMenu?.updateSubMenuItemFont(context)
             }
         }
     }

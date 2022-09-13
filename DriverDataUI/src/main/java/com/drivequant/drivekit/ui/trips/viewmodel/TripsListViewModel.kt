@@ -19,14 +19,18 @@ import com.drivequant.drivekit.common.ui.utils.DistanceUnit
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.databaseutils.entity.toTrips
+import com.drivequant.drivekit.dbtripaccess.DbTripAccess
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.trip.TripsQueryListener
 import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.*
+import java.util.*
 
 internal class TripsListViewModel(
     var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -40,6 +44,8 @@ internal class TripsListViewModel(
     var syncTripsError: MutableLiveData<Any> = MutableLiveData()
         private set
 
+    val shouldShowFilterMenuOption: MutableLiveData<Boolean> = MutableLiveData()
+
     fun fetchTrips(synchronizationType: SynchronizationType) {
         if (DriveKitDriverData.isConfigured()) {
             var handler: Handler? = null
@@ -48,20 +54,38 @@ internal class TripsListViewModel(
             }
             handler?.post {
                 DriveKit.modules.tripAnalysis?.checkTripToRepost()
-
-                val transportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
-                if (DriverDataUI.enableAlternativeTrips){
-                    transportationModes.addAll(TripListConfiguration.ALTERNATIVE().getTransportationModes())
-                }
+                val motorizedTransportationModes: MutableList<TransportationMode> = TripListConfiguration.MOTORIZED().getTransportationModes().toMutableList()
                 DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
                     override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                         if (status == TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY) {
                             syncTripsError.postValue(Any())
                         }
-                        this@TripsListViewModel.trips = trips
+
+                        if (DriverDataUI.enableAlternativeTrips) {
+                            val allTrips: MutableList<Trip> = trips.toMutableList()
+                            val alternativeTransportationModes =
+                                TripListConfiguration.ALTERNATIVE().getTransportationModes()
+                            val query = DbTripAccess
+                                .tripsQuery()
+                                .whereIn("transportationMode", alternativeTransportationModes.map { it.value })
+
+                            DriverDataUI.alternativeTripsDepthInDays?.let { depth ->
+                                query.and()
+                                    .whereGreaterThanOrEqual("endDate", getAlternativeTripsLimitDate(depth))
+                            }
+
+                            query.orderBy("endDate", Query.Direction.DESCENDING)
+                            val alternativeTrips = query.query().executeTrips().toTrips()
+                            allTrips.addAll(alternativeTrips)
+                            this@TripsListViewModel.trips = allTrips
+                            shouldShowFilterMenuOption.postValue(alternativeTrips.isNotEmpty())
+                        } else {
+                            this@TripsListViewModel.trips = trips
+                            shouldShowFilterMenuOption.postValue(false)
+                        }
                         filterTrips(tripListConfiguration)
                     }
-                }, synchronizationType, transportationModes)
+                }, synchronizationType, motorizedTransportationModes)
             }
         } else {
             syncTripsError.postValue(Any())
@@ -138,7 +162,7 @@ internal class TripsListViewModel(
         return transportationModeFilterItems
     }
 
-    fun computeFilterTransportationModes(): Set<TransportationMode> {
+    private fun computeFilterTransportationModes(): Set<TransportationMode> {
         val transportationModes = mutableSetOf<TransportationMode>()
         TripListConfiguration.MOTORIZED().getTransportationModes().forEach {
             if (DriveKitDriverData.tripsQuery()
@@ -181,9 +205,19 @@ internal class TripsListViewModel(
         }).toSpannable()
     }
 
-    fun getFilterVisibility() = (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
+    fun getFilterVisibility() =
+        when (tripListConfiguration) {
+            is TripListConfiguration.MOTORIZED -> DriverDataUI.enableVehicleFilter
+            is TripListConfiguration.ALTERNATIVE -> DriverDataUI.enableAlternativeTrips && filterItems.size > 1
+        }
 
     fun hasLocalTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
+
+    fun getAlternativeTripsLimitDate(depthInDays: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, - depthInDays)
+        return calendar.time
+    }
 
     @Suppress("UNCHECKED_CAST")
     class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)

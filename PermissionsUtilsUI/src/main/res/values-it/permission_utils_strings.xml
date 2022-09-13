@@ -100,7 +100,8 @@
    <string name="dk_perm_utils_permissions_location_title">Tracciabilità automatica dei viaggi</string>
    <string name="dk_perm_utils_permissions_nearby_text1_android12">Per riconoscere il suo veicolo e analizzare i suoi viaggi, è essenziale attivare il rilevamento dei dispositivi vicini.</string>
    <string name="dk_perm_utils_permissions_nearby_text2_android12">Per farlo, selezionate l\'opzione \"Consenti\" dopo aver premuto il pulsante qui sotto.</string>
-   <string name="dk_perm_utils_permissions_notifications_text1">Per essere informati quando un viaggio viene analizzato e ricevere suggerimenti, è necessario consentire all\'applicazione di visualizzare le notifiche.</string>
+   <string name="dk_perm_utils_permissions_notifications_text1">Per essere informati quando un viaggio viene analizzato e ricevere suggerimenti, è necessario consentire all\'applicazione di visualizzare le notifiche.
+</string>
    <string name="dk_perm_utils_permissions_notifications_text2">A tal fine, selezionare l\'opzione \"Consenti\" dopo aver toccato il pulsante sottostante.</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_button">Autorizzare il monitoraggio delle attività</string>
    <string name="dk_perm_utils_permissions_phone_settings_activity_text">Per migliorare l\'analisi dei vostri viaggi e identificare il modo di trasporto utilizzato, è necessario attivare l\'opzione Movimento e fitness.</string>
