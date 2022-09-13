@@ -205,7 +205,11 @@ internal class TripsListViewModel(
         }).toSpannable()
     }
 
-    fun getFilterVisibility() = (DriverDataUI.enableVehicleFilter || DriverDataUI.enableAlternativeTrips) && filterItems.size > 1
+    fun getFilterVisibility() =
+        when (tripListConfiguration) {
+            is TripListConfiguration.MOTORIZED -> DriverDataUI.enableVehicleFilter
+            is TripListConfiguration.ALTERNATIVE -> DriverDataUI.enableAlternativeTrips && filterItems.size > 1
+        }
 
     fun hasLocalTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
 
