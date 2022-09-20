@@ -7,6 +7,14 @@
     <string name="authentication_title">Please enter a unique user ID</string>
     <string name="authentication_unique_identifier">Unique identifier</string>
     <string name="button_logout">LOG OUT</string>
+
+    <string name="parameters_delete_account_title">Account deletion</string>
+    <string name="button_delete_account">Delete account</string>
+    <string name="delete_account_header">Account deletion</string>
+    <string name="account_deletion_content_1">If you confirm your choice, you will be automatically logged out and the account deletion request will be taken into account.</string>
+    <string name="account_deletion_content_2">You have 30 days to re-login to the application. If you reconnect within 30 days, the account deletion request will be cancelled.\n\nAfter this time, if you do not log back in, all your data will be permanently deleted.\n\nThe deletion of your data is not reversible.</string>
+    <string name="account_deletion_confirmation">Delete your account permanently?\nThis action is not reversible.</string>
+
     <string name="button_next_step">Go to the next step</string>
     <string name="button_see_documentation">SEE THE DOCUMENTATION</string>
     <string name="button_see_feature">SEE THE FUNCTION</string>

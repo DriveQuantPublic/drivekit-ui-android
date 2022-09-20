@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
 import com.drivekit.demoapp.settings.enum.UserInfoType
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
+import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -75,6 +76,7 @@ internal class SettingsActivity: AppCompatActivity() {
         initAutostartSection()
         initNotificationSection()
         initLogoutSection()
+        initDeleteAccountSection()
         listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
         }
@@ -145,13 +147,28 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun initLogoutSection() {
-        button_delete_account.apply {
+        button_logout_account.apply {
             normalText(DriveKitUI.colors.criticalColor())
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
                 manageLogoutClick()
             }
         }
+    }
+
+    private fun initDeleteAccountSection() {
+        initTitle(title_account_deletion, R.string.parameters_delete_account_title, R.drawable.dk_trash)
+        button_delete_account.apply {
+            normalText(DriveKitUI.colors.criticalColor())
+            setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+            setOnClickListener {
+                manageDeleteAccount()
+            }
+        }
+    }
+
+    private fun manageDeleteAccount() {
+        DeleteAccountActivity.launchActivity(this)
     }
 
     private fun initTitle(view: TextView, titleResId: Int, iconResId: Int) {
@@ -246,15 +263,6 @@ internal class SettingsActivity: AppCompatActivity() {
 
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
-    }
-
-    private fun restartApplication() {
-        val intent = packageManager.getLaunchIntentForPackage(packageName)
-        if (intent != null) {
-            val mainIntent = Intent.makeRestartActivityTask(intent.component)
-            startActivity(mainIntent)
-            Runtime.getRuntime().exit(0)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
