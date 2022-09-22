@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="account_deletion_api_key_info">Cette fonctionnalité n\'est pas activée pour toutes les clés API. Veuillez vous rapprocher de votre contact DriveQuant si vous souhaitez modifier cette configuration.</string>
    <string name="account_deletion_confirmation">Supprimer définitivement votre compte ?\nCette action n\'est pas réversible.</string>
    <string name="account_deletion_content_1">Si vous confirmez votre choix, vous serez déconnecté automatiquement et la demande de suppression de compte sera prise en compte.</string>
    <string name="account_deletion_content_2">Vous disposez de 30 jours pour vous reconnecter à l\'application.\n\nSi vous vous reconnectez dans un délai de 30 jours, la demande de suppression de compte sera annulée.\n\nPassé ce délai, si vous ne vous reconnectez pas, toutes vos données seront définitivement supprimées.\n\nLa suppression de vos données n\'est pas réversible.</string>
+   <string name="account_deletion_error_forbidden">La fonctionnalité de suppression de compte n\'est pas activée pour votre clé API.\nVeuillez vous rapprocher de votre contact DriveQuant si vous souhaitez l\'activer.</string>
    <string name="app_name">DriveKit Demo App</string>
    <string name="authentication_description">Pour initialiser le SDK DriveKit, il est indispensable de configurer un identifiant unique pour chaque utilisateur.\n\nNous vous recommandons de saisir un identifiant anonyme et de ne jamais utiliser un numéro de téléphone ou une adresse email.</string>
    <string name="authentication_error">Identifiant invalide</string>

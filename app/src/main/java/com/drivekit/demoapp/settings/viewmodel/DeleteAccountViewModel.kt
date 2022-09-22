@@ -2,6 +2,7 @@ package com.drivekit.demoapp.settings.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
@@ -15,7 +16,13 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
         DriveKitListenerManager.addListener(this)
     }
 
-    var deleteAccountLiveData = MutableLiveData<Boolean>()
+    var accountDeletionError = MutableLiveData<Int>()
+        private set
+
+    var accountDeletionForbidden = MutableLiveData<Int>()
+        private set
+
+    var accountDeletedLiveData = MutableLiveData<Any>()
         private set
 
     fun deleteAccount(instantDeletion: Boolean = false) {
@@ -23,8 +30,14 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
     }
 
     override fun onAccountDeleted(status: DeleteAccountStatus) {
-        deleteAccountLiveData.postValue(status == DeleteAccountStatus.SUCCESS)
-        DriveKitListenerManager.removeListener(this)
+        when (status) {
+            DeleteAccountStatus.SUCCESS -> {
+                accountDeletedLiveData.postValue(Any())
+                DriveKitListenerManager.removeListener(this)
+            }
+            DeleteAccountStatus.FAILED_TO_DELETE -> accountDeletionError.postValue(R.string.dk_common_error_message)
+            DeleteAccountStatus.FORBIDDEN -> accountDeletionForbidden.postValue(R.string.account_deletion_error_forbidden)
+        }
     }
 
     override fun onAuthenticationError(errorType: RequestError) {

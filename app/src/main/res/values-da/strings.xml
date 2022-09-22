@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="account_deletion_api_key_info">Denne funktion er ikke aktiveret for alle API-nøgler. Kontakt din DriveQuant-kontaktperson, hvis du ønsker at ændre denne indstilling.</string>
     <string name="account_deletion_confirmation">Delete your account permanently?\nThis action is not reversible.</string>
     <string name="account_deletion_content_1">If you confirm your choice, you will be automatically logged out and the account deletion request will be taken into account.</string>
     <string name="account_deletion_content_2">You have 30 days to re-login to the application. If you reconnect within 30 days, the account deletion request will be cancelled.\n\nAfter this time, if you do not log back in, all your data will be permanently deleted.\n\nThe deletion of your data is not reversible.</string>
+    <string name="account_deletion_error_forbidden">Funktionen til sletning af konto er ikke aktiveret for din API-nøgle.\nKontakt din DriveQuant-kontaktperson, hvis du ønsker at aktivere den.</string>
     <string name="app_name">DriveKit Demo App</string>
     <string name="authentication_description">To initialize the DriveKit SDK, it is essential to configure a unique identifier for each user.\n\nWe recommend that you enter an anonymous identifier and never use a phone number or an email address.</string>
     <string name="authentication_error">Invalid login</string>

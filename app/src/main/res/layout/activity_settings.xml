@@ -185,6 +185,13 @@
                 android:text="@string/account_deletion_content_1" />
 
             <TextView
+                android:id="@+id/api_info_account_deletion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:text="@string/account_deletion_api_key_info" />
+
+            <TextView
                 android:id="@+id/button_delete_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -195,6 +202,10 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <View
+        android:id="@+id/view_separator_7"
+        style="@style/Separator.Horizontal" />
 
     <TextView
         android:id="@+id/button_logout_account"

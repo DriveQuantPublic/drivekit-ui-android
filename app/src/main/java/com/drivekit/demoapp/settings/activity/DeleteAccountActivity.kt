@@ -38,22 +38,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         checkViewModelInitialization()
 
         button_delete_account.setOnClickListener {
-            val alert = DKAlertDialog.LayoutBuilder().init(this)
-                .layout(R.layout.template_alert_dialog_layout)
-                .cancelable(false)
-                .positiveButton(getString(R.string.dk_common_delete)) { _, _ -> deleteAccount() }
-                .negativeButton(getString(R.string.dk_common_cancel)) { _, _ -> finish() }
-                .show()
-
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            title?.apply {
-                text = getString(R.string.app_name)
-            }
-            description?.apply {
-                text = getString(R.string.account_deletion_confirmation)
-            }
-            alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DriveKitUI.colors.criticalColor())
+            displayAccountDeletionConfirmation()
         }
         button_cancel_account_deletion.setOnClickListener {
             finish()
@@ -62,17 +47,17 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         text_view_explaining_text.setTextColor(DriveKitUI.colors.mainFontColor())
         text_view_warning_text.setTextColor(DriveKitUI.colors.mainFontColor())
 
-        viewModel.deleteAccountLiveData.observe(this) {
+        viewModel.accountDeletionError.observe(this) {
             updateProgressVisibility(false)
-            if (it) {
-                restartApplication()
-            } else {
-                Toast.makeText(
-                    this@DeleteAccountActivity,
-                    getString(R.string.dk_common_error_message),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            Toast.makeText(this@DeleteAccountActivity, getString(it), Toast.LENGTH_SHORT).show()
+        }
+        viewModel.accountDeletionForbidden.observe(this) {
+            updateProgressVisibility(false)
+            displayAccountDeletionError(it)
+        }
+        viewModel.accountDeletedLiveData.observe(this) {
+            updateProgressVisibility(false)
+            restartApplication()
         }
     }
 
@@ -99,6 +84,42 @@ internal class DeleteAccountActivity : AppCompatActivity() {
             } else {
                 View.GONE
             }
+        }
+    }
+
+    private fun displayAccountDeletionConfirmation() {
+        val alert = DKAlertDialog.LayoutBuilder().init(this)
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(getString(R.string.dk_common_delete)) { _, _ -> deleteAccount() }
+            .negativeButton(getString(R.string.dk_common_cancel)) { _, _ -> finish() }
+            .show()
+
+        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+        title?.apply {
+            text = getString(R.string.app_name)
+        }
+        description?.apply {
+            text = getString(R.string.account_deletion_confirmation)
+        }
+        alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DriveKitUI.colors.criticalColor())
+    }
+
+    private fun displayAccountDeletionError(errorMessageResId: Int) {
+        val alert = DKAlertDialog.LayoutBuilder().init(this)
+            .layout(R.layout.template_alert_dialog_layout)
+            .cancelable(false)
+            .positiveButton(getString(R.string.dk_common_ok)) { _, _ -> finish() }
+            .show()
+
+        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
+        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+        title?.apply {
+            text = getString(R.string.app_name)
+        }
+        description?.apply {
+            text = getString(errorMessageResId)
         }
     }
 

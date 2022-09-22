@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="account_deletion_api_key_info">Esta función no está habilitada para todas las claves API. Por favor, póngase en contacto con su contacto de DriveQuant si desea cambiar esta configuración.</string>
    <string name="account_deletion_confirmation">¿Borrar su cuenta definitivamente?\nEsta acción no es reversible.</string>
    <string name="account_deletion_content_1">Si confirma tu elección, se cerrará automáticamente la sesión y se tendrá en cuenta la solicitud de eliminación de tu cuenta.</string>
    <string name="account_deletion_content_2">Tienes 30 días para volver a conectarte a la aplicación. Si te vuelves a conectar antes de los 30 días, se anulará la solicitud de eliminación de tu cuenta.\n\nDespués de este periodo, si no vuelves a conectarte, todos tus datos se borrarán definitivamente.\n\nLa eliminación de sus datos no es reversible.</string>
+   <string name="account_deletion_error_forbidden">La función de eliminación de cuentas no está habilitada para su clave API.\nPor favor, póngase en contacto con su contacto de DriveQuant si desea habilitarlo.</string>
    <string name="app_name">DriveKit Demo App</string>
    <string name="authentication_description">Para inicializar el SDK de DriveKit, es imprescindible configurar un identificador único para cada usuario.\n\nLe recomendamos que introduzca un identificador anónimo y nunca utilice un número de teléfono o una dirección de correo electrónico.</string>
    <string name="authentication_error">Inicio de sesión inválido</string>
