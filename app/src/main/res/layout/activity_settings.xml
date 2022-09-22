@@ -165,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:text="@string/see_settings"
+                android:layout_marginVertical="@dimen/dk_margin"
                 android:textAllCaps="true" />
             <View
                 android:id="@+id/view_separator_6"
@@ -194,9 +195,7 @@
         </LinearLayout>
 
     </ScrollView>
-    <View
-        android:id="@+id/view_separator_8"
-        style="@style/Separator.Horizontal" />
+
     <TextView
         android:id="@+id/button_logout_account"
         android:layout_width="match_parent"

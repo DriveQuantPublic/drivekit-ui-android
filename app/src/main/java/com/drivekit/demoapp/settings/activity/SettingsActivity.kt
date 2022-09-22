@@ -77,7 +77,7 @@ internal class SettingsActivity: AppCompatActivity() {
         initNotificationSection()
         initLogoutSection()
         initDeleteAccountSection()
-        listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5).forEach {
+        listOf(view_separator_1, view_separator_2, view_separator_3, view_separator_4, view_separator_5, view_separator_6).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
         }
         viewModel.updateUserInfoLiveData.observe(this) { success ->

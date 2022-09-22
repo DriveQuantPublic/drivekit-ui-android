@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="account_deletion_confirmation">Supprimer définitivement votre compte ?\nCette action n\'est pas réversible.</string>
+   <string name="account_deletion_content_1">Si vous confirmez votre choix, vous serez déconnecté automatiquement et la demande de suppression de compte sera prise en compte.</string>
+   <string name="account_deletion_content_2">Vous disposez de 30 jours pour vous reconnecter à l\'application.\n\nSi vous vous reconnectez dans un délai de 30 jours, la demande de suppression de compte sera annulée.\n\nPassé ce délai, si vous ne vous reconnectez pas, toutes vos données seront définitivement supprimées.\n\nLa suppression de vos données n\'est pas réversible.</string>
    <string name="app_name">DriveKit Demo App</string>
    <string name="authentication_description">Pour initialiser le SDK DriveKit, il est indispensable de configurer un identifiant unique pour chaque utilisateur.\n\nNous vous recommandons de saisir un identifiant anonyme et de ne jamais utiliser un numéro de téléphone ou une adresse email.</string>
    <string name="authentication_error">Identifiant invalide</string>
    <string name="authentication_header">Identification utilisateur</string>
    <string name="authentication_title">Veuillez renseigner un identifiant unique d\'utilisateur</string>
    <string name="authentication_unique_identifier">Identifiant unique</string>
+   <string name="button_delete_account">Supprimer mon compte</string>
    <string name="button_logout">DÉCONNEXION</string>
    <string name="button_next_step">Passer à l\'étape suivante</string>
    <string name="button_see_documentation">VOIR LA DOCUMENTATION</string>
@@ -16,6 +20,7 @@
    <string name="cancel_trip">Annuler le trajet</string>
    <string name="client_error">Une erreur est survenue, veuillez réessayer ultérieurement.</string>
    <string name="dashboard_header">Tableau de bord</string>
+   <string name="delete_account_header">Suppression de compte</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
    <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -130,6 +135,7 @@
    <string name="parameters_auto_start_disabled">Le mode automatique est en veille. Activez cette fonction si vous souhaitez que l\'application détecte et analyse vos trajets automatiquement.</string>
    <string name="parameters_auto_start_enabled">Le mode automatique est activé. Dans cette configuration, l\'application analyse vos trajets sans intervention manuelle même si elle est en arrière-plan.</string>
    <string name="parameters_auto_start_title">Démarrage automatique</string>
+   <string name="parameters_delete_account_title">Suppression de compte</string>
    <string name="parameters_enter_firstname">Entrez votre prénom</string>
    <string name="parameters_enter_lastname">Entrez votre nom</string>
    <string name="parameters_enter_pseudo">Entrez votre pseudo</string>
