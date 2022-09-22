@@ -3,19 +3,24 @@ package com.drivekit.demoapp.onboarding.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.manager.*
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
+import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.core.networking.RequestError
 
 internal class UserIdViewModel : ViewModel(), DriveKitListener {
+
+    init {
+        DriveKitListenerManager.addListener(this)
+    }
 
     private var listener: UserIdDriveKitListener? = null
     var messageIdentifier: MutableLiveData<Int> = MutableLiveData()
@@ -23,30 +28,33 @@ internal class UserIdViewModel : ViewModel(), DriveKitListener {
     var syncUserInfo: MutableLiveData<Boolean> = MutableLiveData()
 
     fun sendUserId(userId: String, listener: UserIdDriveKitListener) {
-        DriveKitListenerManager.registerListener(this)
         DriveKit.setUserId(userId)
         this.listener = listener
     }
 
     override fun onConnected() {
-        DriveKitListenerManager.unregisterListener(this)
+        DriveKitListenerManager.removeListener(this)
         this.listener?.onSetUserId(true, null)
         this.listener = null
     }
 
     override fun onAuthenticationError(errorType: RequestError) {
-        DriveKitListenerManager.unregisterListener(this)
+        DriveKitListenerManager.removeListener(this)
         this.listener?.onSetUserId(false, errorType)
         this.listener = null
     }
 
     override fun onDisconnected() {
-        DriveKitListenerManager.unregisterListener(this)
+        DriveKitListenerManager.removeListener(this)
         this.listener?.onSetUserId(false, null)
         this.listener = null
     }
 
     override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {
+        // do nothing
+    }
+
+    override fun onAccountDeleted(status: DeleteAccountStatus) {
         // do nothing
     }
 
