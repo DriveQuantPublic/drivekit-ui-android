@@ -51,9 +51,16 @@ class VehicleNameChooserFragment : Fragment() {
         editTextWrapper.editText?.setText(viewModel.getDefaultVehicleName())
         button_validate.button()
         button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
+        button_validate.isEnabled = true
         button_validate.setOnClickListener {
+            viewModel.progressBarObserver.observe(this) { it ->
+                it?.let {
+                    button_validate.isEnabled = !it
+                }
+            }
             viewModel.name = editTextWrapper.editText?.editableText.toString()
             viewModel.computeNextScreen(requireContext(), VehiclePickerStep.NAME)
+
         }
     }
 }
