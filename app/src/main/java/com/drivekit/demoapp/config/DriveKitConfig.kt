@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.drivekit.TripListenerController
-import com.drivekit.demoapp.manager.DriveKitListenerManager
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.drivekitdemoapp.R
@@ -74,7 +73,7 @@ internal object DriveKitConfig {
 
     private fun initializeModules(application: Application) {
         // DriveKit Core Initialization:
-        DriveKit.initialize(application, DriveKitListenerManager)
+        DriveKit.initialize(application)
 
         // TripAnalysis initialization:
         DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
