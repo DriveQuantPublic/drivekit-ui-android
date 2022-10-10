@@ -96,6 +96,7 @@
    <string name="notif_trip_bus_detected_not_displayed">Votre trajet n\'est pas noté car il a été réalisé en bus</string>
    <string name="notif_trip_cancelled_highspeed">Votre trajet a été annulé car vous êtes en train ou en avion</string>
    <string name="notif_trip_cancelled_no_beacon">Votre trajet a été annulé car votre boîtier Bluetooth n\'a pas été détecté</string>
+   <string name="notif_trip_cancelled_no_bluetooth_device">Votre trajet a été annulé car votre appareil Bluetooth n\'a pas été détecté</string>
    <string name="notif_trip_cancelled_no_gps_data">Le trajet n\'a pas pu être analysé car les données GPS n\'ont pas pu être récupérées.</string>
    <string name="notif_trip_cancelled_no_gps_data_title">L\'analyse du trajet n\'est pas possible</string>
    <string name="notif_trip_cancelled_title">Trajet annulé</string>
@@ -107,6 +108,7 @@
    <string name="notif_trip_finished_distraction">Score distraction</string>
    <string name="notif_trip_finished_efficiency">Score d\'efficacité</string>
    <string name="notif_trip_finished_no_beacon">Votre trajet n\'a pas été réalisé avec votre véhicule</string>
+   <string name="notif_trip_finished_no_bluetooth_device">Votre trajet n\'a pas été réalisé avec votre véhicule</string>
    <string name="notif_trip_finished_safety">Score de sécurité</string>
    <string name="notif_trip_finished_title">Nouveau trajet</string>
    <string name="notif_trip_idle_detected">Les données ne correspondent pas à un déplacement en véhicule.</string>
