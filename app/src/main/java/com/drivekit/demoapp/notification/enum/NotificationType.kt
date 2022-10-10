@@ -27,7 +27,8 @@ internal sealed class NotificationType {
             TripAnalysisError.DUPLICATE_TRIP,
             TripAnalysisError.NO_NETWORK,
             TripAnalysisError.NO_API_KEY -> DKNotificationChannel.TRIP_ENDED
-            TripAnalysisError.NO_BEACON -> DKNotificationChannel.TRIP_CANCELLED
+            TripAnalysisError.NO_BEACON,
+            TripAnalysisError.NO_BLUETOOTH_DEVICE -> DKNotificationChannel.TRIP_CANCELLED
         }
         is TRIP_CANCELLED -> DKNotificationChannel.TRIP_CANCELLED
         is TRIP_ENDED -> {
@@ -47,9 +48,11 @@ internal sealed class NotificationType {
             TripAnalysisError.NO_NETWORK -> 205
             TripAnalysisError.NO_API_KEY -> 204
             TripAnalysisError.NO_BEACON -> 252
+            TripAnalysisError.NO_BLUETOOTH_DEVICE -> 253
         }
         is TRIP_CANCELLED -> when (this.reason) {
             TripCancellationReason.NO_BEACON -> 252
+            TripCancellationReason.NO_BLUETOOTH_DEVICE -> 253
             TripCancellationReason.HIGH_SPEED -> 250
             TripCancellationReason.NO_GPS_POINT -> 251
         }
@@ -80,11 +83,13 @@ internal sealed class NotificationType {
         is TRIP_ANALYSIS_ERROR -> when (this.error) {
             TripAnalysisError.DUPLICATE_TRIP,
             TripAnalysisError.NO_BEACON,
+            TripAnalysisError.NO_BLUETOOTH_DEVICE,
             TripAnalysisError.NO_API_KEY -> R.string.app_name
             TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network_title
         }
         is TRIP_CANCELLED -> when (this.reason) {
             TripCancellationReason.NO_BEACON,
+            TripCancellationReason.NO_BLUETOOTH_DEVICE,
             TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_title
             TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data_title
         }
@@ -99,11 +104,13 @@ internal sealed class NotificationType {
             TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network
             TripAnalysisError.NO_API_KEY -> R.string.notif_trip_error_unauthorized
             TripAnalysisError.NO_BEACON -> R.string.notif_trip_finished_no_beacon
+            TripAnalysisError.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_finished_no_bluetooth_device
         }.let {
             context.getString(it)
         }
         is TRIP_CANCELLED -> when (this.reason) {
             TripCancellationReason.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
+            TripCancellationReason.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
             TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_highspeed
             TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data
         }.let {

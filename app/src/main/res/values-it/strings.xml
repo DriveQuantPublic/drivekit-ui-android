@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="account_deletion_api_key_info">Questa funzione non è abilitata per tutte le chiavi API. Se si desidera modificare questa impostazione, contattare il proprio referente DriveQuant.</string>
+   <string name="account_deletion_confirmation">Cancellare il tuo account in modo permanente?\nQuesta azione non è reversibile.</string>
+   <string name="account_deletion_content_1">Se confermate la vostra scelta, sarete automaticamente disconnessi e la richiesta di cancellare il vostro account sarà presa in considerazione.</string>
+   <string name="account_deletion_content_2">Hai 30 giorni di tempo per riconnetterti all\'applicazione. Se ti riconnetti entro 30 giorni, la richiesta di cancellazione del tuo account sarà annullata.\n\nDopo questo periodo, se non effettui nuovamente il login, tutti i tuoi dati saranno cancellati definitivamente.\n\nLa cancellazione dei suoi dati non è reversibile.</string>
+   <string name="account_deletion_error_forbidden">La funzione di cancellazione dell\'account non è abilitata per la vostra key API.\nSe si desidera abilitarlo, contattare il proprio referente DriveQuant.</string>
    <string name="app_name">DriveKit Demo App</string>
    <string name="authentication_description">Per inizializzare l\'SDK DriveKit, è essenziale configurare un identificatore unico per ogni utente.\n\nTi consigliamo di inserire un identificatore anonimo e di non usare mai un numero di telefono o un indirizzo email.</string>
    <string name="authentication_error">Accesso non valido</string>
    <string name="authentication_header">Identificazione dell\'utente</string>
    <string name="authentication_title">Inserisci un ID utente unico</string>
    <string name="authentication_unique_identifier">Identificatore unico</string>
+   <string name="button_delete_account">Cancellare il mio account</string>
    <string name="button_logout">DISCONNETTERE</string>
    <string name="button_next_step">Passare alla fase successiva</string>
    <string name="button_see_documentation">VEDERE LA DOCUMENTAZIONE</string>
@@ -16,6 +22,7 @@
    <string name="cancel_trip">Annulla il viaggio</string>
    <string name="client_error">Si è verificato un errore, si prega di riprovare più tardi.</string>
    <string name="dashboard_header">Dashboard</string>
+   <string name="delete_account_header">Eliminazione dell\'account</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
    <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -89,6 +96,7 @@
    <string name="notif_trip_bus_detected_not_displayed">Il vostro viaggio non è stato notato perché è stato fatto in autobus.</string>
    <string name="notif_trip_cancelled_highspeed">Il tuo viaggio è stato annullato perché viaggi in treno o in aereo</string>
    <string name="notif_trip_cancelled_no_beacon">Il tuo viaggio è stato annullato perché il tuo badge Bluetooth non è stato riconosciuto</string>
+   <string name="notif_trip_cancelled_no_bluetooth_device">Il viaggio è stato annullato perché il dispositivo Bluetooth non è stato rilevato.</string>
    <string name="notif_trip_cancelled_no_gps_data">Il viaggio non può essere analizzato perché i dati GPS non possono essere recuperati.</string>
    <string name="notif_trip_cancelled_no_gps_data_title">L\'analisi del viaggio non è possibile</string>
    <string name="notif_trip_cancelled_title">Viaggio annullato</string>
@@ -100,6 +108,7 @@
    <string name="notif_trip_finished_distraction">Punteggio di distrazione</string>
    <string name="notif_trip_finished_efficiency">Punteggio guida ecologica</string>
    <string name="notif_trip_finished_no_beacon">Il tuo viaggio non è stato fatto con il tuo veicolo</string>
+   <string name="notif_trip_finished_no_bluetooth_device">Il tuo viaggio non è stato fatto con il tuo veicolo</string>
    <string name="notif_trip_finished_safety">Punteggio di sicurezza</string>
    <string name="notif_trip_finished_title">Nuovo viaggio</string>
    <string name="notif_trip_idle_detected">I dati non corrispondono a un viaggio in auto.</string>
@@ -130,6 +139,7 @@
    <string name="parameters_auto_start_disabled">La modalità automatica è in standby. Attivare questa funzione se si desidera che l\'applicazione rilevi e analizzi automaticamente le rotte.</string>
    <string name="parameters_auto_start_enabled">Il modo automatico è attivato. In questa configurazione, l\'applicazione analizza i percorsi senza intervento manuale anche se in background.</string>
    <string name="parameters_auto_start_title">Inizio automatico</string>
+   <string name="parameters_delete_account_title">Eliminazione dell\'account</string>
    <string name="parameters_enter_firstname">Inserisci il tuo nome</string>
    <string name="parameters_enter_lastname">Inserisci il tuo cognome</string>
    <string name="parameters_enter_pseudo">Inserisci il tuo pseudo</string>

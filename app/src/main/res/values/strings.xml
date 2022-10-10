@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="account_deletion_api_key_info">This feature is not enabled for all API keys. Please contact your DriveQuant contact if you are interested in changing this configuration.</string>
+    <string name="account_deletion_confirmation">Delete your account permanently?\nThis action is not reversible.</string>
+    <string name="account_deletion_content_1">If you confirm your choice, you will be automatically logged out and the account deletion request will be taken into account.</string>
+    <string name="account_deletion_content_2">You have 30 days to re-login to the application. If you reconnect within 30 days, the account deletion request will be cancelled.\n\nAfter this time, if you do not log back in, all your data will be permanently deleted.\n\nThe deletion of your data is not reversible.</string>
+    <string name="account_deletion_error_forbidden">The account deletion feature is disabled for your API key.\nPlease contact your DriveQuant contact if you want to enable it.</string>
     <string name="app_name">DriveKit Demo App</string>
     <string name="authentication_description">To initialize the DriveKit SDK, it is essential to configure a unique identifier for each user.\n\nWe recommend that you enter an anonymous identifier and never use a phone number or an email address.</string>
     <string name="authentication_error">Invalid login</string>
     <string name="authentication_header">User identification</string>
     <string name="authentication_title">Please enter a unique user ID</string>
     <string name="authentication_unique_identifier">Unique identifier</string>
+    <string name="button_delete_account">Delete my account</string>
     <string name="button_logout">LOG OUT</string>
     <string name="button_next_step">Go to the next step</string>
     <string name="button_see_documentation">SEE THE DOCUMENTATION</string>
@@ -16,6 +22,7 @@
     <string name="cancel_trip">Cancel the trip</string>
     <string name="client_error">An error has occurred, please try again later.</string>
     <string name="dashboard_header">Dashboard</string>
+    <string name="delete_account_header">Account Deletion</string>
     <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
     <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
     <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
@@ -89,6 +96,7 @@
     <string name="notif_trip_bus_detected_not_displayed">Your trip is not scored because it was made by bus</string>
     <string name="notif_trip_cancelled_highspeed">Your trip has been canceled because you are traveling by train or plane</string>
     <string name="notif_trip_cancelled_no_beacon">Your trip has been canceled because your Bluetooth badge has not been recognized</string>
+    <string name="notif_trip_cancelled_no_bluetooth_device">Your trip has been canceled because your Bluetooth device has not been recognized</string>
     <string name="notif_trip_cancelled_no_gps_data">The trip could not be analyzed because the GPS data could not be retrieved.</string>
     <string name="notif_trip_cancelled_no_gps_data_title">Trip analysis is not possible</string>
     <string name="notif_trip_cancelled_title">Trip cancelled</string>
@@ -100,6 +108,7 @@
     <string name="notif_trip_finished_distraction">Distraction score</string>
     <string name="notif_trip_finished_efficiency">Ecodriving score</string>
     <string name="notif_trip_finished_no_beacon">Your trip has not been made with your vehicle</string>
+    <string name="notif_trip_finished_no_bluetooth_device">Your trip has not been made with your vehicle</string>
     <string name="notif_trip_finished_safety">Safety score</string>
     <string name="notif_trip_finished_title">New trip</string>
     <string name="notif_trip_idle_detected">The trip data does not correspond to a vehicle trip.</string>
@@ -130,6 +139,7 @@
     <string name="parameters_auto_start_disabled">The automatic mode is in idle mode. Enable this function if you want the application to automatically detect and analyze your trips.</string>
     <string name="parameters_auto_start_enabled">The automatic mode is activated. In this configuration, the application analyzes your trips without any manual action even if it is in the background.</string>
     <string name="parameters_auto_start_title">Auto Start</string>
+    <string name="parameters_delete_account_title">Account Deletion</string>
     <string name="parameters_enter_firstname">Enter your first name</string>
     <string name="parameters_enter_lastname">Enter your last name</string>
     <string name="parameters_enter_pseudo">Enter your pseudo</string>
