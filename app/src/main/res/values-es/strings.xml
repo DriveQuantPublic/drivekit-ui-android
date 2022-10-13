@@ -24,7 +24,7 @@
    <string name="dashboard_header">Panel de instrumentos</string>
    <string name="delete_account_header">Eliminación de la cuenta</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
-   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/challenge/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
@@ -39,7 +39,7 @@
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
    <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
    <string name="drivekit_doc_ios_badges">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-badges-categories</string>
-   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/user-interface/ios/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/challenge/user-interface/ios/get-started#display-challenge-list</string>
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
