@@ -55,7 +55,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
             updateProgressVisibility(false)
             displayAccountDeletionError(it)
         }
-        viewModel.accountDeletedLiveData.observe(this) {
+        viewModel.accountDeleted.observe(this) {
             updateProgressVisibility(false)
             restartApplication()
         }
@@ -97,12 +97,8 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-        title?.apply {
-            text = getString(R.string.app_name)
-        }
-        description?.apply {
-            text = getString(R.string.account_deletion_confirmation)
-        }
+        title?.text = getString(R.string.app_name)
+        description?.text = getString(R.string.account_deletion_confirmation)
         alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DriveKitUI.colors.criticalColor())
     }
 
@@ -115,12 +111,8 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-        title?.apply {
-            text = getString(R.string.app_name)
-        }
-        description?.apply {
-            text = getString(errorMessageResId)
-        }
+        title?.text = getString(R.string.app_name)
+        description?.text = getString(errorMessageResId)
     }
 
     override fun onSupportNavigateUp(): Boolean {
