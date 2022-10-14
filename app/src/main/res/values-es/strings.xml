@@ -24,7 +24,7 @@
    <string name="dashboard_header">Panel de instrumentos</string>
    <string name="delete_account_header">Eliminación de la cuenta</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
-   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/challenge/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
@@ -39,7 +39,7 @@
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
    <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
    <string name="drivekit_doc_ios_badges">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-badges-categories</string>
-   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/user-interface/ios/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/challenge/user-interface/ios/get-started#display-challenge-list</string>
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
@@ -96,6 +96,7 @@
    <string name="notif_trip_bus_detected_not_displayed">Su viaje no se nota porque se hizo en autobús.</string>
    <string name="notif_trip_cancelled_highspeed">Su viaje ha sido cancelado porque viaja en tren o avión</string>
    <string name="notif_trip_cancelled_no_beacon">Su viaje ha sido cancelado porque su carcasa Bluetooth no ha sido reconocida</string>
+   <string name="notif_trip_cancelled_no_bluetooth_device">Su viaje se ha cancelado porque no se ha detectado su dispositivo Bluetooth</string>
    <string name="notif_trip_cancelled_no_gps_data">El viaje no pudo analizarse porque no se pudieron recuperar los datos del GPS.</string>
    <string name="notif_trip_cancelled_no_gps_data_title">El análisis de viaje no es posible</string>
    <string name="notif_trip_cancelled_title">Viaje cancelado</string>
@@ -107,6 +108,7 @@
    <string name="notif_trip_finished_distraction">Puntuación de distracción</string>
    <string name="notif_trip_finished_efficiency">Puntuación de conducción ecológica</string>
    <string name="notif_trip_finished_no_beacon">Su viaje no se ha hecho con su vehículo</string>
+   <string name="notif_trip_finished_no_bluetooth_device">Su viaje no se ha hecho con su vehículo</string>
    <string name="notif_trip_finished_safety">Puntuación de seguridad</string>
    <string name="notif_trip_finished_title">Nuevo viaje</string>
    <string name="notif_trip_idle_detected">Los datos no corresponden a un viaje en vehículo.</string>

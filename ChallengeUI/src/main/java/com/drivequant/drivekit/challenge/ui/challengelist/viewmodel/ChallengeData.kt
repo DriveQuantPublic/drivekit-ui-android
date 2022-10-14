@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
-import com.drivequant.drivekit.databaseutils.entity.Group
+import com.drivequant.drivekit.databaseutils.entity.ChallengeGroup
 import java.util.*
 
 class ChallengeData(
@@ -18,7 +18,7 @@ class ChallengeData(
     val isRegistered: Boolean,
     val conditionsFilled: Boolean,
     val driverConditions: Map<String, String>,
-    val groups: List<Group>,
+    val groups: List<ChallengeGroup>,
     val rules: String?,
     val status: ChallengeStatus
 ) {

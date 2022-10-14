@@ -20,7 +20,7 @@ The components available in the Demo application are:
 * **[Driver Data](https://docs.drivequant.com/driver-data/introduction)** manages the driver trips display (list and details) and ensures the synchronisation of driver data. This component also offers ready to use widgets to display information about user's last trips ;
 * **[Vehicle](https://docs.drivequant.com/vehicle/introduction)** is made to select one or more vehicles, to choose the autostart mode for each of them and to manage odometer of each vehicle ;
 * **[Driver Achievement](https://docs.drivequant.com/driver-achievement/introduction)** contains gaming features (ranking, badges and streaks) that measure driver performance and stimulate driver improvement;
-* **[Challenge](https://docs.drivequant.com/introduction)** is used to display the list of challenges, join a challenge or display challenge details.
+* **[Challenge](https://docs.drivequant.com/challenge/introduction)** is used to display the list of challenges, join a challenge or display challenge details.
 
 Before installing the **DriveKit SDK** in your mobile application, we recommend that you do some tests with the Demo application. It's fast and it will save you time. The Demo application has been specially designed to help you discover smartphone telematics. 
 
@@ -57,8 +57,8 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `Gson = 2.7`
 * `Volley = 1.2.1`
 * `Room = 2.4.1`
-* `WorkManager = 2.7.0-rc01`
-* `Play Services = 16.0.0`
+* `WorkManager = 2.7.1`
+* `Play Services = 20.0.0`
 
 
 ### 🧑‍💻 Install and run the Demo app
