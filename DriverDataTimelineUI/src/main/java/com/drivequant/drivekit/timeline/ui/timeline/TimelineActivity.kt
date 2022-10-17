@@ -2,6 +2,7 @@ package com.drivequant.drivekit.timeline.ui.timeline
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -15,6 +16,15 @@ class TimelineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
+        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, TimelineFragment.newInstance())
+            .commit()
+
         tagScreen()
         checkViewModelInitialization()
     }
@@ -28,7 +38,7 @@ class TimelineActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
-        setActivityTitle(DKResource.convertToString(this, "dk_timeline_menu")) //TODO(replace with timeline title)
+        setActivityTitle("Timeline") //TODO(replace with timeline key string)
     }
 
     private fun tagScreen() {
@@ -38,5 +48,10 @@ class TimelineActivity : AppCompatActivity() {
                 "dk_tag_timeline"
             ), javaClass.simpleName
         )
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

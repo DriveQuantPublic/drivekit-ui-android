@@ -25,6 +25,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
@@ -47,7 +48,7 @@ internal object DriveKitConfig {
     // ===============================
     // ↓↓↓ ENTER YOUR API KEY HERE ↓↓↓
     // ===============================
-    private const val apiKey = "W4nDvNst9r7Cd1xmIB1eiZiE"
+    private const val apiKey = ""
 
     private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
 
@@ -90,6 +91,7 @@ internal object DriveKitConfig {
         // UI modules configuration:
         configureCommonUI()
         configureDriverDataUI()
+        configureDriverDataTimelineUI()
         configureVehicleUI()
         configureTripAnalysisUI(context)
         configureDriverAchievementUI()
@@ -136,6 +138,10 @@ internal object DriveKitConfig {
     private fun configureDriverDataUI() {
         DriverDataUI.initialize(tripData = tripData)
         DriverDataUI.enableAlternativeTrips(enableAlternativeTrips)
+    }
+
+    private fun configureDriverDataTimelineUI() {
+        DriverDataTimelineUI.initialize()
     }
 
     private fun configureVehicleUI() {
