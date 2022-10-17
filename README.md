@@ -60,13 +60,14 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `WorkManager = 2.7.1`
 * `Play Services = 20.0.0`
 
-
 ### 🧑‍💻 Install and run the Demo app
 
 * The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get a **DriveKit API key**, contact us at: <contact@drivequant.com>.
 * At the beginning of `DriveKitConfig` class, add your **DriveKit API Key** in the `apiKey` property.
 * Build and run the Demo app on your phone
 
+You can watch the following tutorial video for more details:
+<a href="https://www.loom.com/share/fdc75d440476492eaddab3d278f77299">DriveKit Demo App - Android - Part 1</a>
 
 ### ⚙️ Configure the Demo app
 1. Ensure that you have set the API Key during the previous step. Otherwise, the interface will display an error message.
@@ -77,6 +78,9 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 1. Add your first vehicle to your account.
 1. In order for the app to work properly, it is recommended to disable the battery optimization functions for the application. This is especially important for some Android smartphone models such as Huawei, Samsung, OnePlus, Asus and Xiaomi. You can find more information about it in [our FAQ](https://drivequant.zendesk.com/hc/en-gb/articles/360007407020-How-to-disable-battery-optimization-on-your-smartphone-).
 1. That’s it!
+
+You can watch the following tutorial video for more details:
+<a href="https://www.loom.com/share/d1f5fd8e9f5f43449630a2efc15b8bf8">DriveKit Demo App - Android - Part 2</a>
 
 
 ### 🚗 Test the Demo app
@@ -94,6 +98,9 @@ You can now discover the main screens of the app:
 The best way to become familiar with smartphone telematics is to try the app in real conditions when travelling by car or public transport.
 
 Alternatively, you can perform some tests in the office using the [trip simulator](https://docs.drivequant.com/trip-analysis/trip-simulator) which allows you to reproduce pre-recorded data from real trips.
+
+You can watch the following tutorial video for more details:
+<a href="https://www.loom.com/share/a0a4c55b8fdc4568bec0089feb6bb5a5">DriveKit Demo App - Android - Part 3</a>
 
 We hope you will enjoy discovering the DriveKit SDK. Please feel free to contact us if you have any questions or suggestions. Our goal is to help you save time and leverage the full potential of the DriveKit SDK to boost your product.
 Have fun with DriveKit!
