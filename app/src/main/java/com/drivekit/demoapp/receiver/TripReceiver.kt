@@ -80,6 +80,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
         when (status) {
             CancelTrip.NO_GPS_DATA -> R.string.notif_trip_cancelled_no_gps_data
             CancelTrip.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
+            CancelTrip.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
             else -> R.string.trip_cancelled_reset
         }.let { messageResId ->
             showNotification(context, context.getString(messageResId))
@@ -93,6 +94,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
             CancelTrip.MISSING_CONFIGURATION,
             CancelTrip.RESET,
             CancelTrip.BEACON_NO_SPEED -> null
+            CancelTrip.NO_BLUETOOTH_DEVICE -> TripCancellationReason.NO_BLUETOOTH_DEVICE
         }?.let {
             DKNotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
         }

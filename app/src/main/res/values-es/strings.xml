@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="account_deletion_api_key_info">Esta función no está habilitada para todas las claves API. Por favor, póngase en contacto con su contacto de DriveQuant si desea cambiar esta configuración.</string>
+   <string name="account_deletion_confirmation">¿Borrar su cuenta definitivamente?\nEsta acción no es reversible.</string>
+   <string name="account_deletion_content_1">Si confirma tu elección, se cerrará automáticamente la sesión y se tendrá en cuenta la solicitud de eliminación de tu cuenta.</string>
+   <string name="account_deletion_content_2">Tienes 30 días para volver a conectarte a la aplicación. Si te vuelves a conectar antes de los 30 días, se anulará la solicitud de eliminación de tu cuenta.\n\nDespués de este periodo, si no vuelves a conectarte, todos tus datos se borrarán definitivamente.\n\nLa eliminación de sus datos no es reversible.</string>
+   <string name="account_deletion_error_forbidden">La función de eliminación de cuentas no está habilitada para su clave API.\nPor favor, póngase en contacto con su contacto de DriveQuant si desea habilitarlo.</string>
    <string name="app_name">DriveKit Demo App</string>
    <string name="authentication_description">Para inicializar el SDK de DriveKit, es imprescindible configurar un identificador único para cada usuario.\n\nLe recomendamos que introduzca un identificador anónimo y nunca utilice un número de teléfono o una dirección de correo electrónico.</string>
    <string name="authentication_error">Inicio de sesión inválido</string>
    <string name="authentication_header">Identificación del usuario</string>
    <string name="authentication_title">Por favor, introduzca un ID de usuario único</string>
    <string name="authentication_unique_identifier">Identificador único</string>
+   <string name="button_delete_account">Borrar mi cuenta</string>
    <string name="button_logout">DESCONECTAR</string>
    <string name="button_next_step">Pasar al siguiente paso</string>
    <string name="button_see_documentation">VER LA DOCUMENTACIÓN</string>
@@ -16,8 +22,9 @@
    <string name="cancel_trip">Cancelar el viaje</string>
    <string name="client_error">Se ha producido un error, inténtelo de nuevo más tarde.</string>
    <string name="dashboard_header">Panel de instrumentos</string>
+   <string name="delete_account_header">Eliminación de la cuenta</string>
    <string name="drivekit_doc_android_badges">https://docs.drivequant.com/driver-achievement/user-interface/android#select-badges-categories</string>
-   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/user-interface/android/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_android_challenges">https://docs.drivequant.com/challenge/user-interface/android/get-started#display-challenge-list</string>
    <string name="drivekit_doc_android_diag">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#sdk-diagnosis</string>
    <string name="drivekit_doc_android_driver_data">https://docs.drivequant.com/driver-data/user-interface/android/get-started</string>
    <string name="drivekit_doc_android_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-android</string>
@@ -32,7 +39,7 @@
    <string name="drivekit_doc_android_vehicle_list">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-list</string>
    <string name="drivekit_doc_android_working_hours">https://docs.drivequant.com/trip-analysis/user-interface/android/get-started#working-hours</string>
    <string name="drivekit_doc_ios_badges">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-badges-categories</string>
-   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/user-interface/ios/get-started#display-challenge-list</string>
+   <string name="drivekit_doc_ios_challenges">https://docs.drivequant.com/challenge/user-interface/ios/get-started#display-challenge-list</string>
    <string name="drivekit_doc_ios_diag">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#sdk-diagnosis</string>
    <string name="drivekit_doc_ios_driver_data">https://docs.drivequant.com/driver-data/user-interface/ios/get-started</string>
    <string name="drivekit_doc_ios_github_ui">https://github.com/DriveQuantPublic/drivekit-ui-ios</string>
@@ -89,6 +96,7 @@
    <string name="notif_trip_bus_detected_not_displayed">Su viaje no se nota porque se hizo en autobús.</string>
    <string name="notif_trip_cancelled_highspeed">Su viaje ha sido cancelado porque viaja en tren o avión</string>
    <string name="notif_trip_cancelled_no_beacon">Su viaje ha sido cancelado porque su carcasa Bluetooth no ha sido reconocida</string>
+   <string name="notif_trip_cancelled_no_bluetooth_device">Su viaje se ha cancelado porque no se ha detectado su dispositivo Bluetooth</string>
    <string name="notif_trip_cancelled_no_gps_data">El viaje no pudo analizarse porque no se pudieron recuperar los datos del GPS.</string>
    <string name="notif_trip_cancelled_no_gps_data_title">El análisis de viaje no es posible</string>
    <string name="notif_trip_cancelled_title">Viaje cancelado</string>
@@ -100,6 +108,7 @@
    <string name="notif_trip_finished_distraction">Puntuación de distracción</string>
    <string name="notif_trip_finished_efficiency">Puntuación de conducción ecológica</string>
    <string name="notif_trip_finished_no_beacon">Su viaje no se ha hecho con su vehículo</string>
+   <string name="notif_trip_finished_no_bluetooth_device">Su viaje no se ha hecho con su vehículo</string>
    <string name="notif_trip_finished_safety">Puntuación de seguridad</string>
    <string name="notif_trip_finished_title">Nuevo viaje</string>
    <string name="notif_trip_idle_detected">Los datos no corresponden a un viaje en vehículo.</string>
@@ -130,6 +139,7 @@
    <string name="parameters_auto_start_disabled">El modo automático está en espera. Active esta función si desea que la aplicación detecte y analice automáticamente sus rutas.</string>
    <string name="parameters_auto_start_enabled">El modo automático está activado. En esta configuración, la aplicación analiza sus rutas sin intervención manual, incluso si está en segundo plano.</string>
    <string name="parameters_auto_start_title">Inicio automático</string>
+   <string name="parameters_delete_account_title">Eliminación de la cuenta</string>
    <string name="parameters_enter_firstname">Introduzca su nombre de pila</string>
    <string name="parameters_enter_lastname">Introduzca su apellido</string>
    <string name="parameters_enter_pseudo">Introduzca su seudónimo</string>

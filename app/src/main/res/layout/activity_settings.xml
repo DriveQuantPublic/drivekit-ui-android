@@ -165,12 +165,50 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
                 android:text="@string/see_settings"
+                android:layout_marginVertical="@dimen/dk_margin"
                 android:textAllCaps="true" />
+            <View
+                android:id="@+id/view_separator_6"
+                style="@style/Separator.Horizontal" />
+            <TextView
+                android:id="@+id/title_account_deletion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dk_margin" />
+
+            <TextView
+                android:id="@+id/description_account_deletion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:text="@string/account_deletion_content_1" />
+
+            <TextView
+                android:id="@+id/api_info_account_deletion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:text="@string/account_deletion_api_key_info" />
+
+            <TextView
+                android:id="@+id/button_delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:textAllCaps="true"
+                android:text="@string/button_delete_account" />
         </LinearLayout>
+
     </ScrollView>
 
+    <View
+        android:id="@+id/view_separator_7"
+        style="@style/Separator.Horizontal" />
+
     <TextView
-        android:id="@+id/button_delete_account"
+        android:id="@+id/button_logout_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
