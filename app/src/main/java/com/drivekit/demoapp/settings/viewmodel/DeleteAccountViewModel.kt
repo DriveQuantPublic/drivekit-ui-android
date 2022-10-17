@@ -16,14 +16,9 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
         DriveKitListenerManager.addListener(this)
     }
 
-    var accountDeletionError = MutableLiveData<Int>()
-        private set
-
-    var accountDeletionForbidden = MutableLiveData<Int>()
-        private set
-
-    var accountDeletedLiveData = MutableLiveData<Any>()
-        private set
+    val accountDeletionError = MutableLiveData<Int>()
+    val accountDeletionForbidden = MutableLiveData<Int>()
+    val accountDeleted = MutableLiveData<Any>()
 
     fun deleteAccount(instantDeletion: Boolean = false) {
         DriveKit.deleteAccount(instantDeletion)
@@ -32,7 +27,7 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
     override fun onAccountDeleted(status: DeleteAccountStatus) {
         when (status) {
             DeleteAccountStatus.SUCCESS -> {
-                accountDeletedLiveData.postValue(Any())
+                accountDeleted.postValue(Any())
                 DriveKitListenerManager.removeListener(this)
             }
             DeleteAccountStatus.FAILED_TO_DELETE -> accountDeletionError.postValue(R.string.dk_common_error_message)
