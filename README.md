@@ -57,7 +57,7 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `Gson = 2.7`
 * `Volley = 1.2.1`
 * `Room = 2.4.1`
-* `WorkManager = 2.7.0-rc01`
+* `WorkManager = 2.7.1`
 * `Play Services = 16.0.0`
 
 
