@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Timeline
@@ -15,7 +15,9 @@ internal class TimelineViewModel : ViewModel() {
 
     var selectedTimelineScoreType: TimelineScoreData
     var timelineScoreTypes = mutableListOf<TimelineScoreData>()
-    var selectedTimelinePeriods = mutableListOf<DKTimelinePeriod>()
+    var selectedTimelinePeriod = mutableListOf<DKTimelinePeriod>()
+
+    val timelineDataLiveData: MutableLiveData<List<Timeline>> = MutableLiveData()
 
     init {
         for (score in DriverDataTimelineUI.scores) {
@@ -29,18 +31,18 @@ internal class TimelineViewModel : ViewModel() {
                 DKTimelineScore.SAFETY
             )
         }
-        selectedTimelinePeriods.addAll(DKTimelinePeriod.values())
+        selectedTimelinePeriod.addAll(DKTimelinePeriod.values())
     }
 
     fun fetchTimeline() {
         DriveKitDriverData.getTimelines(
-            periods = selectedTimelinePeriods,
+            periods = selectedTimelinePeriod,
             listener = object: TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
                     timelines: List<Timeline>
                 ) {
-                    Log.e("TEST",timelines[0].period.name)
+                    timelineDataLiveData.postValue(timelines)
                 }
             },
             synchronizationType = SynchronizationType.DEFAULT

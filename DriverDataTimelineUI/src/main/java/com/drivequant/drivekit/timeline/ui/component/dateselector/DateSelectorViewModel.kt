@@ -1,13 +1,13 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.timeline.ui.component.TimelinePeriod
+import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import java.util.*
 
 internal class DateSelectorViewModel: ViewModel() {
 
     private var dates : List<Date> = mutableListOf()
-    private var period = TimelinePeriod.MONTH
+    private var period = DKTimelinePeriod.MONTH
     private var selectedDateIndex: Int = 0
 
     var listener : DateSelectorListener? = null

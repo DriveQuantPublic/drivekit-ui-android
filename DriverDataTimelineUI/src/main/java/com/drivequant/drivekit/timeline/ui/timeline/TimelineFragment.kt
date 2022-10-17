@@ -30,6 +30,11 @@ class TimelineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkViewModelInitialization()
         setupTabLayout()
+
+        viewModel.timelineDataLiveData.observe(this) {
+            updateProgressVisibility(false)
+            // TODO()
+        }
     }
 
     override fun onResume() {
@@ -68,6 +73,7 @@ class TimelineFragment : Fragment() {
                         DriverDataTimelineUI.scores[tab_layout_timeline.selectedTabPosition]
                     updateTimeline()
                 }
+
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
