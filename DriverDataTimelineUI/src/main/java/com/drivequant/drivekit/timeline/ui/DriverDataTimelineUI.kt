@@ -2,18 +2,24 @@ package com.drivequant.drivekit.timeline.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
+import com.drivequant.drivekit.core.access.AccessType
+import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
+import com.drivequant.drivekit.timeline.ui.timeline.TimelineFragment
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
+import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailFragment
 
 object DriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
 
     internal const val TAG = "DriveKit Driver Data Timeline UI"
 
+    var scores: List<DKTimelineScore> = DKTimelineScore.values().toList()
+        get() = field.filter { it.hasAccess() }
+
     fun initialize() {
-       DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
+        DriveKitNavigationController.driverDataTimelineUIEntryPoint = this
     }
 
     override fun startTimelineActivity(context: Context) {
@@ -28,11 +34,27 @@ object DriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
         context.startActivity(intent)
     }
 
-    override fun createTimelineFragment(): Fragment {
-         TODO()
+    override fun createTimelineFragment() = TimelineFragment.newInstance()
+
+    override fun createTimelineDetailFragment() = TimelineDetailFragment.newInstance()
+}
+
+enum class DKTimelineScore {
+    SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
+
+    fun getIconResId() = when (this) {
+        DISTRACTION -> "dk_timeline_distraction"
+        ECO_DRIVING -> "dk_timeline_ecodriving"
+        SAFETY -> "dk_timeline_safety"
+        SPEEDING -> "dk_timeline_speeding"
     }
 
-    override fun createTimelineDetailFragment(): Fragment {
-         TODO()
+    fun hasAccess() = when (this) {
+        SAFETY -> AccessType.SAFETY
+        ECO_DRIVING -> AccessType.ECODRIVING
+        DISTRACTION -> AccessType.PHONE_DISTRACTION
+        SPEEDING -> AccessType.SPEEDING
+    }.let {
+        DriveKitAccess.hasAccess(it)
     }
 }

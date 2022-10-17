@@ -11,11 +11,15 @@ import com.drivequant.drivekit.timeline.ui.R
 
 class TimelineActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: TimelineViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
+
+        tagScreen()
+        setupUi()
+    }
+
+    private fun setupUi() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -24,21 +28,6 @@ class TimelineActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, TimelineFragment.newInstance())
             .commit()
-
-        tagScreen()
-        checkViewModelInitialization()
-    }
-
-    private fun checkViewModelInitialization() {
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(TimelineViewModel::class.java)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkViewModelInitialization()
-        setActivityTitle("Timeline") //TODO(replace with timeline key string)
     }
 
     private fun tagScreen() {
@@ -48,6 +37,11 @@ class TimelineActivity : AppCompatActivity() {
                 "dk_tag_timeline"
             ), javaClass.simpleName
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActivityTitle("Timeline") //TODO(replace with timeline key string)
     }
 
     override fun onSupportNavigateUp(): Boolean {
