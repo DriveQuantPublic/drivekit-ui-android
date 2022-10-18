@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
-import com.drivequant.drivekit.core.access.AccessType
-import com.drivequant.drivekit.core.access.DriveKitAccess
+import com.drivequant.drivekit.timeline.ui.timeline.DKTimelineScore
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineFragment
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
@@ -44,24 +43,4 @@ object DriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
     override fun createTimelineFragment() = TimelineFragment.newInstance()
 
     override fun createTimelineDetailFragment() = TimelineDetailFragment.newInstance()
-}
-
-enum class DKTimelineScore {
-    SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
-
-    fun getIconResId() = when (this) {
-        DISTRACTION -> "dk_timeline_distraction"
-        ECO_DRIVING -> "dk_timeline_ecodriving"
-        SAFETY -> "dk_timeline_safety"
-        SPEEDING -> "dk_timeline_speeding"
-    }
-
-    fun hasAccess() = when (this) {
-        SAFETY -> AccessType.SAFETY
-        ECO_DRIVING -> AccessType.ECODRIVING
-        DISTRACTION -> AccessType.PHONE_DISTRACTION
-        SPEEDING -> AccessType.SPEEDING
-    }.let {
-        DriveKitAccess.hasAccess(it)
-    }
 }

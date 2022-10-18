@@ -9,6 +9,6 @@
         android:gravity="center"
         android:paddingEnd="@dimen/dk_margin_medium"
         android:paddingStart="@dimen/dk_margin_medium"
-        android:background="@drawable/dk_timeline_rounded_edges" />
+        android:background="@drawable/dk_rounded_edges" />
 </LinearLayout>
 
