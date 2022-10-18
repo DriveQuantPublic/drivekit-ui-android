@@ -15,8 +15,15 @@ object DriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
 
     internal const val TAG = "DriveKit Driver Data Timeline UI"
 
-    var scores: List<DKTimelineScore> = DKTimelineScore.values().toList()
+    var timelineScores: List<DKTimelineScore> =
+        mutableListOf(DKTimelineScore.DISTRACTION, DKTimelineScore.SAFETY)
         get() = field.filter { it.hasAccess() }
+        set(value) {
+            if (value.isEmpty()) {
+                val timelineScores = mutableListOf<DKTimelineScore>()
+                timelineScores.add(DKTimelineScore.SAFETY)
+            }
+        }
 
     fun initialize() {
         DriveKitNavigationController.driverDataTimelineUIEntryPoint = this

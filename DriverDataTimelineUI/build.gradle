@@ -24,6 +24,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"

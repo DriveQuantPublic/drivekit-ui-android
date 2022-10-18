@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 
@@ -28,28 +29,43 @@ class TimelineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         checkViewModelInitialization()
-        setupTabLayout()
+        displayTabLayout()
+        displayDateContainer()
+        displayGraphContainer()
+        displayPeriodContainer()
+        displayRoadContextContainer()
+
+        displayTimelineDetail()
+        updateTimeline()
+
+        viewModel.syncStatus.observe(this) {
+            updateProgressVisibility(false)
+            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+        }
 
         viewModel.timelineDataLiveData.observe(this) {
-            updateProgressVisibility(false)
-            // TODO()
+            Toast.makeText(context, it.period.name, Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkViewModelInitialization()
+    private fun displayTimelineDetail() {
+        button_display_timeline_detail.setOnClickListener {
+            TimelineDetailActivity.launchActivity(requireActivity())
+        }
     }
 
-    private fun setupTabLayout() {
-        for (timelineScoreType in viewModel.timelineScoreTypes) {
-            val tab = tab_layout_timeline.newTab()
-            val icon = DKResource.convertToDrawable(requireContext(), timelineScoreType.iconId)
-            icon?.let {
-                tab.setIcon(it)
+    private fun displayTabLayout() {
+        context?.let { context ->
+            viewModel.timelineScoreTypes.forEach {
+                val tab = tab_layout_timeline.newTab()
+                val icon = DKResource.convertToDrawable(context, it.getIconResId())
+                icon?.let { drawable ->
+                    tab.setIcon(drawable)
+                }
+                tab_layout_timeline.addTab(tab)
             }
-            tab_layout_timeline.addTab(tab)
         }
 
         for (i in 0 until tab_layout_timeline.tabCount) {
@@ -57,9 +73,10 @@ class TimelineFragment : Fragment() {
             tab?.setCustomView(R.layout.dk_icon_view_tab)
         }
 
-        if (DriverDataTimelineUI.scores.size < 2) {
+        if (viewModel.timelineScoreTypes.size < 2) {
             tab_layout_timeline.visibility = View.GONE
         }
+
         tab_layout_timeline.apply {
             setBackgroundColor(
                 ContextCompat.getColor(
@@ -67,20 +84,36 @@ class TimelineFragment : Fragment() {
                     R.color.dkTimelineBackgroundColor
                 )
             )
+
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    viewModel.selectedTimelineScoreType.scoreType =
-                        DriverDataTimelineUI.scores[tab_layout_timeline.selectedTabPosition]
-                    updateTimeline()
+                    viewModel.updateTimelineScore(
+                        tab_layout_timeline.selectedTabPosition
+                    )
                 }
-
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
         }
     }
 
-    fun updateTimeline() {
+    private fun displayPeriodContainer() {
+        TODO()
+    }
+
+    private fun displayGraphContainer() {
+        TODO()
+    }
+
+    private fun displayDateContainer() {
+        TODO()
+    }
+
+    private fun displayRoadContextContainer() {
+        TODO()
+    }
+
+    private fun updateTimeline() {
         updateProgressVisibility(true)
         viewModel.fetchTimeline()
     }
@@ -99,5 +132,10 @@ class TimelineFragment : Fragment() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(this).get(TimelineViewModel::class.java)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkViewModelInitialization()
     }
 }
