@@ -35,6 +35,8 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         super.onViewCreated(view, savedInstanceState)
 
         checkViewModelInitialization()
+        setupSwipeToRefresh()
+
         displayTabLayout()
         displayDateContainer()
         displayGraphContainer()
@@ -139,6 +141,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
                 View.GONE
             }
         }
+        updateSwipeRefreshTripsVisibility(displayProgress)
     }
 
     private fun checkViewModelInitialization() {
@@ -161,5 +164,21 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
                   it.setPeriodSelected(false)
               }
           }
+    }
+
+    private fun setupSwipeToRefresh() {
+        updateSwipeRefreshTripsVisibility(false)
+        dk_swipe_refresh_timeline.setOnRefreshListener {
+            updateTimeline()
+        }
+    }
+
+    private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
+        if (display) {
+            dk_swipe_refresh_timeline.isRefreshing = display
+        } else {
+            dk_swipe_refresh_timeline.visibility = View.VISIBLE
+            dk_swipe_refresh_timeline.isRefreshing = display
+        }
     }
 }

@@ -25,6 +25,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.timeline.ui.DKTimelineScore
 import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -142,6 +143,8 @@ internal object DriveKitConfig {
 
     private fun configureDriverDataTimelineUI() {
         DriverDataTimelineUI.initialize()
+        //DriverDataTimelineUI.scoresType = listOf(DKTimelineScore.ECO_DRIVING, DKTimelineScore.SPEEDING)
+
     }
 
     private fun configureVehicleUI() {

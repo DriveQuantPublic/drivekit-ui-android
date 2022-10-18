@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".timeline.TimelineFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/dk_swipe_refresh_timeline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
     <LinearLayout
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -72,7 +79,7 @@
             android:textColor="#000" />
 
     </LinearLayout>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <ProgressBar
         android:id="@+id/progress_circular"
         style="@style/Widget.AppCompat.ProgressBar"
