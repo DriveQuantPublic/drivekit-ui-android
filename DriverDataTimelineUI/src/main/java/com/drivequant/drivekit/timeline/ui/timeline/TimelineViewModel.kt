@@ -24,7 +24,7 @@ internal class TimelineViewModel : ViewModel() {
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData(TimelineSyncStatus.NO_ERROR)
 
     init {
-        timelineScoreTypes.addAll(DriverDataTimelineUI.timelineScores)
+        timelineScoreTypes.addAll(DriverDataTimelineUI.scoresType)
         timelinePeriodTypes.addAll(DKTimelinePeriod.values().toList())
 
         selectedTimelineScoreType = timelineScoreTypes.first()
@@ -48,7 +48,6 @@ internal class TimelineViewModel : ViewModel() {
 
     private fun updateTimeline() {
         val periods = listOf(selectedTimelinePeriod)
-
         DriveKitDriverData.getTimelines(
             periods = periods,
             listener = object : TimelineQueryListener {
@@ -68,8 +67,9 @@ internal class TimelineViewModel : ViewModel() {
         )
     }
 
-    fun updateTimelinePeriod(position: Int) {
-        selectedTimelinePeriod = timelinePeriodTypes[position]
+    fun updateTimelinePeriod(period: DKTimelinePeriod) {
+        selectedTimelinePeriod = period
+        Log.e("TEST", selectedTimelinePeriod.name)
         updateTimeline()
     }
 
@@ -191,4 +191,10 @@ fun Timeline.toTimelineData() = TimelineData(
 fun TimelinePeriod.toDKTimelinePeriod() = when (this) {
     TimelinePeriod.WEEK -> DKTimelinePeriod.WEEK
     TimelinePeriod.MONTH -> DKTimelinePeriod.MONTH
+}
+
+//TODO (Replace with title resId)
+fun DKTimelinePeriod.getTitleResId() = when(this) {
+    DKTimelinePeriod.WEEK -> "Par semaine"
+    DKTimelinePeriod.MONTH -> "Par mois"
 }

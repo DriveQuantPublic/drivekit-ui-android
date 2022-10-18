@@ -9,14 +9,18 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorListener
+import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 
-class TimelineFragment : Fragment() {
+class TimelineFragment : Fragment(), PeriodSelectorListener {
 
     private lateinit var viewModel: TimelineViewModel
+    private val periodSelectorViews = mutableListOf<PeriodSelectorView>()
 
     companion object {
         fun newInstance() = TimelineFragment()
@@ -39,7 +43,10 @@ class TimelineFragment : Fragment() {
 
         displayTimelineDetail()
         updateTimeline()
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewModel.syncStatus.observe(this) {
             updateProgressVisibility(false)
             Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
@@ -98,19 +105,25 @@ class TimelineFragment : Fragment() {
     }
 
     private fun displayPeriodContainer() {
-        TODO()
+        periodSelectorViews.addAll(viewModel.timelinePeriodTypes.map {
+            PeriodSelectorView(requireContext(), it, this)
+        })
+        periodSelectorViews.forEach {
+            period_container.addView(it)
+        }
+        periodSelectorViews.first().setPeriodSelected(true)
     }
 
     private fun displayGraphContainer() {
-        TODO()
+        // TODO()
     }
 
     private fun displayDateContainer() {
-        TODO()
+        // TODO()
     }
 
     private fun displayRoadContextContainer() {
-        TODO()
+        // TODO()
     }
 
     private fun updateTimeline() {
@@ -137,5 +150,16 @@ class TimelineFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
+    }
+
+    override fun onSelectPeriod(period: DKTimelinePeriod) {
+          periodSelectorViews.forEach {
+              if (period == it.timelinePeriod) {
+                  it.setPeriodSelected(true)
+                  viewModel.updateTimelinePeriod(period)
+              } else {
+                  it.setPeriodSelected(false)
+              }
+          }
     }
 }
