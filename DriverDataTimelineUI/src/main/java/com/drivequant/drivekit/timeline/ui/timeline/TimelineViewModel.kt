@@ -22,7 +22,7 @@ internal class TimelineViewModel : ViewModel() {
     var timelinePeriodTypes = mutableListOf<DKTimelinePeriod>()
 
     val timelineDataLiveData: MutableLiveData<TimelineData> = MutableLiveData()
-    val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData(TimelineSyncStatus.NO_ERROR)
+    val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
     init {
         timelineScoreTypes.addAll(DriverDataTimelineUI.scoresType)
