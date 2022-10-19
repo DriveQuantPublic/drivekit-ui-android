@@ -12,8 +12,13 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
+import java.util.*
 
 internal class TimelineViewModel : ViewModel() {
+
+    companion object {
+        const val MONTHS_NUMBER_PER_YEAR = 12
+    }
 
     private var selectedTimelineScoreType: DKTimelineScore
     private var selectedTimelinePeriod: DKTimelinePeriod
@@ -78,6 +83,81 @@ internal class TimelineViewModel : ViewModel() {
         selectedTimelineScoreType = timelineScoreTypes[position]
         Log.e("TEST", selectedTimelineScoreType.name)
         updateTimeline()
+    }
+
+    private fun transformTimelineData(dates :List<String>) {
+        var fromIndex = 0
+        var toIndex: Int
+        val resultMonths = mutableListOf<List<Int>>()
+        val resultDates = mutableListOf<List<String>>()
+
+        val years = dates.map { it.substringBefore("-") }
+        val months = dates.map { it.substringAfter("-").substringBefore("-").toInt() }
+
+        getYearsOccurrence(years).forEach { occurrence ->
+            toIndex = fromIndex + occurrence
+            resultMonths.add(months.subList(fromIndex, toIndex))
+            resultDates.add(dates.subList(fromIndex, toIndex))
+            fromIndex = toIndex
+        }
+
+        addMissingMonths(resultDates, years.distinct(), getMissingMonths(resultMonths))
+
+    }
+
+    private fun getYearsOccurrence(years: List<String>): List<Int> {
+        val yearOccurrence = mutableListOf<Int>()
+        years.distinct().forEach { year ->
+            yearOccurrence.add(Collections.frequency(years, year))
+        }
+        return yearOccurrence
+    }
+
+    private fun addMissingMonths(
+        resultDates: List<List<String>>,
+        years: List<String>,
+        missingMonthsPerYear: List<List<Int>>
+    ) : List<List<String>> {
+        val newDates = mutableListOf<MutableList<String>>()
+        newDates.addAll(resultDates.map { it.toMutableList() })
+
+        for (i in newDates.indices) {
+            missingMonthsPerYear[i].forEach {
+                var str = "$it"
+                if (it < 10) {
+                    str = "0$it"
+                }
+                newDates[i].add(it - 1, "${years[i]}-$str-01T12:00:00.000+00:00")
+            }
+        }
+        return newDates
+    }
+
+    fun getMissingIndex(missingMonths: List<Int>) = missingMonths.map { it - 1 }
+
+    private fun getMissingNumbers(numbers: List<Int>, length: Int): List<Int> {
+        val temp = IntArray(length + 1)
+        val missingNumbers = mutableListOf<Int>()
+        for (i in 0 until length) {
+            temp[i] = 0
+        }
+        for (element in numbers) {
+            temp[element - 1] = 1
+        }
+        for (i in 0 until length) {
+            if (temp[i] == 0) {
+                missingNumbers.add(i + 1)
+            }
+        }
+        return missingNumbers
+    }
+
+    private fun getMissingMonths(monthsPerYear: List<List<Int>>): List<List<Int>> {
+        val missingMonths = mutableListOf<List<Int>>()
+        monthsPerYear.forEach {
+            missingMonths.add(getMissingNumbers(it, MONTHS_NUMBER_PER_YEAR))
+        }
+        return missingMonths
     }
 }
 
