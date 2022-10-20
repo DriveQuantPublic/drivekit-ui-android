@@ -66,6 +66,7 @@ internal class TimelineViewModel : ViewModel() {
                         timelineDataLiveData.postValue(
                             timelinesData[0]
                         )
+                        transformTimelineData(timelines[0].toTimelineData().allContext.date)
                     }
                 }
             },
@@ -85,66 +86,66 @@ internal class TimelineViewModel : ViewModel() {
         updateTimeline()
     }
 
-    private fun transformTimelineData(dates :List<String>) {
+    private fun transformTimelineData(dates :List<String>): List<String> {
         var fromIndex = 0
         var toIndex: Int
-        val resultMonths = mutableListOf<List<Int>>()
-        val resultDates = mutableListOf<List<String>>()
+        val monthsPerYear = mutableListOf<List<Int>>()
+        val datesPerYear = mutableListOf<List<String>>()
 
         val years = dates.map { it.substringBefore("-") }
         val months = dates.map { it.substringAfter("-").substringBefore("-").toInt() }
 
-        getYearsOccurrence(years).forEach { occurrence ->
-            toIndex = fromIndex + occurrence
-            resultMonths.add(months.subList(fromIndex, toIndex))
-            resultDates.add(dates.subList(fromIndex, toIndex))
+        computeYearsOccurrence(years).entries.forEach {
+            toIndex = fromIndex + it.value
+            monthsPerYear.add(months.subList(fromIndex, toIndex))
+            datesPerYear.add(dates.subList(fromIndex, toIndex))
             fromIndex = toIndex
         }
 
-        addMissingMonths(resultDates, years.distinct(), getMissingMonths(resultMonths))
-
+        return addMissingMonths(
+            datesPerYear,
+            computeMissingMonthsPerYear(monthsPerYear),
+            years.distinct())
     }
 
-    private fun getYearsOccurrence(years: List<String>): List<Int> {
-        val yearOccurrence = mutableListOf<Int>()
+    private fun computeYearsOccurrence(years: List<String>): Map<String,Int> {
+        val map = mutableMapOf<String, Int>()
         years.distinct().forEach { year ->
-            yearOccurrence.add(Collections.frequency(years, year))
+            map[year] = Collections.frequency(years, year)
         }
-        return yearOccurrence
+        return map
     }
 
     private fun addMissingMonths(
-        resultDates: List<List<String>>,
+        datesPerYear: List<List<String>>,
+        missingMonthsPerYear: List<List<Int>>,
         years: List<String>,
-        missingMonthsPerYear: List<List<Int>>
-    ) : List<List<String>> {
-        val newDates = mutableListOf<MutableList<String>>()
-        newDates.addAll(resultDates.map { it.toMutableList() })
+    ) : List<String> {
+        val dates = mutableListOf<MutableList<String>>()
+        dates.addAll(datesPerYear.map { it.toMutableList() })
 
-        for (i in newDates.indices) {
+        for (i in dates.indices) {
             missingMonthsPerYear[i].forEach {
                 var str = "$it"
                 if (it < 10) {
                     str = "0$it"
                 }
-                newDates[i].add(it - 1, "${years[i]}-$str-01T12:00:00.000+00:00")
+                dates[i].add(it, "${years[i]}-$str-01T12:00:00.000+00:00")
             }
         }
-        return newDates
+        return dates.flatten()
     }
 
-    fun getMissingIndex(missingMonths: List<Int>) = missingMonths.map { it - 1 }
-
-    private fun getMissingNumbers(numbers: List<Int>, length: Int): List<Int> {
-        val temp = IntArray(length + 1)
+    private fun findMissingNumbers(numbers: List<Int>, size: Int): List<Int> {
+        val temp = IntArray(size + 1)
         val missingNumbers = mutableListOf<Int>()
-        for (i in 0 until length) {
+        for (i in 0 until size) {
             temp[i] = 0
         }
         for (element in numbers) {
             temp[element - 1] = 1
         }
-        for (i in 0 until length) {
+        for (i in 0 until size) {
             if (temp[i] == 0) {
                 missingNumbers.add(i + 1)
             }
@@ -152,10 +153,10 @@ internal class TimelineViewModel : ViewModel() {
         return missingNumbers
     }
 
-    private fun getMissingMonths(monthsPerYear: List<List<Int>>): List<List<Int>> {
+    private fun computeMissingMonthsPerYear(monthsPerYear: List<List<Int>>): List<List<Int>> {
         val missingMonths = mutableListOf<List<Int>>()
         monthsPerYear.forEach {
-            missingMonths.add(getMissingNumbers(it, MONTHS_NUMBER_PER_YEAR))
+            missingMonths.add(findMissingNumbers(it, MONTHS_NUMBER_PER_YEAR))
         }
         return missingMonths
     }
