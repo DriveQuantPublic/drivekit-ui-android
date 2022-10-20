@@ -1,3 +1,8 @@
 <resources>
     <string name="dk_timeline_menu">Timeline</string>
+
+    <string name="dk_road_context_urbain_dense">Urbain dense</string>
+    <string name="dk_road_context_urbain_fluid">Urbain fluid</string>
+    <string name="dk_road_context_extra_urbain">Extra urbain</string>
+    <string name="dk_road_context_highway">Voies rapides</string>
 </resources>

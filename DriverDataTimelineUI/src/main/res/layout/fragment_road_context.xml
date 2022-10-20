@@ -1,7 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".component.graph.TimelineGraphFragment">
-</FrameLayout>
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/dk_margin"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dk_margin">
+
+        <TextView
+            android:id="@+id/text_view_road_context_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:text="Context routier (103 km)" />
+
+        <com.drivequant.drivekit.timeline.ui.component.roadcontext.CustomProgressBar
+            android:id="@+id/custom_progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:progressDrawable="@android:color/transparent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_road_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
