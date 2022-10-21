@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_timeline.*
 class TimelineFragment : Fragment(), PeriodSelectorListener {
 
     private lateinit var viewModel: TimelineViewModel
+    private lateinit var roadContextViewModel: RoadContextViewModel
     private val periodSelectorViews = mutableListOf<PeriodSelectorView>()
 
     companion object {
@@ -46,6 +47,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
 
         displayTimelineDetail()
         updateTimeline()
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -127,19 +129,20 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
     }
 
     private fun displayRoadContextContainer(roadContextDataItems: List<RoadContextItemData>) {
-        val roadContextViewModel = ViewModelProviders.of(
-            this,
-            RoadContextViewModel.RoadContextViewModelFactory(
-                roadContextDataItems
-            )
-        ).get(RoadContextViewModel::class.java)
-
-        childFragmentManager.beginTransaction()
-            .replace(
-                R.id.road_context_container,
-                RoadContextFragment.newInstance(roadContextViewModel)
-            )
-            .commit()
+        if(!this::roadContextViewModel.isInitialized) {
+            roadContextViewModel = ViewModelProviders.of(
+                this,
+                RoadContextViewModel.RoadContextViewModelFactory(
+                    roadContextDataItems
+                )
+            ).get(RoadContextViewModel::class.java)
+            childFragmentManager.beginTransaction()
+                .replace(
+                    R.id.road_context_container,
+                    RoadContextFragment.newInstance(roadContextViewModel)
+                )
+                .commit()
+        }
     }
 
     private fun updateTimeline() {

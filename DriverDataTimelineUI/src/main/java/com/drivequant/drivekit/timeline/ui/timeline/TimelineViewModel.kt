@@ -46,6 +46,7 @@ internal class TimelineViewModel : ViewModel() {
                     timelines: List<Timeline>
                 ) {
                     syncStatus.postValue(timelineSyncStatus)
+                    updateTimeline()
                 }
             },
             synchronizationType = SynchronizationType.DEFAULT

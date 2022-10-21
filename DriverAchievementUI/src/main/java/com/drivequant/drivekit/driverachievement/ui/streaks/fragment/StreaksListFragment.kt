@@ -26,8 +26,9 @@ class StreaksListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(!this::listViewModel.isInitialized)
-        listViewModel = ViewModelProviders.of(this).get(StreaksListViewModel::class.java)
+        if(!this::listViewModel.isInitialized) {
+            listViewModel = ViewModelProviders.of(this).get(StreaksListViewModel::class.java)
+        }
     }
 
     override fun onCreateView(
