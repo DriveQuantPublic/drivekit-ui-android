@@ -48,10 +48,9 @@
         <LinearLayout
             android:id="@+id/road_context_container"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_half"
             android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:background="#FFAAC5"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/dk_margin_quarter" />

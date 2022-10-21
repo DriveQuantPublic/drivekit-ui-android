@@ -6,16 +6,16 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 
-class CustomRoadContextBar @JvmOverloads constructor(
+internal class CustomRoadContextBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0)
-    : View(context, attrs, defStyleAttr) {
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
-    private val rectF = RectF(0f,0f,0f,0f)
+    private val rectF = RectF(0f, 0f, 0f, 0f)
     private val rectPath = Path()
-    private val cornerRadius = 30f
 
+    private val cornerRadius = 30f
     private var measuredWidth = 0f
     private var measuredHeight = 0f
 
@@ -43,27 +43,39 @@ class CustomRoadContextBar @JvmOverloads constructor(
         val progressRect = RectF()
 
         for (progressItem in progressItems) {
-            val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-            progressPaint.color = ContextCompat.getColor(
-                context,
-                progressItem.color
-            )
-
-            val progressItemWidth = (progressItem.progressItemPercentage * width / 100).toInt()
-            var progressItemRight = lastProgress + progressItemWidth
+            val progressPaint = createPaint(progressItem)
+            val progressItemWidth = computeProgressWidth(progressItem)
+            var progressItemStart = lastProgress + progressItemWidth
 
             if (progressItems.indexOf(progressItem) == progressItems.size - 1
-                && progressItemRight != width) {
-                progressItemRight = width
+                && progressItemStart != width) {
+                progressItemStart = width
             }
             progressRect.set(
                 lastProgress.toFloat(),
                 0f,
-                progressItemRight.toFloat(),
+                progressItemStart.toFloat(),
                 measuredHeight
             )
-            canvas?.drawRect(progressRect,progressPaint)
-            lastProgress = progressItemRight
+            canvas?.drawRect(progressRect, progressPaint)
+            lastProgress = progressItemStart
         }
     }
+
+    private fun computeProgressWidth(progressItem: ProgressItem) =
+        (progressItem.progressItemPercentage * width / 100).toInt()
+
+    private fun createPaint(progressItem: ProgressItem): Paint {
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        paint.color = ContextCompat.getColor(
+            context,
+            progressItem.color
+        )
+        return paint
+    }
 }
+
+internal data class ProgressItem(
+    val color: Int,
+    val progressItemPercentage: Float
+)

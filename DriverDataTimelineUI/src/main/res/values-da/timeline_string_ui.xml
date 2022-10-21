@@ -5,4 +5,6 @@
     <string name="dk_road_context_urbain_fluid">Urbain fluid</string>
     <string name="dk_road_context_extra_urbain">Extra urbain</string>
     <string name="dk_road_context_highway">Voies rapides</string>
+    <string name="dk_timeline_road_context_title">Context routier (%s)</string>
+
 </resources>

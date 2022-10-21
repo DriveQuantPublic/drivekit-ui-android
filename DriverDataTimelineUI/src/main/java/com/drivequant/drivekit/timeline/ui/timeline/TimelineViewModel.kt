@@ -66,7 +66,7 @@ internal class TimelineViewModel : ViewModel() {
                         timelineDataLiveData.postValue(
                             timelinesData[0]
                         )
-                        transformTimelineData(timelines[0].toTimelineData().allContext.date)
+                        //transformTimelineData(timelines[0].toTimelineData().allContext.date)
                     }
                 }
             },
@@ -164,21 +164,7 @@ internal class TimelineViewModel : ViewModel() {
 
 data class RoadContextItemData(
     val type: RoadContext,
-    val date: List<String>,
-    val numberTripTotal: List<Int>,
-    val numberTripScored: List<Int>,
     val distance: List<Double>,
-    val duration: List<Int>,
-    val efficiency: List<Double>,
-    val safety: List<Double>,
-    val acceleration: List<Int>,
-    val braking: List<Int>,
-    val adherence: List<Int>,
-    val co2Mass: List<Double>,
-    val fuelVolume: List<Double>,
-    val efficiencyAcceleration: List<Double>,
-    val efficiencyBrake: List<Double>,
-    val efficiencySpeedMaintain: List<Double>
 )
 
 data class AllContextItemData(
@@ -218,21 +204,7 @@ data class TimelineData(
 
 fun RoadContextItem.toRoadContextItemData() = RoadContextItemData(
     type,
-    date,
-    numberTripTotal,
-    numberTripScored,
     distance,
-    duration,
-    efficiency,
-    safety,
-    acceleration,
-    braking,
-    adherence,
-    co2Mass,
-    fuelVolume,
-    efficiencyAcceleration,
-    efficiencyBrake,
-    efficiencySpeedMaintain
 )
 
 fun AllContextItem.toAllContextItemData() = AllContextItemData(

@@ -10,7 +10,16 @@
     android:padding="@dimen/dk_margin"
     app:cardCornerRadius="8dp">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <include
+        android:id="@+id/empty_road_context_view"
+        layout="@layout/dk_road_context_empty_view"
+        android:visibility="gone" />
+
     <LinearLayout
+        android:id="@+id/road_context_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -34,4 +43,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+    </FrameLayout>
 </androidx.cardview.widget.CardView>

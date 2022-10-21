@@ -2,112 +2,98 @@ package com.drivequant.drivekit.timeline.ui.component.roadcontext
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.convertToString
+
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.timeline.RoadContextItemData
 
 data class DistanceByRoadContext(
-    val roadContextType: RoadContextType,
-    val distance :Double
+    val roadContext: RoadContext,
+    val distances: List<Double>
 )
 
-internal class RoadContextViewModel: ViewModel() {
+class RoadContextViewModel(
+    private val roadContexts: List<RoadContextItemData>
+) : ViewModel() {
 
-    private val distanceByRoadContextType: List<DistanceByRoadContext> = mutableListOf()
-    private val distance: Double = 0.0
+    private lateinit var heavyUranDistance: DistanceByRoadContext
+    private lateinit var cityDistance: DistanceByRoadContext
+    private lateinit var subUrbanDistance: DistanceByRoadContext
+    private lateinit var expressWaysDistance: DistanceByRoadContext
 
-    fun getRoadContextList() = listOf(
-        RoadContextType.SUBURBAN,
-        RoadContextType.HEAVY_URBAN_TRAFFIC,
-        RoadContextType.EXPRESSWAY,
-        RoadContextType.CITY
-    )
+    var totalDistance = 0.0
 
-    fun update(distanceByContext: Pair<RoadContext, Double>, distance: Double) {
-        TODO()
-    }
-
-    fun totalCalculatedDistance(): Double {
-        var totalDistance = 0.0
-        for (item in distanceByRoadContextType) {
-            if (item.distance > 0) {
-                totalDistance += item.distance
+    init {
+        roadContexts.forEach {
+            when (it.type) {
+                RoadContext.HEAVY_URBAN_TRAFFIC -> heavyUranDistance =
+                    DistanceByRoadContext(it.type, it.distance)
+                RoadContext.CITY -> cityDistance = DistanceByRoadContext(it.type, it.distance)
+                RoadContext.EXPRESSWAYS -> expressWaysDistance =
+                    DistanceByRoadContext(it.type, it.distance)
+                RoadContext.SUBURBAN -> subUrbanDistance =
+                    DistanceByRoadContext(it.type, it.distance)
+                else -> throw IllegalArgumentException("$this road context is not supported.")
             }
         }
-        return totalDistance
     }
 
-    fun getActiveContextNumber(): Int {
-        var total = 0
-        for (item in distanceByRoadContextType) {
-            if (item.distance > 0) {
-                total += 1
-            }
+    fun getRoadContextList() = roadContexts.map { it.type }
+
+    fun shouldShowEmptyViewContainer() = getRoadContextList().isEmpty()
+
+    fun totalCalculatedDistance(context: Context): String {
+        roadContexts.map { it.distance }.forEach {
+            totalDistance += it.sum()
         }
-        return total
+        return DKDataFormatter.formatMeterDistanceInKm(
+            context = context,
+            distance = totalDistance * 1000,
+            minDistanceToRemoveFractions = 10.0
+        ).convertToString()
     }
 
-    fun getRoadContextPercent(roadContext: RoadContextType) = when (roadContext) {
-        RoadContextType.HEAVY_URBAN_TRAFFIC -> getHeavyUrbanTrafficPercent()
-        RoadContextType.CITY -> getCityPercent()
-        RoadContextType.SUBURBAN -> getSuburbanPercent()
-        RoadContextType.EXPRESSWAY -> getExpressWaysPercent()
-    }
+    fun getRoadContextPercent(roadContext: RoadContext) = when (roadContext) {
+        RoadContext.EXPRESSWAYS -> expressWaysDistance
+        RoadContext.HEAVY_URBAN_TRAFFIC -> heavyUranDistance
+        RoadContext.CITY -> cityDistance
+        RoadContext.SUBURBAN -> subUrbanDistance
+        else -> null
+    }?.let {
+        return computeRoadContextPercent(it).toFloat()
+    } ?: 0f
 
-    private fun getHeavyUrbanTrafficPercent(): Double {
-        var percentage = 0.0
-        for (item in distanceByRoadContextType) {
-            if (item.roadContextType == RoadContextType.HEAVY_URBAN_TRAFFIC) {
-               percentage = item.distance / totalCalculatedDistance()
-            }
+    private fun computeRoadContextPercent(distanceByRoadContext: DistanceByRoadContext): Double {
+        if (totalDistance != 0.0) {
+            return (distanceByRoadContext.distances.sum() / totalDistance) * 100
         }
-        return 40.0
+        return 0.0
     }
 
-    private fun getCityPercent(): Double {
-        var percentage = 0.0
-        for (item in distanceByRoadContextType) {
-            if (item.roadContextType == RoadContextType.CITY) {
-                percentage = item.distance / totalCalculatedDistance()
-            }
+    @Suppress("UNCHECKED_CAST")
+    class RoadContextViewModelFactory(private val roadContexts: List<RoadContextItemData>) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return RoadContextViewModel(roadContexts) as T
         }
-        return 40.0
-    }
-
-    private fun getSuburbanPercent(): Double {
-        var percentage = 0.0
-        for (item in distanceByRoadContextType) {
-            if (item.roadContextType == RoadContextType.SUBURBAN) {
-                percentage = item.distance / totalCalculatedDistance()
-            }
-        }
-        return 10.0
-    }
-
-    private fun getExpressWaysPercent(): Double {
-        var percentage = 0.0
-        for (item in distanceByRoadContextType) {
-            if (item.roadContextType == RoadContextType.EXPRESSWAY) {
-                percentage = item.distance / totalCalculatedDistance()
-            }
-        }
-        return 10.0
     }
 }
 
-enum class RoadContextType {
-    HEAVY_URBAN_TRAFFIC, CITY, SUBURBAN, EXPRESSWAY;
+fun RoadContext.getColorResId(): Int = when (this) {
+    RoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextUrbainDenseColor
+    RoadContext.CITY -> R.color.dkRoadContextUrbainFluidColor
+    RoadContext.SUBURBAN -> R.color.dkRoadContextSubUrbainColor
+    RoadContext.EXPRESSWAYS -> R.color.dkRoadContextHighwayColor
+    else -> throw IllegalArgumentException("$this road context is not supported.")
+}
 
-    fun getColorResId() = when (this) {
-        HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextUrbainDenseColor
-        CITY -> R.color.dkRoadContextUrbainFluidColor
-        SUBURBAN -> R.color.dkRoadContextSubUrbainColor
-        EXPRESSWAY -> R.color.dkRoadContextHighwayColor
-    }
-
-    fun getTitleResId() = when (this) {
-        HEAVY_URBAN_TRAFFIC -> "dk_road_context_urbain_dense"
-        CITY -> "dk_road_context_urbain_fluid"
-        SUBURBAN -> "dk_road_context_extra_urbain"
-        EXPRESSWAY -> "dk_road_context_highway"
-    }
+fun RoadContext.getTitleResId() = when (this) {
+    RoadContext.HEAVY_URBAN_TRAFFIC -> "dk_road_context_urbain_dense"
+    RoadContext.CITY -> "dk_road_context_urbain_fluid"
+    RoadContext.SUBURBAN -> "dk_road_context_extra_urbain"
+    RoadContext.EXPRESSWAYS -> "dk_road_context_highway"
+    else -> throw IllegalArgumentException("$this road context is not supported.")
 }

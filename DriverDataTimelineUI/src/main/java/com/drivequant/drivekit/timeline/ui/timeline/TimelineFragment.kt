@@ -13,6 +13,8 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextFragment
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
@@ -41,7 +43,6 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         displayDateContainer()
         displayGraphContainer()
         displayPeriodContainer()
-        displayRoadContextContainer()
 
         displayTimelineDetail()
         updateTimeline()
@@ -56,6 +57,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
 
         viewModel.timelineDataLiveData.observe(this) {
             Toast.makeText(context, it.period.name, Toast.LENGTH_SHORT).show()
+            displayRoadContextContainer(it.roadContexts)
         }
     }
 
@@ -124,8 +126,20 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         // TODO()
     }
 
-    private fun displayRoadContextContainer() {
-        // TODO()
+    private fun displayRoadContextContainer(roadContextDataItems: List<RoadContextItemData>) {
+        val roadContextViewModel = ViewModelProviders.of(
+            this,
+            RoadContextViewModel.RoadContextViewModelFactory(
+                roadContextDataItems
+            )
+        ).get(RoadContextViewModel::class.java)
+
+        childFragmentManager.beginTransaction()
+            .replace(
+                R.id.road_context_container,
+                RoadContextFragment.newInstance(roadContextViewModel)
+            )
+            .commit()
     }
 
     private fun updateTimeline() {

@@ -3,7 +3,6 @@ package com.drivequant.drivekit.timeline.ui.timeline
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
