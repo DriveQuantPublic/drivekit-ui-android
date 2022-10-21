@@ -23,11 +23,11 @@
             android:layout_marginBottom="@dimen/dk_margin"
             android:text="Context routier (103 km)" />
 
-        <com.drivequant.drivekit.timeline.ui.component.roadcontext.CustomProgressBar
-            android:id="@+id/custom_progress_bar"
+        <com.drivequant.drivekit.timeline.ui.component.roadcontext.CustomRoadContextBar
+            android:layout_marginBottom="@dimen/dk_margin"
+            android:id="@+id/custom_bar"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:progressDrawable="@android:color/transparent" />
+            android:layout_height="30dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_road_context"

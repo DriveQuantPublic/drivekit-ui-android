@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.timeline.ui.component.roadcontext
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,23 +41,28 @@ class RoadContextFragment : Fragment() {
             }
         }
 
-        custom_progress_bar.thumb.mutate().alpha = 0
+        val progressItems = mutableListOf<ProgressItem>()
+        progressItems.add(
+            ProgressItem(R.color.dkRoadContextUrbainDenseColor, viewModel.getRoadContextPercent(
+                RoadContextType.HEAVY_URBAN_TRAFFIC
+            ).toFloat())
+        )
+        progressItems.add(
+            ProgressItem(R.color.dkRoadContextHighwayColor, viewModel.getRoadContextPercent(
+                RoadContextType.EXPRESSWAY
+            ).toFloat()))
 
-        val progressItemList = mutableListOf<ProgressItem>()
-        progressItemList.add(
-            ProgressItem(R.color.dkRoadContextUrbainDenseColor, 25f)
+        progressItems.add(
+            ProgressItem(R.color.dkRoadContextUrbainFluidColor, viewModel.getRoadContextPercent(
+                RoadContextType.CITY
+            ).toFloat())
         )
-        progressItemList.add(
-            ProgressItem(R.color.dkRoadContextHighwayColor, 25f)
+        progressItems.add(
+            ProgressItem(R.color.dkRoadContextSubUrbainColor, viewModel.getRoadContextPercent(
+                RoadContextType.SUBURBAN
+            ).toFloat())
         )
-        progressItemList.add(
-            ProgressItem(R.color.dkRoadContextUrbainFluidColor, 25f)
-        )
-        progressItemList.add(
-            ProgressItem(R.color.dkRoadContextSubUrbainColor, 25f)
-        )
-        custom_progress_bar.initData(progressItemList)
-        custom_progress_bar.invalidate()
+        custom_bar.init(progressItems)
     }
 
     private fun checkViewModelInitialization() {

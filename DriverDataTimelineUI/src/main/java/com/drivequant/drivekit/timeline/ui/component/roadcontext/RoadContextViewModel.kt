@@ -1,30 +1,49 @@
 package com.drivequant.drivekit.timeline.ui.component.roadcontext
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.timeline.ui.R
 
-internal class RoadContextViewModel : ViewModel() {
+data class DistanceByRoadContext(
+    val roadContextType: RoadContextType,
+    val distance :Double
+)
 
-    private var distance: Double = 0.0
-    private var distanceByContext: Pair<RoadContext, Double> = Pair(RoadContext.CITY, 0.0)
+internal class RoadContextViewModel: ViewModel() {
 
-    fun getRoadContextList() = listOf<RoadContextType>(
+    private val distanceByRoadContextType: List<DistanceByRoadContext> = mutableListOf()
+    private val distance: Double = 0.0
+
+    fun getRoadContextList() = listOf(
         RoadContextType.SUBURBAN,
         RoadContextType.HEAVY_URBAN_TRAFFIC,
-        RoadContextType.EXPRESSWAY
+        RoadContextType.EXPRESSWAY,
+        RoadContextType.CITY
     )
 
     fun update(distanceByContext: Pair<RoadContext, Double>, distance: Double) {
         TODO()
     }
 
-    fun getTotalDistance(): Int {
-        TODO()
+    fun totalCalculatedDistance(): Double {
+        var totalDistance = 0.0
+        for (item in distanceByRoadContextType) {
+            if (item.distance > 0) {
+                totalDistance += item.distance
+            }
+        }
+        return totalDistance
     }
 
     fun getActiveContextNumber(): Int {
-        TODO()
+        var total = 0
+        for (item in distanceByRoadContextType) {
+            if (item.distance > 0) {
+                total += 1
+            }
+        }
+        return total
     }
 
     fun getRoadContextPercent(roadContext: RoadContextType) = when (roadContext) {
@@ -35,19 +54,43 @@ internal class RoadContextViewModel : ViewModel() {
     }
 
     private fun getHeavyUrbanTrafficPercent(): Double {
-        TODO()
+        var percentage = 0.0
+        for (item in distanceByRoadContextType) {
+            if (item.roadContextType == RoadContextType.HEAVY_URBAN_TRAFFIC) {
+               percentage = item.distance / totalCalculatedDistance()
+            }
+        }
+        return 40.0
     }
 
     private fun getCityPercent(): Double {
-        TODO()
+        var percentage = 0.0
+        for (item in distanceByRoadContextType) {
+            if (item.roadContextType == RoadContextType.CITY) {
+                percentage = item.distance / totalCalculatedDistance()
+            }
+        }
+        return 40.0
     }
 
     private fun getSuburbanPercent(): Double {
-        TODO()
+        var percentage = 0.0
+        for (item in distanceByRoadContextType) {
+            if (item.roadContextType == RoadContextType.SUBURBAN) {
+                percentage = item.distance / totalCalculatedDistance()
+            }
+        }
+        return 10.0
     }
 
     private fun getExpressWaysPercent(): Double {
-        TODO()
+        var percentage = 0.0
+        for (item in distanceByRoadContextType) {
+            if (item.roadContextType == RoadContextType.EXPRESSWAY) {
+                percentage = item.distance / totalCalculatedDistance()
+            }
+        }
+        return 10.0
     }
 }
 
