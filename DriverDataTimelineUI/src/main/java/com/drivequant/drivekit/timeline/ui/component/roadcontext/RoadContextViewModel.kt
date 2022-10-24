@@ -91,9 +91,9 @@ fun RoadContext.getColorResId(): Int = when (this) {
 }
 
 fun RoadContext.getTitleResId() = when (this) {
-    RoadContext.HEAVY_URBAN_TRAFFIC -> "dk_road_context_urbain_dense"
-    RoadContext.CITY -> "dk_road_context_urbain_fluid"
-    RoadContext.SUBURBAN -> "dk_road_context_extra_urbain"
-    RoadContext.EXPRESSWAYS -> "dk_road_context_highway"
+    RoadContext.HEAVY_URBAN_TRAFFIC -> "dk_timeline_road_context_heavy_urban_traffic"
+    RoadContext.CITY -> "dk_timeline_road_context_city"
+    RoadContext.SUBURBAN -> "dk_timeline_road_context_suburban"
+    RoadContext.EXPRESSWAYS -> "dk_timeline_road_context_expressways"
     else -> throw IllegalArgumentException("$this road context is not supported.")
 }

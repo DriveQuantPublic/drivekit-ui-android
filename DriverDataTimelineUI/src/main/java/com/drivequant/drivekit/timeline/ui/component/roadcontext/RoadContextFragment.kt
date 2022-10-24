@@ -40,8 +40,8 @@ class RoadContextFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //TODO
         //checkViewModelInitialization()
-        displayRoadContextUI()
-        init()
+        initRoadContextContainer()
+        initProgressItems()
         displayRoadContextItems()
     }
 
@@ -58,7 +58,7 @@ class RoadContextFragment : Fragment() {
         }
     }
 
-    private fun init() {
+    private fun initProgressItems() {
         val progressItems = mutableListOf<ProgressItem>()
         for (roadContext in viewModel.getRoadContextList()) {
             progressItems.add(
@@ -70,18 +70,15 @@ class RoadContextFragment : Fragment() {
         custom_bar.init(progressItems)
     }
 
-    private fun displayRoadContextUI() {
+    private fun initRoadContextContainer() {
         if (viewModel.shouldShowEmptyViewContainer()) {
-            with(empty_road_context_view) {
-                visibility = View.VISIBLE
-                text_view_no_data_title.headLine2(DriveKitUI.colors.primaryColor())
-                text_view_no_data_description.normalText(DriveKitUI.colors.complementaryFontColor())
-                road_context_view_container.visibility = View.GONE
-            }
+            displayEmptyRoadContextUI()
         } else {
-            empty_road_context_view.visibility = View.GONE
-            road_context_view_container.visibility = View.VISIBLE
+            displayRoadContextUI()
         }
+    }
+
+    private fun displayRoadContextUI() {
         context?.let { context ->
             with(text_view_road_context_title) {
                 text = String.format(
@@ -90,6 +87,29 @@ class RoadContextFragment : Fragment() {
                 )
                 normalText(DriveKitUI.colors.mainFontColor())
             }
+        }
+        empty_road_context_view.visibility = View.GONE
+        road_context_view_container.visibility = View.VISIBLE
+    }
+
+    private fun displayEmptyRoadContextUI() {
+        with(empty_road_context_view) {
+            visibility = View.VISIBLE
+            with(text_view_no_data_title) {
+                headLine2(DriveKitUI.colors.primaryColor())
+                text = DKResource.convertToString(
+                    context,
+                    "dk_timeline_road_context_title_no_data"
+                )
+            }
+            with(text_view_no_data_description) {
+                normalText(DriveKitUI.colors.complementaryFontColor())
+                text = DKResource.convertToString(
+                    context,
+                    "dk_timeline_road_context_description_no_data"
+                )
+            }
+            road_context_view_container.visibility = View.GONE
         }
     }
 

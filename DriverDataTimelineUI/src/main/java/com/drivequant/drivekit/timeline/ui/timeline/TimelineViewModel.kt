@@ -247,8 +247,8 @@ fun TimelinePeriod.toDKTimelinePeriod() = when (this) {
 
 //TODO (Replace with title resId)
 fun DKTimelinePeriod.getTitleResId() = when(this) {
-    DKTimelinePeriod.WEEK -> "Par semaine"
-    DKTimelinePeriod.MONTH -> "Par mois"
+    DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
+    DKTimelinePeriod.MONTH -> "dk_timeline_per_month"
 }
 
 enum class DKTimelineScore {

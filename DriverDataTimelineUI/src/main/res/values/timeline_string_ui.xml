@@ -1,9 +1,12 @@
 <resources>
     <string name="dk_timeline_menu">Timelines</string>
-
-    <string name="dk_road_context_urbain_dense">Urbain dense</string>
-    <string name="dk_road_context_urbain_fluid">Urbain fluid</string>
-    <string name="dk_road_context_extra_urbain">Extra urbain</string>
-    <string name="dk_road_context_highway">Voies rapides</string>
+    <string name="dk_timeline_per_month">Par mois</string>
+    <string name="dk_timeline_per_week">Par semaines</string>
+    <string name="dk_timeline_road_context_heavy_urban_traffic">Urbain dense</string>
+    <string name="dk_timeline_road_context_city">Urbain fluid</string>
+    <string name="dk_timeline_road_context_suburban">Extra urbain</string>
+    <string name="dk_timeline_road_context_expressways">Voies rapides</string>
     <string name="dk_timeline_road_context_title">Context routier (%s)</string>
+    <string name="dk_timeline_road_context_title_no_data">Vous n\'avez pas encore de données </string>
+    <string name="dk_timeline_road_context_description_no_data">Faites un premier trajet pour voir vos premiers graphiques s\'afficher.</string>
 </resources>
