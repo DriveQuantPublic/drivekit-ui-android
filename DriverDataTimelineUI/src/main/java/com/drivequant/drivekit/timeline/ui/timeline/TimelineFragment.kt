@@ -47,7 +47,6 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
 
         displayTimelineDetail()
         updateTimeline()
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,9 +56,10 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
             Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.timelineDataLiveData.observe(this) {
-            Toast.makeText(context, it.period.name, Toast.LENGTH_SHORT).show()
-            displayRoadContextContainer(it.roadContexts)
+        viewModel.timelinesDataLiveData.observe(this) {
+            it.forEach { timeline ->
+                displayRoadContextContainer(timeline.roadContexts)
+            }
         }
     }
 

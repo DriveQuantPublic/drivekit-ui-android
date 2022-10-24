@@ -26,7 +26,7 @@ internal class TimelineViewModel : ViewModel() {
     var timelineScoreTypes = mutableListOf<DKTimelineScore>()
     var timelinePeriodTypes = mutableListOf<DKTimelinePeriod>()
 
-    val timelineDataLiveData: MutableLiveData<TimelineData> = MutableLiveData()
+    val timelinesDataLiveData: MutableLiveData<List<TimelineData>> = MutableLiveData()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
     init {
@@ -63,12 +63,7 @@ internal class TimelineViewModel : ViewModel() {
                     timelines: List<Timeline>
                 ) {
                     val timelinesData = timelines.map { it.toTimelineData() }
-                    if (timelinesData.isNotEmpty()) {
-                        timelineDataLiveData.postValue(
-                            timelinesData[0]
-                        )
-                        //transformTimelineData(timelines[0].toTimelineData().allContext.date)
-                    }
+                    timelinesDataLiveData.postValue(timelinesData)
                 }
             },
             synchronizationType = SynchronizationType.CACHE
@@ -87,6 +82,8 @@ internal class TimelineViewModel : ViewModel() {
         updateTimeline()
     }
 
+    //TODO WIP : complete missing month method
+    //transformTimelineData(timelines[0].toTimelineData().allContext.date)
     private fun transformTimelineData(dates :List<String>): List<String> {
         var fromIndex = 0
         var toIndex: Int

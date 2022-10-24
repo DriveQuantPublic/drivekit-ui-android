@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.timeline.ui.R
@@ -37,6 +38,7 @@ class RoadContextFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //TODO
         //checkViewModelInitialization()
         displayRoadContextUI()
         init()
@@ -70,15 +72,24 @@ class RoadContextFragment : Fragment() {
 
     private fun displayRoadContextUI() {
         if (viewModel.shouldShowEmptyViewContainer()) {
-            empty_road_context_view.visibility = View.VISIBLE
-            empty_road_context_view.text_view_no_data_title.headLine2(DriveKitUI.colors.primaryColor())
-            road_context_view_container.visibility = View.GONE
+            with(empty_road_context_view) {
+                visibility = View.VISIBLE
+                text_view_no_data_title.headLine2(DriveKitUI.colors.primaryColor())
+                text_view_no_data_description.normalText(DriveKitUI.colors.complementaryFontColor())
+                road_context_view_container.visibility = View.GONE
+            }
         } else {
             empty_road_context_view.visibility = View.GONE
             road_context_view_container.visibility = View.VISIBLE
         }
         context?.let { context ->
-            text_view_road_context_title.text = String.format(DKResource.convertToString(context,"dk_timeline_road_context_title"),viewModel.totalCalculatedDistance(context))
+            with(text_view_road_context_title) {
+                text = String.format(
+                    DKResource.convertToString(context, "dk_timeline_road_context_title"),
+                    viewModel.totalCalculatedDistance(context)
+                )
+                normalText(DriveKitUI.colors.mainFontColor())
+            }
         }
     }
 
