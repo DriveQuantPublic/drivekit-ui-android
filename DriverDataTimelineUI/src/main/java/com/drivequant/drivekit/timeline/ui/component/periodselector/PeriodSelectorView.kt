@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.timeline.getTitleResId
@@ -31,7 +32,7 @@ class PeriodSelectorView(
         )
         setStyle()
         with(text_view_selector) {
-            text = timelinePeriod.getTitleResId()
+            text = DKResource.convertToString(context, timelinePeriod.getTitleResId())
             setOnClickListener {
                 listener.onSelectPeriod(timelinePeriod)
             }

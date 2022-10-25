@@ -1,7 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".component.graph.TimelineGraphFragment">
-</FrameLayout>
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dk_margin"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dk_margin_half">
+
+        <FrameLayout
+            android:id="@+id/layout_image_view_previous"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/image_view_previous"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/dk_timeline_previous" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_view_date_range"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="du 01/08/2022 au 31/08/2022" />
+
+        <FrameLayout
+            android:id="@+id/layout_image_view_next"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+        <ImageView
+                android:id="@+id/image_view_next"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/dk_timeline_next" />
+        </FrameLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

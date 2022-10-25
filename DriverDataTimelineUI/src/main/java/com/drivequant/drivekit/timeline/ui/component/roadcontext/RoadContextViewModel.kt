@@ -86,7 +86,7 @@ fun RoadContext.getColorResId(): Int = when (this) {
     RoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextUrbainDenseColor
     RoadContext.CITY -> R.color.dkRoadContextUrbainFluidColor
     RoadContext.SUBURBAN -> R.color.dkRoadContextSubUrbainColor
-    RoadContext.EXPRESSWAYS -> R.color.dkRoadContextHighwayColor
+    RoadContext.EXPRESSWAYS -> R.color.dkRoadContextExpresswayColor
     else -> throw IllegalArgumentException("$this road context is not supported.")
 }
 

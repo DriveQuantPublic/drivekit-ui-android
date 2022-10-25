@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin"
-        tools:text="@string/dk_timeline_from_date" />
+        tools:text="@string/dk_timeline_road_context_title_no_data" />
 
     <TextView
         android:id="@+id/text_view_no_data_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin"
-        android:text="@string/dk_timeline_to_date" />
+        android:text="@string/dk_timeline_road_context_description_no_data" />
 </LinearLayout>
