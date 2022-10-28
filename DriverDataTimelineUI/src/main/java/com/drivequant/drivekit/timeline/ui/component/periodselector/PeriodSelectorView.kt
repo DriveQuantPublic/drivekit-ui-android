@@ -33,7 +33,7 @@ class PeriodSelectorView(
         with(text_view_selector) {
             text = timelinePeriod.getTitleResId()
             setOnClickListener {
-                listener.onSelectPeriod(timelinePeriod)
+                listener.onPeriodSelected(timelinePeriod)
             }
         }
     }

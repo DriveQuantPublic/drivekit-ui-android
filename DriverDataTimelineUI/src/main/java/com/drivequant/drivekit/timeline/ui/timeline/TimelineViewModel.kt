@@ -11,29 +11,31 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
-import java.util.*
+import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 
 internal class TimelineViewModel : ViewModel() {
 
-    companion object {
-        const val MONTHS_NUMBER_PER_YEAR = 12
-    }
+    private var selectedTimelinePeriod: DKTimelinePeriod = DKTimelinePeriod.WEEK // TODO mock
 
-    private var selectedTimelineScoreType: DKTimelineScore
-    private var selectedTimelinePeriod: DKTimelinePeriod
+    var scores = listOf<DKTimelineScoreType>()
 
-    var timelineScoreTypes = mutableListOf<DKTimelineScore>()
-    var timelinePeriodTypes = mutableListOf<DKTimelinePeriod>()
+    var timelinePeriodTypes = listOf<DKTimelinePeriod>()
 
     val timelineDataLiveData: MutableLiveData<TimelineData> = MutableLiveData()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
-    init {
-        timelineScoreTypes.addAll(DriverDataTimelineUI.scoresType)
-        timelinePeriodTypes.addAll(DKTimelinePeriod.values().toList())
+    private var selectedScore: DKTimelineScoreType = DKTimelineScoreType.values().first()
+        set(value) {
+            field = value
+            updateTimeline()
+        }
 
-        selectedTimelineScoreType = timelineScoreTypes.first()
+    init {
+        scores = DriveKitDriverDataTimelineUI.scoresType.toMutableList()
+        selectedScore = scores.firstOrNull() ?: DKTimelineScoreType.SAFETY
+
+        timelinePeriodTypes = DKTimelinePeriod.values().toList()
+
         selectedTimelinePeriod = timelinePeriodTypes.first()
     }
 
@@ -53,9 +55,8 @@ internal class TimelineViewModel : ViewModel() {
     }
 
     private fun updateTimeline() {
-        val periods = listOf(selectedTimelinePeriod)
         DriveKitDriverData.getTimelines(
-            periods = periods,
+            periods = listOf(selectedTimelinePeriod),
             listener = object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
@@ -66,7 +67,7 @@ internal class TimelineViewModel : ViewModel() {
                         timelineDataLiveData.postValue(
                             timelinesData[0]
                         )
-                        transformTimelineData(timelines[0].toTimelineData().allContext.date)
+                        //transformTimelineData(timelines[0].toTimelineData().allContext.date)
                     }
                 }
             },
@@ -75,90 +76,17 @@ internal class TimelineViewModel : ViewModel() {
     }
 
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
-        selectedTimelinePeriod = period
-        Log.e("TEST", selectedTimelinePeriod.name)
-        updateTimeline()
+        if (selectedTimelinePeriod != period) {
+            selectedTimelinePeriod = period
+            Log.e("TEST", selectedTimelinePeriod.name)
+            updateTimeline()
+        }
     }
 
     fun updateTimelineScore(position: Int) {
-        selectedTimelineScoreType = timelineScoreTypes[position]
-        Log.e("TEST", selectedTimelineScoreType.name)
+        selectedScore = scores[position]
+        //Log.e("TEST", selectedScore?.name? ?: DKTimelineScoreType.SAFETY)
         updateTimeline()
-    }
-
-    private fun transformTimelineData(dates :List<String>): List<String> {
-        var fromIndex = 0
-        var toIndex: Int
-        val monthsPerYear = mutableListOf<List<Int>>()
-        val datesPerYear = mutableListOf<List<String>>()
-
-        val years = dates.map { it.substringBefore("-") }
-        val months = dates.map { it.substringAfter("-").substringBefore("-").toInt() }
-
-        computeYearsOccurrence(years).entries.forEach {
-            toIndex = fromIndex + it.value
-            monthsPerYear.add(months.subList(fromIndex, toIndex))
-            datesPerYear.add(dates.subList(fromIndex, toIndex))
-            fromIndex = toIndex
-        }
-
-        return addMissingMonths(
-            datesPerYear,
-            computeMissingMonthsPerYear(monthsPerYear),
-            years.distinct())
-    }
-
-    private fun computeYearsOccurrence(years: List<String>): Map<String,Int> {
-        val map = mutableMapOf<String, Int>()
-        years.distinct().forEach { year ->
-            map[year] = Collections.frequency(years, year)
-        }
-        return map
-    }
-
-    private fun addMissingMonths(
-        datesPerYear: List<List<String>>,
-        missingMonthsPerYear: List<List<Int>>,
-        years: List<String>,
-    ) : List<String> {
-        val dates = mutableListOf<MutableList<String>>()
-        dates.addAll(datesPerYear.map { it.toMutableList() })
-
-        for (i in dates.indices) {
-            missingMonthsPerYear[i].forEach {
-                var str = "$it"
-                if (it < 10) {
-                    str = "0$it"
-                }
-                dates[i].add(it, "${years[i]}-$str-01T12:00:00.000+00:00")
-            }
-        }
-        return dates.flatten()
-    }
-
-    private fun findMissingNumbers(numbers: List<Int>, size: Int): List<Int> {
-        val temp = IntArray(size + 1)
-        val missingNumbers = mutableListOf<Int>()
-        for (i in 0 until size) {
-            temp[i] = 0
-        }
-        for (element in numbers) {
-            temp[element - 1] = 1
-        }
-        for (i in 0 until size) {
-            if (temp[i] == 0) {
-                missingNumbers.add(i + 1)
-            }
-        }
-        return missingNumbers
-    }
-
-    private fun computeMissingMonthsPerYear(monthsPerYear: List<List<Int>>): List<List<Int>> {
-        val missingMonths = mutableListOf<List<Int>>()
-        monthsPerYear.forEach {
-            missingMonths.add(findMissingNumbers(it, MONTHS_NUMBER_PER_YEAR))
-        }
-        return missingMonths
     }
 }
 
@@ -281,7 +209,7 @@ fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.MONTH -> "Par mois"
 }
 
-enum class DKTimelineScore {
+enum class DKTimelineScoreType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
     fun getIconResId() = when (this) {

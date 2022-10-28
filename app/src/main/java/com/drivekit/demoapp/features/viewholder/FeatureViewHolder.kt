@@ -18,7 +18,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.badges.activity.BadgeListActivity
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
-import com.drivequant.drivekit.timeline.ui.DriverDataTimelineUI
+import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -112,7 +112,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                 DriveKitTripAnalysisUI.startWorkingHoursActivity(context)
             }
             FeatureType.DRIVERDATA_TIMELINE -> {
-                DriverDataTimelineUI.startTimelineActivity(context)
+                DriveKitDriverDataTimelineUI.startTimelineActivity(context)
             }
         }
     }
