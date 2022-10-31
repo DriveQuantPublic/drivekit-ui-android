@@ -4,22 +4,20 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.core.access.AccessType
-import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 
 internal class TimelineViewModel : ViewModel() {
 
-    private var selectedTimelinePeriod: DKTimelinePeriod = DKTimelinePeriod.WEEK // TODO mock
+    var scores: List<DKTimelineScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
-    var scores = DriveKitDriverDataTimelineUI.scoresType.toMutableList()
-
-    var timelinePeriodTypes = listOf<DKTimelinePeriod>()
+    var timelinePeriodTypes = DKTimelinePeriod.values().toList()
+    private var selectedTimelinePeriod: DKTimelinePeriod = timelinePeriodTypes.first()
 
     val timelineDataLiveData: MutableLiveData<Timeline> = MutableLiveData()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
@@ -30,61 +28,68 @@ internal class TimelineViewModel : ViewModel() {
             updateTimeline()
         }
 
+    private var weekTimeline: Timeline? = null
+    private var monthTimeline: Timeline? = null
+
     init {
-        selectedScore = scores.firstOrNull() ?: DKTimelineScoreType.SAFETY
-
-        timelinePeriodTypes = DKTimelinePeriod.values().toList()
-
-        selectedTimelinePeriod = timelinePeriodTypes.first()
-    }
-
-    fun fetchTimeline() {
-        DriveKitDriverData.getTimelines(
-            periods = DKTimelinePeriod.values().toList(),
-            listener = object : TimelineQueryListener {
-                override fun onResponse(
-                    timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<Timeline>
-                ) {
-                    syncStatus.postValue(timelineSyncStatus)
+        // periodSelectorViewModel.listener = this
+        DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
+            override fun onResponse(
+                timelineSyncStatus: TimelineSyncStatus,
+                timelines: List<Timeline>
+            ) {
+                if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
+                    timelines.forEach {
+                        when (it.period) {
+                            TimelinePeriod.WEEK -> weekTimeline = it
+                            TimelinePeriod.MONTH -> monthTimeline = it
+                        }
+                    }
+                    update()
                 }
-            },
-            synchronizationType = SynchronizationType.DEFAULT
-        )
+            }
+
+        }, SynchronizationType.CACHE)
     }
 
-    private fun updateTimeline() {
-        DriveKitDriverData.getTimelines(
-            periods = listOf(selectedTimelinePeriod),
-            listener = object : TimelineQueryListener {
-                override fun onResponse(
-                    timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<Timeline>
-                ) {
-                    if (timelines.isNotEmpty()) {
-                        timelineDataLiveData.postValue(
-                            timelines[0]
-                        )
-                        //transformTimelineData(timelines[0].toTimelineData().allContext.date)
+    fun updateTimeline() {
+        DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
+            override fun onResponse(
+                timelineSyncStatus: TimelineSyncStatus,
+                timelines: List<Timeline>
+            ) {
+                if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
+                    timelines.forEach {
+                        when (it.period) {
+                            TimelinePeriod.WEEK -> weekTimeline = it
+                            TimelinePeriod.MONTH -> monthTimeline = it
+                        }
                     }
                 }
-            },
-            synchronizationType = SynchronizationType.CACHE
-        )
+                syncStatus.postValue(timelineSyncStatus)
+                // TODO
+                update()
+            }
+        })
+    }
+
+    private fun update() {
+        lateinit var timelineSource: Timeline
+        // TODO next ticket
     }
 
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (selectedTimelinePeriod != period) {
             selectedTimelinePeriod = period
             Log.e("TEST", selectedTimelinePeriod.name)
-            updateTimeline()
+            update()
         }
     }
 
     fun updateTimelineScore(position: Int) {
         selectedScore = scores[position]
         //Log.e("TEST", selectedScore?.name? ?: DKTimelineScoreType.SAFETY)
-        updateTimeline()
+        update()
     }
 }
 
@@ -94,22 +99,3 @@ fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.MONTH -> "Par mois"
 }
 
-enum class DKTimelineScoreType {
-    SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
-
-    fun getIconResId() = when (this) {
-        SAFETY -> "dk_common_safety_flat"
-        DISTRACTION -> "dk_common_distraction_flat"
-        ECO_DRIVING -> "dk_common_ecodriving_flat"
-        SPEEDING -> "dk_common_speeding_flat"
-    }
-
-    fun hasAccess() = when (this) {
-        SAFETY -> AccessType.SAFETY
-        ECO_DRIVING -> AccessType.ECODRIVING
-        DISTRACTION -> AccessType.PHONE_DISTRACTION
-        SPEEDING -> AccessType.SPEEDING
-    }.let {
-        DriveKitAccess.hasAccess(it)
-    }
-}

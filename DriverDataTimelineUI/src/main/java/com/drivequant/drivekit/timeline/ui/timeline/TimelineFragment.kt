@@ -126,7 +126,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
 
     private fun updateTimeline() {
         updateProgressVisibility(true)
-        viewModel.fetchTimeline()
+        viewModel.updateTimeline()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
