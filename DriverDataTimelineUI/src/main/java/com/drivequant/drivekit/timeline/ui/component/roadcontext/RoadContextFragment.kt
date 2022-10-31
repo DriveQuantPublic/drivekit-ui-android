@@ -11,10 +11,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.adapter.RoadContextItemListAdapter
-import com.drivequant.drivekit.timeline.ui.timeline.RoadContextItemData
 import kotlinx.android.synthetic.main.dk_road_context_empty_view.view.*
 import kotlinx.android.synthetic.main.fragment_road_context.*
 
@@ -38,8 +36,7 @@ class RoadContextFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO
-        //checkViewModelInitialization()
+        checkViewModelInitialization()
         initRoadContextContainer()
         initProgressItems()
         displayRoadContextItems()
@@ -60,11 +57,9 @@ class RoadContextFragment : Fragment() {
 
     private fun initProgressItems() {
         val progressItems = mutableListOf<ProgressItem>()
-        for (roadContext in viewModel.getRoadContextList()) {
+        viewModel.distanceByContext.forEach{
             progressItems.add(
-                ProgressItem(roadContext.getColorResId(), viewModel.getRoadContextPercent(
-                    roadContext
-                ))
+                ProgressItem(it.key.getColorResId(), viewModel.getRoadContextPercent(it.key))
             )
         }
         custom_bar.init(progressItems)
@@ -80,13 +75,15 @@ class RoadContextFragment : Fragment() {
 
     private fun displayRoadContextUI() {
         context?.let { context ->
+            /*
             with(text_view_road_context_title) {
+
                 text = String.format(
                     DKResource.convertToString(context, "dk_timeline_road_context_title"),
                     viewModel.totalCalculatedDistance(context)
                 )
                 normalText(DriveKitUI.colors.mainFontColor())
-            }
+            }*/
         }
         empty_road_context_view.visibility = View.GONE
         road_context_view_container.visibility = View.VISIBLE
@@ -117,27 +114,11 @@ class RoadContextFragment : Fragment() {
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProviders.of(
                 this,
-                RoadContextViewModel.RoadContextViewModelFactory(
-                    mock()
-                )
+                RoadContextViewModel.RoadContextViewModelFactory()
             ).get(RoadContextViewModel::class.java)
+            // TODO configure
+            //viewModel.configure()
         }
-    }
-
-    //TODO Remove mock function
-    private fun mock() : List<RoadContextItemData> {
-        val item1 = RoadContextItemData(
-            RoadContext.HEAVY_URBAN_TRAFFIC,
-            listOf(1.0,2.0,4.0))
-
-        val item2 = RoadContextItemData(
-            RoadContext.CITY,
-            listOf(1.0,2.0))
-
-        val item3 = RoadContextItemData(
-            RoadContext.EXPRESSWAYS,
-            listOf(1.0))
-        return listOf(item1, item2, item3)
     }
 
     override fun onResume() {
