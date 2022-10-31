@@ -32,7 +32,7 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
         measuredHeight = (bottom - top).toFloat()
         rectF.set(0f, 0f, measuredWidth, measuredHeight)
         rectPath.reset()
-        rectPath.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW);
+        rectPath.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -40,7 +40,6 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
         canvas?.clipPath(rectPath)
 
         var lastProgress = 0
-        val progressRect = RectF()
 
         for (progressItem in progressItems) {
             val progressPaint = createPaint(progressItem)
@@ -51,13 +50,13 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
                 && progressItemStart != width) {
                 progressItemStart = width
             }
-            progressRect.set(
+            rectF.set(
                 lastProgress.toFloat(),
                 0f,
                 progressItemStart.toFloat(),
                 measuredHeight
             )
-            canvas?.drawRect(progressRect, progressPaint)
+            canvas?.drawRect(rectF, progressPaint)
             lastProgress = progressItemStart
         }
     }
