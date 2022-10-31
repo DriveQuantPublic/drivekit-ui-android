@@ -13,9 +13,7 @@ object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
         get() = field.filter { it.hasAccess() }
         set(value) {
             field = value.ifEmpty {
-                val timelineScores = mutableListOf<DKTimelineScoreType>()
-                timelineScores.add(DKTimelineScoreType.SAFETY)
-                timelineScores
+                listOf(DKTimelineScoreType.SAFETY)
             }
         }
 
