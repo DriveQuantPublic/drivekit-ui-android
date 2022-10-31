@@ -4,20 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal"
-    tools:ignore="MissingDefaultResource">
-
+    android:orientation="horizontal">
     <ImageView
         android:id="@+id/image_view_road_context_indicator"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:contentDescription="@string/app_name" />
-
     <TextView
         android:id="@+id/text_view_road_context_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
-        android:text="Urbain dense" />
-
+        tools:text="Urbain dense" />
 </LinearLayout>

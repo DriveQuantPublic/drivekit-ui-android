@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -9,6 +11,14 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 
 class TimelineActivity : AppCompatActivity() {
+
+    companion object {
+        fun launchActivity(context: Context) {
+            val intent = Intent(context, TimelineActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

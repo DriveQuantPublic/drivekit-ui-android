@@ -77,5 +77,5 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
 
 internal data class ProgressItem(
     val color: Int,
-    val progressItemPercentage: Float
+    val progressItemPercentage: Double
 )

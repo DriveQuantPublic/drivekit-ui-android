@@ -18,8 +18,8 @@ internal class RoadContextItemListAdapter(
     }
 
     override fun onBindViewHolder(holder: RoadContextItemViewHolder, position: Int) {
-        holder.bind(viewModel.getRoadContextList()[position])
+        holder.bind(viewModel.distanceByContext.keys.toTypedArray()[position])
     }
 
-    override fun getItemCount() = viewModel.getRoadContextList().size
+    override fun getItemCount() = viewModel.distanceByContext.size
 }

@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.getColorResId
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.getTitleResId
 import kotlinx.android.synthetic.main.dk_road_context_list_item.view.*
 
 internal class RoadContextItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(roadContext: RoadContext) {
+    fun bind(roadContext: TimelineRoadContext) {
         val drawable = ContextCompat.getDrawable(
             itemView.context,
             R.drawable.dk_road_context_indicator

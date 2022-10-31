@@ -34,7 +34,7 @@ class PeriodSelectorView(
         with(text_view_selector) {
             text = DKResource.convertToString(context, timelinePeriod.getTitleResId())
             setOnClickListener {
-                listener.onSelectPeriod(timelinePeriod)
+                listener.onPeriodSelected(timelinePeriod)
             }
         }
     }

@@ -10,13 +10,13 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 
 class RoadContextViewModel : ViewModel() {
-
-    lateinit var distanceByContext: Map<TimelineRoadContext, Double>
+    var distanceByContext = linkedMapOf<TimelineRoadContext, Double>()
 
     private var distance = 0.0
 
-    fun configure(distanceByContext: Map<TimelineRoadContext, Double>) {
+    fun configure(distanceByContext: LinkedHashMap<TimelineRoadContext, Double>) {
         this.distanceByContext = distanceByContext
+        distance = 0.0
         distanceByContext.forEach {
             distance += it.value
         }
@@ -24,7 +24,7 @@ class RoadContextViewModel : ViewModel() {
 
     fun shouldShowEmptyViewContainer() = distanceByContext.isEmpty()
 
-    fun totalCalculatedDistance(context: Context): String { // TODO
+    fun formatDistanceInKm(context: Context): String {
         return DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = distance * 1000,
@@ -32,14 +32,13 @@ class RoadContextViewModel : ViewModel() {
         ).convertToString()
     }
 
-    fun getRoadContextPercent(roadContext: TimelineRoadContext) =
-        computeRoadContextPercent(distanceByContext[roadContext]).toFloat()
-
-    private fun computeRoadContextPercent(distanceByRoadContext: DistanceByRoadContext): Double {
-        if (distance != 0.0) {
-            return (distanceByRoadContext.distances.sum() / distance) * 100
+    fun getPercent(roadContext: TimelineRoadContext): Double {
+        val percent = if (distanceByContext.isEmpty()) {
+            0.0
+        } else {
+            (distanceByContext[roadContext]?.div(distance)!!*1000) ?: 0.0 //TODO verify *1000
         }
-        return 0.0
+        return percent
     }
 
     @Suppress("UNCHECKED_CAST")

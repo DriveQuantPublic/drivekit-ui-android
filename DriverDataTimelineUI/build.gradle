@@ -38,13 +38,13 @@ uploadArchives {
                 repository(url: "$System.env.REPO_PATH") {
                     authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
                     pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "driveit-driver-data-timeline-ui"
+                    pom.artifactId = "drivekit-driver-data-timeline-ui"
                     pom.version = android.defaultConfig.versionName
                 }
             } else {
                 repository(url: mavenLocal().url) {
                     pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "driveit-driver-data-timeline-ui"
+                    pom.artifactId = "drivekit-driver-data-timeline-ui"
                     pom.version = android.defaultConfig.versionName
                 }
             }
