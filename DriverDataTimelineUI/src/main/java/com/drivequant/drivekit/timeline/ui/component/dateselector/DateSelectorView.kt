@@ -1,16 +1,10 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
 import android.content.Context
-import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.timeline.ui.R
 import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
@@ -35,13 +29,11 @@ class DateSelectorView(context: Context) : LinearLayout(context) {
 
     private fun update() {
         layout_image_view_previous.setOnClickListener {
-            //viewModel.updateDate(DirectionType.PREVIOUS)
-            // TODO moveToPreviousDate
+            viewModel.moveToPreviousDate()
         }
 
         layout_image_view_next.setOnClickListener {
-            //viewModel.updateDate(DirectionType.NEXT)
-            // TODO moveToNextDate
+            viewModel.moveToNextDate()
         }
 /*
         viewModel.hasPreviousDate.observe(this) {
