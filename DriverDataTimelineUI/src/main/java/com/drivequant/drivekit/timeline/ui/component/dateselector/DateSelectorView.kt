@@ -1,37 +1,49 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
+import android.content.Context
 import android.graphics.Typeface
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.timeline.ui.R
-import kotlinx.android.synthetic.main.fragment_date_selector.*
+import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
-class DateSelectorFragment : Fragment() {
+class DateSelectorView(context: Context) : LinearLayout(context) {
 
     private lateinit var viewModel: DateSelectorViewModel
 
-    companion object {
-        fun newInstance(
-            viewModel: DateSelectorViewModel
-        ): DateSelectorFragment {
-            val fragment = DateSelectorFragment()
-            fragment.viewModel = viewModel
-            return fragment
-        }
+    init {
+        val view = View.inflate(context, R.layout.dk_date_selector_view, null).setDKStyle()
+        addView(
+            view, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    fun configure(viewModel: DateSelectorViewModel) {
+        this.viewModel = viewModel
+        update()
+    }
 
+    private fun update() {
+        layout_image_view_previous.setOnClickListener {
+            //viewModel.updateDate(DirectionType.PREVIOUS)
+            // TODO moveToPreviousDate
+        }
+
+        layout_image_view_next.setOnClickListener {
+            //viewModel.updateDate(DirectionType.NEXT)
+            // TODO moveToNextDate
+        }
+/*
         viewModel.hasPreviousDate.observe(this) {
             context?.let { context ->
                 DKResource.convertToDrawable(context, "dk_timeline_previous")?.let { drawable ->
@@ -73,43 +85,15 @@ class DateSelectorFragment : Fragment() {
                     typeface(Typeface.BOLD)
                     color(DriveKitUI.colors.complementaryFontColor())
                 }).space().append(
-                   it.second.take(10),
+                    it.second.take(10),
                     context.resSpans {
                         typeface(Typeface.BOLD)
                         color(DriveKitUI.colors.primaryColor())
                     }).toSpannable()
             }
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_date_selector, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //TODO
-        //checkViewModelInitialization()
-
-        layout_image_view_previous.setOnClickListener {
-            viewModel.updateDate(DirectionType.PREVIOUS)
-        }
-
-        layout_image_view_next.setOnClickListener {
-            viewModel.updateDate(DirectionType.NEXT)
-        }
-
-    }
-
-    private fun checkViewModelInitialization() {
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(DateSelectorViewModel::class.java)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //checkViewModelInitialization()
+ */
     }
 }
 

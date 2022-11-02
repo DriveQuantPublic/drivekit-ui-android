@@ -11,6 +11,7 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
+import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
@@ -25,7 +26,6 @@ internal class TimelineViewModel : ViewModel() {
     var timelinePeriodTypes = DKTimelinePeriod.values().toList()
     private var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
 
-    val timelineDataLiveData: MutableLiveData<Timeline> = MutableLiveData()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
     private var selectedScore: DKTimelineScoreType = scores.first()
@@ -35,6 +35,7 @@ internal class TimelineViewModel : ViewModel() {
         }
 
     var roadContextViewModel = RoadContextViewModel()
+    var dateSelectorViewModel = DateSelectorViewModel()
 
     private var weekTimeline: Timeline? = null
     private var monthTimeline: Timeline? = null
@@ -103,6 +104,7 @@ internal class TimelineViewModel : ViewModel() {
                     distanceByContext[it.type.toTimelineRoadContext()] = distance
                 }
                 roadContextViewModel.configure(distanceByContext as LinkedHashMap<TimelineRoadContext, Double>)
+                dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod) // TODO compute dates ?
                 updateData.postValue(Any())
             }
         }

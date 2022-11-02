@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
@@ -23,8 +25,13 @@ import kotlinx.android.synthetic.main.fragment_timeline.*
 class TimelineFragment : Fragment(), PeriodSelectorListener {
 
     private lateinit var viewModel: TimelineViewModel
+    private lateinit var dateSelectorViewModel: DateSelectorViewModel
     private lateinit var roadContextViewModel: RoadContextViewModel
+
     private val periodSelectorViews = mutableListOf<PeriodSelectorView>()
+
+    private lateinit var dateSelectorContainer: LinearLayout
+    private lateinit var dateSelectorView: DateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
@@ -42,11 +49,13 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         super.onViewCreated(view, savedInstanceState)
 
         roadContextContainer = view.findViewById(R.id.road_context_container)
+        dateSelectorContainer = view.findViewById(R.id.date_selector_container)
 
         checkViewModelInitialization()
 
         viewModel.updateData.observe(this) {
             roadContextView.configure(viewModel.roadContextViewModel)
+            dateSelectorView.configure(viewModel.dateSelectorViewModel)
         }
 
         setupSwipeToRefresh()
@@ -67,10 +76,6 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         viewModel.syncStatus.observe(this) {
             updateProgressVisibility(false)
             Toast.makeText(context, "Sync status: ${it.name}", Toast.LENGTH_SHORT).show() //TODO dev only
-        }
-
-        viewModel.timelineDataLiveData.observe(this) {
-            Toast.makeText(context, "TimelineLiveData ${it.period.name}", Toast.LENGTH_SHORT).show() //TODO dev only
         }
     }
 
@@ -130,15 +135,18 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
     }
 
     private fun displayDateContainer() {
-        // TODO()
+        if (!this::dateSelectorViewModel.isInitialized) {
+            dateSelectorViewModel = ViewModelProviders.of(this, DateSelectorViewModel.DateSelectorViewModelFactory()).get(DateSelectorViewModel::class.java)
+            context?.let {
+                dateSelectorView = DateSelectorView(it)
+                dateSelectorContainer.addView(dateSelectorView)
+            }
+        }
     }
 
     private fun displayRoadContextContainer() {
         if(!this::roadContextViewModel.isInitialized) {
-            roadContextViewModel = ViewModelProviders.of(
-                this,
-                RoadContextViewModel.RoadContextViewModelFactory()
-            ).get(RoadContextViewModel::class.java)
+            roadContextViewModel = ViewModelProviders.of(this, RoadContextViewModel.RoadContextViewModelFactory()).get(RoadContextViewModel::class.java)
             context?.let {
                 roadContextView = RoadContextView(it)
                 roadContextContainer.addView(roadContextView)
