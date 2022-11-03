@@ -60,6 +60,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
             viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
                 override fun onDateSelected(date: String) {
                     Toast.makeText(this@TimelineFragment.context, "Date selected: $date", Toast.LENGTH_SHORT).show()
+                    dateSelectorView.update()
                 }
             }
         }
@@ -154,10 +155,10 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
     private fun displayRoadContextContainer() {
         if(!this::roadContextViewModel.isInitialized) {
             roadContextViewModel = ViewModelProviders.of(this, RoadContextViewModel.RoadContextViewModelFactory()).get(RoadContextViewModel::class.java)
-            context?.let {
-                roadContextView = RoadContextView(it)
-                roadContextContainer.addView(roadContextView)
-            }
+        }
+        context?.let {
+            roadContextView = RoadContextView(it)
+            roadContextContainer.addView(roadContextView)
         }
     }
 

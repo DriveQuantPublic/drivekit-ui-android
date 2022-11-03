@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
@@ -10,26 +9,48 @@ import java.util.*
 
 class DateSelectorViewModel : ViewModel() {
 
+    companion object {
+        fun getBackendDateFormat(): DateFormat {
+            val backendDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+            backendDateFormat.timeZone = TimeZone.getTimeZone("GMT")
+            return backendDateFormat
+        }
+    }
+
     var listener: DateSelectorListener? = null
 
+    private lateinit var period: DKTimelinePeriod
     private lateinit var dates: List<String>
     private var selectedDateIndex: Int = -1
-    private lateinit var period: DKTimelinePeriod
     var hasPreviousDate = false
         private set
     var hasNextDate = false
         private set
 
-    lateinit var fromDate: String
-    lateinit var toDate: String
+    private lateinit var fromDate: String
+    private lateinit var toDate: String
+
+    var computedFromDate: Date? = null
+        get() =
+            if (this::fromDate.isInitialized) {
+                getBackendDateFormat().parse(fromDate) ?: null
+            } else {
+                null
+            }
+        private set
+    var computedToDate: Date? = null
+        get() =
+            if (this::fromDate.isInitialized) {
+                getBackendDateFormat().parse(toDate) ?: null
+            } else {
+                null
+            }
+        private set
 
     fun configure(dates: List<String>, selectedDateIndex: Int?, period: DKTimelinePeriod) {
         this.dates = dates
         this.period = period
-        selectedDateIndex?.let { // TODO dirty
-            this.selectedDateIndex = selectedDateIndex
-        }
-        // TODO listener
+        this.selectedDateIndex = selectedDateIndex ?: -1
         updateProperties()
     }
 
@@ -47,25 +68,19 @@ class DateSelectorViewModel : ViewModel() {
         if (hasPreviousDate) {
             selectedDateIndex -= 1
             updateProperties()
-        } else {
-            Log.d("DEBUG", "No previous date !") //TODO remove debug log
         }
     }
-
 
     fun moveToNextDate() {
         if (hasNextDate) {
             selectedDateIndex += 1
             updateProperties()
-        } else {
-            Log.d("DEBUG", "No next date !") //TODO remove debug log
         }
     }
 
     private fun getEndDate(fromDate: String, period: DKTimelinePeriod): String {
         val calendar = Calendar.getInstance()
-        val backendDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
-        backendDateFormat.timeZone = TimeZone.getTimeZone("GMT")
+        val backendDateFormat = getBackendDateFormat()
         backendDateFormat.parse(fromDate)?.let { computedFromDate ->
             calendar.time = computedFromDate
             when (period) {
@@ -76,13 +91,13 @@ class DateSelectorViewModel : ViewModel() {
                 }
             }
         }
-        return calendar.toString()
+        return backendDateFormat.format(calendar.time)
     }
 
     @Suppress("UNCHECKED_CAST")
     class DateSelectorViewModelFactory :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DateSelectorViewModel() as T
         }
     }
