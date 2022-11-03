@@ -30,8 +30,7 @@
                 <ImageView
                     android:id="@+id/image_view_previous"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dk_timeline_previous" />
+                    android:layout_height="match_parent" />
             </FrameLayout>
 
             <TextView
@@ -39,9 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_weight="6"
-                android:gravity="center"
-                android:text="du 01/08/2022 au 31/08/2022" />
-                <!-- TODO -->
+                android:gravity="center" />
 
             <FrameLayout
                 android:id="@+id/layout_image_view_next"
@@ -54,8 +51,7 @@
                 <ImageView
                     android:id="@+id/image_view_next"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/dk_timeline_next" />
+                    android:layout_height="match_parent" />
             </FrameLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

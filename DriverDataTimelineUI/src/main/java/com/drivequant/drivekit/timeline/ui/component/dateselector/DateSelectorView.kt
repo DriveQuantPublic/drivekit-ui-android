@@ -85,7 +85,7 @@ class DateSelectorView(context: Context) : LinearLayout(context) {
                 )
                 .space()
                 .append(
-                    viewModel.computedFromDate?.formatDate(DKDatePattern.STANDARD_DATE) ?: "",
+                    viewModel.computedFromDate.formatDate(DKDatePattern.STANDARD_DATE),
                     context.resSpans {
                         typeface(Typeface.BOLD)
                         color(DriveKitUI.colors.primaryColor())
@@ -98,7 +98,7 @@ class DateSelectorView(context: Context) : LinearLayout(context) {
                 })
                 .space()
                 .append(
-                    viewModel.computedToDate?.formatDate(DKDatePattern.STANDARD_DATE) ?: "",
+                    viewModel.computedToDate.formatDate(DKDatePattern.STANDARD_DATE),
                 context.resSpans {
                     typeface(Typeface.BOLD)
                     color(DriveKitUI.colors.primaryColor())

@@ -103,7 +103,7 @@ internal class TimelineViewModel : ViewModel() {
                     distanceByContext[it.type.toTimelineRoadContext()] = distance
                 }
                 roadContextViewModel.configure(distanceByContext as LinkedHashMap<TimelineRoadContext, Double>)
-                dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod) // TODO compute dates ?
+                dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 updateData.postValue(Any())
             }
         }

@@ -59,7 +59,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
             viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
                 override fun onDateSelected(date: String) {
-                    Toast.makeText(this@TimelineFragment.context, "Date selected: $date", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this@TimelineFragment.context, "Date selected: $date", Toast.LENGTH_SHORT).show()
                     dateSelectorView.update()
                 }
             }

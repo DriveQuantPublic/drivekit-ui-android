@@ -30,20 +30,20 @@ class DateSelectorViewModel : ViewModel() {
     private lateinit var fromDate: String
     private lateinit var toDate: String
 
-    var computedFromDate: Date? = null
+    var computedFromDate: Date = Date()
         get() =
             if (this::fromDate.isInitialized) {
-                getBackendDateFormat().parse(fromDate) ?: null
+                getBackendDateFormat().parse(fromDate) ?: Date()
             } else {
-                null
+                Date()
             }
         private set
-    var computedToDate: Date? = null
+    var computedToDate: Date = Date()
         get() =
-            if (this::fromDate.isInitialized) {
-                getBackendDateFormat().parse(toDate) ?: null
+            if (this::toDate.isInitialized) {
+                getBackendDateFormat().parse(toDate) ?: Date()
             } else {
-                null
+                Date()
             }
         private set
 
@@ -66,14 +66,14 @@ class DateSelectorViewModel : ViewModel() {
 
     fun moveToPreviousDate() {
         if (hasPreviousDate) {
-            selectedDateIndex -= 1
+            selectedDateIndex--
             updateProperties()
         }
     }
 
     fun moveToNextDate() {
         if (hasNextDate) {
-            selectedDateIndex += 1
+            selectedDateIndex++
             updateProperties()
         }
     }
