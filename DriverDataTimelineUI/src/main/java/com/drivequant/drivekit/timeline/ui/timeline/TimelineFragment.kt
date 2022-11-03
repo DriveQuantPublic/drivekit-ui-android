@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorListener
@@ -56,6 +57,11 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         viewModel.updateData.observe(this) {
             roadContextView.configure(viewModel.roadContextViewModel)
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
+            viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
+                override fun onDateSelected(date: String) {
+                    Toast.makeText(this@TimelineFragment.context, "Date selected: $date", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         setupSwipeToRefresh()
@@ -137,10 +143,11 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
     private fun displayDateContainer() {
         if (!this::dateSelectorViewModel.isInitialized) {
             dateSelectorViewModel = ViewModelProviders.of(this, DateSelectorViewModel.DateSelectorViewModelFactory()).get(DateSelectorViewModel::class.java)
-            context?.let {
-                dateSelectorView = DateSelectorView(it)
-                dateSelectorContainer.addView(dateSelectorView)
-            }
+
+        }
+        context?.let {
+            dateSelectorView = DateSelectorView(it)
+            dateSelectorContainer.addView(dateSelectorView)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.SynchronizationType
@@ -113,24 +112,17 @@ internal class TimelineViewModel : ViewModel() {
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
-            Log.e("TEST", currentPeriod.name)
             update()
         }
     }
 
     fun updateTimelineScore(position: Int) {
         selectedScore = scores[position]
-        //Log.e("TEST", selectedScore?.name? ?: DKTimelineScoreType.SAFETY)
         update()
     }
 }
 
-data class RoadContextItemData(
-    val type: RoadContext,
-    val distance: List<Double>,
-)
-
-//TODO (Replace with title resId)
+//TODO Move in TimelinePeriodViewModel
 fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
     DKTimelinePeriod.MONTH -> "dk_timeline_per_month"

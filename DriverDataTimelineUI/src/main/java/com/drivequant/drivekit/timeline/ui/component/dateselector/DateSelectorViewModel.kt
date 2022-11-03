@@ -39,6 +39,7 @@ class DateSelectorViewModel : ViewModel() {
             hasPreviousDate = selectedDateIndex > 0
             fromDate = dates[selectedDateIndex]
             toDate = getEndDate(fromDate, period)
+            listener?.onDateSelected(fromDate)
         }
     }
 
