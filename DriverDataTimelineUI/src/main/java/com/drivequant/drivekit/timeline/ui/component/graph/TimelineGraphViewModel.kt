@@ -11,8 +11,8 @@ internal class TimelineGraphViewModel : ViewModel() {
     var title: String = ""
     var description: String = ""
 
-    var xAxisConfig: GraphAxisConfig? = null
-    var yAxisConfig: GraphAxisConfig? = null
+    //var xAxisConfig = GraphAxisConfig()
+    //var yAxisConfig = GraphAxisConfig()
 
     var listener: TimelineGraphListener? = null
 
