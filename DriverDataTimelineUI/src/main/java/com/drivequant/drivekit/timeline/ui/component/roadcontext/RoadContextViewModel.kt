@@ -10,11 +10,11 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 
 class RoadContextViewModel : ViewModel() {
-    var distanceByContext = linkedMapOf<TimelineRoadContext, Double>()
+    var distanceByContext = mapOf<TimelineRoadContext, Double>()
 
     private var distance = 0.0
 
-    fun configure(distanceByContext: LinkedHashMap<TimelineRoadContext, Double>) {
+    fun configure(distanceByContext: Map<TimelineRoadContext, Double>) {
         this.distanceByContext = distanceByContext
         distance = 0.0
         distanceByContext.forEach {

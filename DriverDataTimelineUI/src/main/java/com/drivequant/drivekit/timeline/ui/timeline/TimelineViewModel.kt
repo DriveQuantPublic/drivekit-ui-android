@@ -14,7 +14,6 @@ import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
-import kotlin.collections.LinkedHashMap
 
 internal class TimelineViewModel : ViewModel() {
 
@@ -102,7 +101,7 @@ internal class TimelineViewModel : ViewModel() {
                     val distance = it.distance[selectedDateIndex]
                     distanceByContext[it.type.toTimelineRoadContext()] = distance
                 }
-                roadContextViewModel.configure(distanceByContext as LinkedHashMap<TimelineRoadContext, Double>)
+                roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>)
                 updateData.postValue(Any())
             }
         }
