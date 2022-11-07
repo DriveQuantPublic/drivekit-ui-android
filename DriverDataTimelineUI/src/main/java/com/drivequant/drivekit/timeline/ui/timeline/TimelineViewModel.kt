@@ -42,7 +42,6 @@ internal class TimelineViewModel : ViewModel() {
     private var selectedDate: String? = null
 
     init {
-        // periodSelectorViewModel.listener = this
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
             override fun onResponse(
                 timelineSyncStatus: TimelineSyncStatus,
@@ -112,6 +111,13 @@ internal class TimelineViewModel : ViewModel() {
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
+            update()
+        }
+    }
+
+    fun updateTimelineDate(date: String) {
+        if (selectedDate != date) {
+            selectedDate = date
             update()
         }
     }

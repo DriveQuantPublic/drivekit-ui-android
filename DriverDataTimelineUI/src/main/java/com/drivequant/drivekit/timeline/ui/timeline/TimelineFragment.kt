@@ -59,8 +59,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
             viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
                 override fun onDateSelected(date: String) {
-                    //Toast.makeText(this@TimelineFragment.context, "Date selected: $date", Toast.LENGTH_SHORT).show()
-                    dateSelectorView.update()
+                    viewModel.updateTimelineDate(date)
                 }
             }
         }
@@ -82,7 +81,7 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         super.onActivityCreated(savedInstanceState)
         viewModel.syncStatus.observe(this) {
             updateProgressVisibility(false)
-            Toast.makeText(context, "Sync status: ${it.name}", Toast.LENGTH_SHORT).show() //TODO dev only
+            //Toast.makeText(context, "Sync status: ${it.name}", Toast.LENGTH_SHORT).show() //TODO dev only
         }
     }
 
@@ -159,6 +158,9 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         context?.let {
             roadContextView = RoadContextView(it)
             roadContextContainer.addView(roadContextView)
+        }
+        viewModel.roadContextViewModel.changeObserver.observe(this) {
+            roadContextView.configure(viewModel.roadContextViewModel)
         }
     }
 

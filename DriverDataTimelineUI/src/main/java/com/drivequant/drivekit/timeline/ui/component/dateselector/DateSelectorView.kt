@@ -16,27 +16,13 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.timeline.ui.R
 import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
-class DateSelectorView(context: Context) : LinearLayout(context) {
+class DateSelectorView(context: Context) :
+    LinearLayout(context) {
 
     private lateinit var viewModel: DateSelectorViewModel
 
-    init {
-        val view = View.inflate(context, R.layout.dk_date_selector_view, null).setDKStyle()
-        addView(
-            view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
-    }
-
     fun configure(viewModel: DateSelectorViewModel) {
         this.viewModel = viewModel
-        this.viewModel.listener = object : DateSelectorListener {
-            override fun onDateSelected(date: String) {
-                update()
-            }
-        }
         update()
     }
 
@@ -105,6 +91,16 @@ class DateSelectorView(context: Context) : LinearLayout(context) {
                 })
                 .toSpannable()
         }
+    }
+
+    init {
+        val view = View.inflate(context, R.layout.dk_date_selector_view, null).setDKStyle()
+        addView(
+            view, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
     }
 }
 

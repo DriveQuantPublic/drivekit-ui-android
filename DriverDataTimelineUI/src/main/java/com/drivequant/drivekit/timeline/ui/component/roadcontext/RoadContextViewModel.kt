@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.timeline.ui.component.roadcontext
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -10,6 +11,9 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 
 class RoadContextViewModel : ViewModel() {
+
+    var changeObserver: MutableLiveData<Any> = MutableLiveData()
+
     var distanceByContext = linkedMapOf<TimelineRoadContext, Double>()
 
     private var distance = 0.0
@@ -20,6 +24,7 @@ class RoadContextViewModel : ViewModel() {
         distanceByContext.forEach {
             distance += it.value
         }
+        changeObserver.postValue(Any())
     }
 
     fun shouldShowEmptyViewContainer() = distanceByContext.isEmpty()
@@ -36,7 +41,7 @@ class RoadContextViewModel : ViewModel() {
         val percent = if (distanceByContext.isEmpty()) {
             0.0
         } else {
-            (distanceByContext[roadContext]?.div(distance)!!*1000) ?: 0.0 //TODO verify *1000
+            (distanceByContext[roadContext]?.div(distance)!!*1000) ?: 0.0 // TODO
         }
         return percent
     }
