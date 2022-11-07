@@ -12,9 +12,12 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRo
 
 class RoadContextViewModel : ViewModel() {
 
-    var changeObserver: MutableLiveData<Any> = MutableLiveData()
+    val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
-    var distanceByContext = linkedMapOf<TimelineRoadContext, Double>()
+    var distanceByContext = mapOf<TimelineRoadContext, Double>()
+        private set(value) {
+            field = value.filterNot { it.value <= 0.0 }
+        }
 
     private var distance = 0.0
 
