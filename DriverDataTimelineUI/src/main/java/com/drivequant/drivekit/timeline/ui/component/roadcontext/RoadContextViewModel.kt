@@ -40,18 +40,18 @@ class RoadContextViewModel : ViewModel() {
         ).convertToString()
     }
 
-    fun getPercent(roadContext: TimelineRoadContext): Double {
-        val percent = if (distanceByContext.isEmpty()) {
+    fun getPercent(roadContext: TimelineRoadContext) =
+        if (distanceByContext.isEmpty()) {
             0.0
         } else {
-            (distanceByContext[roadContext]?.div(distance)!!*1000) ?: 0.0 // TODO
+            distanceByContext[roadContext]?.div(distance)?.let {
+                it * 100
+            } ?: run { 0.0 }
         }
-        return percent
-    }
 
     @Suppress("UNCHECKED_CAST")
     class RoadContextViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return RoadContextViewModel() as T
         }
     }
