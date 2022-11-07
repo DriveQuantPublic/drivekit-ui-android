@@ -27,7 +27,7 @@ class DateSelectorView(context: Context) :
     }
 
     fun update() {
-        layout_image_view_previous.setOnClickListener {
+        image_view_previous.setOnClickListener {
             viewModel.moveToPreviousDate()
         }
 
@@ -43,7 +43,7 @@ class DateSelectorView(context: Context) :
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
-                    layout_image_view_previous.isEnabled = it
+                    image_view_previous.isEnabled = it
                     image_view_previous.setImageDrawable(drawable)
                 }
             }

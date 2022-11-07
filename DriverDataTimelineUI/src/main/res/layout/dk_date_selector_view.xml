@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dk_margin"
+        app:cardElevation="0dp"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
@@ -19,19 +20,13 @@
             android:orientation="horizontal"
             android:padding="@dimen/dk_margin_half">
 
-            <FrameLayout
-                android:id="@+id/layout_image_view_previous"
+            <ImageView
+                android:id="@+id/image_view_previous"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/image_view_previous"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
+                android:layout_gravity="center"
+                android:background="?selectableItemBackgroundBorderless"/>
 
             <TextView
                 android:id="@+id/text_view_date_range"
@@ -40,19 +35,13 @@
                 android:layout_weight="6"
                 android:gravity="center" />
 
-            <FrameLayout
-                android:id="@+id/layout_image_view_next"
+            <ImageView
+                android:id="@+id/image_view_next"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
-
-                <ImageView
-                    android:id="@+id/image_view_next"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </FrameLayout>
+                android:layout_gravity="center"
+                android:background="?selectableItemBackgroundBorderless"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
