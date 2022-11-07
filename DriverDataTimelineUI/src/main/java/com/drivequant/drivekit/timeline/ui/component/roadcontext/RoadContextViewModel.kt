@@ -21,7 +21,7 @@ class RoadContextViewModel : ViewModel() {
 
     private var distance = 0.0
 
-    fun configure(distanceByContext: LinkedHashMap<TimelineRoadContext, Double>) {
+    fun configure(distanceByContext: Map<TimelineRoadContext, Double>) {
         this.distanceByContext = distanceByContext
         distance = 0.0
         distanceByContext.forEach {
