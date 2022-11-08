@@ -31,7 +31,7 @@ class DateSelectorView(context: Context) :
             viewModel.moveToPreviousDate()
         }
 
-        layout_image_view_next.setOnClickListener {
+        image_view_next.setOnClickListener {
             viewModel.moveToNextDate()
         }
 
@@ -55,7 +55,7 @@ class DateSelectorView(context: Context) :
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
-                    layout_image_view_next.isEnabled = it
+                    image_view_next.isEnabled = it
                     image_view_next.setImageDrawable(drawable)
                 }
             }
