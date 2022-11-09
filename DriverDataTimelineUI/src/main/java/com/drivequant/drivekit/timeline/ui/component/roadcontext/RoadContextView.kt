@@ -102,7 +102,7 @@ class RoadContextView(context: Context) : LinearLayout(context) {
                 normalText(DriveKitUI.colors.complementaryFontColor())
                 text = DKResource.convertToString(
                     context,
-                    "dk_timeline_road_context_description_no_data"
+                    "dk_timeline_road_context_description_empty_data"
                 )
             }
             road_context_view_container.visibility = View.GONE

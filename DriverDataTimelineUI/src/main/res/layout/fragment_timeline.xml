@@ -61,10 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:text="voir plus de détail sur mon score"
+                android:text="@string/dk_timeline_button_timeline_detail"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textColor="#000"
                 android:textSize="@dimen/dk_text_big" />
 
         </LinearLayout>

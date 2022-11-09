@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_timeline_acceleration_score">Punteggio di accelerazione:</string>
+   <string name="dk_timeline_accelerations">Accelerazione / 100 km: %s</string>
+   <string name="dk_timeline_adherence">Limiti di aderenza / 100 km: %s</string>
+   <string name="dk_timeline_brakings">Frenata / 100 km: %s</string>
+   <string name="dk_timeline_button_timeline_detail">Vedi maggiori dettagli sul mio punteggio</string>
+   <string name="dk_timeline_calls_duration">Durata delle chiamate vietate / 100 km: %s</string>
+   <string name="dk_timeline_co2_mass">Massa di CO2: %s</string>
+   <string name="dk_timeline_consumption">Consumo: %s</string>
+   <string name="dk_timeline_deceleration_score">Punteggio di decelerazione:</string>
+   <string name="dk_timeline_from_date">dall\'</string>
+   <string name="dk_timeline_info_accel_score">Il punteggio di accelerazione va da -5 a 5. Per il valore -5, l\'accelerazione è troppo lenta. Un punteggio di 5 indica che l\'accelerazione è troppo veloce. Un punteggio di 0 indica che l\'accelerazione corrisponde perfettamente a uno stile di guida ecologico.</string>
+   <string name="dk_timeline_info_decel_score">Il punteggio di decelerazione varia da -5 a 5. Per il valore -5, la decelerazione è troppo lenta. Un punteggio di 5 significa che la decelerazione è troppo veloce. Un punteggio di 0 indica che la decelerazione è perfetta per la guida ecologica.</string>
+   <string name="dk_timeline_info_maintain_score">Il punteggio di mantenimento della velocità va da 0 a 5. Un valore di 0 indica che il conducente si comporta bene e guida a velocità costante. Altrimenti, quando vengono rilevate delle oscillazioni nella velocità, il punteggio aumenta e il pilota può progredire.</string>
+   <string name="dk_timeline_maintain_score">Punteggio di manutenzione:</string>
+   <string name="dk_timeline_nb_unlocks">Numero di sblocco / 100 km: %s</string>
+   <string name="dk_timeline_overspeeding_distance">Superamento della distanza relativa: %s</string>
+   <string name="dk_timeline_overspeeding_duration">Durata relativa dell\'eccesso di velocità: %s</string>
+   <string name="dk_timeline_per_month">Per mese</string>
+   <string name="dk_timeline_per_week">A settimana</string>
+   <string name="dk_timeline_road_context_city">Urbano</string>
+   <string name="dk_timeline_road_context_description_empty_data">Fate un primo viaggio per vedere apparire i primi grafici.</string>
+   <string name="dk_timeline_road_context_description_no_data_ecodriving">I viaggi per le date selezionate sono troppo brevi per ottenere un punteggio di guida ecologica.</string>
+   <string name="dk_timeline_road_context_description_no_data_safety">I viaggi per le date selezionate sono troppo brevi per ottenere un punteggio di guida sicurezza.</string>
+   <string name="dk_timeline_road_context_expressways">Strade a scorrimento veloce</string>
+   <string name="dk_timeline_road_context_heavy_urban_traffic">Ambiente urbano ad alta densità di traffico</string>
+   <string name="dk_timeline_road_context_suburban">Extraurbano</string>
+   <string name="dk_timeline_road_context_title">Contesto stradale (%s)</string>
+   <string name="dk_timeline_road_context_title_empty_data">Non si dispone ancora di dati</string>
+   <string name="dk_timeline_road_context_title_no_data">Nessun dato da visualizzare</string>
+   <string name="dk_timeline_saved_co2">Risparmio di carburante ottenibile: %s</string>
+   <string name="dk_timeline_title">Timeline</string>
+   <string name="dk_timeline_to_date">al</string>
+   <string name="dk_timeline_trips_forbidden_calls">Viaggi senza chiamata: %s</string>
+</resources>

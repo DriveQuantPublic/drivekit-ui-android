@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -81,7 +80,6 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         super.onActivityCreated(savedInstanceState)
         viewModel.syncStatus.observe(this) {
             updateProgressVisibility(false)
-            //Toast.makeText(context, "Sync status: ${it.name}", Toast.LENGTH_SHORT).show() //TODO dev only
         }
     }
 
