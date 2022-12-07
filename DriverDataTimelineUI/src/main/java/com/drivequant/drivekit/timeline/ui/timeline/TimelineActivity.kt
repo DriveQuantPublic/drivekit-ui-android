@@ -48,7 +48,7 @@ class TimelineActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle("Timeline") //TODO(replace with timeline key string)
+        setActivityTitle(getString(R.string.dk_timeline_title))
         tagScreen()
     }
 
