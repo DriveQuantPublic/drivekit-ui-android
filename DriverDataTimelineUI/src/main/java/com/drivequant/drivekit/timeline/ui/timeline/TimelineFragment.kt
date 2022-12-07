@@ -208,11 +208,6 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
     }
 
     private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
-        dk_swipe_refresh_timeline.apply {
-            isRefreshing = display
-            if (display) {
-                visibility = View.VISIBLE
-            }
-        }
+        dk_swipe_refresh_timeline.isRefreshing = display
     }
 }

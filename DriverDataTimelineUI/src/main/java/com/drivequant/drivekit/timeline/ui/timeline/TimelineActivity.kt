@@ -23,8 +23,6 @@ class TimelineActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline)
-
-        tagScreen()
         setupUi()
     }
 
@@ -51,6 +49,7 @@ class TimelineActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setActivityTitle(getString(R.string.dk_timeline_title))
+        tagScreen()
     }
 
     override fun onSupportNavigateUp(): Boolean {

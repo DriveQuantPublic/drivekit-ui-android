@@ -21,6 +21,19 @@
    <string name="dk_common_driving_context_fastlane">voies rapides</string>
    <string name="dk_common_duration">Durée</string>
    <string name="dk_common_ecodriving">Écoconduite</string>
+   <string name="dk_common_ecodriving_accel_good">Bonne accélération</string>
+   <string name="dk_common_ecodriving_accel_high">Accélération trop forte</string>
+   <string name="dk_common_ecodriving_accel_low">Accélération trop faible</string>
+   <string name="dk_common_ecodriving_accel_strong">Accélération forte</string>
+   <string name="dk_common_ecodriving_accel_weak">Accélération faible</string>
+   <string name="dk_common_ecodriving_decel_good">Freinage idéal</string>
+   <string name="dk_common_ecodriving_decel_high">Freinage trop fort</string>
+   <string name="dk_common_ecodriving_decel_low">Freinage trop faible</string>
+   <string name="dk_common_ecodriving_decel_strong">Freinage fort</string>
+   <string name="dk_common_ecodriving_decel_weak">Freinage faible</string>
+   <string name="dk_common_ecodriving_speed_bad_maintain">Vitesse très irrégulière</string>
+   <string name="dk_common_ecodriving_speed_good_maintain">Vitesse régulière</string>
+   <string name="dk_common_ecodriving_speed_weak_maintain">Vitesse irrégulière</string>
    <string name="dk_common_edit">Éditer</string>
    <string name="dk_common_error_empty_field">Ce champ ne peut pas être vide</string>
    <string name="dk_common_error_message">Une erreur est survenue, veuillez réessayer ultérieurement.</string>
@@ -68,6 +81,7 @@
    <string name="dk_common_unit_mpg">mpg</string>
    <string name="dk_common_unit_mph">mph</string>
    <string name="dk_common_unit_power">ch</string>
+   <string name="dk_common_unit_score">/ 10</string>
    <string name="dk_common_unit_second">s</string>
    <string name="dk_common_unit_ton">t</string>
    <string name="dk_common_update_photo_title">Changer l\'image</string>

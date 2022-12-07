@@ -14,7 +14,6 @@
    <string name="dk_driverdata_alternative_transportation_remark">💡 Ce trajet n\'a pas de score car l’application ne mesure pas votre conduite lorsque vous n\'êtes pas dans votre véhicule.</string>
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Merci d\'avoir déclaré ce trajet et de nous aider à améliorer l\'identification automatique du mode de transport.</string>
    <string name="dk_driverdata_alternative_trips">Transports alternatifs</string>
-   <string name="dk_driverdata_bad_maintain">Vitesse très irrégulière</string>
    <string name="dk_driverdata_beginning_authorized_call">Début d\'un appel autorisé</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">L\'application a détecté le début d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Début d\'appel non-autorisé</string>
@@ -31,7 +30,7 @@
    <string name="dk_driverdata_distraction_score">Score de distraction</string>
    <string name="dk_driverdata_distraction_score_info">Le score de distraction (utilisation du téléphone au volant) mesure les interactions du conducteur avec son smartphone pendant la conduite. Cela comprend à la fois le nombre de déverrouillages du téléphone la durée de communication téléphonique durant le trajet. L\'utilisation du téléphone est susceptible de perturber l\'attention du conducteur et augmente sensiblement le risque d\'accident. Les appels réalisés avec le kit main libre de votre véhicule sont autorisés et ils ne feront pas baisser votre score.</string>
    <string name="dk_driverdata_eco_score">Score d\'éco-conduite</string>
-   <string name="dk_driverdata_eco_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20%% est atteignable.</string>
+   <string name="dk_driverdata_eco_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20% est atteignable.</string>
    <string name="dk_driverdata_end_authorized_call">Fin d\'appel autorisé</string>
    <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
@@ -42,14 +41,7 @@
    <string name="dk_driverdata_failed_to_declare_transportation">Le mode de transport n\'a pas pu être mis à jour, veuillez réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_delete_trip">Le trajet n\'a pas pu être supprimé, réessayer ultérieurement.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossible de synchroniser les trajets, veuillez réessayer plus tard.</string>
-   <string name="dk_driverdata_good_accel">Bonne accélération</string>
-   <string name="dk_driverdata_good_decel">Freinage idéal</string>
-   <string name="dk_driverdata_good_maintain">Vitesse régulière</string>
-   <string name="dk_driverdata_high_accel">Accélération trop forte</string>
-   <string name="dk_driverdata_high_decel">Freinage trop fort</string>
    <string name="dk_driverdata_lock_event">Fermeture de l\'écran</string>
-   <string name="dk_driverdata_low_accel">Accélération trop faible</string>
-   <string name="dk_driverdata_low_decel">Freinage trop faible</string>
    <string name="dk_driverdata_my_weekly_score_distraction">Mon score hebdomadaire | Distraction</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">Mon score hebdomadaire | Éco-conduite</string>
    <string name="dk_driverdata_my_weekly_score_safety">Mon score hebdomadaire | Sécurité</string>
@@ -90,8 +82,6 @@
    <string name="dk_driverdata_speeding_score">Score de vitesse</string>
    <string name="dk_driverdata_speeding_score_info">Ce score est le reflet du respect des limitations de vitesse. Il évolue en fonction de la distance parcourue au-dessus de la limite réglementaire. Plus la distance en dépassement augmente et plus le score diminue.</string>
    <string name="dk_driverdata_start_event">Début de trajet</string>
-   <string name="dk_driverdata_strong_accel">Accélération forte</string>
-   <string name="dk_driverdata_strong_decel">Freinage fort</string>
    <string name="dk_driverdata_synthesis_co2_emissions">Emissions de CO2</string>
    <string name="dk_driverdata_synthesis_co2_mass">Masse de CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
@@ -143,9 +133,6 @@
    <string name="dk_driverdata_urban">%s en zone urbaine</string>
    <string name="dk_driverdata_value">Valeur =</string>
    <string name="dk_driverdata_vehicle_trips">Trajets en véhicule</string>
-   <string name="dk_driverdata_weak_accel">Accélération faible</string>
-   <string name="dk_driverdata_weak_decel">Freinage faible</string>
-   <string name="dk_driverdata_weak_maintain">Vitesse irrégulière</string>
    <string name="dk_driverdata_weather_cloud">Temps nuageux</string>
    <string name="dk_driverdata_weather_fog">Temps brumeux</string>
    <string name="dk_driverdata_weather_hail">Temps de gel</string>

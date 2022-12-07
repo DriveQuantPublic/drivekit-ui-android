@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_timeline_acceleration_score">Score d\'accélération : %s</string>
+    <string name="dk_timeline_accelerations">Accélérations / 100 km : %s</string>
+    <string name="dk_timeline_adherence">Limites d\'adhérence / 100 km : %s</string>
+    <string name="dk_timeline_brakings">Freinages / 100 km : %s</string>
+    <string name="dk_timeline_button_timeline_detail">Voir plus de détails sur mon score</string>
+    <string name="dk_timeline_calls_duration">Durée d\'appels interdits / 100 km : %s</string>
+    <string name="dk_timeline_co2_mass">Masse de CO2 : %s</string>
+    <string name="dk_timeline_consumption">Consommation : %s</string>
+    <string name="dk_timeline_deceleration_score">Score de décélération : %s</string>
+    <string name="dk_timeline_distraction_score">Score de distraction : %s</string>
+    <string name="dk_timeline_eco_score">Score d\'éco-conduite : %s</string>
+    <string name="dk_timeline_from_date">du</string>
+    <string name="dk_timeline_fuel_savings">Économies de carburant réalisables : %s</string>
+    <string name="dk_timeline_info_accel_score">Le score d\'accélération varie entre -5 et 5. Si le score vaut -5, cela indique que l\'accélération est trop faible. Si le score vaut 5, l\'accélération est trop forte. Un score nul indique que l\'accélération est idéale dans le cadre de l\'éco-conduite.</string>
+    <string name="dk_timeline_info_decel_score">Le score de décélération varie entre -5 et 5. Si le score vaut -5, la décélération est trop lente. Si le score vaut 5, elle est trop brusque. Un score nul indique que la décélération est idéale dans le cadre de l\'éco-conduite.</string>
+    <string name="dk_timeline_info_maintain_score">Le score de maintien varie entre 0 à 5. Si le score est égal à 0, la vitesse est stable et l\'énergie dépensée est minimale. Dans le cas contraire, si la vitesse oscille, le score de maintien augmente ce qui indique qu\'il y a une surconsommation.</string>
+    <string name="dk_timeline_maintain_score">Score de maintien : %s</string>
+    <string name="dk_timeline_nb_unlocks">Nombre de déverrouillages / 100 km : %s</string>
+    <string name="dk_timeline_overspeeding_distance">Distance relative en dépassement : %s</string>
+    <string name="dk_timeline_overspeeding_duration">Durée relative en dépassement : %s</string>
+    <string name="dk_timeline_per_month">Par mois</string>
+    <string name="dk_timeline_per_week">Par semaine</string>
+    <string name="dk_timeline_road_context_city">Urbain fluide</string>
+    <string name="dk_timeline_road_context_description_empty_data">Faites un premier trajet pour voir vos premiers graphiques s\'afficher.</string>
+    <string name="dk_timeline_road_context_description_no_data_ecodriving">Les trajets pour les dates sélectionnées sont trop courts pour avoir un score d’éco-conduite</string>
+    <string name="dk_timeline_road_context_description_no_data_safety">Les trajets pour les dates sélectionnées sont trop courts pour avoir un score de sécurité</string>
+    <string name="dk_timeline_road_context_expressways">Voies rapides</string>
+    <string name="dk_timeline_road_context_heavy_urban_traffic">Urbain dense</string>
+    <string name="dk_timeline_road_context_suburban">Extra urbain</string>
+    <string name="dk_timeline_road_context_title">Contexte routier (%s)</string>
+    <string name="dk_timeline_road_context_title_empty_data">Vous n\'avez pas encore de données</string>
+    <string name="dk_timeline_road_context_title_no_data">Pas de données à afficher</string>
+    <string name="dk_timeline_safety_score">Score de sécurité : %s</string>
+    <string name="dk_timeline_speeding_score">Score de vitesse : %s</string>
+    <string name="dk_timeline_title">Timeline</string>
+    <string name="dk_timeline_to_date">au</string>
+    <string name="dk_timeline_trips_forbidden_calls">Trajets avec appels interdits : %s</string>
+</resources>
