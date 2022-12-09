@@ -55,7 +55,11 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
 
         viewModel.updateData.observe(this) {
             roadContextView.configure(viewModel.roadContextViewModel)
-            dateSelectorView.configure(viewModel.dateSelectorViewModel)
+            if (dateSelectorViewModel.hasDates()) {
+                dateSelectorView.configure(viewModel.dateSelectorViewModel)
+            } else {
+                dateSelectorContainer.visibility = View.GONE
+            }
             viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
                 override fun onDateSelected(date: String) {
                     viewModel.updateTimelineDate(date)

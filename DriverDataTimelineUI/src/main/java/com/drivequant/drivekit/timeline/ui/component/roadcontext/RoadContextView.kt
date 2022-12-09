@@ -105,7 +105,7 @@ class RoadContextView(context: Context) : LinearLayout(context) {
                     "dk_timeline_road_context_description_empty_data"
                 )
             }
-            road_context_view_container.visibility = View.GONE
+            road_context_view_container?.visibility = View.GONE
         }
     }
 }

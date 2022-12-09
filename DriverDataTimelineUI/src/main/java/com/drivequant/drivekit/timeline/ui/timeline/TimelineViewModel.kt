@@ -104,9 +104,9 @@ internal class TimelineViewModel : ViewModel() {
                 }
                 roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
-                updateData.postValue(Any())
             }
         }
+        updateData.postValue(Any())
     }
 
     fun updateTimelinePeriod(period: DKTimelinePeriod) {

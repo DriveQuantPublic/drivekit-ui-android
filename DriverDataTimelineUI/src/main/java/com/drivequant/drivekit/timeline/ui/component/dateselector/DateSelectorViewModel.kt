@@ -64,6 +64,8 @@ class DateSelectorViewModel : ViewModel() {
         }
     }
 
+    fun hasDates() = this::dates.isInitialized && dates.isNotEmpty()
+
     fun moveToPreviousDate() {
         if (hasPreviousDate) {
             selectedDateIndex--
