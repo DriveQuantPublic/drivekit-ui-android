@@ -57,6 +57,7 @@ internal class TimelineViewModel : ViewModel() {
                 }
             }
         }, SynchronizationType.CACHE)
+        updateTimeline()
     }
 
     fun updateTimeline() {
@@ -72,16 +73,17 @@ internal class TimelineViewModel : ViewModel() {
                             TimelinePeriod.MONTH -> monthTimeline = it
                         }
                     }
+                    update(resettingSelectedDate = true)
                 }
                 syncStatus.postValue(timelineSyncStatus)
-                // TODO
-                selectedDate = null
-                update()
             }
         })
     }
 
-    private fun update() {
+    private fun update(resettingSelectedDate: Boolean = false) {
+        if (resettingSelectedDate) {
+           selectedDate = null
+        }
         when (currentPeriod) {
             DKTimelinePeriod.WEEK -> weekTimeline
             DKTimelinePeriod.MONTH -> monthTimeline
@@ -110,7 +112,7 @@ internal class TimelineViewModel : ViewModel() {
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
-            update()
+            update(resettingSelectedDate = true)
         }
     }
 
