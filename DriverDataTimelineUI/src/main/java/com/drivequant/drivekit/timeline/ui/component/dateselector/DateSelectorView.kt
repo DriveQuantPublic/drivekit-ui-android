@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
@@ -63,33 +61,49 @@ class DateSelectorView(context: Context) :
             val fromDatePrefix = DKResource.convertToString(context, "dk_timeline_from_date")
             val toDatePrefix = DKResource.convertToString(context, "dk_timeline_to_date")
 
-            text_view_date_range.text = DKSpannable()
-                .append(fromDatePrefix, context.resSpans {
-                    typeface(Typeface.BOLD)
-                    color(DriveKitUI.colors.complementaryFontColor())
-                    }
-                )
-                .space()
-                .append(
-                    viewModel.computedFromDate.formatDate(DKDatePattern.STANDARD_DATE),
-                    context.resSpans {
-                        typeface(Typeface.BOLD)
-                        color(DriveKitUI.colors.primaryColor())
-                    }
-                )
-                .space()
-                .append(toDatePrefix, context.resSpans {
-                    typeface(Typeface.BOLD)
-                    color(DriveKitUI.colors.complementaryFontColor())
-                })
-                .space()
-                .append(
-                    viewModel.computedToDate.formatDate(DKDatePattern.STANDARD_DATE),
-                context.resSpans {
-                    typeface(Typeface.BOLD)
-                    color(DriveKitUI.colors.primaryColor())
-                })
-                .toSpannable()
+            text_view_date_range.text = when (viewModel.period) {
+                DKTimelinePeriod.WEEK -> {
+                    DKSpannable()
+                        .append(fromDatePrefix, context.resSpans {
+                            typeface(Typeface.BOLD)
+                            color(DriveKitUI.colors.complementaryFontColor())
+                        }
+                        )
+                        .space()
+                        .append(
+                            viewModel.computedFromDate.formatDate(DKDatePattern.STANDARD_DATE),
+                            context.resSpans {
+                                typeface(Typeface.BOLD)
+                                color(DriveKitUI.colors.primaryColor())
+                            }
+                        )
+                        .space()
+                        .append(toDatePrefix, context.resSpans {
+                            typeface(Typeface.BOLD)
+                            color(DriveKitUI.colors.complementaryFontColor())
+                        })
+                        .space()
+                        .append(
+                            viewModel.computedToDate.formatDate(DKDatePattern.STANDARD_DATE),
+                            context.resSpans {
+                                typeface(Typeface.BOLD)
+                                color(DriveKitUI.colors.primaryColor())
+                            })
+                        .toSpannable()
+                }
+                DKTimelinePeriod.MONTH -> {
+                    DKSpannable()
+                        .append(
+                            viewModel.computedFromDate.formatDate(DKDatePattern.MONTH_LETTER_YEAR)
+                                .capitalizeFirstLetter(),
+                            context.resSpans {
+                                typeface(Typeface.BOLD)
+                                color(DriveKitUI.colors.primaryColor())
+                            }
+                        )
+                        .toSpannable()
+                }
+            }
         }
     }
 

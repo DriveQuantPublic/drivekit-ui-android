@@ -11,6 +11,7 @@ enum class DKDatePattern {
     FULL_DATE,
     DAY_MONTH,
     MONTH_YEAR,
+    MONTH_LETTER_YEAR,
     YEAR_ONLY,
     YEAR,
     DAY,
@@ -25,6 +26,7 @@ enum class DKDatePattern {
         FULL_DATE -> "EEEE d MMMM yyyy"
         DAY_MONTH -> "dd/MM"
         MONTH_YEAR -> "MM/yyyy"
+        MONTH_LETTER_YEAR -> "MMMM yyyy"
         YEAR_ONLY -> "E"
         YEAR -> "yyyy"
         DAY -> "EEEE"

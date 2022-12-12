@@ -19,7 +19,8 @@ class DateSelectorViewModel : ViewModel() {
 
     var listener: DateSelectorListener? = null
 
-    private lateinit var period: DKTimelinePeriod
+    lateinit var period: DKTimelinePeriod
+        private set
     private lateinit var dates: List<String>
     private var selectedDateIndex: Int = -1
     var hasPreviousDate = false
@@ -30,22 +31,20 @@ class DateSelectorViewModel : ViewModel() {
     private lateinit var fromDate: String
     private lateinit var toDate: String
 
-    var computedFromDate: Date = Date()
+    val computedFromDate: Date
         get() =
             if (this::fromDate.isInitialized) {
                 getBackendDateFormat().parse(fromDate) ?: Date()
             } else {
                 Date()
             }
-        private set
-    var computedToDate: Date = Date()
+    val computedToDate: Date
         get() =
             if (this::toDate.isInitialized) {
                 getBackendDateFormat().parse(toDate) ?: Date()
             } else {
                 Date()
             }
-        private set
 
     fun configure(dates: List<String>, selectedDateIndex: Int?, period: DKTimelinePeriod) {
         this.dates = dates
