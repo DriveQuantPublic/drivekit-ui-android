@@ -150,6 +150,12 @@ class TimelineFragment : Fragment(), PeriodSelectorListener {
         }
         context?.let {
             dateSelectorView = DateSelectorView(it)
+            dateSelectorView.apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+            }
             dateSelectorContainer.addView(dateSelectorView)
         }
     }
