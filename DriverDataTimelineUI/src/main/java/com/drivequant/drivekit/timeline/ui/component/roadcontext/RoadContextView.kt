@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.adapter.RoadContextItemListAdapter
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import kotlinx.android.synthetic.main.dk_road_context_empty_view.view.*
 import kotlinx.android.synthetic.main.dk_road_context_view.view.*
 
@@ -67,10 +68,10 @@ class RoadContextView(context: Context) : LinearLayout(context) {
     }
 
     private fun initRoadContextContainer() {
-        if (viewModel.shouldShowEmptyViewContainer()) {
-            displayEmptyRoadContextUI()
-        } else {
+        if (viewModel.displayData()) {
             displayRoadContextUI()
+        } else {
+            displayEmptyRoadContextUI()
         }
     }
 
@@ -89,20 +90,37 @@ class RoadContextView(context: Context) : LinearLayout(context) {
     }
 
     private fun displayEmptyRoadContextUI() {
+        val titleKey: String
+        val descriptionKey: String
+        when (viewModel.getEmptyRoadContextType()) {
+            EmptyRoadContextType.EMPTY_DATA -> {
+                titleKey = "dk_timeline_road_context_title_empty_data"
+                descriptionKey = "dk_timeline_road_context_description_empty_data"
+            }
+            EmptyRoadContextType.NO_DATA_SAFETY -> {
+                titleKey = "dk_timeline_road_context_title_no_data"
+                descriptionKey = "dk_timeline_road_context_description_no_data_safety"
+            }
+            EmptyRoadContextType.NO_DATA_ECODRIVING -> {
+                titleKey = "dk_timeline_road_context_title_no_data"
+                descriptionKey = "dk_timeline_road_context_description_no_data_ecodriving"
+            }
+        }
+
         with(empty_road_context_view) {
             visibility = View.VISIBLE
             with(text_view_no_data_title) {
                 headLine2(DriveKitUI.colors.primaryColor())
                 text = DKResource.convertToString(
                     context,
-                    "dk_timeline_road_context_title_no_data"
+                    titleKey
                 )
             }
             with(text_view_no_data_description) {
                 normalText(DriveKitUI.colors.complementaryFontColor())
                 text = DKResource.convertToString(
                     context,
-                    "dk_timeline_road_context_description_empty_data"
+                    descriptionKey
                 )
             }
             road_context_view_container?.visibility = View.GONE

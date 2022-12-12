@@ -40,6 +40,11 @@ internal class TimelineViewModel : ViewModel() {
 
     private var selectedDate: String? = null
 
+    val hasData: Boolean
+        get() {
+            return getTimelineSource()?.allContext?.numberTripTotal?.isNotEmpty() ?: run { false }
+        }
+
     init {
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
             override fun onResponse(
@@ -84,10 +89,7 @@ internal class TimelineViewModel : ViewModel() {
         if (resettingSelectedDate) {
            selectedDate = null
         }
-        when (currentPeriod) {
-            DKTimelinePeriod.WEEK -> weekTimeline
-            DKTimelinePeriod.MONTH -> monthTimeline
-        }?.let { timelineSource ->
+        getTimelineSource()?.let { timelineSource ->
             val dates = timelineSource.allContext.date
             val selectedDateIndex = if (selectedDate != null) {
                 dates.indexOf(selectedDate)
@@ -98,11 +100,16 @@ internal class TimelineViewModel : ViewModel() {
             }
             if (selectedDateIndex != null) {
                 val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
-                timelineSource.roadContexts.forEach {
-                    val distance = it.distance[selectedDateIndex]
-                    distanceByContext[it.type.toTimelineRoadContext()] = distance
+
+                val totalTripNumber = getTimelineSource()?.allContext?.numberTripTotal?.get(selectedDateIndex) ?: 0
+                if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || totalTripNumber > 0) {
+                    timelineSource.roadContexts.forEach {
+                        val distance = it.distance[selectedDateIndex]
+                        distanceByContext[it.type.toTimelineRoadContext()] = distance
+                    }
                 }
-                roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>)
+               
+                roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
             }
         }
@@ -126,6 +133,11 @@ internal class TimelineViewModel : ViewModel() {
     fun updateTimelineScore(position: Int) {
         selectedScore = scores[position]
         update()
+    }
+
+    private fun getTimelineSource() = when (currentPeriod) {
+        DKTimelinePeriod.WEEK -> weekTimeline
+        DKTimelinePeriod.MONTH -> monthTimeline
     }
 }
 

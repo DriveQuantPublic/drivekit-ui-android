@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
+import kotlin.properties.Delegates
 
 class RoadContextViewModel : ViewModel() {
 
@@ -20,9 +23,12 @@ class RoadContextViewModel : ViewModel() {
         }
 
     private var distance = 0.0
+    private var hasData by Delegates.notNull<Boolean>()
+    private lateinit var selectedScore: DKTimelineScoreType
 
-    fun configure(distanceByContext: Map<TimelineRoadContext, Double>) {
+    fun configure(distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
         this.distanceByContext = distanceByContext
+        this.hasData = hasData
         distance = 0.0
         distanceByContext.forEach {
             distance += it.value
@@ -30,7 +36,21 @@ class RoadContextViewModel : ViewModel() {
         changeObserver.postValue(Any())
     }
 
-    fun shouldShowEmptyViewContainer() = distanceByContext.isEmpty()
+    fun displayData() = distanceByContext.isNotEmpty()
+
+    fun getEmptyRoadContextType(): EmptyRoadContextType {
+        return if (!hasData) {
+            EmptyRoadContextType.EMPTY_DATA
+        } else {
+            when (selectedScore) {
+                DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> {
+                    EmptyRoadContextType.EMPTY_DATA
+                }
+                DKTimelineScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
+                DKTimelineScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
+            }
+        }
+    }
 
     fun formatDistanceInKm(context: Context): String {
         return DKDataFormatter.formatMeterDistanceInKm(
