@@ -20,6 +20,7 @@
                 android:id="@+id/tab_layout_timeline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"
                 app:tabMode="fixed" />
 
             <LinearLayout
