@@ -1,16 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dk_timeline_menu">Timelines</string>
-    <string name="dk_timeline_button_timeline_detail">Voir plus de détail sur mon score</string>
-    <string name="dk_timeline_per_month">Par mois</string>
-    <string name="dk_timeline_per_week">Par semaine</string>
-    <string name="dk_timeline_road_context_heavy_urban_traffic">Urbain dense</string>
-    <string name="dk_timeline_road_context_city">Urbain fluide</string>
-    <string name="dk_timeline_road_context_suburban">Extra urbain</string>
-    <string name="dk_timeline_road_context_expressways">Voies rapides</string>
-    <string name="dk_timeline_road_context_title">Contexte routier (%s)</string>
-    <string name="dk_timeline_road_context_title_no_data">Vous n\'avez pas encore de données </string>
-    <string name="dk_timeline_road_context_description_no_data">Faites un premier trajet pour voir vos premiers graphiques s\'afficher.</string>
-
-    <string name="dk_timeline_from_date">du</string>
-    <string name="dk_timeline_to_date">au</string>
+    <string name="dk_timeline_acceleration_score">Puntuación de aceleración: %s</string>
+    <string name="dk_timeline_accelerations">Aceleración / 100 km: %s</string>
+    <string name="dk_timeline_adherence">Límites de adherencia / 100 km: %s</string>
+    <string name="dk_timeline_brakings">Frenada / 100 km: %s</string>
+    <string name="dk_timeline_button_timeline_detail">Ver más detalles en mi puntuación</string>
+    <string name="dk_timeline_calls_duration">Duración de las llamadas prohibidas / 100 km: %s</string>
+    <string name="dk_timeline_co2_mass">Masa de CO2: %s</string>
+    <string name="dk_timeline_consumption">Consumo: %s</string>
+    <string name="dk_timeline_deceleration_score">Puntuación de desaceleración: %s</string>
+    <string name="dk_timeline_distraction_score">Puntuación de distracción: %s</string>
+    <string name="dk_timeline_eco_score">Puntuación de la ecoconducción: %s</string>
+    <string name="dk_timeline_from_date">del</string>
+    <string name="dk_timeline_fuel_savings">Ahorro de combustible alcanzable: %s</string>
+    <string name="dk_timeline_info_accel_score">La puntuación de aceleración va de -5 a 5. Para el valor -5, la aceleración es demasiado lenta. Una puntuación de 5 indica que la aceleración es demasiado rápida. Una puntuación de 0 indica que la aceleración se ajusta perfectamente a un estilo de conducción ecológico.</string>
+    <string name="dk_timeline_info_decel_score">La puntuación de desaceleración varía de -5 a 5. Para el valor -5, la deceleración es demasiado lenta. Una puntuación de 5 significa que la desaceleración es demasiado rápida. Una puntuación de 0 indica que la deceleración es perfecta para la conducción ecológica.</string>
+    <string name="dk_timeline_info_maintain_score">La puntuación de mantenimiento de la velocidad va de 0 a 5. Un valor de 0 indica que el conductor se comporta bien y conduce a una velocidad constante. De lo contrario, cuando se detectan oscilaciones en la velocidad, la puntuación aumenta y el conductor puede progresar.</string>
+    <string name="dk_timeline_maintain_score">Puntuación de mantenimiento: %s</string>
+    <string name="dk_timeline_nb_unlocks">Número de desbloqueos / 100 km: %s</string>
+    <string name="dk_timeline_overspeeding_distance">Distancia relativa al exceso de velocidad: %s</string>
+    <string name="dk_timeline_overspeeding_duration">Duración relativa de la sobrecarga: %s</string>
+    <string name="dk_timeline_per_month">Por mes</string>
+    <string name="dk_timeline_per_week">Por semana</string>
+    <string name="dk_timeline_road_context_city">Urbano</string>
+    <string name="dk_timeline_road_context_description_empty_data">Haz un primer viaje para ver aparecer tus primeros gráficos.</string>
+    <string name="dk_timeline_road_context_description_no_data_ecodriving">Los viajes para las fechas seleccionadas son demasiado cortos para tener una puntuación de ecoconducción</string>
+    <string name="dk_timeline_road_context_description_no_data_safety">Los viajes para las fechas seleccionadas son demasiado cortas para tener una puntuación de seguridad</string>
+    <string name="dk_timeline_road_context_expressways">Autopistas</string>
+    <string name="dk_timeline_road_context_heavy_urban_traffic">Entorno urbano denso</string>
+    <string name="dk_timeline_road_context_suburban">Extraurbano</string>
+    <string name="dk_timeline_road_context_title">Contexto de carretera (%s)</string>
+    <string name="dk_timeline_road_context_title_empty_data">Todavía no tiene datos</string>
+    <string name="dk_timeline_road_context_title_no_data">No hay datos para visualizar</string>
+    <string name="dk_timeline_safety_score">Puntuación de seguridad: %s</string>
+    <string name="dk_timeline_speeding_score">Puntaje de velocidad: %s</string>
+    <string name="dk_timeline_title">Cronología</string>
+    <string name="dk_timeline_to_date">al</string>
+    <string name="dk_timeline_trips_forbidden_calls">Viajes sin llamada: %s</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.SynchronizationType
@@ -11,6 +10,7 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
+import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
@@ -24,7 +24,6 @@ internal class TimelineViewModel : ViewModel() {
     var timelinePeriodTypes = DKTimelinePeriod.values().toList()
     private var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
 
-    val timelineDataLiveData: MutableLiveData<Timeline> = MutableLiveData()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
     private var selectedScore: DKTimelineScoreType = scores.first()
@@ -34,6 +33,7 @@ internal class TimelineViewModel : ViewModel() {
         }
 
     var roadContextViewModel = RoadContextViewModel()
+    var dateSelectorViewModel = DateSelectorViewModel()
 
     private var weekTimeline: Timeline? = null
     private var monthTimeline: Timeline? = null
@@ -41,7 +41,6 @@ internal class TimelineViewModel : ViewModel() {
     private var selectedDate: String? = null
 
     init {
-        // periodSelectorViewModel.listener = this
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
             override fun onResponse(
                 timelineSyncStatus: TimelineSyncStatus,
@@ -58,6 +57,7 @@ internal class TimelineViewModel : ViewModel() {
                 }
             }
         }, SynchronizationType.CACHE)
+        updateTimeline()
     }
 
     fun updateTimeline() {
@@ -73,16 +73,17 @@ internal class TimelineViewModel : ViewModel() {
                             TimelinePeriod.MONTH -> monthTimeline = it
                         }
                     }
+                    update(resettingSelectedDate = true)
                 }
                 syncStatus.postValue(timelineSyncStatus)
-                // TODO
-                selectedDate = null
-                update()
             }
         })
     }
 
-    private fun update() {
+    private fun update(resettingSelectedDate: Boolean = false) {
+        if (resettingSelectedDate) {
+           selectedDate = null
+        }
         when (currentPeriod) {
             DKTimelinePeriod.WEEK -> weekTimeline
             DKTimelinePeriod.MONTH -> monthTimeline
@@ -102,32 +103,34 @@ internal class TimelineViewModel : ViewModel() {
                     distanceByContext[it.type.toTimelineRoadContext()] = distance
                 }
                 roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>)
+                dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 updateData.postValue(Any())
             }
         }
+        updateData.postValue(Any())
     }
 
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
-            Log.e("TEST", currentPeriod.name)
+            update(resettingSelectedDate = true)
+        }
+    }
+
+    fun updateTimelineDate(date: String) {
+        if (selectedDate != date) {
+            selectedDate = date
             update()
         }
     }
 
     fun updateTimelineScore(position: Int) {
         selectedScore = scores[position]
-        //Log.e("TEST", selectedScore?.name? ?: DKTimelineScoreType.SAFETY)
         update()
     }
 }
 
-data class RoadContextItemData(
-    val type: RoadContext,
-    val distance: List<Double>,
-)
-
-//TODO (Replace with title resId)
+//TODO Move in TimelinePeriodViewModel
 fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
     DKTimelinePeriod.MONTH -> "dk_timeline_per_month"

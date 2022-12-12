@@ -33,8 +33,6 @@ class TimelineDetailActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, TimelineDetailFragment.newInstance())
             .commit()
-
-        tagScreen()
         checkViewModelInitialization()
     }
 
@@ -56,7 +54,8 @@ class TimelineDetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
-        setActivityTitle("Timeline Detail") //TODO(replace with detail title)
+        setActivityTitle(getString(R.string.dk_timeline_title)) // TODO
+        tagScreen()
     }
 
     override fun onSupportNavigateUp(): Boolean {

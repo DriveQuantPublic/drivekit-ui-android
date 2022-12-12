@@ -21,6 +21,19 @@
     <string name="dk_common_driving_context_fastlane">Espressways</string>
     <string name="dk_common_duration">Duration</string>
     <string name="dk_common_ecodriving">Eco-driving</string>
+    <string name="dk_common_ecodriving_accel_good">Good acceleration</string>
+    <string name="dk_common_ecodriving_accel_high">Acceleration is too high</string>
+    <string name="dk_common_ecodriving_accel_low">Acceleration is too low</string>
+    <string name="dk_common_ecodriving_accel_strong">Strong acceleration</string>
+    <string name="dk_common_ecodriving_accel_weak">Weak acceleration</string>
+    <string name="dk_common_ecodriving_decel_good">Good deceleration</string>
+    <string name="dk_common_ecodriving_decel_high">Deceleration is too high</string>
+    <string name="dk_common_ecodriving_decel_low">Deceleration is too low</string>
+    <string name="dk_common_ecodriving_decel_strong">Strong deceleration</string>
+    <string name="dk_common_ecodriving_decel_weak">Weak deceleration</string>
+    <string name="dk_common_ecodriving_speed_bad_maintain">Very fluctuating speed</string>
+    <string name="dk_common_ecodriving_speed_good_maintain">Good speed maintain</string>
+    <string name="dk_common_ecodriving_speed_weak_maintain">Irregular speed</string>
     <string name="dk_common_edit">Edit</string>
     <string name="dk_common_error_empty_field">This field cannot be blank</string>
     <string name="dk_common_error_message">An error occurred during the request, please retry later.</string>
@@ -68,6 +81,7 @@
     <string name="dk_common_unit_mpg">mpg</string>
     <string name="dk_common_unit_mph">mph</string>
     <string name="dk_common_unit_power">hp</string>
+    <string name="dk_common_unit_score">/ 10</string>
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_unit_ton">t</string>
     <string name="dk_common_update_photo_title">Edit the picture</string>

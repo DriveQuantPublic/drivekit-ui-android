@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.timeline.ui.component.roadcontext
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
@@ -10,7 +11,13 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 
 class RoadContextViewModel : ViewModel() {
+
+    val changeObserver: MutableLiveData<Any> = MutableLiveData()
+
     var distanceByContext = mapOf<TimelineRoadContext, Double>()
+        private set(value) {
+            field = value.filterNot { it.value <= 0.0 }
+        }
 
     private var distance = 0.0
 
@@ -20,6 +27,7 @@ class RoadContextViewModel : ViewModel() {
         distanceByContext.forEach {
             distance += it.value
         }
+        changeObserver.postValue(Any())
     }
 
     fun shouldShowEmptyViewContainer() = distanceByContext.isEmpty()
@@ -32,18 +40,18 @@ class RoadContextViewModel : ViewModel() {
         ).convertToString()
     }
 
-    fun getPercent(roadContext: TimelineRoadContext): Double {
-        val percent = if (distanceByContext.isEmpty()) {
+    fun getPercent(roadContext: TimelineRoadContext) =
+        if (distanceByContext.isEmpty()) {
             0.0
         } else {
-            (distanceByContext[roadContext]?.div(distance)!!*1000) ?: 0.0 //TODO verify *1000
+            distanceByContext[roadContext]?.div(distance)?.let {
+                it * 100
+            } ?: run { 0.0 }
         }
-        return percent
-    }
 
     @Suppress("UNCHECKED_CAST")
     class RoadContextViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return RoadContextViewModel() as T
         }
     }
