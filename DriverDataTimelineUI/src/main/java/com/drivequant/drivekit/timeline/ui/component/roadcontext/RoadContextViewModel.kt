@@ -23,7 +23,7 @@ class RoadContextViewModel : ViewModel() {
         }
 
     private var distance = 0.0
-    private var hasData by Delegates.notNull<Boolean>()
+    private var hasData: Boolean = false
     private lateinit var selectedScore: DKTimelineScoreType
 
     fun configure(distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
