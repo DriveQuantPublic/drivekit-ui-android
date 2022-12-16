@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.convertKmsToMiles
@@ -357,6 +358,62 @@ object DKDataFormatter {
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_power))
 
+    fun formatScore(context: Context, score: Double): String =
+        score.format(1)
+            .plus(nbsp)
+            .plus(context.getString(R.string.dk_common_unit_score))
+
+    fun formatPercentage(value: Double): String =
+        value.format(1)
+            .plus(nbsp)
+            .plus("%")
+
+    fun formatLiter(context: Context, liter: Double): String =
+        liter.format(1)
+            .plus(nbsp)
+            .plus(context.getString(R.string.dk_common_unit_liter))
+
+    @StringRes
+    fun getAccelerationDescriptionKey(score: Double): Int {
+        return if (score < Constants.Ecodriving.Acceleration.LOW_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_accel_low
+        } else if (score < Constants.Ecodriving.Acceleration.WEAK_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_accel_weak
+        } else if (score < Constants.Ecodriving.Acceleration.GOOD_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_accel_good
+        } else if (score < Constants.Ecodriving.Acceleration.STRONG_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_accel_strong
+        } else {
+            R.string.dk_common_ecodriving_accel_high
+        }
+    }
+
+    @StringRes
+    fun getDecelerationDescriptionKey(score: Double): Int {
+        return if (score < Constants.Ecodriving.Deceleration.LOW_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_decel_low
+        } else if (score < Constants.Ecodriving.Deceleration.WEAK_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_decel_weak
+        } else if (score < Constants.Ecodriving.Deceleration.GOOD_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_decel_good
+        } else if (score < Constants.Ecodriving.Deceleration.STRONG_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_decel_strong
+        } else {
+            R.string.dk_common_ecodriving_decel_high
+        }
+    }
+
+    @StringRes
+    fun getSpeedMaintainDescription(score: Double): Int {
+        return if (score < Constants.Ecodriving.SpeedMaintain.GOOD_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_speed_good_maintain
+        } else if (score < Constants.Ecodriving.SpeedMaintain.WEAK_LEVEL_THRESHOLD) {
+            R.string.dk_common_ecodriving_speed_weak_maintain
+        } else {
+            R.string.dk_common_ecodriving_speed_bad_maintain
+        }
+    }
+
     fun ceilDuration(durationInSeconds: Double?, ceilValueInSeconds: Int): Double? {
         return if (durationInSeconds != null && durationInSeconds.rem(60) > 0 && durationInSeconds >= ceilValueInSeconds) {
             durationInSeconds.div(60).toInt() * 60.toDouble() + 60
@@ -370,6 +427,29 @@ object DKDataFormatter {
             distanceInMeter.div(1000).toInt() * 1000.toDouble() + 1000
         } else {
             distanceInMeter
+        }
+    }
+}
+
+private object Constants {
+    object Ecodriving {
+        object SpeedMaintain {
+            const val GOOD_LEVEL_THRESHOLD: Double = 1.5
+            const val WEAK_LEVEL_THRESHOLD: Double = 3.5
+        }
+
+        object Acceleration {
+            const val LOW_LEVEL_THRESHOLD: Double = -4.0
+            const val WEAK_LEVEL_THRESHOLD: Double = -2.0
+            const val GOOD_LEVEL_THRESHOLD: Double = 1.0
+            const val STRONG_LEVEL_THRESHOLD: Double = 3.0
+        }
+
+        object Deceleration {
+            const val LOW_LEVEL_THRESHOLD: Double = -4.0
+            const val WEAK_LEVEL_THRESHOLD: Double = -2.0
+            const val GOOD_LEVEL_THRESHOLD: Double = 1.0
+            const val STRONG_LEVEL_THRESHOLD: Double = 3.0
         }
     }
 }

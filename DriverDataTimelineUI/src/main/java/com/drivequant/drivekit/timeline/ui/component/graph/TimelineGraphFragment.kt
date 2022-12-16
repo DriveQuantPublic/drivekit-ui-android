@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 
 class TimelineGraphFragment : Fragment() {
 
