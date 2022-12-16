@@ -2,6 +2,9 @@ package com.drivequant.drivekit.timeline.ui.timeline
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.extension.CalendarField
+import com.drivequant.drivekit.common.ui.extension.removeTime
+import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -16,6 +19,7 @@ import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelect
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
+import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.*
 
 internal class TimelineViewModel : ViewModel() {
@@ -63,11 +67,11 @@ internal class TimelineViewModel : ViewModel() {
                                 selectedDate
                             } else {
                                 // month to week
-                                selectedDate.toFirstDayOfMonth().removeTime()
+                                selectedDate.startingFrom(CalendarField.MONTH).removeTime()
                             }
                             compareDate.let {
                                 val dates = timeline.allContext.date.map {
-                                    DateSelectorViewModel.getBackendDateFormat().parse(it)!! // TODO refacto
+                                    it.toTimelineDate()!!
                                 }
                                 this@TimelineViewModel.selectedDate = dates.first { date ->
                                     date > compareDate
@@ -125,7 +129,7 @@ internal class TimelineViewModel : ViewModel() {
         }
         getTimelineSource()?.let { timelineSource ->
             val dates = timelineSource.allContext.date.map {
-                DateSelectorViewModel.getBackendDateFormat().parse(it)!! //TODO refacto
+                it.toTimelineDate()!!
             }
             val selectedDateIndex = if (selectedDate != null) {
                 dates.indexOf(selectedDate)
@@ -175,26 +179,6 @@ internal class TimelineViewModel : ViewModel() {
         DKTimelinePeriod.WEEK -> weekTimeline
         DKTimelinePeriod.MONTH -> monthTimeline
     }
-}
-
-// TODO refacto later on dateExtension
-fun Date.toFirstDayOfMonth(): Date {
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.time = this
-    Calendar.MONTH
-    calendar.set(Calendar.DAY_OF_MONTH, 0)
-    return calendar.time.removeTime()
-}
-
-// TODO refacto later on dateExtension
-fun Date.removeTime(): Date {
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.time = this
-    calendar.set(Calendar.HOUR, 0)
-    calendar.set(Calendar.MINUTE, 0)
-    calendar.set(Calendar.SECOND, 0)
-    calendar.set(Calendar.MILLISECOND, 0)
-    return calendar.time
 }
 
 //TODO Move in TimelinePeriodViewModel
