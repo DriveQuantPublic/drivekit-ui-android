@@ -4,6 +4,7 @@
     android:id="@+id/view_group_empty_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:padding="@dimen/dk_margin"
     android:orientation="vertical">
 
