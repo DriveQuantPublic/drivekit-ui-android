@@ -83,6 +83,7 @@ class RoadContextView(context: Context) : LinearLayout(context) {
                     viewModel.formatDistanceInKm(context)
                 )
                 normalText(DriveKitUI.colors.mainFontColor())
+                visibility = View.VISIBLE
             }
         }
         empty_road_context_view.visibility = View.GONE
@@ -91,7 +92,7 @@ class RoadContextView(context: Context) : LinearLayout(context) {
 
     private fun displayEmptyRoadContextUI() {
         viewModel.emptyRoadContextType?.let {
-            val titleKey: String
+            var titleKey: String? = null
             val descriptionKey: String
             when (it) {
                 EmptyRoadContextType.EMPTY_DATA -> {
@@ -107,19 +108,21 @@ class RoadContextView(context: Context) : LinearLayout(context) {
                     descriptionKey = "dk_timeline_road_context_description_no_data_ecodriving"
                 }
                 EmptyRoadContextType.NO_DATA -> {
-                    titleKey = "dk_timeline_road_context_title_no_data" //TODO verify ?
+                    titleKey = null
                     descriptionKey = "dk_timeline_road_context_no_context_description"
                 }
             }
 
             with(empty_road_context_view) {
                 visibility = View.VISIBLE
-                with(text_view_no_data_title) {
-                    headLine2(DriveKitUI.colors.primaryColor())
-                    text = DKResource.convertToString(
-                        context,
-                        titleKey
-                    )
+                titleKey?.let {
+                    with(text_view_no_data_title) {
+                        headLine2(DriveKitUI.colors.primaryColor())
+                        text = DKResource.convertToString(
+                            context,
+                            it
+                        )
+                    }
                 }
                 with(text_view_no_data_description) {
                     normalText(DriveKitUI.colors.complementaryFontColor())
@@ -130,6 +133,8 @@ class RoadContextView(context: Context) : LinearLayout(context) {
                 }
                 road_context_view_container?.visibility = View.GONE
             }
+
+            text_view_road_context_title.visibility = View.GONE
         }
     }
 }

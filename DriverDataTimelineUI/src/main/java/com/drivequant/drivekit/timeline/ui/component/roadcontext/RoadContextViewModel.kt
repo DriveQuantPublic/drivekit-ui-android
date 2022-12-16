@@ -23,11 +23,12 @@ class RoadContextViewModel : ViewModel() {
 
     private var distance = 0.0
     private var hasData: Boolean = false
-    private lateinit var selectedScore: DKTimelineScoreType
+    private var selectedScore: DKTimelineScoreType = DKTimelineScoreType.SAFETY
     var emptyRoadContextType: EmptyRoadContextType? = null
         private set
 
-    fun configure(distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
+    fun configure(selectedScore: DKTimelineScoreType, distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
+        this.selectedScore = selectedScore
         this.distanceByContext = distanceByContext
         this.hasData = hasData
         distance = 0.0
