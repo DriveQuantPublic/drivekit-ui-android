@@ -149,7 +149,11 @@ internal class TimelineViewModel : ViewModel() {
                
                 roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
+            } else {
+                configureWithNoData()
             }
+        } ?: run {
+            configureWithNoData()
         }
         updateData.postValue(Any())
     }
@@ -177,15 +181,31 @@ internal class TimelineViewModel : ViewModel() {
         DKTimelinePeriod.WEEK -> weekTimeline
         DKTimelinePeriod.MONTH -> monthTimeline
     }
+
+    private fun configureWithNoData() {
+        when (currentPeriod) {
+            DKTimelinePeriod.WEEK -> Date().toFirstDayOfWeek()
+            DKTimelinePeriod.MONTH -> Date().toFirstDayOfMonth()
+        }.let { startDate ->
+            dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
+            roadContextViewModel.configure(mapOf(), false)
+        }
+    }
+}
+
+fun Date.toFirstDayOfWeek(): Date {
+    val calendar: Calendar = Calendar.getInstance()
+    calendar.time = this.removeTime()
+    calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+    return calendar.time
 }
 
 // TODO refacto later on dateExtension
 fun Date.toFirstDayOfMonth(): Date {
     val calendar: Calendar = Calendar.getInstance()
-    calendar.time = this
-    Calendar.MONTH
-    calendar.set(Calendar.DAY_OF_MONTH, 0)
-    return calendar.time.removeTime()
+    calendar.time = this.removeTime()
+    calendar.set(Calendar.DAY_OF_WEEK, 1)
+    return calendar.time
 }
 
 // TODO refacto later on dateExtension
