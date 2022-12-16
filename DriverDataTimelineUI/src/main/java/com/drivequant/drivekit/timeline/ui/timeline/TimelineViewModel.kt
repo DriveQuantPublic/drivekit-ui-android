@@ -188,20 +188,13 @@ internal class TimelineViewModel : ViewModel() {
 
     private fun configureWithNoData() {
         when (currentPeriod) {
-            DKTimelinePeriod.WEEK -> Date().toFirstDayOfWeek()
-            DKTimelinePeriod.MONTH -> Date().toFirstDayOfMonth()
+            DKTimelinePeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+            DKTimelinePeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
             roadContextViewModel.configure(mapOf(), false)
         }
     }
-}
-
-fun Date.toFirstDayOfWeek(): Date {
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.time = this.removeTime()
-    calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
-    return calendar.time
 }
 
 //TODO Move in TimelinePeriodViewModel
