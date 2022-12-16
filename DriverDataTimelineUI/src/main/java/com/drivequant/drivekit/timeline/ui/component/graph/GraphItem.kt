@@ -34,11 +34,11 @@ internal sealed class GraphItem {
             }
         }
 
-    private fun getGraphDescription(context: Context, value: Double?): String {
-        if (value == null) {
-            return "-"
+    fun getGraphDescription(context: Context, value: Double?): String {
+        return if (value == null) {
+            "-"
         } else {
-            return when (this) {
+            when (this) {
                 is Score -> DKDataFormatter.formatScore(context, value)
                 is ScoreItem -> getGraphDescription(context, value, this.scoreItemType)
             }

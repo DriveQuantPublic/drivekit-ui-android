@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.timeline.ui.component.graph
+package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

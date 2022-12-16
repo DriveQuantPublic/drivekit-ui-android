@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.timeline.ui.component.graph
+package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import java.util.*
 
