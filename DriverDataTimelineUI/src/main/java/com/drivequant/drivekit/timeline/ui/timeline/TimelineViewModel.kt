@@ -196,10 +196,3 @@ internal class TimelineViewModel : ViewModel() {
         }
     }
 }
-
-//TODO Move in TimelinePeriodViewModel
-fun DKTimelinePeriod.getTitleResId() = when(this) {
-    DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
-    DKTimelinePeriod.MONTH -> "dk_timeline_per_month"
-}
-
