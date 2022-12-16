@@ -21,32 +21,17 @@ class DateSelectorViewModel : ViewModel() {
 
     lateinit var period: DKTimelinePeriod
         private set
-    private lateinit var dates: List<String>
+    private lateinit var dates: List<Date>
     private var selectedDateIndex: Int = -1
     var hasPreviousDate = false
         private set
     var hasNextDate = false
         private set
 
-    private lateinit var fromDate: String
-    private lateinit var toDate: String
+    lateinit var fromDate: Date
+    lateinit var toDate: Date
 
-    val computedFromDate: Date
-        get() =
-            if (this::fromDate.isInitialized) {
-                getBackendDateFormat().parse(fromDate) ?: Date()
-            } else {
-                Date()
-            }
-    val computedToDate: Date
-        get() =
-            if (this::toDate.isInitialized) {
-                getBackendDateFormat().parse(toDate) ?: Date()
-            } else {
-                Date()
-            }
-
-    fun configure(dates: List<String>, selectedDateIndex: Int?, period: DKTimelinePeriod) {
+    fun configure(dates: List<Date>, selectedDateIndex: Int?, period: DKTimelinePeriod) {
         this.dates = dates
         this.period = period
         this.selectedDateIndex = selectedDateIndex ?: -1
@@ -79,20 +64,17 @@ class DateSelectorViewModel : ViewModel() {
         }
     }
 
-    private fun getEndDate(fromDate: String, period: DKTimelinePeriod): String {
+    private fun getEndDate(fromDate: Date, period: DKTimelinePeriod): Date {
         val calendar = Calendar.getInstance()
-        val backendDateFormat = getBackendDateFormat()
-        backendDateFormat.parse(fromDate)?.let { computedFromDate ->
-            calendar.time = computedFromDate
-            when (period) {
-                DKTimelinePeriod.WEEK -> calendar.add(Calendar.DATE, 6)
-                DKTimelinePeriod.MONTH -> {
-                    calendar.add(Calendar.MONTH, 1)
-                    calendar.add(Calendar.DAY_OF_YEAR, -1)
-                }
+        calendar.time = fromDate
+        when (period) {
+            DKTimelinePeriod.WEEK -> calendar.add(Calendar.DATE, 6)
+            DKTimelinePeriod.MONTH -> {
+                calendar.add(Calendar.MONTH, 1)
+                calendar.add(Calendar.DAY_OF_YEAR, -1)
             }
         }
-        return backendDateFormat.format(calendar.time)
+        return calendar.time
     }
 
     @Suppress("UNCHECKED_CAST")

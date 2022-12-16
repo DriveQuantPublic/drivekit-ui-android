@@ -11,9 +11,12 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
+import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
+import java.util.*
 
 internal class TimelineViewModel : ViewModel() {
 
@@ -29,23 +32,54 @@ internal class TimelineViewModel : ViewModel() {
     private var selectedScore: DKTimelineScoreType = scores.first()
         set(value) {
             field = value
-            updateTimeline()
+            update()
         }
 
+    var periodSelectorViewModel = PeriodSelectorViewModel()
     var roadContextViewModel = RoadContextViewModel()
     var dateSelectorViewModel = DateSelectorViewModel()
 
     private var weekTimeline: Timeline? = null
     private var monthTimeline: Timeline? = null
 
-    private var selectedDate: String? = null
+    private var selectedDate: Date? = null
 
-    val hasData: Boolean
+    private val hasData: Boolean
         get() {
             return getTimelineSource()?.allContext?.numberTripTotal?.isNotEmpty() ?: run { false }
         }
 
     init {
+        periodSelectorViewModel.listener = object : PeriodSelectorItemListener {
+            override fun onPeriodSelected(period: DKTimelinePeriod) {
+                if (currentPeriod != period) {
+                    currentPeriod = period
+
+                    // get neariest date
+                    getTimelineSource()?.let { timeline ->
+                        selectedDate?.let { selectedDate ->
+                            val compareDate: Date = if (period == DKTimelinePeriod.WEEK) {
+                                // month to week
+                                selectedDate
+                            } else {
+                                // month to week
+                                selectedDate.toFirstDayOfMonth().removeTime()
+                            }
+                            compareDate.let {
+                                val dates = timeline.allContext.date.map {
+                                    DateSelectorViewModel.getBackendDateFormat().parse(it)!! // TODO refacto
+                                }
+                                this@TimelineViewModel.selectedDate = dates.first { date ->
+                                    date > compareDate
+                                }
+                            }
+                        }
+                    }
+
+                    update()
+                }
+            }
+        }
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
             override fun onResponse(
                 timelineSyncStatus: TimelineSyncStatus,
@@ -90,7 +124,9 @@ internal class TimelineViewModel : ViewModel() {
            selectedDate = null
         }
         getTimelineSource()?.let { timelineSource ->
-            val dates = timelineSource.allContext.date
+            val dates = timelineSource.allContext.date.map {
+                DateSelectorViewModel.getBackendDateFormat().parse(it)!! //TODO refacto
+            }
             val selectedDateIndex = if (selectedDate != null) {
                 dates.indexOf(selectedDate)
             } else if (dates.isNotEmpty()) {
@@ -98,7 +134,7 @@ internal class TimelineViewModel : ViewModel() {
             } else {
                 null
             }
-            if (selectedDateIndex != null) {
+            if (selectedDateIndex != null && selectedDateIndex >= 0) {
                 val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
 
                 val totalTripNumber = getTimelineSource()?.allContext?.numberTripTotal?.get(selectedDateIndex) ?: 0
@@ -119,11 +155,11 @@ internal class TimelineViewModel : ViewModel() {
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
-            update(resettingSelectedDate = true)
+            update()
         }
     }
 
-    fun updateTimelineDate(date: String) {
+    fun updateTimelineDate(date: Date) {
         if (selectedDate != date) {
             selectedDate = date
             update()
@@ -139,6 +175,26 @@ internal class TimelineViewModel : ViewModel() {
         DKTimelinePeriod.WEEK -> weekTimeline
         DKTimelinePeriod.MONTH -> monthTimeline
     }
+}
+
+// TODO refacto later on dateExtension
+fun Date.toFirstDayOfMonth(): Date {
+    val calendar: Calendar = Calendar.getInstance()
+    calendar.time = this
+    Calendar.MONTH
+    calendar.set(Calendar.DAY_OF_MONTH, 0)
+    return calendar.time.removeTime()
+}
+
+// TODO refacto later on dateExtension
+fun Date.removeTime(): Date {
+    val calendar: Calendar = Calendar.getInstance()
+    calendar.time = this
+    calendar.set(Calendar.HOUR, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    return calendar.time
 }
 
 //TODO Move in TimelinePeriodViewModel

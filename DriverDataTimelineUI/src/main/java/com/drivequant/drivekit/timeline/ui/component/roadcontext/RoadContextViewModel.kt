@@ -11,7 +11,6 @@ import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
-import kotlin.properties.Delegates
 
 class RoadContextViewModel : ViewModel() {
 

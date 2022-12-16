@@ -19,6 +19,16 @@ class DateSelectorView(context: Context) :
 
     private lateinit var viewModel: DateSelectorViewModel
 
+    init {
+        val view = View.inflate(context, R.layout.dk_date_selector_view, null).setDKStyle()
+        addView(
+            view, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        )
+    }
+
     fun configure(viewModel: DateSelectorViewModel) {
         this.viewModel = viewModel
         update()
@@ -71,7 +81,7 @@ class DateSelectorView(context: Context) :
                         )
                         .space()
                         .append(
-                            viewModel.computedFromDate.formatDate(DKDatePattern.STANDARD_DATE),
+                            viewModel.fromDate.formatDate(DKDatePattern.STANDARD_DATE),
                             context.resSpans {
                                 typeface(Typeface.BOLD)
                                 color(DriveKitUI.colors.primaryColor())
@@ -84,7 +94,7 @@ class DateSelectorView(context: Context) :
                         })
                         .space()
                         .append(
-                            viewModel.computedToDate.formatDate(DKDatePattern.STANDARD_DATE),
+                            viewModel.toDate.formatDate(DKDatePattern.STANDARD_DATE),
                             context.resSpans {
                                 typeface(Typeface.BOLD)
                                 color(DriveKitUI.colors.primaryColor())
@@ -94,7 +104,7 @@ class DateSelectorView(context: Context) :
                 DKTimelinePeriod.MONTH -> {
                     DKSpannable()
                         .append(
-                            viewModel.computedFromDate.formatDate(DKDatePattern.MONTH_LETTER_YEAR)
+                            viewModel.fromDate.formatDate(DKDatePattern.MONTH_LETTER_YEAR)
                                 .capitalizeFirstLetter(),
                             context.resSpans {
                                 typeface(Typeface.BOLD)
@@ -107,13 +117,5 @@ class DateSelectorView(context: Context) :
         }
     }
 
-    init {
-        val view = View.inflate(context, R.layout.dk_date_selector_view, null).setDKStyle()
-        addView(
-            view, ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        )
-    }
+
 }
