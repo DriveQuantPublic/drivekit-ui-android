@@ -74,7 +74,7 @@ internal class TimelineViewModel : ViewModel() {
                                     it.toTimelineDate()!!
                                 }
                                 this@TimelineViewModel.selectedDate = dates.first { date ->
-                                    date > compareDate
+                                    date >= compareDate
                                 }
                             }
                         }
