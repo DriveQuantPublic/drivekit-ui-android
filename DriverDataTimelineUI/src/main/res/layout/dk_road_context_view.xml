@@ -10,6 +10,7 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="180dp"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="@dimen/dk_margin"
