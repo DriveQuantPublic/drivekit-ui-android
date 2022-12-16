@@ -28,6 +28,7 @@
     <string name="dk_timeline_road_context_description_no_data_safety">Die Fahrten für die ausgewählten Daten sind zu kurz, um eine Sicherheitsbewertung zu erhalten.</string>
     <string name="dk_timeline_road_context_expressways">Autobahnen</string>
     <string name="dk_timeline_road_context_heavy_urban_traffic">dichtem Stadtverkehr</string>
+    <string name="dk_timeline_road_context_no_context_description">In diesem Zeitraum gibt es nicht genügend Daten, um die Verteilung der Straßenkontexte zu berechnen.</string>
     <string name="dk_timeline_road_context_suburban">Außerstädtisch</string>
     <string name="dk_timeline_road_context_title">Straßenkontext (%s)</string>
     <string name="dk_timeline_road_context_title_empty_data">Sie haben noch keine Daten</string>
