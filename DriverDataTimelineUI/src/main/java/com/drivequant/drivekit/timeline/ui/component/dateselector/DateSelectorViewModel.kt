@@ -3,19 +3,9 @@ package com.drivequant.drivekit.timeline.ui.component.dateselector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DateSelectorViewModel : ViewModel() {
-
-    companion object {
-        fun getBackendDateFormat(): DateFormat {
-            val backendDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
-            backendDateFormat.timeZone = TimeZone.getTimeZone("GMT")
-            return backendDateFormat
-        }
-    }
 
     var listener: DateSelectorListener? = null
 
