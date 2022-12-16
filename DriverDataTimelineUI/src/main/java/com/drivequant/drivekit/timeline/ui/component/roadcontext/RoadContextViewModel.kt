@@ -24,6 +24,8 @@ class RoadContextViewModel : ViewModel() {
     private var distance = 0.0
     private var hasData: Boolean = false
     private lateinit var selectedScore: DKTimelineScoreType
+    var emptyRoadContextType: EmptyRoadContextType? = null
+        private set
 
     fun configure(distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
         this.distanceByContext = distanceByContext
@@ -32,24 +34,22 @@ class RoadContextViewModel : ViewModel() {
         distanceByContext.forEach {
             distance += it.value
         }
-        changeObserver.postValue(Any())
-    }
 
-    fun displayData() = distanceByContext.isNotEmpty()
-
-    fun getEmptyRoadContextType(): EmptyRoadContextType {
-        return if (!hasData) {
+        emptyRoadContextType = if (!hasData) {
             EmptyRoadContextType.EMPTY_DATA
-        } else {
+        } else if (distanceByContext.isEmpty()) {
             when (selectedScore) {
-                DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> {
-                    EmptyRoadContextType.EMPTY_DATA
-                }
+                DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
                 DKTimelineScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
                 DKTimelineScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
             }
+        } else {
+            null
         }
+        changeObserver.postValue(Any())
     }
+
+    fun displayData() = emptyRoadContextType == null
 
     fun formatDistanceInKm(context: Context): String {
         return DKDataFormatter.formatMeterDistanceInKm(

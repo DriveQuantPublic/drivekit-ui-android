@@ -141,7 +141,9 @@ internal class TimelineViewModel : ViewModel() {
                 if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || totalTripNumber > 0) {
                     timelineSource.roadContexts.forEach {
                         val distance = it.distance[selectedDateIndex]
-                        distanceByContext[it.type.toTimelineRoadContext()] = distance
+                        if (distance > 0) {
+                            distanceByContext[it.type.toTimelineRoadContext()] = distance
+                        }
                     }
                 }
                

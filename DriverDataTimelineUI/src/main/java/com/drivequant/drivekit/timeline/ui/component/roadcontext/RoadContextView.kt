@@ -90,40 +90,46 @@ class RoadContextView(context: Context) : LinearLayout(context) {
     }
 
     private fun displayEmptyRoadContextUI() {
-        val titleKey: String
-        val descriptionKey: String
-        when (viewModel.getEmptyRoadContextType()) {
-            EmptyRoadContextType.EMPTY_DATA -> {
-                titleKey = "dk_timeline_road_context_title_empty_data"
-                descriptionKey = "dk_timeline_road_context_description_empty_data"
+        viewModel.emptyRoadContextType?.let {
+            val titleKey: String
+            val descriptionKey: String
+            when (it) {
+                EmptyRoadContextType.EMPTY_DATA -> {
+                    titleKey = "dk_timeline_road_context_title_empty_data"
+                    descriptionKey = "dk_timeline_road_context_description_empty_data"
+                }
+                EmptyRoadContextType.NO_DATA_SAFETY -> {
+                    titleKey = "dk_timeline_road_context_title_no_data"
+                    descriptionKey = "dk_timeline_road_context_description_no_data_safety"
+                }
+                EmptyRoadContextType.NO_DATA_ECODRIVING -> {
+                    titleKey = "dk_timeline_road_context_title_no_data"
+                    descriptionKey = "dk_timeline_road_context_description_no_data_ecodriving"
+                }
+                EmptyRoadContextType.NO_DATA -> {
+                    titleKey = "dk_timeline_road_context_title_no_data" //TODO verify ?
+                    descriptionKey = "dk_timeline_road_context_no_context_description"
+                }
             }
-            EmptyRoadContextType.NO_DATA_SAFETY -> {
-                titleKey = "dk_timeline_road_context_title_no_data"
-                descriptionKey = "dk_timeline_road_context_description_no_data_safety"
-            }
-            EmptyRoadContextType.NO_DATA_ECODRIVING -> {
-                titleKey = "dk_timeline_road_context_title_no_data"
-                descriptionKey = "dk_timeline_road_context_description_no_data_ecodriving"
-            }
-        }
 
-        with(empty_road_context_view) {
-            visibility = View.VISIBLE
-            with(text_view_no_data_title) {
-                headLine2(DriveKitUI.colors.primaryColor())
-                text = DKResource.convertToString(
-                    context,
-                    titleKey
-                )
+            with(empty_road_context_view) {
+                visibility = View.VISIBLE
+                with(text_view_no_data_title) {
+                    headLine2(DriveKitUI.colors.primaryColor())
+                    text = DKResource.convertToString(
+                        context,
+                        titleKey
+                    )
+                }
+                with(text_view_no_data_description) {
+                    normalText(DriveKitUI.colors.complementaryFontColor())
+                    text = DKResource.convertToString(
+                        context,
+                        descriptionKey
+                    )
+                }
+                road_context_view_container?.visibility = View.GONE
             }
-            with(text_view_no_data_description) {
-                normalText(DriveKitUI.colors.complementaryFontColor())
-                text = DKResource.convertToString(
-                    context,
-                    descriptionKey
-                )
-            }
-            road_context_view_container?.visibility = View.GONE
         }
     }
 }
