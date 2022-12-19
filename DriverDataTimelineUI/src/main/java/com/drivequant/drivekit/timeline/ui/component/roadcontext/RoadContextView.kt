@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.adapter.RoadContextItemListAdapter
@@ -82,7 +83,7 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
                     DKResource.convertToString(context, "dk_timeline_road_context_title"),
                     viewModel.formatDistanceInKm(context)
                 )
-                normalText(DriveKitUI.colors.mainFontColor())
+                smallText(DriveKitUI.colors.mainFontColor())
                 visibility = View.VISIBLE
             }
         }
