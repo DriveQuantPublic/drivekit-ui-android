@@ -59,7 +59,7 @@ internal class TimelineViewModel : ViewModel() {
                 if (currentPeriod != period) {
                     currentPeriod = period
 
-                    // get neariest date
+                    // get nearest date
                     getTimelineSource()?.let { timeline ->
                         selectedDate?.let { selectedDate ->
                             val compareDate: Date = if (period == DKTimelinePeriod.WEEK) {
