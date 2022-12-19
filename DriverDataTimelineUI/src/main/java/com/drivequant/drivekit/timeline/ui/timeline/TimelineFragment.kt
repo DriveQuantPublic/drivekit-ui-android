@@ -36,7 +36,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private lateinit var roadContextView: RoadContextView
 
     private lateinit var graphContainer: LinearLayout
-    private lateinit var timelineGraphView: TimelineGraphView
+    private lateinit var graphView: TimelineGraphView
 
     companion object {
         fun newInstance() = TimelineFragment()
@@ -169,10 +169,10 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun displayGraphContainer() {
         context?.let {
-            timelineGraphView = TimelineGraphView(it)
-            graphContainer.addView(timelineGraphView)
+            graphView = TimelineGraphView(it)
+            graphContainer.addView(graphView)
         }
-        timelineGraphView.configure(viewModel.graphViewModel)
+        graphView.configure(viewModel.graphViewModel)
     }
 
     private fun updateTimeline() {

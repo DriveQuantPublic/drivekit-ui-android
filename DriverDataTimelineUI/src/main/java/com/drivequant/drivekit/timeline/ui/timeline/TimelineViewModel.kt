@@ -15,6 +15,7 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
@@ -26,7 +27,7 @@ import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import com.drivequant.drivekit.timeline.ui.toTimelineString
 import java.util.*
 
-internal class TimelineViewModel : ViewModel() {
+internal class TimelineViewModel() : ViewModel() {
 
     var updateData = MutableLiveData<Any>()
 
@@ -172,8 +173,7 @@ internal class TimelineViewModel : ViewModel() {
                 // Update view models
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext, hasData)
-                // TODO
-                //self.timelineGraphViewModel.configure(timeline: cleanedTimeline, timelineSelectedIndex: selectedDateIndex, graphItem: .score(self.selectedScore), period: self.currentPeriod)
+                //graphViewModel.configure(context, cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
             } else {
                 configureWithNoData()
             }

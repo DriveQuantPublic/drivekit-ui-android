@@ -12,7 +12,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGra
 internal class TimelineGraphView(context: Context): LinearLayout(context) {
 
     private lateinit var viewModel: TimelineGraphViewModel
-    private lateinit var graph_title: TextView
+    private val graph_title: TextView
 
     init {
         val view = View.inflate(context, R.layout.dk_timeline_graph_view, null).setDKStyle()
