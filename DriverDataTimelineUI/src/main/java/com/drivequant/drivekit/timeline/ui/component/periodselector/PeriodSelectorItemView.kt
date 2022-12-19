@@ -12,12 +12,12 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.timeline.getTitleResId
+import com.drivequant.drivekit.timeline.ui.getTitleResId
 import kotlinx.android.synthetic.main.dk_timeline_period_item_selector.view.*
 import kotlinx.android.synthetic.main.dk_timeline_period_selector.view.*
 
 @SuppressLint("ViewConstructor")
-class PeriodSelectorItemView(
+internal class PeriodSelectorItemView(
     context: Context,
     val timelinePeriod: DKTimelinePeriod,
     val listener: PeriodSelectorItemListener

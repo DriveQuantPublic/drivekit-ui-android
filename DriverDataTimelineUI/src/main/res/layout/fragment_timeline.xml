@@ -55,6 +55,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dk_margin_quarter" />
 
+            <!-- TODO WHICH HEIGHT ? -->
             <LinearLayout
                 android:id="@+id/graph_container"
                 android:layout_width="match_parent"
@@ -63,7 +64,6 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dk_margin_quarter" />
 
-            <!-- TODO WHICH HEIGHT ? -->
             <TextView
                 android:id="@+id/button_display_timeline_detail"
                 android:layout_width="match_parent"

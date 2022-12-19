@@ -8,17 +8,16 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 
-class PeriodSelectorView(
+internal class PeriodSelectorView(
     context: Context,
     periods: List<DKTimelinePeriod>
 ) : LinearLayout(context) {
 
-    private var view: LinearLayout
     private lateinit var viewModel: PeriodSelectorViewModel
     private var buttons = mutableListOf<PeriodSelectorItemView>()
 
     init {
-        view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
+        val view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,

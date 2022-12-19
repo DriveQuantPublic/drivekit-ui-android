@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
@@ -30,6 +31,7 @@ internal class RoadContextItemViewHolder(itemView: View) : RecyclerView.ViewHold
             with(text_view_road_context_name) {
                 text = DKResource.convertToString(itemView.context, roadContext.getTitleResId())
                 setTextColor(DriveKitUI.colors.complementaryFontColor())
+                smallText(DriveKitUI.colors.complementaryFontColor())
             }
         }
     }

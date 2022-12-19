@@ -13,7 +13,6 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
-import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Date
 

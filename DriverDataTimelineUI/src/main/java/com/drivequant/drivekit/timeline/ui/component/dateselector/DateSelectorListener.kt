@@ -2,6 +2,6 @@ package com.drivequant.drivekit.timeline.ui.component.dateselector
 
 import java.util.*
 
-interface DateSelectorListener {
+internal interface DateSelectorListener {
     fun onDateSelected(date: Date)
 }

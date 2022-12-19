@@ -2,7 +2,6 @@ package com.drivequant.drivekit.common.ui.utils
 
 
 enum class DKDatePattern {
-
     WEEK_LETTER,
     STANDARD_DATE,
     HOUR_ONLY,

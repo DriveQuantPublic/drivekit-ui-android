@@ -27,7 +27,7 @@ fun Date.startingFrom(calendarField: CalendarField): Date {
     val subField = calendarField.firstSubField() ?: return this
     val calendar: Calendar = Calendar.getInstance()
     calendar.time = this
-    calendar.set(subField, calendar.getActualMinimum(subField))
+    calendar.dkclear(subField)
     return calendar.time
 }
 
@@ -97,12 +97,16 @@ fun Calendar.clearFrom(calendarField: CalendarField) {
 
 private fun Calendar.clear(fields: List<Int>) {
     for (field in fields) {
-        val clearValue: Int = when (field) {
-            Calendar.DAY_OF_WEEK -> Calendar.MONDAY
-            else -> this.getActualMinimum(field)
-        }
-        set(field, clearValue)
+        dkclear(field)
     }
+}
+
+private fun Calendar.dkclear(field: Int) {
+    val clearValue: Int = when (field) {
+        Calendar.DAY_OF_WEEK -> Calendar.MONDAY
+        else -> this.getActualMinimum(field)
+    }
+    set(field, clearValue)
 }
 
 private enum class DKTimeUnit(private val scale: Long) {

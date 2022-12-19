@@ -13,13 +13,10 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
-import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
@@ -28,9 +25,6 @@ import java.util.*
 class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private lateinit var viewModel: TimelineViewModel
-    private lateinit var periodSelectorViewModel: PeriodSelectorViewModel
-    private lateinit var dateSelectorViewModel: DateSelectorViewModel
-    private lateinit var roadContextViewModel: RoadContextViewModel
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: PeriodSelectorView
@@ -138,9 +132,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayPeriodContainer() {
-        if (!this::periodSelectorViewModel.isInitialized) {
-            periodSelectorViewModel = ViewModelProviders.of(this, PeriodSelectorViewModel.PeriodSelectorViewModelFactory()).get(PeriodSelectorViewModel::class.java)
-        }
         context?.let {
             periodSelectorView = PeriodSelectorView(it, viewModel.timelinePeriodTypes)
             periodSelectorView.apply {
@@ -154,9 +145,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayDateContainer() {
-        if (!this::dateSelectorViewModel.isInitialized) {
-            dateSelectorViewModel = ViewModelProviders.of(this, DateSelectorViewModel.DateSelectorViewModelFactory()).get(DateSelectorViewModel::class.java)
-        }
         context?.let {
             dateSelectorView = DateSelectorView(it)
             dateSelectorView.apply {
@@ -170,9 +158,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayRoadContextContainer() {
-        if(!this::roadContextViewModel.isInitialized) {
-            roadContextViewModel = ViewModelProviders.of(this, RoadContextViewModel.RoadContextViewModelFactory()).get(RoadContextViewModel::class.java)
-        }
         context?.let {
             roadContextView = RoadContextView(it)
             roadContextContainer.addView(roadContextView)

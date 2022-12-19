@@ -1,11 +1,10 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import java.util.*
 
-class DateSelectorViewModel : ViewModel() {
+internal class DateSelectorViewModel : ViewModel() {
 
     var listener: DateSelectorListener? = null
 
@@ -65,13 +64,5 @@ class DateSelectorViewModel : ViewModel() {
             }
         }
         return calendar.time
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class DateSelectorViewModelFactory :
-        ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DateSelectorViewModel() as T
-        }
     }
 }
