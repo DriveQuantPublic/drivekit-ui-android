@@ -58,12 +58,12 @@
             <LinearLayout
                 android:id="@+id/graph_container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#FFAAC5"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/dk_margin_quarter" />
 
+            <!-- TODO WHICH HEIGHT ? -->
             <TextView
                 android:id="@+id/button_display_timeline_detail"
                 android:layout_width="match_parent"

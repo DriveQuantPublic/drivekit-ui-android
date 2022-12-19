@@ -14,6 +14,7 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
@@ -40,6 +41,9 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
 
+    private lateinit var graphContainer: LinearLayout
+    private lateinit var timelineGraphView: TimelineGraphView
+
     companion object {
         fun newInstance() = TimelineFragment()
     }
@@ -55,6 +59,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
+        graphContainer = view.findViewById(R.id.graph_container)
 
         checkViewModelInitialization()
 
@@ -178,7 +183,11 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayGraphContainer() {
-        // TODO()
+        context?.let {
+            timelineGraphView = TimelineGraphView(it)
+            graphContainer.addView(timelineGraphView)
+        }
+        timelineGraphView.configure(viewModel.graphViewModel)
     }
 
     private fun updateTimeline() {

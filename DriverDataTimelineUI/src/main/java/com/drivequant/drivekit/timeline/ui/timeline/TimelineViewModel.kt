@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.extension.CalendarField
@@ -14,12 +15,15 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphListener
+import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
+import com.drivequant.drivekit.timeline.ui.toTimelineString
 import java.util.*
 
 internal class TimelineViewModel : ViewModel() {
@@ -42,6 +46,7 @@ internal class TimelineViewModel : ViewModel() {
     var periodSelectorViewModel = PeriodSelectorViewModel()
     var roadContextViewModel = RoadContextViewModel()
     var dateSelectorViewModel = DateSelectorViewModel()
+    var graphViewModel = TimelineGraphViewModel()
 
     private var weekTimeline: Timeline? = null
     private var monthTimeline: Timeline? = null
@@ -82,6 +87,11 @@ internal class TimelineViewModel : ViewModel() {
 
                     update()
                 }
+            }
+        }
+        graphViewModel.listener = object : TimelineGraphListener {
+            override fun onSelectDate(date: Date) {
+                Log.i("DEBUG", "onSelectDate event : ${date.toTimelineString()}")
             }
         }
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
@@ -149,8 +159,9 @@ internal class TimelineViewModel : ViewModel() {
                     }
                 }
                
-                roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
+                roadContextViewModel.configure(distanceByContext as Map<TimelineRoadContext, Double>, hasData)
+                //self.timelineGraphViewModel.configure(timeline: cleanedTimeline, timelineSelectedIndex: selectedDateIndex, graphItem: .score(self.selectedScore), period: self.currentPeriod)
             }
         }
         updateData.postValue(Any())
