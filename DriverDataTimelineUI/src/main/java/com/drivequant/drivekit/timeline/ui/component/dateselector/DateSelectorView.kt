@@ -47,7 +47,7 @@ internal class DateSelectorView(context: Context) :
             viewModel.hasPreviousDate.let { hasPreviousDate ->
                 DKResource.convertToDrawable(context, "dk_timeline_previous")?.let { drawable ->
                     if (!hasPreviousDate) {
-                        drawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
+                        drawable.tintDrawable(DriveKitUI.colors.neutralColor())
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
@@ -59,7 +59,7 @@ internal class DateSelectorView(context: Context) :
             viewModel.hasNextDate.let { hasNextDate ->
                 DKResource.convertToDrawable(context, "dk_timeline_next")?.let { drawable ->
                     if (!hasNextDate) {
-                        drawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
+                        drawable.tintDrawable(DriveKitUI.colors.neutralColor())
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
