@@ -42,19 +42,18 @@ internal class RoadContextViewModel : ViewModel() {
                 distanceByContext.forEach {
                     distance += it.value
                 }
-
-                emptyRoadContextType = if (!hasData) {
-                    EmptyRoadContextType.EMPTY_DATA
-                } else if (distanceByContext.isEmpty()) {
-                    when (selectedScore) {
-                        DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
-                        DKTimelineScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
-                        DKTimelineScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
-                    }
-                } else {
-                    null
-                }
             }
+        }
+        emptyRoadContextType = if (!hasData) {
+            EmptyRoadContextType.EMPTY_DATA
+        } else if (distanceByContext.isEmpty()) {
+            when (selectedScore) {
+                DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
+                DKTimelineScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
+                DKTimelineScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
+            }
+        } else {
+            null
         }
         changeObserver.postValue(Any())
     }

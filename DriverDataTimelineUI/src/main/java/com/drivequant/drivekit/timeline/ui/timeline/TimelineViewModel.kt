@@ -160,7 +160,7 @@ internal class TimelineViewModel : ViewModel() {
                 }
 
                 // Update view models
-                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext as Map<TimelineRoadContext, Double>, hasData)
+                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
             } else {
                 configureWithNoData()
