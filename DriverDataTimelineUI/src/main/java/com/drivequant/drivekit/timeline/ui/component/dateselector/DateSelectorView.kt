@@ -14,7 +14,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
-class DateSelectorView(context: Context) :
+internal class DateSelectorView(context: Context) :
     LinearLayout(context) {
 
     private lateinit var viewModel: DateSelectorViewModel
@@ -44,26 +44,26 @@ class DateSelectorView(context: Context) :
         }
 
         context?.let { context ->
-            viewModel.hasPreviousDate.let {
+            viewModel.hasPreviousDate.let { hasPreviousDate ->
                 DKResource.convertToDrawable(context, "dk_timeline_previous")?.let { drawable ->
-                    if (!it) {
+                    if (!hasPreviousDate) {
                         drawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
-                    image_view_previous.isEnabled = it
+                    image_view_previous.isEnabled = hasPreviousDate
                     image_view_previous.setImageDrawable(drawable)
                 }
             }
 
-            viewModel.hasNextDate.let {
+            viewModel.hasNextDate.let { hasNextDate ->
                 DKResource.convertToDrawable(context, "dk_timeline_next")?.let { drawable ->
-                    if (!it) {
+                    if (!hasNextDate) {
                         drawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
                     } else {
                         drawable.tintDrawable(DriveKitUI.colors.secondaryColor())
                     }
-                    image_view_next.isEnabled = it
+                    image_view_next.isEnabled = hasNextDate
                     image_view_next.setImageDrawable(drawable)
                 }
             }
@@ -116,6 +116,4 @@ class DateSelectorView(context: Context) :
             }
         }
     }
-
-
 }

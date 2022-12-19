@@ -2,7 +2,7 @@ package com.drivequant.drivekit.timeline.ui.component.roadcontext.enum
 
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 
-enum class TimelineRoadContext {
+internal enum class TimelineRoadContext {
     EXPRESSWAYS,
     HEAVY_URBAN_TRAFFIC,
     CITY,

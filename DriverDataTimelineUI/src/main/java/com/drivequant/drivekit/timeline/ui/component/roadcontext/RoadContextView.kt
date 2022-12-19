@@ -17,7 +17,7 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadC
 import kotlinx.android.synthetic.main.dk_road_context_empty_view.view.*
 import kotlinx.android.synthetic.main.dk_road_context_view.view.*
 
-class RoadContextView(context: Context) : LinearLayout(context) {
+internal class RoadContextView(context: Context) : LinearLayout(context) {
 
     private lateinit var viewModel: RoadContextViewModel
     private var adapter: RoadContextItemListAdapter? = null

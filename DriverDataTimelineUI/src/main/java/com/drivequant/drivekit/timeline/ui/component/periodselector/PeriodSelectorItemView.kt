@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.dk_timeline_period_item_selector.view.*
 import kotlinx.android.synthetic.main.dk_timeline_period_selector.view.*
 
 @SuppressLint("ViewConstructor")
-class PeriodSelectorItemView(
+internal class PeriodSelectorItemView(
     context: Context,
     val timelinePeriod: DKTimelinePeriod,
     val listener: PeriodSelectorItemListener

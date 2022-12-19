@@ -8,7 +8,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 
-class PeriodSelectorView(
+internal class PeriodSelectorView(
     context: Context,
     periods: List<DKTimelinePeriod>
 ) : LinearLayout(context) {

@@ -12,7 +12,7 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 
-class RoadContextViewModel : ViewModel() {
+internal class RoadContextViewModel : ViewModel() {
 
     val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
@@ -77,14 +77,14 @@ class RoadContextViewModel : ViewModel() {
     }
 }
 
-fun TimelineRoadContext.getColorResId() = when (this) {
+internal fun TimelineRoadContext.getColorResId() = when (this) {
     TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextUrbainDenseColor
     TimelineRoadContext.CITY -> R.color.dkRoadContextUrbainFluidColor
     TimelineRoadContext.SUBURBAN -> R.color.dkRoadContextSubUrbainColor
     TimelineRoadContext.EXPRESSWAYS -> R.color.dkRoadContextExpresswayColor
 }
 
-fun TimelineRoadContext.getTitleResId() = when (this) {
+internal fun TimelineRoadContext.getTitleResId() = when (this) {
     TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> "dk_timeline_road_context_heavy_urban_traffic"
     TimelineRoadContext.CITY -> "dk_timeline_road_context_city"
     TimelineRoadContext.SUBURBAN -> "dk_timeline_road_context_suburban"

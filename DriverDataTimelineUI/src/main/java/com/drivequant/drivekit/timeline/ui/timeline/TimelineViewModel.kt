@@ -132,13 +132,8 @@ internal class TimelineViewModel : ViewModel() {
             val sourceDates = timelineSource.allContext.date.map {
                 it.toTimelineDate()!!
             }
-            lateinit var cleanedTimeline: Timeline
-            selectedDate?.let {
-                val selectedDateIndex = sourceDates.indexOf(it)
-                cleanedTimeline = cleanTimeline(timelineSource, selectedScore, selectedDateIndex)
-            } ?: run {
-                cleanedTimeline = cleanTimeline(timelineSource, selectedScore, null)
-            }
+            val initialSelectedDateIndex = selectedDate?.let { sourceDates.indexOf(it) }
+            val cleanedTimeline = cleanTimeline(timelineSource, selectedScore, initialSelectedDateIndex)
 
             // Compute selected index
             val dates = cleanedTimeline.allContext.date.map {
@@ -243,7 +238,7 @@ internal class TimelineViewModel : ViewModel() {
         val efficiencySpeedMaintain = mutableListOf<Double>()
 
         val allContextItem = timeline.allContext
-        allContextItem.date.forEachIndexed { index, s ->
+        allContextItem.date.forEachIndexed { index, _ ->
             val canInsertAtIndex = timeline.allContext.numberTripScored[index] > 0
                     || score == DKTimelineScoreType.DISTRACTION
                     || score == DKTimelineScoreType.SPEEDING

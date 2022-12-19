@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import java.util.*
 
-class DateSelectorViewModel : ViewModel() {
+internal class DateSelectorViewModel : ViewModel() {
 
     var listener: DateSelectorListener? = null
 

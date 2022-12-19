@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 
-class PeriodSelectorViewModel: ViewModel() {
+internal class PeriodSelectorViewModel: ViewModel() {
 
     var listener: PeriodSelectorItemListener? = null
     var selectedPeriod: DKTimelinePeriod = DKTimelinePeriod.WEEK
