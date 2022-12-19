@@ -116,17 +116,19 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
 
             with(empty_road_context_view) {
                 visibility = View.VISIBLE
-                titleKey?.let {
-                    with(text_view_no_data_title) {
-                        headLine2(DriveKitUI.colors.primaryColor())
-                        text = DKResource.convertToString(
-                            context,
-                            it
-                        )
-                    }
-                } ?: run {
-                    text_view_no_data_title.text = null
+                val description = if (titleKey != null) {
+                    DKResource.convertToString(context, titleKey)
+                } else {
+                    String.format(
+                        DKResource.convertToString(context, "dk_timeline_road_context_title"),
+                        viewModel.formatDistanceInKm(context)
+                    )
                 }
+                with(text_view_no_data_title) {
+                    headLine2(DriveKitUI.colors.primaryColor())
+                    text = description
+                }
+
                 with(text_view_no_data_description) {
                     smallText(DriveKitUI.colors.complementaryFontColor())
                     text = DKResource.convertToString(
