@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_group_empty_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="@dimen/dk_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_view_no_data_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin"
+        tools:text="@string/dk_timeline_road_context_title_no_data" />
+
+    <TextView
+        android:id="@+id/text_view_no_data_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin"
+        android:text="@string/dk_timeline_road_context_description_empty_data" />
+</LinearLayout>

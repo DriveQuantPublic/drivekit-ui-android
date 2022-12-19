@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="dkTimelineBackgroundColor">#FAFAFA</color>
+    <color name="dkRoadContextHeavyUrbanTrafficColor">#036A82</color>
+    <color name="dkRoadContextSuburbanColor">#699DAD</color>
+    <color name="dkRoadContextCityColor">#3B8497</color>
+    <color name="dkRoadContextExpresswaysColor">#8FB7C2</color>
 </resources>

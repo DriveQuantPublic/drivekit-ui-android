@@ -28,6 +28,7 @@
     <string name="dk_timeline_road_context_description_no_data_safety">Los viajes para las fechas seleccionadas son demasiado cortas para tener una puntuación de seguridad</string>
     <string name="dk_timeline_road_context_expressways">Autopistas</string>
     <string name="dk_timeline_road_context_heavy_urban_traffic">Entorno urbano denso</string>
+    <string name="dk_timeline_road_context_no_context_description">No hay datos suficientes en este periodo para calcular la distribución de los contextos viales.</string>
     <string name="dk_timeline_road_context_suburban">Extraurbano</string>
     <string name="dk_timeline_road_context_title">Contexto de carretera (%s)</string>
     <string name="dk_timeline_road_context_title_empty_data">Todavía no tiene datos</string>

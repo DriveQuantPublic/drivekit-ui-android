@@ -11,74 +11,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout_timeline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed" />
-
         <LinearLayout
-            android:id="@+id/period_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/date_container"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:background="#FFAAC5"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin_half"
+                app:tabMode="fixed" />
 
-        <LinearLayout
-            android:id="@+id/road_context_container"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:background="#FFAAC5"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            <LinearLayout
+                android:id="@+id/period_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dk_margin_quarter" />
 
-        <LinearLayout
-            android:id="@+id/graph_container"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_quarter"
-            android:background="#FFAAC5"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            <LinearLayout
+                android:id="@+id/period_selector_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dk_margin_quarter" />
 
-        <TextView
-            android:id="@+id/button_display_timeline_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="@dimen/dk_text_big"
-            android:layout_marginBottom="@dimen/dk_margin"
-            android:text="voir plus de détail sur mon score"
-            android:textAllCaps="true"
-            android:textColor="#000" />
+            <LinearLayout
+                android:id="@+id/date_selector_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dk_margin_quarter" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/road_context_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dk_margin_quarter" />
+
+            <LinearLayout
+                android:id="@+id/graph_container"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#FFAAC5"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dk_margin_quarter" />
+
+            <TextView
+                android:id="@+id/button_display_timeline_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:text="@string/dk_timeline_button_timeline_detail"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="@dimen/dk_text_big" />
+
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <ProgressBar
         android:id="@+id/progress_circular"
         style="@style/Widget.AppCompat.ProgressBar"
