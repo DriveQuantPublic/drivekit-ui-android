@@ -3,7 +3,6 @@ package com.drivequant.drivekit.timeline.ui.component.roadcontext
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Timeline
@@ -78,13 +77,6 @@ internal class RoadContextViewModel : ViewModel() {
                 it * 100
             } ?: run { 0.0 }
         }
-
-    @Suppress("UNCHECKED_CAST")
-    class RoadContextViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return RoadContextViewModel() as T
-        }
-    }
 }
 
 internal fun TimelineRoadContext.getColorResId() = when (this) {

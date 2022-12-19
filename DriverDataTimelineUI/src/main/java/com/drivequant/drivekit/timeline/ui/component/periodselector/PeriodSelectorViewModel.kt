@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.timeline.ui.component.periodselector
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 
 internal class PeriodSelectorViewModel: ViewModel() {
@@ -21,14 +20,6 @@ internal class PeriodSelectorViewModel: ViewModel() {
         if (this.selectedPeriod != period) {
             this.selectedPeriod = period
             listener?.onPeriodSelected(period)
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class PeriodSelectorViewModelFactory :
-        ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return PeriodSelectorViewModel() as T
         }
     }
 }
