@@ -13,12 +13,11 @@ internal class PeriodSelectorView(
     periods: List<DKTimelinePeriod>
 ) : LinearLayout(context) {
 
-    private val view: LinearLayout
     private val buttons = mutableListOf<PeriodSelectorItemView>()
     private lateinit var viewModel: PeriodSelectorViewModel
 
     init {
-        view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
+        val view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
