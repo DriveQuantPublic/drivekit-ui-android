@@ -124,6 +124,8 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
                             it
                         )
                     }
+                } ?: run {
+                    text_view_no_data_title.text = null
                 }
                 with(text_view_no_data_description) {
                     normalText(DriveKitUI.colors.complementaryFontColor())
