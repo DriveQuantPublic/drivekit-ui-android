@@ -238,12 +238,16 @@ internal class TimelineViewModel : ViewModel() {
         val efficiencySpeedMaintain = mutableListOf<Double>()
 
         val allContextItem = timeline.allContext
-        allContextItem.date.forEachIndexed { index, _ ->
-            val canInsertAtIndex = timeline.allContext.numberTripScored[index] > 0
+
+        val canInsertAtIndex: (Int) -> Boolean = { pos ->
+            timeline.allContext.numberTripScored[pos] > 0
                     || score == DKTimelineScoreType.DISTRACTION
                     || score == DKTimelineScoreType.SPEEDING
-                    || selectedDateIndex == index
-            if (canInsertAtIndex) {
+                    || selectedDateIndex == pos
+        }
+
+        allContextItem.date.forEachIndexed { index, _ ->
+            if (canInsertAtIndex(index)) {
                 date.add(allContextItem.date[index])
                 numberTripTotal.add(allContextItem.numberTripTotal[index])
                 numberTripScored.add(allContextItem.numberTripScored[index])
@@ -294,12 +298,7 @@ internal class TimelineViewModel : ViewModel() {
             val efficiencySpeedMaintain = mutableListOf<Double>()
 
             timeline.allContext.date.forEachIndexed { index, _ ->
-                val canInsertAtIndex = timeline.allContext.numberTripScored[index] > 0
-                        || score == DKTimelineScoreType.DISTRACTION
-                        || score == DKTimelineScoreType.SPEEDING
-                        || selectedDateIndex == index
-
-                if (canInsertAtIndex) {
+                if (canInsertAtIndex(index)) {
                     date.add(roadContextItem.date[index])
                     numberTripTotal.add(roadContextItem.numberTripTotal[index])
                     numberTripScored.add(roadContextItem.numberTripScored[index])
@@ -371,5 +370,4 @@ internal class TimelineViewModel : ViewModel() {
         )
         return Timeline(timeline.period, allContext, roadContexts)
     }
-
 }
