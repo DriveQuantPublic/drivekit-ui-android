@@ -149,8 +149,8 @@ internal class TimelineViewModel : ViewModel() {
             if (selectedDateIndex != null && selectedDateIndex >= 0) {
                 val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
 
-                val totalTripNumber = getTimelineSource()?.allContext?.numberTripTotal?.get(selectedDateIndex) ?: 0
-                if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || totalTripNumber > 0) {
+                val scoredTripsCount = cleanedTimeline.allContext.numberTripScored[selectedDateIndex]
+                if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || scoredTripsCount > 0) {
                     cleanedTimeline.roadContexts.forEach {
                         val distance = it.distance[selectedDateIndex]
                         if (distance > 0) {
