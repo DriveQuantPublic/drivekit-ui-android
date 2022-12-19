@@ -160,7 +160,7 @@ internal class TimelineViewModel : ViewModel() {
                 }
 
                 // Update view models
-                roadContextViewModel.configure(selectedScore, distanceByContext as Map<TimelineRoadContext, Double>, hasData)
+                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext as Map<TimelineRoadContext, Double>, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
             } else {
                 configureWithNoData()
@@ -201,7 +201,7 @@ internal class TimelineViewModel : ViewModel() {
             DKTimelinePeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
-            roadContextViewModel.configure(selectedScore, mapOf(), false)
+            roadContextViewModel.configure(getTimelineSource(), selectedScore, null, mapOf(), false)
         }
     }
 
