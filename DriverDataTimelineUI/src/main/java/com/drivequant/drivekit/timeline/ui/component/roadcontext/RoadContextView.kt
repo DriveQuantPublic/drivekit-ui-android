@@ -128,7 +128,7 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
                     text_view_no_data_title.text = null
                 }
                 with(text_view_no_data_description) {
-                    normalText(DriveKitUI.colors.complementaryFontColor())
+                    smallText(DriveKitUI.colors.complementaryFontColor())
                     text = DKResource.convertToString(
                         context,
                         descriptionKey
