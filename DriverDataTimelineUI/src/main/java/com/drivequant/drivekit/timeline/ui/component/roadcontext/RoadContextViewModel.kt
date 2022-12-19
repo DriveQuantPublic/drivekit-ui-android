@@ -22,7 +22,7 @@ internal class RoadContextViewModel : ViewModel() {
             field = value.filterNot { it.value <= 0.0 }
         }
 
-    var totalDistanceForAllContext = 0.0
+    private var totalDistanceForAllContext = 0.0
     private var timeline: Timeline? = null
     private var distance = 0.0
     private var hasData: Boolean = false

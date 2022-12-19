@@ -201,7 +201,7 @@ internal class TimelineViewModel : ViewModel() {
             DKTimelinePeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
-            roadContextViewModel.configure(getTimelineSource(), selectedScore, null, mapOf(), false)
+            roadContextViewModel.configure(null, selectedScore, null, mapOf(), false)
         }
     }
 
