@@ -79,10 +79,10 @@ internal class RoadContextViewModel : ViewModel() {
 }
 
 internal fun TimelineRoadContext.getColorResId() = when (this) {
-    TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextUrbainDenseColor
-    TimelineRoadContext.CITY -> R.color.dkRoadContextUrbainFluidColor
-    TimelineRoadContext.SUBURBAN -> R.color.dkRoadContextSubUrbainColor
-    TimelineRoadContext.EXPRESSWAYS -> R.color.dkRoadContextExpresswayColor
+    TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextHeavyUrbanTrafficColor
+    TimelineRoadContext.CITY -> R.color.dkRoadContextCityColor
+    TimelineRoadContext.SUBURBAN -> R.color.dkRoadContextSuburbanColor
+    TimelineRoadContext.EXPRESSWAYS -> R.color.dkRoadContextExpresswaysColor
 }
 
 internal fun TimelineRoadContext.getTitleResId() = when (this) {
