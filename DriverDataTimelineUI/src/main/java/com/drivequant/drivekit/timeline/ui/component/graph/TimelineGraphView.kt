@@ -3,7 +3,6 @@ package com.drivequant.drivekit.timeline.ui.component.graph
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.drivequant.drivekit.common.ui.DriveKitUI
