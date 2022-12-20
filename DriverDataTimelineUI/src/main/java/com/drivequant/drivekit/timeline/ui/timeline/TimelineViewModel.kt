@@ -1,13 +1,19 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.removeTime
 import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.databaseutils.entity.*
+import com.drivequant.drivekit.databaseutils.entity.AllContextItem
+import com.drivequant.drivekit.databaseutils.entity.RoadContextItem
+import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
@@ -27,7 +33,7 @@ import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import com.drivequant.drivekit.timeline.ui.toTimelineString
 import java.util.*
 
-internal class TimelineViewModel() : ViewModel() {
+internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
     var updateData = MutableLiveData<Any>()
 
@@ -173,7 +179,7 @@ internal class TimelineViewModel() : ViewModel() {
                 // Update view models
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext, hasData)
-                //graphViewModel.configure(context, cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
+                graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
             } else {
                 configureWithNoData()
             }
@@ -381,5 +387,13 @@ internal class TimelineViewModel() : ViewModel() {
             efficiencySpeedMaintain
         )
         return Timeline(timeline.period, allContext, roadContexts)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class TimelineViewModelFactory(private val application: Application) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return TimelineViewModel(application) as T
+        }
     }
 }

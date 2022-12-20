@@ -193,7 +193,14 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(TimelineViewModel::class.java)
+            activity?.application?.let { application ->
+                if (!this::viewModel.isInitialized) {
+                    viewModel = ViewModelProviders.of(
+                        this,
+                        TimelineViewModel.TimelineViewModelFactory(application)
+                    ).get(TimelineViewModel::class.java)
+                }
+            }
         }
     }
 
