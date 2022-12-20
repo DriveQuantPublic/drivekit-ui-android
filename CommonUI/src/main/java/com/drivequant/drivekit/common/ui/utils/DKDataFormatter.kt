@@ -359,7 +359,7 @@ object DKDataFormatter {
             .plus(context.getString(R.string.dk_common_unit_power))
 
     fun formatScore(context: Context, score: Double): String =
-        score.format(1)
+        score.removeZeroDecimal().format(1)
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_score))
 

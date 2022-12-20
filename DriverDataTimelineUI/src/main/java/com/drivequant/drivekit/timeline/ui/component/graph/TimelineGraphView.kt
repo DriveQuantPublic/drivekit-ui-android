@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
@@ -32,6 +34,14 @@ internal class TimelineGraphView(context: Context): LinearLayout(context) {
     }
 
     fun update() {
-        graphTitle.text = DKResource.convertToString(context, viewModel.titleKey)
+        with(graphTitle) {
+            text = DKResource.buildString(
+                context,
+                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.primaryColor(),
+                viewModel.titleKey,
+                viewModel.description)
+            smallText()
+        }
     }
 }
