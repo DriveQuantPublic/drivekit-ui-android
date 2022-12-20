@@ -5,7 +5,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 
 internal interface GraphViewModel {
-    var graphViewModelDidUpdate: (() -> Void)?
+    var graphViewModelDidUpdate: (() -> Unit)?
     val type: GraphType
     val points: List<GraphPoint?>
     val selectedIndex: Int?

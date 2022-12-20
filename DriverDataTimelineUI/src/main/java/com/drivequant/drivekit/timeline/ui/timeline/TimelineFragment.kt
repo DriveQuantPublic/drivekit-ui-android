@@ -13,6 +13,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
@@ -60,6 +61,8 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         viewModel.updateData.observe(this) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
+            graphView.configure(viewModel.graphViewModel)
+
             if (viewModel.dateSelectorViewModel.hasDates()) {
                 dateSelectorContainer.visibility = View.VISIBLE
                 dateSelectorView.configure(viewModel.dateSelectorViewModel)
@@ -70,6 +73,14 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                 override fun onDateSelected(date: Date) {
                     viewModel.updateTimelineDate(date)
                 }
+            }
+            viewModel.graphViewModel.listener = object : TimelineGraphListener {
+                override fun onSelectDate(date: Date) {
+                    // TODO
+                }
+            }
+            viewModel.graphViewModel.graphViewModelDidUpdate = {
+                // TODO
             }
         }
 

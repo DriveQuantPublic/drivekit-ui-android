@@ -21,7 +21,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         private const val GRAPH_POINT_NUMBER: Int = 8
     }
     var listener: TimelineGraphListener? = null
-    override var graphViewModelDidUpdate: (() -> Void)? = null
+    override var graphViewModelDidUpdate: (() -> Unit)? = null
     override var type: GraphType = GraphType.LINE
     override var points: List<GraphPoint?> = emptyList()
     override var selectedIndex: Int? = null
