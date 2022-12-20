@@ -43,7 +43,7 @@ internal class GraphAxisFormatter: ValueFormatter() {
     }
 
     fun stringForValue(value: Double, axis: AxisBase?): String {
-        this.config.labels.titles?.let { labels ->
+        this.config.labels.getTitles()?.let { labels ->
             val index = (value - this.config.min).toInt()
             if (index >= 0 && index < labels.size) {
                 return labels[index]
@@ -76,7 +76,7 @@ internal class DKAxisRenderer(
     ) {
         super.drawLabel(c, formattedLabel, x, y, anchor, angleDegrees)
 
-        val index = this.config.labels.titles?.indexOfFirst { it == formattedLabel }
+        val index = this.config.labels.getTitles()?.indexOfFirst { it == formattedLabel }
         if (index != null && index == selectedIndex) {
             // TODO draw a background with a pill shape when the label is the selected one
         }

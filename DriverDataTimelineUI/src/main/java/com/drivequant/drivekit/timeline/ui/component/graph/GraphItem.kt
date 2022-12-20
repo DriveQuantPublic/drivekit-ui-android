@@ -1,10 +1,13 @@
 package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
+import com.drivequant.drivekit.common.ui.extension.ceiledToValueDivisibleBy10
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import kotlin.math.ceil
+import kotlin.math.min
 
 internal sealed class GraphItem {
     data class Score(val scoreType: DKTimelineScoreType) : GraphItem()
@@ -31,6 +34,53 @@ internal sealed class GraphItem {
             return when (this) {
                 is Score -> getGraphMinValue(this.scoreType)
                 is ScoreItem -> getGraphMinValue(this.scoreItemType)
+            }
+        }
+
+    fun maxNumberOfLabels(maxValue: Double): Int {
+        val internalCountBetweenBounds = (ceil(maxValue) - graphMinValue).toInt()
+        // Add one because we need X intervals so X+1 values
+        return min(internalCountBetweenBounds, GraphConstants.defaultNumberOfIntervalInYAxis) + 1
+    }
+
+    fun getGraphMaxValue(realMaxValue: Double?): Double {
+        this.defaultGraphMaxValue?.let {
+            return it
+        } ?: run {
+            val maxValue = realMaxValue ?: GraphConstants.defaultMaxValueInYAxis.toDouble()
+            if (maxValue <= GraphConstants.notEnoughDataInGraphThreshold) {
+                return GraphConstants.maxValueInYAxisWhenNotEnoughDataInGraph.toDouble()
+            } else {
+                return maxValue.ceiledToValueDivisibleBy10()
+            }
+        }
+    }
+
+    private val defaultGraphMaxValue: Double?
+        get() {
+            return when (this) {
+                is Score -> when (scoreType) {
+                    DKTimelineScoreType.SAFETY,
+                    DKTimelineScoreType.ECO_DRIVING,
+                    DKTimelineScoreType.DISTRACTION,
+                    DKTimelineScoreType.SPEEDING -> 10.0
+                }
+                is ScoreItem -> when (scoreItemType) {
+                    TimelineScoreItemType.SAFETY_ACCELERATION -> null
+                    TimelineScoreItemType.SAFETY_BRAKING -> null
+                    TimelineScoreItemType.SAFETY_ADHERENCE -> null
+                    TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> 5.0
+                    TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> 5.0
+                    TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> 5.0
+                    TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> null
+                    TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> null
+                    TimelineScoreItemType.ECODRIVING_CO2MASS -> null
+                    TimelineScoreItemType.DISTRACTION_UNLOCK -> null
+                    TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> null
+                    TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> null
+                    TimelineScoreItemType.SPEEDING_DURATION -> 100.0
+                    TimelineScoreItemType.SPEEDING_DISTANCE -> 100.0
+                }
             }
         }
 

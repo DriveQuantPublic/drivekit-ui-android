@@ -25,7 +25,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <!-- TODO GRAPHVIEW -->
+            <FrameLayout
+                android:id="@+id/graph_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

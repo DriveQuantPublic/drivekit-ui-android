@@ -7,16 +7,16 @@ internal data class GraphAxisConfig(
 )
 
 internal sealed class LabelType {
-    data class RAW_VALUES(val labelCount: Int) : LabelType()
-    data class CUSTOM_LABELS(val labels: List<String>) : LabelType()
+    data class RawValues(val labelCount: Int) : LabelType()
+    data class CustomLabels(val labels: List<String>) : LabelType()
 
-    val count = when (this) {
-        is CUSTOM_LABELS -> labels.size
-        is RAW_VALUES -> labelCount
+    fun getCount() = when (this) {
+        is CustomLabels -> labels.size
+        is RawValues -> labelCount
     }
 
-    val titles = when (this) {
-        is CUSTOM_LABELS -> labels
-        is RAW_VALUES -> null
+    fun getTitles() = when (this) {
+        is CustomLabels -> labels
+        is RawValues -> null
     }
 }

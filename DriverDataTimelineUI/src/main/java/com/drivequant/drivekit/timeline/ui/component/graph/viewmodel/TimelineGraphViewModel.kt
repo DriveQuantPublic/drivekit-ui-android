@@ -14,6 +14,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
+import java.util.Collections.max
 import java.util.Date
 
 internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewListener {
@@ -127,13 +128,14 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         this.type = graphItem.graphType
         this.points = graphPoints
         this.selectedIndex = selectedIndex
-        this.xAxisConfig = GraphAxisConfig(0.0, (graphPointNumber - 1).toDouble(), graphDates)
+        this.xAxisConfig = GraphAxisConfig(0.0, (graphPointNumber - 1).toDouble(), LabelType.CustomLabels(graphDates))
         val minYValue = graphItem.graphMinValue
+        val maxYValue = graphItem.getGraphMaxValue(max(graphPoints.map { it?.y ?: 0.0 }))
         val labels: MutableList<String> = mutableListOf()
         for (i in minYValue.toInt()..10) {
             labels.add(i.toString())
         }
-        this.yAxisConfig = GraphAxisConfig(graphItem.graphMinValue, 10.0, labels)
+        this.yAxisConfig = GraphAxisConfig(graphItem.graphMinValue, maxYValue, LabelType.RawValues(graphItem.maxNumberOfLabels(maxYValue)))
         this.titleKey = graphItem.graphTitleKey
         this.description = graphDescription
         this.graphViewModelDidUpdate?.let { it() }
