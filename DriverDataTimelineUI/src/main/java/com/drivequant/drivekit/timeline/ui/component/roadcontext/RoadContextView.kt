@@ -115,7 +115,7 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
 
             with(empty_road_context_view) {
                 visibility = View.VISIBLE
-                val description = if (titleKey != null) {
+                val title = if (titleKey != null) {
                     DKResource.convertToString(context, titleKey)
                 } else {
                     String.format(
@@ -125,7 +125,7 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
                 }
                 with(text_view_no_data_title) {
                     headLine2(DriveKitUI.colors.primaryColor())
-                    text = description
+                    text = title
                 }
 
                 with(text_view_no_data_description) {
