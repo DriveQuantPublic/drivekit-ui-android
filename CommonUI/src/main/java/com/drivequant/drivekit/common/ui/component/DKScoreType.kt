@@ -1,19 +1,19 @@
-package com.drivequant.drivekit.timeline.ui
+package com.drivequant.drivekit.common.ui.component
 
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
 
-enum class DKTimelineScoreType {
+enum class DKScoreType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
-    internal fun getIconResId() = when (this) {
+    fun getIconResId() = when (this) {
         SAFETY -> "dk_common_safety_flat"
         DISTRACTION -> "dk_common_distraction_flat"
         ECO_DRIVING -> "dk_common_ecodriving_flat"
         SPEEDING -> "dk_common_speeding_flat"
     }
 
-    internal fun hasAccess() = when (this) {
+    fun hasAccess() = when (this) {
         SAFETY -> AccessType.SAFETY
         ECO_DRIVING -> AccessType.ECODRIVING
         DISTRACTION -> AccessType.PHONE_DISTRACTION

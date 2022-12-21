@@ -6,7 +6,7 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
-import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.timeline.ui.component.graph.*
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
@@ -300,10 +300,10 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private fun getValue(index: Int, graphItem: GraphItem, timeline: Timeline): Double? {
         return when (graphItem) {
             is GraphItem.Score -> when (graphItem.scoreType) {
-                DKTimelineScoreType.SAFETY -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.safety[index] else null
-                DKTimelineScoreType.ECO_DRIVING -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.efficiency[index] else null
-                DKTimelineScoreType.DISTRACTION -> timeline.allContext.phoneDistraction[index]
-                DKTimelineScoreType.SPEEDING -> timeline.allContext.speeding[index]
+                DKScoreType.SAFETY -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.safety[index] else null
+                DKScoreType.ECO_DRIVING -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.efficiency[index] else null
+                DKScoreType.DISTRACTION -> timeline.allContext.phoneDistraction[index]
+                DKScoreType.SPEEDING -> timeline.allContext.speeding[index]
             }
             is GraphItem.ScoreItem -> when (graphItem.scoreItemType) {
                 TimelineScoreItemType.SAFETY_ACCELERATION -> timeline.allContext.acceleration[index].toDouble()

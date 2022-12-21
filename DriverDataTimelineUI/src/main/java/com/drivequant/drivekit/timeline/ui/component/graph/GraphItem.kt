@@ -5,12 +5,12 @@ import com.drivequant.drivekit.common.ui.extension.ceiledToValueDivisibleBy10
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import kotlin.math.ceil
 import kotlin.math.min
 
 internal sealed class GraphItem {
-    data class Score(val scoreType: DKTimelineScoreType) : GraphItem()
+    data class Score(val scoreType: DKScoreType) : GraphItem()
     data class ScoreItem(val scoreItemType: TimelineScoreItemType) : GraphItem()
 
     val graphType: GraphType
@@ -60,10 +60,10 @@ internal sealed class GraphItem {
         get() {
             return when (this) {
                 is Score -> when (scoreType) {
-                    DKTimelineScoreType.SAFETY,
-                    DKTimelineScoreType.ECO_DRIVING,
-                    DKTimelineScoreType.DISTRACTION,
-                    DKTimelineScoreType.SPEEDING -> 10.0
+                    DKScoreType.SAFETY,
+                    DKScoreType.ECO_DRIVING,
+                    DKScoreType.DISTRACTION,
+                    DKScoreType.SPEEDING -> 10.0
                 }
                 is ScoreItem -> when (scoreItemType) {
                     TimelineScoreItemType.SAFETY_ACCELERATION -> null
@@ -133,12 +133,12 @@ internal sealed class GraphItem {
         }
     }
 
-    private fun getGraphTitleKey(scoreType: DKTimelineScoreType): String {
+    private fun getGraphTitleKey(scoreType: DKScoreType): String {
         return when (scoreType) {
-            DKTimelineScoreType.SAFETY -> "dk_timeline_safety_score"
-            DKTimelineScoreType.ECO_DRIVING -> "dk_timeline_eco_score"
-            DKTimelineScoreType.DISTRACTION -> "dk_timeline_distraction_score"
-            DKTimelineScoreType.SPEEDING -> "dk_timeline_speeding_score"
+            DKScoreType.SAFETY -> "dk_timeline_safety_score"
+            DKScoreType.ECO_DRIVING -> "dk_timeline_eco_score"
+            DKScoreType.DISTRACTION -> "dk_timeline_distraction_score"
+            DKScoreType.SPEEDING -> "dk_timeline_speeding_score"
         }
     }
 
@@ -161,12 +161,12 @@ internal sealed class GraphItem {
         }
     }
 
-    private fun getGraphMinValue(scoreType: DKTimelineScoreType): Double {
+    private fun getGraphMinValue(scoreType: DKScoreType): Double {
         return when (scoreType) {
-            DKTimelineScoreType.SAFETY -> 3.0
-            DKTimelineScoreType.ECO_DRIVING -> 6.0
-            DKTimelineScoreType.DISTRACTION -> 0.0
-            DKTimelineScoreType.SPEEDING -> 0.0
+            DKScoreType.SAFETY -> 3.0
+            DKScoreType.ECO_DRIVING -> 6.0
+            DKScoreType.DISTRACTION -> 0.0
+            DKScoreType.SPEEDING -> 0.0
         }
     }
 

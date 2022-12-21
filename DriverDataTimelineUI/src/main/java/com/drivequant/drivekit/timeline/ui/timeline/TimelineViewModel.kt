@@ -17,7 +17,7 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
@@ -34,14 +34,14 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     var updateData = MutableLiveData<Any>()
 
-    var scores: List<DKTimelineScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
+    var scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
     var timelinePeriodTypes = DKTimelinePeriod.values().toList()
     private var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
-    private var selectedScore: DKTimelineScoreType = scores.first()
+    private var selectedScore: DKScoreType = scores.first()
         set(value) {
             field = value
             update()
@@ -159,7 +159,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
 
                 val scoredTripsCount = cleanedTimeline.allContext.numberTripScored[selectedDateIndex]
-                if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || scoredTripsCount > 0) {
+                if (selectedScore == DKScoreType.DISTRACTION || selectedScore == DKScoreType.SPEEDING || scoredTripsCount > 0) {
                     cleanedTimeline.roadContexts.forEach {
                         val distance = it.distance[selectedDateIndex]
                         if (distance > 0) {
@@ -217,7 +217,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     private fun cleanTimeline(
         timeline: Timeline,
-        score: DKTimelineScoreType,
+        score: DKScoreType,
         selectedDateIndex: Int?
     ): Timeline {
         val date = mutableListOf<String>()
@@ -251,8 +251,8 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
         val canInsertAtIndex: (Int) -> Boolean = { pos ->
             timeline.allContext.numberTripScored[pos] > 0
-                    || score == DKTimelineScoreType.DISTRACTION
-                    || score == DKTimelineScoreType.SPEEDING
+                    || score == DKScoreType.DISTRACTION
+                    || score == DKScoreType.SPEEDING
                     || selectedDateIndex == pos
         }
 

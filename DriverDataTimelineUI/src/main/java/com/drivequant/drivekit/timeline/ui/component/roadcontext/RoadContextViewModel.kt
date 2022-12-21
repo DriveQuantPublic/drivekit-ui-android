@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Timeline
-import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
@@ -26,11 +26,11 @@ internal class RoadContextViewModel : ViewModel() {
     private var timeline: Timeline? = null
     private var distance = 0.0
     private var hasData: Boolean = false
-    private var selectedScore: DKTimelineScoreType = DKTimelineScoreType.SAFETY
+    private var selectedScore: DKScoreType = DKScoreType.SAFETY
     var emptyRoadContextType: EmptyRoadContextType? = null
         private set
 
-    fun configure(timeline: Timeline?, selectedScore: DKTimelineScoreType, selectedIndex: Int?, distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
+    fun configure(timeline: Timeline?, selectedScore: DKScoreType, selectedIndex: Int?, distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
         timeline?.let { timeline
             selectedIndex?.let { selectedIndex ->
                 this.timeline = timeline
@@ -48,9 +48,9 @@ internal class RoadContextViewModel : ViewModel() {
             EmptyRoadContextType.EMPTY_DATA
         } else if (distanceByContext.isEmpty()) {
             when (selectedScore) {
-                DKTimelineScoreType.DISTRACTION, DKTimelineScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
-                DKTimelineScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
-                DKTimelineScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
+                DKScoreType.DISTRACTION, DKScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
+                DKScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
+                DKScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
             }
         } else {
             null
