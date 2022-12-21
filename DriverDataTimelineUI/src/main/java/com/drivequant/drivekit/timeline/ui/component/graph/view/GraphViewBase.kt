@@ -10,6 +10,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewMo
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointF
@@ -39,13 +40,7 @@ internal abstract class GraphViewBase(context: Context, val viewModel: GraphView
     abstract fun setupData()
 }
 
-internal class GraphAxisFormatter: ValueFormatter() {
-    private lateinit var config: GraphAxisConfig
-
-    fun init(config: GraphAxisConfig) {
-        this.config = config
-    }
-
+internal class GraphAxisFormatter(val config: GraphAxisConfig): ValueFormatter() {
     fun stringForValue(value: Double, axis: AxisBase?): String {
         this.config.labels.getTitles()?.let { labels ->
             val index = (value - this.config.min).toInt()
@@ -63,6 +58,12 @@ internal class DKAxisRenderer(
     xAxis: XAxis,
     transformer: Transformer,
 ) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
+
+    companion object {
+        fun from(chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKAxisRenderer {
+            return DKAxisRenderer(config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
+        }
+    }
 
     var selectedIndex: Int? = null
 
