@@ -20,8 +20,8 @@
     <string name="dk_timeline_nb_unlocks">Entsperrungsnummer / 100 km: %s</string>
     <string name="dk_timeline_overspeeding_distance">Überdrehzahl relativer Abstand: %s</string>
     <string name="dk_timeline_overspeeding_duration">Überdrehzahl relative Dauer: %s</string>
-    <string name="dk_timeline_per_month">Pro Monat</string>
-    <string name="dk_timeline_per_week">Pro Woche</string>
+    <string name="dk_timeline_per_month">Monat</string>
+    <string name="dk_timeline_per_week">Woche</string>
     <string name="dk_timeline_road_context_city">Städtisch</string>
     <string name="dk_timeline_road_context_description_empty_data">Machen Sie eine erste Fahrt, um zu sehen, wie Ihre ersten Grafiken angezeigt werden.</string>
     <string name="dk_timeline_road_context_description_no_data_ecodriving">Die Fahrten für die ausgewählten Daten sind zu kurz, um einen Eco-Drive-Score zu erhalten.</string>
@@ -29,7 +29,7 @@
     <string name="dk_timeline_road_context_expressways">Autobahnen</string>
     <string name="dk_timeline_road_context_heavy_urban_traffic">dichtem Stadtverkehr</string>
     <string name="dk_timeline_road_context_no_context_description">In diesem Zeitraum gibt es nicht genügend Daten, um die Verteilung der Straßenkontexte zu berechnen.</string>
-    <string name="dk_timeline_road_context_suburban">Außerstädtisch</string>
+    <string name="dk_timeline_road_context_suburban">Extra städtlig</string>
     <string name="dk_timeline_road_context_title">Straßenkontext (%s)</string>
     <string name="dk_timeline_road_context_title_empty_data">Sie haben noch keine Daten</string>
     <string name="dk_timeline_road_context_title_no_data">Keine Daten anzeigen</string>
