@@ -61,7 +61,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         viewModel.updateData.observe(this) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
-            graphView.configure(viewModel.graphViewModel)
 
             if (viewModel.dateSelectorViewModel.hasDates()) {
                 dateSelectorContainer.visibility = View.VISIBLE
@@ -180,10 +179,9 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun displayGraphContainer() {
         context?.let {
-            graphView = TimelineGraphView(it)
+            graphView = TimelineGraphView(it, this.viewModel.graphViewModel)
             graphContainer.addView(graphView)
         }
-        graphView.configure(viewModel.graphViewModel)
     }
 
     private fun updateTimeline() {

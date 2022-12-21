@@ -2,6 +2,7 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
@@ -15,20 +16,23 @@ import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Transformer
 import com.github.mikephil.charting.utils.ViewPortHandler
 
-internal abstract class GraphViewBase(context: Context): LinearLayout(context) {
+internal abstract class GraphViewBase(context: Context, val viewModel: GraphViewModel): LinearLayout(context) {
 
     var listener: GraphViewListener? = null
-    lateinit var viewModel: GraphViewModel
-        private set
 
-    fun init(viewModel: GraphViewModel) {
-        this.viewModel = viewModel
-        addView(getChartView())
+    init {
+        initChartView()
+        addView(getChartView(), ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        ))
         this.viewModel.graphViewModelDidUpdate = {
             setupData()
         }
         setupData()
     }
+
+    abstract fun initChartView()
 
     abstract fun getChartView(): BarLineChartBase<*>
 

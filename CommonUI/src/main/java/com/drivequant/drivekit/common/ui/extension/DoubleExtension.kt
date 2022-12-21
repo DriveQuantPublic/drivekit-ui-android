@@ -21,7 +21,7 @@ fun Double.ceilDuration(): Double {
     return computedDuration
 }
 
-fun Double.ceiledToValueDivisibleBy10(): Double {
+fun Double.ceilToValueDivisibleBy10(): Double {
     val intValue = ceil(this).toInt()
     val nextValueDivisibleBy10 = ((intValue / 10).plus(if (intValue % 10 == 0) 0 else 1)) * 10
     return nextValueDivisibleBy10.toDouble()

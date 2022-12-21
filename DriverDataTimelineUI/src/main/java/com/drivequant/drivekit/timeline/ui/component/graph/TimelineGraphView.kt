@@ -11,13 +11,14 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewBase
+import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
+import com.drivequant.drivekit.timeline.ui.component.graph.view.LineGraphView
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 
-internal class TimelineGraphView(context: Context): LinearLayout(context) {
-
-    private lateinit var viewModel: TimelineGraphViewModel
+internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener {
     private val graphTitle: TextView
-    private val graphContainer: FrameLayout
+    private val graphView: GraphViewBase
 
     init {
         val view = View.inflate(context, R.layout.dk_timeline_graph_view, null).setDKStyle()
@@ -26,15 +27,28 @@ internal class TimelineGraphView(context: Context): LinearLayout(context) {
             ViewGroup.LayoutParams.WRAP_CONTENT
         ))
         graphTitle = view.findViewById(R.id.graph_title)
-        graphContainer = view.findViewById(R.id.graph_view_container)
+        val graphContainer = view.findViewById(R.id.graph_view_container) as FrameLayout
+
+        val graphView: GraphViewBase = when (this.viewModel.type) {
+            GraphType.LINE -> LineGraphView(context, this.viewModel)
+            GraphType.BAR -> TODO()
+        }
+        graphContainer.addView(graphView, ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        ))
+        graphView.listener = this
+        this.graphView = graphView
+        this.viewModel.graphViewModelDidUpdate = this::updateContent
+        updateContent()
     }
 
-    fun configure(viewModel: TimelineGraphViewModel) {
-        this.viewModel = viewModel
-        update()
+    private fun updateContent() {
+        updateTitle()
+        this.graphView.setupData()
     }
 
-    private fun update() {
+    private fun updateTitle() {
         with(graphTitle) {
             text = DKResource.buildString(
                 context,
@@ -46,5 +60,9 @@ internal class TimelineGraphView(context: Context): LinearLayout(context) {
                 highlightSize = R.dimen.dk_text_normal
             )
         }
+    }
+
+    override fun onSelectPoint(point: GraphPoint) {
+        TODO("Not yet implemented")
     }
 }

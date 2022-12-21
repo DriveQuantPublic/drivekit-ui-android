@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.extension.ceiledToValueDivisibleBy10
+import com.drivequant.drivekit.common.ui.extension.ceilToValueDivisibleBy10
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
@@ -38,20 +38,20 @@ internal sealed class GraphItem {
         }
 
     fun maxNumberOfLabels(maxValue: Double): Int {
-        val internalCountBetweenBounds = (ceil(maxValue) - graphMinValue).toInt()
+        val intervalCountBetweenBounds = (ceil(maxValue) - this.graphMinValue).toInt()
         // Add one because we need X intervals so X+1 values
-        return min(internalCountBetweenBounds, GraphConstants.defaultNumberOfIntervalInYAxis) + 1
+        return min(intervalCountBetweenBounds, GraphConstants.DEFAULT_NUMBER_OF_INTERVAL_IN_Y_AXIS) + 1
     }
 
     fun getGraphMaxValue(realMaxValue: Double?): Double {
         this.defaultGraphMaxValue?.let {
             return it
         } ?: run {
-            val maxValue = realMaxValue ?: GraphConstants.defaultMaxValueInYAxis.toDouble()
-            if (maxValue <= GraphConstants.notEnoughDataInGraphThreshold) {
-                return GraphConstants.maxValueInYAxisWhenNotEnoughDataInGraph.toDouble()
+            val maxValue = realMaxValue ?: GraphConstants.DEFAULT_MAX_VALUE_IN_Y_AXIS.toDouble()
+            if (maxValue <= GraphConstants.NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD) {
+                return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH.toDouble()
             } else {
-                return maxValue.ceiledToValueDivisibleBy10()
+                return maxValue.ceilToValueDivisibleBy10()
             }
         }
     }
