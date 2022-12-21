@@ -3,6 +3,7 @@ package com.drivequant.drivekit.common.ui.extension
 
 import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.ceil
 
 fun Double.removeZeroDecimal(): String = DecimalFormat("0.#").format(this)
 
