@@ -72,6 +72,10 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.isScaleXEnabled = false
             this.isScaleYEnabled = false
             this.isDragEnabled = false
+            this.isDoubleTapToZoomEnabled = false
+            this.axisRight.isEnabled = false
+            this.legend.isEnabled = false
+            this.description = null
             this.extraLeftOffset = 4.convertDpToPx().toFloat()
             this.extraRightOffset = 20.convertDpToPx().toFloat()
         }
@@ -93,6 +97,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
         with (this.chartView.axisLeft) {
             this.mDecimals = 0
+            this.setDrawAxisLine(false)
             this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
             this.xOffset = -4.convertDpToPx().toFloat()

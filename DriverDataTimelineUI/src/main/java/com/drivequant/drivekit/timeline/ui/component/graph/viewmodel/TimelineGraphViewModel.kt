@@ -48,7 +48,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         val delta = selectedDate.diffWith(currentDate, calendarField).toInt()
         this.sourceDates = sourceDates
         this.timelineSelectedIndex = timelineSelectedIndex
-        val selectedIndexInGraph = (graphPointNumber - 1) - (delta % graphPointNumber)
+        val selectedIndexInGraph = (graphPointNumber - 1) - ((-delta) % graphPointNumber)
         val graphStartDate = selectedDate.add(-selectedIndexInGraph, calendarField)
         val graphDates:List<String> = getGraphLabels(graphStartDate, calendarField, period, graphPointNumber)
         val graphPoints: MutableList<GraphPoint?> = mutableListOf()
@@ -327,8 +327,8 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private fun getInterpolatedValue(date: Date, previousValidIndex: Int, nextValidIndex: Int, dates: List<Date>, calenderUnit: CalendarField, graphItem: GraphItem, timeline: Timeline): Double? {
         val previousValidDate: Date = dates[previousValidIndex]
         val nextValidDate: Date = dates[nextValidIndex]
-        val diffBetweenPreviousAndNext = previousValidDate.diffWith(nextValidDate, calenderUnit)
-        val diffBetweenPreviousAndDate = previousValidDate.diffWith(date, calenderUnit)
+        val diffBetweenPreviousAndNext = nextValidDate.diffWith(previousValidDate, calenderUnit)
+        val diffBetweenPreviousAndDate = date.diffWith(previousValidDate, calenderUnit)
         val previousValue = getValue(previousValidIndex, graphItem, timeline)
         val nextValue = getValue(nextValidIndex, graphItem, timeline)
         return if (previousValue != null && nextValue != null) {
