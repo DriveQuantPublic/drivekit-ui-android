@@ -43,7 +43,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
                 val value = Entry(point.x.toFloat(), point.y.toFloat(), point.data)
                 val isInterpolatedPoint = point.data?.interpolatedPoint ?: true
                 if (index == this.viewModel.selectedIndex) {
-                    //select()
+                    select(value, isInterpolatedPoint)
                 } else if (isInterpolatedPoint) {
                     value.icon = this.invisibleIcon
                 } else {
@@ -100,7 +100,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.setDrawAxisLine(false)
             this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            this.xOffset = -4.convertDpToPx().toFloat()
+            this.xOffset = 4.convertDpToPx().toFloat()
             this.textColor = R.color.dkAxisLabelColor
             viewModel.yAxisConfig?.let { yAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(yAxisConfig)
