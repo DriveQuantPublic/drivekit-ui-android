@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
@@ -48,7 +49,7 @@ internal class GraphAxisFormatter(val config: GraphAxisConfig): ValueFormatter()
                 return labels[index]
             }
         }
-        return value.toDouble().format(1)
+        return value.toDouble().removeZeroDecimal()
     }
 }
 

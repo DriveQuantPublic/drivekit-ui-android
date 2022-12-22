@@ -2,6 +2,7 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
@@ -53,7 +54,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             }
         }
         val line = LineDataSet(entries, null)
-        line.colors = listOf(R.color.dkChartStrokeColor)
+        line.colors = listOf(ContextCompat.getColor(this.context, R.color.dkChartStrokeColor))
         line.setDrawVerticalHighlightIndicator(false)
         line.setDrawHorizontalHighlightIndicator(false)
         line.isHighlightEnabled = true
@@ -81,11 +82,10 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
         }
 
         with (this.chartView.xAxis) {
-            this.mDecimals = 0
             this.setDrawAxisLine(false)
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
-            this.textColor = R.color.dkAxisLabelColor
+            this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
             //this.textSize = //TODO()
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
@@ -96,7 +96,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
         }
 
         with (this.chartView.axisLeft) {
-            this.mDecimals = 0
             this.setDrawAxisLine(false)
             this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
