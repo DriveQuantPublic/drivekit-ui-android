@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
@@ -142,7 +143,12 @@ internal object DriveKitConfig {
 
     private fun configureDriverDataTimelineUI() {
         DriveKitDriverDataTimelineUI.initialize()
-        //DriverDataTimelineUI.scoresType = listOf(DKTimelineScore.ECO_DRIVING, DKTimelineScore.SPEEDING)
+        DriveKitDriverDataTimelineUI.scores = listOf(
+            DKScoreType.SAFETY,
+            DKScoreType.ECO_DRIVING,
+            DKScoreType.DISTRACTION,
+            DKScoreType.SPEEDING
+        )
     }
 
     private fun configureVehicleUI() {
