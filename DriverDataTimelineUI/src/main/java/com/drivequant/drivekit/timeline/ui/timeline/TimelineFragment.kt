@@ -78,9 +78,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     // TODO
                 }
             }
-            viewModel.graphViewModel.graphViewModelDidUpdate = {
-                // TODO
-            }
         }
 
         setupSwipeToRefresh()

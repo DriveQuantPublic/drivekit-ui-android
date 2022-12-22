@@ -41,14 +41,14 @@ internal abstract class GraphViewBase(context: Context, val viewModel: GraphView
 }
 
 internal class GraphAxisFormatter(val config: GraphAxisConfig): ValueFormatter() {
-    fun stringForValue(value: Double, axis: AxisBase?): String {
+    override fun getFormattedValue(value: Float): String {
         this.config.labels.getTitles()?.let { labels ->
             val index = (value - this.config.min).toInt()
             if (index >= 0 && index < labels.size) {
                 return labels[index]
             }
         }
-        return value.format(1)
+        return value.toDouble().format(1)
     }
 }
 

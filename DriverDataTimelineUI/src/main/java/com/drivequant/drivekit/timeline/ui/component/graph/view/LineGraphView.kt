@@ -1,7 +1,11 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.view
 
+import android.annotation.SuppressLint
 import android.content.Context
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.charts.LineChart
@@ -11,10 +15,14 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
+@SuppressLint("ViewConstructor")
 internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) : GraphViewBase(context, graphViewModel) {
 
     private lateinit var chartView: LineChart
     private var selectedEntry: Entry? = null
+    private val defaultIcon = GraphConstants.circleIcon(context)
+    private val selectedIcon = GraphConstants.circleIcon(context, DriveKitUI.colors.secondaryColor())
+    private val invisibleIcon = GraphConstants.invisibleIcon()
 
     override fun initChartView() {
         val chartView = LineChart(context)
@@ -37,9 +45,9 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
                 if (index == this.viewModel.selectedIndex) {
                     //select()
                 } else if (isInterpolatedPoint) {
-                    //value.icon = invisibleIcon
+                    value.icon = this.invisibleIcon
                 } else {
-                    //value.icon = defaultIcon
+                    value.icon = this.defaultIcon
                 }
                 entries.add(value)
             }
@@ -64,8 +72,8 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.isScaleXEnabled = false
             this.isScaleYEnabled = false
             this.isDragEnabled = false
-            this.extraLeftOffset = 4F //TODO: DP value?
-            this.extraRightOffset = 20F //TODO: DP value?
+            this.extraLeftOffset = 4.convertDpToPx().toFloat()
+            this.extraRightOffset = 20.convertDpToPx().toFloat()
         }
 
         with (this.chartView.xAxis) {
@@ -85,9 +93,9 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
         with (this.chartView.axisLeft) {
             this.mDecimals = 0
-            this.enableGridDashedLine(4F, 2F, 0F)
+            this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            this.xOffset = -4F //TODO: dp value?
+            this.xOffset = -4.convertDpToPx().toFloat()
             this.textColor = R.color.dkAxisLabelColor
             viewModel.yAxisConfig?.let { yAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(yAxisConfig)
@@ -97,6 +105,27 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             }
         }
         this.chartView.setClipValuesToContent(false)
+        this.chartView.invalidate()
 //        self.chartView.delegate = self
+    }
+
+    private fun select(entry: Entry, isInterpolatedPoint: Boolean) {
+        if (isInterpolatedPoint) {
+            clearPreviousSelectedEntry(false)
+        } else {
+            clearPreviousSelectedEntry()
+            this.selectedEntry = entry
+            entry.icon = this.selectedIcon
+        }
+//        if let renderer = self.chartView.xAxisRenderer as? DKXAxisRenderer {
+//            renderer.selectedIndex = Int(entry.x)
+//        }
+    }
+
+    private fun clearPreviousSelectedEntry(shouldRestoreIcon: Boolean = true) {
+        if (shouldRestoreIcon) {
+            this.selectedEntry?.icon = this.defaultIcon
+        }
+        this.selectedEntry = null
     }
 }

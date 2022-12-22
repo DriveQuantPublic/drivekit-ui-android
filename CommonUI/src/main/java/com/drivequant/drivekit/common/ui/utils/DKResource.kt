@@ -1,11 +1,12 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import android.text.Spannable
 import androidx.annotation.DimenRes
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.resSpans
 
@@ -77,4 +78,8 @@ object DKResource {
         }
         return dkSpannable.toSpannable()
     }
+}
+
+fun Int.convertDpToPx(): Int {
+    return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
