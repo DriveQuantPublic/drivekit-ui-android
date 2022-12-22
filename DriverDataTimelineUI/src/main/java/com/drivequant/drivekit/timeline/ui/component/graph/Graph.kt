@@ -28,6 +28,7 @@ internal object GraphConstants {
     const val DEFAULT_MAX_VALUE_IN_Y_AXIS = 10
     const val NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD = 10.0
     const val MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH = 10.0
+    const val GRAPH_LINE_WIDTH = 2F
     private val iconSize = 14.convertDpToPx()
 
     fun circleIcon(context: Context, insideColor: Int = Color.WHITE): Drawable {

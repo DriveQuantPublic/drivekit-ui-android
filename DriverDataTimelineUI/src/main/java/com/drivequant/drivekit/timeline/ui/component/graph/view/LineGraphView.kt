@@ -60,7 +60,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
         line.isHighlightEnabled = true
         line.setDrawValues(false)
         line.setDrawCircles(false)
-        line.lineWidth = 2F
+        line.lineWidth = GraphConstants.GRAPH_LINE_WIDTH
 
         val data = LineData()
         data.addDataSet(line)
@@ -77,6 +77,8 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.axisRight.isEnabled = false
             this.legend.isEnabled = false
             this.description = null
+            this.setClipValuesToContent(false)
+            this.setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH)
         }
 
         with (this.chartView.xAxis) {
@@ -106,7 +108,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             }
         }
 
-        this.chartView.setClipValuesToContent(false)
         this.chartView.invalidate()
 //        self.chartView.delegate = self
     }
