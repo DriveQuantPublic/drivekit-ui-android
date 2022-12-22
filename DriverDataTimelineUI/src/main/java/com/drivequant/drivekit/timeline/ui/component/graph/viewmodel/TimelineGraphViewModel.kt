@@ -45,7 +45,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         val selectedDate = dates[timelineSelectedIndex]
         val now = Date()
         val currentDate = now.startingFrom(calendarField)
-        val delta = selectedDate.diffWith(currentDate, calendarField).toInt()
+        val delta = selectedDate.diffWith(currentDate.removeTime(), calendarField).toInt()
         this.sourceDates = sourceDates
         this.timelineSelectedIndex = timelineSelectedIndex
         val selectedIndexInGraph = (graphPointNumber - 1) - ((-delta) % graphPointNumber)
