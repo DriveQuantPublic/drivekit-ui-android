@@ -30,7 +30,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 
         val graphView: GraphViewBase = when (this.viewModel.type) {
             GraphType.LINE -> LineGraphView(context, this.viewModel)
-            GraphType.BAR -> TODO()
+            GraphType.BAR -> BarGraphView(context, this.viewModel)
         }
         graphContainer.addView(graphView, ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,

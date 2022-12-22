@@ -2,6 +2,7 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
@@ -10,27 +11,22 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.PointData
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.BarLineChartBase
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 @SuppressLint("ViewConstructor")
-internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) : GraphViewBase(context, graphViewModel), OnChartValueSelectedListener {
+internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : GraphViewBase(context, graphViewModel), OnChartValueSelectedListener {
 
-    private lateinit var chartView: LineChart
+    private lateinit var chartView: BarChart
     private var selectedEntry: Entry? = null
-    private val defaultIcon = GraphConstants.circleIcon(context)
-    private val selectedIcon = GraphConstants.circleIcon(context, DriveKitUI.colors.secondaryColor())
-    private val invisibleIcon = GraphConstants.invisibleIcon()
 
     override fun initChartView() {
-        val chartView = LineChart(context)
+        val chartView = BarChart(context)
         this.chartView = chartView
     }
 
@@ -40,35 +36,33 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(this@LineGraphView.context, this.chartView, it))
+            this.chartView.setXAxisRenderer(DKAxisRenderer.from(this.chartView, it))
         }
-        val entries = mutableListOf<Entry>()
+        val entries = mutableListOf<BarEntry>()
+        var entryToSelect: BarEntry? = null
         this.viewModel.points.forEachIndexed { index, point ->
             if (point != null) {
-                val value = Entry(point.x.toFloat(), point.y.toFloat(), point.data)
-                val isInterpolatedPoint = point.data?.interpolatedPoint ?: true
+                val value = BarEntry(point.x.toFloat(), point.y.toFloat(), point.data)
                 if (index == this.viewModel.selectedIndex) {
-                    select(value, isInterpolatedPoint)
-                } else if (isInterpolatedPoint) {
-                    value.icon = this.invisibleIcon
-                } else {
-                    value.icon = this.defaultIcon
+                    entryToSelect = value
                 }
                 entries.add(value)
             }
         }
-        val line = LineDataSet(entries, null)
-        line.colors = listOf(ContextCompat.getColor(this.context, R.color.dkChartStrokeColor))
-        line.setDrawVerticalHighlightIndicator(false)
-        line.setDrawHorizontalHighlightIndicator(false)
-        line.isHighlightEnabled = true
-        line.setDrawValues(false)
-        line.setDrawCircles(false)
-        line.lineWidth = GraphConstants.GRAPH_LINE_WIDTH
 
-        val data = LineData()
-        data.addDataSet(line)
+        val bar = BarDataSet(entries, null)
+        bar.colors = listOf(Color.WHITE)
+        bar.barBorderColor = ContextCompat.getColor(this.context, R.color.dkChartStrokeColor)
+        bar.barBorderWidth = GraphConstants.GRAPH_LINE_WIDTH
+        bar.isHighlightEnabled = true
+        bar.highLightColor = DriveKitUI.colors.secondaryColor()
+        bar.highLightAlpha = 255
+        bar.setDrawValues(false)
+
+        val data = BarData()
+        data.addDataSet(bar)
         data.isHighlightEnabled = true
+        data.barWidth = 0.5f
 
         with(this.chartView) {
             this.data = data
@@ -93,9 +87,9 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             //this.textSize = //TODO()
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
-                this.setLabelCount(xAxisConfig.labels.getCount(), true)
-                this.axisMinimum = xAxisConfig.min.toFloat()
-                this.axisMaximum = xAxisConfig.max.toFloat()
+                this.setLabelCount(xAxisConfig.labels.getCount(), false)
+                this.axisMinimum = xAxisConfig.min.toFloat() - 0.5f
+                this.axisMaximum = xAxisConfig.max.toFloat() + 0.5f
             }
         }
 
@@ -114,42 +108,32 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
         this.chartView.invalidate()
         this.chartView.setOnChartValueSelectedListener(this)
-    }
 
-    private fun select(entry: Entry, isInterpolatedPoint: Boolean) {
-        if (isInterpolatedPoint) {
-            clearPreviousSelectedEntry(false)
-        } else {
-            clearPreviousSelectedEntry()
-            this.selectedEntry = entry
-            entry.icon = this.selectedIcon
-        }
-
-        this.chartView.rendererXAxis?.let {
-            if (it is DKAxisRenderer) {
-                it.selectedIndex = entry.x.toInt()
-            }
+        entryToSelect?.let {
+            select(it)
         }
     }
 
-    private fun clearPreviousSelectedEntry(shouldRestoreIcon: Boolean = true) {
-        if (shouldRestoreIcon) {
-            this.selectedEntry?.icon = this.defaultIcon
-        }
-        this.selectedEntry = null
+    private fun select(entry: Entry) {
+        this.selectedEntry = entry
+        this.chartView.highlightValue(entry.x, 0)
+//        if let renderer = self.chartView.xAxisRenderer as? DKXAxisRenderer {
+//            renderer.selectedIndex = Int(entry.x)
+//        }
     }
 
     override fun onValueSelected(entry: Entry?, highlight: Highlight?) {
         if (entry != null && entry != this.selectedEntry) {
             val data: PointData? = entry.data as? PointData
             if (data != null) {
-                select(entry, data.interpolatedPoint)
+                select(entry)
                 this.listener?.onSelectPoint(GraphPoint(entry.x.toDouble(), entry.y.toDouble(), data))
             }
         }
     }
 
     override fun onNothingSelected() {
-        // Do nothing.
+        // Nothing to do.
     }
+
 }
