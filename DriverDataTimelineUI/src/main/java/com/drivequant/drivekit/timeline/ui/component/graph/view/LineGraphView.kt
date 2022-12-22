@@ -40,7 +40,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(this.chartView, it))
+            this.chartView.setXAxisRenderer(DKAxisRenderer.from(this@LineGraphView.context, this.chartView, it))
         }
         val entries = mutableListOf<Entry>()
         this.viewModel.points.forEachIndexed { index, point ->
@@ -125,9 +125,12 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.selectedEntry = entry
             entry.icon = this.selectedIcon
         }
-//        if let renderer = self.chartView.xAxisRenderer as? DKXAxisRenderer {
-//            renderer.selectedIndex = Int(entry.x)
-//        }
+
+        this.chartView.rendererXAxis?.let {
+            if (it is DKAxisRenderer) {
+                it.selectedIndex = entry.x.toInt()
+            }
+        }
     }
 
     private fun clearPreviousSelectedEntry(shouldRestoreIcon: Boolean = true) {

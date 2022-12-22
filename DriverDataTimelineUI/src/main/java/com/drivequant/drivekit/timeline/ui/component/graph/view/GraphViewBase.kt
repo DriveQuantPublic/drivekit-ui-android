@@ -2,9 +2,14 @@ package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
@@ -14,6 +19,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Transformer
+import com.github.mikephil.charting.utils.Utils
 import com.github.mikephil.charting.utils.ViewPortHandler
 
 internal abstract class GraphViewBase(context: Context, val viewModel: GraphViewModel): LinearLayout(context) {
@@ -52,6 +58,7 @@ internal class GraphAxisFormatter(val config: GraphAxisConfig): ValueFormatter()
 }
 
 internal class DKAxisRenderer(
+    val context: Context,
     val config: GraphAxisConfig,
     viewPortHandler: ViewPortHandler,
     xAxis: XAxis,
@@ -59,8 +66,8 @@ internal class DKAxisRenderer(
 ) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
 
     companion object {
-        fun from(chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKAxisRenderer {
-            return DKAxisRenderer(config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
+        fun from(context: Context, chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKAxisRenderer {
+            return DKAxisRenderer(context, config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
         }
     }
 
@@ -74,11 +81,14 @@ internal class DKAxisRenderer(
         anchor: MPPointF?,
         angleDegrees: Float
     ) {
-        super.drawLabel(c, formattedLabel, x, y, anchor, angleDegrees)
-
         val index = this.config.labels.getTitles()?.indexOfFirst { it == formattedLabel }
         if (index != null && index == selectedIndex) {
-            // TODO draw a background with a pill shape when the label is the selected one
+            c?.let { canvas ->
+                anchor?.let {
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.dk_common_clock) // TODO create drawable programatically with drivekit colors
+                    Utils.drawImage(c, drawable, x.toInt(), y.toInt() + 15, 30, 30) //TODO FINISH
+                }
+            }
         }
         super.drawLabel(c, formattedLabel, x, y, anchor, angleDegrees)
     }
