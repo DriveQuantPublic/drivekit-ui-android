@@ -4,12 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
-import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -67,10 +65,6 @@ internal class DKAxisRenderer(
     }
 
     var selectedIndex: Int? = null
-
-    init {
-        // TODO super.init() not needed ?
-    }
 
     override fun drawLabel(
         c: Canvas?,

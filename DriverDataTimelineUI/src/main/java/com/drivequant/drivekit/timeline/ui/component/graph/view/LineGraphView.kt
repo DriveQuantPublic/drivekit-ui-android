@@ -77,8 +77,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.axisRight.isEnabled = false
             this.legend.isEnabled = false
             this.description = null
-            this.extraLeftOffset = 4.convertDpToPx().toFloat()
-            this.extraRightOffset = 20.convertDpToPx().toFloat()
         }
 
         with (this.chartView.xAxis) {
@@ -99,7 +97,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.setDrawAxisLine(false)
             this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            this.xOffset = 4.convertDpToPx().toFloat()
             this.textColor = R.color.dkAxisLabelColor
             viewModel.yAxisConfig?.let { yAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(yAxisConfig)
@@ -108,6 +105,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
                 this.axisMaximum = yAxisConfig.max.toFloat()
             }
         }
+
         this.chartView.setClipValuesToContent(false)
         this.chartView.invalidate()
 //        self.chartView.delegate = self
