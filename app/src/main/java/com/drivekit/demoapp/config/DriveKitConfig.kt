@@ -86,7 +86,7 @@ internal object DriveKitConfig {
 
     fun configureModules(context: Context) {
         // Internal modules configuration:
-        configureCore()
+        configureCore(context)
         configureTripAnalysis(context)
 
         // UI modules configuration:
@@ -109,8 +109,11 @@ internal object DriveKitConfig {
         DriveKitTripAnalysis.activateAutoStart(activate)
     }
 
-    private fun configureCore() {
+    private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {
+            if (apiKey != DriveKit.config.apiKey) {
+                reset(context)
+            }
             DriveKit.setApiKey(apiKey)
         }
     }
