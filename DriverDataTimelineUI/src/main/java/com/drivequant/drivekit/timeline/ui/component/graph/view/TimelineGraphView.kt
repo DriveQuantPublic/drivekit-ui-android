@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.timeline.ui.component.graph
+package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
 import android.view.View
@@ -10,12 +10,12 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewBase
-import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
-import com.drivequant.drivekit.timeline.ui.component.graph.view.LineGraphView
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 
 internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener {
+    var listener: GraphViewListener? = null
     private val graphTitle: TextView
     private val graphView: GraphViewBase
 
@@ -62,6 +62,6 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
     }
 
     override fun onSelectPoint(point: GraphPoint) {
-        TODO("Not yet implemented")
+        this.listener?.onSelectPoint(point)
     }
 }

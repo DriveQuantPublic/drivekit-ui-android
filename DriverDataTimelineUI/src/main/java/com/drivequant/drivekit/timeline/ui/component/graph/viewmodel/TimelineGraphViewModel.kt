@@ -18,9 +18,6 @@ import java.util.Collections.max
 import java.util.Date
 
 internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewListener {
-    private companion object {
-        private const val GRAPH_POINT_NUMBER: Int = 8
-    }
     var listener: TimelineGraphListener? = null
     override var graphViewModelDidUpdate: (() -> Unit)? = null
     override var type: GraphType = GraphType.LINE
@@ -41,7 +38,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         val sourceDates = timeline.allContext.date.map { it.toTimelineDate()!! }
         val dates: List<Date> = sourceDates.map { it.removeTime() }
         val calendarField = getCalendarField(period)
-        val graphPointNumber = GRAPH_POINT_NUMBER
+        val graphPointNumber = GraphConstants.GRAPH_POINT_NUMBER
         val selectedDate = dates[timelineSelectedIndex]
         val now = Date()
         val currentDate = now.startingFrom(calendarField)
@@ -79,7 +76,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
 
     fun showEmptyGraph(graphItem: GraphItem, period: DKTimelinePeriod) {
         val calendarField = getCalendarField(period)
-        val graphPointNumber = GRAPH_POINT_NUMBER
+        val graphPointNumber = GraphConstants.GRAPH_POINT_NUMBER
         val now = Date()
         val currentDate = now.startingFrom(calendarField)
         val startDate = currentDate.add(-graphPointNumber + 1, calendarField)
@@ -227,7 +224,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         // Find previous valid index
         var point: GraphPoint? = null
         var previousValidIndex: Int = -1
-        var i = GRAPH_POINT_NUMBER - 1
+        var i = GraphConstants.GRAPH_POINT_NUMBER - 1
         var hasMoreKnownDates = true
         val firstDate = dates.first()
         while (previousValidIndex < 0 && hasMoreKnownDates) {
@@ -250,7 +247,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
             if (nextValidIndex < max) {
                 val interpolatedValue = getInterpolatedValue(xLabelDate, previousValidIndex, nextValidIndex, dates, calendarField, graphItem, timeline)
                 if (interpolatedValue != null)  {
-                    point = GraphPoint((GRAPH_POINT_NUMBER - 1).toDouble(), interpolatedValue, null)
+                    point = GraphPoint((GraphConstants.GRAPH_POINT_NUMBER - 1).toDouble(), interpolatedValue, null)
                 }
             }
         }

@@ -21,6 +21,7 @@ import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
@@ -90,6 +91,12 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     }
                     update()
                 }
+            }
+        }
+        graphViewModel.listener = object : TimelineGraphListener {
+            override fun onSelectDate(date: Date) {
+                this@TimelineViewModel.selectedDate = date
+                update()
             }
         }
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {

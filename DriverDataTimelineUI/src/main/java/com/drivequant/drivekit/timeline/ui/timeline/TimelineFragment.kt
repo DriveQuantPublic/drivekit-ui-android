@@ -13,8 +13,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
-import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
-import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphView
+import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
@@ -71,11 +70,6 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
             viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
                 override fun onDateSelected(date: Date) {
                     viewModel.updateTimelineDate(date)
-                }
-            }
-            viewModel.graphViewModel.listener = object : TimelineGraphListener {
-                override fun onSelectDate(date: Date) {
-                    // TODO
                 }
             }
         }
@@ -177,6 +171,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private fun displayGraphContainer() {
         context?.let {
             graphView = TimelineGraphView(it, this.viewModel.graphViewModel)
+            graphView.listener = this.viewModel.graphViewModel
             graphContainer.addView(graphView)
         }
     }

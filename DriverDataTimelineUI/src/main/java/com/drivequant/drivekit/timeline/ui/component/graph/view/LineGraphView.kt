@@ -7,6 +7,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
+import com.drivequant.drivekit.timeline.ui.component.graph.PointData
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.charts.LineChart
@@ -15,9 +17,11 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 @SuppressLint("ViewConstructor")
-internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) : GraphViewBase(context, graphViewModel) {
+internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) : GraphViewBase(context, graphViewModel), OnChartValueSelectedListener {
 
     private lateinit var chartView: LineChart
     private var selectedEntry: Entry? = null
@@ -109,6 +113,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
         }
 
         this.chartView.invalidate()
+        this.chartView.setOnChartValueSelectedListener(this)
 //        self.chartView.delegate = self
     }
 
@@ -130,5 +135,19 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.selectedEntry?.icon = this.defaultIcon
         }
         this.selectedEntry = null
+    }
+
+    override fun onValueSelected(entry: Entry?, highlight: Highlight?) {
+        if (entry != null && entry != this.selectedEntry) {
+            val data: PointData? = entry.data as? PointData
+            if (data != null) {
+                select(entry, data.interpolatedPoint)
+                this.listener?.onSelectPoint(GraphPoint(entry.x.toDouble(), entry.y.toDouble(), data))
+            }
+        }
+    }
+
+    override fun onNothingSelected() {
+        // Do nothing.
     }
 }
