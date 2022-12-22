@@ -1,13 +1,11 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.util.Log
+import android.graphics.*
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
@@ -19,7 +17,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Transformer
-import com.github.mikephil.charting.utils.Utils
 import com.github.mikephil.charting.utils.ViewPortHandler
 
 internal abstract class GraphViewBase(context: Context, val viewModel: GraphViewModel): LinearLayout(context) {
@@ -85,8 +82,24 @@ internal class DKAxisRenderer(
         if (index != null && index == selectedIndex) {
             c?.let { canvas ->
                 anchor?.let {
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.dk_common_clock) // TODO create drawable programatically with drivekit colors
-                    Utils.drawImage(c, drawable, x.toInt(), y.toInt() + 15, 30, 30) //TODO FINISH
+                    /*
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.dk_test_rectangle_rounded) // TODO create drawable programatically with drivekit colors
+                    val width = (mViewPortHandler.chartWidth - x).toInt()
+                    val height = (mViewPortHandler.chartHeight - y).toInt()
+                    Utils.drawImage(c, drawable, x.toInt(), y.toInt(), 100, 30) //TODO FINISH
+
+                     */
+                    // TODO WIP
+                    val rectPaint = Paint()
+                    rectPaint.color = DriveKitUI.colors.secondaryColor()
+                    rectPaint.style = Paint.Style.FILL
+                    c.drawRect(
+                        0f,
+                        mViewPortHandler.contentBottom().toInt().toFloat(),
+                        mViewPortHandler.chartWidth,
+                        mViewPortHandler.chartHeight,
+                        rectPaint
+                    )
                 }
             }
         }
