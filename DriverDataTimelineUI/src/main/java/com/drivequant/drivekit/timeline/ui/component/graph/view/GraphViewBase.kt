@@ -84,7 +84,7 @@ internal class DKAxisRenderer(
                 val paint = Paint(mAxisLabelPaint)
                 paint.color = DriveKitUI.colors.secondaryColor()
                 paint.style = Paint.Style.FILL
-                val width = Utils.calcTextSize(paint, formattedLabel).width * 1.15f
+                val width = Utils.calcTextSize(paint, mXAxis.longestLabel).width * 1.15f
                 val rect = RectF(0f, 10f, width, 50f)
                 val radius = 50f
                 canvas.drawRoundRect(rect, radius, radius, paint)
