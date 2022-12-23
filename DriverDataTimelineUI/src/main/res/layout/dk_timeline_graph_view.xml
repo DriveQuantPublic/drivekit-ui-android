@@ -18,11 +18,15 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/dk_margin_half">
+            android:paddingTop="@dimen/dk_margin_half"
+            android:paddingBottom="@dimen/dk_margin_half"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/dk_margin_half">
 
             <TextView
                 android:id="@+id/graph_title"
                 android:layout_width="0dp"
+                android:layout_marginStart="@dimen/dk_margin_half"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
