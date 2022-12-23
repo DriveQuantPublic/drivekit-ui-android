@@ -219,6 +219,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
             roadContextViewModel.configure(null, selectedScore, null, mapOf(), false)
+            graphViewModel.showEmptyGraph(GraphItem.Score(this.selectedScore), this.currentPeriod)
         }
     }
 
