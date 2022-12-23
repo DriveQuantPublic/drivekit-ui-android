@@ -1,11 +1,15 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Paint.Align
+import android.graphics.Rect
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
@@ -15,7 +19,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.MPPointF
 import com.github.mikephil.charting.utils.Transformer
-import com.github.mikephil.charting.utils.Utils
 import com.github.mikephil.charting.utils.ViewPortHandler
 
 
@@ -63,6 +66,13 @@ internal class DKAxisRenderer(
 ) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
 
     companion object {
+        private val fontMetrics = Paint.FontMetrics()
+        private val paintRenderer = Paint().also {
+            it.color = DriveKitUI.colors.secondaryColor()
+            it.style = Paint.Style.FILL
+            it.alpha = 255 / 2
+        }
+
         fun from(context: Context, chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKAxisRenderer {
             return DKAxisRenderer(context, config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
         }
@@ -71,25 +81,39 @@ internal class DKAxisRenderer(
     var selectedIndex: Int? = null
 
     override fun drawLabel(
-        c: Canvas?,
-        formattedLabel: String?,
+        canvas: Canvas?,
+        text: String?,
         x: Float,
         y: Float,
         anchor: MPPointF?,
         angleDegrees: Float
     ) {
-        val index = this.config.labels.getTitles()?.indexOfFirst { it == formattedLabel }
-        if (index != null && index == selectedIndex) {
-            c?.let { canvas ->
-                val paint = Paint(mAxisLabelPaint)
-                paint.color = DriveKitUI.colors.secondaryColor()
-                paint.style = Paint.Style.FILL
-                val width = Utils.calcTextSize(paint, mXAxis.longestLabel).width * 1.15f
-                val rect = RectF(0f, 10f, width, 50f)
-                val radius = 50f
-                canvas.drawRoundRect(rect, radius, radius, paint)
+        val index = this.config.labels.getTitles()?.indexOfFirst { it == text }
+        if (index != null && index == selectedIndex && text != null && canvas != null) {
+            var drawOffsetX = 0f
+            var drawOffsetY = 0f
+            val paint = mAxisLabelPaint
+            val lineHeight: Float = paint.getFontMetrics(fontMetrics)
+            val rect = Rect()
+            paint.getTextBounds(text, 0, text.length, rect)
+            val horizontalPadding = 2.convertDpToPx()
+            val verticalPadding = 1.convertDpToPx()
+            drawOffsetX -= rect.left.toFloat()
+            drawOffsetY += -fontMetrics.ascent
+            val originalTextAlign: Align = paint.textAlign
+            paint.textAlign = Align.LEFT
+            if (anchor != null && (anchor.x != 0f || anchor.y != 0f)) {
+                drawOffsetX -= rect.width() * anchor.x
+                drawOffsetY -= lineHeight * anchor.y
             }
+            drawOffsetX += x
+            drawOffsetY += y
+
+            val radius = (rect.height() + verticalPadding * 2f)
+            canvas.drawRoundRect(drawOffsetX - horizontalPadding, drawOffsetY - rect.height() - verticalPadding, drawOffsetX + rect.width() + 2 * horizontalPadding, drawOffsetY + 2 * verticalPadding, radius, radius, paintRenderer)
+
+            paint.textAlign = originalTextAlign
         }
-        super.drawLabel(c, formattedLabel, x, y, anchor, angleDegrees)
+        super.drawLabel(canvas, text, x, y, anchor, angleDegrees)
     }
 }
