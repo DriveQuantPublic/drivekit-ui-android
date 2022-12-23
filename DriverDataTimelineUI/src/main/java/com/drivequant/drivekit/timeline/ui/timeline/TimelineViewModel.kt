@@ -241,6 +241,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         val speeding = mutableListOf<Double>()
         val co2Mass = mutableListOf<Double>()
         val fuelVolume = mutableListOf<Double>()
+        val fuelSaving = mutableListOf<Double>()
         val unlock = mutableListOf<Int>()
         val lock = mutableListOf<Int>()
         val callAuthorized = mutableListOf<Int>()
@@ -279,6 +280,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 speeding.add(allContextItem.speeding[index])
                 co2Mass.add(allContextItem.co2Mass[index])
                 fuelVolume.add(allContextItem.fuelVolume[index])
+                fuelSaving.add(allContextItem.fuelSaving[index])
                 unlock.add(allContextItem.unlock[index])
                 lock.add(allContextItem.lock[index])
                 callAuthorized.add(allContextItem.callAuthorized[index])
@@ -310,6 +312,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             val adherence = mutableListOf<Int>()
             val co2Mass = mutableListOf<Double>()
             val fuelVolume = mutableListOf<Double>()
+            val fuelSaving = mutableListOf<Double>()
             val efficiencyAcceleration = mutableListOf<Double>()
             val efficiencyBrake = mutableListOf<Double>()
             val efficiencySpeedMaintain = mutableListOf<Double>()
@@ -328,6 +331,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     adherence.add(roadContextItem.adherence[index])
                     co2Mass.add(roadContextItem.co2Mass[index])
                     fuelVolume.add(roadContextItem.fuelVolume[index])
+                    fuelSaving.add(roadContextItem.fuelSaving[index])
                     if (roadContextItem.efficiencyAcceleration.isNotEmpty()) {
                         efficiencyAcceleration.add(roadContextItem.efficiencyAcceleration[index])
                         efficiencyBrake.add(roadContextItem.efficiencyBrake[index])
@@ -350,6 +354,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 adherence,
                 co2Mass,
                 fuelVolume,
+                fuelSaving,
                 efficiencyAcceleration,
                 efficiencyBrake,
                 efficiencySpeedMaintain
@@ -372,6 +377,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             speeding,
             co2Mass,
             fuelVolume,
+            fuelSaving,
             unlock,
             lock,
             callAuthorized,
