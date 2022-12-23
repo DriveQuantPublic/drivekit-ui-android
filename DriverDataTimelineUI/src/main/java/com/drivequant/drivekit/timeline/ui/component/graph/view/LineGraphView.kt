@@ -90,7 +90,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
-            //this.textSize = //TODO()
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), true)
@@ -101,7 +100,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
         with (this.chartView.axisLeft) {
             this.setDrawAxisLine(false)
-            this.xOffset = 4.convertDpToPx().toFloat()
+            this.xOffset = 12F
             this.enableGridDashedLine(4.convertDpToPx().toFloat(), 2.convertDpToPx().toFloat(), 0F)
             this.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
             this.textColor = R.color.dkAxisLabelColor
