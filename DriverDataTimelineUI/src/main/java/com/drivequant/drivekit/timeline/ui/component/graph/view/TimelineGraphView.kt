@@ -12,10 +12,12 @@ import androidx.core.view.GestureDetectorCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
+import kotlin.math.abs
 
 internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener {
     var listener: GraphViewListener? = null
@@ -46,14 +48,6 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         updateContent()
     }
 
-    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        return if (this.gestureDetector.onTouchEvent(event)) {
-            true
-        } else {
-            super.onInterceptTouchEvent(event)
-        }
-    }
-
     private fun updateContent() {
         updateTitle()
         this.graphView.setupData()
@@ -73,6 +67,8 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         }
     }
 
+    fun manageTouchEvent(event: MotionEvent) = this.gestureDetector.onTouchEvent(event)
+
     override fun onSelectPoint(point: GraphPoint) {
         this.listener?.onSelectPoint(point)
     }
@@ -80,10 +76,12 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 
 private class SwipeGestureDetector(private val viewModel: TimelineGraphViewModel) : GestureDetector.SimpleOnGestureListener() {
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        if (velocityX > 0) {
-            this.viewModel.showPreviousGraphData()
-        } else {
-            this.viewModel.showNextGraphData()
+        if (abs(velocityX) > 100.convertDpToPx()) {
+            if (velocityX > 0) {
+                this.viewModel.showPreviousGraphData()
+            } else {
+                this.viewModel.showNextGraphData()
+            }
         }
         return super.onFling(e1, e2, velocityX, velocityY)
     }

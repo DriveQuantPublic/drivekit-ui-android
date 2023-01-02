@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
@@ -38,6 +39,8 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private lateinit var graphContainer: LinearLayout
     private lateinit var graphView: TimelineGraphView
 
+    private lateinit var nestedScrollView: NestedScrollView
+
     companion object {
         fun newInstance() = TimelineFragment()
     }
@@ -54,6 +57,15 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
         graphContainer = view.findViewById(R.id.graph_container)
+        nestedScrollView = view.findViewById(R.id.nested_scroll_view)
+
+        nestedScrollView.setOnTouchListener { _, motionEvent ->
+            motionEvent?.let { event ->
+                graphView.manageTouchEvent(event)
+            } ?: run {
+                false
+            }
+        }
 
         checkViewModelInitialization()
 
