@@ -59,7 +59,7 @@ internal class RoadContextView(context: Context) : LinearLayout(context) {
 
     private fun initProgressItems() {
         val progressItems = mutableListOf<ProgressItem>()
-        viewModel.distanceByContext.forEach{
+        viewModel.distanceByContext.forEach {
             progressItems.add(
                 ProgressItem(it.key.getColorResId(), viewModel.getPercent(it.key))
             )
