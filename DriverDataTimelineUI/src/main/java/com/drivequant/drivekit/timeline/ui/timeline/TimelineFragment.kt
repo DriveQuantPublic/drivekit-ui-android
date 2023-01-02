@@ -60,11 +60,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         nestedScrollView = view.findViewById(R.id.nested_scroll_view)
 
         nestedScrollView.setOnTouchListener { _, motionEvent ->
-            motionEvent?.let { event ->
-                graphView.manageTouchEvent(event)
-            } ?: run {
-                false
-            }
+            graphView.manageTouchEvent(motionEvent)
         }
 
         checkViewModelInitialization()
