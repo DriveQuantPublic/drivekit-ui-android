@@ -310,7 +310,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> timeline.allContext.efficiencyBrake[index]
                 TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> timeline.allContext.efficiencySpeedMaintain[index]
                 TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> timeline.allContext.fuelVolume[index]
-                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> TODO()
+                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> timeline.allContext.fuelSaving[index]
                 TimelineScoreItemType.ECODRIVING_CO2MASS -> timeline.allContext.co2Mass[index]
                 TimelineScoreItemType.DISTRACTION_UNLOCK -> timeline.allContext.unlock[index].toDouble()
                 TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> timeline.allContext.callForbidden[index].toDouble()
