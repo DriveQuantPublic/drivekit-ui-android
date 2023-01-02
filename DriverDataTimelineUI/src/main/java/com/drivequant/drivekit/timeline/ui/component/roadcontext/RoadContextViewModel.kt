@@ -72,7 +72,7 @@ internal class RoadContextViewModel : ViewModel() {
         if (distanceByContext.isEmpty()) {
             0.0
         } else {
-            distanceByContext[roadContext]?.div(totalDistanceForAllContext)?.let {
+            distanceByContext[roadContext]?.div(distance)?.let {
                 it * 100
             } ?: run { 0.0 }
         }
