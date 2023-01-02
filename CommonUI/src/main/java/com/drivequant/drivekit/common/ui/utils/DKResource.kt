@@ -78,8 +78,5 @@ object DKResource {
         }
         return dkSpannable.toSpannable()
     }
-}
 
-fun Int.convertDpToPx(): Int {
-    return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
