@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
 internal class CustomRoadContextBar @JvmOverloads constructor(
     context: Context,
@@ -69,12 +72,12 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
         paint.color = ContextCompat.getColor(
             context,
             progressItem.color
-        )
+        ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
         return paint
     }
 }
 
 internal data class ProgressItem(
-    val color: Int,
+    @ColorRes val color: Int,
     val progressItemPercentage: Double
 )

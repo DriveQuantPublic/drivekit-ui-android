@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
+import com.drivequant.drivekit.common.ui.graphical.DKColors
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
@@ -24,7 +26,7 @@ internal class RoadContextItemViewHolder(itemView: View) : RecyclerView.ViewHold
             ContextCompat.getColor(
                 itemView.context,
                 roadContext.getColorResId()
-            )
+            ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
         )
         with(itemView) {
             image_view_road_context_indicator.setImageDrawable(drawable)
