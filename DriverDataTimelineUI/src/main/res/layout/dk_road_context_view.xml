@@ -36,13 +36,15 @@
                     android:id="@+id/text_view_road_context_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dk_margin_half" />
+                    android:layout_marginBottom="@dimen/dk_margin_half"
+                    android:paddingHorizontal="@dimen/dk_margin_eigth" />
 
                 <com.drivequant.drivekit.timeline.ui.component.roadcontext.CustomRoadContextBar
                     android:id="@+id/custom_bar"
                     android:layout_width="match_parent"
+                    android:layout_height="30dp"
                     android:layout_marginBottom="@dimen/dk_margin_half"
-                    android:layout_height="30dp"/>
+                    android:layout_marginHorizontal="@dimen/dk_margin_eigth" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_road_context"

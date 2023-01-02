@@ -30,7 +30,7 @@ internal object GraphConstants {
     const val MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH = 10.0
     const val GRAPH_POINT_NUMBER: Int = 8
     const val GRAPH_LINE_WIDTH = 2F
-    private val iconSize = 14.convertDpToPx()
+    private val iconSize = 11.convertDpToPx()
 
     fun circleIcon(context: Context, insideColor: Int = Color.WHITE): Drawable {
         val borderColor: Int = ContextCompat.getColor(context, R.color.dkChartStrokeColor)
@@ -49,7 +49,7 @@ internal object GraphConstants {
             intrinsicWidth = iconSize
             intrinsicHeight = iconSize
             paint.color = backgroundColor
-            paint.style = Paint.Style.FILL_AND_STROKE;
+            paint.style = Paint.Style.FILL_AND_STROKE
         }
         return LayerDrawable(arrayOf<Drawable>(backgroundShape, borderShape))
     }
@@ -59,7 +59,7 @@ internal object GraphConstants {
         val backgroundShape = ShapeDrawable().apply {
             shape = OvalShape()
             paint.color = backgroundColor
-            paint.style = Paint.Style.FILL;
+            paint.style = Paint.Style.FILL
         }
         return backgroundShape
     }
