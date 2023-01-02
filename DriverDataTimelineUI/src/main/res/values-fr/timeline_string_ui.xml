@@ -20,8 +20,8 @@
     <string name="dk_timeline_nb_unlocks">Nombre de déverrouillages / 100 km : %s</string>
     <string name="dk_timeline_overspeeding_distance">Distance relative en dépassement : %s</string>
     <string name="dk_timeline_overspeeding_duration">Durée relative en dépassement : %s</string>
-    <string name="dk_timeline_per_month">Par mois</string>
-    <string name="dk_timeline_per_week">Par semaine</string>
+    <string name="dk_timeline_per_month">Mois</string>
+    <string name="dk_timeline_per_week">Semaine</string>
     <string name="dk_timeline_road_context_city">Urbain fluide</string>
     <string name="dk_timeline_road_context_description_empty_data">Faites un premier trajet pour voir vos premiers graphiques s\'afficher.</string>
     <string name="dk_timeline_road_context_description_no_data_ecodriving">Les trajets pour les dates sélectionnées sont trop courts pour avoir un score d’éco-conduite</string>

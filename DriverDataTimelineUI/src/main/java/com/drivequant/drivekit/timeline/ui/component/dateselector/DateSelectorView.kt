@@ -34,7 +34,7 @@ internal class DateSelectorView(context: Context) :
         update()
     }
 
-    fun update() {
+    private fun update() {
         image_view_previous.setOnClickListener {
             viewModel.moveToPreviousDate()
         }

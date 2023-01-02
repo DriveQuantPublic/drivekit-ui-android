@@ -4,21 +4,20 @@
     android:id="@+id/view_group_empty_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:padding="@dimen/dk_margin"
+    android:padding="@dimen/dk_margin_half"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/text_view_no_data_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin_half"
         tools:text="@string/dk_timeline_road_context_title_no_data" />
 
     <TextView
         android:id="@+id/text_view_no_data_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin_half"
         android:text="@string/dk_timeline_road_context_description_empty_data" />
 </LinearLayout>

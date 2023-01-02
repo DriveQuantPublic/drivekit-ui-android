@@ -30,6 +30,7 @@ internal class RoadContextItemViewHolder(itemView: View) : RecyclerView.ViewHold
             image_view_road_context_indicator.setImageDrawable(drawable)
             with(text_view_road_context_name) {
                 text = DKResource.convertToString(itemView.context, roadContext.getTitleResId())
+                setTextColor(DriveKitUI.colors.complementaryFontColor())
                 smallText(DriveKitUI.colors.complementaryFontColor())
             }
         }

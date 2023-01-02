@@ -1,19 +1,28 @@
 package com.drivequant.drivekit.timeline.ui.timeline
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.removeTime
 import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.databaseutils.entity.*
+import com.drivequant.drivekit.databaseutils.entity.AllContextItem
+import com.drivequant.drivekit.databaseutils.entity.RoadContextItem
+import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.timeline.ui.DKTimelineScoreType
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
+import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
@@ -22,18 +31,18 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimeline
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.*
 
-internal class TimelineViewModel : ViewModel() {
+internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
     var updateData = MutableLiveData<Any>()
 
-    var scores: List<DKTimelineScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
+    var scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
     var timelinePeriodTypes = DKTimelinePeriod.values().toList()
     private var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
-    private var selectedScore: DKTimelineScoreType = scores.first()
+    private var selectedScore: DKScoreType = scores.first()
         set(value) {
             field = value
             update()
@@ -42,6 +51,7 @@ internal class TimelineViewModel : ViewModel() {
     var periodSelectorViewModel = PeriodSelectorViewModel()
     var roadContextViewModel = RoadContextViewModel()
     var dateSelectorViewModel = DateSelectorViewModel()
+    var graphViewModel = TimelineGraphViewModel()
 
     private var weekTimeline: Timeline? = null
     private var monthTimeline: Timeline? = null
@@ -81,6 +91,12 @@ internal class TimelineViewModel : ViewModel() {
                     }
                     update()
                 }
+            }
+        }
+        graphViewModel.listener = object : TimelineGraphListener {
+            override fun onSelectDate(date: Date) {
+                this@TimelineViewModel.selectedDate = date
+                update()
             }
         }
         DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
@@ -150,7 +166,7 @@ internal class TimelineViewModel : ViewModel() {
                 val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
 
                 val scoredTripsCount = cleanedTimeline.allContext.numberTripScored[selectedDateIndex]
-                if (selectedScore == DKTimelineScoreType.DISTRACTION || selectedScore == DKTimelineScoreType.SPEEDING || scoredTripsCount > 0) {
+                if (selectedScore == DKScoreType.DISTRACTION || selectedScore == DKScoreType.SPEEDING || scoredTripsCount > 0) {
                     cleanedTimeline.roadContexts.forEach {
                         val distance = it.distance[selectedDateIndex]
                         if (distance > 0) {
@@ -160,8 +176,9 @@ internal class TimelineViewModel : ViewModel() {
                 }
 
                 // Update view models
-                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext, hasData)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
+                roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex, distanceByContext, hasData)
+                graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
             } else {
                 configureWithNoData()
             }
@@ -202,12 +219,13 @@ internal class TimelineViewModel : ViewModel() {
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
             roadContextViewModel.configure(null, selectedScore, null, mapOf(), false)
+            graphViewModel.showEmptyGraph(GraphItem.Score(this.selectedScore), this.currentPeriod)
         }
     }
 
     private fun cleanTimeline(
         timeline: Timeline,
-        score: DKTimelineScoreType,
+        score: DKScoreType,
         selectedDateIndex: Int?
     ): Timeline {
         val date = mutableListOf<String>()
@@ -224,6 +242,7 @@ internal class TimelineViewModel : ViewModel() {
         val speeding = mutableListOf<Double>()
         val co2Mass = mutableListOf<Double>()
         val fuelVolume = mutableListOf<Double>()
+        val fuelSaving = mutableListOf<Double>()
         val unlock = mutableListOf<Int>()
         val lock = mutableListOf<Int>()
         val callAuthorized = mutableListOf<Int>()
@@ -241,8 +260,8 @@ internal class TimelineViewModel : ViewModel() {
 
         val canInsertAtIndex: (Int) -> Boolean = { pos ->
             timeline.allContext.numberTripScored[pos] > 0
-                    || score == DKTimelineScoreType.DISTRACTION
-                    || score == DKTimelineScoreType.SPEEDING
+                    || score == DKScoreType.DISTRACTION
+                    || score == DKScoreType.SPEEDING
                     || selectedDateIndex == pos
         }
 
@@ -262,6 +281,7 @@ internal class TimelineViewModel : ViewModel() {
                 speeding.add(allContextItem.speeding[index])
                 co2Mass.add(allContextItem.co2Mass[index])
                 fuelVolume.add(allContextItem.fuelVolume[index])
+                fuelSaving.add(allContextItem.fuelSaving[index])
                 unlock.add(allContextItem.unlock[index])
                 lock.add(allContextItem.lock[index])
                 callAuthorized.add(allContextItem.callAuthorized[index])
@@ -293,6 +313,7 @@ internal class TimelineViewModel : ViewModel() {
             val adherence = mutableListOf<Int>()
             val co2Mass = mutableListOf<Double>()
             val fuelVolume = mutableListOf<Double>()
+            val fuelSaving = mutableListOf<Double>()
             val efficiencyAcceleration = mutableListOf<Double>()
             val efficiencyBrake = mutableListOf<Double>()
             val efficiencySpeedMaintain = mutableListOf<Double>()
@@ -311,6 +332,7 @@ internal class TimelineViewModel : ViewModel() {
                     adherence.add(roadContextItem.adherence[index])
                     co2Mass.add(roadContextItem.co2Mass[index])
                     fuelVolume.add(roadContextItem.fuelVolume[index])
+                    fuelSaving.add(roadContextItem.fuelSaving[index])
                     if (roadContextItem.efficiencyAcceleration.isNotEmpty()) {
                         efficiencyAcceleration.add(roadContextItem.efficiencyAcceleration[index])
                         efficiencyBrake.add(roadContextItem.efficiencyBrake[index])
@@ -333,6 +355,7 @@ internal class TimelineViewModel : ViewModel() {
                 adherence,
                 co2Mass,
                 fuelVolume,
+                fuelSaving,
                 efficiencyAcceleration,
                 efficiencyBrake,
                 efficiencySpeedMaintain
@@ -355,6 +378,7 @@ internal class TimelineViewModel : ViewModel() {
             speeding,
             co2Mass,
             fuelVolume,
+            fuelSaving,
             unlock,
             lock,
             callAuthorized,
@@ -369,5 +393,13 @@ internal class TimelineViewModel : ViewModel() {
             efficiencySpeedMaintain
         )
         return Timeline(timeline.period, allContext, roadContexts)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class TimelineViewModelFactory(private val application: Application) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return TimelineViewModel(application) as T
+        }
     }
 }

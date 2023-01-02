@@ -20,13 +20,13 @@
     <string name="dk_timeline_nb_unlocks">Antal udslip / 100 km: %s</string>
     <string name="dk_timeline_overspeeding_distance">Fartoverskridelse ift. afstand: %s</string>
     <string name="dk_timeline_overspeeding_duration">Fartoverskridelse ift. varighed: %s</string>
-    <string name="dk_timeline_per_month">pr. måned</string>
-    <string name="dk_timeline_per_week">pr. uge</string>
-    <string name="dk_timeline_road_context_city">By</string>
+    <string name="dk_timeline_per_month">Måned</string>
+    <string name="dk_timeline_per_week">Uge</string>
+    <string name="dk_timeline_road_context_city">Ekstra urban</string>
     <string name="dk_timeline_road_context_description_empty_data">Foretag en første tur for at se dine første grafer blive vist.</string>
     <string name="dk_timeline_road_context_description_no_data_ecodriving">Rejserne på de valgte datoer er for korte til at få en score for miljøvenlig kørsel</string>
     <string name="dk_timeline_road_context_description_no_data_safety">Ruterne for de valgte datoer er for korte til at få en sikkerhedsscore</string>
-    <string name="dk_timeline_road_context_expressways">motorvej</string>
+    <string name="dk_timeline_road_context_expressways">Motorvej</string>
     <string name="dk_timeline_road_context_heavy_urban_traffic">Tæt bymiljø</string>
     <string name="dk_timeline_road_context_no_context_description">Der er ikke tilstrækkelige data for denne periode til at beregne fordelingen af vejsammenhænge.</string>
     <string name="dk_timeline_road_context_suburban">tæt bytrafik</string>

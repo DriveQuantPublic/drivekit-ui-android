@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
@@ -34,6 +36,11 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
 
+    private lateinit var graphContainer: LinearLayout
+    private lateinit var graphView: TimelineGraphView
+
+    private lateinit var nestedScrollView: NestedScrollView
+
     companion object {
         fun newInstance() = TimelineFragment()
     }
@@ -49,12 +56,19 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
+        graphContainer = view.findViewById(R.id.graph_container)
+        nestedScrollView = view.findViewById(R.id.nested_scroll_view)
+
+        nestedScrollView.setOnTouchListener { _, motionEvent ->
+            graphView.manageTouchEvent(motionEvent)
+        }
 
         checkViewModelInitialization()
 
         viewModel.updateData.observe(this) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
+
             if (viewModel.dateSelectorViewModel.hasDates()) {
                 dateSelectorContainer.visibility = View.VISIBLE
                 dateSelectorView.configure(viewModel.dateSelectorViewModel)
@@ -163,7 +177,11 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayGraphContainer() {
-        // TODO()
+        context?.let {
+            graphView = TimelineGraphView(it, this.viewModel.graphViewModel)
+            graphView.listener = this.viewModel.graphViewModel
+            graphContainer.addView(graphView)
+        }
     }
 
     private fun updateTimeline() {
@@ -184,7 +202,14 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(TimelineViewModel::class.java)
+            activity?.application?.let { application ->
+                if (!this::viewModel.isInitialized) {
+                    viewModel = ViewModelProviders.of(
+                        this,
+                        TimelineViewModel.TimelineViewModelFactory(application)
+                    ).get(TimelineViewModel::class.java)
+                }
+            }
         }
     }
 

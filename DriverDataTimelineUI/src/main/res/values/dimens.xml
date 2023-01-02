@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dk_timeline_graph_max_height">250dp</dimen>
+</resources>

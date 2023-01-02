@@ -13,8 +13,8 @@ internal class PeriodSelectorView(
     periods: List<DKTimelinePeriod>
 ) : LinearLayout(context) {
 
-    private val buttons = mutableListOf<PeriodSelectorItemView>()
     private lateinit var viewModel: PeriodSelectorViewModel
+    private val buttons: List<PeriodSelectorItemView>
 
     init {
         val view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
@@ -24,16 +24,14 @@ internal class PeriodSelectorView(
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
-        periods.map { period ->
-            val item = PeriodSelectorItemView(context, period, object : PeriodSelectorItemListener {
+        this.buttons = periods.map { period ->
+            PeriodSelectorItemView(context, period, object : PeriodSelectorItemListener {
                 override fun onPeriodSelected(period: DKTimelinePeriod) {
                     buttonSelected(period)
                     viewModel.onPeriodSelected(period)
                 }
             })
-            buttons.add(item)
-            view.addView(item)
-        }
+        }.onEach { view.addView(it) }
     }
 
     fun configure(viewModel: PeriodSelectorViewModel) {
