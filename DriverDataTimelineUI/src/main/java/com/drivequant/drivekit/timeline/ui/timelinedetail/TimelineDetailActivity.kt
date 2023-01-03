@@ -13,8 +13,6 @@ import com.drivequant.drivekit.timeline.ui.R
 
 class TimelineDetailActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: TimelineDetailViewModel
-
     companion object {
         fun launchActivity(activity: Activity) {
             val intent = Intent(activity, TimelineDetailActivity::class.java)
@@ -25,6 +23,10 @@ class TimelineDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timeline_detail)
+        setupUI()
+    }
+
+    private fun setupUI() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -33,7 +35,6 @@ class TimelineDetailActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, TimelineDetailFragment.newInstance())
             .commit()
-        checkViewModelInitialization()
     }
 
     private fun tagScreen() {
@@ -45,16 +46,8 @@ class TimelineDetailActivity : AppCompatActivity() {
         )
     }
 
-    private fun checkViewModelInitialization() {
-        if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this,).get(TimelineDetailViewModel::class.java)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
-        checkViewModelInitialization()
-        setActivityTitle(getString(R.string.dk_timeline_title)) // TODO
         tagScreen()
     }
 
