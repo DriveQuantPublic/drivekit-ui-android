@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
-import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
-import com.drivequant.drivekit.timeline.ui.timeline.TimelineFragment
-import com.drivequant.drivekit.timeline.ui.timeline.TimelineViewModel
 
 class TimelineDetailFragment : Fragment() {
 
@@ -56,24 +54,22 @@ class TimelineDetailFragment : Fragment() {
             //graphView.manageTouchEvent(motionEvent)
         }*/
 
-        checkViewModelInitialization()
+        initViewModel()
 
-
+        /*viewModel.clearObserver.observe(this) {
+            activity?.onBackPressed()
+        }*/
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkViewModelInitialization()
-    }
-
-    private fun checkViewModelInitialization() {
+    private fun initViewModel() {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    viewModel = ViewModelProviders.of(
+                    // TODO
+                    /*viewModel = ViewModelProviders.of(
                         this,
                         TimelineDetailViewModel.TimelineDetailViewModelFactory(application)
-                    ).get(TimelineDetailViewModel::class.java)
+                    ).get(TimelineDetailViewModel::class.java)*/
                 }
             }
         }

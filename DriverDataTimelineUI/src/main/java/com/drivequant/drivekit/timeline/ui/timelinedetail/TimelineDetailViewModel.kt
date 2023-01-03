@@ -2,6 +2,7 @@ package com.drivequant.drivekit.timeline.ui.timelinedetail
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.DKScoreType
@@ -20,21 +21,15 @@ import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Date
 
 internal class TimelineDetailViewModel(
-    application: Application/*,
-    val selectedScore: DKScoreType,
-    val selectedPeriod: DKTimelinePeriod,
-    val selectedDate: Date,
-    val weekTimeline: Timeline,
-    val monthTimeline: Timeline*/
+    application: Application,
+    private val selectedScore: DKScoreType,
+    private val selectedPeriod: DKTimelinePeriod,
+    private val selectedDate: Date,
+    private val weekTimeline: Timeline,
+    private val monthTimeline: Timeline
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener {
 
-    //TEMP
-    val selectedScore: DKScoreType = DKScoreType.SAFETY
-    val selectedPeriod: DKTimelinePeriod = DKTimelinePeriod.WEEK
-    val selectedDate: Date = Date()
-    val weekTimeline: Timeline = TODO()
-    val monthTimeline: Timeline = TODO()
-
+    val clearObserver = MutableLiveData<Any>()
     var listener: TimelineDetailViewModelListener? = null
 //    val title: String = selectedScore.
     /*
@@ -53,10 +48,10 @@ internal class TimelineDetailViewModel(
     }
 
     @Suppress("UNCHECKED_CAST")
-    class TimelineDetailViewModelFactory(private val application: Application/*, private val selectedScore: DKScoreType, private val selectedPeriod: DKTimelinePeriod, private val selectedDate: Date, private val weekTimeline: Timeline, private val monthTimeline: Timeline*/) :
+    class TimelineDetailViewModelFactory(private val application: Application, private val selectedScore: DKScoreType, private val selectedPeriod: DKTimelinePeriod, private val selectedDate: Date, private val weekTimeline: Timeline, private val monthTimeline: Timeline) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return TimelineDetailViewModel(application/*, selectedScore, selectedPeriod, selectedDate, weekTimeline, monthTimeline*/) as T
+            return TimelineDetailViewModel(application, selectedScore, selectedPeriod, selectedDate, weekTimeline, monthTimeline) as T
         }
     }
 
@@ -114,5 +109,10 @@ internal class TimelineDetailViewModel(
 
     override fun onDateSelected(date: Date) {
         TODO("Not yet implemented")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        clearObserver.postValue(Any())
     }
 }
