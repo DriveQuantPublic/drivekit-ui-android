@@ -84,7 +84,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 
 private class SwipeGestureDetector(private val viewModel: TimelineGraphViewModel) : GestureDetector.SimpleOnGestureListener() {
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        if (abs(velocityX) > 100.convertDpToPx()) {
+        if (abs(velocityX) > abs(velocityY) && abs(velocityX) > 100.convertDpToPx()) {
             if (velocityX > 0) {
                 this.viewModel.showPreviousGraphData()
             } else {
