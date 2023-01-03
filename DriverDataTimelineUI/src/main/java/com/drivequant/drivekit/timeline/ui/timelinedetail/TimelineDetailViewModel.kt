@@ -30,6 +30,8 @@ internal class TimelineDetailViewModel(
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener {
 
     val clearObserver = MutableLiveData<Any>()
+    val updateData = MutableLiveData<Any>()
+
     var listener: TimelineDetailViewModelListener? = null
 //    val title: String = selectedScore.
     /*
@@ -37,11 +39,11 @@ internal class TimelineDetailViewModel(
         selectedScore.stringValue()
     }
      */
-    private val periodSelectorViewModel: PeriodSelectorViewModel = PeriodSelectorViewModel()
-    private val dateSelectorViewModel: DateSelectorViewModel = DateSelectorViewModel()
-    private val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
-    private val timelineGraphViewModelByScoreItem: MutableMap<TimelineScoreItemType, TimelineGraphViewModel> = mutableMapOf()
-    private val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
+    val periodSelectorViewModel: PeriodSelectorViewModel = PeriodSelectorViewModel()
+    val dateSelectorViewModel: DateSelectorViewModel = DateSelectorViewModel()
+    val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
+    val timelineGraphViewModelByScoreItem: MutableMap<TimelineScoreItemType, TimelineGraphViewModel> = mutableMapOf()
+    val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
 
     init {
         updateViewModels()
@@ -80,6 +82,8 @@ internal class TimelineDetailViewModel(
 //                this.timelineGraphViewModelByScoreItem = this.orderedScoreItemTypeToDisplay.reduce()
             }
         }
+
+        updateData.postValue(Any())
 
         /*
         if let selectedDateIndex {

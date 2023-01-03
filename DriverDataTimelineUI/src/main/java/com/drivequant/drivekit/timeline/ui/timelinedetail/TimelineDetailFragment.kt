@@ -80,9 +80,58 @@ class TimelineDetailFragment : Fragment() {
 
         initViewModel()
 
-        /*viewModel.clearObserver.observe(this) {
+        // TODO title®
+        //activity?.setTitle(viewModel.)
+
+        viewModel.clearObserver.observe(this) {
             activity?.onBackPressed()
-        }*/
+        }
+
+        viewModel.updateData.observe(this) {
+            periodSelectorView.configure(viewModel.periodSelectorViewModel)
+            roadContextView.configure(viewModel.roadContextViewModel)
+            dateSelectorView.configure(viewModel.dateSelectorViewModel)
+        }
+
+        displayPeriodContainer()
+        displayDateContainer()
+        displayRoadContextContainer()
+    }
+
+    private fun displayPeriodContainer() {
+        context?.let {
+            periodSelectorView = PeriodSelectorView(it)
+            periodSelectorView.apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+            }
+            periodSelectorContainer.addView(periodSelectorView)
+        }
+    }
+
+    private fun displayDateContainer() {
+        context?.let {
+            dateSelectorView = DateSelectorView(it)
+            dateSelectorView.apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+            }
+            dateSelectorContainer.addView(dateSelectorView)
+        }
+    }
+
+    private fun displayRoadContextContainer() {
+        context?.let {
+            roadContextView = RoadContextView(it)
+            roadContextContainer.addView(roadContextView)
+        }
+        viewModel.roadContextViewModel.changeObserver.observe(this) {
+            roadContextView.configure(viewModel.roadContextViewModel)
+        }
     }
 
     private fun initViewModel() {

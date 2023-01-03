@@ -33,8 +33,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
-    val timelinePeriodTypes = DKTimelinePeriod.values().toList()
-    var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
+    var currentPeriod: DKTimelinePeriod = DKTimelinePeriod.values().first()
         private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()

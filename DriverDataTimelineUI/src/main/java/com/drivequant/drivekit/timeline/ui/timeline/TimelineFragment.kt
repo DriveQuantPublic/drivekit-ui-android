@@ -154,7 +154,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun displayPeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it, viewModel.timelinePeriodTypes)
+            periodSelectorView = PeriodSelectorView(it)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
