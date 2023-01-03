@@ -18,7 +18,8 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
+import com.drivequant.drivekit.timeline.ui.*
+import com.drivequant.drivekit.timeline.ui.addValueIfNotEmpty
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
@@ -168,7 +169,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 val scoredTripsCount = cleanedTimeline.allContext.numberTripScored[selectedDateIndex]
                 if (selectedScore == DKScoreType.DISTRACTION || selectedScore == DKScoreType.SPEEDING || scoredTripsCount > 0) {
                     cleanedTimeline.roadContexts.forEach {
-                        val distance = it.distance[selectedDateIndex]
+                        val distance = it.distance[selectedDateIndex, 0.0]
                         if (distance > 0) {
                             distanceByContext[it.type.toTimelineRoadContext()] = distance
                         }
@@ -266,36 +267,35 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         }
 
         allContextItem.date.forEachIndexed { index, _ ->
-            if (canInsertAtIndex(index)) {
-                date.add(allContextItem.date[index])
-                numberTripTotal.add(allContextItem.numberTripTotal[index])
-                numberTripScored.add(allContextItem.numberTripScored[index])
-                distance.add(allContextItem.distance[index])
-                duration.add(allContextItem.duration[index])
-                efficiency.add(allContextItem.efficiency[index])
-                safety.add(allContextItem.safety[index])
-                acceleration.add(allContextItem.acceleration[index])
-                braking.add(allContextItem.braking[index])
-                adherence.add(allContextItem.adherence[index])
-                phoneDistraction.add(allContextItem.phoneDistraction[index])
-                speeding.add(allContextItem.speeding[index])
-                co2Mass.add(allContextItem.co2Mass[index])
-                fuelVolume.add(allContextItem.fuelVolume[index])
-                fuelSaving.add(allContextItem.fuelSaving[index])
-                unlock.add(allContextItem.unlock[index])
-                lock.add(allContextItem.lock[index])
-                callAuthorized.add(allContextItem.callAuthorized[index])
-                callForbidden.add(allContextItem.callForbidden[index])
-                callForbiddenDuration.add(allContextItem.callForbiddenDuration[index])
-                callAuthorizedDuration.add(allContextItem.callAuthorizedDuration[index])
-                if (allContextItem.numberTripWithForbiddenCall.isNotEmpty()) { // Some old trips may have no these distractions values
-                    numberTripWithForbiddenCall.add(allContextItem.numberTripWithForbiddenCall[index])
-                    speedingDuration.add(allContextItem.speedingDuration[index])
-                    speedingDistance.add(allContextItem.speedingDistance[index])
-                    efficiencyBrake.add(allContextItem.efficiencyBrake[index])
-                    efficiencyAcceleration.add(allContextItem.efficiencyAcceleration[index])
-                    efficiencySpeedMaintain.add(allContextItem.efficiencySpeedMaintain[index])
-                }
+            val currentDate = allContextItem.date.getSafe(index)
+            if (currentDate != null && canInsertAtIndex(index)) {
+                date.add(currentDate)
+                allContextItem.numberTripTotal.addValueIfNotEmpty(index, numberTripTotal)
+                allContextItem.numberTripScored.addValueIfNotEmpty(index, numberTripScored)
+                allContextItem.distance.addValueIfNotEmpty(index, distance)
+                allContextItem.duration.addValueIfNotEmpty(index, duration)
+                allContextItem.efficiency.addValueIfNotEmpty(index, efficiency)
+                allContextItem.safety.addValueIfNotEmpty(index, safety)
+                allContextItem.acceleration.addValueIfNotEmpty(index, acceleration)
+                allContextItem.braking.addValueIfNotEmpty(index, braking)
+                allContextItem.adherence.addValueIfNotEmpty(index, adherence)
+                allContextItem.phoneDistraction.addValueIfNotEmpty(index, phoneDistraction)
+                allContextItem.speeding.addValueIfNotEmpty(index, speeding)
+                allContextItem.co2Mass.addValueIfNotEmpty(index, co2Mass)
+                allContextItem.fuelVolume.addValueIfNotEmpty(index, fuelVolume)
+                allContextItem.fuelSaving.addValueIfNotEmpty(index, fuelSaving)
+                allContextItem.unlock.addValueIfNotEmpty(index, unlock)
+                allContextItem.lock.addValueIfNotEmpty(index, lock)
+                allContextItem.callAuthorized.addValueIfNotEmpty(index, callAuthorized)
+                allContextItem.callForbidden.addValueIfNotEmpty(index, callForbidden)
+                allContextItem.callForbiddenDuration.addValueIfNotEmpty(index, callForbiddenDuration)
+                allContextItem.callAuthorizedDuration.addValueIfNotEmpty(index, callAuthorizedDuration)
+                allContextItem.numberTripWithForbiddenCall.addValueIfNotEmpty(index, numberTripWithForbiddenCall)
+                allContextItem.speedingDuration.addValueIfNotEmpty(index, speedingDuration)
+                allContextItem.speedingDistance.addValueIfNotEmpty(index, speedingDistance)
+                allContextItem.efficiencyBrake.addValueIfNotEmpty(index, efficiencyBrake)
+                allContextItem.efficiencyAcceleration.addValueIfNotEmpty(index, efficiencyAcceleration)
+                allContextItem.efficiencySpeedMaintain.addValueIfNotEmpty(index, efficiencySpeedMaintain)
             }
         }
 
@@ -319,25 +319,24 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             val efficiencySpeedMaintain = mutableListOf<Double>()
 
             timeline.allContext.date.forEachIndexed { index, _ ->
-                if (canInsertAtIndex(index)) {
-                    date.add(roadContextItem.date[index])
-                    numberTripTotal.add(roadContextItem.numberTripTotal[index])
-                    numberTripScored.add(roadContextItem.numberTripScored[index])
-                    distance.add(roadContextItem.distance[index])
-                    duration.add(roadContextItem.duration[index])
-                    efficiency.add(roadContextItem.efficiency[index])
-                    safety.add(roadContextItem.safety[index])
-                    acceleration.add(roadContextItem.acceleration[index])
-                    braking.add(roadContextItem.braking[index])
-                    adherence.add(roadContextItem.adherence[index])
-                    co2Mass.add(roadContextItem.co2Mass[index])
-                    fuelVolume.add(roadContextItem.fuelVolume[index])
-                    fuelSaving.add(roadContextItem.fuelSaving[index])
-                    if (roadContextItem.efficiencyAcceleration.isNotEmpty()) {
-                        efficiencyAcceleration.add(roadContextItem.efficiencyAcceleration[index])
-                        efficiencyBrake.add(roadContextItem.efficiencyBrake[index])
-                        efficiencySpeedMaintain.add(roadContextItem.efficiencySpeedMaintain[index])
-                    }
+                val currentDate = roadContextItem.date.getSafe(index)
+                if (currentDate != null && canInsertAtIndex(index)) {
+                    date.add(currentDate)
+                    roadContextItem.numberTripTotal.addValueIfNotEmpty(index, numberTripTotal)
+                    roadContextItem.numberTripScored.addValueIfNotEmpty(index, numberTripScored)
+                    roadContextItem.distance.addValueIfNotEmpty(index, distance)
+                    roadContextItem.duration.addValueIfNotEmpty(index, duration)
+                    roadContextItem.efficiency.addValueIfNotEmpty(index, efficiency)
+                    roadContextItem.safety.addValueIfNotEmpty(index, safety)
+                    roadContextItem.acceleration.addValueIfNotEmpty(index, acceleration)
+                    roadContextItem.braking.addValueIfNotEmpty(index, braking)
+                    roadContextItem.adherence.addValueIfNotEmpty(index, adherence)
+                    roadContextItem.co2Mass.addValueIfNotEmpty(index, co2Mass)
+                    roadContextItem.fuelVolume.addValueIfNotEmpty(index, fuelVolume)
+                    roadContextItem.fuelSaving.addValueIfNotEmpty(index, fuelSaving)
+                    roadContextItem.efficiencyAcceleration.addValueIfNotEmpty(index, efficiencyAcceleration)
+                    roadContextItem.efficiencyBrake.addValueIfNotEmpty(index, efficiencyBrake)
+                    roadContextItem.efficiencySpeedMaintain.addValueIfNotEmpty(index, efficiencySpeedMaintain)
                 }
             }
 
