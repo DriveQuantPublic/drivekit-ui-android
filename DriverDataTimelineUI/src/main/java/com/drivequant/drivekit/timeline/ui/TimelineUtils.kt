@@ -1,27 +1,14 @@
 package com.drivequant.drivekit.timeline.ui
 
 import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
 internal fun Date.toTimelineString(): String = TimelineUtils.getBackendDateFormat().format(this)
-
-internal fun Timeline.totalDistanceForAllContexts(selectedScore: DKScoreType, selectedIndex: Int) : Double {
-    var totalDistanceForAllContexts = 0.0
-    if (this.hasValidTripScored(selectedScore, selectedIndex)) {
-        totalDistanceForAllContexts = this.allContext.distance[selectedIndex, 0.0]
-    }
-    return totalDistanceForAllContexts
-}
-
-private fun Timeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
-    selectedScore == DKScoreType.DISTRACTION
-            || selectedScore == DKScoreType.SPEEDING
-            || this.allContext.numberTripScored[selectedIndex, 0] > 0
 
 internal fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
@@ -50,5 +37,33 @@ internal operator fun <E> List<E>.get(index: Int, default: E): E = getSafe(index
 internal fun <E> List<E>.addValueIfNotEmpty(index: Int, list: MutableList<E>) {
     if (this.isNotEmpty()) {
         list.add(this[index])
+    }
+}
+
+
+internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType> {
+    return when (this) {
+        DKScoreType.DISTRACTION -> listOf(
+            TimelineScoreItemType.DISTRACTION_UNLOCK,
+            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION,
+            TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL
+        )
+        DKScoreType.ECO_DRIVING -> listOf(
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION,
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE,
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN,
+            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME,
+            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS,
+            TimelineScoreItemType.ECODRIVING_CO2MASS
+        )
+        DKScoreType.SAFETY -> listOf(
+            TimelineScoreItemType.SAFETY_ACCELERATION,
+            TimelineScoreItemType.SAFETY_BRAKING,
+            TimelineScoreItemType.SAFETY_ADHERENCE
+        )
+        DKScoreType.SPEEDING -> listOf(
+            TimelineScoreItemType.SPEEDING_DURATION,
+            TimelineScoreItemType.SPEEDING_DISTANCE
+        )
     }
 }
