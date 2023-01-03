@@ -58,12 +58,26 @@
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dk_margin_quarter">
+
+                    <TextView
+                        android:id="@+id/button_display_timeline_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dk_margin"
+                        android:gravity="center_horizontal"
+                        android:text="@string/dk_timeline_button_timeline_detail"
+                        android:textAllCaps="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/graph_container"
@@ -71,18 +85,11 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="@dimen/dk_margin_quarter" />
-
-                    <TextView
-                        android:id="@+id/button_display_timeline_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dk_margin"
-                        android:text="@string/dk_timeline_button_timeline_detail"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/dk_text_big" />
-                </LinearLayout>
+                        app:layout_constraintBottom_toTopOf="@id/button_display_timeline_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

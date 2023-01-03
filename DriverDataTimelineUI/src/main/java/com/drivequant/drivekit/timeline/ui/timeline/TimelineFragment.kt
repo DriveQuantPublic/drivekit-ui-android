@@ -9,6 +9,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProviders
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
@@ -102,8 +104,11 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun displayTimelineDetail() {
-        button_display_timeline_detail.setOnClickListener {
-            TimelineDetailActivity.launchActivity(requireActivity())
+        button_display_timeline_detail.apply {
+            setOnClickListener {
+                TimelineDetailActivity.launchActivity(requireActivity())
+            }
+            headLine2(DriveKitUI.colors.secondaryColor())
         }
     }
 
