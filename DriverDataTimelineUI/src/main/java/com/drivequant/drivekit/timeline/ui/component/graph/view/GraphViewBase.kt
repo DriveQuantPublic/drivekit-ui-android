@@ -96,8 +96,8 @@ internal class DKAxisRenderer(
             val lineHeight: Float = paint.getFontMetrics(fontMetrics)
             val rect = Rect()
             paint.getTextBounds(text, 0, text.length, rect)
-            val horizontalPadding = 2.convertDpToPx()
-            val verticalPadding = 1.convertDpToPx()
+            val horizontalPadding = 3.convertDpToPx()
+            val verticalPadding = 2.convertDpToPx()
             drawOffsetX -= rect.left.toFloat()
             drawOffsetY += -fontMetrics.ascent
             val originalTextAlign: Align = paint.textAlign
