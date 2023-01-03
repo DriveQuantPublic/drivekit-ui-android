@@ -29,30 +29,34 @@ import java.util.*
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
-    var updateData = MutableLiveData<Any>()
+    val updateData = MutableLiveData<Any>()
 
-    var scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
+    val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
-    var timelinePeriodTypes = DKTimelinePeriod.values().toList()
-    private var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
+    val timelinePeriodTypes = DKTimelinePeriod.values().toList()
+    var currentPeriod: DKTimelinePeriod = timelinePeriodTypes.first()
+        private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
-    private var selectedScore: DKScoreType = scores.first()
-        set(value) {
+    var selectedScore: DKScoreType = scores.first()
+        private set(value) {
             field = value
             update()
         }
 
-    var periodSelectorViewModel = PeriodSelectorViewModel()
-    var roadContextViewModel = RoadContextViewModel()
-    var dateSelectorViewModel = DateSelectorViewModel()
-    var graphViewModel = TimelineGraphViewModel()
+    var weekTimeline: Timeline? = null
+        private set
+    var monthTimeline: Timeline? = null
+        private set
 
-    private var weekTimeline: Timeline? = null
-    private var monthTimeline: Timeline? = null
+    var selectedDate: Date? = null
+        private set
 
-    private var selectedDate: Date? = null
+    val periodSelectorViewModel = PeriodSelectorViewModel()
+    val roadContextViewModel = RoadContextViewModel()
+    val dateSelectorViewModel = DateSelectorViewModel()
+    val graphViewModel = TimelineGraphViewModel()
 
     init {
         periodSelectorViewModel.listener = object : PeriodSelectorItemListener {
@@ -90,43 +94,49 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 update()
             }
         }
-        DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
-            override fun onResponse(
-                timelineSyncStatus: TimelineSyncStatus,
-                timelines: List<Timeline>
-            ) {
-                if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
-                    timelines.forEach {
-                        when (it.period) {
-                            TimelinePeriod.WEEK -> weekTimeline = it
-                            TimelinePeriod.MONTH -> monthTimeline = it
+        DriveKitDriverData.getTimelines(
+            DKTimelinePeriod.values().asList(),
+            object : TimelineQueryListener {
+                override fun onResponse(
+                    timelineSyncStatus: TimelineSyncStatus,
+                    timelines: List<Timeline>
+                ) {
+                    if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
+                        timelines.forEach {
+                            when (it.period) {
+                                TimelinePeriod.WEEK -> weekTimeline = it
+                                TimelinePeriod.MONTH -> monthTimeline = it
+                            }
                         }
+                        update()
                     }
-                    update()
                 }
-            }
-        }, SynchronizationType.CACHE)
+            },
+            SynchronizationType.CACHE
+        )
         updateTimeline()
     }
 
     fun updateTimeline() {
-        DriveKitDriverData.getTimelines(DKTimelinePeriod.values().asList(), object : TimelineQueryListener {
-            override fun onResponse(
-                timelineSyncStatus: TimelineSyncStatus,
-                timelines: List<Timeline>
-            ) {
-                if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
-                    timelines.forEach {
-                        when (it.period) {
-                            TimelinePeriod.WEEK -> weekTimeline = it
-                            TimelinePeriod.MONTH -> monthTimeline = it
+        DriveKitDriverData.getTimelines(
+            DKTimelinePeriod.values().asList(),
+            object : TimelineQueryListener {
+                override fun onResponse(
+                    timelineSyncStatus: TimelineSyncStatus,
+                    timelines: List<Timeline>
+                ) {
+                    if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
+                        timelines.forEach {
+                            when (it.period) {
+                                TimelinePeriod.WEEK -> weekTimeline = it
+                                TimelinePeriod.MONTH -> monthTimeline = it
+                            }
                         }
+                        update(resettingSelectedDate = true)
                     }
-                    update(resettingSelectedDate = true)
+                    syncStatus.postValue(timelineSyncStatus)
                 }
-                syncStatus.postValue(timelineSyncStatus)
-            }
-        })
+            })
     }
 
     private fun update(resettingSelectedDate: Boolean = false) {

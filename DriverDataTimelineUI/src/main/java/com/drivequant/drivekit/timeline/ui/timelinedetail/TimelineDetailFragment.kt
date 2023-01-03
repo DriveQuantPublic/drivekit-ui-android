@@ -9,14 +9,24 @@ import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
+import java.util.*
 
 class TimelineDetailFragment : Fragment() {
 
     private lateinit var viewModel: TimelineDetailViewModel
+
+    private lateinit var selectedScore: DKScoreType
+    private lateinit var selectedPeriod: DKTimelinePeriod
+    private lateinit var selectedDate: Date
+    private lateinit var weekTimeline: Timeline
+    private lateinit var monthTimeline: Timeline
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: PeriodSelectorView
@@ -33,7 +43,21 @@ class TimelineDetailFragment : Fragment() {
     private lateinit var nestedScrollView: NestedScrollView
 
     companion object {
-        fun newInstance() = TimelineDetailFragment()
+        fun newInstance(
+            selectedScore: DKScoreType,
+            selectedPeriod: DKTimelinePeriod,
+            selectedDate: Date,
+            weekTimeline: Timeline,
+            monthTimeline: Timeline
+        ): TimelineDetailFragment {
+            val fragment = TimelineDetailFragment()
+            fragment.selectedScore = selectedScore
+            fragment.selectedPeriod = selectedPeriod
+            fragment.selectedDate = selectedDate
+            fragment.weekTimeline = weekTimeline
+            fragment.monthTimeline = monthTimeline
+            return fragment
+        }
     }
 
     override fun onCreateView(
@@ -65,11 +89,17 @@ class TimelineDetailFragment : Fragment() {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    // TODO
-                    /*viewModel = ViewModelProviders.of(
+                    viewModel = ViewModelProviders.of(
                         this,
-                        TimelineDetailViewModel.TimelineDetailViewModelFactory(application)
-                    ).get(TimelineDetailViewModel::class.java)*/
+                        TimelineDetailViewModel.TimelineDetailViewModelFactory(
+                            application,
+                            selectedScore,
+                            selectedPeriod,
+                            selectedDate,
+                            weekTimeline,
+                            monthTimeline
+                        )
+                    ).get(TimelineDetailViewModel::class.java)
                 }
             }
         }

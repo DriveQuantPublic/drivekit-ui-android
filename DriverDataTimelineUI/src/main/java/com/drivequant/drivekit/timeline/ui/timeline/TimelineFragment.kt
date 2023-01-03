@@ -106,7 +106,14 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     private fun displayTimelineDetail() {
         button_display_timeline_detail.apply {
             setOnClickListener {
-                TimelineDetailActivity.launchActivity(requireActivity())
+                TimelineDetailActivity.launchActivity(
+                    requireActivity(),
+                    viewModel.selectedScore,
+                    viewModel.currentPeriod,
+                    viewModel.selectedDate,
+                    viewModel.weekTimeline,
+                    viewModel.monthTimeline
+                )
             }
             headLine2(DriveKitUI.colors.secondaryColor())
         }
