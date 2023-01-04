@@ -7,6 +7,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
+import com.drivequant.drivekit.common.ui.utils.Co2Unit
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -105,10 +106,13 @@ internal sealed class GraphItem {
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> context.getString(DKDataFormatter.getDecelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> context.getString(DKDataFormatter.getSpeedMaintainDescription(value))
             TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatLiter(context, value)
-            TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value)
+            TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value, Co2Unit.KILOGRAM, Co2Unit.KILOGRAM)
             TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatLiter(context, value)
             TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1)
-            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> DKDataFormatter.formatDuration(context, value).convertToString()
+            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
+                // The value is in minute so we convert it back to seconds before reformatting. The conversion is done here to keep the graph Y Axis in minute
+                DKDataFormatter.formatDuration(context, value * 60).convertToString()
+            }
             TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> DKDataFormatter.formatPercentage(value)
             TimelineScoreItemType.SPEEDING_DURATION -> DKDataFormatter.formatPercentage(value)
             TimelineScoreItemType.SPEEDING_DISTANCE -> DKDataFormatter.formatPercentage(value)

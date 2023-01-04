@@ -13,9 +13,11 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
+import com.drivequant.drivekit.timeline.ui.getSafe
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Collections.max
 import java.util.Date
+import kotlin.math.ceil
 
 internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewListener {
     var listener: TimelineGraphListener? = null
@@ -128,11 +130,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         this.xAxisConfig = GraphAxisConfig(0.0, (graphPointNumber - 1).toDouble(), LabelType.CustomLabels(graphDates))
         val minYValue = graphItem.graphMinValue
         val maxYValue = graphItem.getGraphMaxValue(max(graphPoints.map { it?.y ?: 0.0 }))
-        val labels: MutableList<String> = mutableListOf()
-        for (i in minYValue.toInt()..10) {
-            labels.add(i.toString())
-        }
-        this.yAxisConfig = GraphAxisConfig(graphItem.graphMinValue, maxYValue, LabelType.RawValues(graphItem.maxNumberOfLabels(maxYValue)))
+        this.yAxisConfig = GraphAxisConfig(minYValue, maxYValue, LabelType.RawValues(graphItem.maxNumberOfLabels(maxYValue)))
         this.titleKey = graphItem.graphTitleKey
         this.description = graphDescription
         this.graphViewModelDidUpdate?.let { it() }
@@ -295,28 +293,108 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     }
 
     private fun getValue(index: Int, graphItem: GraphItem, timeline: Timeline): Double? {
+        val totalDuration = timeline.allContext.duration.getSafe(index)?.toDouble() ?: 0.0
+        val totalDistance = timeline.allContext.distance.getSafe(index) ?: 0.0
         return when (graphItem) {
             is GraphItem.Score -> when (graphItem.scoreType) {
-                DKScoreType.SAFETY -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.safety[index] else null
-                DKScoreType.ECO_DRIVING -> if (timeline.allContext.numberTripScored[index] > 0) timeline.allContext.efficiency[index] else null
-                DKScoreType.DISTRACTION -> timeline.allContext.phoneDistraction[index]
-                DKScoreType.SPEEDING -> timeline.allContext.speeding[index]
+                DKScoreType.SAFETY -> {
+                    return timeline.allContext.numberTripScored.getSafe(index)?.let { numberTripScored ->
+                        if (numberTripScored > 0) {
+                            timeline.allContext.safety.getSafe(index)
+                        } else {
+                            null
+                        }
+                    }
+                }
+                DKScoreType.ECO_DRIVING -> {
+                    return timeline.allContext.numberTripScored.getSafe(index)?.let { numberTripScored ->
+                        if (numberTripScored > 0) {
+                            timeline.allContext.efficiency.getSafe(index)
+                        } else {
+                            null
+                        }
+                    }
+                }
+                DKScoreType.DISTRACTION -> timeline.allContext.phoneDistraction.getSafe(index)
+                DKScoreType.SPEEDING -> timeline.allContext.speeding.getSafe(index)
             }
             is GraphItem.ScoreItem -> when (graphItem.scoreItemType) {
-                TimelineScoreItemType.SAFETY_ACCELERATION -> timeline.allContext.acceleration[index].toDouble()
-                TimelineScoreItemType.SAFETY_BRAKING -> timeline.allContext.braking[index].toDouble()
-                TimelineScoreItemType.SAFETY_ADHERENCE -> timeline.allContext.adherence[index].toDouble()
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> timeline.allContext.efficiencyAcceleration[index]
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> timeline.allContext.efficiencyBrake[index]
-                TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> timeline.allContext.efficiencySpeedMaintain[index]
-                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> timeline.allContext.fuelVolume[index]
-                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> timeline.allContext.fuelSaving[index]
-                TimelineScoreItemType.ECODRIVING_CO2MASS -> timeline.allContext.co2Mass[index]
-                TimelineScoreItemType.DISTRACTION_UNLOCK -> timeline.allContext.unlock[index].toDouble()
-                TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> timeline.allContext.callForbidden[index].toDouble()
-                TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> timeline.allContext.numberTripWithForbiddenCall[index].toDouble() / timeline.allContext.numberTripTotal[index].toDouble()
-                TimelineScoreItemType.SPEEDING_DURATION -> timeline.allContext.speedingDuration[index].toDouble()
-                TimelineScoreItemType.SPEEDING_DISTANCE -> timeline.allContext.speedingDistance[index]
+                TimelineScoreItemType.SAFETY_ACCELERATION -> {
+                    if (totalDistance <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.acceleration.getSafe(index)?.let { acceleration ->
+                        acceleration / totalDistance * 100.0
+                    }
+                }
+                TimelineScoreItemType.SAFETY_BRAKING -> {
+                    if (totalDistance <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.braking.getSafe(index)?.let { braking ->
+                        braking / totalDistance * 100.0
+                    }
+                }
+                TimelineScoreItemType.SAFETY_ADHERENCE -> {
+                    if (totalDistance <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.adherence.getSafe(index)?.let { adherence ->
+                        adherence / totalDistance * 100.0
+                    }
+                }
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> timeline.allContext.efficiencyAcceleration.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> timeline.allContext.efficiencyBrake.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> timeline.allContext.efficiencySpeedMaintain.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> timeline.allContext.fuelVolume.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> timeline.allContext.fuelSaving.getSafe(index)
+                TimelineScoreItemType.ECODRIVING_CO2MASS -> timeline.allContext.co2Mass.getSafe(index)
+                TimelineScoreItemType.DISTRACTION_UNLOCK -> {
+                    if (totalDistance <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.unlock.getSafe(index)?.let { unlock ->
+                        unlock / totalDistance * 100.0
+                    }
+                }
+                TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
+                    if (totalDistance <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.callForbiddenDuration.getSafe(index)?.let { callForbiddenDuration ->
+                        // The result is converted in minute and rounded up to greater integer value
+                        ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)
+                    }
+
+                    timeline.allContext.callForbidden[index].toDouble()
+                }
+                TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> {
+                    val numberTripWithForbiddenCall =  timeline.allContext.numberTripWithForbiddenCall.getSafe(index)
+                    val numberTripTotal = timeline.allContext.numberTripTotal.getSafe(index)
+                    if (numberTripWithForbiddenCall == null || numberTripTotal == null) {
+                        return null
+                    }
+                    if (numberTripTotal <= 0) {
+                        return 0.0
+                    }
+                    return numberTripWithForbiddenCall.toDouble() / numberTripTotal.toDouble() * 100.0
+                }
+                TimelineScoreItemType.SPEEDING_DURATION -> {
+                    if (totalDuration <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.speedingDuration.getSafe(index)?.let { speedingDuration ->
+                        (speedingDuration.toDouble() / 60.0) / totalDuration * 100.0
+                    }
+                }
+                TimelineScoreItemType.SPEEDING_DISTANCE -> {
+                    if (totalDuration <= 0) {
+                        return 0.0
+                    }
+                    return timeline.allContext.speedingDistance.getSafe(index)?.let { speedingDistance ->
+                        (speedingDistance / 1000.0) / totalDuration * 100.0
+                    }
+                }
             }
         }
     }
