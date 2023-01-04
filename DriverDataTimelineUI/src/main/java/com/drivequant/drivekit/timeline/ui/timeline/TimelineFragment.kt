@@ -84,6 +84,12 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     viewModel.updateTimelineDate(date)
                 }
             }
+
+            button_display_timeline_detail.visibility = if (viewModel.roadContextViewModel.displayData()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
         setupSwipeToRefresh()
@@ -94,7 +100,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         displayRoadContextContainer()
         displayGraphContainer()
 
-        displayTimelineDetail()
+        setupTimelineDetail()
         updateTimeline()
     }
 
@@ -110,7 +116,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         viewModel.updateTimelineDate(selectedDate)
     }
 
-    private fun displayTimelineDetail() {
+    private fun setupTimelineDetail() {
         button_display_timeline_detail.apply {
             setOnClickListener {
                 TimelineDetailActivity.launchActivity(
