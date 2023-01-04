@@ -84,7 +84,6 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
-            //this.textSize = //TODO()
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), false)
@@ -117,9 +116,11 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     private fun select(entry: Entry) {
         this.selectedEntry = entry
         this.chartView.highlightValue(entry.x, 0)
-//        if let renderer = self.chartView.xAxisRenderer as? DKXAxisRenderer {
-//            renderer.selectedIndex = Int(entry.x)
-//        }
+        this.chartView.rendererXAxis?.let {
+            if (it is DKAxisRenderer) {
+                it.selectedIndex = entry.x.toInt()
+            }
+        }
     }
 
     override fun onValueSelected(entry: Entry?, highlight: Highlight?) {

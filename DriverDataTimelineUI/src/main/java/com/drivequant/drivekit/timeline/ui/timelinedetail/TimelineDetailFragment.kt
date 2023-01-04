@@ -138,6 +138,7 @@ class TimelineDetailFragment : Fragment() {
             graphContainer.removeAllViews()
             viewModel.timelineGraphViewModelByScoreItem.forEach {
                 val graph = TimelineGraphView(context, it.value)
+                graph.listener = it.value
                 graphViews.add(graph)
                 graphContainer.addView(graph)
             }

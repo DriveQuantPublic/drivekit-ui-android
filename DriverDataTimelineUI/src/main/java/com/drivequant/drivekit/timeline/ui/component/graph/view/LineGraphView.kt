@@ -40,7 +40,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(this@LineGraphView.context, this.chartView, it))
+            this.chartView.setXAxisRenderer(DKAxisRenderer.from(context, this.chartView, it))
         }
         val entries = mutableListOf<Entry>()
         this.viewModel.points.forEachIndexed { index, point ->
