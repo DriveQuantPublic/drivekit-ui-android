@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
@@ -45,8 +43,6 @@ class TimelineDetailFragment : Fragment() {
     private lateinit var graphContainer: LinearLayout
     private var graphViews = mutableListOf<TimelineGraphView>()
 
-    private lateinit var nestedScrollView: NestedScrollView
-
     companion object {
         fun newInstance(
             selectedScore: DKScoreType,
@@ -77,7 +73,6 @@ class TimelineDetailFragment : Fragment() {
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
         graphContainer = view.findViewById(R.id.graph_container)
-        nestedScrollView = view.findViewById(R.id.nested_scroll_view)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -111,10 +106,6 @@ class TimelineDetailFragment : Fragment() {
                 monthTimeline = Gson().fromJson(savedMonthTimeline, Timeline::class.java)
             }
         }
-
-        /*nestedScrollView.setOnTouchListener { _, motionEvent ->
-            //graphView.manageTouchEvent(motionEvent)
-        }*/
 
         initViewModel()
 
