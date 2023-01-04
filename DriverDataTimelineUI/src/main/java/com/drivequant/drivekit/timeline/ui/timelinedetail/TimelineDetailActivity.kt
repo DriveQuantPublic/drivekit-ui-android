@@ -5,13 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
-import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
@@ -85,20 +79,6 @@ class TimelineDetailActivity : AppCompatActivity() {
                 )
                 .commit()
         }
-    }
-
-    private fun tagScreen() {
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                this,
-                "dk_tag_timeline_score_detail"
-            ), javaClass.simpleName
-        )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        tagScreen()
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -5,9 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.timeline.ui.R
 
 class TimelineActivity : AppCompatActivity() {
@@ -37,19 +35,9 @@ class TimelineActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun tagScreen() {
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                this,
-                "dk_tag_timeline"
-            ), javaClass.simpleName
-        )
-    }
-
     override fun onResume() {
         super.onResume()
         setActivityTitle(getString(R.string.dk_timeline_title))
-        tagScreen()
     }
 
     override fun onSupportNavigateUp(): Boolean {

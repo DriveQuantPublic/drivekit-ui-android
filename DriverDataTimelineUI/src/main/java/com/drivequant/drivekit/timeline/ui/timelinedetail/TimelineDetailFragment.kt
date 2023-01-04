@@ -9,7 +9,9 @@ import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
@@ -96,6 +98,20 @@ class TimelineDetailFragment : Fragment() {
         displayPeriodContainer()
         displayDateContainer()
         displayRoadContextContainer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tagScreen()
+    }
+
+    private fun tagScreen() {
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_timeline_score_detail"
+            ), javaClass.simpleName
+        )
     }
 
     private fun displayPeriodContainer() {

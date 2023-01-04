@@ -227,7 +227,17 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     override fun onResume() {
         super.onResume()
+        tagScreen()
         checkViewModelInitialization()
+    }
+
+    private fun tagScreen() {
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_timeline"
+            ), javaClass.simpleName
+        )
     }
 
     override fun onPeriodSelected(period: DKTimelinePeriod) {
