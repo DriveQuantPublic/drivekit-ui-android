@@ -9,7 +9,14 @@ fun Double.removeZeroDecimal(): String = DecimalFormat("0.#").format(this)
 
 fun Double.convertKmsToMiles(): Double = this * 0.621371
 
-fun Double.format(floatingNumber: Int): String = String.format(Locale.getDefault(),"%.${floatingNumber}f",this)
+fun Double.format(floatingNumber: Int, removeZeroDecimal: Boolean = false) =
+    if (this.isWhole() && removeZeroDecimal) {
+        this.removeZeroDecimal()
+    } else {
+        String.format(Locale.getDefault(), "%.${floatingNumber}f", this)
+    }
+
+fun Double.isWhole() = (this % 1) == 0.0
 
 fun Double.ceilDuration(): Double {
     var computedDuration = this

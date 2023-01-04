@@ -6,6 +6,7 @@ import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -97,16 +98,16 @@ internal sealed class GraphItem {
 
     private fun getGraphDescription(context: Context, value: Double, scoreItemType: TimelineScoreItemType): String {
         return when (scoreItemType) {
-            TimelineScoreItemType.SAFETY_ACCELERATION -> value.format(1)
-            TimelineScoreItemType.SAFETY_BRAKING -> value.format(1)
-            TimelineScoreItemType.SAFETY_ADHERENCE -> value.format(1)
+            TimelineScoreItemType.SAFETY_ACCELERATION -> value.format(1, true)
+            TimelineScoreItemType.SAFETY_BRAKING -> value.format(1, true)
+            TimelineScoreItemType.SAFETY_ADHERENCE -> value.format(1, true)
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> context.getString(DKDataFormatter.getAccelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> context.getString(DKDataFormatter.getDecelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> context.getString(DKDataFormatter.getSpeedMaintainDescription(value))
             TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatLiter(context, value)
             TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value)
             TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatLiter(context, value)
-            TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1)
+            TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1, true)
             TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> DKDataFormatter.formatDuration(context, value).convertToString()
             TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> DKDataFormatter.formatPercentage(value)
             TimelineScoreItemType.SPEEDING_DURATION -> DKDataFormatter.formatPercentage(value)

@@ -360,17 +360,17 @@ object DKDataFormatter {
             .plus(context.getString(R.string.dk_common_unit_power))
 
     fun formatScore(context: Context, score: Double): String =
-        score.removeZeroDecimal().format(1)
+        score.format(1, true)
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_score))
 
     fun formatPercentage(value: Double): String =
-        value.format(1)
+        value.format(1, true)
             .plus(nbsp)
             .plus("%")
 
     fun formatLiter(context: Context, liter: Double): String =
-        liter.format(1)
+        liter.format(1, true) // TODO si 0,0l
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_liter))
 
