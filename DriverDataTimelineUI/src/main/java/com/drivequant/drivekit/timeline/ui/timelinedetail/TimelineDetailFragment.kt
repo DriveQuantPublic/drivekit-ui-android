@@ -41,7 +41,6 @@ class TimelineDetailFragment : Fragment() {
     private lateinit var roadContextView: RoadContextView
 
     private lateinit var graphContainer: LinearLayout
-    private var graphViews = mutableListOf<TimelineGraphView>()
 
     companion object {
         fun newInstance(
@@ -130,7 +129,6 @@ class TimelineDetailFragment : Fragment() {
             viewModel.timelineGraphViewModelByScoreItem.forEach {
                 val graph = TimelineGraphView(context, it.value)
                 graph.listener = it.value
-                graphViews.add(graph)
                 graphContainer.addView(graph)
             }
         }
