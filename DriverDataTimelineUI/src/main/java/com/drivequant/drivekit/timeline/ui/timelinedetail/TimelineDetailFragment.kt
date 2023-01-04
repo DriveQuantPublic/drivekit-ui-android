@@ -16,6 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.google.gson.Gson
@@ -42,7 +43,7 @@ class TimelineDetailFragment : Fragment() {
     private lateinit var roadContextView: RoadContextView
 
     private lateinit var graphContainer: LinearLayout
-    //private val graphView: List<TimelineGraphView>
+    private var graphViews = mutableListOf<TimelineGraphView>()
 
     private lateinit var nestedScrollView: NestedScrollView
 
@@ -123,11 +124,24 @@ class TimelineDetailFragment : Fragment() {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
+
+            configureGraphContainer()
         }
 
         displayPeriodContainer()
         displayDateContainer()
         displayRoadContextContainer()
+    }
+
+    private fun configureGraphContainer() {
+        context?.let { context ->
+            graphContainer.removeAllViews()
+            viewModel.timelineGraphViewModelByScoreItem.forEach {
+                val graph = TimelineGraphView(context, it.value)
+                graphViews.add(graph)
+                graphContainer.addView(graph)
+            }
+        }
     }
 
     override fun onResume() {
