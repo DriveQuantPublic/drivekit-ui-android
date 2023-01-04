@@ -67,8 +67,6 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         }
     }
 
-    fun manageTouchEvent(event: MotionEvent?) = onInterceptTouchEvent(event)
-
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         return if (this.gestureDetector.onTouchEvent(event)) {
             true

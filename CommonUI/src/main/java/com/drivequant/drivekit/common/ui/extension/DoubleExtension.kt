@@ -1,6 +1,8 @@
 @file:JvmName("DKDoubleUtils")
 package com.drivequant.drivekit.common.ui.extension
 
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.math.ceil
@@ -9,14 +11,8 @@ fun Double.removeZeroDecimal(): String = DecimalFormat("0.#").format(this)
 
 fun Double.convertKmsToMiles(): Double = this * 0.621371
 
-fun Double.format(floatingNumber: Int, removeZeroDecimal: Boolean = false) =
-    if (this.isWhole() && removeZeroDecimal) {
-        this.removeZeroDecimal()
-    } else {
-        String.format(Locale.getDefault(), "%.${floatingNumber}f", this)
-    }
-
-fun Double.isWhole() = (this % 1) == 0.0
+fun Double.format(floatingNumber: Int) =
+    BigDecimal(this).setScale(floatingNumber, RoundingMode.HALF_UP).toDouble().removeZeroDecimal()
 
 fun Double.ceilDuration(): Double {
     var computedDuration = this
