@@ -18,6 +18,7 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
+import com.google.gson.Gson
 import java.util.*
 
 class TimelineDetailFragment : Fragment() {
@@ -75,6 +76,39 @@ class TimelineDetailFragment : Fragment() {
         roadContextContainer = view.findViewById(R.id.road_context_container)
         graphContainer = view.findViewById(R.id.graph_container)
         nestedScrollView = view.findViewById(R.id.nested_scroll_view)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("selectedScore", selectedScore.name)
+        outState.putString("selectedPeriod", selectedPeriod.name)
+        outState.putLong("selectedDate", selectedDate.time)
+        outState.putString("weekTimeline", Gson().toJson(weekTimeline))
+        outState.putString("monthTimeline", Gson().toJson(monthTimeline))
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            it.getString("selectedScore")?.let { savedScore ->
+                selectedScore = DKScoreType.valueOf(savedScore)
+            }
+            it.getString("selectedPeriod")?.let { savedPeriod ->
+                selectedPeriod = DKTimelinePeriod.valueOf(savedPeriod)
+            }
+            val savedDate = it.getLong("selectedDate")
+            if (savedDate > 0) {
+                val date = Date()
+                date.time = savedDate
+                selectedDate = date
+            }
+            it.getString("weekTimeline")?.let { savedWeekTimeline ->
+                weekTimeline = Gson().fromJson(savedWeekTimeline, Timeline::class.java)
+            }
+            it.getString("monthTimeline")?.let { savedMonthTimeline ->
+                monthTimeline = Gson().fromJson(savedMonthTimeline, Timeline::class.java)
+            }
+        }
 
         /*nestedScrollView.setOnTouchListener { _, motionEvent ->
             //graphView.manageTouchEvent(motionEvent)
