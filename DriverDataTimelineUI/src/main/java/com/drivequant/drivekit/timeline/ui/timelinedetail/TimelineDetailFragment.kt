@@ -117,12 +117,7 @@ class TimelineDetailFragment : Fragment() {
 
         initViewModel()
 
-        // TODO title®
-        //activity?.setTitle(viewModel.)
-
-        viewModel.clearObserver.observe(this) {
-            activity?.onBackPressed()
-        }
+        activity?.setTitle(viewModel.titleId)
 
         viewModel.updateData.observe(this) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)

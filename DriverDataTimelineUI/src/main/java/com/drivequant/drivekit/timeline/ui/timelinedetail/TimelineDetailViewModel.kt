@@ -33,7 +33,6 @@ internal class TimelineDetailViewModel(
     var monthTimeline: Timeline
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
 
-    val clearObserver = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
 
     var listener: TimelineDetailViewModelListener? = null
@@ -94,11 +93,6 @@ internal class TimelineDetailViewModel(
     private fun getTimelineSource(): Timeline = when (this.selectedPeriod) {
         DKTimelinePeriod.MONTH -> this.monthTimeline
         DKTimelinePeriod.WEEK -> this.weekTimeline
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        clearObserver.postValue(Any())
     }
 
     //- PeriodSelectorItemListener
