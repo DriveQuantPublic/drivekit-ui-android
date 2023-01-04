@@ -145,6 +145,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 null
             }
             if (selectedDateIndex != null && selectedDateIndex >= 0) {
+                this.selectedDate = dates[selectedDateIndex]
                 // Update view models
                 periodSelectorViewModel.configure(this.currentPeriod)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
