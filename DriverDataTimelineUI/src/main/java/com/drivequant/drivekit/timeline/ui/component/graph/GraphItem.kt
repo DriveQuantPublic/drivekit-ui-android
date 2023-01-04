@@ -1,13 +1,12 @@
 package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.extension.ceilToValueDivisibleBy10
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.Co2Unit
+import com.drivequant.drivekit.timeline.ui.ceilToLowestValueWithNiceStep
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -53,7 +52,7 @@ internal sealed class GraphItem {
             if (maxValue <= GraphConstants.NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD) {
                 return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH.toDouble()
             } else {
-                return maxValue.ceilToValueDivisibleBy10()
+                return maxValue.ceilToLowestValueWithNiceStep()
             }
         }
     }

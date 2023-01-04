@@ -5,7 +5,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
-import kotlin.math.ceil
 
 fun Double.removeZeroDecimal(): String = DecimalFormat("0.#").format(this)
 
@@ -22,10 +21,4 @@ fun Double.ceilDuration(): Double {
         ((computedDuration / 60).toInt() * 60).toDouble()
     }
     return computedDuration
-}
-
-fun Double.ceilToValueDivisibleBy10(): Double {
-    val intValue = ceil(this).toInt()
-    val nextValueDivisibleBy10 = ((intValue / 10).plus(if (intValue % 10 == 0) 0 else 1)) * 10
-    return nextValueDivisibleBy10.toDouble()
 }

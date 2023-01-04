@@ -11,6 +11,7 @@ import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
 internal fun Date.toTimelineString(): String = TimelineUtils.getBackendDateFormat().format(this)
@@ -102,4 +103,16 @@ internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType>
             TimelineScoreItemType.SPEEDING_DISTANCE
         )
     }
+}
+
+
+internal fun Double.ceilToValueDivisibleBy100(): Double {
+    val intValue = ceil(this).toInt()
+    val nextValueDivisibleBy100 = ((intValue / 100).plus(if (intValue % 100 == 0) 0 else 1)) * 100
+    return nextValueDivisibleBy100.toDouble()
+}
+
+internal fun Double.ceilToLowestValueWithNiceStep(): Double = when (ceil(this).toInt()) {
+    in 0..10 -> 10.0
+    else -> ceilToValueDivisibleBy100()
 }
