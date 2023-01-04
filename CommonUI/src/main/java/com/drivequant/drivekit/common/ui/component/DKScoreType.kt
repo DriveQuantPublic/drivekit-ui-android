@@ -1,5 +1,7 @@
 package com.drivequant.drivekit.common.ui.component
 
+import androidx.annotation.StringRes
+import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
 
@@ -20,5 +22,13 @@ enum class DKScoreType {
         SPEEDING -> AccessType.SPEEDING
     }.let {
         DriveKitAccess.hasAccess(it)
+    }
+
+    @StringRes
+    fun getTitleId(): Int = when (this) {
+        ECO_DRIVING -> R.string.dk_common_ecodriving
+        DISTRACTION -> R.string.dk_common_distraction
+        SAFETY -> R.string.dk_common_safety
+        SPEEDING -> R.string.dk_common_speed
     }
 }

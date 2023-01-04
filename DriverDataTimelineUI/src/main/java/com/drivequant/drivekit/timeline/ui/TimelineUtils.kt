@@ -1,6 +1,11 @@
 package com.drivequant.drivekit.timeline.ui
 
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.extension.CalendarField
+import com.drivequant.drivekit.common.ui.extension.removeTime
+import com.drivequant.drivekit.common.ui.extension.startingFrom
+import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
@@ -15,11 +20,42 @@ internal fun DKTimelinePeriod.getTitleResId() = when(this) {
     DKTimelinePeriod.MONTH -> "dk_timeline_per_month"
 }
 
-private object TimelineUtils {
+internal object TimelineUtils {
     fun getBackendDateFormat(): DateFormat {
         val backendDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
         backendDateFormat.timeZone = TimeZone.getTimeZone("GMT")
         return backendDateFormat
+    }
+
+    fun updateSelectedDateForNewPeriod(period: DKTimelinePeriod, previousSelectedDate: Date?, weekTimeline: Timeline?, monthTimeline: Timeline?): Date? {
+        if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
+            if (weekTimeline.period != TimelinePeriod.WEEK || monthTimeline.period != TimelinePeriod.MONTH) {
+                throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
+            }
+            val timeline: Timeline
+            val compareDate: Date
+            when (period) {
+                DKTimelinePeriod.WEEK -> {
+                    compareDate = previousSelectedDate
+                    timeline = weekTimeline
+                }
+                DKTimelinePeriod.MONTH -> {
+                    compareDate = previousSelectedDate.startingFrom(CalendarField.MONTH)
+                    timeline = monthTimeline
+                }
+            }
+            var newSelectedDate = previousSelectedDate
+            for (dateString in timeline.allContext.date) {
+                val date = dateString.toTimelineDate()!!
+                if (date >= compareDate) {
+                    newSelectedDate = date
+                    break
+                }
+            }
+            return newSelectedDate
+        } else {
+            return null
+        }
     }
 }
 

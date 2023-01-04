@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.CalendarField
-import com.drivequant.drivekit.common.ui.extension.removeTime
 import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Timeline
@@ -63,25 +62,8 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 if (currentPeriod != period) {
                     currentPeriod = period
 
-                    // get nearest date
-                    getTimelineSource()?.let { timeline ->
-                        selectedDate?.let { selectedDate ->
-                            val compareDate: Date = if (period == DKTimelinePeriod.WEEK) {
-                                // month to week
-                                selectedDate
-                            } else {
-                                // month to week
-                                selectedDate.startingFrom(CalendarField.MONTH).removeTime()
-                            }
-                            compareDate.let {
-                                val dates = timeline.allContext.date.map {
-                                    it.toTimelineDate()!!
-                                }
-                                this@TimelineViewModel.selectedDate = dates.first { date ->
-                                    date >= compareDate
-                                }
-                            }
-                        }
+                    TimelineUtils.updateSelectedDateForNewPeriod(period, selectedDate, weekTimeline, monthTimeline)?.let {
+                        this@TimelineViewModel.selectedDate = it
                     }
                     update()
                 }
