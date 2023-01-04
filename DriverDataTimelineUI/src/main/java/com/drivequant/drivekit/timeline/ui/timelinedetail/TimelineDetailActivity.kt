@@ -9,10 +9,13 @@ import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
+import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 import com.google.gson.Gson
 import java.util.*
 
 class TimelineDetailActivity : AppCompatActivity() {
+
+    private lateinit var fragment: TimelineDetailFragment
 
     companion object {
 
@@ -36,7 +39,7 @@ class TimelineDetailActivity : AppCompatActivity() {
             intent.putExtra(SELECTED_DATE_ID_EXTRA, selectedDate?.time)
             intent.putExtra(WEEK_TIMELINE_ID_EXTRA, Gson().toJson(weekTimeline))
             intent.putExtra(MONTH_TIMELINE_ID_EXTRA, Gson().toJson(monthTimeline))
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent, TimelineActivity.TIMELINE_DETAIL_REQUEST_CODE)
         }
     }
 
@@ -66,23 +69,35 @@ class TimelineDetailActivity : AppCompatActivity() {
         ) {
             val computedDate = Date()
             computedDate.time = selectedDate
+            fragment = TimelineDetailFragment.newInstance(
+                DKScoreType.valueOf(selectedScore),
+                DKTimelinePeriod.valueOf(selectedPeriod),
+                computedDate,
+                Gson().fromJson(weekTimeline, Timeline::class.java),
+                Gson().fromJson(monthTimeline, Timeline::class.java)
+            )
             supportFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.container, TimelineDetailFragment.newInstance(
-                        DKScoreType.valueOf(selectedScore),
-                        DKTimelinePeriod.valueOf(selectedPeriod),
-                        computedDate,
-                        Gson().fromJson(weekTimeline, Timeline::class.java),
-                        Gson().fromJson(monthTimeline, Timeline::class.java),
-                    )
-                )
-                .commit()
+            .beginTransaction()
+            .replace(R.id.container, fragment)
+            .commit()
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        finishActivity()
         return true
+    }
+
+    override fun onBackPressed() {
+        finishActivity()
+        super.onBackPressed()
+    }
+
+    private fun finishActivity() {
+        val intent = Intent()
+        intent.putExtra("selectedPeriod", fragment.viewModel.selectedPeriod.name)
+        intent.putExtra("selectedDate", fragment.viewModel.selectedDate)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 }

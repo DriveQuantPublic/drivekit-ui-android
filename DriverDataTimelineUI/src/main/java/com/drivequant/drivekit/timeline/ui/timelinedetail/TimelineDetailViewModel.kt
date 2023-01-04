@@ -22,11 +22,11 @@ import java.util.Date
 
 internal class TimelineDetailViewModel(
     application: Application,
-    private val selectedScore: DKScoreType,
-    private val selectedPeriod: DKTimelinePeriod,
-    private val selectedDate: Date,
-    private val weekTimeline: Timeline,
-    private val monthTimeline: Timeline
+    var selectedScore: DKScoreType,
+    var selectedPeriod: DKTimelinePeriod,
+    var selectedDate: Date,
+    var weekTimeline: Timeline,
+    var monthTimeline: Timeline
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener {
 
     val clearObserver = MutableLiveData<Any>()

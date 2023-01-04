@@ -164,6 +164,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             }
             if (selectedDateIndex != null && selectedDateIndex >= 0) {
                 // Update view models
+                periodSelectorViewModel.configure(this.currentPeriod)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex)
                 graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)

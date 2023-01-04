@@ -23,7 +23,8 @@ import java.util.*
 
 class TimelineDetailFragment : Fragment() {
 
-    private lateinit var viewModel: TimelineDetailViewModel
+    internal lateinit var viewModel: TimelineDetailViewModel
+        private set
 
     private lateinit var selectedScore: DKScoreType
     private lateinit var selectedPeriod: DKTimelinePeriod

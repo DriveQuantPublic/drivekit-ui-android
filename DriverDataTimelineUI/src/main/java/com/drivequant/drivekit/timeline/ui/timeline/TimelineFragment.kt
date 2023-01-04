@@ -103,6 +103,11 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
     }
 
+    fun updateDataFromDetailScreen(selectedPeriod: DKTimelinePeriod, selectedDate: Date) {
+        onPeriodSelected(selectedPeriod)
+        viewModel.updateTimelineDate(selectedDate)
+    }
+
     private fun displayTimelineDetail() {
         button_display_timeline_detail.apply {
             setOnClickListener {
