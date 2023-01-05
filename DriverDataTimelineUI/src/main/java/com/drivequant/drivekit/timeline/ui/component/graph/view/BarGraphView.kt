@@ -84,7 +84,6 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
-            this.setAvoidFirstLastClipping(true)
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), false)
