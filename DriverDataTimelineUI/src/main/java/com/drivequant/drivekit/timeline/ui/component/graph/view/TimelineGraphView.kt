@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.view
 
 import android.content.Context
+import android.graphics.Rect
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -25,6 +26,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
     private val graphTitle: TextView
     private val graphView: GraphViewBase
     private val gestureDetector = GestureDetectorCompat(context, SwipeGestureDetector(viewModel))
+    private var dispatchMotionEventsToSwipeRecognizer = false
 
     init {
         val view = View.inflate(context, R.layout.dk_timeline_graph_view, null).setDKStyle()
@@ -72,8 +74,33 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         this.listener?.onSelectPoint(point)
     }
 
+
     override fun onInterceptMotionEvent(motionEvent: MotionEvent?) {
-        this.gestureDetector.onTouchEvent(motionEvent)
+        val action = motionEvent?.let { it.action and MotionEvent.ACTION_MASK }
+        if (this.dispatchMotionEventsToSwipeRecognizer || (motionEvent != null && motionEvent.isInside(this.graphView) && action == MotionEvent.ACTION_DOWN)) {
+            this.dispatchMotionEventsToSwipeRecognizer = true
+            this.gestureDetector.onTouchEvent(motionEvent)
+            if (action != null) {
+                when (action) {
+                    MotionEvent.ACTION_UP -> this.dispatchMotionEventsToSwipeRecognizer = false
+                    MotionEvent.ACTION_POINTER_DOWN -> {
+                        val cancelEvent = MotionEvent.obtain(motionEvent)
+                        cancelEvent.action = MotionEvent.ACTION_CANCEL
+                        this.gestureDetector.onTouchEvent(cancelEvent)
+                        this.dispatchMotionEventsToSwipeRecognizer = false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun MotionEvent.isInside(view: View): Boolean {
+        val outRect = Rect()
+        val locationArray: IntArray = IntArray(2)
+        view.getDrawingRect(outRect)
+        view.getLocationOnScreen(locationArray)
+        outRect.offset(locationArray[0], locationArray[1])
+        return outRect.contains(this.rawX.toInt(), this.rawY.toInt())
     }
 }
 
