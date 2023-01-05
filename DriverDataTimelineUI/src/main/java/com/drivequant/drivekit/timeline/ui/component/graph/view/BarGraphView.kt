@@ -77,6 +77,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.description = null
             this.setClipValuesToContent(false)
             setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH / 2f)
+            this.extraBottomOffset = 4f
         }
 
         with (this.chartView.xAxis) {
