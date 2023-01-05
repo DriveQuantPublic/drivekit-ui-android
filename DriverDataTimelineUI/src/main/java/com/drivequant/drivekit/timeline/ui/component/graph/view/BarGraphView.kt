@@ -136,9 +136,8 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     }
 
     override fun onNothingSelected() {
-        // Nothing to do.
+        this.selectedEntry?.let { select(it) }
     }
-
 }
 
 private class CustomBarChart(context: Context) : BarChart(context) {
