@@ -68,28 +68,28 @@
                     android:orientation="vertical"
                     android:padding="@dimen/dk_margin_quarter">
 
+                    <LinearLayout
+                        android:id="@+id/graph_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/button_display_timeline_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dk_margin"
+                        android:layout_marginVertical="@dimen/dk_margin_half"
                         android:gravity="center_horizontal"
                         android:text="@string/dk_timeline_button_timeline_detail"
                         android:textAllCaps="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/graph_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toTopOf="@id/button_display_timeline_detail"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@id/graph_container"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
