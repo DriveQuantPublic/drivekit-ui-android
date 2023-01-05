@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
@@ -25,6 +26,7 @@ class TimelineDetailFragment : Fragment() {
     internal lateinit var viewModel: TimelineDetailViewModel
         private set
 
+    private lateinit var dispatchTouchLinearLayout: DispatchTouchLinearLayout
     private lateinit var selectedScore: DKScoreType
     private lateinit var selectedPeriod: DKTimelinePeriod
     private lateinit var selectedDate: Date
@@ -68,6 +70,7 @@ class TimelineDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dispatchTouchLinearLayout = view.findViewById(R.id.dispatch_touch_linear_layout)
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
@@ -126,10 +129,13 @@ class TimelineDetailFragment : Fragment() {
     private fun configureGraphContainer() {
         context?.let { context ->
             graphContainer.removeAllViews()
+            this.dispatchTouchLinearLayout.removeAllOnInterceptMotionEventListeners()
             viewModel.timelineGraphViewModelByScoreItem.forEach {
                 val graph = TimelineGraphView(context, it.value)
                 graph.listener = it.value
                 graphContainer.addView(graph)
+
+                this.dispatchTouchLinearLayout.addOnInterceptMotionEventListener(graph)
             }
         }
     }

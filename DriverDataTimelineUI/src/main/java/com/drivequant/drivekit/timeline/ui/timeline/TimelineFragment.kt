@@ -204,7 +204,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
             graphView.listener = this.viewModel.graphViewModel
             graphContainer.addView(graphView)
 
-            this.dispatchTouchFrameLayout.interceptMotionEventListener = this.graphView
+            this.dispatchTouchFrameLayout.addOnInterceptMotionEventListener(this.graphView)
         }
     }
 
