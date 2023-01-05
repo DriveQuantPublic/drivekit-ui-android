@@ -386,11 +386,11 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                     }
                 }
                 TimelineScoreItemType.SPEEDING_DISTANCE -> {
-                    if (totalDuration <= 0) {
+                    if (totalDistance <= 0) {
                         return 0.0
                     }
                     return timeline.allContext.speedingDistance.getSafe(index)?.let { speedingDistance ->
-                        (speedingDistance / 1000.0) / totalDuration * 100.0
+                        (speedingDistance / 1000.0) / totalDistance * 100.0
                     }
                 }
             }
