@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 
-internal class DispatchTouchFrameLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
+internal class DispatchTouchFrameLayout constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     var interceptMotionEventListener: OnInterceptMotionEventListener? = null
 
