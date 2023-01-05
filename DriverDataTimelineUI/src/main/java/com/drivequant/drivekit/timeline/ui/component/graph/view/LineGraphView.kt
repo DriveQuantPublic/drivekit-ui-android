@@ -82,6 +82,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.legend.isEnabled = false
             this.description = null
             this.setClipValuesToContent(false)
+            setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH / 2f)
             this.extraBottomOffset = 4f
             this.extraRightOffset = 18f
         }
