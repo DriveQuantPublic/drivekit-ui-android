@@ -30,7 +30,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
     private val invisibleIcon = GraphConstants.invisibleIcon()
 
     override fun initChartView() {
-        val chartView = LineChart(context)
+        val chartView = CustomLineChart(context)
         this.chartView = chartView
     }
 
@@ -40,7 +40,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(context, this.chartView, it))
+            this.chartView.setXAxisRenderer(DKXAxisRenderer.from(context, this.chartView, it))
         }
         val entries = mutableListOf<Entry>()
         this.viewModel.points.forEachIndexed { index, point ->
@@ -82,7 +82,6 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.legend.isEnabled = false
             this.description = null
             this.setClipValuesToContent(false)
-            this.setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH / 2f)
             this.extraBottomOffset = 4f
             this.extraRightOffset = 18f
         }
@@ -130,7 +129,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
         }
 
         this.chartView.rendererXAxis?.let {
-            if (it is DKAxisRenderer) {
+            if (it is DKXAxisRenderer) {
                 it.selectedIndex = entry.x.toInt()
             }
         }
@@ -155,5 +154,13 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
 
     override fun onNothingSelected() {
         // Do nothing.
+    }
+
+}
+
+private class CustomLineChart(context: Context) : LineChart(context) {
+    init {
+        mViewPortHandler = CustomViewPortHandler()
+        super.init()
     }
 }

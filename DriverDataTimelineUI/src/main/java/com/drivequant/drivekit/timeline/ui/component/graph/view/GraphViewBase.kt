@@ -5,12 +5,14 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.Align
 import android.graphics.Rect
+import android.graphics.RectF
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.GraphViewModel
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
@@ -57,7 +59,7 @@ internal class GraphAxisFormatter(val config: GraphAxisConfig): ValueFormatter()
     }
 }
 
-internal class DKAxisRenderer(
+internal class DKXAxisRenderer(
     val context: Context,
     val config: GraphAxisConfig,
     viewPortHandler: ViewPortHandler,
@@ -73,8 +75,8 @@ internal class DKAxisRenderer(
             it.alpha = 255 / 2
         }
 
-        fun from(context: Context, chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKAxisRenderer {
-            return DKAxisRenderer(context, config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
+        fun from(context: Context, chartView: BarLineChartBase<*>, config: GraphAxisConfig): DKXAxisRenderer {
+            return DKXAxisRenderer(context, config, chartView.viewPortHandler, chartView.xAxis, chartView.getTransformer(YAxis.AxisDependency.LEFT))
         }
     }
 
@@ -115,5 +117,15 @@ internal class DKAxisRenderer(
             paint.textAlign = originalTextAlign
         }
         super.drawLabel(canvas, text, x, y, anchor, angleDegrees)
+    }
+
+}
+
+internal class CustomViewPortHandler : ViewPortHandler() {
+    override fun getContentRect(): RectF {
+        val contentRect = super.getContentRect()
+        val newContentRect = RectF(contentRect)
+        newContentRect.inset(0f, -(GraphConstants.GRAPH_LINE_WIDTH / 2f).convertDpToPx().toFloat())
+        return newContentRect
     }
 }

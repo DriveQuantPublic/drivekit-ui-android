@@ -26,7 +26,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     private var selectedEntry: Entry? = null
 
     override fun initChartView() {
-        val chartView = BarChart(context)
+        val chartView = CustomBarChart(context)
         this.chartView = chartView
     }
 
@@ -36,7 +36,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(context, this.chartView, it))
+            this.chartView.setXAxisRenderer(DKXAxisRenderer.from(context, this.chartView, it))
         }
         val entries = mutableListOf<BarEntry>()
         var entryToSelect: BarEntry? = null
@@ -117,7 +117,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
         this.selectedEntry = entry
         this.chartView.highlightValue(entry.x, 0)
         this.chartView.rendererXAxis?.let {
-            if (it is DKAxisRenderer) {
+            if (it is DKXAxisRenderer) {
                 it.selectedIndex = entry.x.toInt()
             }
         }
@@ -137,4 +137,11 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
         // Nothing to do.
     }
 
+}
+
+private class CustomBarChart(context: Context) : BarChart(context) {
+    init {
+        mViewPortHandler = CustomViewPortHandler()
+        super.init()
+    }
 }
