@@ -128,4 +128,9 @@ internal class CustomViewPortHandler : ViewPortHandler() {
         newContentRect.inset(0f, -(GraphConstants.GRAPH_LINE_WIDTH / 2f).convertDpToPx().toFloat())
         return newContentRect
     }
+
+    override fun isInBoundsBottom(y: Float): Boolean {
+        val y = (y * 100f).toInt().toFloat() / 100f
+        return mContentRect.bottom + GraphConstants.GRAPH_LINE_WIDTH.convertDpToPx() >= y
+    }
 }
