@@ -93,6 +93,7 @@ internal class LineGraphView(context: Context, graphViewModel: GraphViewModel) :
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
+            this.textSize = GraphConstants.GRAPH_LABEL_TEXT_SIZE
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), true)
