@@ -365,8 +365,6 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
                         // The result is converted in minute and rounded up to greater integer value
                         ceil((callForbiddenDuration / 60).toDouble() / totalDistance * 100.0)
                     }
-
-                    timeline.allContext.callForbidden[index].toDouble()
                 }
                 TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> {
                     val numberTripWithForbiddenCall =  timeline.allContext.numberTripWithForbiddenCall.getSafe(index)
