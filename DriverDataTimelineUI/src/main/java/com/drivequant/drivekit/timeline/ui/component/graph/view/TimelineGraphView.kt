@@ -13,13 +13,14 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
+import com.drivequant.drivekit.timeline.ui.OnInterceptMotionEventListener
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
 import kotlin.math.abs
 
-internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener {
+internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphViewModel): LinearLayout(context), GraphViewListener, OnInterceptMotionEventListener {
     var listener: GraphViewListener? = null
     private val graphTitle: TextView
     private val graphView: GraphViewBase
@@ -67,16 +68,12 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         }
     }
 
-    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        return if (this.gestureDetector.onTouchEvent(event)) {
-            true
-        } else {
-            super.onInterceptTouchEvent(event)
-        }
-    }
-
     override fun onSelectPoint(point: GraphPoint) {
         this.listener?.onSelectPoint(point)
+    }
+
+    override fun onInterceptMotionEvent(motionEvent: MotionEvent?) {
+        this.gestureDetector.onTouchEvent(motionEvent)
     }
 }
 

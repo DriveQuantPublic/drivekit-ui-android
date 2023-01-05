@@ -13,6 +13,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
@@ -28,6 +29,8 @@ import java.util.*
 class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private lateinit var viewModel: TimelineViewModel
+
+    private lateinit var dispatchTouchFrameLayout: DispatchTouchFrameLayout
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: PeriodSelectorView
@@ -54,6 +57,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dispatchTouchFrameLayout = view.findViewById(R.id.dispatch_touch_frame_layout)
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
@@ -198,6 +202,8 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
             graphView = TimelineGraphView(it, this.viewModel.graphViewModel)
             graphView.listener = this.viewModel.graphViewModel
             graphContainer.addView(graphView)
+
+            this.dispatchTouchFrameLayout.interceptMotionEventListener = this.graphView
         }
     }
 
