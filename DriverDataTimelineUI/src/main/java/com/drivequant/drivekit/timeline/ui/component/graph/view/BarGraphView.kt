@@ -76,7 +76,6 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.legend.isEnabled = false
             this.description = null
             this.setClipValuesToContent(false)
-            this.setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH)
         }
 
         with (this.chartView.xAxis) {
@@ -84,6 +83,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
+            this.setAvoidFirstLastClipping(true)
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), false)
