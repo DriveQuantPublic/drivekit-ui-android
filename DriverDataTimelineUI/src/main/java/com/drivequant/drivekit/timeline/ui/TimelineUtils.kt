@@ -2,7 +2,6 @@ package com.drivequant.drivekit.timeline.ui
 
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.CalendarField
-import com.drivequant.drivekit.common.ui.extension.removeTime
 import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
