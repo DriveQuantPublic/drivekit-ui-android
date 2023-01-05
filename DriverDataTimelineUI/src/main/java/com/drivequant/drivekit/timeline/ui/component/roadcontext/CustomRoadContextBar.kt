@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
-internal class CustomRoadContextBar @JvmOverloads constructor(
+internal class CustomRoadContextBar constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

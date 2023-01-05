@@ -96,7 +96,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 
     private fun MotionEvent.isInside(view: View): Boolean {
         val outRect = Rect()
-        val locationArray: IntArray = IntArray(2)
+        val locationArray = IntArray(2)
         view.getDrawingRect(outRect)
         view.getLocationOnScreen(locationArray)
         outRect.offset(locationArray[0], locationArray[1])

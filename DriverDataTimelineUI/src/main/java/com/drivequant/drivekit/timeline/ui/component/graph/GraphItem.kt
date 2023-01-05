@@ -50,7 +50,7 @@ internal sealed class GraphItem {
         } ?: run {
             val maxValue = realMaxValue ?: GraphConstants.DEFAULT_MAX_VALUE_IN_Y_AXIS.toDouble()
             if (maxValue <= GraphConstants.NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD) {
-                return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH.toDouble()
+                return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH
             } else {
                 return maxValue.ceilToLowestValueWithNiceStep()
             }
