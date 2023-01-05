@@ -5,9 +5,14 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 @JvmOverloads
-fun Double.removeZeroDecimal(floatingPointNumber: Int = 1): String = DecimalFormat("0.${"#".repeat(floatingPointNumber)}").format(this)
+fun Double.removeZeroDecimal(floatingPointNumber: Int = 1): String = if (floatingPointNumber <= 0) {
+    this.roundToInt().toString()
+} else {
+    DecimalFormat("0.${"#".repeat(floatingPointNumber)}").format(this)
+}
 
 fun Double.convertKmsToMiles(): Double = this * 0.621371
 
