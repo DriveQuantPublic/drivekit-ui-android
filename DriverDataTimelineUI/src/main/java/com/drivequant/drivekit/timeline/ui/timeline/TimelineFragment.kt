@@ -149,6 +149,7 @@ class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
 
         tab_layout_timeline.apply {
+            setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
             setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkTimelineBackgroundColor))
 
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
