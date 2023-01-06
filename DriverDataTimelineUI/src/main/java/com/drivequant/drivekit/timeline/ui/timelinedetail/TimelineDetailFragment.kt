@@ -21,7 +21,7 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.google.gson.Gson
 import java.util.*
 
-class TimelineDetailFragment : Fragment() {
+internal class TimelineDetailFragment : Fragment() {
 
     internal lateinit var viewModel: TimelineDetailViewModel
         private set

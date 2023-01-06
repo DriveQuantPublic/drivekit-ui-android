@@ -5,5 +5,4 @@ import androidx.fragment.app.Fragment
 
 interface DriverDataTimelineUIEntryPoint {
     fun startTimelineActivity(context: Context)
-    fun createTimelineFragment(): Fragment
 }

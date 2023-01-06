@@ -26,7 +26,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
 
-class TimelineFragment : Fragment(), PeriodSelectorItemListener {
+internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private lateinit var viewModel: TimelineViewModel
 

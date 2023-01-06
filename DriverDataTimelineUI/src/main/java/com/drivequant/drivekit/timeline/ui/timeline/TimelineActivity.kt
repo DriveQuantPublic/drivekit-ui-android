@@ -10,7 +10,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import java.util.*
 
-class TimelineActivity : AppCompatActivity() {
+internal class TimelineActivity : AppCompatActivity() {
 
     private lateinit var fragment: TimelineFragment
 

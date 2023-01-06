@@ -13,7 +13,7 @@ import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 import com.google.gson.Gson
 import java.util.*
 
-class TimelineDetailActivity : AppCompatActivity() {
+internal class TimelineDetailActivity : AppCompatActivity() {
 
     private lateinit var fragment: TimelineDetailFragment
 
