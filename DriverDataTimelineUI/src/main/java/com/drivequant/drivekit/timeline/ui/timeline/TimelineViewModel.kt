@@ -38,10 +38,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
 
     var selectedScore: DKScoreType = scores.first()
-        private set(value) {
-            field = value
-            update()
-        }
+        private set
 
     var weekTimeline: Timeline? = null
         private set
