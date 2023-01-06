@@ -1,1 +1,9 @@
-include ':app', ':DriverDataUI', ':DriverAchievementUI', ':CommonUI', ':VehicleUI', ':PermissionsUtilsUI', ':ChallengeUI', ':TripAnalysisUI'
+include ':app',
+        ':DriverDataUI',
+        ':DriverAchievementUI',
+        ':CommonUI',
+        ':VehicleUI',
+        ':PermissionsUtilsUI',
+        ':ChallengeUI',
+        ':TripAnalysisUI',
+        ':DriverDataTimelineUI'

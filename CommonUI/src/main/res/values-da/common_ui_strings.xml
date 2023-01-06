@@ -21,6 +21,19 @@
     <string name="dk_common_driving_context_fastlane">Motorvej</string>
     <string name="dk_common_duration">Varighed</string>
     <string name="dk_common_ecodriving">Øko-kørsel</string>
+    <string name="dk_common_ecodriving_accel_good">God acceleration</string>
+    <string name="dk_common_ecodriving_accel_high">Accelerationen er for kraftig</string>
+    <string name="dk_common_ecodriving_accel_low">Acceleration er for lav</string>
+    <string name="dk_common_ecodriving_accel_strong">Kraftig acceleration</string>
+    <string name="dk_common_ecodriving_accel_weak">Svag acceleration</string>
+    <string name="dk_common_ecodriving_decel_good">God deceleration</string>
+    <string name="dk_common_ecodriving_decel_high">Deceleration er for høj</string>
+    <string name="dk_common_ecodriving_decel_low">Deceleration er for lav</string>
+    <string name="dk_common_ecodriving_decel_strong">Stærk deceleration</string>
+    <string name="dk_common_ecodriving_decel_weak">Svag deceleration</string>
+    <string name="dk_common_ecodriving_speed_bad_maintain">Meget svingende hastighed</string>
+    <string name="dk_common_ecodriving_speed_good_maintain">God jævn fart</string>
+    <string name="dk_common_ecodriving_speed_weak_maintain">Uregelmæssig hastighed</string>
     <string name="dk_common_edit">Rediger</string>
     <string name="dk_common_error_empty_field">Dette felt kan ikke være tomt</string>
     <string name="dk_common_error_message">Der opstod en fejl under anmodningen, bedes du prøve igen senere.</string>
@@ -68,6 +81,7 @@
     <string name="dk_common_unit_mpg">mi/gal</string>
     <string name="dk_common_unit_mph">mi/t</string>
     <string name="dk_common_unit_power">hk</string>
+    <string name="dk_common_unit_score">/ 10</string>
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_unit_ton">t</string>
     <string name="dk_common_update_photo_title">Rediger billedet</string>

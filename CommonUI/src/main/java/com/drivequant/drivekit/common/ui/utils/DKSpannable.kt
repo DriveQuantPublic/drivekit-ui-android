@@ -32,6 +32,8 @@ class DKSpannable {
     fun appendSpace(newText: CharSequence, before: Boolean = true) =
         if (before) append(" ").append(newText) else append(newText).append(" ")
 
+    fun space() = append(" ")
+
     fun toSpannable() = SpannableString(concat(*elements.toTypedArray())).apply {
         values.forEach {
             val range = it.key

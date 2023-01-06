@@ -41,6 +41,7 @@ dependencies {
     implementation project(':CommonUI')
     implementation project(':TripAnalysisUI')
     implementation project(':DriverDataUI')
+    implementation project(':DriverDataTimelineUI')
     implementation project(':VehicleUI')
     implementation project(':DriverAchievementUI')
     implementation project(':PermissionsUtilsUI')

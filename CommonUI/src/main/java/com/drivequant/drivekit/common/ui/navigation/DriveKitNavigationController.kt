@@ -6,4 +6,5 @@ object DriveKitNavigationController {
     var vehicleUIEntryPoint: VehicleUIEntryPoint? = null
     var permissionsUtilsUIEntryPoint: PermissionsUtilsUIEntryPoint? = null
     var tripAnalysisUIEntryPoint: TripAnalysisUIEntryPoint? = null
+    var driverDataTimelineUIEntryPoint: DriverDataTimelineUIEntryPoint? = null
 }

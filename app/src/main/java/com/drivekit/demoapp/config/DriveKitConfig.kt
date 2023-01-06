@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
+import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
@@ -25,6 +26,7 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
@@ -84,12 +86,13 @@ internal object DriveKitConfig {
 
     fun configureModules(context: Context) {
         // Internal modules configuration:
-        configureCore()
+        configureCore(context)
         configureTripAnalysis(context)
 
         // UI modules configuration:
         configureCommonUI()
         configureDriverDataUI()
+        configureDriverDataTimelineUI()
         configureVehicleUI()
         configureTripAnalysisUI(context)
         configureDriverAchievementUI()
@@ -106,8 +109,11 @@ internal object DriveKitConfig {
         DriveKitTripAnalysis.activateAutoStart(activate)
     }
 
-    private fun configureCore() {
+    private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {
+            if (apiKey != DriveKit.config.apiKey) {
+                reset(context)
+            }
             DriveKit.setApiKey(apiKey)
         }
     }
@@ -136,6 +142,16 @@ internal object DriveKitConfig {
     private fun configureDriverDataUI() {
         DriverDataUI.initialize(tripData = tripData)
         DriverDataUI.enableAlternativeTrips(enableAlternativeTrips)
+    }
+
+    private fun configureDriverDataTimelineUI() {
+        DriveKitDriverDataTimelineUI.initialize()
+        DriveKitDriverDataTimelineUI.scores = listOf(
+            DKScoreType.SAFETY,
+            DKScoreType.ECO_DRIVING,
+            DKScoreType.DISTRACTION,
+            DKScoreType.SPEEDING
+        )
     }
 
     private fun configureVehicleUI() {

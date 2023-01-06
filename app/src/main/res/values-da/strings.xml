@@ -33,6 +33,7 @@
     <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
     <string name="drivekit_doc_android_ranking">https://docs.drivequant.com/driver-achievement/user-interface/android#select-ranking-themes</string>
     <string name="drivekit_doc_android_streaks">https://docs.drivequant.com/driver-achievement/user-interface/android#select-streak-themes</string>
+    <string name="drivekit_doc_android_timeline">https://docs.drivequant.com/timeline-ui/android/get-started</string>
     <string name="drivekit_doc_android_update_user_info">https://docs.drivequant.com/get-started-drivekit/android#update-users-information</string>
     <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android#identify-user </string>
     <string name="drivekit_doc_android_vehicle">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-picker</string>
@@ -48,6 +49,7 @@
     <string name="drivekit_doc_ios_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
     <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
     <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
+    <string name="drivekit_doc_ios_timeline">https://docs.drivequant.com/timeline-ui/ios/get-started</string>
     <string name="drivekit_doc_ios_update_user_info">https://docs.drivequant.com/get-started-drivekit/ios#update-users-information</string>
     <string name="drivekit_doc_ios_user_id">https://docs.drivequant.com/get-started-drivekit/ios#identify-user</string>
     <string name="drivekit_doc_ios_vehicle">https://docs.drivequant.com/vehicle/user-interface/ios/get-started#display-vehicle-picker-in-navigation-controller</string>
@@ -68,6 +70,8 @@
     <string name="feature_ranking_title">Driver Achievement | Rankings</string>
     <string name="feature_streaks_description">Combos reward drivers who manage to complete several consecutive trips with high scores. To install this feature in your app, see the documentation for the Drivers Achievement component.</string>
     <string name="feature_streaks_title">Driver Achievement | Streaks</string>
+    <string name="feature_timeline_description">Driver Data-komponenten indeholder et UI-submodul til visning af tidslinjer. Disse skærmbilleder indeholder grafer, der viser den kronologiske udvikling i en chaufførs ugentlige eller månedlige score.</string>
+    <string name="feature_timeline_title">Driver Data | Timeline</string>
     <string name="feature_trip_list_description">The Driver Data component shows the results of the driving data analysis. It includes a list of trips and a map display with scores presented by theme: safety, eco-driving, distraction and speed limit.</string>
     <string name="feature_trip_list_title">Driver Data | List and display of trips</string>
     <string name="feature_vehicle_description">The Vehicle component displays the list of vehicles and their characteristics. It allows to add, replace or delete a vehicle. The activation mode is configurable per vehicle (GPS, iBeacon or Bluetooth device).</string>

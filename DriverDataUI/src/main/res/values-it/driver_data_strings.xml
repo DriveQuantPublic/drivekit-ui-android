@@ -14,7 +14,6 @@
    <string name="dk_driverdata_alternative_transportation_remark">💡 Questo viaggio non ha un punteggio perché l\'applicazione non misura la vostra guida mentre non siete nel vostro veicolo.</string>
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Grazie per averci segnalato questo viaggio e per averci aiutato a migliorare il riconoscimento automatico delle modalità di trasporto.</string>
    <string name="dk_driverdata_alternative_trips">Trasporto alternativo</string>
-   <string name="dk_driverdata_bad_maintain">Velocità molto irregolare</string>
    <string name="dk_driverdata_beginning_authorized_call">Inizio di una telefonata autorizzata</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">L\'applicazione ha rilevato l\'inizio di una chiamata autorizzata, il che significa che è stata effettuata utilizzando il tuo kit vivavoce. Questa azione non penalizza il tuo punteggio di utilizzo del telefono, in quanto è legalmente consentito. Tuttavia, rimane una distrazione durante la guida, per la vostra sicurezza e quella degli altri utenti della strada, si raccomanda vivamente di aspettare che il vostro veicolo sia parcheggiato prima di fare una chiamata.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Inizio di una telefonata non autorizzato</string>
@@ -42,14 +41,7 @@
    <string name="dk_driverdata_failed_to_declare_transportation">La modalità di trasporto non può essere aggiornata, si prega di riprovare più tardi.</string>
    <string name="dk_driverdata_failed_to_delete_trip">Il viaggio non è stato eliminato, riprova più tardi.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Impossibile sincronizzare i viaggi, riprovare più tardi.</string>
-   <string name="dk_driverdata_good_accel">Buona accelerazione</string>
-   <string name="dk_driverdata_good_decel">Freni ideali</string>
-   <string name="dk_driverdata_good_maintain">Velocità regolare</string>
-   <string name="dk_driverdata_high_accel">Accelerazione troppo alta</string>
-   <string name="dk_driverdata_high_decel">Frenata troppo forte</string>
    <string name="dk_driverdata_lock_event">Blocco dello schermo</string>
-   <string name="dk_driverdata_low_accel">Accelerazione troppo debole</string>
-   <string name="dk_driverdata_low_decel">Frenata troppo debole</string>
    <string name="dk_driverdata_my_weekly_score_distraction">Il mio punteggio settimanale | Distrazione</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">Il mio punteggio settimanale | Efficienza</string>
    <string name="dk_driverdata_my_weekly_score_safety">Il mio punteggio settimanale | Sicurezza</string>
@@ -90,8 +82,6 @@
    <string name="dk_driverdata_speeding_score">Punteggio di velocità</string>
    <string name="dk_driverdata_speeding_score_info">Questo punteggio riflette il rispetto dei limiti di velocità. Si evolve in funzione della distanza percorsa oltre il limite legale. Maggiore è la distanza oltre il limite, minore è il punteggio.</string>
    <string name="dk_driverdata_start_event">Inizio del viaggio</string>
-   <string name="dk_driverdata_strong_accel">Accelerazione forte</string>
-   <string name="dk_driverdata_strong_decel">Forte frenata</string>
    <string name="dk_driverdata_synthesis_co2_emissions">Emissioni di CO2</string>
    <string name="dk_driverdata_synthesis_co2_mass">Massa di CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condizione</string>
@@ -143,9 +133,6 @@
    <string name="dk_driverdata_urban">%s nelle aree urbane</string>
    <string name="dk_driverdata_value">Valor =</string>
    <string name="dk_driverdata_vehicle_trips">Viaggi in veicolo</string>
-   <string name="dk_driverdata_weak_accel">Basso accelerazione</string>
-   <string name="dk_driverdata_weak_decel">Bassa frenata</string>
-   <string name="dk_driverdata_weak_maintain">Velocità irregolare</string>
    <string name="dk_driverdata_weather_cloud">con il cielo coperto</string>
    <string name="dk_driverdata_weather_fog">con la nebbia</string>
    <string name="dk_driverdata_weather_hail">con il gelo</string>

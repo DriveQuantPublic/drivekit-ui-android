@@ -35,10 +35,10 @@ class RankingData(
 
     override fun getIcon(context: Context): Drawable? =
         when (viewModel.fetchedRanking.rankingType) {
-            RankingType.SAFETY -> "dk_achievements_safety"
-            RankingType.DISTRACTION -> "dk_achievements_distraction"
-            RankingType.ECO_DRIVING -> "dk_achievements_ecodriving"
-            RankingType.SPEEDING -> "dk_achievements_speeding"
+            RankingType.SAFETY -> "dk_common_safety_flat"
+            RankingType.DISTRACTION -> "dk_common_distraction_flat"
+            RankingType.ECO_DRIVING -> "dk_common_ecodriving_flat"
+            RankingType.SPEEDING -> "dk_common_speeding_flat"
         }.let {
             DKResource.convertToDrawable(context, it)
         }

@@ -14,7 +14,6 @@
    <string name="dk_driverdata_alternative_transportation_remark">💡 This trip does not have a score because the application does not measure your driving while you are not in your vehicle.</string>
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Thank you for reporting this trip and for helping us improve transportation mode automatic recognition.</string>
    <string name="dk_driverdata_alternative_trips">Alternative transport</string>
-   <string name="dk_driverdata_bad_maintain">Very fluctuating speed</string>
    <string name="dk_driverdata_beginning_authorized_call">Start of authorized call</string>
    <string name="dk_driverdata_beginning_authorized_call_info_content">The application has detected the start of an authorized call, this means that it has been made to your hands-free car kit. This action does not penalize your phone usage score, as it is legally permitted. However, it remains a distraction while driving, for your safety and that of other road users, it is strongly recommended that you wait until your vehicle is parked to make a call.</string>
    <string name="dk_driverdata_beginning_unauthorized_call">Start of unauthorized call</string>
@@ -42,14 +41,7 @@
    <string name="dk_driverdata_failed_to_declare_transportation">Transportation mode couldn\'t be updated, please retry later.</string>
    <string name="dk_driverdata_failed_to_delete_trip">The trip could not be deleted, try again later.</string>
    <string name="dk_driverdata_failed_to_sync_trips">Failed to synchronize trips, please retry later.</string>
-   <string name="dk_driverdata_good_accel">Good acceleration</string>
-   <string name="dk_driverdata_good_decel">Good deceleration</string>
-   <string name="dk_driverdata_good_maintain">Good speed maintain</string>
-   <string name="dk_driverdata_high_accel">Acceleration is too high</string>
-   <string name="dk_driverdata_high_decel">Deceleration is too high</string>
    <string name="dk_driverdata_lock_event">Screen locking</string>
-   <string name="dk_driverdata_low_accel">Acceleration is too low</string>
-   <string name="dk_driverdata_low_decel">Deceleration is too low</string>
    <string name="dk_driverdata_my_weekly_score_distraction">My weekly score | Distraction</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">My weekly score | Eco-driving</string>
    <string name="dk_driverdata_my_weekly_score_safety">My weekly score | Safety</string>
@@ -90,8 +82,6 @@
    <string name="dk_driverdata_speeding_score">Speeding score</string>
    <string name="dk_driverdata_speeding_score_info">This score highlights the respect of speed limits. It changes according to the distance travelled above the legal limit. The greater the distance over the limit, the lower the score.</string>
    <string name="dk_driverdata_start_event">Start of trip</string>
-   <string name="dk_driverdata_strong_accel">Strong acceleration</string>
-   <string name="dk_driverdata_strong_decel">Strong deceleration</string>
    <string name="dk_driverdata_synthesis_co2_emissions">CO2 emissions</string>
    <string name="dk_driverdata_synthesis_co2_mass">Mass of CO2</string>
    <string name="dk_driverdata_synthesis_condition">Condition</string>
@@ -143,9 +133,6 @@
    <string name="dk_driverdata_urban">%s in urban zone</string>
    <string name="dk_driverdata_value">Value =</string>
    <string name="dk_driverdata_vehicle_trips">Vehicle trips</string>
-   <string name="dk_driverdata_weak_accel">Weak acceleration</string>
-   <string name="dk_driverdata_weak_decel">Weak deceleration</string>
-   <string name="dk_driverdata_weak_maintain">Irregular speed</string>
    <string name="dk_driverdata_weather_cloud">Cloudy weather</string>
    <string name="dk_driverdata_weather_fog">Foggy weather</string>
    <string name="dk_driverdata_weather_hail">Freezing weather</string>

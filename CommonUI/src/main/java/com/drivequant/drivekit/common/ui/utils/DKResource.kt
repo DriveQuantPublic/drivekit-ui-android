@@ -1,10 +1,12 @@
 package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import android.text.Spannable
+import androidx.annotation.DimenRes
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.resSpans
 
@@ -33,7 +35,9 @@ object DKResource {
         textColor: Int,
         highlightColor: Int,
         identifier: String,
-        vararg args: String
+        vararg args: String,
+        @DimenRes textSize: Int = R.dimen.dk_text_normal,
+        @DimenRes highlightSize: Int = R.dimen.dk_text_normal,
     ): Spannable {
         val dkSpannable = DKSpannable()
         var currentArgPosition = 0
@@ -52,20 +56,20 @@ object DKResource {
                     dkSpannable.append(args[currentArgPosition], context.resSpans {
                         color(highlightColor)
                         typeface(Typeface.BOLD)
-                        size(R.dimen.dk_text_normal)
+                        size(highlightSize)
                     })
                     currentArgPosition++
                 } else {
                     dkSpannable.append(array[index], context.resSpans {
                         color(textColor)
                         typeface(Typeface.NORMAL)
-                        size(R.dimen.dk_text_normal)
+                        size(textSize)
                     })
                     if (currentArgPosition < args.size && args[currentArgPosition].isNotBlank()) {
                         dkSpannable.append(args[currentArgPosition], context.resSpans {
                             color(highlightColor)
                             typeface(Typeface.BOLD)
-                            size(R.dimen.dk_text_normal)
+                            size(highlightSize)
                         })
                         currentArgPosition++
                     }
@@ -74,4 +78,5 @@ object DKResource {
         }
         return dkSpannable.toSpannable()
     }
+
 }

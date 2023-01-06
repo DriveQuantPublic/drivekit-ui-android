@@ -5,6 +5,7 @@ import com.drivekit.drivekitdemoapp.R
 internal enum class FeatureType {
     ALL,
     DRIVERDATA_TRIPS,
+    DRIVERDATA_TIMELINE,
     PERMISSIONSUTILS_ONBOARDING,
     PERMISSIONSUTILS_DIAGNOSIS,
     VEHICLE_LIST,
@@ -27,6 +28,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_BADGES -> R.drawable.ic_feature_driverachievement_badges
         DRIVERACHIEVEMENT_STREAKS -> R.drawable.ic_feature_driverachievement_streaks
         TRIPANALYSIS_WORKINGHOURS -> R.drawable.ic_feature_tripanalysis_workinghours
+        DRIVERDATA_TIMELINE -> R.drawable.ic_feature_driverdata_timeline
     }
 
     fun getTitleResId() = when (this) {
@@ -41,6 +43,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_BADGES -> R.string.feature_badges_title
         DRIVERACHIEVEMENT_STREAKS -> R.string.feature_streaks_title
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_title
+        DRIVERDATA_TIMELINE -> R.string.feature_timeline_title
     }
 
     fun getDescriptionResId() = when (this) {
@@ -55,6 +58,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_BADGES -> R.string.feature_badges_description
         DRIVERACHIEVEMENT_STREAKS -> R.string.feature_streaks_description
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_description
+        DRIVERDATA_TIMELINE -> R.string.feature_timeline_description
     }
 
     fun getInfoUrlResId() = when (this) {
@@ -69,6 +73,7 @@ internal enum class FeatureType {
         DRIVERACHIEVEMENT_BADGES -> R.string.drivekit_doc_android_badges
         DRIVERACHIEVEMENT_STREAKS -> R.string.drivekit_doc_android_streaks
         TRIPANALYSIS_WORKINGHOURS -> R.string.drivekit_doc_android_working_hours
+        DRIVERDATA_TIMELINE -> R.string.drivekit_doc_android_timeline
     }
 
     fun getActionButtonTitleResId() = when (this) {
