@@ -90,13 +90,13 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
         setupSwipeToRefresh()
 
-        displayTabLayout()
-        displayPeriodContainer()
-        displayDateContainer()
-        displayRoadContextContainer()
-        displayGraphContainer()
+        configureTabLayout()
+        configurePeriodContainer()
+        configureDateContainer()
+        configureRoadContextContainer()
+        configureGraphContainer()
 
-        setupTimelineDetail()
+        configureTimelineDetail()
         updateTimeline()
     }
 
@@ -112,7 +112,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         viewModel.updateTimelineDate(selectedDate)
     }
 
-    private fun setupTimelineDetail() {
+    private fun configureTimelineDetail() {
         button_display_timeline_detail.apply {
             setOnClickListener {
                 TimelineDetailActivity.launchActivity(
@@ -128,7 +128,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
     }
 
-    private fun displayTabLayout() {
+    private fun configureTabLayout() {
         context?.let { context ->
             viewModel.scores.forEach {
                 val tab = tab_layout_timeline.newTab()
@@ -162,7 +162,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
     }
 
-    private fun displayPeriodContainer() {
+    private fun configurePeriodContainer() {
         context?.let {
             periodSelectorView = PeriodSelectorView(it)
             periodSelectorView.apply {
@@ -171,11 +171,14 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
             }
-            periodSelectorContainer.addView(periodSelectorView)
+            periodSelectorContainer.apply {
+                removeAllViews()
+                addView(periodSelectorView)
+            }
         }
     }
 
-    private fun displayDateContainer() {
+    private fun configureDateContainer() {
         context?.let {
             dateSelectorView = DateSelectorView(it)
             dateSelectorView.apply {
@@ -184,26 +187,34 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
             }
-            dateSelectorContainer.addView(dateSelectorView)
+            dateSelectorContainer.apply {
+                removeAllViews()
+                addView(dateSelectorView)
+            }
         }
     }
 
-    private fun displayRoadContextContainer() {
+    private fun configureRoadContextContainer() {
         context?.let {
             roadContextView = RoadContextView(it)
-            roadContextContainer.addView(roadContextView)
+            roadContextContainer.apply {
+                removeAllViews()
+                addView(roadContextView)
+            }
         }
         viewModel.roadContextViewModel.changeObserver.observe(this) {
             roadContextView.configure(viewModel.roadContextViewModel)
         }
     }
 
-    private fun displayGraphContainer() {
+    private fun configureGraphContainer() {
         context?.let {
             graphView = TimelineGraphView(it, this.viewModel.graphViewModel)
             graphView.listener = this.viewModel.graphViewModel
-            graphContainer.addView(graphView)
-
+            graphContainer.apply {
+                removeAllViews()
+                addView(graphView)
+            }
             this.dispatchTouchFrameLayout.addOnInterceptMotionEventListener(this.graphView)
         }
     }

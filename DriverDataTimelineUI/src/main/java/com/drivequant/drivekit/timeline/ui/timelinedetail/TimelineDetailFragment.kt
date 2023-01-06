@@ -121,9 +121,9 @@ internal class TimelineDetailFragment : Fragment() {
             configureGraphContainer()
         }
 
-        displayPeriodContainer()
-        displayDateContainer()
-        displayRoadContextContainer()
+        configurePeriodContainer()
+        configureDateContainer()
+        configureRoadContextContainer()
     }
 
     private fun configureGraphContainer() {
@@ -154,7 +154,7 @@ internal class TimelineDetailFragment : Fragment() {
         )
     }
 
-    private fun displayPeriodContainer() {
+    private fun configurePeriodContainer() {
         context?.let {
             periodSelectorView = PeriodSelectorView(it)
             periodSelectorView.apply {
@@ -163,11 +163,14 @@ internal class TimelineDetailFragment : Fragment() {
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
             }
-            periodSelectorContainer.addView(periodSelectorView)
+            periodSelectorContainer.apply {
+                removeAllViews()
+                addView(periodSelectorView)
+            }
         }
     }
 
-    private fun displayDateContainer() {
+    private fun configureDateContainer() {
         context?.let {
             dateSelectorView = DateSelectorView(it)
             dateSelectorView.apply {
@@ -176,14 +179,20 @@ internal class TimelineDetailFragment : Fragment() {
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
             }
-            dateSelectorContainer.addView(dateSelectorView)
+            dateSelectorContainer.apply {
+                removeAllViews()
+                addView(dateSelectorView)
+            }
         }
     }
 
-    private fun displayRoadContextContainer() {
+    private fun configureRoadContextContainer() {
         context?.let {
             roadContextView = RoadContextView(it)
-            roadContextContainer.addView(roadContextView)
+            roadContextContainer.apply {
+                removeAllViews()
+                addView(roadContextView)
+            }
         }
         viewModel.roadContextViewModel.changeObserver.observe(this) {
             roadContextView.configure(viewModel.roadContextViewModel)
