@@ -106,35 +106,34 @@ class TripEvent(val type: TripEventType,
         }
     }
 
-    fun getDescription(context: Context, trip: Trip) : Spannable? {
-        return when(type){
+    fun getDescription(context: Context, trip: Trip): Spannable? {
+        return when (type) {
             SAFETY_BRAKE, SAFETY_ADHERENCE, SAFETY_ACCEL -> {
-
+                var text = " " + String.format("%.2f", value)
+                if (type == SAFETY_BRAKE || type == SAFETY_ACCEL) {
+                    text += " " + context.getString(R.string.dk_common_unit_accel_meter_per_second_square)
+                }
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
                     size(R.dimen.dk_text_small)
-                }).append(" ${String.format("%.2f", value)} ${context.getString(R.string.dk_common_unit_accel_meter_per_second_square)}", context.resSpans {
+                }).append(text, context.resSpans {
                     color(DriveKitUI.colors.warningColor())
                     size(R.dimen.dk_text_small)
                     typeface(Typeface.BOLD)
                 }).toSpannable()
-
             }
-
             START -> {
-
                 if (trip.departureAddress.isEmpty())
                  SpannableString.valueOf(trip.departureCity)
                 else
                     SpannableString.valueOf(trip.departureAddress)
-
             }
-            FINISH ->
+            FINISH -> {
                 if (trip.arrivalAddress.isEmpty())
                     SpannableString.valueOf(trip.arrivalCity)
                 else
                     SpannableString.valueOf(trip.arrivalAddress)
-
+            }
             PHONE_DISTRACTION_LOCK -> null
             PHONE_DISTRACTION_UNLOCK -> null
             PHONE_DISTRACTION_PICK_UP, PHONE_DISTRACTION_HANG_UP -> {
