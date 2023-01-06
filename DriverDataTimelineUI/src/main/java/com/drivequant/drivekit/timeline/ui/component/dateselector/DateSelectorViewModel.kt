@@ -33,7 +33,6 @@ internal class DateSelectorViewModel : ViewModel() {
             hasPreviousDate = selectedDateIndex > 0
             fromDate = dates[selectedDateIndex]
             toDate = getEndDate(fromDate, period)
-            listener?.onDateSelected(fromDate)
         }
     }
 
@@ -43,6 +42,7 @@ internal class DateSelectorViewModel : ViewModel() {
         if (hasPreviousDate) {
             selectedDateIndex--
             updateProperties()
+            listener?.onDateSelected(fromDate)
         }
     }
 
@@ -50,6 +50,7 @@ internal class DateSelectorViewModel : ViewModel() {
         if (hasNextDate) {
             selectedDateIndex++
             updateProperties()
+            listener?.onDateSelected(fromDate)
         }
     }
 

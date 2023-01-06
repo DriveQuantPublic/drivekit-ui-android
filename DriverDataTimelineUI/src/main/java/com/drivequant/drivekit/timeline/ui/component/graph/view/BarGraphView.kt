@@ -26,7 +26,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     private var selectedEntry: Entry? = null
 
     override fun initChartView() {
-        val chartView = BarChart(context)
+        val chartView = CustomBarChart(context)
         this.chartView = chartView
     }
 
@@ -36,7 +36,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
 
     override fun setupData() {
         this.viewModel.xAxisConfig?.let {
-            this.chartView.setXAxisRenderer(DKAxisRenderer.from(context, this.chartView, it))
+            this.chartView.setXAxisRenderer(DKXAxisRenderer.from(context, this.chartView, it))
         }
         val entries = mutableListOf<BarEntry>()
         var entryToSelect: BarEntry? = null
@@ -76,7 +76,8 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.legend.isEnabled = false
             this.description = null
             this.setClipValuesToContent(false)
-            this.setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH)
+            setDragOffsetY(-GraphConstants.GRAPH_LINE_WIDTH / 2f)
+            this.extraBottomOffset = 4f
         }
 
         with (this.chartView.xAxis) {
@@ -84,7 +85,7 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
             this.setDrawGridLines(false)
             this.position = XAxis.XAxisPosition.BOTTOM
             this.textColor = ContextCompat.getColor(context, R.color.dkAxisLabelColor)
-            //this.textSize = //TODO()
+            this.textSize = GraphConstants.GRAPH_LABEL_TEXT_SIZE
             viewModel.xAxisConfig?.let { xAxisConfig ->
                 this.valueFormatter = GraphAxisFormatter(xAxisConfig)
                 this.setLabelCount(xAxisConfig.labels.getCount(), false)
@@ -117,9 +118,11 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     private fun select(entry: Entry) {
         this.selectedEntry = entry
         this.chartView.highlightValue(entry.x, 0)
-//        if let renderer = self.chartView.xAxisRenderer as? DKXAxisRenderer {
-//            renderer.selectedIndex = Int(entry.x)
-//        }
+        this.chartView.rendererXAxis?.let {
+            if (it is DKXAxisRenderer) {
+                it.selectedIndex = entry.x.toInt()
+            }
+        }
     }
 
     override fun onValueSelected(entry: Entry?, highlight: Highlight?) {
@@ -133,7 +136,13 @@ internal class BarGraphView(context: Context, graphViewModel: GraphViewModel) : 
     }
 
     override fun onNothingSelected() {
-        // Nothing to do.
+        this.selectedEntry?.let { select(it) }
     }
+}
 
+private class CustomBarChart(context: Context) : BarChart(context) {
+    init {
+        mViewPortHandler = CustomViewPortHandler()
+        super.init()
+    }
 }

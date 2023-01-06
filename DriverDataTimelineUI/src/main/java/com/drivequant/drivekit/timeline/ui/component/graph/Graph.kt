@@ -29,7 +29,8 @@ internal object GraphConstants {
     const val NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD = 10.0
     const val MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH = 10.0
     const val GRAPH_POINT_NUMBER: Int = 8
-    const val GRAPH_LINE_WIDTH = 2F
+    const val GRAPH_LINE_WIDTH = 2f
+    const val GRAPH_LABEL_TEXT_SIZE = 11f
     private val iconSize = 11.convertDpToPx()
 
     fun circleIcon(context: Context, insideColor: Int = Color.WHITE): Drawable {

@@ -11,6 +11,8 @@ import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
+import com.drivequant.drivekit.timeline.ui.distanceByRoadContext
+import com.drivequant.drivekit.timeline.ui.hasData
 import com.drivequant.drivekit.timeline.ui.totalDistanceForAllContexts
 
 internal class RoadContextViewModel : ViewModel() {
@@ -23,39 +25,36 @@ internal class RoadContextViewModel : ViewModel() {
         }
 
     private var totalDistanceForAllContext = 0.0
-    private var timeline: Timeline? = null
     private var distance = 0.0
-    private var hasData: Boolean = false
     private var selectedScore: DKScoreType = DKScoreType.SAFETY
     var emptyRoadContextType: EmptyRoadContextType? = null
         private set
 
-    fun configure(timeline: Timeline?, selectedScore: DKScoreType, selectedIndex: Int?, distanceByContext: Map<TimelineRoadContext, Double>, hasData: Boolean) {
-        timeline?.let { timeline
-            selectedIndex?.let { selectedIndex ->
-                this.timeline = timeline
-                this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedScore, selectedIndex)
-                this.selectedScore = selectedScore
-                this.distanceByContext = distanceByContext
-                this.hasData = hasData
-                distance = 0.0
-                distanceByContext.forEach {
-                    distance += it.value
-                }
+    fun configure(timeline: Timeline?, selectedScore: DKScoreType, selectedIndex: Int?) {
+        if (timeline != null && selectedIndex != null && timeline.hasData()) {
+            this.selectedScore = selectedScore
+            this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedScore, selectedIndex)
+            this.distanceByContext = timeline.distanceByRoadContext(selectedScore, selectedIndex)
+            this.distance = 0.0
+            this.distanceByContext.forEach {
+                this.distance += it.value
             }
-        }
-        emptyRoadContextType = if (!hasData) {
-            EmptyRoadContextType.EMPTY_DATA
-        } else if (distanceByContext.isEmpty()) {
-            when (selectedScore) {
-                DKScoreType.DISTRACTION, DKScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
-                DKScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
-                DKScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
+            this.emptyRoadContextType = if (this.distanceByContext.isEmpty()) {
+                when (selectedScore) {
+                    DKScoreType.DISTRACTION, DKScoreType.SPEEDING -> EmptyRoadContextType.NO_DATA
+                    DKScoreType.SAFETY -> EmptyRoadContextType.NO_DATA_SAFETY
+                    DKScoreType.ECO_DRIVING -> EmptyRoadContextType.NO_DATA_ECODRIVING
+                }
+            } else {
+                null
             }
         } else {
-            null
+            this.totalDistanceForAllContext = 0.0
+            this.distanceByContext = emptyMap()
+            this.distance = 0.0
+            this.emptyRoadContextType = EmptyRoadContextType.EMPTY_DATA
         }
-        changeObserver.postValue(Any())
+        this.changeObserver.postValue(Any())
     }
 
     fun displayData() = emptyRoadContextType == null

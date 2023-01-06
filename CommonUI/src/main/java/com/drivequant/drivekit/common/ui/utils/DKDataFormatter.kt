@@ -305,15 +305,18 @@ object DKDataFormatter {
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_g_per_km))
 
-    fun formatCO2Mass(context: Context, co2mass: Double): String {
+    fun formatCO2Mass(context: Context, co2mass: Double, minUnit: Co2Unit = Co2Unit.GRAM, maxUnit: Co2Unit = Co2Unit.TON): String {
+        if (maxUnit < minUnit) {
+            throw IllegalArgumentException("maxUnit < minUnit")
+        }
         return when {
-            co2mass < 1 -> {
+            maxUnit == Co2Unit.GRAM || (co2mass < 1 && minUnit == Co2Unit.GRAM) -> {
                 val unit = DKResource.convertToString(context, "dk_common_unit_g")
                 "${(co2mass * 1000).roundToInt()}"
                     .plus(nbsp)
                     .plus(unit)
             }
-            co2mass > 1000 -> {
+            minUnit >= Co2Unit.TON || maxUnit >= Co2Unit.TON || (co2mass > 1000) -> {
                 formatMassInTon(context, co2mass)
             }
             else -> {
@@ -360,7 +363,7 @@ object DKDataFormatter {
             .plus(context.getString(R.string.dk_common_unit_power))
 
     fun formatScore(context: Context, score: Double): String =
-        score.removeZeroDecimal().format(1)
+        score.format(1)
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_score))
 
@@ -430,6 +433,12 @@ object DKDataFormatter {
             distanceInMeter
         }
     }
+}
+
+enum class Co2Unit {
+    GRAM,
+    KILOGRAM,
+    TON
 }
 
 private object Constants {

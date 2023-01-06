@@ -10,7 +10,7 @@ import com.drivequant.drivekit.timeline.ui.R
 
 internal class PeriodSelectorView(
     context: Context,
-    periods: List<DKTimelinePeriod>
+    periods: List<DKTimelinePeriod> = DKTimelinePeriod.values().toList()
 ) : LinearLayout(context) {
 
     private lateinit var viewModel: PeriodSelectorViewModel

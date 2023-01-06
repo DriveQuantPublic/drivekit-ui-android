@@ -24,6 +24,4 @@ object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
     override fun startTimelineActivity(context: Context) {
         TimelineActivity.launchActivity(context)
     }
-
-    override fun createTimelineFragment() = TimelineFragment.newInstance()
 }

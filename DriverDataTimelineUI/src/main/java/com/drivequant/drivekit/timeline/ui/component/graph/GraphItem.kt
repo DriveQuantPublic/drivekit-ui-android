@@ -1,11 +1,12 @@
 package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.extension.ceilToValueDivisibleBy10
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.utils.Co2Unit
+import com.drivequant.drivekit.timeline.ui.ceilToLowestValueWithNiceStep
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -49,9 +50,9 @@ internal sealed class GraphItem {
         } ?: run {
             val maxValue = realMaxValue ?: GraphConstants.DEFAULT_MAX_VALUE_IN_Y_AXIS.toDouble()
             if (maxValue <= GraphConstants.NOT_ENOUGH_DATA_IN_GRAPH_THRESHOLD) {
-                return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH.toDouble()
+                return GraphConstants.MAX_VALUE_IN_Y_AXIS_WHEN_NOT_ENOUGH_DATA_IN_GRAPH
             } else {
-                return maxValue.ceilToValueDivisibleBy10()
+                return maxValue.ceilToLowestValueWithNiceStep()
             }
         }
     }
@@ -104,10 +105,13 @@ internal sealed class GraphItem {
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> context.getString(DKDataFormatter.getDecelerationDescriptionKey(value))
             TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> context.getString(DKDataFormatter.getSpeedMaintainDescription(value))
             TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> DKDataFormatter.formatLiter(context, value)
-            TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value)
+            TimelineScoreItemType.ECODRIVING_CO2MASS -> DKDataFormatter.formatCO2Mass(context, value, Co2Unit.KILOGRAM, Co2Unit.KILOGRAM)
             TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> DKDataFormatter.formatLiter(context, value)
             TimelineScoreItemType.DISTRACTION_UNLOCK -> value.format(1)
-            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> DKDataFormatter.formatDuration(context, value).convertToString()
+            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> {
+                // The value is in minute so we convert it back to seconds before reformatting. The conversion is done here to keep the graph Y Axis in minute
+                DKDataFormatter.formatDuration(context, value * 60).convertToString()
+            }
             TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> DKDataFormatter.formatPercentage(value)
             TimelineScoreItemType.SPEEDING_DURATION -> DKDataFormatter.formatPercentage(value)
             TimelineScoreItemType.SPEEDING_DISTANCE -> DKDataFormatter.formatPercentage(value)
