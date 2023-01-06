@@ -24,8 +24,15 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
 
     private var progressItems = listOf<ProgressItem>()
 
+    private var paints = mutableMapOf<ProgressItem, Paint>()
+
     fun init(progressItems: List<ProgressItem>) {
         this.progressItems = progressItems
+
+        paints.clear()
+        progressItems.forEach {
+            paints[it] = createPaint(it)
+        }
         invalidate()
     }
 
@@ -45,7 +52,6 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
         var lastProgress = 0
 
         for (progressItem in progressItems) {
-            val progressPaint = createPaint(progressItem)
             val progressItemWidth = computeProgressWidth(progressItem)
             var progressItemStart = lastProgress + progressItemWidth
 
@@ -59,7 +65,11 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
                 progressItemStart.toFloat(),
                 measuredHeight
             )
-            canvas?.drawRect(rectF, progressPaint)
+
+            paints[progressItem]?.let { paint ->
+                canvas?.drawRect(rectF, paint)
+            }
+
             lastProgress = progressItemStart
         }
     }

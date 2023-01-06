@@ -41,7 +41,7 @@ internal class TimelineDetailViewModel(
     val dateSelectorViewModel: DateSelectorViewModel = DateSelectorViewModel()
     val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()
-    val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
+    private val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
 
     init {
         updateViewModels()
