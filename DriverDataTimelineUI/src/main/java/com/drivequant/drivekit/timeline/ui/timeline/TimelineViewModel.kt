@@ -160,6 +160,21 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         updateData.postValue(Any())
     }
 
+    fun updateTimelineDateAndPeriod(period: DKTimelinePeriod, date: Date) {
+        var shouldUpdate = false
+        if (currentPeriod != period) {
+            shouldUpdate = true
+            currentPeriod = period
+        }
+        if (selectedDate != date) {
+            shouldUpdate = true
+            selectedDate = date
+        }
+        if (shouldUpdate) {
+            update()
+        }
+    }
+
     fun updateTimelinePeriod(period: DKTimelinePeriod) {
         if (currentPeriod != period) {
             currentPeriod = period

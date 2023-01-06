@@ -96,7 +96,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         configureRoadContextContainer()
         configureGraphContainer()
 
-        configureTimelineDetail()
+        configureTimelineDetailButton()
         updateTimeline()
     }
 
@@ -108,11 +108,10 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     fun updateDataFromDetailScreen(selectedPeriod: DKTimelinePeriod, selectedDate: Date) {
-        onPeriodSelected(selectedPeriod)
-        viewModel.updateTimelineDate(selectedDate)
+        viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
-    private fun configureTimelineDetail() {
+    private fun configureTimelineDetailButton() {
         button_display_timeline_detail.apply {
             setOnClickListener {
                 TimelineDetailActivity.launchActivity(
