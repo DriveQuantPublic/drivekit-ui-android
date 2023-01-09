@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
@@ -123,7 +124,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     viewModel.monthTimeline
                 )
             }
-            headLine2(DriveKitUI.colors.secondaryColor())
+            button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
         }
     }
 
