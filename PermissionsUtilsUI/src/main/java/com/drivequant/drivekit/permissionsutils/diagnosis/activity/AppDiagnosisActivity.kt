@@ -280,15 +280,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun displayBatteryOptimizationSection() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> batteryOptimizationContent12()
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> batteryOptimizationContent()
-            else -> {
-                battery_view_separator.visibility = View.GONE
-                text_view_battery_description_1.visibility = View.GONE
-                text_view_battery_description_2.visibility = View.GONE
-                text_view_battery_description_3.visibility = View.GONE
-                text_view_battery_description_4.visibility = View.GONE
-                text_view_battery_title.visibility = View.GONE
-            }
+            else -> batteryOptimizationContent()
         }
     }
 
@@ -416,7 +408,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         val connectivityFilter = IntentFilter(SensorsReceiver.CONNECTIVITY_INTENT_ACTION)
         registerReceiver(sensorsReceiver, connectivityFilter)
     }
-    
+
     private fun requestPermission(permissionType: PermissionType) {
         when (permissionType) {
             PermissionType.LOCATION -> requestLocationPermission()
