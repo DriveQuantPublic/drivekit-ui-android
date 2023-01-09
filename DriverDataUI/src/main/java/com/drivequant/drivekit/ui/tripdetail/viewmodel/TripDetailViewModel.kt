@@ -300,11 +300,7 @@ internal class TripDetailViewModel(
         return getAdviceByMapItem(mapItem) != null
     }
 
-    private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? {
-        return trip?.let {
-            return mapItem.getAdvice(it)
-        }
-    }
+    private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? = trip?.let { mapItem.getAdvice(it) }
 
     fun getAdviceTitle(mapItem: DKMapItem): String? {
         return getAdviceByMapItem(mapItem)?.title

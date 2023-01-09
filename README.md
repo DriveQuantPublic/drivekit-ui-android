@@ -48,7 +48,7 @@ For an integration on Android you will need the following elements:
 * A valid DriveKit API key
 
 Your project must be configured as follows: 
-* `minSdkVersion = 21`
+* `minSdkVersion = 23`
 * `compileSdkVersion = 33`
 * `targetSdkVersion = 33`
 
