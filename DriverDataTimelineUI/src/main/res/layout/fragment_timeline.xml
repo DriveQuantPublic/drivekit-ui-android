@@ -82,7 +82,7 @@
                         android:id="@+id/button_display_timeline_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/dk_margin"
+                        android:layout_marginTop="@dimen/dk_margin"
                         android:gravity="center"
                         android:text="@string/dk_timeline_button_timeline_detail"
                         app:layout_constraintBottom_toBottomOf="parent"
