@@ -427,7 +427,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     fun getRankingProgression(): DriverProgression? =
         challengeDetailData?.let {
-            it.driversRanked?.let { driversRanked ->
+            return it.driversRanked?.let { driversRanked ->
                 val previousRank = driversRanked[it.userIndex].previousRank
                 val rank = driversRanked[it.userIndex].rank
                 return if (rank > 0 && previousRank > 0) {

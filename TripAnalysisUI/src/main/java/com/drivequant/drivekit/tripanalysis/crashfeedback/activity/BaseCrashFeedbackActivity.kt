@@ -20,6 +20,7 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
         } else {
+            @Suppress("DEPRECATION")
             this.window.addFlags(
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON

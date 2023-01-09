@@ -303,8 +303,6 @@ internal class TripDetailViewModel(
     private fun getAdviceByMapItem(mapItem: DKMapItem): TripAdvice? {
         return trip?.let {
             return mapItem.getAdvice(it)
-        }?.let {
-            null
         }
     }
 

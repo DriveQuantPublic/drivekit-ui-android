@@ -111,63 +111,63 @@ internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int
 
     val roadContexts = mutableListOf<RoadContextItem>()
     this.roadContexts.forEachIndexed { _, roadContextItem ->
-        val date = mutableListOf<String>()
-        val numberTripTotal = mutableListOf<Int>()
-        val numberTripScored = mutableListOf<Int>()
-        val distance = mutableListOf<Double>()
-        val duration = mutableListOf<Int>()
-        val efficiency = mutableListOf<Double>()
-        val safety = mutableListOf<Double>()
-        val acceleration = mutableListOf<Int>()
-        val braking = mutableListOf<Int>()
-        val adherence = mutableListOf<Int>()
-        val co2Mass = mutableListOf<Double>()
-        val fuelVolume = mutableListOf<Double>()
-        val fuelSaving = mutableListOf<Double>()
-        val efficiencyAcceleration = mutableListOf<Double>()
-        val efficiencyBrake = mutableListOf<Double>()
-        val efficiencySpeedMaintain = mutableListOf<Double>()
+        val newDate = mutableListOf<String>()
+        val newNumberTripTotal = mutableListOf<Int>()
+        val newNumberTripScored = mutableListOf<Int>()
+        val newDistance = mutableListOf<Double>()
+        val newDuration = mutableListOf<Int>()
+        val newEfficiency = mutableListOf<Double>()
+        val newSafety = mutableListOf<Double>()
+        val newAcceleration = mutableListOf<Int>()
+        val newBraking = mutableListOf<Int>()
+        val newAdherence = mutableListOf<Int>()
+        val newCo2Mass = mutableListOf<Double>()
+        val newFuelVolume = mutableListOf<Double>()
+        val newFuelSaving = mutableListOf<Double>()
+        val newEfficiencyAcceleration = mutableListOf<Double>()
+        val newEfficiencyBrake = mutableListOf<Double>()
+        val newEfficiencySpeedMaintain = mutableListOf<Double>()
 
         this.allContext.date.forEachIndexed { index, _ ->
             val currentDate = roadContextItem.date.getSafe(index)
             if (currentDate != null && canInsertAtIndex(index)) {
-                date.add(currentDate)
-                roadContextItem.numberTripTotal.addValueIfNotEmpty(index, numberTripTotal)
-                roadContextItem.numberTripScored.addValueIfNotEmpty(index, numberTripScored)
-                roadContextItem.distance.addValueIfNotEmpty(index, distance)
-                roadContextItem.duration.addValueIfNotEmpty(index, duration)
-                roadContextItem.efficiency.addValueIfNotEmpty(index, efficiency)
-                roadContextItem.safety.addValueIfNotEmpty(index, safety)
-                roadContextItem.acceleration.addValueIfNotEmpty(index, acceleration)
-                roadContextItem.braking.addValueIfNotEmpty(index, braking)
-                roadContextItem.adherence.addValueIfNotEmpty(index, adherence)
-                roadContextItem.co2Mass.addValueIfNotEmpty(index, co2Mass)
-                roadContextItem.fuelVolume.addValueIfNotEmpty(index, fuelVolume)
-                roadContextItem.fuelSaving.addValueIfNotEmpty(index, fuelSaving)
-                roadContextItem.efficiencyAcceleration.addValueIfNotEmpty(index, efficiencyAcceleration)
-                roadContextItem.efficiencyBrake.addValueIfNotEmpty(index, efficiencyBrake)
-                roadContextItem.efficiencySpeedMaintain.addValueIfNotEmpty(index, efficiencySpeedMaintain)
+                newDate.add(currentDate)
+                roadContextItem.numberTripTotal.addValueIfNotEmpty(index, newNumberTripTotal)
+                roadContextItem.numberTripScored.addValueIfNotEmpty(index, newNumberTripScored)
+                roadContextItem.distance.addValueIfNotEmpty(index, newDistance)
+                roadContextItem.duration.addValueIfNotEmpty(index, newDuration)
+                roadContextItem.efficiency.addValueIfNotEmpty(index, newEfficiency)
+                roadContextItem.safety.addValueIfNotEmpty(index, newSafety)
+                roadContextItem.acceleration.addValueIfNotEmpty(index, newAcceleration)
+                roadContextItem.braking.addValueIfNotEmpty(index, newBraking)
+                roadContextItem.adherence.addValueIfNotEmpty(index, newAdherence)
+                roadContextItem.co2Mass.addValueIfNotEmpty(index, newCo2Mass)
+                roadContextItem.fuelVolume.addValueIfNotEmpty(index, newFuelVolume)
+                roadContextItem.fuelSaving.addValueIfNotEmpty(index, newFuelSaving)
+                roadContextItem.efficiencyAcceleration.addValueIfNotEmpty(index, newEfficiencyAcceleration)
+                roadContextItem.efficiencyBrake.addValueIfNotEmpty(index, newEfficiencyBrake)
+                roadContextItem.efficiencySpeedMaintain.addValueIfNotEmpty(index, newEfficiencySpeedMaintain)
             }
         }
 
         val newRoadContext = RoadContextItem(
             roadContextItem.type,
-            date,
-            numberTripTotal,
-            numberTripScored,
-            distance,
-            duration,
-            efficiency,
-            safety,
-            acceleration,
-            braking,
-            adherence,
-            co2Mass,
-            fuelVolume,
-            fuelSaving,
-            efficiencyAcceleration,
-            efficiencyBrake,
-            efficiencySpeedMaintain
+            newDate,
+            newNumberTripTotal,
+            newNumberTripScored,
+            newDistance,
+            newDuration,
+            newEfficiency,
+            newSafety,
+            newAcceleration,
+            newBraking,
+            newAdherence,
+            newCo2Mass,
+            newFuelVolume,
+            newFuelSaving,
+            newEfficiencyAcceleration,
+            newEfficiencyBrake,
+            newEfficiencySpeedMaintain
         )
         roadContexts.add(newRoadContext)
     }
