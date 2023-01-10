@@ -13,7 +13,7 @@ import androidx.core.graphics.ColorUtils
  * @return the current color tinted using `color`'s hue.
  */
 @ColorInt
-fun Int.tintFromHueOfColor(@ColorInt color: Int): Int {
+fun @receiver:ColorInt Int.tintFromHueOfColor(@ColorInt color: Int): Int {
     if (Color.alpha(color) == 0) return this
     val baseHslValues = color.getHslValues()
     val baseHue = baseHslValues.getHue()
@@ -26,8 +26,12 @@ fun Int.tintFromHueOfColor(@ColorInt color: Int): Int {
     return ColorUtils.HSLToColor(hslValues)
 }
 
+fun @receiver:ColorInt Int.shouldInvertTextColor(@ColorInt otherColor: Int) =
+    // We should have at least a ratio of 2.8:1 or we need to invert foreground color
+    ColorUtils.calculateContrast(this, otherColor) < 2.8
+
 @FloatRange(from = 0.0, to = 360.0)
-fun Int.getHue(): Float = this.getHslValues().getHue()
+fun @receiver:ColorInt Int.getHue(): Float = this.getHslValues().getHue()
 
 fun FloatArray.getHue(): Float = this[0]
 
@@ -36,7 +40,7 @@ fun FloatArray.setHue(@FloatRange(from = 0.0, to = 360.0) hue: Float) {
 }
 
 @FloatRange(from = 0.0, to = 1.0)
-fun Int.getSaturation(): Float = this.getHslValues().getSaturation()
+fun @receiver:ColorInt Int.getSaturation(): Float = this.getHslValues().getSaturation()
 
 fun FloatArray.getSaturation(): Float = this[1]
 
@@ -45,7 +49,7 @@ fun FloatArray.setSaturation(@FloatRange(from = 0.0, to = 1.0) saturation: Float
 }
 
 @FloatRange(from = 0.0, to = 1.0)
-fun Int.getLightness(): Float = this.getHslValues().getLightness()
+fun @receiver:ColorInt Int.getLightness(): Float = this.getHslValues().getLightness()
 
 fun FloatArray.getLightness(): Float = this[2]
 
@@ -53,7 +57,7 @@ fun FloatArray.setLightness(@FloatRange(from = 0.0, to = 1.0) lightness: Float) 
     this[2] = lightness
 }
 
-private fun Int.getHslValues(): FloatArray {
+private fun @receiver:ColorInt Int.getHslValues(): FloatArray {
     val hslValues = FloatArray(3)
     ColorUtils.colorToHSL(this, hslValues)
     return hslValues
