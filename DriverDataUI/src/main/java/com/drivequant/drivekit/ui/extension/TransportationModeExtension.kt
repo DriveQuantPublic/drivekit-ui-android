@@ -5,23 +5,6 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 
-fun TransportationMode.isAlternative(): Boolean =
-    when (this) {
-        TransportationMode.UNKNOWN,
-        TransportationMode.CAR,
-        TransportationMode.MOTO,
-        TransportationMode.TRUCK -> false
-        TransportationMode.BUS,
-        TransportationMode.TRAIN,
-        TransportationMode.BOAT,
-        TransportationMode.BIKE,
-        TransportationMode.FLIGHT,
-        TransportationMode.SKIING,
-        TransportationMode.ON_FOOT,
-        TransportationMode.IDLE,
-        TransportationMode.OTHER -> true
-    }
-
 fun TransportationMode.image(context: Context): Drawable? =
     when (this) {
         TransportationMode.UNKNOWN,

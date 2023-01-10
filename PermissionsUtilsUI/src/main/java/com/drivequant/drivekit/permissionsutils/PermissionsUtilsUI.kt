@@ -192,11 +192,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_network)} $connectivityMail \n"
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_battery)} $batteryOptimization \n\n"
-        }
-
+        mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_battery)} $batteryOptimization \n\n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_model)} ${Build.MANUFACTURER.uppercase(Locale.getDefault())} ${Build.MODEL}\n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os)} Android \n"
         mailBody += "${context.getString(R.string.dk_perm_utils_app_diag_email_os_version)} ${Build.VERSION.RELEASE} \n"

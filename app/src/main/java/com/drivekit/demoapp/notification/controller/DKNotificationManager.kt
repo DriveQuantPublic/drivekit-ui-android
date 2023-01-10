@@ -9,7 +9,6 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
-import com.drivekit.demoapp.utils.getImmutableFlag
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -120,7 +119,7 @@ internal object DKNotificationManager : TripListener {
                     val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
                     var contentIntent: PendingIntent? = null
                     if (intent != null) {
-                        contentIntent = PendingIntent.getActivity(context, 0, intent, getImmutableFlag())
+                        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
                     }
                     sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
                 }

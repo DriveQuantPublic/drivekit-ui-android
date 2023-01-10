@@ -11,7 +11,6 @@ import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivekit.demoapp.notification.enum.TripCancellationReason
-import com.drivekit.demoapp.utils.getImmutableFlag
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
@@ -151,7 +150,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
         }
         return TaskStackBuilder.create(context)
             .addNextIntentWithParentStack(intent)
-            .getPendingIntent(Random().nextInt(Int.MAX_VALUE), getImmutableFlag())
+            .getPendingIntent(Random().nextInt(Int.MAX_VALUE), PendingIntent.FLAG_IMMUTABLE)
     }
 }
 
