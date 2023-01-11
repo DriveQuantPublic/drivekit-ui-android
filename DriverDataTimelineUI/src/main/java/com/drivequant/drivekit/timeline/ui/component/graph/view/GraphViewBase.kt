@@ -120,6 +120,9 @@ internal class DKXAxisRenderer(
 
             paint.textAlign = originalTextAlign
             paint.color = selectedTextColor
+        } else {
+            // Restore the Paint color for all points after the selectedIndex
+            mAxisLabelPaint.color = DriveKitUI.colors.mainFontColor()
         }
         super.drawLabel(canvas, text, x, y, anchor, angleDegrees)
     }
