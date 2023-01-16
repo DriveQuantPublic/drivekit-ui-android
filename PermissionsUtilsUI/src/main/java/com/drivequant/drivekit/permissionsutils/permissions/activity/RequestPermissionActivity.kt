@@ -45,11 +45,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
 
     @Suppress("UNCHECKED_CAST")
     protected fun request(context: Activity, permissionCallback: OnPermissionCallback, vararg permissionName: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            handlePermissions(context, permissionName as Array<String>)
-        } else {
-            permissionCallback.onPermissionGranted(permissionName as Array<String>)
-        }
+        handlePermissions(context, permissionName as Array<String>)
     }
 
     private fun handlePermissions(context: Activity, permissionNames: Array<String>) {

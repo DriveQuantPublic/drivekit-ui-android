@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dk_tag_timeline" translatable="false">drivekit-timeline</string>
+    <string name="dk_tag_timeline_score_detail" translatable="false">drivekit-timeline-score-detail</string>
+</resources>
