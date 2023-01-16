@@ -10,7 +10,9 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
@@ -51,7 +53,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_timeline, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_timeline, container, false).setDKStyle()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,7 +125,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                     viewModel.monthTimeline
                 )
             }
-            headLine2(DriveKitUI.colors.secondaryColor())
+            button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
         }
     }
 
