@@ -33,7 +33,7 @@
    <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
    <string name="drivekit_doc_android_ranking">https://docs.drivequant.com/driver-achievement/user-interface/android#select-ranking-themes</string>
    <string name="drivekit_doc_android_streaks">https://docs.drivequant.com/driver-achievement/user-interface/android#select-streak-themes</string>
-   <string name="drivekit_doc_android_timeline">https://docs.drivequant.com/timeline-ui/android/get-started</string>
+   <string name="drivekit_doc_android_timeline">https://docs.drivequant.com/driver-data-timeline-ui/android/get-started</string>
    <string name="drivekit_doc_android_update_user_info">https://docs.drivequant.com/get-started-drivekit/android#update-users-information</string>
    <string name="drivekit_doc_android_user_id">https://docs.drivequant.com/get-started-drivekit/android#identify-user </string>
    <string name="drivekit_doc_android_vehicle">https://docs.drivequant.com/vehicle/user-interface/android/get-started#display-vehicle-picker</string>
