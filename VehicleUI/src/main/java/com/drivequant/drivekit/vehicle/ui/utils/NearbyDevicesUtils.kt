@@ -27,8 +27,8 @@ internal object NearbyDevicesUtils {
     fun isBluetoothScanAuthorized(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ContextCompat.checkSelfPermission(
-                DriveKit.applicationContext!!, Manifest.permission.BLUETOOTH_SCAN) == PermissionChecker.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                DriveKit.applicationContext!!, Manifest.permission.BLUETOOTH_CONNECT) == PermissionChecker.PERMISSION_GRANTED
+                DriveKit.applicationContext, Manifest.permission.BLUETOOTH_SCAN) == PermissionChecker.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                DriveKit.applicationContext, Manifest.permission.BLUETOOTH_CONNECT) == PermissionChecker.PERMISSION_GRANTED
         } else {
             true
         }

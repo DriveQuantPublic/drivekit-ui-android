@@ -150,7 +150,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         val versionName = try {
-            val pInfo = DriveKit.applicationContext!!.packageManager.getPackageInfo(DriveKit.applicationContext!!.packageName, 0)
+            val pInfo = DriveKit.applicationContext.packageManager.getPackageInfo(DriveKit.applicationContext.packageName, 0)
             pInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             "noName"
