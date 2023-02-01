@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -48,10 +48,10 @@ class DKSynthesisCardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (this::synthesisCard.isInitialized) {
             if (!this::viewModel.isInitialized) {
-                viewModel = ViewModelProviders.of(
+                viewModel = ViewModelProvider(
                     this,
                     DKSynthesisCardViewModel.DKSynthesisCardViewModelFactory(synthesisCard)
-                ).get(DKSynthesisCardViewModel::class.java)
+                )[DKSynthesisCardViewModel::class.java]
             }
             updateContent()
         }

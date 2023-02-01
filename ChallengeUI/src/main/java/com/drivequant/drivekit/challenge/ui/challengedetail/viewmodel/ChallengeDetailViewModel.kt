@@ -481,7 +481,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     class ChallengeDetailViewModelFactory(private val challengeId: String) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ChallengeDetailViewModel(challengeId) as T
         }
     }

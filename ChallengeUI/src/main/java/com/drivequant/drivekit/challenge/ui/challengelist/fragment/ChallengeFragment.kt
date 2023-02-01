@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
@@ -25,7 +25,7 @@ class ChallengeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
+            viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
         }
         updateProgressVisibility(true)
         viewModel.fetchChallengeList()

@@ -147,7 +147,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
         private val vehicleId: String,
         private val historyId: Int) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return OdometerHistoryDetailViewModel(vehicleId, historyId) as T
         }
     }

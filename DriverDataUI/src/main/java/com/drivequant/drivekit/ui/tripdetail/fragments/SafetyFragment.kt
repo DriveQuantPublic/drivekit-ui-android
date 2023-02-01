@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -53,10 +53,9 @@ class SafetyFragment : Fragment() {
         (savedInstanceState?.getSerializable("safety") as Safety?)?.let{
             safety = it
         }
-        viewModel = ViewModelProviders.of(this,
+        viewModel = ViewModelProvider(this,
             SafetyViewModelFactory(safety)
-        ).get(
-            SafetyViewModel::class.java)
+        )[SafetyViewModel::class.java]
 
         gauge_type_title.text = context?.getString(R.string.dk_common_safety)
         accel_description.text = context?.getString(R.string.dk_driverdata_safety_accel)

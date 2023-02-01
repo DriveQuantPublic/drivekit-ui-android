@@ -4,7 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -70,8 +70,8 @@ class BeaconActivity : AppCompatActivity() {
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
-        viewModel = ViewModelProviders.of(this,
-            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
+        viewModel = ViewModelProvider(this,
+            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon))[BeaconViewModel::class.java]
         viewModel.init(this)
 
         viewModel.fragmentDispatcher.observe(this) { fragment ->

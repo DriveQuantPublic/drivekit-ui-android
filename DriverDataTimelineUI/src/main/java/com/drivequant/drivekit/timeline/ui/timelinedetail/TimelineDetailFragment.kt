@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -204,7 +204,7 @@ internal class TimelineDetailFragment : Fragment() {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    viewModel = ViewModelProviders.of(
+                    viewModel = ViewModelProvider(
                         this,
                         TimelineDetailViewModel.TimelineDetailViewModelFactory(
                             application,
@@ -214,7 +214,7 @@ internal class TimelineDetailFragment : Fragment() {
                             weekTimeline,
                             monthTimeline
                         )
-                    ).get(TimelineDetailViewModel::class.java)
+                    )[TimelineDetailViewModel::class.java]
                 }
             }
         }

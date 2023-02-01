@@ -65,7 +65,7 @@ internal class OdometerVehicleListViewModel(val vehicleId: String?) : ViewModel(
     internal class OdometerVehicleListViewModelFactory(
         private val vehicleId: String?) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return OdometerVehicleListViewModel(vehicleId) as T
         }
     }

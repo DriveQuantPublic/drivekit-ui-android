@@ -20,7 +20,7 @@ internal class OdometerDetailViewModel(val vehicleId: String) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     internal class OdometerDetailViewModelFactory(private val vehicleId: String) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return OdometerDetailViewModel(vehicleId) as T
         }
     }

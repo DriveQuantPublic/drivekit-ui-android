@@ -10,7 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.settings.viewmodel.NotificationSettingsViewModel
 import com.drivekit.drivekitdemoapp.R
@@ -48,7 +48,7 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
     private fun initConfiguration() {
         val context = this@NotificationSettingsActivity
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(NotificationSettingsViewModel::class.java)
+            viewModel = ViewModelProvider(this)[NotificationSettingsViewModel::class.java]
         }
 
         text_view_notifications_description.normalText(DriveKitUI.colors.complementaryFontColor())

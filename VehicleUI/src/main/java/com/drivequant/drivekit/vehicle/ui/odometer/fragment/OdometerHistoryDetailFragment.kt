@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -72,9 +72,9 @@ class OdometerHistoryDetailFragment : Fragment() {
 
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-                viewModel = ViewModelProviders.of(this,
+                viewModel = ViewModelProvider(this,
                     OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
-                        historyId)).get(OdometerHistoryDetailViewModel::class.java)
+                        historyId))[OdometerHistoryDetailViewModel::class.java]
                 if (!viewModel.canEditOrAddHistory()) {
                     "dk_tag_vehicles_odometer_histories_detail"
                 } else {

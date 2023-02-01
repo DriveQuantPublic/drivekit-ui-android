@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.app.Activity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -66,10 +66,10 @@ internal class AlternativeTripFragment : Fragment() {
             }
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
-            ).get(AlternativeTripViewModel::class.java)
+            )[AlternativeTripViewModel::class.java]
         }
         button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())

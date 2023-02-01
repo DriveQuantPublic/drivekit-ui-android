@@ -1,8 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven'
+
+project.ext {
+    artifactId = "drivekit-common-ui"
+}
+
 android {
+    namespace 'com.drivequant.drivekit.common.ui'
+    buildToolsVersion project.ext.build_tools_version
     compileSdkVersion project.ext.compile_sdk_version
 
     defaultConfig {
@@ -24,7 +30,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     api "com.google.android.material:material:$material"
     api "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_layout"
@@ -32,31 +37,12 @@ dependencies {
     api "androidx.appcompat:appcompat:$appcompat"
     api "androidx.gridlayout:gridlayout:$grid_layout"
     api "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    api 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    api "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
 
-    api 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    api "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
     implementation "com.drivequant.drivekit:drivekit-core:$drivekit_version"
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if (System.env.REPO_PATH) {
-                repository(url: "$System.env.REPO_PATH") {
-                    authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
-                    pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-common-ui"
-                    pom.version = android.defaultConfig.versionName
-                }
-            } else {
-                repository(url: mavenLocal().url) {
-                    pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-common-ui"
-                    pom.version = android.defaultConfig.versionName
-                }
-            }
-        }
-    }
-}
+apply from: '../maven-publish.gradle'

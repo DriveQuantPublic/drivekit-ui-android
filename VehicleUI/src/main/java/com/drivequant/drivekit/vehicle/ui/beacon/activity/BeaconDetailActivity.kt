@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.beacon.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -77,7 +77,7 @@ class BeaconDetailActivity : AppCompatActivity() {
             beaconInfo?.let { beaconInfo ->
                 beaconRetrievedInfo?.let { beaconRetrievedInfo ->
                     vehicleName?.let { vehicleName ->
-                        viewModel = ViewModelProviders.of(
+                        viewModel = ViewModelProvider(
                             this,
                             BeaconDetailViewModel.BeaconDetailViewModelFactory(
                                 vehicleId,
@@ -85,7 +85,7 @@ class BeaconDetailActivity : AppCompatActivity() {
                                 beaconRetrievedInfo,
                                 beaconInfo
                             )
-                        ).get(BeaconDetailViewModel::class.java)
+                        )[BeaconDetailViewModel::class.java]
                     }
                 }
             }

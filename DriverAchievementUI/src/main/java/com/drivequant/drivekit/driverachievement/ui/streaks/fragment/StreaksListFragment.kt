@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.fragment
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +27,7 @@ class StreaksListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if(!this::listViewModel.isInitialized) {
-            listViewModel = ViewModelProviders.of(this).get(StreaksListViewModel::class.java)
+            listViewModel = ViewModelProvider(this)[StreaksListViewModel::class.java]
         }
     }
 

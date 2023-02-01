@@ -4,7 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -58,7 +58,7 @@ class BluetoothActivity : AppCompatActivity() {
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA) as String
 
-        viewModel = ViewModelProviders.of(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName)).get(BluetoothViewModel::class.java)
+        viewModel = ViewModelProvider(this, BluetoothViewModel.BluetoothViewModelFactory(vehicleId, vehicleName))[BluetoothViewModel::class.java]
 
         viewModel.fragmentDispatcher.observe(this) { fragment ->
             fragment?.let {

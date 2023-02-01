@@ -222,7 +222,7 @@ internal class TripsListViewModel(
     @Suppress("UNCHECKED_CAST")
     class TripsListViewModelFactory(private val tripListConfiguration: TripListConfiguration)
         : ViewModelProvider.NewInstanceFactory() {
-        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T: ViewModel> create(modelClass: Class<T>): T {
             return TripsListViewModel(tripListConfiguration) as T
         }
     }

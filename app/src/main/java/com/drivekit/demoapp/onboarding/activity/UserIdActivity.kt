@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.manager.*
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
@@ -41,7 +41,7 @@ class UserIdActivity : AppCompatActivity() {
         title = getString( R.string.authentication_header)
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(UserIdViewModel::class.java)
+            viewModel = ViewModelProvider(this)[UserIdViewModel::class.java]
         }
 
         text_view_user_id_description.apply {

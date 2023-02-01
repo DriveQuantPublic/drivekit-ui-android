@@ -76,11 +76,11 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 
 
     override fun onInterceptMotionEvent(motionEvent: MotionEvent?) {
-        val action = motionEvent?.let { it.action and MotionEvent.ACTION_MASK }
-        if (this.dispatchMotionEventsToSwipeRecognizer || (motionEvent != null && motionEvent.isInside(this.graphView) && action == MotionEvent.ACTION_DOWN)) {
-            this.dispatchMotionEventsToSwipeRecognizer = true
-            this.gestureDetector.onTouchEvent(motionEvent)
-            if (action != null) {
+        if (motionEvent != null) {
+            val action = motionEvent.action and MotionEvent.ACTION_MASK
+            if (this.dispatchMotionEventsToSwipeRecognizer || (motionEvent.isInside(this.graphView) && action == MotionEvent.ACTION_DOWN)) {
+                this.dispatchMotionEventsToSwipeRecognizer = true
+                this.gestureDetector.onTouchEvent(motionEvent)
                 when (action) {
                     MotionEvent.ACTION_UP -> this.dispatchMotionEventsToSwipeRecognizer = false
                     MotionEvent.ACTION_POINTER_DOWN -> {

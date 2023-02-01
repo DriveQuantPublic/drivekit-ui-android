@@ -124,7 +124,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     class AlternativeTripViewModelFactory(private val trip: Trip) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return AlternativeTripViewModel(trip) as T
         }
     }

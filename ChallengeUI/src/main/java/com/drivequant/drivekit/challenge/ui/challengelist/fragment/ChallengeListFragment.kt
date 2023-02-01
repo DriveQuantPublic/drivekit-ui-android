@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
@@ -75,7 +75,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         )
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(ChallengeListViewModel::class.java)
+            viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
         }
 
         dk_swipe_refresh_challenge.setOnRefreshListener {

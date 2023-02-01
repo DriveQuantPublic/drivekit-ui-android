@@ -84,7 +84,7 @@ internal class TransportationModeViewModel(private val itinId: String) : ViewMod
     @Suppress("UNCHECKED_CAST")
     class TransportationModeViewModelFactory(private val itinId: String) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return TransportationModeViewModel(itinId) as T
         }
     }

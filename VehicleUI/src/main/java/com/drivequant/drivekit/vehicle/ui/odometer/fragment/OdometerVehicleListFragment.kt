@@ -12,7 +12,7 @@ import android.widget.AdapterView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -62,8 +62,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             vehicleId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this,
-                OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId)).get(OdometerVehicleListViewModel::class.java)
+            viewModel = ViewModelProvider(this,
+                OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId))[OdometerVehicleListViewModel::class.java]
         }
         dk_swipe_refresh_odometer.setOnRefreshListener {
             updateSwipeRefreshOdometerVisibility(true)

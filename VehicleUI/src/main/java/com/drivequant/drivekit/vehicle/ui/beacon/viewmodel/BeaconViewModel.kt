@@ -232,7 +232,7 @@ class BeaconViewModel(
         private val vehicleId: String?,
         private val beacon: Beacon?
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return BeaconViewModel(scanType, vehicleId, beacon) as T
         }
     }

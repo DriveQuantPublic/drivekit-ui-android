@@ -2,7 +2,7 @@ package com.drivequant.drivekit.driverachievement.ui.rankings.fragment
 
 import android.content.Context
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
@@ -52,7 +52,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
             ), javaClass.simpleName
         )
         if (!this::rankingViewModel.isInitialized) {
-            rankingViewModel = ViewModelProviders.of(this).get(RankingViewModel::class.java)
+            rankingViewModel = ViewModelProvider(this)[RankingViewModel::class.java]
         }
         setTabLayout()
         if (rankingViewModel.rankingSelectorsData.size > 1) {

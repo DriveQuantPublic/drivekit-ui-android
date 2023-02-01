@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -61,10 +61,10 @@ class TripTimelineFragment : Fragment() {
         val tripListConfigurationType = savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
 
         if (itinId != null && tripListConfigurationType != null) {
-            tripDetailViewModel = ViewModelProviders.of(
+            tripDetailViewModel = ViewModelProvider(
                 this,
                 TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
-            ).get(TripDetailViewModel::class.java)
+            )[TripDetailViewModel::class.java]
         }
 
         timeline_list.layoutManager =

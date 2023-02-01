@@ -134,7 +134,7 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")
     class SynthesisViewModelFactory(private val trip: Trip) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return SynthesisViewModel(trip) as T
         }
     }
