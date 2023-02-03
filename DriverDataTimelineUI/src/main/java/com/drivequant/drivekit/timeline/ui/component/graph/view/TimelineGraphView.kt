@@ -79,7 +79,9 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
         val action = motionEvent?.let { it.action and MotionEvent.ACTION_MASK }
         if (this.dispatchMotionEventsToSwipeRecognizer || (motionEvent != null && motionEvent.isInside(this.graphView) && action == MotionEvent.ACTION_DOWN)) {
             this.dispatchMotionEventsToSwipeRecognizer = true
-            this.gestureDetector.onTouchEvent(motionEvent)
+            motionEvent?.let {
+                this.gestureDetector.onTouchEvent(it)
+            }
             if (action != null) {
                 when (action) {
                     MotionEvent.ACTION_UP -> this.dispatchMotionEventsToSwipeRecognizer = false
