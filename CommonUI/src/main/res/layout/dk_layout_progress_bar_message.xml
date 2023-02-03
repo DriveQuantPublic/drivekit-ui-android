@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
@@ -8,7 +8,6 @@
     android:layout_margin="@dimen/dk_margin_half"
     android:background="@color/cardview_light_background"
     android:elevation="@dimen/dk_margin_half"
-    android:orientation="horizontal"
     android:padding="@dimen/dk_margin">
 
     <ProgressBar
@@ -17,14 +16,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dk_margin_medium"
-        android:elevation="@dimen/dk_margin_eigth" />
+        android:elevation="@dimen/dk_margin_eigth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dk_text_view_progress_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/dk_text_view_progress_message"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:lines="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dk_progress_circular"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/dk_common_validate" />
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
