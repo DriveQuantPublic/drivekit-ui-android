@@ -39,11 +39,11 @@ class DKProgressBar : LinearLayout {
         val label = alertDialog.show().findViewById<TextView>(R.id.dk_text_view_progress_message)
         label?.run {
             if (message.isNullOrEmpty()) {
-                this.visibility = View.GONE
+                visibility = View.GONE
             } else {
-                this.text = message
-                this.normalText(DriveKitUI.colors.mainFontColor())
-                this.visibility = View.VISIBLE
+                text = message
+                normalText(DriveKitUI.colors.mainFontColor())
+                visibility = View.VISIBLE
             }
         }
     }
