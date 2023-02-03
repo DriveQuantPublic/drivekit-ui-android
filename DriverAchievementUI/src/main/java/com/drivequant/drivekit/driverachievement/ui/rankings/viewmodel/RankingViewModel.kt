@@ -14,7 +14,8 @@ import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
 
 class RankingViewModel : ViewModel() {
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
-    var rankingDriversData = mutableListOf<RankingDriverData>()
+    var rankingDriversData = listOf<RankingDriverData>()
+        private set
     var mutableLiveDataRankingData: MutableLiveData<RankingData> = MutableLiveData()
     lateinit var fetchedRanking: Ranking
     val rankingSelectorsData = mutableListOf<RankingSelectorData>()
@@ -95,8 +96,8 @@ class RankingViewModel : ViewModel() {
             })
     }
 
-    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): MutableList<RankingDriverData> {
-        rankingDriversData.clear()
+    private fun buildRankingDriverData(driversRanked: List<DriverRanked>): List<RankingDriverData> {
+        val rankingDriversData = mutableListOf<RankingDriverData>()
         var alreadyInserted = false
         for ((index, driverRanked) in driversRanked.withIndex()) {
             rankingDriversData.add(
@@ -124,4 +125,3 @@ class RankingViewModel : ViewModel() {
         return rankingDriversData
     }
 }
-
