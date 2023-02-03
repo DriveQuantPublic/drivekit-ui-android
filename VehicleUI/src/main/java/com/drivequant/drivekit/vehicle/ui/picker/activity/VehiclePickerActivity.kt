@@ -145,6 +145,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.computeNextScreen(this, null)
     }
 
+    @SuppressLint("MissingSuperCall")
+    override fun onSaveInstanceState(outState: Bundle) {
+        // Do not want to restore state. So do not call super.
+    }
+
     fun updateTitle(title: String) {
         setActivityTitle(title)
     }
@@ -206,7 +211,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
-        val fragment = when (vehiclePickerStep){
+        val fragment = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
@@ -221,7 +226,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             .commit()
     }
 
-    private fun updateTitle(vehiclePickerStep: VehiclePickerStep){
+    private fun updateTitle(vehiclePickerStep: VehiclePickerStep) {
         val screenTitle = when (vehiclePickerStep){
             CATEGORY_DESCRIPTION -> viewModel.selectedCategory.title
             NAME -> DKResource.convertToString(this, "dk_vehicle_name")

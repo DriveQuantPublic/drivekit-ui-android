@@ -228,7 +228,7 @@ class ChallengeParticipationFragment : Fragment() {
                         is FormatType.SEPARATOR -> spannable.append(it.value)
                     }
                 }
-                text_view_countdown.text = spannable.toSpannable()
+                text_view_countdown?.text = spannable.toSpannable()
             }
 
             override fun onFinish() {}
