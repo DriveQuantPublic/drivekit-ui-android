@@ -56,11 +56,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     lateinit var carCharacteristics: CarCharacteristics
     lateinit var truckCharacteristics: TruckCharacteristics
 
-    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, otherAction: Boolean = false){
-        when (currentStep){
+    fun computeNextScreen(context: Context, currentStep: VehiclePickerStep?, otherAction: Boolean = false) {
+        when (currentStep) {
             null -> {
                 itemTypes = fetchVehicleTypes(context)
-                if (itemTypes.size == 1){
+                if (itemTypes.size == 1) {
                     selectedVehicleTypeItem = VehicleTypeItem.valueOf(itemTypes.first().value)
                     computeNextScreen(context, TYPE)
                 } else {
@@ -117,7 +117,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     }
 
     fun getItemsByStep(vehiclePickerStep: VehiclePickerStep): List<VehiclePickerItem> {
-        return when (vehiclePickerStep){
+        return when (vehiclePickerStep) {
             TYPE -> itemTypes
             TRUCK_TYPE -> itemTruckTypes
             CATEGORY -> itemCategories
@@ -134,7 +134,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun fetchVehicleTypes(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val vehicleTypesItems = buildVehicleTypesItems()
-        for (i in vehicleTypesItems.indices){
+        for (i in vehicleTypesItems.indices) {
             val currentType = vehicleTypesItems[i]
             items.add(VehiclePickerItem(i, currentType.getTitle(context), currentType.name))
         }
@@ -144,7 +144,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun fetchTruckTypes(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val truckTypes = selectedVehicleTypeItem.getTruckTypes(context)
-        for (i in truckTypes.indices){
+        for (i in truckTypes.indices) {
             items.add(VehiclePickerItem(i, truckTypes[i].title, truckTypes[i].truckType, truckTypes[i].icon))
         }
         return items
@@ -153,7 +153,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun fetchVehicleCategories(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val categories = selectedVehicleTypeItem.getCategories(context)
-        for (i in categories.indices){
+        for (i in categories.indices) {
             items.add(VehiclePickerItem(i, categories[i].title, categories[i].category, categories[i].icon1, categories[i].icon2))
         }
         return items
@@ -162,11 +162,11 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun fetchVehicleBrands(context: Context, withIcons: Boolean = false): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawBrands = selectedVehicleTypeItem.getBrands(context, withIcons)
-        for (i in rawBrands.indices){
+        for (i in rawBrands.indices) {
             items.add(VehiclePickerItem(i, rawBrands[i].brand.value, rawBrands[i].brand.name, rawBrands[i].icon))
         }
-        if (withIcons){
-            if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.getBrands(selectedVehicleTypeItem.vehicleType).size){
+        if (withIcons) {
+            if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.getBrands(selectedVehicleTypeItem.vehicleType).size) {
                 items.add(VehiclePickerItem(items.size, DKResource.convertToString(context, "dk_vehicle_other_brands"), "OTHER_BRANDS"))
             }
         }
@@ -176,7 +176,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private fun fetchVehicleEngines(context: Context): List<VehiclePickerItem> {
         val items: MutableList<VehiclePickerItem> = mutableListOf()
         val rawBrands = selectedVehicleTypeItem.getEngineIndexes(context)
-        for (i in rawBrands.indices){
+        for (i in rawBrands.indices) {
             items.add(VehiclePickerItem(i, rawBrands[i].title, rawBrands[i].engine.toString()))
         }
         return items
@@ -184,9 +184,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleModels() {
         progressBarObserver.postValue(true)
-        when (selectedVehicleTypeItem.vehicleType){
+        when (selectedVehicleTypeItem.vehicleType) {
             VehicleType.CAR -> {
-                DriveKitVehiclePicker.getCarModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener{
+                DriveKitVehiclePicker.getCarModels(selectedBrand, selectedEngineIndex, object : VehicleModelsQueryListener {
                     override fun onResponse(status: VehiclePickerStatus, models: List<String>) {
                         manageModelsResponse(status, models)
                     }
@@ -204,8 +204,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun manageModelsResponse(status: VehiclePickerStatus, models: List<String>){
-        when (status){
+    private fun manageModelsResponse(status: VehiclePickerStatus, models: List<String>) {
+        when (status) {
             SUCCESS -> {
                 itemModels = buildItemsFromStrings(models)
                 stepDispatcher.postValue(MODELS)
@@ -218,7 +218,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun fetchVehicleYears() {
         progressBarObserver.postValue(true)
-        when (selectedVehicleTypeItem.vehicleType){
+        when (selectedVehicleTypeItem.vehicleType) {
             VehicleType.CAR -> {
                 DriveKitVehiclePicker.getCarYears(selectedBrand, selectedEngineIndex, selectedModel, object : VehicleYearsQueryListener {
                     override fun onResponse(status: VehiclePickerStatus, years: List<String>) {
@@ -238,8 +238,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun manageYearsResponse(status: VehiclePickerStatus, years: List<String>){
-        when (status){
+    private fun manageYearsResponse(status: VehiclePickerStatus, years: List<String>) {
+        when (status) {
             SUCCESS -> {
                 itemYears = buildItemsFromStrings(years)
                 stepDispatcher.postValue(YEARS)
@@ -272,8 +272,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun manageVersionsResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>){
-        when (status){
+    private fun manageVersionsResponse(status: VehiclePickerStatus, versions: List<VehicleVersion>) {
+        when (status) {
             SUCCESS -> {
                 itemVersions = buildItemsFromVersions(versions)
                 stepDispatcher.postValue(VERSIONS)
@@ -284,7 +284,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         progressBarObserver.postValue(false)
     }
 
-    private fun fetchVehicleCharacteristics(){
+    private fun fetchVehicleCharacteristics() {
         progressBarObserver.postValue(true)
         when (selectedVehicleTypeItem.vehicleType){
             VehicleType.CAR -> {
@@ -320,7 +320,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun createVehicle(){
+    private fun createVehicle() {
         progressBarObserver.postValue(true)
 
         DriveKitVehicle.getVehiclesOrderByNameAsc(object : VehicleListQueryListener {
@@ -347,7 +347,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }, SynchronizationType.CACHE)
     }
 
-    private fun manageCreateVehicleResponse(status: VehicleManagerStatus, vehicle: Vehicle){
+    private fun manageCreateVehicleResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
         if (status == VehicleManagerStatus.SUCCESS){
             vehicleToDelete?.let {
                 DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
@@ -373,8 +373,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun manageBrands(context: Context){
-        if (DriveKitVehicleUI.brandsWithIcons){
+    private fun manageBrands(context: Context) {
+        if (DriveKitVehicleUI.brandsWithIcons) {
             itemBrands = fetchVehicleBrands(context, withIcons = true)
             if (itemBrands.size == 1){
                 selectedBrand = VehicleBrand.getEnumByName(itemBrands.first().value)
@@ -385,7 +385,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             }
         } else {
             itemBrands = fetchVehicleBrands(context)
-            if (itemBrands.size == 1){
+            if (itemBrands.size == 1) {
                 selectedBrand = VehicleBrand.getEnumByName(itemBrands.first().value)
                 itemEngines = fetchVehicleEngines(context)
                 stepDispatcher.postValue(ENGINE)
@@ -395,7 +395,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
     }
 
-    private fun manageEngineIndexes(context: Context){
+    private fun manageEngineIndexes(context: Context) {
         itemEngines = fetchVehicleEngines(context)
         when {
             selectedVehicleTypeItem.vehicleType == VehicleType.TRUCK -> {
@@ -443,9 +443,9 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun computeCreateVehicleDetectionMode(vehicles: List<Vehicle>): DetectionMode {
         val detectionModes = DriveKitVehicleUI.detectionModes
-        return if (detectionModes.isEmpty()){
+        return if (detectionModes.isEmpty()) {
             DetectionMode.DISABLED
-        } else if (detectionModes.contains(DetectionMode.GPS)){
+        } else if (detectionModes.contains(DetectionMode.GPS)) {
             if (vehicles.isEmpty()){
                 DetectionMode.GPS
             } else {
@@ -458,7 +458,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun buildItemsFromStrings(source: List<String>) : MutableList<VehiclePickerItem> {
         val list: MutableList<VehiclePickerItem> = mutableListOf()
-        for (i in source.indices){
+        for (i in source.indices) {
             list.add(VehiclePickerItem(i, source[i], source[i]))
         }
         return list
@@ -466,7 +466,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun buildItemsFromVersions(source: List<VehicleVersion>) : MutableList<VehiclePickerItem> {
         val list: MutableList<VehiclePickerItem> = mutableListOf()
-        for (i in source.indices){
+        for (i in source.indices) {
             list.add(VehiclePickerItem(i, source[i].version, source[i].dqIndex))
         }
         return list

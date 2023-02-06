@@ -38,12 +38,12 @@ class DKRankingView(context: Context) : LinearLayout(context) {
         dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
-    fun configure(rankingComponent:DKDriverRanking) {
+    fun configure(rankingComponent: DKDriverRanking) {
         viewModel.setDKDriverRanking(rankingComponent)
         dk_recycler_view_ranking.layoutManager =
             LinearLayoutManager(context)
         if (this::rankingAdapter.isInitialized) {
-            rankingAdapter.notifyDataSetChanged()
+            rankingAdapter.update()
         } else {
             rankingAdapter =
                 RankingListAdapter(

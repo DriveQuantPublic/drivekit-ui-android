@@ -92,7 +92,8 @@ internal class TripReceiver : TripAnalysedReceiver() {
             CancelTrip.NO_SPEED,
             CancelTrip.MISSING_CONFIGURATION,
             CancelTrip.RESET,
-            CancelTrip.BEACON_NO_SPEED -> null
+            CancelTrip.BEACON_NO_SPEED,
+            CancelTrip.BLUETOOTH_DEVICE_NO_SPEED -> null
             CancelTrip.NO_BLUETOOTH_DEVICE -> TripCancellationReason.NO_BLUETOOTH_DEVICE
         }?.let {
             DKNotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))

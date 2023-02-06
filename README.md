@@ -54,10 +54,10 @@ Your project must be configured as follows:
 * `targetSdkVersion = 33`
 
 The DriveKit SDK uses the libraries listed below. These are minimal required versions. Check that they are compatible with your application.
-* `Kotlin = 1.5.21`
-* `Gson = 2.7`
+* `Kotlin = 1.7.22`
+* `Gson = 2.8.6`
 * `Volley = 1.2.1`
-* `Room = 2.4.1`
+* `Room = 2.4.3`
 * `WorkManager = 2.7.1`
 * `Play Services = 20.0.0`
 

@@ -5,7 +5,6 @@ import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
-import com.drivequant.drivekit.timeline.ui.timeline.TimelineFragment
 
 object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
 
