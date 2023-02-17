@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
@@ -38,7 +38,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(UserInfoViewModel::class.java)
+            viewModel = ViewModelProvider(this)[UserInfoViewModel::class.java]
         }
 
         title = getString(R.string.user_info_header)

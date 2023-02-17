@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -52,17 +52,17 @@ class ChallengeRulesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(it)
-            ).get(ChallengeParticipationViewModel::class.java)
+            )[ChallengeParticipationViewModel::class.java]
         }
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
-            ).get(ChallengeParticipationViewModel::class.java)
+            )[ChallengeParticipationViewModel::class.java]
         }
 
         val view =

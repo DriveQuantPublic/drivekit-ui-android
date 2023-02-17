@@ -18,7 +18,7 @@ class SafetyViewModel(private val safety : Safety) : ViewModel() {
 
 @Suppress("UNCHECKED_CAST")
 class SafetyViewModelFactory(private val safety : Safety) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SafetyViewModel(safety) as T
     }
 }

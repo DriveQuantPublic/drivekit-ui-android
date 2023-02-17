@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
@@ -59,10 +59,10 @@ class ChallengeTripListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
-            ).get(ChallengeDetailViewModel::class.java)
+            )[ChallengeDetailViewModel::class.java]
         }
 
         challenge_trips_list.configure(object : DKTripList {
@@ -83,10 +83,10 @@ class ChallengeTripListFragment : Fragment() {
             }
         })
 
-        val viewModelParticipation = ViewModelProviders.of(
+        val viewModelParticipation = ViewModelProvider(
             this,
             ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.getChallengeId())
-        ).get(ChallengeParticipationViewModel::class.java)
+        )[ChallengeParticipationViewModel::class.java]
 
         val view =
             ChallengeHeaderView(

@@ -20,38 +20,36 @@ internal class CustomInfoWindowAdapter(
 
     var view: View = View.inflate(context, R.layout.item_info_marker, null)
 
-    override fun getInfoContents(marker: Marker?): View {
+    override fun getInfoContents(marker: Marker): View {
         return view
     }
 
-    override fun getInfoWindow(marker: Marker?): View {
+    override fun getInfoWindow(marker: Marker): View {
         FontUtils.overrideFonts(context, view)
-        marker?.let{
-            val event = tripDetailViewModel.displayEvents[it.tag as Int]
-            val eventHour = view.findViewById<TextView>(R.id.text_view_time)
-            eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
-            eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
+        val event = tripDetailViewModel.displayEvents[marker.tag as Int]
+        val eventHour = view.findViewById<TextView>(R.id.text_view_time)
+        eventHour.text = event.time.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        eventHour.setTextColor(DriveKitUI.colors.complementaryFontColor())
 
-            val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
-            bubbleTitle.text = event.getTitle(context)
-            bubbleTitle.headLine2(DriveKitUI.colors.primaryColor())
+        val bubbleTitle = view.findViewById<TextView>(R.id.bubble_title)
+        bubbleTitle.text = event.getTitle(context)
+        bubbleTitle.headLine2(DriveKitUI.colors.primaryColor())
 
-            val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
-            descriptionTextView.smallText()
-            event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
-                descriptionTextView.visibility  = View.VISIBLE
-                descriptionTextView.text = description
-            } ?: kotlin.run {
-                descriptionTextView.visibility  = View.GONE
-            }
+        val descriptionTextView = view.findViewById<TextView>(R.id.bubble_description)
+        descriptionTextView.smallText()
+        event.getDescription(view.context, tripDetailViewModel.trip!!)?.let {description ->
+            descriptionTextView.visibility  = View.VISIBLE
+            descriptionTextView.text = description
+        } ?: kotlin.run {
+            descriptionTextView.visibility  = View.GONE
+        }
 
-            val bubbleInfo = view.findViewById<ImageView>(R.id.bubble_more_info)
-            bubbleInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
-            if (event.showInfoIcon()){
-                bubbleInfo.visibility = View.VISIBLE
-            }else{
-                bubbleInfo.visibility = View.INVISIBLE
-            }
+        val bubbleInfo = view.findViewById<ImageView>(R.id.bubble_more_info)
+        bubbleInfo.setColorFilter(DriveKitUI.colors.secondaryColor())
+        if (event.showInfoIcon()) {
+            bubbleInfo.visibility = View.VISIBLE
+        } else {
+            bubbleInfo.visibility = View.INVISIBLE
         }
         return view
     }

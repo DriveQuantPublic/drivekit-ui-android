@@ -1,0 +1,30 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    repositories {
+        maven {
+            if (System.env.REPO_PATH) {
+                url System.env.REPO_PATH
+                if (System.env.MAVEN_LOGIN && System.env.MAVEN_PASSWORD) {
+                    credentials {
+                        username System.env.MAVEN_LOGIN
+                        password System.env.MAVEN_PASSWORD
+                    }
+                }
+            } else {
+                url mavenLocal().url
+            }
+        }
+    }
+    publications {
+        release(MavenPublication) {
+            groupId = "com.drivequant.drivekit"
+            artifactId = project.artifactId
+            version = android.defaultConfig.versionName
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}

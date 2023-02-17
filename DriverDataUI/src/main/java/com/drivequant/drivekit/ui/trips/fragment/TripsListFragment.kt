@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
@@ -49,11 +49,10 @@ class TripsListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 TripsListViewModel.TripsListViewModelFactory(TripListConfiguration.MOTORIZED())
-            )
-                .get(TripsListViewModel::class.java)
+            )[TripsListViewModel::class.java]
         }
 
         viewModel.shouldShowFilterMenuOption.observe(this) {

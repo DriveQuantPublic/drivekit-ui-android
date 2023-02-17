@@ -10,7 +10,7 @@ import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
@@ -68,7 +68,7 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+            viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
         }
     }
 

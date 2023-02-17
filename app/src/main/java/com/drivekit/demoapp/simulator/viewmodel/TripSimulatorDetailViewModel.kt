@@ -156,7 +156,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     @Suppress("UNCHECKED_CAST")
     class TripSimulatorDetailViewModelFactory(private val presetTripType: PresetTripType) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return TripSimulatorDetailViewModel(presetTripType) as T
         }
     }

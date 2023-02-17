@@ -3,7 +3,7 @@ package com.drivequant.drivekit.timeline.ui
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.startingFrom
-import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
@@ -27,12 +27,12 @@ internal object TimelineUtils {
         return backendDateFormat
     }
 
-    fun updateSelectedDateForNewPeriod(period: DKTimelinePeriod, previousSelectedDate: Date?, weekTimeline: Timeline?, monthTimeline: Timeline?): Date? {
+    fun updateSelectedDateForNewPeriod(period: DKTimelinePeriod, previousSelectedDate: Date?, weekTimeline: DKRawTimeline?, monthTimeline: DKRawTimeline?): Date? {
         if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
             if (weekTimeline.period != TimelinePeriod.WEEK || monthTimeline.period != TimelinePeriod.MONTH) {
                 throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
             }
-            val timeline: Timeline
+            val timeline: DKRawTimeline
             val compareDate: Date
             when (period) {
                 DKTimelinePeriod.WEEK -> {

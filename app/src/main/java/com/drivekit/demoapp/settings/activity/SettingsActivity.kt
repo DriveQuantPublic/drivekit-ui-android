@@ -18,7 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
 import com.drivekit.demoapp.settings.enum.UserInfoType
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
@@ -66,7 +66,7 @@ internal class SettingsActivity: AppCompatActivity() {
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+            viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
         }
     }
 

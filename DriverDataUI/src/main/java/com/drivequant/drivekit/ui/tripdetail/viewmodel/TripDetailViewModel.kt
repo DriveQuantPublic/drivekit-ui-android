@@ -478,7 +478,7 @@ class TripDetailViewModelFactory(
     private val itinId: String,
     private val tripListConfiguration: TripListConfiguration
 ) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return TripDetailViewModel(itinId, tripListConfiguration) as T
     }
 }

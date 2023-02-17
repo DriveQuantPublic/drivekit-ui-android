@@ -2,7 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -47,7 +47,7 @@ class VehiclesListFragment : Fragment() {
             updateVehicles(SynchronizationType.DEFAULT)
         }
 
-        viewModel = ViewModelProviders.of(this).get(VehiclesListViewModel::class.java)
+        viewModel = ViewModelProvider(this)[VehiclesListViewModel::class.java]
         viewModel.apply {
             progressBarObserver.observe(this@VehiclesListFragment) {
                 it?.let { displayProgressCircular ->

@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -82,8 +82,8 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     private fun initVehicleOdometerDetail() {
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-                viewModel = ViewModelProviders.of(this,
-                    OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId)).get(OdometerDetailViewModel::class.java)
+                viewModel = ViewModelProvider(this,
+                    OdometerDetailViewModel.OdometerDetailViewModelFactory(vehicleId))[OdometerDetailViewModel::class.java]
                 initOdometerItems(vehicleId)
                 initVehicle(context)
                 displayOdometerReadings(context, vehicleId)
