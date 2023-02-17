@@ -72,7 +72,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                 update()
             }
         }
-        DriveKitDriverData.getTimelines(
+        DriveKitDriverData.getRawTimelines(
             DKTimelinePeriod.values().asList(),
             object : TimelineQueryListener {
                 override fun onResponse(
@@ -96,7 +96,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     }
 
     fun updateTimeline() {
-        DriveKitDriverData.getTimelines(
+        DriveKitDriverData.getRawTimelines(
             DKTimelinePeriod.values().asList(),
             object : TimelineQueryListener {
                 override fun onResponse(
