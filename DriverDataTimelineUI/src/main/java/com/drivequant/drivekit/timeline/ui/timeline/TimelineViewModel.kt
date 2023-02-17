@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.databaseutils.entity.Timeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.*
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
@@ -40,9 +40,9 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedScore: DKScoreType = scores.first()
         private set
 
-    var weekTimeline: Timeline? = null
+    var weekTimeline: DKRawTimeline? = null
         private set
-    var monthTimeline: Timeline? = null
+    var monthTimeline: DKRawTimeline? = null
         private set
 
     var selectedDate: Date? = null
@@ -77,7 +77,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<Timeline>
+                    timelines: List<DKRawTimeline>
                 ) {
                     if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                         timelines.forEach {
@@ -101,7 +101,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
-                    timelines: List<Timeline>
+                    timelines: List<DKRawTimeline>
                 ) {
                     if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
                         timelines.forEach {

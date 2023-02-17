@@ -11,7 +11,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
@@ -31,8 +31,8 @@ internal class TimelineDetailFragment : Fragment() {
     private lateinit var selectedScore: DKScoreType
     private lateinit var selectedPeriod: DKTimelinePeriod
     private lateinit var selectedDate: Date
-    private lateinit var weekTimeline: Timeline
-    private lateinit var monthTimeline: Timeline
+    private lateinit var weekTimeline: DKRawTimeline
+    private lateinit var monthTimeline: DKRawTimeline
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: PeriodSelectorView
@@ -50,8 +50,8 @@ internal class TimelineDetailFragment : Fragment() {
             selectedScore: DKScoreType,
             selectedPeriod: DKTimelinePeriod,
             selectedDate: Date,
-            weekTimeline: Timeline,
-            monthTimeline: Timeline
+            weekTimeline: DKRawTimeline,
+            monthTimeline: DKRawTimeline
         ): TimelineDetailFragment {
             val fragment = TimelineDetailFragment()
             fragment.selectedScore = selectedScore
@@ -103,10 +103,10 @@ internal class TimelineDetailFragment : Fragment() {
                 selectedDate = date
             }
             it.getString("weekTimeline")?.let { savedWeekTimeline ->
-                weekTimeline = Gson().fromJson(savedWeekTimeline, Timeline::class.java)
+                weekTimeline = Gson().fromJson(savedWeekTimeline, DKRawTimeline::class.java)
             }
             it.getString("monthTimeline")?.let { savedMonthTimeline ->
-                monthTimeline = Gson().fromJson(savedMonthTimeline, Timeline::class.java)
+                monthTimeline = Gson().fromJson(savedMonthTimeline, DKRawTimeline::class.java)
             }
         }
 

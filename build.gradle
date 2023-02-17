@@ -2,11 +2,11 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '1.29-beta2'
+        drivekit_version = '1.30-beta1'
 
         kotlin_version = '1.7.21'
 
-        appcompat = '1.6.0'
+        appcompat = '1.6.1'
         constraint_layout = '2.1.4'
         core_ktx = '1.9.0'
         grid_layout = '1.0.0'
@@ -28,7 +28,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath 'com.android.tools.build:gradle:7.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

@@ -36,8 +36,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "com.github.PhilJay:MPAndroidChart:$mp_chart"
 
-    implementation "com.google.android.gms:play-services-location:$play_services_location"
-
     implementation "com.drivequant.drivekit:drivekit-trip-analysis:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-driver-data:$drivekit_version"
     implementation "com.drivequant.drivekit:drivekit-vehicle:$drivekit_version"

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
@@ -30,8 +30,8 @@ internal class TimelineDetailActivity : AppCompatActivity() {
             selectedScore: DKScoreType,
             selectedPeriod: DKTimelinePeriod,
             selectedDate: Date?,
-            weekTimeline: Timeline?,
-            monthTimeline: Timeline?
+            weekTimeline: DKRawTimeline?,
+            monthTimeline: DKRawTimeline?
         ) {
             val intent = Intent(activity, TimelineDetailActivity::class.java)
             intent.putExtra(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
@@ -73,8 +73,8 @@ internal class TimelineDetailActivity : AppCompatActivity() {
                 DKScoreType.valueOf(selectedScore),
                 DKTimelinePeriod.valueOf(selectedPeriod),
                 computedDate,
-                Gson().fromJson(weekTimeline, Timeline::class.java),
-                Gson().fromJson(monthTimeline, Timeline::class.java)
+                Gson().fromJson(weekTimeline, DKRawTimeline::class.java),
+                Gson().fromJson(monthTimeline, DKRawTimeline::class.java)
             )
             supportFragmentManager
             .beginTransaction()
