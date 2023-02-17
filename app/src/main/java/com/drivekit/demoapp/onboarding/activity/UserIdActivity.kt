@@ -98,6 +98,7 @@ class UserIdActivity : AppCompatActivity() {
             }
         } else {
             text_input_layout_user_id.isErrorEnabled = false
+            progress_bar_message.show(null)
             viewModel.sendUserId(userId, object : UserIdDriveKitListener {
                 override fun onSetUserId(status: Boolean, requestError: RequestError?) {
                     if (status) {

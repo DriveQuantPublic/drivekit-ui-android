@@ -51,7 +51,9 @@ class ChallengeFragment : Fragment() {
     }
 
     fun updateChallenge() {
-        viewModel.fetchChallengeList(SynchronizationType.CACHE)
+        if (this::viewModel.isInitialized) {
+            viewModel.fetchChallengeList(SynchronizationType.CACHE)
+        }
     }
 
     private fun setViewPager() {

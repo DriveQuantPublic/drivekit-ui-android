@@ -13,7 +13,7 @@ class DKWeakList <T> : Iterable<T> {
         val iterator = this.elements.iterator()
         while (iterator.hasNext()) {
             iterator.next().get().let {
-                if (it == null || it === iterator) {
+                if (it == null || it === element) {
                     iterator.remove()
                 }
             }
