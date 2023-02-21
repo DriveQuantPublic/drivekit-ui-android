@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/my_synthesis_score_card_view"
+        style="@style/DKCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/dk_margin"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dk_margin_half"
+            android:paddingTop="@dimen/dk_margin_half"
+            android:paddingEnd="@dimen/dk_margin_half"
+            android:paddingBottom="@dimen/dk_margin_half">
+
+            <ImageView
+                android:id="@+id/score_card_icon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/score_card_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TEST 1"
+                app:layout_constraintEnd_toStartOf="@id/score_card_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/score_card_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TEST 2"
+                app:layout_constraintEnd_toStartOf="@id/score_card_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/score_card_title" />
+
+            <TextView
+                android:id="@+id/score_card_evolution_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TEST 3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/score_card_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/score_card_subtitle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
