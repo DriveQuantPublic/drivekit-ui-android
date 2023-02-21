@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.Spannable
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -49,35 +48,23 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
         if (value == 11.0)
             return R.color.dkGaugeBackColor
-        if (value <= steps[0])
-            return R.color.dkVeryBad
         if (value <= steps[1])
-            return R.color.dkBad
+            return R.color.dkVeryBad
         if (value <= steps[2])
-            return R.color.dkBadMean
+            return R.color.dkBad
         if (value <= steps[3])
-            return R.color.dkMean
+            return R.color.dkBadMean
         if (value <= steps[4])
+            return R.color.dkMean
+        if (value <= steps[5])
             return R.color.dkGoodMean
-        return if (value <= steps[5]) R.color.dkGood else R.color.dkExcellent
+        return if (value <= steps[6]) R.color.dkGood else R.color.dkExcellent
     }
 
-    private fun getSteps(): List<Double> = when (this) {
-        is ECO_DRIVING -> {
-            val mean = 7.63
-            val sigma = 0.844
-            listOf(
-                mean - (2 * sigma),
-                mean - sigma,
-                mean - (0.25 * sigma),
-                mean,
-                mean + (0.25 * sigma),
-                mean + sigma,
-                mean + (2 * sigma)
-            )
-        }
-        is SAFETY -> listOf(0.0, 5.5, 6.5, 7.5, 8.5, 9.5, 10.0)
-        is DISTRACTION -> listOf(1.0, 7.0, 8.0, 8.5, 9.0, 9.5, 10.0)
-        is SPEEDING -> listOf(3.0, 5.0, 7.0, 8.0, 9.0, 9.5, 10.0)
-    }
+    private fun getSteps() = when (this) {
+        is SAFETY -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SAFETY
+        is ECO_DRIVING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.ECO_DRIVING
+        is DISTRACTION -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.DISTRACTION
+        is SPEEDING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SPEEDING
+    }.getSteps()
 }

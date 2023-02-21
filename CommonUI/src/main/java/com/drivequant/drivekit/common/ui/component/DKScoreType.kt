@@ -2,9 +2,8 @@ package com.drivequant.drivekit.common.ui.component
 
 import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.core.access.AccessType
-import com.drivequant.drivekit.core.access.DriveKitAccess
 
+// Beware that it also exists a DKScoreType enum on DriveKit Core
 enum class DKScoreType {
     SAFETY, ECO_DRIVING, DISTRACTION, SPEEDING;
 
@@ -14,15 +13,12 @@ enum class DKScoreType {
         ECO_DRIVING -> "dk_common_ecodriving_flat"
         SPEEDING -> "dk_common_speeding_flat"
     }
-
     fun hasAccess() = when (this) {
-        SAFETY -> AccessType.SAFETY
-        ECO_DRIVING -> AccessType.ECODRIVING
-        DISTRACTION -> AccessType.PHONE_DISTRACTION
-        SPEEDING -> AccessType.SPEEDING
-    }.let {
-        DriveKitAccess.hasAccess(it)
-    }
+        SAFETY -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SAFETY
+        ECO_DRIVING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.ECO_DRIVING
+        DISTRACTION -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.DISTRACTION
+        SPEEDING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SPEEDING
+    }.hasAccess()
 
     @StringRes
     fun getTitleId(): Int = when (this) {

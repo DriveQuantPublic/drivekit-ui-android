@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
