@@ -8,6 +8,7 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -62,9 +63,9 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     }
 
     private fun getSteps() = when (this) {
-        is SAFETY -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SAFETY
-        is ECO_DRIVING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.ECO_DRIVING
-        is DISTRACTION -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.DISTRACTION
-        is SPEEDING -> com.drivequant.drivekit.core.scoreslevels.DKScoreType.SPEEDING
+        is SAFETY -> DKScoreType.SAFETY
+        is ECO_DRIVING -> DKScoreType.ECO_DRIVING
+        is DISTRACTION -> DKScoreType.DISTRACTION
+        is SPEEDING -> DKScoreType.SPEEDING
     }.getSteps()
 }
