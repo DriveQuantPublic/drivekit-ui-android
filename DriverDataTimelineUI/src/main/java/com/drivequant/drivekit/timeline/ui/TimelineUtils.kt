@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.startingFrom
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
@@ -75,7 +75,6 @@ internal fun <E> List<E>.addValueIfNotEmpty(index: Int, list: MutableList<E>) {
         list.add(this[index])
     }
 }
-
 
 internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType> {
     return when (this) {
