@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
