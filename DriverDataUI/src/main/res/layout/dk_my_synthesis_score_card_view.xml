@@ -31,13 +31,12 @@
                 android:layout_height="64dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/score_card_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TEST 1"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +46,6 @@
                 android:id="@+id/score_card_subtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="7,5 / 10"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +55,7 @@
                 android:id="@+id/score_card_evolution_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TEST 3"
+                android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
