@@ -1,23 +1,23 @@
-package com.drivequant.drivekit.timeline.ui.component.periodselector
+package com.drivequant.drivekit.common.ui.component.periodselector
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.common.DKPeriod
-import com.drivequant.drivekit.timeline.ui.R
 
-internal class PeriodSelectorView(
+class DKPeriodSelectorView(
     context: Context,
     periods: List<DKPeriod>
 ) : LinearLayout(context) {
 
-    private lateinit var viewModel: PeriodSelectorViewModel
+    private lateinit var viewModel: DKPeriodSelectorViewModel
     private val buttons: List<PeriodSelectorItemView>
 
     init {
-        val view = View.inflate(context, R.layout.dk_timeline_period_selector, null).setDKStyle() as LinearLayout
+        val view = View.inflate(context, R.layout.dk_period_selector, null).setDKStyle() as LinearLayout
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -25,7 +25,7 @@ internal class PeriodSelectorView(
             )
         )
         this.buttons = periods.map { period ->
-            PeriodSelectorItemView(context, period, object : PeriodSelectorItemListener {
+            PeriodSelectorItemView(context, period, object : DKPeriodSelectorItemListener {
                 override fun onPeriodSelected(period: DKPeriod) {
                     buttonSelected(period)
                     viewModel.onPeriodSelected(period)
@@ -34,14 +34,14 @@ internal class PeriodSelectorView(
         }.onEach { view.addView(it) }
     }
 
-    fun configure(viewModel: PeriodSelectorViewModel) {
+    fun configure(viewModel: DKPeriodSelectorViewModel) {
         this.viewModel = viewModel
         buttonSelected(viewModel.selectedPeriod)
     }
 
     fun buttonSelected(period: DKPeriod) {
         buttons.forEach {
-            it.setPeriodSelected(it.timelinePeriod == period)
+            it.setPeriodSelected(it.period == period)
         }
     }
 }

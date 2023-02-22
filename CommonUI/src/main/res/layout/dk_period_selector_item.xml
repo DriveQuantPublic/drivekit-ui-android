@@ -6,8 +6,8 @@
         android:id="@+id/text_view_selector"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dk_ic_big"
+        android:background="@drawable/dk_period_selector_rounded_edges"
         android:gravity="center"
-        android:paddingEnd="@dimen/dk_margin_double"
         android:paddingStart="@dimen/dk_margin_double"
-        android:background="@drawable/dk_timeline_rounded_edges" />
+        android:paddingEnd="@dimen/dk_margin_double" />
 </LinearLayout>

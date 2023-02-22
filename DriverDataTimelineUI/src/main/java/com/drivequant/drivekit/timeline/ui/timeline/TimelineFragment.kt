@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -19,22 +21,20 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
 
-internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
+internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private lateinit var viewModel: TimelineViewModel
 
     private lateinit var dispatchTouchFrameLayout: DispatchTouchFrameLayout
 
     private lateinit var periodSelectorContainer: LinearLayout
-    private lateinit var periodSelectorView: PeriodSelectorView
+    private lateinit var periodSelectorView: DKPeriodSelectorView
 
     private lateinit var dateSelectorContainer: LinearLayout
     private lateinit var dateSelectorView: DateSelectorView
@@ -164,7 +164,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it, viewModel.periods)
+            periodSelectorView = DKPeriodSelectorView(it, viewModel.periods)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,

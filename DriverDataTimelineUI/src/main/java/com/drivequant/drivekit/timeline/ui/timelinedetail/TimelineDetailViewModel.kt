@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
@@ -18,8 +20,6 @@ import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.Date
@@ -31,7 +31,7 @@ internal class TimelineDetailViewModel(
     var selectedDate: Date,
     var weekTimeline: DKRawTimeline,
     var monthTimeline: DKRawTimeline
-) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
+) : AndroidViewModel(application), DKPeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
 
     val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
 
@@ -39,7 +39,7 @@ internal class TimelineDetailViewModel(
 
     var listener: TimelineDetailViewModelListener? = null
     @StringRes val titleId: Int = selectedScore.getTitleId()
-    val periodSelectorViewModel: PeriodSelectorViewModel = PeriodSelectorViewModel()
+    val periodSelectorViewModel: DKPeriodSelectorViewModel = DKPeriodSelectorViewModel()
     val dateSelectorViewModel: DateSelectorViewModel = DateSelectorViewModel()
     val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()

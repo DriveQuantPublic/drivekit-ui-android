@@ -1,11 +1,11 @@
-package com.drivequant.drivekit.timeline.ui.component.periodselector
+package com.drivequant.drivekit.common.ui.component.periodselector
 
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 
-internal class PeriodSelectorViewModel: ViewModel() {
+class DKPeriodSelectorViewModel: ViewModel() {
 
-    var listener: PeriodSelectorItemListener? = null
+    var listener: DKPeriodSelectorItemListener? = null
     var selectedPeriod: DKPeriod = DKPeriod.WEEK
         private set
 
@@ -16,10 +16,11 @@ internal class PeriodSelectorViewModel: ViewModel() {
         }
     }
 
-    fun onPeriodSelected(period: DKPeriod) {
+    internal fun onPeriodSelected(period: DKPeriod) {
         if (this.selectedPeriod != period) {
             this.selectedPeriod = period
             listener?.onPeriodSelected(period)
         }
     }
+
 }

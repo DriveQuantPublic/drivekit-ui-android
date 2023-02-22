@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.timeline.ui.component.periodselector
+package com.drivequant.drivekit.common.ui.component.periodselector
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,42 +6,43 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.common.DKPeriod
-import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.getTitleResId
-import kotlinx.android.synthetic.main.dk_timeline_period_item_selector.view.*
-import kotlinx.android.synthetic.main.dk_timeline_period_selector.view.*
 
 @SuppressLint("ViewConstructor")
 internal class PeriodSelectorItemView(
     context: Context,
-    val timelinePeriod: DKPeriod,
-    val listener: PeriodSelectorItemListener
+    val period: DKPeriod,
+    val listener: DKPeriodSelectorItemListener
 ) : LinearLayout(context) {
 
+    private val textViewSelector: TextView
+
     init {
-        val view = View.inflate(context, R.layout.dk_timeline_period_item_selector, null).setDKStyle()
+        val view = View.inflate(context, R.layout.dk_period_selector_item, null).setDKStyle()
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
+        this.textViewSelector = view.findViewById(R.id.text_view_selector)
         setStyle()
-        with(text_view_selector) {
-            text = DKResource.convertToString(context, timelinePeriod.getTitleResId())
+        with(this.textViewSelector) {
+            text = DKResource.convertToString(context, period.getTitleResId())
             setOnClickListener {
-                listener.onPeriodSelected(timelinePeriod)
+                listener.onPeriodSelected(period)
             }
         }
     }
 
     private fun setStyle() {
-        val params = text_view_selector.layoutParams as MarginLayoutParams
+        val params = textViewSelector.layoutParams as MarginLayoutParams
         params.setMargins(
             context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.topMargin,
@@ -49,17 +50,18 @@ internal class PeriodSelectorItemView(
             params.bottomMargin
         )
         layoutParams = params
-        text_view_selector.normalText()
-        (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
+        textViewSelector.normalText()
+        (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
     }
 
     fun setPeriodSelected(selected: Boolean) {
         if (selected) {
-            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
-            text_view_selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
+            textViewSelector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         } else {
-            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
-            text_view_selector.normalText()
+            (textViewSelector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
+            textViewSelector.normalText()
         }
     }
+
 }

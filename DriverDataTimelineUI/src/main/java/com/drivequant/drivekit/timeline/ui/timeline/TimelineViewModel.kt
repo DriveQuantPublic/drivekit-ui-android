@@ -11,6 +11,8 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
@@ -20,8 +22,6 @@ import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorVi
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextViewModel
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
 import java.util.*
@@ -50,13 +50,13 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedDate: Date? = null
         private set
 
-    val periodSelectorViewModel = PeriodSelectorViewModel()
+    val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val roadContextViewModel = RoadContextViewModel()
     val dateSelectorViewModel = DateSelectorViewModel()
     val graphViewModel = TimelineGraphViewModel()
 
     init {
-        periodSelectorViewModel.listener = object : PeriodSelectorItemListener {
+        periodSelectorViewModel.listener = object : DKPeriodSelectorItemListener {
             override fun onPeriodSelected(period: DKPeriod) {
                 if (currentPeriod != period) {
                     currentPeriod = period
