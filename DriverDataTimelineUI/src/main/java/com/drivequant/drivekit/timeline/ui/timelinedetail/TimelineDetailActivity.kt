@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 import com.google.gson.Gson
@@ -28,7 +28,7 @@ internal class TimelineDetailActivity : AppCompatActivity() {
         fun launchActivity(
             activity: Activity,
             selectedScore: DKScoreType,
-            selectedPeriod: DKTimelinePeriod,
+            selectedPeriod: DKPeriod,
             selectedDate: Date?,
             weekTimeline: DKRawTimeline?,
             monthTimeline: DKRawTimeline?
@@ -71,7 +71,7 @@ internal class TimelineDetailActivity : AppCompatActivity() {
             computedDate.time = selectedDate
             fragment = TimelineDetailFragment.newInstance(
                 DKScoreType.valueOf(selectedScore),
-                DKTimelinePeriod.valueOf(selectedPeriod),
+                DKPeriod.valueOf(selectedPeriod),
                 computedDate,
                 Gson().fromJson(weekTimeline, DKRawTimeline::class.java),
                 Gson().fromJson(monthTimeline, DKRawTimeline::class.java)

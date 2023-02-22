@@ -3,9 +3,9 @@ package com.drivequant.drivekit.timeline.ui
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.CalendarField
 import com.drivequant.drivekit.common.ui.extension.startingFrom
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -15,9 +15,10 @@ import kotlin.math.ceil
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
 internal fun Date.toTimelineString(): String = TimelineUtils.getBackendDateFormat().format(this)
 
-internal fun DKTimelinePeriod.getTitleResId() = when(this) {
-    DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
-    DKTimelinePeriod.MONTH -> "dk_timeline_per_month"
+internal fun DKPeriod.getTitleResId() = when(this) {
+    DKPeriod.WEEK -> "dk_common_period_selector_week"
+    DKPeriod.MONTH -> "dk_common_period_selector_month"
+    DKPeriod.YEAR -> "dk_common_period_selector_year"
 }
 
 internal object TimelineUtils {
@@ -27,7 +28,7 @@ internal object TimelineUtils {
         return backendDateFormat
     }
 
-    fun updateSelectedDateForNewPeriod(period: DKTimelinePeriod, previousSelectedDate: Date?, weekTimeline: DKRawTimeline?, monthTimeline: DKRawTimeline?): Date? {
+    fun updateSelectedDateForNewPeriod(period: DKPeriod, previousSelectedDate: Date?, weekTimeline: DKRawTimeline?, monthTimeline: DKRawTimeline?): Date? {
         if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
             if (weekTimeline.period != TimelinePeriod.WEEK || monthTimeline.period != TimelinePeriod.MONTH) {
                 throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
@@ -35,14 +36,15 @@ internal object TimelineUtils {
             val timeline: DKRawTimeline
             val compareDate: Date
             when (period) {
-                DKTimelinePeriod.WEEK -> {
+                DKPeriod.WEEK -> {
                     compareDate = previousSelectedDate
                     timeline = weekTimeline
                 }
-                DKTimelinePeriod.MONTH -> {
+                DKPeriod.MONTH -> {
                     compareDate = previousSelectedDate.startingFrom(CalendarField.MONTH)
                     timeline = monthTimeline
                 }
+                DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
             }
             var newSelectedDate = previousSelectedDate
             for (dateString in timeline.allContext.date) {

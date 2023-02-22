@@ -10,10 +10,10 @@ import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.*
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
@@ -28,11 +28,13 @@ import java.util.*
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
+    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
+
     val updateData = MutableLiveData<Any>()
 
     val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
-    var currentPeriod: DKTimelinePeriod = DKTimelinePeriod.values().first()
+    var currentPeriod: DKPeriod = this.periods.first()
         private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
@@ -55,7 +57,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     init {
         periodSelectorViewModel.listener = object : PeriodSelectorItemListener {
-            override fun onPeriodSelected(period: DKTimelinePeriod) {
+            override fun onPeriodSelected(period: DKPeriod) {
                 if (currentPeriod != period) {
                     currentPeriod = period
 
@@ -73,7 +75,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             }
         }
         DriveKitDriverData.getRawTimelines(
-            DKTimelinePeriod.values().asList(),
+            this.periods,
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
@@ -84,6 +86,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                             when (it.period) {
                                 TimelinePeriod.WEEK -> weekTimeline = it
                                 TimelinePeriod.MONTH -> monthTimeline = it
+                                TimelinePeriod.YEAR -> {}
                             }
                         }
                         update()
@@ -97,7 +100,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     fun updateTimeline() {
         DriveKitDriverData.getRawTimelines(
-            DKTimelinePeriod.values().asList(),
+            this.periods,
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
@@ -108,6 +111,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                             when (it.period) {
                                 TimelinePeriod.WEEK -> weekTimeline = it
                                 TimelinePeriod.MONTH -> monthTimeline = it
+                                TimelinePeriod.YEAR -> {}
                             }
                         }
                         update(resettingSelectedDate = true)
@@ -157,7 +161,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         updateData.postValue(Any())
     }
 
-    fun updateTimelineDateAndPeriod(period: DKTimelinePeriod, date: Date) {
+    fun updateTimelineDateAndPeriod(period: DKPeriod, date: Date) {
         var shouldUpdate = false
         if (currentPeriod != period) {
             shouldUpdate = true
@@ -172,7 +176,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    fun updateTimelinePeriod(period: DKTimelinePeriod) {
+    fun updateTimelinePeriod(period: DKPeriod) {
         if (currentPeriod != period) {
             currentPeriod = period
             update()
@@ -192,14 +196,16 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     }
 
     private fun getTimelineSource() = when (currentPeriod) {
-        DKTimelinePeriod.WEEK -> weekTimeline
-        DKTimelinePeriod.MONTH -> monthTimeline
+        DKPeriod.WEEK -> weekTimeline
+        DKPeriod.MONTH -> monthTimeline
+        DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
     }
 
     private fun configureWithNoData() {
         when (currentPeriod) {
-            DKTimelinePeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
-            DKTimelinePeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+            DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+            DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+            DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, currentPeriod)
             roadContextViewModel.configure(null, selectedScore, null)

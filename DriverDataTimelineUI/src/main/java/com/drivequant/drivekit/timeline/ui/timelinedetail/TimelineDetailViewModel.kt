@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
 import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
 import com.drivequant.drivekit.timeline.ui.cleanedTimeline
@@ -27,11 +27,13 @@ import java.util.Date
 internal class TimelineDetailViewModel(
     application: Application,
     var selectedScore: DKScoreType,
-    var selectedPeriod: DKTimelinePeriod,
+    var selectedPeriod: DKPeriod,
     var selectedDate: Date,
     var weekTimeline: DKRawTimeline,
     var monthTimeline: DKRawTimeline
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
+
+    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
 
     val updateData = MutableLiveData<Any>()
 
@@ -48,7 +50,7 @@ internal class TimelineDetailViewModel(
     }
 
     @Suppress("UNCHECKED_CAST")
-    class TimelineDetailViewModelFactory(private val application: Application, private val selectedScore: DKScoreType, private val selectedPeriod: DKTimelinePeriod, private val selectedDate: Date, private val weekTimeline: DKRawTimeline, private val monthTimeline: DKRawTimeline) :
+    class TimelineDetailViewModelFactory(private val application: Application, private val selectedScore: DKScoreType, private val selectedPeriod: DKPeriod, private val selectedDate: Date, private val weekTimeline: DKRawTimeline, private val monthTimeline: DKRawTimeline) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return TimelineDetailViewModel(application, selectedScore, selectedPeriod, selectedDate, weekTimeline, monthTimeline) as T
@@ -91,13 +93,14 @@ internal class TimelineDetailViewModel(
     }
 
     private fun getTimelineSource(): DKRawTimeline = when (this.selectedPeriod) {
-        DKTimelinePeriod.MONTH -> this.monthTimeline
-        DKTimelinePeriod.WEEK -> this.weekTimeline
+        DKPeriod.MONTH -> this.monthTimeline
+        DKPeriod.WEEK -> this.weekTimeline
+        DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
     }
 
     //- PeriodSelectorItemListener
 
-    override fun onPeriodSelected(period: DKTimelinePeriod) {
+    override fun onPeriodSelected(period: DKPeriod) {
         if (this.selectedPeriod != period) {
             val date = TimelineUtils.updateSelectedDateForNewPeriod(period, this.selectedDate, this.weekTimeline, this.monthTimeline)
             if (date != null) {

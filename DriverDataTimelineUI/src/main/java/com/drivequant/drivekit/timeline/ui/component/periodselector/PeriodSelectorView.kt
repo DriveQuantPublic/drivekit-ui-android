@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.timeline.ui.R
 
 internal class PeriodSelectorView(
     context: Context,
-    periods: List<DKTimelinePeriod> = DKTimelinePeriod.values().toList()
+    periods: List<DKPeriod>
 ) : LinearLayout(context) {
 
     private lateinit var viewModel: PeriodSelectorViewModel
@@ -26,7 +26,7 @@ internal class PeriodSelectorView(
         )
         this.buttons = periods.map { period ->
             PeriodSelectorItemView(context, period, object : PeriodSelectorItemListener {
-                override fun onPeriodSelected(period: DKTimelinePeriod) {
+                override fun onPeriodSelected(period: DKPeriod) {
                     buttonSelected(period)
                     viewModel.onPeriodSelected(period)
                 }
@@ -39,7 +39,7 @@ internal class PeriodSelectorView(
         buttonSelected(viewModel.selectedPeriod)
     }
 
-    fun buttonSelected(period: DKTimelinePeriod) {
+    fun buttonSelected(period: DKPeriod) {
         buttons.forEach {
             it.setPeriodSelected(it.timelinePeriod == period)
         }

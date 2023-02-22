@@ -11,8 +11,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
@@ -29,7 +29,7 @@ internal class TimelineDetailFragment : Fragment() {
 
     private lateinit var dispatchTouchLinearLayout: DispatchTouchLinearLayout
     private lateinit var selectedScore: DKScoreType
-    private lateinit var selectedPeriod: DKTimelinePeriod
+    private lateinit var selectedPeriod: DKPeriod
     private lateinit var selectedDate: Date
     private lateinit var weekTimeline: DKRawTimeline
     private lateinit var monthTimeline: DKRawTimeline
@@ -48,7 +48,7 @@ internal class TimelineDetailFragment : Fragment() {
     companion object {
         fun newInstance(
             selectedScore: DKScoreType,
-            selectedPeriod: DKTimelinePeriod,
+            selectedPeriod: DKPeriod,
             selectedDate: Date,
             weekTimeline: DKRawTimeline,
             monthTimeline: DKRawTimeline
@@ -94,7 +94,7 @@ internal class TimelineDetailFragment : Fragment() {
                 selectedScore = DKScoreType.valueOf(savedScore)
             }
             it.getString("selectedPeriod")?.let { savedPeriod ->
-                selectedPeriod = DKTimelinePeriod.valueOf(savedPeriod)
+                selectedPeriod = DKPeriod.valueOf(savedPeriod)
             }
             val savedDate = it.getLong("selectedDate")
             if (savedDate > 0) {
@@ -157,7 +157,7 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it)
+            periodSelectorView = PeriodSelectorView(it, viewModel.periods)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,

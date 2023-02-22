@@ -11,7 +11,6 @@
     <string name="dk_timeline_deceleration_score">Score de décélération : %s</string>
     <string name="dk_timeline_distraction_score">Score de distraction : %s</string>
     <string name="dk_timeline_eco_score">Score d\'éco-conduite : %s</string>
-    <string name="dk_timeline_from_date">du</string>
     <string name="dk_timeline_fuel_savings">Économies de carburant réalisables : %s</string>
     <string name="dk_timeline_info_accel_score">Le score d\'accélération varie entre -5 et 5. Si le score vaut -5, cela indique que l\'accélération est trop faible. Si le score vaut 5, l\'accélération est trop forte. Un score nul indique que l\'accélération est idéale dans le cadre de l\'éco-conduite.</string>
     <string name="dk_timeline_info_decel_score">Le score de décélération varie entre -5 et 5. Si le score vaut -5, la décélération est trop lente. Si le score vaut 5, elle est trop brusque. Un score nul indique que la décélération est idéale dans le cadre de l\'éco-conduite.</string>
@@ -20,8 +19,6 @@
     <string name="dk_timeline_nb_unlocks">Nombre de déverrouillages / 100 km : %s</string>
     <string name="dk_timeline_overspeeding_distance">Distance relative en dépassement : %s</string>
     <string name="dk_timeline_overspeeding_duration">Durée relative en dépassement : %s</string>
-    <string name="dk_timeline_per_month">Mois</string>
-    <string name="dk_timeline_per_week">Semaine</string>
     <string name="dk_timeline_road_context_city">Urbain fluide</string>
     <string name="dk_timeline_road_context_description_empty_data">Faites un premier trajet pour voir vos premiers graphiques s\'afficher.</string>
     <string name="dk_timeline_road_context_description_no_data_ecodriving">Les trajets pour les dates sélectionnées sont trop courts pour avoir un score d’éco-conduite</string>
@@ -36,6 +33,5 @@
     <string name="dk_timeline_safety_score">Score de sécurité : %s</string>
     <string name="dk_timeline_speeding_score">Score de vitesse : %s</string>
     <string name="dk_timeline_title">Timeline</string>
-    <string name="dk_timeline_to_date">au</string>
     <string name="dk_timeline_trips_forbidden_calls">Trajets avec appels interdits : %s</string>
 </resources>
