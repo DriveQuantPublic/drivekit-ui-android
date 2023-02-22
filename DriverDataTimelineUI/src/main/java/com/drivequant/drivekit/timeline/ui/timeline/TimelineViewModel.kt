@@ -5,8 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.extension.CalendarField
-import com.drivequant.drivekit.common.ui.extension.startingFrom
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -14,6 +12,8 @@ import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.*
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
