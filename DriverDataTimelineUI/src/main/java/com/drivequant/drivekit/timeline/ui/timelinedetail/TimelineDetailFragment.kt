@@ -157,7 +157,7 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it)
+            periodSelectorView = PeriodSelectorView(it, viewModel.periods)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,

@@ -28,11 +28,13 @@ import java.util.*
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
+    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
+
     val updateData = MutableLiveData<Any>()
 
     val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
 
-    var currentPeriod: DKPeriod = DKPeriod.values().first()
+    var currentPeriod: DKPeriod = this.periods.first()
         private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
@@ -73,7 +75,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             }
         }
         DriveKitDriverData.getRawTimelines(
-            DKPeriod.values().asList(),
+            this.periods,
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,
@@ -98,7 +100,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     fun updateTimeline() {
         DriveKitDriverData.getRawTimelines(
-            DKPeriod.values().asList(),
+            this.periods,
             object : TimelineQueryListener {
                 override fun onResponse(
                     timelineSyncStatus: TimelineSyncStatus,

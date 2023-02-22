@@ -33,6 +33,8 @@ internal class TimelineDetailViewModel(
     var monthTimeline: DKRawTimeline
 ) : AndroidViewModel(application), PeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
 
+    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
+
     val updateData = MutableLiveData<Any>()
 
     var listener: TimelineDetailViewModelListener? = null
