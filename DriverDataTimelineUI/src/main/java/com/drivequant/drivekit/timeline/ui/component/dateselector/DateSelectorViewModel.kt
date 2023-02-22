@@ -1,14 +1,14 @@
 package com.drivequant.drivekit.timeline.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.core.common.DKPeriod
 import java.util.*
 
 internal class DateSelectorViewModel : ViewModel() {
 
     var listener: DateSelectorListener? = null
 
-    lateinit var period: DKTimelinePeriod
+    lateinit var period: DKPeriod
         private set
     private lateinit var dates: List<Date>
     private var selectedDateIndex: Int = -1
@@ -20,7 +20,7 @@ internal class DateSelectorViewModel : ViewModel() {
     lateinit var fromDate: Date
     lateinit var toDate: Date
 
-    fun configure(dates: List<Date>, selectedDateIndex: Int?, period: DKTimelinePeriod) {
+    fun configure(dates: List<Date>, selectedDateIndex: Int?, period: DKPeriod) {
         this.dates = dates
         this.period = period
         this.selectedDateIndex = selectedDateIndex ?: -1
@@ -54,13 +54,17 @@ internal class DateSelectorViewModel : ViewModel() {
         }
     }
 
-    private fun getEndDate(fromDate: Date, period: DKTimelinePeriod): Date {
+    private fun getEndDate(fromDate: Date, period: DKPeriod): Date {
         val calendar = Calendar.getInstance()
         calendar.time = fromDate
         when (period) {
-            DKTimelinePeriod.WEEK -> calendar.add(Calendar.DATE, 6)
-            DKTimelinePeriod.MONTH -> {
+            DKPeriod.WEEK -> calendar.add(Calendar.DATE, 6)
+            DKPeriod.MONTH -> {
                 calendar.add(Calendar.MONTH, 1)
+                calendar.add(Calendar.DAY_OF_YEAR, -1)
+            }
+            DKPeriod.YEAR -> {
+                calendar.add(Calendar.YEAR, 1)
                 calendar.add(Calendar.DAY_OF_YEAR, -1)
             }
         }

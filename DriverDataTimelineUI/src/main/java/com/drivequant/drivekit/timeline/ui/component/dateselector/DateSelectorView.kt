@@ -10,12 +10,11 @@ import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.timeline.ui.R
 import kotlinx.android.synthetic.main.dk_date_selector_view.view.*
 
-internal class DateSelectorView(context: Context) :
-    LinearLayout(context) {
+internal class DateSelectorView(context: Context) : LinearLayout(context) {
 
     private lateinit var viewModel: DateSelectorViewModel
 
@@ -72,13 +71,12 @@ internal class DateSelectorView(context: Context) :
             val toDatePrefix = DKResource.convertToString(context, "dk_timeline_to_date")
 
             text_view_date_range.text = when (viewModel.period) {
-                DKTimelinePeriod.WEEK -> {
+                DKPeriod.WEEK -> {
                     DKSpannable()
                         .append(fromDatePrefix, context.resSpans {
                             typeface(Typeface.BOLD)
                             color(DriveKitUI.colors.complementaryFontColor())
-                        }
-                        )
+                        })
                         .space()
                         .append(
                             viewModel.fromDate.formatDate(DKDatePattern.STANDARD_DATE),
@@ -101,7 +99,7 @@ internal class DateSelectorView(context: Context) :
                             })
                         .toSpannable()
                 }
-                DKTimelinePeriod.MONTH -> {
+                DKPeriod.MONTH -> {
                     DKSpannable()
                         .append(
                             viewModel.fromDate.formatDate(DKDatePattern.MONTH_LETTER_YEAR)
@@ -110,9 +108,9 @@ internal class DateSelectorView(context: Context) :
                                 typeface(Typeface.BOLD)
                                 color(DriveKitUI.colors.primaryColor())
                             }
-                        )
-                        .toSpannable()
+                        ).toSpannable()
                 }
+                DKPeriod.YEAR -> TODO()
             }
         }
     }

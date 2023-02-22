@@ -11,10 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
@@ -109,7 +108,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
     }
 
-    fun updateDataFromDetailScreen(selectedPeriod: DKTimelinePeriod, selectedDate: Date) {
+    fun updateDataFromDetailScreen(selectedPeriod: DKPeriod, selectedDate: Date) {
         viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
@@ -264,7 +263,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         )
     }
 
-    override fun onPeriodSelected(period: DKTimelinePeriod) {
+    override fun onPeriodSelected(period: DKPeriod) {
         viewModel.updateTimelinePeriod(period)
     }
 

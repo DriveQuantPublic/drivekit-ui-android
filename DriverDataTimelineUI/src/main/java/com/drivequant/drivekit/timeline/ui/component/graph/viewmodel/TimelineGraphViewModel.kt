@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.*
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
@@ -36,7 +36,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private var indexOfFirstPointInTimeline: Int? = null
     private var indexOfLastPointInTimeline: Int? = null
 
-    fun configure(context: Context, timeline: DKRawTimeline, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKTimelinePeriod) {
+    fun configure(context: Context, timeline: DKRawTimeline, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKPeriod) {
         val sourceDates = timeline.allContext.date.map { it.toTimelineDate()!! }
         val dates: List<Date> = sourceDates.map { it.removeTime() }
         val calendarField = getCalendarField(period)
@@ -76,7 +76,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         configure(graphItem, graphPointNumber, graphPoints, graphDates, selectedIndexInGraph, graphItem.getGraphDescription(context, getValue(timelineSelectedIndex, graphItem, timeline)))
     }
 
-    fun showEmptyGraph(graphItem: GraphItem, period: DKTimelinePeriod) {
+    fun showEmptyGraph(graphItem: GraphItem, period: DKPeriod) {
         val calendarField = getCalendarField(period)
         val graphPointNumber = GraphConstants.GRAPH_POINT_NUMBER
         val now = Date()
@@ -136,22 +136,24 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         this.graphViewModelDidUpdate?.let { it() }
     }
 
-    private fun getCalendarField(period: DKTimelinePeriod): CalendarField = when (period) {
-        DKTimelinePeriod.WEEK -> CalendarField.WEEK
-        DKTimelinePeriod.MONTH -> CalendarField.MONTH
+    private fun getCalendarField(period: DKPeriod): CalendarField = when (period) {
+        DKPeriod.WEEK -> CalendarField.WEEK
+        DKPeriod.MONTH -> CalendarField.MONTH
+        DKPeriod.YEAR -> CalendarField.YEAR
     }
 
-    private fun getDateFormatPattern(period: DKTimelinePeriod): DKDatePattern {
+    private fun getDateFormatPattern(period: DKPeriod): DKDatePattern {
         return when (period) {
-            DKTimelinePeriod.WEEK -> DKDatePattern.DAY_MONTH
-            DKTimelinePeriod.MONTH -> DKDatePattern.MONTH_ABBREVIATION
+            DKPeriod.WEEK -> DKDatePattern.DAY_MONTH
+            DKPeriod.MONTH -> DKDatePattern.MONTH_ABBREVIATION
+            DKPeriod.YEAR -> DKDatePattern.YEAR
         }
     }
 
     private fun getGraphLabels(
         startDate: Date,
         calendarField: CalendarField,
-        period: DKTimelinePeriod,
+        period: DKPeriod,
         graphPointNumber: Int
     ): List<String> {
         val graphDates: MutableList<String> = mutableListOf()

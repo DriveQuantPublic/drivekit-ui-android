@@ -10,10 +10,7 @@ import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisA
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.core.utils.ConnectivityType
-import com.drivequant.drivekit.core.utils.DiagnosisHelper
-import com.drivequant.drivekit.core.utils.PermissionStatus
-import com.drivequant.drivekit.core.utils.PermissionType
+import com.drivequant.drivekit.core.utils.*
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -150,7 +147,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         val versionName = try {
-            val pInfo = DriveKit.applicationContext.packageManager.getPackageInfo(DriveKit.applicationContext.packageName, 0)
+            val pInfo = DriveKit.applicationContext.packageManager.getPackageInfoCompat(DriveKit.applicationContext.packageName, 0)
             pInfo.versionName
         } catch (e: PackageManager.NameNotFoundException) {
             "noName"
