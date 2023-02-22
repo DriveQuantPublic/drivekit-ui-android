@@ -5,7 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 
@@ -60,6 +61,8 @@ internal class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun update() {
-
+        score_card_title.headLine2(DriveKitUI.colors.primaryColor())
+        score_card_subtitle.highlightBig(DriveKitUI.colors.primaryColor())
+        score_card_evolution_text.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 }
