@@ -43,7 +43,7 @@ internal class TripGoogleMapViewHolder(
     }
 
     init {
-        viewModel.displayMapItem.observe(fragment, Observer {
+        viewModel.displayMapItem.observe(fragment) {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
                 when (mapItem) {
@@ -63,8 +63,8 @@ internal class TripGoogleMapViewHolder(
                     }
                 }
             }
-        })
-        viewModel.selection.observe(fragment, Observer {
+        }
+        viewModel.selection.observe(fragment) {
             it?.let { position ->
                 val marker = googleMarkerList[position]
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(
@@ -75,12 +75,12 @@ internal class TripGoogleMapViewHolder(
                 )
                 googleMap.animateCamera(cameraUpdate)
             }
-        })
-        viewModel.selectedMapTraceType.observe(fragment, Observer {
+        }
+        viewModel.selectedMapTraceType.observe(fragment) {
             it?.let {
                 traceRoute(MapItem.DISTRACTION, it)
             }
-        })
+        }
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
 

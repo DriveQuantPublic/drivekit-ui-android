@@ -114,7 +114,7 @@ internal class TimelineDetailFragment : Fragment() {
 
         activity?.setTitle(viewModel.titleId)
 
-        viewModel.updateData.observe(this) {
+        viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
@@ -195,7 +195,7 @@ internal class TimelineDetailFragment : Fragment() {
                 addView(roadContextView)
             }
         }
-        viewModel.roadContextViewModel.changeObserver.observe(this) {
+        viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
             roadContextView.configure(viewModel.roadContextViewModel)
         }
     }

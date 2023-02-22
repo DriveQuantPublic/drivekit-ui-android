@@ -78,16 +78,16 @@ class BeaconScannerSuccessFragment : Fragment() {
             viewModel.addBeaconToVehicle()
         }
 
-        viewModel.beaconAddObserver.observe(this, Observer {
+        viewModel.beaconAddObserver.observe(viewLifecycleOwner) {
             it?.let { vehicleBeaconStatus ->
-                when (vehicleBeaconStatus){
+                when (vehicleBeaconStatus) {
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
                     ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")
                     UNKNOWN_VEHICLE -> displayErrorAlert("dk_vehicle_unknown")
                     UNAVAILABLE_BEACON -> viewModel.updateScanState(BeaconStep.BEACON_UNAVAILABLE)
                 }
             }
-        })
+        }
     }
 
     private fun displayErrorAlert(identifier: String){

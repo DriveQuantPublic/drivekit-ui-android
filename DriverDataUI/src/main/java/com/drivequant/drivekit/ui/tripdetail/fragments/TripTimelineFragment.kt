@@ -74,7 +74,7 @@ class TripTimelineFragment : Fragment() {
                 tripDetailViewModel.getSelectedEvent().postValue(position)
             }
         }, DriveKitUI.colors.secondaryColor())
-        tripDetailViewModel.getSelectedEvent().observe(this) {
+        tripDetailViewModel.getSelectedEvent().observe(viewLifecycleOwner) {
             it?.let { position ->
                 (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
                 timeline_list.smoothScrollToPosition(position)

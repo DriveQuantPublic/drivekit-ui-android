@@ -65,7 +65,7 @@ class ChallengeResultsFragment : Fragment() {
             )[ChallengeDetailViewModel::class.java]
         }
 
-        viewModel.syncChallengeDetailError.observe(this, Observer {
+        viewModel.syncChallengeDetailError.observe(viewLifecycleOwner, Observer {
             val colorStateList =
                 ColorStateList.valueOf(
                     ContextCompat.getColor(

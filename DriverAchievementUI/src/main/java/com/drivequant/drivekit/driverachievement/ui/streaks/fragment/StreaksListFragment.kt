@@ -59,7 +59,7 @@ class StreaksListFragment : Fragment() {
     }
 
     private fun updateStreaks() {
-        listViewModel.streaksData.observe(this, Observer {
+        listViewModel.streaksData.observe(viewLifecycleOwner, Observer {
             if (listViewModel.syncStatus != StreakSyncStatus.NO_ERROR) {
                 Toast.makeText(context, context?.getString(R.string.dk_achievements_failed_to_sync_streaks), Toast.LENGTH_LONG)
                     .show()

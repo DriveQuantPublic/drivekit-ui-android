@@ -49,7 +49,7 @@ class VehiclesListFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[VehiclesListViewModel::class.java]
         viewModel.apply {
-            progressBarObserver.observe(this@VehiclesListFragment) {
+            progressBarObserver.observe(viewLifecycleOwner) {
                 it?.let { displayProgressCircular ->
                     if (displayProgressCircular) {
                         showProgressCircular()
@@ -59,7 +59,7 @@ class VehiclesListFragment : Fragment() {
                 }
             }
 
-            removeBeaconOrBluetoothObserver.observe(this@VehiclesListFragment) {
+            removeBeaconOrBluetoothObserver.observe(viewLifecycleOwner) {
                 viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
             }
         }
@@ -83,7 +83,7 @@ class VehiclesListFragment : Fragment() {
 
     fun updateVehicles(synchronizationType: SynchronizationType) {
         adapter?.setTouched(false)
-        viewModel.vehiclesData.observe(this) {
+        viewModel.vehiclesData.observe(viewLifecycleOwner) {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
                 Toast.makeText(
                     context,

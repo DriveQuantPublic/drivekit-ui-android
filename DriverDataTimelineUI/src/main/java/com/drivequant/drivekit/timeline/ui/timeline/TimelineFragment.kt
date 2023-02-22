@@ -66,7 +66,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
         checkViewModelInitialization()
 
-        viewModel.updateData.observe(this) {
+        viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
 
@@ -103,7 +103,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.syncStatus.observe(this) {
+        viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateProgressVisibility(false)
         }
     }
@@ -202,7 +202,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
                 addView(roadContextView)
             }
         }
-        viewModel.roadContextViewModel.changeObserver.observe(this) {
+        viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
             roadContextView.configure(viewModel.roadContextViewModel)
         }
     }
