@@ -89,9 +89,9 @@ class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun configureEvolutionText(previousScore: Double?) {
-        val hasPreviousData = viewModel.hasPreviousData()
-        val textResId = viewModel.getEvolutionTextResId(hasPreviousData)
-        score_card_evolution_text.text = if (hasPreviousData) {
+        val textResId = viewModel.getEvolutionTextResId()
+
+        score_card_evolution_text.text = if(viewModel.hasScoredTrips() && viewModel.hasPreviousData()) {
             DKSpannable().append(context.getString(textResId)).space().computeScoreOnTen(previousScore).toSpannable()
         } else {
             context.getString(textResId)

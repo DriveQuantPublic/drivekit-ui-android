@@ -23,9 +23,13 @@ import com.drivekit.demoapp.utils.getSerializableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
+import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
@@ -78,6 +82,9 @@ internal class DashboardActivity : AppCompatActivity() {
         initLastTripsCard()
         initStartStopTripButton()
         initTripSimulatorButton()
+
+        // TODO remove after PR review
+        initMySynthesisScoreCard()
     }
 
     private fun initInfoBanners() {
@@ -141,6 +148,17 @@ internal class DashboardActivity : AppCompatActivity() {
 
         viewModel.sdkStateObserver.observe(this) {
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
+        }
+    }
+
+    // TODO remove after PR review
+    private fun initMySynthesisScoreCard() {
+        DriveKitDriverData.getDriverTimelines(listOf(DKPeriod.WEEK)) { status, timelines ->
+            //if (status == TimelineSyncStatus.NO_ERROR ) {
+                val viewModel = MySynthesisScoreCardViewModel()
+                viewModel.configure(DKScoreType.ECO_DRIVING, DKPeriod.WEEK, timelines.firstOrNull(), timelines.firstOrNull()?.allContext?.get(1)?.date)
+                container_my_synthesis_score_card.configure(viewModel)
+            //}
         }
     }
 

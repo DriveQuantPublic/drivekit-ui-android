@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
@@ -12,7 +11,6 @@ import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.R
-import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 import java.util.*
 
 // TODO restore internal
@@ -22,8 +20,8 @@ class MySynthesisScoreCardViewModel : ViewModel() {
 
     var selectedScoreType: DKScoreType = DKScoreType.SAFETY
     var selectedPeriod: DKPeriod = DKPeriod.WEEK
+    var driverTimeline: DKDriverTimeline? = null
     var scoreSynthesis: DKScoreSynthesis? = null
-    var isTimelineEmpty: Boolean = true
     private lateinit var selectedDate: Date
 
     fun configure(scoreType: DKScoreType?, period: DKPeriod?, driverTimeline: DKDriverTimeline?, selectedDate: Date?) {
@@ -33,11 +31,21 @@ class MySynthesisScoreCardViewModel : ViewModel() {
             this.selectedDate = selectedDate
         }
         if (driverTimeline != null && selectedDate != null) {
+            this.driverTimeline = driverTimeline
             this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
         }
-        isTimelineEmpty = driverTimeline?.allContext?.isEmpty() ?: true
         this.changeObserver.postValue(Any())
     }
+
+    fun hasScoredTrips(): Boolean {
+        return driverTimeline?.allContext?.firstOrNull { it.date == this.selectedDate }?.numberTripScored?.let {nbTripScored ->
+            nbTripScored > 0
+        } ?: run {
+            return false
+        }
+    }
+
+    fun isTimelineEmpty() = driverTimeline?.allContext?.isEmpty() ?: true
 
     fun hasPreviousData() = scoreSynthesis?.previousScoreValue != null
 
@@ -50,14 +58,20 @@ class MySynthesisScoreCardViewModel : ViewModel() {
     }
 
     @StringRes
-    fun getEvolutionTextResId(hasPreviousData: Boolean) =
-        if (isTimelineEmpty) {
+    fun getEvolutionTextResId() =
+        if (isTimelineEmpty()) {
             R.string.dk_driverdata_mysynthesis_not_enough_data
+        } else if (!hasScoredTrips()){
+            when (selectedPeriod) {
+                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
+                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
+                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
+            }
         } else {
             when (selectedPeriod) {
-                DKPeriod.WEEK -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
-                DKPeriod.MONTH -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
-                DKPeriod.YEAR -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
+                DKPeriod.WEEK -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
+                DKPeriod.MONTH -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
+                DKPeriod.YEAR -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
             }
         }
 
