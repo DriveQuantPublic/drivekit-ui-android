@@ -16,7 +16,7 @@ import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.google.gson.Gson
@@ -38,7 +38,7 @@ internal class TimelineDetailFragment : Fragment() {
     private lateinit var periodSelectorView: DKPeriodSelectorView
 
     private lateinit var dateSelectorContainer: LinearLayout
-    private lateinit var dateSelectorView: DateSelectorView
+    private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
@@ -173,7 +173,7 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configureDateContainer() {
         context?.let {
-            dateSelectorView = DateSelectorView(it)
+            dateSelectorView = DKDateSelectorView(it)
             dateSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,

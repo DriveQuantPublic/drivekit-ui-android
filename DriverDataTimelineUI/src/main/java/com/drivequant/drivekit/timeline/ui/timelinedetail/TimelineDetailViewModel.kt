@@ -14,8 +14,8 @@ import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
 import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
 import com.drivequant.drivekit.timeline.ui.cleanedTimeline
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorListener
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
@@ -31,7 +31,7 @@ internal class TimelineDetailViewModel(
     var selectedDate: Date,
     var weekTimeline: DKRawTimeline,
     var monthTimeline: DKRawTimeline
-) : AndroidViewModel(application), DKPeriodSelectorItemListener, DateSelectorListener, TimelineGraphListener {
+) : AndroidViewModel(application), DKPeriodSelectorItemListener, DKDateSelectorListener, TimelineGraphListener {
 
     val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
 
@@ -40,7 +40,7 @@ internal class TimelineDetailViewModel(
     var listener: TimelineDetailViewModelListener? = null
     @StringRes val titleId: Int = selectedScore.getTitleId()
     val periodSelectorViewModel: DKPeriodSelectorViewModel = DKPeriodSelectorViewModel()
-    val dateSelectorViewModel: DateSelectorViewModel = DateSelectorViewModel()
+    val dateSelectorViewModel: DKDateSelectorViewModel = DKDateSelectorViewModel()
     val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()
     private val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()

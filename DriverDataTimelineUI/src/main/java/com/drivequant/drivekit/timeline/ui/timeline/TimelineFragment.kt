@@ -18,8 +18,8 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorListener
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
@@ -37,7 +37,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     private lateinit var periodSelectorView: DKPeriodSelectorView
 
     private lateinit var dateSelectorContainer: LinearLayout
-    private lateinit var dateSelectorView: DateSelectorView
+    private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
@@ -76,7 +76,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
             } else {
                 dateSelectorContainer.visibility = View.GONE
             }
-            viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
+            viewModel.dateSelectorViewModel.listener = object : DKDateSelectorListener {
                 override fun onDateSelected(date: Date) {
                     viewModel.updateTimelineDate(date)
                 }
@@ -180,7 +180,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private fun configureDateContainer() {
         context?.let {
-            dateSelectorView = DateSelectorView(it)
+            dateSelectorView = DKDateSelectorView(it)
             dateSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,

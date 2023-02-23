@@ -1,12 +1,12 @@
-package com.drivequant.drivekit.timeline.ui.component.dateselector
+package com.drivequant.drivekit.common.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 import java.util.*
 
-internal class DateSelectorViewModel : ViewModel() {
+class DKDateSelectorViewModel : ViewModel() {
 
-    var listener: DateSelectorListener? = null
+    var listener: DKDateSelectorListener? = null
 
     lateinit var period: DKPeriod
         private set

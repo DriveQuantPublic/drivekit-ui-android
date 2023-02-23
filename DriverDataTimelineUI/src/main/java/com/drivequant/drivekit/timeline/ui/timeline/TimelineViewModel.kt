@@ -18,7 +18,7 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.*
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
@@ -52,7 +52,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val roadContextViewModel = RoadContextViewModel()
-    val dateSelectorViewModel = DateSelectorViewModel()
+    val dateSelectorViewModel = DKDateSelectorViewModel()
     val graphViewModel = TimelineGraphViewModel()
 
     init {

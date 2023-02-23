@@ -10,6 +10,9 @@ import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.TextUtils.concat
 import android.text.style.*
 import android.view.View
+import androidx.annotation.ColorInt
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
 class DKSpannable {
 
@@ -22,6 +25,13 @@ class DKSpannable {
         elements.add(text)
         values[(length..length + end)] = spans
         length += end
+    }
+
+    fun append(context: Context, text: CharSequence, @ColorInt color: Int, style: DKStyle) = apply {
+        append(text, context.resSpans {
+            color(color)
+            style(style)
+        })
     }
 
     fun append(newText: CharSequence) = apply {
@@ -53,6 +63,11 @@ class ResSpans(private val context: Context) : Iterable<Any> {
 
     fun size(@DimenRes id: Int) =
         spans.add(AbsoluteSizeSpan(context.resources.getDimension(id).toInt()))
+
+    fun style(style: DKStyle) {
+        size(style.dimensionId())
+        typeface(style.typefaceStyle())
+    }
 
     fun color(color: Int) = spans.add(ForegroundColorSpan(color))
 

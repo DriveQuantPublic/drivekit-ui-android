@@ -9,6 +9,10 @@ enum class DKDatePattern {
     HOUR_MINUTE_LETTER,
     FULL_DATE,
     DAY_MONTH,
+    DAY_MONTH_LETTER_SHORT,
+    DAY_MONTH_LETTER_SHORT_YEAR,
+    DAY_MONTH_LETTER_YEAR,
+    DAY_OF_MONTH,
     MONTH_YEAR,
     MONTH_LETTER_YEAR,
     MONTH_ABBREVIATION,
@@ -25,6 +29,10 @@ enum class DKDatePattern {
         HOUR_MINUTE -> "HH:mm"
         FULL_DATE -> "EEEE d MMMM yyyy"
         DAY_MONTH -> "dd/MM"
+        DAY_MONTH_LETTER_SHORT -> "d MMM"
+        DAY_MONTH_LETTER_SHORT_YEAR -> "d MMM yyyy"
+        DAY_MONTH_LETTER_YEAR -> "d MMMM yyyy"
+        DAY_OF_MONTH -> "d"
         MONTH_YEAR -> "MM/yyyy"
         MONTH_LETTER_YEAR -> "MMMM yyyy"
         MONTH_ABBREVIATION -> "MMM"
