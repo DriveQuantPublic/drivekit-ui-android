@@ -1,39 +1,45 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.scorecard
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.R
+import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 import java.util.*
 
-// TODO internal?
+// TODO restore internal
 class MySynthesisScoreCardViewModel : ViewModel() {
 
     val changeObserver: MutableLiveData<Any> = MutableLiveData()
 
-    lateinit var selectedScoreType: DKScoreType
-    lateinit var selectedPeriod: DKPeriod
-    lateinit var driverTimeline: DKDriverTimeline
+    var selectedScoreType: DKScoreType = DKScoreType.SAFETY
+    var selectedPeriod: DKPeriod = DKPeriod.WEEK
     var scoreSynthesis: DKScoreSynthesis? = null
+    var isTimelineEmpty: Boolean = true
     private lateinit var selectedDate: Date
 
     fun configure(scoreType: DKScoreType?, period: DKPeriod?, driverTimeline: DKDriverTimeline?, selectedDate: Date?) {
-        if (scoreType != null && period != null && driverTimeline != null && selectedDate != null) {
+        if (scoreType != null && period != null && selectedDate != null) {
             this.selectedScoreType = scoreType
             this.selectedPeriod = period
-            this.driverTimeline = driverTimeline
             this.selectedDate = selectedDate
-            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
-        } else {
-            // TODO empty Timeline
         }
+        if (driverTimeline != null && selectedDate != null) {
+            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
+        }
+        isTimelineEmpty = driverTimeline?.allContext?.isEmpty() ?: true
         this.changeObserver.postValue(Any())
     }
+
+    fun hasPreviousData() = scoreSynthesis?.previousScoreValue != null
 
     @StringRes
     fun getCardTitleResId() = when (this.selectedScoreType) {
@@ -41,5 +47,29 @@ class MySynthesisScoreCardViewModel : ViewModel() {
         DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_score
         DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_score
         DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score
+    }
+
+    @StringRes
+    fun getEvolutionTextResId(hasPreviousData: Boolean) =
+        if (isTimelineEmpty) {
+            R.string.dk_driverdata_mysynthesis_not_enough_data
+        } else {
+            when (selectedPeriod) {
+                DKPeriod.WEEK -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
+                DKPeriod.MONTH -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
+                DKPeriod.YEAR -> if (hasPreviousData) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
+            }
+        }
+
+    @DrawableRes
+    fun getTrendIconResId(): Int {
+        scoreSynthesis?.evolutionTrend?.let { trend ->
+            return when (trend) {
+                DKScoreEvolutionTrend.UP -> R.drawable.dk_driver_data_trend_positive
+                DKScoreEvolutionTrend.DOWN -> R.drawable.dk_driver_data_trend_negative
+                DKScoreEvolutionTrend.SAME -> R.drawable.dk_driver_data_trend_steady
+            }
+        }
+        return R.drawable.dk_driver_data_trend_steady
     }
 }

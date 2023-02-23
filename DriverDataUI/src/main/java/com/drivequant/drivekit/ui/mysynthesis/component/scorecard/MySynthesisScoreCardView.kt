@@ -10,12 +10,11 @@ import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.common.DKPeriod
-import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
+import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 
-// todo internal ?
+// TODO restore internal
 class MySynthesisScoreCardView : LinearLayout {
 
     private lateinit var viewModel: MySynthesisScoreCardViewModel
@@ -66,54 +65,48 @@ class MySynthesisScoreCardView : LinearLayout {
         }
     }
 
-
     private fun update() {
+        val scoreValue = this.viewModel.scoreSynthesis?.scoreValue
+        val previousScore = this.viewModel.scoreSynthesis?.previousScoreValue
+        configureTitle()
+        configureCurrentScoreText(scoreValue)
+        configureEvolutionText(previousScore)
+        configureTrendIcon(this.viewModel.scoreSynthesis)
+    }
+
+    private fun configureTitle() {
         score_card_title.apply {
             headLine2(DriveKitUI.colors.primaryColor())
             score_card_title.text = context.getString(viewModel.getCardTitleResId())
         }
+    }
 
-        this.viewModel.scoreSynthesis?.let { scoreSynthesis ->
+    private fun configureCurrentScoreText(scoreValue: Double?) {
+        val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
 
-            //TODO cut in separate methods
-            val scoreValue = scoreSynthesis.scoreValue
-            val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
+        score_card_subtitle.text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
+        score_card_subtitle.highlightBig(subtitleTextColor)
+    }
 
-            score_card_subtitle.text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
-            score_card_subtitle.highlightBig(subtitleTextColor)
+    private fun configureEvolutionText(previousScore: Double?) {
+        val hasPreviousData = viewModel.hasPreviousData()
+        val textResId = viewModel.getEvolutionTextResId(hasPreviousData)
+        score_card_evolution_text.text = if (hasPreviousData) {
+            DKSpannable().append(context.getString(textResId)).space().computeScoreOnTen(previousScore).toSpannable()
+        } else {
+            context.getString(textResId)
+        }
+        score_card_evolution_text.normalText(DriveKitUI.colors.complementaryFontColor())
+    }
 
-            val previousScore = scoreSynthesis.previousScoreValue
+    private fun configureTrendIcon(scoreSynthesis: DKScoreSynthesis?) {
+        val iconColor =
+            if (scoreSynthesis?.scoreValue != null && scoreSynthesis.previousScoreValue != null) DriveKitUI.colors.primaryColor()
+            else DriveKitUI.colors.complementaryFontColor()
 
-            score_card_evolution_text.normalText()
-            if (previousScore != null) { // has previous score
-                when (this.viewModel.selectedPeriod) {
-                    DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_previous_week
-                    DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_previous_month
-                    DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_previous_year
-                }.let {
-                    score_card_evolution_text.text = DKSpannable().append(context.getString(it)).space().computeScoreOnTen(previousScore).toSpannable()
-                }
-            } else {
-                // TODO no previous score
-            }
-            score_card_evolution_text.normalText(DriveKitUI.colors.complementaryFontColor())
-
-            var drawableResId: Int = R.drawable.dk_driver_data_trend_steady
-            val iconColor = if (scoreValue != null && previousScore != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
-            scoreSynthesis.evolutionTrend?.let { trend ->
-                when (trend) {
-                    DKScoreEvolutionTrend.UP -> R.drawable.dk_driver_data_trend_positive
-                    DKScoreEvolutionTrend.DOWN -> R.drawable.dk_driver_data_trend_negative
-                    DKScoreEvolutionTrend.SAME -> R.drawable.dk_driver_data_trend_steady
-                }.let {
-                    drawableResId = it
-                }
-            }
-            val drawable = ContextCompat.getDrawable(context, drawableResId)
-            drawable?.let { icon ->
-                icon.tintDrawable(iconColor)
-                score_card_icon.setImageDrawable(icon)
-            }
+        ContextCompat.getDrawable(context, viewModel.getTrendIconResId())?.let { icon ->
+            icon.tintDrawable(iconColor)
+            score_card_icon.setImageDrawable(icon)
         }
     }
 
