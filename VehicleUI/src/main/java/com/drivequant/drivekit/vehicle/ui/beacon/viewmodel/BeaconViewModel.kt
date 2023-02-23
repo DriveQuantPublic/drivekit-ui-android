@@ -108,12 +108,21 @@ class BeaconViewModel(
         progressBarObserver.postValue(true)
         beacon?.let { beacon ->
             vehicle?.let { vehicle ->
-                DriveKitVehicle.addBeaconToVehicle(beacon, vehicle, object : VehicleAddBeaconQueryListener {
-                    override fun onResponse(status: VehicleBeaconStatus) {
-                        progressBarObserver.postValue(false)
-                        beaconAddObserver.postValue(status)
-                    }
-                })
+                if (vehicle.beacon != null) {
+                    DriveKitVehicle.changeBeaconToVehicle(beacon, vehicle, object : VehicleChangeBeaconQueryListener {
+                            override fun onResponse(status: VehicleBeaconStatus) {
+                                progressBarObserver.postValue(false)
+                                beaconAddObserver.postValue(status)
+                            }
+                        })
+                } else {
+                    DriveKitVehicle.addBeaconToVehicle(beacon, vehicle, object : VehicleAddBeaconQueryListener {
+                            override fun onResponse(status: VehicleBeaconStatus) {
+                                progressBarObserver.postValue(false)
+                                beaconAddObserver.postValue(status)
+                            }
+                        })
+                }
             }
         }
     }
