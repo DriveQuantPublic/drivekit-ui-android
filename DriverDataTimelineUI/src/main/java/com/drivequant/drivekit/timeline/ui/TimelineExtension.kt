@@ -1,23 +1,23 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.AllContextItem
-import com.drivequant.drivekit.databaseutils.entity.RoadContextItem
-import com.drivequant.drivekit.databaseutils.entity.Timeline
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKRawAllContextItem
+import com.drivequant.drivekit.databaseutils.entity.DKRawRoadContextItem
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRoadContext
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
 
 
-private fun Timeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
+private fun DKRawTimeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
     selectedScore == DKScoreType.DISTRACTION
             || selectedScore == DKScoreType.SPEEDING
             || this.allContext.numberTripScored[selectedIndex, 0] > 0
 
-internal fun Timeline.hasData(): Boolean {
+internal fun DKRawTimeline.hasData(): Boolean {
     return this.allContext.numberTripTotal.isNotEmpty()
 }
 
-internal fun Timeline.distanceByRoadContext(selectedScore: DKScoreType, selectedIndex: Int): Map<TimelineRoadContext, Double> {
+internal fun DKRawTimeline.distanceByRoadContext(selectedScore: DKScoreType, selectedIndex: Int): Map<TimelineRoadContext, Double> {
     val distanceByContext = mutableMapOf<TimelineRoadContext, Double>()
     if (this.hasValidTripScored(selectedScore, selectedIndex)) {
         this.roadContexts.forEach {
@@ -30,7 +30,7 @@ internal fun Timeline.distanceByRoadContext(selectedScore: DKScoreType, selected
     return distanceByContext
 }
 
-internal fun Timeline.totalDistanceForAllContexts(selectedScore: DKScoreType, selectedIndex: Int) : Double {
+internal fun DKRawTimeline.totalDistanceForAllContexts(selectedScore: DKScoreType, selectedIndex: Int) : Double {
     var totalDistanceForAllContexts = 0.0
     if (this.hasValidTripScored(selectedScore, selectedIndex)) {
         totalDistanceForAllContexts = this.allContext.distance[selectedIndex, 0.0]
@@ -38,7 +38,7 @@ internal fun Timeline.totalDistanceForAllContexts(selectedScore: DKScoreType, se
     return totalDistanceForAllContexts
 }
 
-internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int?): Timeline {
+internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int?): DKRawTimeline {
     val date = mutableListOf<String>()
     val numberTripTotal = mutableListOf<Int>()
     val numberTripScored = mutableListOf<Int>()
@@ -109,7 +109,7 @@ internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int
         }
     }
 
-    val roadContexts = mutableListOf<RoadContextItem>()
+    val roadContexts = mutableListOf<DKRawRoadContextItem>()
     this.roadContexts.forEachIndexed { _, roadContextItem ->
         val newDate = mutableListOf<String>()
         val newNumberTripTotal = mutableListOf<Int>()
@@ -150,7 +150,7 @@ internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int
             }
         }
 
-        val newRoadContext = RoadContextItem(
+        val newRoadContext = DKRawRoadContextItem(
             roadContextItem.type,
             newDate,
             newNumberTripTotal,
@@ -172,7 +172,7 @@ internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int
         roadContexts.add(newRoadContext)
     }
 
-    val allContext = AllContextItem(
+    val allContext = DKRawAllContextItem(
         date,
         numberTripScored,
         numberTripTotal,
@@ -201,5 +201,5 @@ internal fun Timeline.cleanedTimeline(score: DKScoreType, selectedDateIndex: Int
         efficiencyAcceleration,
         efficiencySpeedMaintain
     )
-    return Timeline(this.period, allContext, roadContexts)
+    return DKRawTimeline(this.period, allContext, roadContexts)
 }

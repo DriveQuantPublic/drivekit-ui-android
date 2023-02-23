@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.fragment.ChallengeDetailFragment
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
@@ -44,10 +44,7 @@ class ChallengeDetailActivity : AppCompatActivity() {
     private fun showFragment() {
         val challengeId =
             intent.getStringExtra(ChallengeParticipationActivity.CHALLENGE_ID_EXTRA) as String
-        val viewModel = ViewModelProviders.of(
-            this,
-            ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
-        ).get(ChallengeDetailViewModel::class.java)
+        val viewModel = ViewModelProvider(this, ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId))[ChallengeDetailViewModel::class.java]
 
         setActivityTitle(viewModel.challenge.title)
 

@@ -105,24 +105,23 @@ internal object DKNotificationManager : TripListener {
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {}
 
     override fun tripSavedForRepost() {
-        sendNotification(DriveKit.applicationContext!!, NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_NETWORK))
+        sendNotification(DriveKit.applicationContext, NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_NETWORK))
     }
 
     override fun tripStarted(startMode: StartMode) {}
 
     override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
-        DriveKit.applicationContext?.let { context ->
-            if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED && deviceConfigEvent.btRequired) {
-                if (deviceConfigEvent.btEnabled) {
-                    cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)
-                } else {
-                    val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
-                    var contentIntent: PendingIntent? = null
-                    if (intent != null) {
-                        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-                    }
-                    sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
+        if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED && deviceConfigEvent.btRequired) {
+            val context = DriveKit.applicationContext
+            if (deviceConfigEvent.btEnabled) {
+                cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)
+            } else {
+                val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
+                var contentIntent: PendingIntent? = null
+                if (intent != null) {
+                    contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
                 }
+                sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
             }
         }
     }

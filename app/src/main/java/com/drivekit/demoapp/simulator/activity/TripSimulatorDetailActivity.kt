@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
 import com.drivekit.demoapp.component.TripSimulatorGraphView
 import com.drivekit.demoapp.simulator.viewmodel.PresetTripType
@@ -62,10 +62,10 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         }
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 TripSimulatorDetailViewModel.TripSimulatorDetailViewModelFactory(presetTripType)
-            ).get(TripSimulatorDetailViewModel::class.java)
+            )[TripSimulatorDetailViewModel::class.java]
         }
 
         if (!this::graphView.isInitialized) {

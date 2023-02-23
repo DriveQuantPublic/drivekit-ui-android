@@ -4,7 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -125,9 +125,9 @@ class TripDetailFragment : Fragment() {
             itinId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this,
+            viewModel = ViewModelProvider(this,
                 TripDetailViewModelFactory(itinId, tripListConfiguration)
-            ).get(TripDetailViewModel::class.java)
+            )[TripDetailViewModel::class.java]
         }
         progress_circular.visibility = View.VISIBLE
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)

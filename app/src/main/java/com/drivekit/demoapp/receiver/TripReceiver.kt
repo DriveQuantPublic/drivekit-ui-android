@@ -25,7 +25,6 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import com.google.android.gms.common.util.CollectionUtils
 import java.util.*
 
 internal class TripReceiver : TripAnalysedReceiver() {
@@ -132,7 +131,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
     ): PendingIntent? {
         val intent = Intent(context, DashboardActivity::class.java)
         if (!TextUtils.isEmpty(itinId)) {
-            val hasTripAdvices = !CollectionUtils.isEmpty(tripAdvices)
+            val hasTripAdvices = !tripAdvices.isNullOrEmpty()
             intent.putExtra(TripDetailActivity.ITINID_EXTRA, itinId)
             intent.putExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, hasTripAdvices)
             if (transportationMode != null && transportationMode.isAlternative()) {

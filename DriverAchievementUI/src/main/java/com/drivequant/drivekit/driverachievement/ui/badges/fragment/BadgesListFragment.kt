@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.fragment
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,7 +27,7 @@ class BadgesListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (!this::listViewModel.isInitialized)
-            listViewModel = ViewModelProviders.of(this).get(BadgesListViewModel::class.java)
+            listViewModel = ViewModelProvider(this)[BadgesListViewModel::class.java]
     }
 
     override fun onCreateView(

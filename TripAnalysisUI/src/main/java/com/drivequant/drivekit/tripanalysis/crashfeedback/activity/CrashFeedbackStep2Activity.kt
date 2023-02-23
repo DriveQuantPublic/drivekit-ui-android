@@ -3,7 +3,7 @@ package com.drivequant.drivekit.tripanalysis.crashfeedback.activity
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
@@ -34,7 +34,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
         setContentView(R.layout.dk_layout_activity_crash_feedback_step2)
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(CrashFeedbackStep2ViewModel::class.java)
+            viewModel = ViewModelProvider(this)[CrashFeedbackStep2ViewModel::class.java]
         }
 
         DriveKitTripAnalysis.setCrashFeedbackTimer(60 * 5) // 5 minutes

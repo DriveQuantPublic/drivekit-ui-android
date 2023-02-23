@@ -109,7 +109,7 @@ internal class TripGoogleMapViewHolder(
                 description?.normalText()
         }
     }
-    
+
     private fun configureAdviceButton(mapItem: DKMapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
         adviceFabButton.backgroundTintList =
@@ -312,11 +312,12 @@ internal class TripGoogleMapViewHolder(
                     .icon(BitmapDescriptorFactory.fromResource(event.getMapImageResource()))
                     .anchor(event.getXAnchor(), event.getYAnchor())
                     .title(event.getTitle(itemView.context))
-
             )
-            marker.tag = i
-            googleMarkerList.add(marker)
-            builder.include(location)
+            if (marker != null) {
+                marker.tag = i
+                googleMarkerList.add(marker)
+                builder.include(location)
+            }
         }
     }
 
@@ -349,11 +350,9 @@ internal class TripGoogleMapViewHolder(
         customInfoWindowAdapter.displayInfo(marker)
     }
 
-    override fun onMarkerClick(marker: Marker?): Boolean {
-        marker?.let {
-            viewModel.selection.postValue(it.tag as Int)
-            it.showInfoWindow()
-        }
+    override fun onMarkerClick(marker: Marker): Boolean {
+        viewModel.selection.postValue(marker.tag as Int)
+        marker.showInfoWindow()
         return true
     }
 }

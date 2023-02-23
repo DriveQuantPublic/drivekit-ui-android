@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.getIconResId
 import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
@@ -240,10 +240,10 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    viewModel = ViewModelProviders.of(
+                    viewModel = ViewModelProvider(
                         this,
                         TimelineViewModel.TimelineViewModelFactory(application)
-                    ).get(TimelineViewModel::class.java)
+                    )[TimelineViewModel::class.java]
                 }
             }
         }

@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
@@ -72,7 +72,7 @@ class WorkingHoursActivity : AppCompatActivity() {
 
     private fun setContent() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(WorkingHoursViewModel::class.java)
+            viewModel = ViewModelProvider(this)[WorkingHoursViewModel::class.java]
         }
 
         separator_enable.setBackgroundColor(DriveKitUI.colors.neutralColor())

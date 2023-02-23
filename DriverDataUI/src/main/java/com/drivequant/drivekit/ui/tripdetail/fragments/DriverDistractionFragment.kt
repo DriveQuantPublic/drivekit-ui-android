@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -58,10 +58,10 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             val tripListConfigurationType = it.getSerializable("tripListConfigurationType") as TripListConfigurationType?
 
             if (itinId != null && tripListConfigurationType != null) {
-                viewModel = ViewModelProviders.of(
+                viewModel = ViewModelProvider(
                     this,
                     TripDetailViewModelFactory(itinId, tripListConfigurationType.getTripListConfiguration())
-                ).get(TripDetailViewModel::class.java)
+                )[TripDetailViewModel::class.java]
             }
         }
 

@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -48,9 +48,9 @@ class SynthesisFragment : Fragment() {
         }
 
         if (!this::viewModel.isInitialized){
-            viewModel = ViewModelProviders.of(this,
+            viewModel = ViewModelProvider(this,
                 SynthesisViewModel.SynthesisViewModelFactory(trip)
-            ).get(SynthesisViewModel::class.java)
+            )[SynthesisViewModel::class.java]
         }
 
         viewModel.init(requireContext())
