@@ -17,7 +17,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorListener
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
@@ -78,10 +77,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
             } else {
                 dateSelectorContainer.visibility = View.GONE
             }
-            viewModel.dateSelectorViewModel.listener = object : DKDateSelectorListener {
-                override fun onDateSelected(date: Date) {
-                    viewModel.updateTimelineDate(date)
-                }
+            viewModel.dateSelectorViewModel.onDateSelected = { date ->
+                viewModel.updateTimelineDate(date)
             }
 
             button_display_timeline_detail.visibility = if (viewModel.roadContextViewModel.displayData()) {
@@ -100,14 +97,12 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
         configureGraphContainer()
 
         configureTimelineDetailButton()
-        updateTimeline()
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel.syncStatus.observe(viewLifecycleOwner) {
-            updateProgressVisibility(false)
+            updateSwipeRefreshTripsVisibility(false)
         }
+
+        updateTimeline()
     }
 
     fun updateDataFromDetailScreen(selectedPeriod: DKPeriod, selectedDate: Date) {
@@ -194,19 +189,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     }
 
     private fun updateTimeline() {
-        updateProgressVisibility(true)
+        updateSwipeRefreshTripsVisibility(true)
         viewModel.updateTimeline()
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        }
-        updateSwipeRefreshTripsVisibility(displayProgress)
     }
 
     private fun checkViewModelInitialization() {
