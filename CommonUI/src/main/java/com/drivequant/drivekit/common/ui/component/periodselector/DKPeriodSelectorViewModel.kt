@@ -5,21 +5,26 @@ import com.drivequant.drivekit.core.common.DKPeriod
 
 class DKPeriodSelectorViewModel: ViewModel() {
 
-    var listener: DKPeriodSelectorItemListener? = null
+    var onPeriodSelected: ((period: DKPeriod) -> Unit)? = null
+    var periods: List<DKPeriod> = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
+        private set
     var selectedPeriod: DKPeriod = DKPeriod.WEEK
         private set
 
-    fun configure(selectedPeriod: DKPeriod) {
-        if (this.selectedPeriod != selectedPeriod) {
-            this.selectedPeriod = selectedPeriod
-            onPeriodSelected(selectedPeriod)
+    fun configure(periods: List<DKPeriod>) {
+        this.periods = periods
+    }
+
+    fun select(period: DKPeriod) {
+        if (this.selectedPeriod != period) {
+            this.selectedPeriod = period
         }
     }
 
     internal fun onPeriodSelected(period: DKPeriod) {
         if (this.selectedPeriod != period) {
-            this.selectedPeriod = period
-            listener?.onPeriodSelected(period)
+            select(period)
+            onPeriodSelected?.invoke(period)
         }
     }
 

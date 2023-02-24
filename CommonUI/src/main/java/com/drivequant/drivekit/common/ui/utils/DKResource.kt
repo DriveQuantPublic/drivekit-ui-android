@@ -14,7 +14,7 @@ object DKResource {
 
     fun convertToDrawable(context: Context, identifier: String): Drawable? {
         val id = context.resources.getIdentifier(identifier, "drawable", context.packageName)
-        return if (id > 0){
+        return if (id > 0) {
             ContextCompat.getDrawable(context, id)
         } else {
             null

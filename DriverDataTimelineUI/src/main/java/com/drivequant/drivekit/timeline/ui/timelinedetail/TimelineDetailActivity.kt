@@ -5,8 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity

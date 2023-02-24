@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dispatch_touch_frame_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".timeline.TimelineFragment">
+    tools:context=".mysynthesis.MySynthesisFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/dk_swipe_refresh_timeline"
@@ -18,7 +18,7 @@
             android:orientation="vertical">
 
             <com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-                android:id="@+id/score_selector_view"
+                android:id="@+id/scoreSelector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dk_margin_half" />
@@ -39,14 +39,6 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dk_margin_quarter" />
 
-            <LinearLayout
-                android:id="@+id/road_context_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dk_margin_quarter" />
-
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_scroll_view"
                 android:layout_width="match_parent"
@@ -59,26 +51,35 @@
                     android:orientation="vertical"
                     android:padding="@dimen/dk_margin_quarter">
 
-                    <LinearLayout
-                        android:id="@+id/graph_container"
-                        android:layout_width="match_parent"
+                    <FrameLayout
+                        android:id="@+id/scoreCard_container"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@+id/communityCard_container"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <FrameLayout
+                        android:id="@+id/communityCard_container"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/button_detail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/scoreCard_container" />
+
                     <Button
-                        android:id="@+id/button_display_timeline_detail"
-                        android:layout_width="match_parent"
+                        android:id="@+id/button_detail"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/dk_timeline_button_timeline_detail"
+                        android:text=""
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/graph_container" />
+                        app:layout_constraintTop_toBottomOf="@id/communityCard_container" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
@@ -91,4 +92,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
-</com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout>
+</FrameLayout>

@@ -6,8 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
@@ -16,6 +14,8 @@ import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
 import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorListener
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
+import com.drivequant.drivekit.common.ui.extension.getTitleId
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
@@ -31,7 +31,7 @@ internal class TimelineDetailViewModel(
     var selectedDate: Date,
     var weekTimeline: DKRawTimeline,
     var monthTimeline: DKRawTimeline
-) : AndroidViewModel(application), DKPeriodSelectorItemListener, DKDateSelectorListener, TimelineGraphListener {
+) : AndroidViewModel(application), DKDateSelectorListener, TimelineGraphListener {
 
     val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
 
@@ -71,8 +71,8 @@ internal class TimelineDetailViewModel(
 
             // Update view models.
             if (selectedDateIndex >= 0) {
-                this.periodSelectorViewModel.configure(this.selectedPeriod)
-                this.periodSelectorViewModel.listener = this
+                this.periodSelectorViewModel.select(this.selectedPeriod)
+                this.periodSelectorViewModel.onPeriodSelected = this::onPeriodSelected
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
                 this.dateSelectorViewModel.listener = this
@@ -98,9 +98,7 @@ internal class TimelineDetailViewModel(
         DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
     }
 
-    //- PeriodSelectorItemListener
-
-    override fun onPeriodSelected(period: DKPeriod) {
+    private fun onPeriodSelected(period: DKPeriod) {
         if (this.selectedPeriod != period) {
             val date = TimelineUtils.updateSelectedDateForNewPeriod(period, this.selectedDate, this.weekTimeline, this.monthTimeline)
             if (date != null) {

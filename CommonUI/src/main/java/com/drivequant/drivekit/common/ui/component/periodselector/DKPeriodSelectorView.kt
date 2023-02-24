@@ -8,39 +8,40 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.core.common.DKPeriod
 
-class DKPeriodSelectorView(
-    context: Context,
-    periods: List<DKPeriod>
-) : LinearLayout(context) {
+class DKPeriodSelectorView(context: Context) : LinearLayout(context) {
 
     private lateinit var viewModel: DKPeriodSelectorViewModel
-    private val buttons: List<PeriodSelectorItemView>
+    private val view: ViewGroup
+    private var buttons: List<PeriodSelectorItemView> = listOf()
 
     init {
-        val view = View.inflate(context, R.layout.dk_period_selector, null).setDKStyle() as LinearLayout
+        this.view = View.inflate(context, R.layout.dk_period_selector, null).setDKStyle() as LinearLayout
         addView(
-            view, ViewGroup.LayoutParams(
+            this.view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
-        this.buttons = periods.map { period ->
+    }
+
+    fun configure(viewModel: DKPeriodSelectorViewModel) {
+        this.viewModel = viewModel
+
+        this.view.removeAllViews()
+        this.buttons = viewModel.periods.map { period ->
             PeriodSelectorItemView(context, period, object : DKPeriodSelectorItemListener {
                 override fun onPeriodSelected(period: DKPeriod) {
                     buttonSelected(period)
                     viewModel.onPeriodSelected(period)
                 }
             })
-        }.onEach { view.addView(it) }
-    }
+        }.onEach { this.view.addView(it) }
 
-    fun configure(viewModel: DKPeriodSelectorViewModel) {
-        this.viewModel = viewModel
         buttonSelected(viewModel.selectedPeriod)
     }
 
     fun buttonSelected(period: DKPeriod) {
-        buttons.forEach {
+        this.buttons.forEach {
             it.setPeriodSelected(it.period == period)
         }
     }

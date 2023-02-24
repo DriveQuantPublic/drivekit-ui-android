@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -17,6 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.google.gson.Gson
@@ -157,12 +157,13 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = DKPeriodSelectorView(it, viewModel.periods)
+            periodSelectorView = DKPeriodSelectorView(it)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
+                configure(viewModel.periodSelectorViewModel)
             }
             periodSelectorContainer.apply {
                 removeAllViews()

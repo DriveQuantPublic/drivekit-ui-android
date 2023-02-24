@@ -10,8 +10,6 @@ import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
@@ -19,6 +17,8 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.*
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
+import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
@@ -32,7 +32,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     val updateData = MutableLiveData<Any>()
 
-    val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores.toMutableList()
+    val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores
 
     var currentPeriod: DKPeriod = this.periods.first()
         private set
@@ -50,22 +50,31 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     var selectedDate: Date? = null
         private set
 
+    val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val roadContextViewModel = RoadContextViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val graphViewModel = TimelineGraphViewModel()
 
     init {
-        periodSelectorViewModel.listener = object : DKPeriodSelectorItemListener {
-            override fun onPeriodSelected(period: DKPeriod) {
-                if (currentPeriod != period) {
-                    currentPeriod = period
+        scoreSelectorViewModel.configure(DriveKitDriverDataTimelineUI.scores) { score ->
+            selectedScore = score
+            update()
+        }
+        periodSelectorViewModel.configure(periods)
+        periodSelectorViewModel.onPeriodSelected = { period ->
+            if (currentPeriod != period) {
+                currentPeriod = period
 
-                    TimelineUtils.updateSelectedDateForNewPeriod(period, selectedDate, weekTimeline, monthTimeline)?.let {
-                        this@TimelineViewModel.selectedDate = it
-                    }
-                    update()
+                TimelineUtils.updateSelectedDateForNewPeriod(
+                    period,
+                    selectedDate,
+                    weekTimeline,
+                    monthTimeline
+                )?.let {
+                    this@TimelineViewModel.selectedDate = it
                 }
+                update()
             }
         }
         graphViewModel.listener = object : TimelineGraphListener {
@@ -148,7 +157,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             if (selectedDateIndex != null && selectedDateIndex >= 0) {
                 this.selectedDate = dates[selectedDateIndex]
                 // Update view models
-                periodSelectorViewModel.configure(this.currentPeriod)
+                periodSelectorViewModel.select(this.currentPeriod)
                 dateSelectorViewModel.configure(dates, selectedDateIndex, currentPeriod)
                 roadContextViewModel.configure(cleanedTimeline, selectedScore, selectedDateIndex)
                 graphViewModel.configure(getApplication(), cleanedTimeline, selectedDateIndex, GraphItem.Score(selectedScore), currentPeriod)
@@ -188,11 +197,6 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
             selectedDate = date
             update()
         }
-    }
-
-    fun updateTimelineScore(position: Int) {
-        selectedScore = scores[position]
-        update()
     }
 
     private fun getTimelineSource() = when (currentPeriod) {

@@ -20,15 +20,27 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.core.utils.getApplicationInfoCompat
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
+import com.drivequant.drivekit.ui.mysynthesis.MySynthesisActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
+
     private const val TAG = "DriveKit DriverData UI"
+
+    var scores: List<DKScoreType> = DKScoreType.values().toList()
+        get() = field.filter { it.hasAccess() }
+        set(value) {
+            field = value.ifEmpty {
+                listOf(DKScoreType.SAFETY)
+            }
+        }
+
     var tripData: TripData = TripData.SAFETY
         private set
     var enableAlternativeTrips: Boolean = false
@@ -136,6 +148,8 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun createTripDetailFragment(tripId: String): Fragment =
         TripDetailFragment.newInstance(tripId)
+
+    override fun startMySynthesisActivity(context: Context) = MySynthesisActivity.launchActivity(context)
 
     private fun checkGoogleApiKey() {
         try {

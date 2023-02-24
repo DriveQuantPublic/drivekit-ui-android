@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
@@ -20,10 +19,10 @@ import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorListener
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
+import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
 
@@ -32,6 +31,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     private lateinit var viewModel: TimelineViewModel
 
     private lateinit var dispatchTouchFrameLayout: DispatchTouchFrameLayout
+
+    private lateinit var scoreSelectorView: DKScoreSelectorView
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: DKPeriodSelectorView
@@ -52,13 +53,14 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_timeline, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_timeline, container, false).setDKStyle()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         dispatchTouchFrameLayout = view.findViewById(R.id.dispatch_touch_frame_layout)
+        scoreSelectorView = view.findViewById(R.id.score_selector_view)
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
@@ -91,7 +93,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
         setupSwipeToRefresh()
 
-        configureTabLayout()
+        configureScoreSelectorView()
         configurePeriodContainer()
         configureDateContainer()
         configureRoadContextContainer()
@@ -128,48 +130,20 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
         }
     }
 
-    private fun configureTabLayout() {
-        context?.let { context ->
-            viewModel.scores.forEach {
-                val tab = tab_layout_timeline.newTab()
-                val icon = DKResource.convertToDrawable(context, it.getIconResId())
-                icon?.let { drawable ->
-                    tab.setIcon(drawable)
-                }
-                tab_layout_timeline.addTab(tab)
-            }
-        }
-
-        for (i in 0 until tab_layout_timeline.tabCount) {
-            tab_layout_timeline.getTabAt(i)?.setCustomView(R.layout.dk_icon_view_tab)
-        }
-
-        if (viewModel.scores.size < 2) {
-            tab_layout_timeline.visibility = View.GONE
-        }
-
-        tab_layout_timeline.apply {
-            setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
-            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkTimelineBackgroundColor))
-
-            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    viewModel.updateTimelineScore(tab_layout_timeline.selectedTabPosition)
-                }
-                override fun onTabUnselected(tab: TabLayout.Tab?) {}
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
-            })
-        }
+    private fun configureScoreSelectorView() {
+        scoreSelectorView.configure(viewModel.scoreSelectorViewModel)
+        scoreSelectorView.visibility = if (scoreSelectorView.scoreCount() < 2) View.GONE else View.VISIBLE
     }
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = DKPeriodSelectorView(it, viewModel.periods)
+            periodSelectorView = DKPeriodSelectorView(it)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
+                configure(viewModel.periodSelectorViewModel)
             }
             periodSelectorContainer.apply {
                 removeAllViews()

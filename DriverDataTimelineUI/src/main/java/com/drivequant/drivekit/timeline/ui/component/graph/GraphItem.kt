@@ -4,8 +4,8 @@ import android.content.Context
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.utils.Co2Unit
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.ceilToLowestValueWithNiceStep
 import kotlin.math.ceil
 import kotlin.math.min

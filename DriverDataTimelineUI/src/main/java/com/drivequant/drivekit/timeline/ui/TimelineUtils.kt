@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
