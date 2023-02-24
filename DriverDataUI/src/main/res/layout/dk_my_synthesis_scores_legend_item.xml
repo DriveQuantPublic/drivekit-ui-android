@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/dk_margin_half">
+
+    <!--
+        This view has a magic `marginTop` because we want to top align it with the TextView
+        But the TextView has still font padding even if `includeFontPadding` is set to `false`
+    -->
+    <View
+        android:id="@+id/score_color"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dk_margin_eigth"
+        android:background="@drawable/background_rounded_corners" />
+
+    <TextView
+        android:id="@+id/score_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:includeFontPadding="false"
+        android:gravity="top"
+        android:layout_gravity="top"
+        android:layout_marginHorizontal="@dimen/dk_margin_half" />
+</LinearLayout>

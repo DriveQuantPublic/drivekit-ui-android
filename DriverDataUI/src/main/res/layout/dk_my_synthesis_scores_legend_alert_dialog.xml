@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dk_margin"
+            android:layout_marginVertical="@dimen/dk_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/my_synthesis_score_legend_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/my_synthesis_score_legend_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/score_item_excellent"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_very_good"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_great"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_medium"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_not_good"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_bad"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+
+            <include
+                android:id="@+id/score_item_very_bad"
+                layout="@layout/dk_my_synthesis_scores_legend_item" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+</androidx.appcompat.widget.LinearLayoutCompat>
