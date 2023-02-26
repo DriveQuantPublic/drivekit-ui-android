@@ -5,4 +5,5 @@
     <string name="dk_tag_trips_detail_transportation_mode" translatable="false">drivekit-trips-detail-transportation_mode</string>
     <string name="dk_tag_trips_detail_advice_safety" translatable="false">drivekit-trips-detail-advice-safety</string>
     <string name="dk_tag_trips_detail_advice_efficiency" translatable="false">drivekit-trips-detail-advice-efficiency</string>
+    <string name="dk_tag_my_synthesis" translatable="false">drivekit-my-synthesis</string>
 </resources>

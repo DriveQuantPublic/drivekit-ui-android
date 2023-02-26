@@ -5,48 +5,35 @@ import android.graphics.Typeface
 import android.util.TypedValue
 import android.view.Gravity
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
-fun TextView.pixelToSp(size: Float) = this.setTextSize(TypedValue.COMPLEX_UNIT_PX,size)
+fun TextView.pixelToSp(size: Float) = this.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
 
 @JvmOverloads
 fun TextView.headLine1(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_medium))
-    this.setTextColor(textColor)
-    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    setStyle(DKStyle.HEADLINE1, textColor)
 }
 
 @JvmOverloads
 fun TextView.headLine2(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_normal))
-    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
-    this.setTextColor(textColor)
+    setStyle(DKStyle.HEADLINE2, textColor)
 }
 
 @JvmOverloads
 fun TextView.bigText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_medium))
-    this.setTextColor(textColor)
-    this.typeface = DriveKitUI.primaryFont(context)
+    setStyle(DKStyle.BIG_TEXT, textColor)
 }
 
 @JvmOverloads
 fun TextView.normalText(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_normal))
-    this.setTextColor(textColor)
-    this.typeface = DriveKitUI.primaryFont(context)
+    setStyle(DKStyle.NORMAL_TEXT, textColor)
 }
 
 @JvmOverloads
 fun TextView.smallText(textColor: Int = DriveKitUI.colors.mainFontColor(), isTypeFaceBold: Boolean = false) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_small))
-    this.setTextColor(textColor)
-    if (isTypeFaceBold) {
-        this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
-    } else {
-        this.typeface = DriveKitUI.primaryFont(context)
-    }
+    setStyle(DKStyle.SMALL_TEXT, textColor, if (isTypeFaceBold) Typeface.BOLD else Typeface.NORMAL)
 }
 
 @JvmOverloads
@@ -62,21 +49,21 @@ fun TextView.buttonText(textColor: Int = DriveKitUI.colors.fontColorOnSecondaryC
 
 @JvmOverloads
 fun TextView.highlightSmall(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_big))
-    this.setTextColor(textColor)
-    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    setStyle(DKStyle.HIGHLIGHT_SMALL, textColor)
 }
 
 @JvmOverloads
 fun TextView.highlightMedium(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xbig))
-    this.setTextColor(textColor)
-    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    setStyle(DKStyle.HIGHLIGHT_NORMAL, textColor)
 }
 
 @JvmOverloads
 fun TextView.highlightBig(textColor: Int = DriveKitUI.colors.mainFontColor()) {
-    this.pixelToSp(context.resources.getDimension(R.dimen.dk_text_xxbig))
+    setStyle(DKStyle.HIGHLIGHT_BIG, textColor)
+}
+
+private fun TextView.setStyle(style: DKStyle, @ColorInt textColor: Int, forceTypeFaceStyle: Int? = null) {
+    this.pixelToSp(context.resources.getDimension(style.dimensionId()))
     this.setTextColor(textColor)
-    this.setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
+    this.setTypeface(DriveKitUI.primaryFont(context), forceTypeFaceStyle ?: style.typefaceStyle())
 }

@@ -21,7 +21,7 @@ object DriveKitUI {
         this.fonts = fonts
     }
 
-    fun configureAnalytics(listener: DriveKitAnalyticsListener){
+    fun configureAnalytics(listener: DriveKitAnalyticsListener) {
         this.analyticsListener = listener
     }
 

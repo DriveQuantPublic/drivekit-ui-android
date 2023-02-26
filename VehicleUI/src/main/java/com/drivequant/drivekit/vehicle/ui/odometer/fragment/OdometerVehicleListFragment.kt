@@ -74,7 +74,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
         context?.let { context ->
             viewModel.getVehicleListItems(context)
-            viewModel.vehicleOdometerData.observe(this) {
+            viewModel.vehicleOdometerData.observe(viewLifecycleOwner) {
                 if (it) {
                     viewModel.selection.value?.let { vehicleId ->
                         val viewModel = OdometerItemViewModel(vehicleId)
@@ -104,7 +104,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                     }
                 }
             }
-            viewModel.selection.observe(this) {
+            viewModel.selection.observe(viewLifecycleOwner) {
                 it?.let {
                     val vehicleOdometer =
                         DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne()
@@ -123,7 +123,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
         }
 
-        viewModel.filterData.observe(this) { position ->
+        viewModel.filterData.observe(viewLifecycleOwner) { position ->
             vehicle_filter.setItems(viewModel.filterItems, position)
             initVehicleFilter()
         }

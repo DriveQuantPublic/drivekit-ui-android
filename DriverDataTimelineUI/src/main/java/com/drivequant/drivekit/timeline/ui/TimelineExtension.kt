@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKRawAllContextItem
 import com.drivequant.drivekit.databaseutils.entity.DKRawRoadContextItem
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline

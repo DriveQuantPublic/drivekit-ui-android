@@ -1,24 +1,26 @@
-package com.drivequant.drivekit.timeline.ui.component.dateselector
+package com.drivequant.drivekit.common.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.*
 
-internal class DateSelectorViewModel : ViewModel() {
+class DKDateSelectorViewModel : ViewModel() {
 
-    var listener: DateSelectorListener? = null
+    var onDateSelected: ((date: Date) -> Unit)? = null
 
-    lateinit var period: DKPeriod
+    var period: DKPeriod? = null
         private set
-    private lateinit var dates: List<Date>
+    private var dates: List<Date>? = null
     private var selectedDateIndex: Int = -1
     var hasPreviousDate = false
         private set
     var hasNextDate = false
         private set
 
-    lateinit var fromDate: Date
-    lateinit var toDate: Date
+    var fromDate: Date? = null
+        private set
+    var toDate: Date? = null
+        private set
 
     fun configure(dates: List<Date>, selectedDateIndex: Int?, period: DKPeriod) {
         this.dates = dates
@@ -29,20 +31,27 @@ internal class DateSelectorViewModel : ViewModel() {
 
     private fun updateProperties() {
         if (selectedDateIndex > -1) {
-            hasNextDate = dates.count() > selectedDateIndex + 1
-            hasPreviousDate = selectedDateIndex > 0
-            fromDate = dates[selectedDateIndex]
-            toDate = getEndDate(fromDate, period)
+            val dates = this.dates
+            val period = this.period
+            if (dates != null && period != null) {
+                hasNextDate = dates.count() > selectedDateIndex + 1
+                hasPreviousDate = selectedDateIndex > 0
+                val fromDate = dates[selectedDateIndex]
+                this.fromDate = fromDate
+                toDate = getEndDate(fromDate, period)
+            }
         }
     }
 
-    fun hasDates() = this::dates.isInitialized && dates.isNotEmpty()
+    fun hasDates() = this.dates?.isNotEmpty() ?: false
 
     fun moveToPreviousDate() {
         if (hasPreviousDate) {
             selectedDateIndex--
             updateProperties()
-            listener?.onDateSelected(fromDate)
+            fromDate?.let {
+                onDateSelected?.invoke(it)
+            }
         }
     }
 
@@ -50,7 +59,9 @@ internal class DateSelectorViewModel : ViewModel() {
         if (hasNextDate) {
             selectedDateIndex++
             updateProperties()
-            listener?.onDateSelected(fromDate)
+            fromDate?.let {
+                onDateSelected?.invoke(it)
+            }
         }
     }
 

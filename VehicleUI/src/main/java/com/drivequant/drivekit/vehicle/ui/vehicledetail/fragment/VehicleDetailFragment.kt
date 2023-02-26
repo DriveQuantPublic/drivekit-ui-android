@@ -196,7 +196,7 @@ class VehicleDetailFragment : Fragment() {
         }
 
         vehicle_fields.layoutManager = LinearLayoutManager(view.context)
-        viewModel.newEditableFieldObserver.observe(this) {
+        viewModel.newEditableFieldObserver.observe(viewLifecycleOwner) {
             it?.let { newEditableField ->
                 if (!editableFields.contains(newEditableField)) {
                     editableFields.add(newEditableField)

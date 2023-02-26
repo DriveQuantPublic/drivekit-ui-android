@@ -52,7 +52,7 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateBadges() {
-        listViewModel.badgesData.observe(this, {
+        listViewModel.badgesData.observe(viewLifecycleOwner, {
             if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
                 Toast.makeText(context,
                     context?.getString(R.string.dk_achievements_failed_to_sync_badges),

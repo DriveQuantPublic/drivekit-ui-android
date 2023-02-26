@@ -74,7 +74,7 @@ class ChallengeParticipationFragment : Fragment() {
             )[ChallengeParticipationViewModel::class.java]
         }
 
-        viewModel.syncJoinChallengeError.observe(this) {
+        viewModel.syncJoinChallengeError.observe(viewLifecycleOwner) {
             context?.let { context ->
                 if (it) {
                     if (viewModel.isChallengeStarted()) {

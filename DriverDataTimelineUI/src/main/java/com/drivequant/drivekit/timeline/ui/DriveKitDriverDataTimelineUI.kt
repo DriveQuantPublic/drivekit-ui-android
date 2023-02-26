@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.timeline.ui
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 
 object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
