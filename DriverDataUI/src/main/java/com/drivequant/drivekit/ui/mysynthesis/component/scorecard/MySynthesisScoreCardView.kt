@@ -50,6 +50,7 @@ class MySynthesisScoreCardView : LinearLayout {
 
     fun configure(viewModel: MySynthesisScoreCardViewModel) {
         this.viewModel = viewModel
+        viewModel.onViewModelUpdated = this::update
         update()
     }
 

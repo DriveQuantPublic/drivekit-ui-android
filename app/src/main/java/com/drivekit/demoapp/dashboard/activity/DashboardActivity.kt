@@ -23,8 +23,8 @@ import com.drivekit.demoapp.utils.getSerializableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.ui.DriverDataUI

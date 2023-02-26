@@ -17,6 +17,7 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
 internal class MySynthesisViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,6 +27,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
+    val scoreCardViewModel = MySynthesisScoreCardViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     private var selectedScore: DKScoreType
@@ -80,6 +82,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 } ?: (dates.size - 1)
                 this.selectedDate = dates[selectedDateIndex]
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+                this.scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, timelineSource, this.selectedDate)
             }
         } ?: run {
             configureWithNoData()

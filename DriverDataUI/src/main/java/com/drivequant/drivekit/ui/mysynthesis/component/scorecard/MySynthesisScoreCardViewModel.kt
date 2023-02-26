@@ -4,8 +4,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
@@ -16,7 +16,7 @@ import java.util.*
 // TODO restore internal
 class MySynthesisScoreCardViewModel : ViewModel() {
 
-    val changeObserver: MutableLiveData<Any> = MutableLiveData()
+    var onViewModelUpdated: (() -> Unit)? = null
 
     var selectedScoreType: DKScoreType = DKScoreType.SAFETY
     var selectedPeriod: DKPeriod = DKPeriod.WEEK
@@ -34,7 +34,7 @@ class MySynthesisScoreCardViewModel : ViewModel() {
             this.driverTimeline = driverTimeline
             this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
         }
-        this.changeObserver.postValue(Any())
+        this.onViewModelUpdated?.invoke()
     }
 
     fun hasScoredTrips(): Boolean {
