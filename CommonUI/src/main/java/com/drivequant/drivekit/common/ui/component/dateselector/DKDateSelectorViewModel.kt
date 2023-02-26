@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.common.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.*
 
 class DKDateSelectorViewModel : ViewModel() {

@@ -1,6 +1,6 @@
 package com.drivequant.drivekit.timeline.ui.timelinedetail
 
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.Date
 
 internal interface TimelineDetailViewModelListener {

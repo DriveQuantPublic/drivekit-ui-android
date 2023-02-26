@@ -14,9 +14,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.getValue
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 class DKDateSelectorView(context: Context) : LinearLayout(context) {
 

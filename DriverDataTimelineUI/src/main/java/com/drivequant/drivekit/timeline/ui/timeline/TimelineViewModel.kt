@@ -6,12 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
@@ -19,6 +17,7 @@ import com.drivequant.drivekit.timeline.ui.*
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.viewmodel.TimelineGraphViewModel
@@ -93,9 +92,9 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     if (timelineSyncStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                         timelines.forEach {
                             when (it.period) {
-                                TimelinePeriod.WEEK -> weekTimeline = it
-                                TimelinePeriod.MONTH -> monthTimeline = it
-                                TimelinePeriod.YEAR -> {}
+                                DKPeriod.WEEK -> weekTimeline = it
+                                DKPeriod.MONTH -> monthTimeline = it
+                                DKPeriod.YEAR -> {}
                             }
                         }
                         update()
@@ -118,9 +117,9 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
                     if (timelineSyncStatus != TimelineSyncStatus.NO_TIMELINE_YET) {
                         timelines.forEach {
                             when (it.period) {
-                                TimelinePeriod.WEEK -> weekTimeline = it
-                                TimelinePeriod.MONTH -> monthTimeline = it
-                                TimelinePeriod.YEAR -> {}
+                                DKPeriod.WEEK -> weekTimeline = it
+                                DKPeriod.MONTH -> monthTimeline = it
+                                DKPeriod.YEAR -> {}
                             }
                         }
                         update(resettingSelectedDate = true)

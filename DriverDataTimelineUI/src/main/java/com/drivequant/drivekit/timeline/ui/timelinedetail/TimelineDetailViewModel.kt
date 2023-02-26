@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.TimelineUtils
 import com.drivequant.drivekit.timeline.ui.associatedScoreItemTypes
@@ -15,6 +14,7 @@ import com.drivequant.drivekit.timeline.ui.cleanedTimeline
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.common.ui.extension.getTitleId
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType

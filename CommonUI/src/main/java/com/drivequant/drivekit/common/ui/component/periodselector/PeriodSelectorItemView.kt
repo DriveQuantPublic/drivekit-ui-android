@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 @SuppressLint("ViewConstructor")
 internal class PeriodSelectorItemView(

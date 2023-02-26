@@ -9,16 +9,15 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
-import java.util.Date
+import java.util.*
 
 internal class MySynthesisViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -30,11 +29,9 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     private var selectedScore: DKScoreType
-    private var selectedPeriod: DKPeriod = this.periods.first()
+    private var selectedPeriod: DKPeriod = this.periods.last()
     private var selectedDate: Date? = null
-    private var weekTimeline: DKDriverTimeline? = null
-    private var monthTimeline: DKDriverTimeline? = null
-    private var yearTimeline: DKDriverTimeline? = null
+    private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
 
     init {
         this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
@@ -43,13 +40,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         configureDateSelector()
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
-                timelines.forEach {
-                    when (it.period) {
-                        TimelinePeriod.WEEK -> weekTimeline = it
-                        TimelinePeriod.MONTH -> monthTimeline = it
-                        TimelinePeriod.YEAR -> yearTimeline = it
-                    }
-                }
+                this.timelineByPeriod = timelines.associateBy { it.period }
                 update()
             }
         }
@@ -59,13 +50,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     fun updateData() {
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
             if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
-                timelines.forEach {
-                    when (it.period) {
-                        TimelinePeriod.WEEK -> weekTimeline = it
-                        TimelinePeriod.MONTH -> monthTimeline = it
-                        TimelinePeriod.YEAR -> yearTimeline = it
-                    }
-                }
+                this.timelineByPeriod = timelines.associateBy { it.period }
                 update(true)
             }
             syncStatus.postValue(status)
@@ -77,8 +62,12 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             if (resettingSelectedDate) {
                 selectedDate = null
             }
-            val dates = timelineSource.allContext.map { allContextItem ->
-                allContextItem.date
+            val dates = timelineSource.allContext.mapNotNull { allContextItem ->
+                if (this.selectedScore == DKScoreType.DISTRACTION || this.selectedScore == DKScoreType.SPEEDING || allContextItem.date == this.selectedDate || (allContextItem.safety != null && allContextItem.ecoDriving != null)) {
+                    allContextItem.date
+                } else {
+                    null
+                }
             }
             if (dates.isNotEmpty()) {
                 val selectedDateIndex: Int = this.selectedDate?.let {
@@ -119,12 +108,32 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
 
     private fun configurePeriodSelector() {
         this.periodSelectorViewModel.configure(periods)
+        this.periodSelectorViewModel.select(this.selectedPeriod)
         this.periodSelectorViewModel.onPeriodSelected = { period ->
             if (this.selectedPeriod != period) {
+                val oldPeriod = this.selectedPeriod
+                val selectedDate = this.selectedDate
+                val sourceTimeline = getTimelineSource(period)
+                if (selectedDate != null && sourceTimeline != null) {
+                    this.selectedDate = updateSelectedDate(selectedDate, oldPeriod, period, sourceTimeline.allContext.map { it.date })
+                }
                 this.selectedPeriod = period
                 update()
             }
         }
+    }
+
+    private fun updateSelectedDate(currentSelectedDate: Date, oldPeriod: DKPeriod, newPeriod: DKPeriod, newDates: List<Date>): Date {
+        val compareDate: Date? = if (oldPeriod == newPeriod) {
+            null
+        } else if (newPeriod == DKPeriod.YEAR) {
+            currentSelectedDate.startingFrom(CalendarField.YEAR)
+        } else if (oldPeriod > newPeriod) {
+            currentSelectedDate
+        } else { // oldPeriod = WEEK, newPeriod = MONTH
+            currentSelectedDate.startingFrom(CalendarField.MONTH)
+        }
+        return compareDate?.let { date ->  newDates.firstOrNull { it >= date } } ?: currentSelectedDate
     }
 
     private fun configureDateSelector() {
@@ -140,11 +149,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }
     }
 
-    private fun getTimelineSource() = when (this.selectedPeriod) {
-        DKPeriod.WEEK -> this.weekTimeline
-        DKPeriod.MONTH -> this.monthTimeline
-        DKPeriod.YEAR -> this.yearTimeline
-    }
+    private fun getTimelineSource(period: DKPeriod = this.selectedPeriod) = this.timelineByPeriod[period]
 
     class MySynthesisViewModelFactory(private val application: Application) :
         ViewModelProvider.NewInstanceFactory() {
