@@ -146,14 +146,13 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initStartStopTripButton() {
-        launchLegend() // TODO
         button_start_stop_trip.findViewById<Button>(R.id.button_action).apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             startStopTripButton = this
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
             setOnClickListener {
                 //viewModel.startStopTrip()
-                launchLegend() // TODO
+                launchLegend() // TODO for review
             }
         }
 
@@ -219,7 +218,7 @@ internal class DashboardActivity : AppCompatActivity() {
             )
         }
         view.findViewById<TextView>(R.id.score_description)?.apply {
-            val text: String = when (scoreLevel) {
+            val scoreValuesText: String = when (scoreLevel) {
                 DKScoreTypeLevels.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
                 DKScoreTypeLevels.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
                 DKScoreTypeLevels.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
@@ -234,7 +233,7 @@ internal class DashboardActivity : AppCompatActivity() {
                     scoreLevel.getScoreLevels(dkScoreType).second.format(1)
                 )
             }
-            this.text = DKSpannable().append(text, context.resSpans {
+            this.text = DKSpannable().append(scoreValuesText, context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
@@ -247,9 +246,7 @@ internal class DashboardActivity : AppCompatActivity() {
                         size(R.dimen.dk_text_small)
                     }).toSpannable()
         }
-        container.addView(
-            view
-        )
+        container.addView(view)
         val params = view.layoutParams as ViewGroup.MarginLayoutParams
         params.setMargins(
             params.leftMargin,
