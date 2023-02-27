@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui.mysynthesis.component.scorecard
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -13,8 +12,7 @@ import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.R
 import java.util.*
 
-// TODO restore internal
-class MySynthesisScoreCardViewModel : ViewModel() {
+internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     var onViewModelUpdated: (() -> Unit)? = null
 
@@ -38,14 +36,14 @@ class MySynthesisScoreCardViewModel : ViewModel() {
     }
 
     fun hasScoredTrips(): Boolean {
-        return driverTimeline?.allContext?.firstOrNull { it.date == this.selectedDate }?.numberTripScored?.let {nbTripScored ->
+        return driverTimeline?.allContext?.firstOrNull { it.date == this.selectedDate }?.numberTripScored?.let { nbTripScored ->
             nbTripScored > 0
         } ?: run {
             return false
         }
     }
 
-    fun isTimelineEmpty() = driverTimeline?.allContext?.isEmpty() ?: true
+    private fun isTimelineEmpty() = driverTimeline?.allContext?.isEmpty() ?: true
 
     fun hasPreviousData() = scoreSynthesis?.previousScoreValue != null
 
