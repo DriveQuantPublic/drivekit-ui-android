@@ -28,11 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
-            <!-- TODO remove after PR review -->
-            <com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
-                android:id="@+id/container_my_synthesis_score_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
             <FrameLayout
                 android:id="@+id/container_last_trips"
                 android:layout_width="match_parent"

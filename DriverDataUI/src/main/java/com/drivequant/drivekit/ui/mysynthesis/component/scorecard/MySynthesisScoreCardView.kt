@@ -14,8 +14,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
 import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 
-// TODO restore internal
-class MySynthesisScoreCardView : LinearLayout {
+internal class MySynthesisScoreCardView : LinearLayout {
 
     private lateinit var viewModel: MySynthesisScoreCardViewModel
 
