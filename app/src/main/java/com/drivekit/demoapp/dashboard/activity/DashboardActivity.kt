@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -163,21 +164,13 @@ internal class DashboardActivity : AppCompatActivity() {
 
     private fun launchLegend() {
         val dkScoreType: DKScoreType = DKScoreType.SAFETY // TODO mock
-        val items = listOf(
-            Pair(DKScoreTypeLevels.EXCELLENT, R.id.score_item_excellent),
-            Pair(DKScoreTypeLevels.VERY_GOOD, R.id.score_item_very_good),
-            Pair(DKScoreTypeLevels.GREAT, R.id.score_item_great),
-            Pair(DKScoreTypeLevels.MEDIUM, R.id.score_item_medium),
-            Pair(DKScoreTypeLevels.NOT_GOOD, R.id.score_item_not_good),
-            Pair(DKScoreTypeLevels.BAD, R.id.score_item_bad),
-            Pair(DKScoreTypeLevels.VERY_BAD, R.id.score_item_very_bad)
-        )
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(this)
             .layout(R.layout.dk_my_synthesis_scores_legend_alert_dialog)
             .positiveButton(getString(R.string.dk_common_close)) { dialog, _ ->
                 dialog.dismiss()
             }
+            .cancelable(true)
             .show()
 
         // Title
@@ -206,24 +199,26 @@ internal class DashboardActivity : AppCompatActivity() {
             smallText()
         }
 
-        items.forEach {
-            configureScoreItem(it.first, alertDialog.findViewById(it.second), dkScoreType)
+        alertDialog.findViewById<LinearLayout>(R.id.container_score_item)?.let { scoreItemContainer ->
+            DKScoreTypeLevels.values().forEach {
+                configureScoreItem(scoreItemContainer, dkScoreType, it)
+            }
         }
     }
 
     private fun configureScoreItem(
-        scoreLevel: DKScoreTypeLevels,
-        view: LinearLayout?,
-        dkScoreType: DKScoreType
-    ) {
-        view?.findViewById<View>(R.id.score_color)?.let { scoreColor ->
+        container: LinearLayout,
+        dkScoreType: DKScoreType,
+        scoreLevel: DKScoreTypeLevels)
+    {
+        val view = View.inflate(this, R.layout.dk_my_synthesis_scores_legend_item, null)
+        view.findViewById<View>(R.id.score_color)?.let { scoreColor ->
             DrawableCompat.setTint(
                 scoreColor.background,
                 ContextCompat.getColor(scoreColor.context, scoreLevel.getColorResId())
             )
         }
-
-        view?.findViewById<TextView>(R.id.score_description)?.apply {
+        view.findViewById<TextView>(R.id.score_description)?.apply {
             val text: String = when (scoreLevel) {
                 DKScoreTypeLevels.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
                 DKScoreTypeLevels.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
@@ -252,6 +247,17 @@ internal class DashboardActivity : AppCompatActivity() {
                         size(R.dimen.dk_text_small)
                     }).toSpannable()
         }
+        container.addView(
+            view
+        )
+        val params = view.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            params.leftMargin,
+            view.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            params.rightMargin,
+            view.resources.getDimension(R.dimen.dk_margin_half).toInt()
+        )
+        view.layoutParams = params
     }
 
     @StringRes

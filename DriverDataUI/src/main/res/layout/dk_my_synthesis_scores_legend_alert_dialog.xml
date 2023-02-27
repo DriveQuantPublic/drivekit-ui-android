@@ -30,33 +30,12 @@
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/score_item_excellent"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
+            <LinearLayout
+                android:id="@+id/container_score_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
 
-            <include
-                android:id="@+id/score_item_very_good"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
-
-            <include
-                android:id="@+id/score_item_great"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
-
-            <include
-                android:id="@+id/score_item_medium"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
-
-            <include
-                android:id="@+id/score_item_not_good"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
-
-            <include
-                android:id="@+id/score_item_bad"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
-
-            <include
-                android:id="@+id/score_item_very_bad"
-                layout="@layout/dk_my_synthesis_scores_legend_item" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

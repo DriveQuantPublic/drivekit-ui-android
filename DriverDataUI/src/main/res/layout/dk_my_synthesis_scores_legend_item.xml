@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/dk_margin_half">
+    android:layout_marginVertical="@dimen/dk_margin">
 
     <!--
         This view has a magic `marginTop` because we want to top align it with the TextView
