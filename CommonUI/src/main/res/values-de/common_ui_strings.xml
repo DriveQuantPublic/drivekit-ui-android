@@ -45,6 +45,9 @@
     <string name="dk_common_no">Nein</string>
     <string name="dk_common_no_pseudo_set">Um Ihr Ranking mit den anderen Teilnehmern zu teilen, laden wir Sie ein, ein Pseudo zu wählen. Ohne ein Pseudo erscheinen Sie als anonym.</string>
     <string name="dk_common_ok">OK</string>
+    <string name="dk_common_period_selector_month">Monat</string>
+    <string name="dk_common_period_selector_week">Woche</string>
+    <string name="dk_common_period_selector_year">Jahr</string>
     <string name="dk_common_permission_camera_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf die Kamera Ihres Smartphones.</string>
     <string name="dk_common_permission_storage_rationale">Für die Nutzung dieser Funktion benötigt die Anwendung die Berechtigung zum Zugriff auf den Speicher Ihres Smartphones.</string>
     <string name="dk_common_permissions">Genehmigungen</string>

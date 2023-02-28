@@ -45,6 +45,9 @@
    <string name="dk_common_no">No</string>
    <string name="dk_common_no_pseudo_set">Para compartir su clasificación con los demás participantes, le invitamos a elegir un pseudo. Sin un pseudo aparecerá como anónimo.</string>
    <string name="dk_common_ok">OK</string>
+   <string name="dk_common_period_selector_month">Mes</string>
+   <string name="dk_common_period_selector_week">Semana</string>
+   <string name="dk_common_period_selector_year">Año</string>
    <string name="dk_common_permission_camera_rationale">La aplicación necesita permiso para acceder a la cámara de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permission_storage_rationale">La aplicación necesita autorización para acceder al almacenamiento de su smartphone para utilizar esta función.</string>
    <string name="dk_common_permissions">Permisos</string>

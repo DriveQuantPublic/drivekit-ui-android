@@ -2,7 +2,6 @@ package com.drivequant.drivekit.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.component.lasttripscards.DKLastTripsUI
@@ -21,14 +20,27 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
 import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.core.utils.getApplicationInfoCompat
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
+import com.drivequant.drivekit.ui.mysynthesis.MySynthesisActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 
 object DriverDataUI : DriverDataUIEntryPoint {
+
     private const val TAG = "DriveKit DriverData UI"
+
+    var scores: List<DKScoreType> = DKScoreType.values().toList()
+        get() = field.filter { it.hasAccess() }
+        set(value) {
+            field = value.ifEmpty {
+                listOf(DKScoreType.SAFETY)
+            }
+        }
+
     var tripData: TripData = TripData.SAFETY
         private set
     var enableAlternativeTrips: Boolean = false
@@ -120,7 +132,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun startTripListActivity(context: Context) {
         val intent = Intent(context, TripsListActivity::class.java)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
@@ -128,7 +140,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         val intent = Intent(context, TripDetailActivity::class.java)
         intent.putExtra(ITINID_EXTRA, tripId)
         intent.putExtra(OPEN_ADVICE_EXTRA, openAdvice)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
@@ -137,9 +149,11 @@ object DriverDataUI : DriverDataUIEntryPoint {
     override fun createTripDetailFragment(tripId: String): Fragment =
         TripDetailFragment.newInstance(tripId)
 
+    override fun startMySynthesisActivity(context: Context) = MySynthesisActivity.launchActivity(context)
+
     private fun checkGoogleApiKey() {
         try {
-            val bundle= DriveKit.applicationContext.packageManager.getApplicationInfo(DriveKit.applicationContext.packageName, PackageManager.GET_META_DATA).metaData
+            val bundle= DriveKit.applicationContext.packageManager.getApplicationInfoCompat(DriveKit.applicationContext.packageName, PackageManager.GET_META_DATA).metaData
             val apiKey = bundle.getString("com.google.android.geo.API_KEY")
             if (apiKey.isNullOrBlank()) {
                 DriveKitLog.e(TAG, "A Google API key must be provided in your AndroidManifest.xml. Please refer to the DriveKit documentation.")

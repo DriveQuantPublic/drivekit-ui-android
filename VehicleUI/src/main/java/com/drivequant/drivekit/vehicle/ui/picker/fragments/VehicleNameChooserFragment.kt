@@ -52,7 +52,7 @@ class VehicleNameChooserFragment : Fragment() {
         button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
         button_validate.isEnabled = true
         button_validate.setOnClickListener {
-            viewModel.progressBarObserver.observe(this) { displayProgressCircular ->
+            viewModel.progressBarObserver.observe(viewLifecycleOwner) { displayProgressCircular ->
                 displayProgressCircular?.let {
                     button_validate.isEnabled = !displayProgressCircular
                 }

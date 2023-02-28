@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import com.drivequant.drivekit.common.ui.utils.DKWeakList
+import com.drivequant.drivekit.core.utils.DKWeakList
 
 internal class DispatchTouchFrameLayout constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 

@@ -98,7 +98,7 @@ internal class TransportationModeFragment : Fragment(){
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(this, { status ->
+        viewModel.updateObserver.observe(viewLifecycleOwner, { status ->
             hideProgressCircular()
             if (status != null){
                 when (status){

@@ -186,7 +186,7 @@ class TripDetailFragment : Fragment() {
         evaluation: Boolean,
         feedback: Int,
         comment: String? = null) {
-        viewModel.sendAdviceFeedbackObserver.observe(this) { status ->
+        viewModel.sendAdviceFeedbackObserver.observe(viewLifecycleOwner) { status ->
             hideProgressCircular()
             if (status != null) {
                 adviceAlertDialog?.hide()
@@ -203,7 +203,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun loadTripData() {
-        viewModel.tripEventsObserver.observe(this) {
+        viewModel.tripEventsObserver.observe(viewLifecycleOwner) {
             if (viewModel.events.isNotEmpty()) {
                 setMapController()
                 setViewPager()
@@ -213,7 +213,7 @@ class TripDetailFragment : Fragment() {
                 displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
             }
         }
-        viewModel.unScoredTrip.observe(this) { routeAvailable ->
+        viewModel.unScoredTrip.observe(viewLifecycleOwner) { routeAvailable ->
             routeAvailable?.let {
                 if (it) {
                     setMapController()
@@ -229,16 +229,16 @@ class TripDetailFragment : Fragment() {
 
             hideProgressCircular()
         }
-        viewModel.noRoute.observe(this) {
+        viewModel.noRoute.observe(viewLifecycleOwner) {
             setViewPager()
             hideProgressCircular()
             setHeaderSummary()
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_get_road_failed, false)
         }
-        viewModel.noData.observe(this) {
+        viewModel.noData.observe(viewLifecycleOwner) {
             displayErrorMessageAndGoBack(R.string.dk_driverdata_trip_detail_data_error)
         }
-        viewModel.reverseGeocoderObserver.observe(this) {
+        viewModel.reverseGeocoderObserver.observe(viewLifecycleOwner) {
             if (it) {
                 requireActivity().setResult(RESULT_OK, Intent())
             }

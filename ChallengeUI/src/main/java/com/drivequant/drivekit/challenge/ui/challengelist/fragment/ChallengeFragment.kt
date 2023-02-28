@@ -33,7 +33,7 @@ class ChallengeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.syncChallengesError.observe(this) {
+        viewModel.syncChallengesError.observe(viewLifecycleOwner) {
             if (!it) {
                 Toast.makeText(
                     context,

@@ -2,7 +2,7 @@ package com.drivequant.drivekit.common.ui.component.triplist.extension
 
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
-import com.drivequant.drivekit.common.ui.extension.isSameDay
+import com.drivequant.drivekit.core.extension.isSameDay
 import java.util.*
 
 const val unknownValue = "N/A" // This is a legacy value we set in trip fields when city or address were null

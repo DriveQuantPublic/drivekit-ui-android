@@ -55,11 +55,11 @@ class TripsListFragment : Fragment() {
             )[TripsListViewModel::class.java]
         }
 
-        viewModel.shouldShowFilterMenuOption.observe(this) {
+        viewModel.shouldShowFilterMenuOption.observe(viewLifecycleOwner) {
             setHasOptionsMenu(it)
         }
 
-        viewModel.tripsData.observe(this) {
+        viewModel.tripsData.observe(viewLifecycleOwner) {
             viewModel.getFilterItems(requireContext())
             if (viewModel.filteredTrips.isEmpty()) {
                 displayNoTrips()
@@ -98,7 +98,7 @@ class TripsListFragment : Fragment() {
             }
         }
 
-        viewModel.syncTripsError.observe(this) {
+        viewModel.syncTripsError.observe(viewLifecycleOwner) {
             it?.let {
                 Toast.makeText(
                     context,

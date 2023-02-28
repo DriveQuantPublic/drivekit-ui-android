@@ -83,7 +83,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel.fetchChallengeList()
         }
 
-        viewModel.syncChallengesError.observe(this) {
+        viewModel.syncChallengesError.observe(viewLifecycleOwner) {
             if (!it) {
                 Toast.makeText(
                     context,

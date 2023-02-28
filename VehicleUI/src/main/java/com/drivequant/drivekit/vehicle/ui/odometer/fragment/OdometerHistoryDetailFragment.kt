@@ -98,7 +98,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 onDistanceClicked(context)
                 onCancelButtonClicked(context)
                 vehicle_item.setBackgroundColor(DriveKitUI.colors.neutralColor())
-                viewModel.odometerActionObserver.observe(this) {
+                viewModel.odometerActionObserver.observe(viewLifecycleOwner) {
                     updateProgressVisibility(false)
                     Toast.makeText(
                         context,
