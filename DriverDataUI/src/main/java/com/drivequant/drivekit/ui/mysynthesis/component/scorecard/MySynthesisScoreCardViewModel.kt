@@ -18,39 +18,35 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     private var selectedScoreType: DKScoreType = DKScoreType.SAFETY
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
-    private var driverTimeline: DKDriverTimeline? = null
-    private var scoreSynthesis: DKScoreSynthesis? = null
+    private lateinit var driverTimeline: DKDriverTimeline
     private lateinit var selectedDate: Date
+    private var scoreSynthesis: DKScoreSynthesis? = null
 
     val score: Double?
         get() = scoreSynthesis?.scoreValue
     val previousScore: Double?
         get() = scoreSynthesis?.previousScoreValue
 
-    fun configure(scoreType: DKScoreType?, period: DKPeriod?, driverTimeline: DKDriverTimeline?, selectedDate: Date?) {
-        if (scoreType != null && period != null) {
-            this.selectedScoreType = scoreType
-            this.selectedPeriod = period
-        }
-        if (driverTimeline != null && selectedDate != null) {
-            this.selectedDate = selectedDate
-            this.driverTimeline = driverTimeline
-            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
-        }
+    fun configure(scoreType: DKScoreType, period: DKPeriod, driverTimeline: DKDriverTimeline, selectedDate: Date) {
+        this.selectedScoreType = scoreType
+        this.selectedPeriod = period
+
+        this.selectedDate = selectedDate
+        this.driverTimeline = driverTimeline
+        this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
+
         this.onViewModelUpdated?.invoke()
     }
 
-    fun hasScoredTrips(): Boolean {
-        return driverTimeline?.allContext?.firstOrNull { it.date == this.selectedDate }?.numberTripScored?.let { nbTripScored ->
-            nbTripScored > 0
-        } ?: run {
-            return false
-        }
-    }
+    private fun hasTrips() = driverTimeline.allContext.first { it.date == this.selectedDate }.numberTripTotal > 0
 
-    private fun isTimelineEmpty() = driverTimeline?.allContext?.isEmpty() ?: true
+    private fun hasScoredTrips() = driverTimeline.allContext.first { it.date == this.selectedDate }.numberTripScored > 0
 
-    fun hasPreviousData() = scoreSynthesis?.previousScoreValue != null
+    fun showEvolutionScoreOutOfTen() =
+        (hasScoredTrips() || (selectedScoreType == DKScoreType.DISTRACTION || selectedScoreType == DKScoreType.SPEEDING))
+            && previousScore != null
+
+    private fun isTimelineEmpty() = driverTimeline.allContext.isEmpty()
 
     @StringRes
     fun getCardTitleResId() = when (this.selectedScoreType) {
@@ -62,19 +58,21 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     @StringRes
     fun getEvolutionTextResId() =
-        if (isTimelineEmpty()) {
+        if (isTimelineEmpty() || (!hasScoredTrips() && (selectedScoreType == DKScoreType.SAFETY && selectedScoreType != DKScoreType.ECO_DRIVING))) {
             R.string.dk_driverdata_mysynthesis_not_enough_data
-        } else if (!hasScoredTrips()){
-            when (selectedPeriod) {
-                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
-                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
-                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }
         } else {
-            when (selectedPeriod) {
-                DKPeriod.WEEK -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
-                DKPeriod.MONTH -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
-                DKPeriod.YEAR -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
+            if (!hasTrips()){
+                when (selectedPeriod) {
+                    DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
+                    DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
+                    DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
+                }
+            } else {
+                when (selectedPeriod) {
+                    DKPeriod.WEEK -> if (previousScore != null) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
+                    DKPeriod.MONTH -> if (previousScore != null) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
+                    DKPeriod.YEAR -> if (previousScore != null) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
+                }
             }
         }
 

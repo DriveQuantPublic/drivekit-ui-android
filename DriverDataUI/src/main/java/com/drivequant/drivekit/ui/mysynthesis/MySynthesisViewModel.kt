@@ -80,9 +80,10 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                         index
                     }
                 } ?: (dates.size - 1)
-                this.selectedDate = dates[selectedDateIndex]
+                val date = dates[selectedDateIndex]
+                this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
-                this.scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, timelineSource, this.selectedDate)
+                this.scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, timelineSource, date)
             }
         } ?: run {
             configureWithNoData()

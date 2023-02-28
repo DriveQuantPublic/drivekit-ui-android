@@ -82,7 +82,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
         val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
 
         subTitle.apply {
-            text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
+            text = DKSpannable().computeScoreOutOfTen(scoreValue).toSpannable()
             highlightBig(subtitleTextColor)
         }
     }
@@ -90,8 +90,8 @@ internal class MySynthesisScoreCardView : LinearLayout {
     private fun configureEvolutionText(previousScore: Double?) {
         val textResId = viewModel.getEvolutionTextResId()
 
-        evolutionText.text = if(viewModel.hasScoredTrips() && viewModel.hasPreviousData()) {
-            DKSpannable().append(context.getString(textResId)).space().computeScoreOnTen(previousScore).toSpannable()
+        evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
+            DKSpannable().append(context.getString(textResId)).space().computeScoreOutOfTen(previousScore).toSpannable()
         } else {
             context.getString(textResId)
         }
@@ -109,7 +109,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
         }
     }
 
-    private fun DKSpannable.computeScoreOnTen(score: Double?): DKSpannable {
+    private fun DKSpannable.computeScoreOutOfTen(score: Double?): DKSpannable {
         val scoreText = (score?.format(1) ?: "-")
             .plus(" ")
             .plus(context.getString(R.string.dk_common_unit_score))
