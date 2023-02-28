@@ -23,12 +23,12 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     private lateinit var selectedDate: Date
 
     fun configure(scoreType: DKScoreType?, period: DKPeriod?, driverTimeline: DKDriverTimeline?, selectedDate: Date?) {
-        if (scoreType != null && period != null && selectedDate != null) {
+        if (scoreType != null && period != null) {
             this.selectedScoreType = scoreType
             this.selectedPeriod = period
-            this.selectedDate = selectedDate
         }
         if (driverTimeline != null && selectedDate != null) {
+            this.selectedDate = selectedDate
             this.driverTimeline = driverTimeline
             this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
         }
