@@ -58,7 +58,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     @StringRes
     fun getEvolutionTextResId() =
-        if (isTimelineEmpty() || (!hasScoredTrips() && (selectedScoreType == DKScoreType.SAFETY && selectedScoreType != DKScoreType.ECO_DRIVING))) {
+        if (isTimelineEmpty() || (!hasScoredTrips() && (selectedScoreType == DKScoreType.SAFETY && selectedScoreType == DKScoreType.ECO_DRIVING))) {
             R.string.dk_driverdata_mysynthesis_not_enough_data
         } else {
             if (!hasTrips()){
