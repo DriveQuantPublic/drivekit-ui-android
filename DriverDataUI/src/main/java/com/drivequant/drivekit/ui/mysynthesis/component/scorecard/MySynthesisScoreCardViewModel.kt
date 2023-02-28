@@ -16,11 +16,16 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     var onViewModelUpdated: (() -> Unit)? = null
 
-    var selectedScoreType: DKScoreType = DKScoreType.SAFETY
-    var selectedPeriod: DKPeriod = DKPeriod.WEEK
-    var driverTimeline: DKDriverTimeline? = null
-    var scoreSynthesis: DKScoreSynthesis? = null
+    private var selectedScoreType: DKScoreType = DKScoreType.SAFETY
+    private var selectedPeriod: DKPeriod = DKPeriod.WEEK
+    private var driverTimeline: DKDriverTimeline? = null
+    private var scoreSynthesis: DKScoreSynthesis? = null
     private lateinit var selectedDate: Date
+
+    val score: Double?
+        get() = scoreSynthesis?.scoreValue
+    val previousScore: Double?
+        get() = scoreSynthesis?.previousScoreValue
 
     fun configure(scoreType: DKScoreType?, period: DKPeriod?, driverTimeline: DKDriverTimeline?, selectedDate: Date?) {
         if (scoreType != null && period != null) {

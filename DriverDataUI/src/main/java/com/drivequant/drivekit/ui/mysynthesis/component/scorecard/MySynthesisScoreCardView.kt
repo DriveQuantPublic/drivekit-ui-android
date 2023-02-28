@@ -5,18 +5,24 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
-import kotlinx.android.synthetic.main.dk_my_synthesis_score_card_view.view.*
 
 internal class MySynthesisScoreCardView : LinearLayout {
 
     private lateinit var viewModel: MySynthesisScoreCardViewModel
+
+    private lateinit var scoreCardView: LinearLayout
+    private lateinit var title: TextView
+    private lateinit var subTitle: TextView
+    private lateinit var evolutionText: TextView
+    private lateinit var trendIcon: ImageView
 
     constructor(context: Context) : super(context) {
         init()
@@ -37,14 +43,19 @@ internal class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.dk_my_synthesis_score_card_view, null).setDKStyle()
+        scoreCardView = View.inflate(context, R.layout.dk_my_synthesis_score_card_view, null) as LinearLayout
+        title = scoreCardView.findViewById(R.id.score_card_title)
+        subTitle = scoreCardView.findViewById(R.id.score_card_subtitle)
+        evolutionText = scoreCardView.findViewById(R.id.score_card_evolution_text)
+        trendIcon = scoreCardView.findViewById(R.id.score_card_icon)
+
+        scoreCardView.setDKStyle()
         addView(
-            view, ViewGroup.LayoutParams(
+            scoreCardView, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
-        setStyle()
     }
 
     fun configure(viewModel: MySynthesisScoreCardViewModel) {
@@ -53,60 +64,48 @@ internal class MySynthesisScoreCardView : LinearLayout {
         update()
     }
 
-    private fun setStyle() {
-        (my_synthesis_score_card_view?.layoutParams as MarginLayoutParams?)?.let { params ->
-            params.setMargins(
-                context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
-                params.topMargin,
-                context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
-                params.bottomMargin
-            )
-            layoutParams = params
-        }
-    }
-
     private fun update() {
-        val scoreValue = this.viewModel.scoreSynthesis?.scoreValue
-        val previousScore = this.viewModel.scoreSynthesis?.previousScoreValue
         configureTitle()
-        configureCurrentScoreText(scoreValue)
-        configureEvolutionText(previousScore)
-        configureTrendIcon(this.viewModel.scoreSynthesis)
+        configureCurrentScoreText(this.viewModel.score)
+        configureEvolutionText(this.viewModel.previousScore)
+        configureTrendIcon(this.viewModel.score, this.viewModel.previousScore)
     }
 
     private fun configureTitle() {
-        score_card_title.apply {
+        title.apply {
             headLine2(DriveKitUI.colors.primaryColor())
-            score_card_title.text = context.getString(viewModel.getCardTitleResId())
+            text = context.getString(viewModel.getCardTitleResId())
         }
     }
 
     private fun configureCurrentScoreText(scoreValue: Double?) {
         val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
 
-        score_card_subtitle.text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
-        score_card_subtitle.highlightBig(subtitleTextColor)
+        subTitle.apply {
+            text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
+            highlightBig(subtitleTextColor)
+        }
     }
 
     private fun configureEvolutionText(previousScore: Double?) {
         val textResId = viewModel.getEvolutionTextResId()
 
-        score_card_evolution_text.text = if(viewModel.hasScoredTrips() && viewModel.hasPreviousData()) {
+        evolutionText.text = if(viewModel.hasScoredTrips() && viewModel.hasPreviousData()) {
             DKSpannable().append(context.getString(textResId)).space().computeScoreOnTen(previousScore).toSpannable()
         } else {
             context.getString(textResId)
         }
-        score_card_evolution_text.normalText(DriveKitUI.colors.complementaryFontColor())
+        evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 
-    private fun configureTrendIcon(scoreSynthesis: DKScoreSynthesis?) {
+    private fun configureTrendIcon(score: Double?, previousScore: Double?) {
         val iconColor =
-            if (scoreSynthesis?.scoreValue != null && scoreSynthesis.previousScoreValue != null) DriveKitUI.colors.primaryColor()
+            if (score != null && previousScore != null) DriveKitUI.colors.primaryColor()
             else DriveKitUI.colors.complementaryFontColor()
 
         ContextCompat.getDrawable(context, viewModel.getTrendIconResId())?.let { icon ->
             icon.tintDrawable(iconColor)
-            score_card_icon.setImageDrawable(icon)
+            trendIcon.setImageDrawable(icon)
         }
     }
 
