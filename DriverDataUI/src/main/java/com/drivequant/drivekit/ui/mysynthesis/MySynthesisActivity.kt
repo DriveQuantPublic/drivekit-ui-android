@@ -10,8 +10,6 @@ import com.drivequant.drivekit.ui.R
 
 internal class MySynthesisActivity : AppCompatActivity() {
 
-    private var fragment: MySynthesisFragment? = null
-
     companion object {
         fun launchActivity(context: Context) {
             val intent = Intent(context, MySynthesisActivity::class.java)
@@ -37,7 +35,6 @@ internal class MySynthesisActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
-        this.fragment = fragment
     }
 
     override fun onResume() {

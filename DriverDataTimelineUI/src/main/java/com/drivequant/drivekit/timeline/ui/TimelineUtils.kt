@@ -71,7 +71,6 @@ internal fun <E> List<E>.addValueIfNotEmpty(index: Int, list: MutableList<E>) {
     }
 }
 
-
 internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType> {
     return when (this) {
         DKScoreType.DISTRACTION -> listOf(
