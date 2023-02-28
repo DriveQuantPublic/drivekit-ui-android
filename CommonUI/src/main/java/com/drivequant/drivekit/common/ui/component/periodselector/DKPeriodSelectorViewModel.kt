@@ -1,7 +1,7 @@
 package com.drivequant.drivekit.common.ui.component.periodselector
 
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 class DKPeriodSelectorViewModel: ViewModel() {
 

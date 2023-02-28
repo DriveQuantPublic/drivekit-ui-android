@@ -14,9 +14,9 @@ import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.getValue
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 class DKDateSelectorView(context: Context) : LinearLayout(context) {
 
@@ -78,6 +78,7 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
             }
 
             dateTextView.text = when (viewModel.period) {
+                null -> ""
                 DKPeriod.WEEK -> getWeekDateText()
                 DKPeriod.MONTH -> getMonthDateText()
                 DKPeriod.YEAR -> getYearDateText()
@@ -86,12 +87,18 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
     }
 
     private fun getWeekDateText(): SpannableString {
-        val startMonth = viewModel.fromDate.getValue(CalendarField.MONTH)
-        val endMonth = viewModel.toDate.getValue(CalendarField.MONTH)
-        val text = if (startMonth == endMonth) {
-            "${viewModel.fromDate.formatDate(DKDatePattern.DAY_OF_MONTH)} - ${viewModel.toDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_YEAR)}"
+        val fromDate = viewModel.fromDate
+        val toDate = viewModel.toDate
+        val text: String = if (fromDate != null && toDate != null) {
+            val startMonth = fromDate.getValue(CalendarField.MONTH)
+            val endMonth = toDate.getValue(CalendarField.MONTH)
+            if (startMonth == endMonth) {
+                "${fromDate.formatDate(DKDatePattern.DAY_OF_MONTH)} - ${toDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_YEAR)}"
+            } else {
+                "${fromDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_SHORT)} - ${toDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_SHORT_YEAR)}"
+            }
         } else {
-            "${viewModel.fromDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_SHORT)} - ${viewModel.toDate.formatDate(DKDatePattern.DAY_MONTH_LETTER_SHORT_YEAR)}"
+            ""
         }
         return DKSpannable().append(
             context,
@@ -103,14 +110,14 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
 
     private fun getMonthDateText(): SpannableString = DKSpannable().append(
         context,
-        viewModel.fromDate.formatDate(DKDatePattern.MONTH_LETTER_YEAR).capitalizeFirstLetter(),
+        viewModel.fromDate?.formatDate(DKDatePattern.MONTH_LETTER_YEAR)?.capitalizeFirstLetter() ?: "",
         DriveKitUI.colors.primaryColor(),
         DKStyle.NORMAL_TEXT
     ).toSpannable()
 
     private fun getYearDateText(): SpannableString = DKSpannable().append(
         context,
-        viewModel.fromDate.formatDate(DKDatePattern.YEAR),
+        viewModel.fromDate?.formatDate(DKDatePattern.YEAR) ?: "",
         DriveKitUI.colors.primaryColor(),
         DKStyle.NORMAL_TEXT
     ).toSpannable()

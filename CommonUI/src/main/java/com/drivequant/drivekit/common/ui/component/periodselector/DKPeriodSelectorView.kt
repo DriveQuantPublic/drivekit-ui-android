@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.core.common.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 class DKPeriodSelectorView(context: Context) : LinearLayout(context) {
 

@@ -1,11 +1,10 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.core.common.DKPeriod
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -14,12 +13,6 @@ import kotlin.math.ceil
 
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
 internal fun Date.toTimelineString(): String = TimelineUtils.getBackendDateFormat().format(this)
-
-internal fun DKPeriod.getTitleResId() = when(this) {
-    DKPeriod.WEEK -> "dk_common_period_selector_week"
-    DKPeriod.MONTH -> "dk_common_period_selector_month"
-    DKPeriod.YEAR -> "dk_common_period_selector_year"
-}
 
 internal object TimelineUtils {
     fun getBackendDateFormat(): DateFormat {
@@ -30,7 +23,7 @@ internal object TimelineUtils {
 
     fun updateSelectedDateForNewPeriod(period: DKPeriod, previousSelectedDate: Date?, weekTimeline: DKRawTimeline?, monthTimeline: DKRawTimeline?): Date? {
         if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
-            if (weekTimeline.period != TimelinePeriod.WEEK || monthTimeline.period != TimelinePeriod.MONTH) {
+            if (weekTimeline.period != DKPeriod.WEEK || monthTimeline.period != DKPeriod.MONTH) {
                 throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
             }
             val timeline: DKRawTimeline
@@ -77,7 +70,6 @@ internal fun <E> List<E>.addValueIfNotEmpty(index: Int, list: MutableList<E>) {
         list.add(this[index])
     }
 }
-
 
 internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType> {
     return when (this) {
