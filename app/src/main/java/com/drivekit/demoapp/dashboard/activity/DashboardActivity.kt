@@ -4,20 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
@@ -31,14 +23,6 @@ import com.drivekit.demoapp.utils.getSerializableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.headLine2
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevels
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
@@ -151,8 +135,7 @@ internal class DashboardActivity : AppCompatActivity() {
             startStopTripButton = this
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
             setOnClickListener {
-                //viewModel.startStopTrip()
-                launchLegend() // TODO for review
+                viewModel.startStopTrip()
             }
         }
 
@@ -160,149 +143,6 @@ internal class DashboardActivity : AppCompatActivity() {
             startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
         }
     }
-
-    private fun launchLegend() {
-        val dkScoreType: DKScoreType = DKScoreType.SAFETY // TODO mock
-        val alertDialog = DKAlertDialog.LayoutBuilder()
-            .init(this)
-            .layout(R.layout.dk_my_synthesis_scores_legend_alert_dialog)
-            .positiveButton(getString(R.string.dk_common_close)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .cancelable(true)
-            .show()
-
-        // Title
-        alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_title)?.apply {
-            text = when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_safety_score
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_eco_score
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_distraction_score
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_speeding_score
-            }.let {
-                getString(it)
-            }
-            headLine2(DriveKitUI.colors.primaryColor())
-        }
-
-        // Description
-        alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_description)?.apply {
-            text = when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_score_info
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_score_info
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_score_info
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score_info
-            }.let {
-                getString(it)
-            }
-            smallText()
-        }
-
-        alertDialog.findViewById<LinearLayout>(R.id.container_score_item)?.let { scoreItemContainer ->
-            DKScoreTypeLevels.values().forEach {
-                configureScoreItem(scoreItemContainer, dkScoreType, it)
-            }
-        }
-    }
-
-    private fun configureScoreItem(
-        container: LinearLayout,
-        dkScoreType: DKScoreType,
-        scoreLevel: DKScoreTypeLevels)
-    {
-        val view = View.inflate(this, R.layout.dk_my_synthesis_scores_legend_item, null)
-        view.findViewById<View>(R.id.score_color)?.let { scoreColor ->
-            DrawableCompat.setTint(
-                scoreColor.background,
-                ContextCompat.getColor(scoreColor.context, scoreLevel.getColorResId())
-            )
-        }
-        view.findViewById<TextView>(R.id.score_description)?.apply {
-            val scoreValuesText: String = when (scoreLevel) {
-                DKScoreTypeLevels.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
-                DKScoreTypeLevels.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
-                DKScoreTypeLevels.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
-                DKScoreTypeLevels.MEDIUM -> R.string.dk_driverdata_mysynthesis_score_title_average
-                DKScoreTypeLevels.NOT_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_low
-                DKScoreTypeLevels.BAD -> R.string.dk_driverdata_mysynthesis_score_title_bad
-                DKScoreTypeLevels.VERY_BAD -> R.string.dk_driverdata_mysynthesis_score_title_very_bad
-            }.let {
-                getString(
-                    it,
-                    scoreLevel.getScoreLevels(dkScoreType).first.format(1),
-                    scoreLevel.getScoreLevels(dkScoreType).second.format(1)
-                )
-            }
-            this.text = DKSpannable().append(scoreValuesText, context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
-                typeface(Typeface.NORMAL)
-                size(R.dimen.dk_text_normal)
-            }).space()
-                .append(
-                    getString(getScoreLevelDescription(dkScoreType, scoreLevel)),
-                    context.resSpans {
-                        color(DriveKitUI.colors.complementaryFontColor())
-                        typeface(Typeface.NORMAL)
-                        size(R.dimen.dk_text_small)
-                    }).toSpannable()
-        }
-        container.addView(view)
-        val params = view.layoutParams as ViewGroup.MarginLayoutParams
-        params.setMargins(
-            params.leftMargin,
-            view.resources.getDimension(R.dimen.dk_margin_half).toInt(),
-            params.rightMargin,
-            view.resources.getDimension(R.dimen.dk_margin_half).toInt()
-        )
-        view.layoutParams = params
-    }
-
-    @StringRes
-    private fun getScoreLevelDescription(dkScoreType: DKScoreType, scoreLevel: DKScoreTypeLevels) =
-        when (scoreLevel) {
-            DKScoreTypeLevels.EXCELLENT -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_excellent
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_excellent
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_excellent
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_excellent
-            }
-            DKScoreTypeLevels.VERY_GOOD -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_good
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_good
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_good
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_very_good
-            }
-            DKScoreTypeLevels.GREAT -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_good
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_good
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_good
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_good
-            }
-            DKScoreTypeLevels.MEDIUM -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_average
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_average
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_average
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_average
-            }
-            DKScoreTypeLevels.NOT_GOOD -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_low
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_low
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_low
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_low
-            }
-            DKScoreTypeLevels.BAD -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_bad
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_bad
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_bad
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_bad
-            }
-            DKScoreTypeLevels.VERY_BAD -> when (dkScoreType) {
-                DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_bad
-                DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_bad
-                DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_bad
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_spedding_level_very_bad
-            }
-        }
 
     private fun initTripSimulatorButton() {
         button_trip_simulator.findViewById<Button>(R.id.button_action).apply {
