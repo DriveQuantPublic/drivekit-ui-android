@@ -63,16 +63,12 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     }
     fun getEvolutionText(context: Context): String {
         val allContextItem = this.allContextItem
-        if (hasNoTrip(allContextItem)) {
-            return when (selectedPeriod) {
-                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
-                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
-                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }.let { context.getString(it) }
+        return if (hasNoTrip(allContextItem)) {
+           context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
         } else if (!hasData(this.selectedScore, allContextItem)) {
-            return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
+            context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else if (this.previousScore != null) {
-            return when (selectedPeriod) {
+            when (selectedPeriod) {
                 DKPeriod.WEEK -> context.getString(R.string.dk_driverdata_mysynthesis_previous_week)
                 DKPeriod.MONTH -> context.getString(R.string.dk_driverdata_mysynthesis_previous_month)
                 DKPeriod.YEAR -> {
@@ -81,7 +77,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
                 }
             }
         } else {
-            return when (selectedPeriod) {
+            when (selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_trip_prev_week
                 DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_trip_prev_month
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_trip_prev_year
