@@ -55,7 +55,7 @@
     <string name="badge_distance_beginer_theme">Rejseafstand - begynder</string>
     <string name="badge_distance_expert_congrats_1">Du har nået målet - tillykke!</string>
     <string name="badge_distance_expert_congrats_2">Tilykke! Du har nået målet. Du har kørt ligeså langt, som hvis du havde kørt tværs over Canada.</string>
-    <string name="badge_distance_expert_congrats_3">Du har opnået en af de største udmærkelser i appen! Flot - og tak fordi du er med.</string>
+    <string name="badge_distance_expert_congrats_3">Du har opnået en af de største udmærkelser i Bilist+! Flot - og tak fordi du er med.</string>
     <string name="badge_distance_expert_description_1">Kør det antal kilometer, der svarer til at køre fra toppen af Danmark til toppen af Norge, for at få denne badge.</string>
     <string name="badge_distance_expert_description_2">Kør det antal kilometer, der svarer til at køre på tværs af verdens næststørste land, Canada.</string>
     <string name="badge_distance_expert_description_3">Tilbagelæg afstanden mellem Paris og Tokyo i fugleflugt. Det er ca. 10.000 km, hvis ikke du lige vidste det.</string>
@@ -193,7 +193,7 @@
     <string name="badge_rain_trip_name_2">Det regner igen</string>
     <string name="badge_rain_trip_name_3">Det regner altid</string>
     <string name="badge_rain_trip_progress_1">Kør %s -ture i regnvejr for at opnå denne udmærkelse.</string>
-    <string name="badge_rain_trip_progress_2">Kør %S -ture for at opnå denne udmærkelse.</string>
+    <string name="badge_rain_trip_progress_2">Kør %s -ture for at opnå denne udmærkelse.</string>
     <string name="badge_rain_trip_progress_3">Kør %s -ture for at opnå denne udmærkelse.</string>
     <string name="badge_rain_trip_theme">Kørsel i regn</string>
     <string name="badge_range_average_congrats_1">Tillykke, du har nået målet!</string>

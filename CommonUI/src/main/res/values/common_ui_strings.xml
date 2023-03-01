@@ -44,6 +44,7 @@
     <string name="dk_common_mean_speed">Average speed</string>
     <string name="dk_common_no">No</string>
     <string name="dk_common_no_pseudo_set">To share your ranking with the other participants, we invite you to choose a pseudo. Without a pseudo you will appear as anonymous.</string>
+    <string name="dk_common_no_trip">No trip</string>
     <string name="dk_common_ok">OK</string>
     <string name="dk_common_period_selector_month">Month</string>
     <string name="dk_common_period_selector_week">Week</string>

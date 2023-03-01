@@ -1,8 +1,11 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.scorecard
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.getValue
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
@@ -58,29 +61,31 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             DKScoreType.SPEEDING -> allContextItem?.speeding != null
         }
     }
-    @StringRes
-    fun getEvolutionTextResId(): Int {
+    fun getEvolutionText(context: Context): String {
         val allContextItem = this.allContextItem
-        return if (hasNoTrip(allContextItem)) {
-            when (selectedPeriod) {
+        if (hasNoTrip(allContextItem)) {
+            return when (selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
                 DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }
+            }.let { context.getString(it) }
         } else if (!hasData(this.selectedScore, allContextItem)) {
-            R.string.dk_driverdata_mysynthesis_not_enough_data
+            return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else if (this.previousScore != null) {
-            when (selectedPeriod) {
-                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_previous_week
-                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_previous_month
-                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_previous_year
+            return when (selectedPeriod) {
+                DKPeriod.WEEK -> context.getString(R.string.dk_driverdata_mysynthesis_previous_week)
+                DKPeriod.MONTH -> context.getString(R.string.dk_driverdata_mysynthesis_previous_month)
+                DKPeriod.YEAR -> {
+                    val currentYear = allContextItem?.date?.getValue(CalendarField.YEAR)
+                    String.format(context.getString(R.string.dk_driverdata_mysynthesis_previous_year), currentYear)
+                }
             }
         } else {
-            when (selectedPeriod) {
+            return when (selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_trip_prev_week
                 DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_trip_prev_month
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_trip_prev_year
-            }
+            }.let { context.getString(it) }
         }
     }
 

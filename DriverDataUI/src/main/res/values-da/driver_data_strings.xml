@@ -20,7 +20,7 @@
    <string name="dk_driverdata_beginning_unauthorized_call_info_content">Hov, det ser ud til, at du kom til at bruge din telefon, mens du kørte. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, så parker først bilen, og sluk for motoren.</string>
    <string name="dk_driverdata_calling_time">Opkaldstid =</string>
    <string name="dk_driverdata_change_transportation_mode">Skift?</string>
-   <string name="dk_driverdata_confirm_delete_trip">Slet turen?</string>
+   <string name="dk_driverdata_confirm_delete_trip">Slet turen? Hvis du sletter turen vil det ikke påvirke dine ugentlige scores. Dog vil det påvirke point og eventuel selvrisikorabat for ugen såfremt dette gøres inden søndag aften.</string>
    <string name="dk_driverdata_day">Dagstur</string>
    <string name="dk_driverdata_declared_transportation_mode">Erklæret tilstand:</string>
    <string name="dk_driverdata_default_filter_item">Alle mine ture</string>
@@ -45,7 +45,7 @@
    <string name="dk_driverdata_my_weekly_score_distraction">Min ugentlige score | Distraktion</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">Min ugentlige score | Øko-kørsel</string>
    <string name="dk_driverdata_my_weekly_score_safety">Min ugentlige score | Sikkerhed</string>
-   <string name="dk_driverdata_my_weekly_score_speeding">Min ugentlige score | Hastighed</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">Not used</string>
    <string name="dk_driverdata_mysynthesis_average">gen.</string>
    <string name="dk_driverdata_mysynthesis_average_score">Din score er gennemsnitlig</string>
    <string name="dk_driverdata_mysynthesis_bad_score">Din score er ringe</string>
@@ -81,13 +81,14 @@
    <string name="dk_driverdata_mysynthesis_no_driving_month">Du har ikke kørt i denne måned</string>
    <string name="dk_driverdata_mysynthesis_no_driving_week">Du har ikke kørt i denne uge</string>
    <string name="dk_driverdata_mysynthesis_no_driving_year">Du har ikke kørt i år</string>
+   <string name="dk_driverdata_mysynthesis_no_trip_at_all"/>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Du har ikke kørt bil i den foregående måned</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Du har ikke kørt bil i den foregående uge</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_year">Du har ikke kørt bil det foregående år</string>
    <string name="dk_driverdata_mysynthesis_not_enough_data">Der er ikke nok data til at vurdere din kørsel.</string>
-   <string name="dk_driverdata_mysynthesis_previous_month">Den foregående måned</string>
-   <string name="dk_driverdata_mysynthesis_previous_week">Den foregående uge</string>
-   <string name="dk_driverdata_mysynthesis_previous_year">Det foregående år</string>
+   <string name="dk_driverdata_mysynthesis_previous_month">Den foregående måned :</string>
+   <string name="dk_driverdata_mysynthesis_previous_week">Den foregående uge :</string>
+   <string name="dk_driverdata_mysynthesis_previous_year">I %1$s :</string>
    <string name="dk_driverdata_mysynthesis_safety_level_average">Din score er gennemsnitlig, men du kan gøre det meget bedre! Du kan forbedre din score ved at tjekke de kørselstips, der vises i detaljerne for dine ture, for at forbedre din score.</string>
    <string name="dk_driverdata_mysynthesis_safety_level_bad">Din kørestil er for dynamisk og risikabel. Kør lidt mere jævnt for at bidrage til at gøre vejene mere sikre.</string>
    <string name="dk_driverdata_mysynthesis_safety_level_excellent">Bravo, din kørestil er eksemplarisk 🏆 !</string>
@@ -97,19 +98,19 @@
    <string name="dk_driverdata_mysynthesis_safety_level_very_good">Din kørsel er meget sikker, og du er tæt på perfektion.</string>
    <string name="dk_driverdata_mysynthesis_safety_score">Min sikkerhedsscore</string>
    <string name="dk_driverdata_mysynthesis_safety_score_info">Sikkerhedsscoren varierer mellem 3 og 10. Din score definerer dit niveau, som er repræsenteret på en farveskala.</string>
-   <string name="dk_driverdata_mysynthesis_score_title_average">Gennemsnitlig (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_bad">Ringe (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_excellent">Fremragende (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_good">God (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_low">Dårlig (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_very_bad">Meget dårlig (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_score_title_very_good">Meget godt (%1$d - %2$d) :</string>
-   <string name="dk_driverdata_mysynthesis_spedding_level_very_bad">Din hastighed er farlig 😡 ! Vær opmærksom på, at det er den første dødsårsag i trafikken. Sæt farten ned for at undgå ulykker og for at beskytte dig selv.</string>
+   <string name="dk_driverdata_mysynthesis_score_title_average">Gennemsnitlig (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_bad">Ringe (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_excellent">Fremragende (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_good">God (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_low">Dårlig (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_very_bad">Meget dårlig (%1$s - %2$s) :</string>
+   <string name="dk_driverdata_mysynthesis_score_title_very_good">Meget godt (%1$s - %2$s) :</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_average">Din score er gennemsnitlig, men du kan gøre det meget bedre! Sørg for at overholde alle fartbegrænsningsskilte.</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_bad">Du kører for hurtigt! Hvis alle trafikanter overholdt hastighedsgrænsen, kunne mange liv reddes hvert år. Gør vejene mere sikre ved at nedsætte hastigheden.</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_excellent">Godt gået, du overholder hastighedsgrænserne perfekt. Du er eksemplarisk 🏆!</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_good">Du overskrider sjældent hastighedsgrænserne, men du kan stadig forbedre dig. Bare en lille smule mere indsats 💪</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_low">Din score er under gennemsnittet. Den gode nyhed er, at du har masser af muligheder for at forbedre dig, så udnyt dem!</string>
+   <string name="dk_driverdata_mysynthesis_speeding_level_very_bad">Din hastighed er farlig 😡 ! Vær opmærksom på, at det er den første dødsårsag i trafikken. Sæt farten ned for at undgå ulykker og for at beskytte dig selv.</string>
    <string name="dk_driverdata_mysynthesis_speeding_level_very_good">Din score er meget god, bliv ved med at nå toppen!</string>
    <string name="dk_driverdata_mysynthesis_speeding_score">Min hastighedsscore</string>
    <string name="dk_driverdata_mysynthesis_speeding_score_info">Hastighedsscoren varierer mellem 0 og 10. Din score definerer dit niveau, som er repræsenteret på en farveskala.</string>
@@ -124,7 +125,7 @@
    <string name="dk_driverdata_no_screen_unlocking">Ingen oplåsning</string>
    <string name="dk_driverdata_no_speeding_content_congratulations">Du har respekteret fartgrænserne på din tur.</string>
    <string name="dk_driverdata_no_speeding_events">Ingen overskridelser</string>
-   <string name="dk_driverdata_no_speeding_title_congratulations">👍 Tillykke og tak for din forsigtighed!</string>
+   <string name="dk_driverdata_no_speeding_title_congratulations">Tillykke og tak for din forsigtighed!</string>
    <string name="dk_driverdata_no_trip_placeholder">Du har endnu ikke foretaget ture med dette køretøj.</string>
    <string name="dk_driverdata_no_trips_recorded">Når du har kørt din første tur, vises den her.</string>
    <string name="dk_driverdata_phone_call_plur">%s telefonopkald</string>
@@ -147,7 +148,7 @@
    <string name="dk_driverdata_screen_lock_text">Din mobil blev brugt under kørslen. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, skal du først parkere bilen og slukke motoren.</string>
    <string name="dk_driverdata_screen_unlock_text">Din mobil blev brugt under kørslen. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, skal du først parkere bilen og slukke motoren.</string>
    <string name="dk_driverdata_speeding_event">Fartoverskridelse</string>
-   <string name="dk_driverdata_speeding_event_info_content">Appen har måt, at fartgrænsen blev overskredet på denne del af turen. Fart er den første faktor i dødsulykker på vejen. For din sikkerhed og dine passagerer er det vigtigt at respektere fartgrænserne.</string>
+   <string name="dk_driverdata_speeding_event_info_content">Bilist+ har måt, at fartgrænsen blev overskredet på denne del af turen. Fart er den første faktor i dødsulykker på vejen. For din sikkerhed og dine passagerer er det vigtigt at respektere fartgrænserne.</string>
    <string name="dk_driverdata_speeding_events_distance">Fartoverskridelse ift. afstand</string>
    <string name="dk_driverdata_speeding_events_duration">Fartoverskridelse ift. varighed</string>
    <string name="dk_driverdata_speeding_events_trip_description">eller %s af din tur</string>
@@ -189,7 +190,7 @@
    <string name="dk_driverdata_transportation_mode_truck">Lastbil</string>
    <string name="dk_driverdata_transportation_profile_driver">Chauffør</string>
    <string name="dk_driverdata_transportation_profile_passenger">Passager</string>
-   <string name="dk_driverdata_trip_deleted">Din rejse er blevet slettet.</string>
+   <string name="dk_driverdata_trip_deleted">Din tur er blevet slettet.</string>
    <string name="dk_driverdata_trip_detail_data_error">Turdata kunne ikke hentes.</string>
    <string name="dk_driverdata_trip_detail_get_road_failed">Den kørte rute kan ikke vises. Sørg for at din mobil er tilsluttet wifi eller mobilnetværket.</string>
    <string name="dk_driverdata_trip_detail_no_score">Turen er optaget, men den kørte afstand er for kort til at evaluere din kørsel.</string>
@@ -200,7 +201,7 @@
    <string name="dk_driverdata_unlock_duration">Varighed med ulåst skærm</string>
    <string name="dk_driverdata_unlock_event">Skærmoplåsning</string>
    <string name="dk_driverdata_unlock_events">Skærmoplåsninger</string>
-   <string name="dk_driverdata_unlock_number">Antal oplåsning</string>
+   <string name="dk_driverdata_unlock_number">Antal oplåsninger</string>
    <string name="dk_driverdata_unlock_screen_content">skærm oplåst i %1$s og %2$s</string>
    <string name="dk_driverdata_urban">%s i byzone</string>
    <string name="dk_driverdata_value">Værdi =</string>
