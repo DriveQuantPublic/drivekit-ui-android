@@ -16,7 +16,9 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
 internal class MySynthesisViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,6 +28,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
+    val scoreCardViewModel = MySynthesisScoreCardViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     private var selectedScore: DKScoreType
@@ -78,8 +81,17 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                         index
                     }
                 } ?: (dates.size - 1)
-                this.selectedDate = dates[selectedDateIndex]
+                val date = dates[selectedDateIndex]
+                this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+
+                this.scoreCardViewModel.configure(
+                    this.selectedScore,
+                    this.selectedPeriod,
+                    timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
+                    timelineSource.allContext.first { it.date == this.selectedDate }
+                )
+
             }
         } ?: run {
             configureWithNoData()
@@ -94,6 +106,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
+            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null)
         }
     }
 
