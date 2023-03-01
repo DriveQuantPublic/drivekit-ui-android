@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -56,13 +55,11 @@ internal class MySynthesisFragment : Fragment() {
         configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
-        configureScoreCard()
-
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
-            configureScoreCard()
+            updateScoreCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -144,7 +141,7 @@ internal class MySynthesisFragment : Fragment() {
         }
     }
 
-    private fun configureScoreCard() {
+    private fun updateScoreCard() {
         this.scoreCardView.configure(viewModel.scoreCardViewModel)
     }
 

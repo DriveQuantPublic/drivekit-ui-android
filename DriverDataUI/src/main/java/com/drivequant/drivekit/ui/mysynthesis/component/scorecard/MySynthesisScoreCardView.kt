@@ -82,20 +82,20 @@ internal class MySynthesisScoreCardView : LinearLayout {
         val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
 
         subTitle.apply {
-            text = DKSpannable().computeScoreOnTen(scoreValue).toSpannable()
+            text = DKSpannable().computeScoreOutOfTen(scoreValue).toSpannable()
             highlightBig(subtitleTextColor)
         }
     }
 
     private fun configureEvolutionText(previousScore: Double?) {
-        val evolutionText = viewModel.getEvolutionText(context)
+        val evolutionText = viewModel.getEvolutionText(this.evolutionText.context)
 
-        evolutionText.text = if(viewModel.hasScoredTrips() && viewModel.hasPreviousData()) {
-            DKSpannable().append(context.getString(textResId)).space().computeScoreOnTen(previousScore).toSpannable()
+        this.evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
+            DKSpannable().append(evolutionText).space().computeScoreOutOfTen(previousScore).toSpannable()
         } else {
-            context.getString(textResId)
+            evolutionText
         }
-        evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 
     private fun configureTrendIcon(score: Double?, previousScore: Double?) {
@@ -109,7 +109,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
         }
     }
 
-    private fun DKSpannable.computeScoreOnTen(score: Double?): DKSpannable {
+    private fun DKSpannable.computeScoreOutOfTen(score: Double?): DKSpannable {
         val scoreText = (score?.format(1) ?: "-")
             .plus(" ")
             .plus(context.getString(R.string.dk_common_unit_score))
