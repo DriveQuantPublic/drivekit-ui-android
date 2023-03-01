@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.scorecard
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
@@ -61,7 +62,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     }
 
     @StringRes
-    fun getEvolutionTextResId() =
+    fun getEvolutionText(context: Context) =
         if (isTimelineEmpty()) {
             R.string.dk_driverdata_mysynthesis_not_enough_data
         } else if (!hasScoredTrips()){
