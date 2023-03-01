@@ -85,15 +85,13 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
-                timelineSource.allContext.first { it.date == this.selectedDate }.let { allContextItem ->
-                        this.scoreCardViewModel.configure(
-                            this.selectedScore,
-                            this.selectedPeriod,
-                            timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
-                            allContextItem.numberTripTotal,
-                            allContextItem.numberTripScored
-                        )
-                    }
+                this.scoreCardViewModel.configure(
+                    this.selectedScore,
+                    this.selectedPeriod,
+                    timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
+                    timelineSource.allContext.first { it.date == this.selectedDate }
+                )
+
             }
         } ?: run {
             configureWithNoData()
@@ -108,7 +106,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
-            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, 0, 0)
+            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null)
         }
     }
 

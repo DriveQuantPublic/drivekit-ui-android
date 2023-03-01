@@ -45,7 +45,8 @@
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/score_card_title" />
+                app:layout_constraintTop_toBottomOf="@id/score_card_title"
+                app:layout_constraintBottom_toTopOf="@+id/score_card_evolution_text"/>
 
             <TextView
                 android:id="@+id/score_card_evolution_text"

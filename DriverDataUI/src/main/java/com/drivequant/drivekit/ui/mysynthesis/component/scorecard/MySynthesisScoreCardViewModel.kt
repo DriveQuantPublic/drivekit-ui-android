@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
@@ -17,8 +18,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
     private var scoreSynthesis: DKScoreSynthesis? = null
 
-    private var totalTrips: Int = 0
-    private var scoredTrips: Int = 0
+    private var allContextItem: DKDriverTimeline.DKAllContextItem? = null
 
     val score: Double?
         get() = scoreSynthesis?.scoreValue
@@ -29,15 +29,12 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         score: DKScoreType,
         period: DKPeriod,
         scoreSynthesis: DKScoreSynthesis?,
-        totalTrips: Int,
-        scoredTrips: Int
+        allContextItem: DKDriverTimeline.DKAllContextItem?
     ) {
         this.selectedScore = score
         this.selectedPeriod = period
         this.scoreSynthesis = scoreSynthesis
-
-        this.totalTrips = totalTrips
-        this.scoredTrips = scoredTrips
+        this.allContextItem = allContextItem
 
         this.onViewModelUpdated?.invoke()
     }
@@ -51,15 +48,26 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score
     }
 
+    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
+
+    private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?): Boolean {
+        return when (score) {
+            DKScoreType.SAFETY -> allContextItem?.safety != null
+            DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving != null
+            DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction != null
+            DKScoreType.SPEEDING -> allContextItem?.speeding != null
+        }
+    }
     @StringRes
-    fun getEvolutionTextResId() =
-        if (totalTrips == 0) {
+    fun getEvolutionTextResId(): Int {
+        val allContextItem = this.allContextItem
+        return if (hasNoTrip(allContextItem)) {
             when (selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
                 DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
             }
-        } else if (scoredTrips == 0 && (this.selectedScore == DKScoreType.SAFETY || this.selectedScore == DKScoreType.ECO_DRIVING)) {
+        } else if (!hasData(this.selectedScore, allContextItem)) {
             R.string.dk_driverdata_mysynthesis_not_enough_data
         } else if (this.previousScore != null) {
             when (selectedPeriod) {
@@ -74,6 +82,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_trip_prev_year
             }
         }
+    }
 
     @DrawableRes
     fun getTrendIconResId(): Int {

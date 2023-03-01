@@ -56,11 +56,12 @@ internal class MySynthesisFragment : Fragment() {
         configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
-        configureScoreCard()
+
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
+            configureScoreCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
