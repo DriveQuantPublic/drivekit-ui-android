@@ -88,14 +88,14 @@ internal class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun configureEvolutionText(previousScore: Double?) {
-        val textResId = viewModel.getEvolutionTextResId()
+        val evolutionText = context.getString(viewModel.getEvolutionTextResId())
 
-        evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
-            DKSpannable().append(context.getString(textResId)).space().computeScoreOutOfTen(previousScore).toSpannable()
+        this.evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
+            DKSpannable().append(evolutionText).space().computeScoreOutOfTen(previousScore).toSpannable()
         } else {
-            context.getString(textResId)
+            evolutionText
         }
-        evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 
     private fun configureTrendIcon(score: Double?, previousScore: Double?) {

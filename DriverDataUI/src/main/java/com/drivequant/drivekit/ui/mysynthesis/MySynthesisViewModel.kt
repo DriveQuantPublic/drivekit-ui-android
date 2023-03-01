@@ -16,6 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
@@ -83,7 +84,16 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 val date = dates[selectedDateIndex]
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
-                this.scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, timelineSource, date)
+
+                timelineSource.allContext.first { it.date == this.selectedDate }.let { allContextItem ->
+                        this.scoreCardViewModel.configure(
+                            this.selectedScore,
+                            this.selectedPeriod,
+                            timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
+                            allContextItem.numberTripTotal,
+                            allContextItem.numberTripScored
+                        )
+                    }
             }
         } ?: run {
             configureWithNoData()
@@ -98,6 +108,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
+            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, 0, 0)
         }
     }
 
