@@ -88,7 +88,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun configureEvolutionText(previousScore: Double?) {
-        val evolutionText = viewModel.getEvolutionText(this.evolutionText.context)
+        val evolutionText = viewModel.getEvolutionText(context)
 
         this.evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
             DKSpannable().append(evolutionText).space().computeScoreOutOfTen(previousScore).toSpannable()
