@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGauge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dk_margin_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mainGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <FrameLayout
+        android:id="@+id/scoreDescription"
+        android:layout_width="200dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="@dimen/dk_margin_medium"
+        android:padding="@dimen/dk_margin_quarter"
+        app:layout_constraintEnd_toEndOf="@id/mainGuideline"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <FrameLayout
+        android:id="@+id/scoreArrowIndicator"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_medium"
+        app:layout_constraintBottom_toTopOf="@+id/gauge"
+        app:layout_constraintEnd_toEndOf="@id/mainGuideline"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline"
+        app:layout_constraintTop_toBottomOf="@id/scoreDescription" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gauge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin_half"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/dk_margin"
+        app:layout_constraintBottom_toTopOf="@+id/communityMinValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/veryBadGauge"
+            android:layout_width="0dp"
+            android:layout_height="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/badGauge"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:background="#FF6E57" />
+
+        <View
+            android:id="@+id/badGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@+id/badMeanGauge"
+            app:layout_constraintStart_toEndOf="@id/veryBadGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#FFA057" />
+
+        <View
+            android:id="@+id/badMeanGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@+id/meanGauge"
+            app:layout_constraintStart_toEndOf="@id/badGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#FFD357" />
+
+        <View
+            android:id="@+id/meanGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@+id/goodMeanGauge"
+            app:layout_constraintStart_toEndOf="@id/badMeanGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#F9FF57" />
+
+        <View
+            android:id="@+id/goodMeanGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@+id/goodGauge"
+            app:layout_constraintStart_toEndOf="@id/meanGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#C6FF57" />
+
+        <View
+            android:id="@+id/goodGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@+id/excellentGauge"
+            app:layout_constraintStart_toEndOf="@id/goodMeanGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#94FF57" />
+
+        <View
+            android:id="@+id/excellentGauge"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/goodGauge"
+            app:layout_constraintTop_toTopOf="@id/veryBadGauge"
+            tools:background="#30C8FC" />
+
+        <TextView
+            android:id="@+id/level0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dk_margin_quarter"
+            app:layout_constraintBottom_toTopOf="@id/veryBadGauge"
+            app:layout_constraintEnd_toStartOf="@id/veryBadGauge"
+            app:layout_constraintStart_toStartOf="@id/veryBadGauge"
+            tools:text="3"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/badGauge"
+            app:layout_constraintStart_toStartOf="@id/badGauge"
+            tools:text="6"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/badMeanGauge"
+            app:layout_constraintStart_toStartOf="@id/badMeanGauge"
+            tools:text="7.5"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/meanGauge"
+            app:layout_constraintStart_toStartOf="@id/meanGauge"
+            tools:text="8.5"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/goodMeanGauge"
+            app:layout_constraintStart_toStartOf="@id/goodMeanGauge"
+            tools:text="9"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/goodGauge"
+            app:layout_constraintStart_toStartOf="@id/goodGauge"
+            tools:text="9.5"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toStartOf="@id/excellentGauge"
+            app:layout_constraintStart_toStartOf="@id/excellentGauge"
+            tools:text="9.8"
+            tools:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/level7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@id/level0"
+            app:layout_constraintEnd_toEndOf="@id/excellentGauge"
+            app:layout_constraintStart_toEndOf="@id/excellentGauge"
+            tools:text="10"
+            tools:textSize="11sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/scoreIndicator"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginBottom="-2dp"
+        app:layout_constraintBottom_toBottomOf="@id/gauge"
+        app:layout_constraintEnd_toEndOf="@id/mainGuideline"
+        app:layout_constraintStart_toStartOf="@id/mainGuideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/communityMinGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/communityMeanGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/communityMaxGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <View
+        android:id="@+id/communityLine"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/communityMinIndicator"
+        app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
+        app:layout_constraintTop_toTopOf="@+id/communityMinIndicator" />
+
+    <TextView
+        android:id="@+id/communityMinValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dk_margin_half"
+        app:layout_constraintBottom_toTopOf="@+id/communityMinIndicator"
+        app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
+        tools:text="x,x" />
+
+    <TextView
+        android:id="@+id/communityMeanValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
+        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        tools:text="moy." />
+
+    <TextView
+        android:id="@+id/communityMaxValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
+        app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
+        tools:text="max" />
+
+    <View
+        android:id="@+id/communityMinIndicator"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
+        app:layout_constraintBottom_toTopOf="@+id/communityMinText"
+        app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMinGuideline" />
+
+    <View
+        android:id="@+id/communityMeanIndicator"
+        android:layout_width="14dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/communityMinIndicator"
+        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        app:layout_constraintTop_toTopOf="@id/communityMinIndicator" />
+
+    <View
+        android:id="@+id/communityMaxIndicator"
+        android:layout_width="14dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/communityMinIndicator"
+        app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
+        app:layout_constraintTop_toTopOf="@id/communityMinIndicator" />
+
+    <TextView
+        android:id="@+id/communityMinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
+        tools:text="min" />
+
+    <TextView
+        android:id="@+id/communityMeanText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
+        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        tools:text="moy." />
+
+    <TextView
+        android:id="@+id/communityMaxText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
+        app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
+        tools:text="max" />
+
+</com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGauge>

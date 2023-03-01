@@ -60,13 +60,23 @@
                         android:layout_height="wrap_content" />
                 </FrameLayout>
 
-                <FrameLayout
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/communityCard_container"
+                    style="@style/DKCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/scoreCard_container" />
+                    app:layout_constraintTop_toBottomOf="@id/scoreCard_container"
+                    app:cardElevation="0dp">
+
+                    <include layout="@layout/dk_mysynthesis_gauge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/button_detail"
