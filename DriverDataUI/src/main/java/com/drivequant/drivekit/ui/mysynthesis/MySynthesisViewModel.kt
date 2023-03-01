@@ -14,6 +14,8 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
+import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
@@ -36,6 +38,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
 
+    private lateinit var communityStatistics: DKCommunityStatistics
+
     init {
         this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
         configureScoreSelector()
@@ -44,19 +48,35 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
-                update()
+                update() // TODO call only after community statistics ?
+                DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics ->
+                    if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
+                        this.communityStatistics = statistics
+                    } else {
+                        // TODO
+                    }
+                }
+            } else {
+                // TODO
             }
         }
         updateData()
     }
 
     fun updateData() {
+        val finish = { status: TimelineSyncStatus -> syncStatus.postValue(status) }
+
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
             if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
-                this.timelineByPeriod = timelines.associateBy { it.period }
-                update(true)
+                DriveKitDriverData.getCommunityStatistics { _, statistics ->
+                    this.timelineByPeriod = timelines.associateBy { it.period }
+                    this.communityStatistics = statistics
+                    update(true)
+                    finish(status)
+                }
+            } else {
+                finish(status)
             }
-            syncStatus.postValue(status)
         }
     }
 
@@ -107,6 +127,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
             scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null)
+            // TODO communityCard
         }
     }
 
