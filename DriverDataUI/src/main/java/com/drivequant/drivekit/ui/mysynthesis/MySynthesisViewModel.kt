@@ -20,6 +20,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
@@ -31,6 +32,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val scoreCardViewModel = MySynthesisScoreCardViewModel()
+    val communityCardViewModel = MySynthesisCommunityCardViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     private var selectedScore: DKScoreType
@@ -48,13 +50,14 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
-                update() // TODO call only after community statistics ?
+
                 DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics ->
                     if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
                         this.communityStatistics = statistics
                     } else {
                         // TODO
                     }
+                    update()
                 }
             } else {
                 // TODO
@@ -67,12 +70,12 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         val finish = { status: TimelineSyncStatus -> syncStatus.postValue(status) }
 
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
+            this.timelineByPeriod = timelines.associateBy { it.period }
             if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
                 DriveKitDriverData.getCommunityStatistics { _, statistics ->
-                    this.timelineByPeriod = timelines.associateBy { it.period }
                     this.communityStatistics = statistics
                     update(true)
-                    finish(status)
+                    finish(status) //TODO à voir pour le status
                 }
             } else {
                 finish(status)
@@ -106,11 +109,22 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
+                val currentAllContextItemIndex = timelineSource.allContext.indexOfFirst { it.date == this.selectedDate }
+
                 this.scoreCardViewModel.configure(
                     this.selectedScore,
                     this.selectedPeriod,
                     timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
-                    timelineSource.allContext.first { it.date == this.selectedDate }
+                    timelineSource.allContext[currentAllContextItemIndex],
+                    if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null // TODO improve that check
+                )
+
+                this.communityCardViewModel.configure(
+                    this.selectedScore,
+                    this.selectedPeriod,
+                    timelineSource,
+                    date,
+                    this.communityStatistics
                 )
             }
         } ?: run {
@@ -126,8 +140,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
-            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null)
-            // TODO communityCard
+            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
+            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics)
         }
     }
 

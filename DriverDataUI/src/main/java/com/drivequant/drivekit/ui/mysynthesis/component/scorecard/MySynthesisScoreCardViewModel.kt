@@ -12,6 +12,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
+import java.util.*
 
 internal class MySynthesisScoreCardViewModel : ViewModel() {
 
@@ -22,6 +23,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     private var scoreSynthesis: DKScoreSynthesis? = null
 
     private var allContextItem: DKDriverTimeline.DKAllContextItem? = null
+    private var previousDate: Date? = null
 
     val score: Double?
         get() = scoreSynthesis?.scoreValue
@@ -32,12 +34,14 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         score: DKScoreType,
         period: DKPeriod,
         scoreSynthesis: DKScoreSynthesis?,
-        allContextItem: DKDriverTimeline.DKAllContextItem?
+        allContextItem: DKDriverTimeline.DKAllContextItem?,
+        previousDate: Date?
     ) {
         this.selectedScore = score
         this.selectedPeriod = period
         this.scoreSynthesis = scoreSynthesis
         this.allContextItem = allContextItem
+        this.previousDate = previousDate
 
         this.onViewModelUpdated?.invoke()
     }
@@ -71,10 +75,10 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             when (selectedPeriod) {
                 DKPeriod.WEEK -> context.getString(R.string.dk_driverdata_mysynthesis_previous_week)
                 DKPeriod.MONTH -> context.getString(R.string.dk_driverdata_mysynthesis_previous_month)
-                DKPeriod.YEAR -> {
-                    val currentYear = allContextItem?.date?.getValue(CalendarField.YEAR)
-                    String.format(context.getString(R.string.dk_driverdata_mysynthesis_previous_year), currentYear)
-                }
+                DKPeriod.YEAR -> String.format(
+                    context.getString(R.string.dk_driverdata_mysynthesis_previous_year),
+                    previousDate?.getValue(CalendarField.YEAR)
+                )
             }
         } else {
             when (selectedPeriod) {
