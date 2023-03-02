@@ -69,7 +69,6 @@ internal class MySynthesisFragment : Fragment() {
             updatePeriodSelector()
             updateDateSelector()
             configureScoreCard()
-            configureLegendTemporary()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -155,7 +154,7 @@ internal class MySynthesisFragment : Fragment() {
         this.scoreCardView.configure(viewModel.scoreCardViewModel)
     }
 
-    private fun configureLegendTemporary() {
+    private fun showScoreLegend() {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
             .layout(R.layout.dk_my_synthesis_scores_legend_alert_dialog)
