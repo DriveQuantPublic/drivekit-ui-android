@@ -34,6 +34,7 @@
                 android:id="@+id/container_score_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/dk_margin_half"
                 android:orientation="vertical"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

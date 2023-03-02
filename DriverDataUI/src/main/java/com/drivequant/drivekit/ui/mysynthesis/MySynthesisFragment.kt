@@ -69,13 +69,10 @@ internal class MySynthesisFragment : Fragment() {
         configureDateSelector()
         configureScoreCard()
 
-        // TODO temporary, for review. The code would be moved in Community Card part
-        this.legendTemporary.setOnClickListener {
-            configureLegendTemporary()
-        }
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
+            configureScoreCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -161,7 +158,6 @@ internal class MySynthesisFragment : Fragment() {
         this.scoreCardView.configure(viewModel.scoreCardViewModel)
     }
 
-    //TODO TEMPORARY
     private fun configureLegendTemporary() {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
@@ -299,10 +295,9 @@ internal class MySynthesisFragment : Fragment() {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_bad
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_bad
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_bad
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_spedding_level_very_bad
+                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_very_good
             }
         }
-
 
     private fun tagScreen() {
         DriveKitUI.analyticsListener?.trackScreen(
