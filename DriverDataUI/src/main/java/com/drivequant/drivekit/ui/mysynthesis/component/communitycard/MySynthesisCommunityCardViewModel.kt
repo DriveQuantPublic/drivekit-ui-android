@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.communitycard
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
@@ -21,68 +22,56 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
     private var driverTimeline: DKDriverTimeline? = null
     private var scoreSynthesis: DKScoreSynthesis? = null
-    private var statistics: DKCommunityStatistics? = null
+    private var allContextItem: DKDriverTimeline.DKAllContextItem? = null
+    private lateinit var statistics: DKCommunityStatistics
     private lateinit var selectedDate: Date
 
-    // TODO
-    fun configure(scoreType: DKScoreType, period: DKPeriod, driverTimeline: DKDriverTimeline, selectedDate: Date, statistics: DKCommunityStatistics) {
+    fun configure(scoreType: DKScoreType, period: DKPeriod, driverTimeline: DKDriverTimeline?, selectedDate: Date?, statistics: DKCommunityStatistics) {
         this.statistics = statistics
         this.selectedScoreType = scoreType
         this.selectedPeriod = period
-        this.selectedDate = selectedDate
-        this.driverTimeline = driverTimeline
-        this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
-
+        if (driverTimeline != null && selectedDate != null) {
+            this.selectedDate = selectedDate
+            this.driverTimeline = driverTimeline
+            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
+            this.allContextItem = driverTimeline.allContext.first { it.date == this.selectedDate }
+        }
         this.onViewModelUpdated?.invoke()
     }
 
-    fun hasScoredTrips(): Boolean {
-        return driverTimeline?.allContext?.firstOrNull { it.date == this.selectedDate }?.numberTripScored?.let { nbTripScored ->
-            nbTripScored > 0
-        } ?: run {
-            return false
+    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
+
+    private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?): Boolean {
+        return when (score) {
+            DKScoreType.SAFETY -> allContextItem?.safety != null
+            DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving != null
+            DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction != null
+            DKScoreType.SPEEDING -> allContextItem?.speeding != null
         }
     }
 
-    private fun isTimelineEmpty() = driverTimeline?.allContext?.isEmpty() ?: true
-
-    fun hasPreviousData() = scoreSynthesis?.previousScoreValue != null
-
-    @StringRes
-    fun getCardTitleResId() = when (this.selectedScoreType) {
-        DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_score
-        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_score
-        DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_score
-        DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score
-    }
-
-    @StringRes
-    fun getEvolutionTextResId() =
-        if (isTimelineEmpty()) {
-            R.string.dk_driverdata_mysynthesis_not_enough_data
-        } else if (!hasScoredTrips()){
-            when (selectedPeriod) {
+    fun getTitleText(context: Context): String {
+        if (hasNoTrip(this.allContextItem)) {
+            return when (this.selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
                 DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
                 DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }
+            }.let { context.getString(it) }
+        } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
+            return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
-            when (selectedPeriod) {
-                DKPeriod.WEEK -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_week else R.string.dk_driverdata_mysynthesis_no_trip_prev_week
-                DKPeriod.MONTH -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_month else R.string.dk_driverdata_mysynthesis_no_trip_prev_month
-                DKPeriod.YEAR -> if (hasPreviousData()) R.string.dk_driverdata_mysynthesis_previous_year else R.string.dk_driverdata_mysynthesis_no_trip_prev_year
+            // dk_driverdata_mysynthesis_you_are_best + dk_driverdata_mysynthesis_you_are_average + lower
+            val scoreStatistics = when (this.selectedScoreType) {
+                DKScoreType.SAFETY -> this.statistics.safety
+                DKScoreType.ECO_DRIVING -> this.statistics.ecoDriving
+                DKScoreType.DISTRACTION -> this.statistics.distraction
+                DKScoreType.SPEEDING -> this.statistics.speeding
             }
+            return scoreStatistics.toString()
         }
+    }
 
-    @DrawableRes
-    fun getTrendIconResId(): Int {
-        scoreSynthesis?.evolutionTrend?.let { trend ->
-            return when (trend) {
-                DKScoreEvolutionTrend.UP -> R.drawable.dk_driver_data_trend_positive
-                DKScoreEvolutionTrend.DOWN -> R.drawable.dk_driver_data_trend_negative
-                DKScoreEvolutionTrend.SAME -> R.drawable.dk_driver_data_trend_steady
-            }
-        }
-        return R.drawable.dk_driver_data_trend_steady
+    private fun compute() {
+
     }
 }

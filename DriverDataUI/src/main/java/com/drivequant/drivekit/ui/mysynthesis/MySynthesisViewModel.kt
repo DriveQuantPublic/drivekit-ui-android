@@ -112,19 +112,19 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 val currentAllContextItemIndex = timelineSource.allContext.indexOfFirst { it.date == this.selectedDate }
 
                 this.scoreCardViewModel.configure(
-                    this.selectedScore,
-                    this.selectedPeriod,
-                    timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
-                    timelineSource.allContext[currentAllContextItemIndex],
-                    if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null // TODO improve that check
+                    score = this.selectedScore,
+                    period = this.selectedPeriod,
+                    scoreSynthesis = timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
+                    allContextItem = timelineSource.allContext[currentAllContextItemIndex],
+                    previousDate = if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null // TODO improve that check
                 )
 
                 this.communityCardViewModel.configure(
-                    this.selectedScore,
-                    this.selectedPeriod,
-                    timelineSource,
-                    date,
-                    this.communityStatistics
+                    scoreType = this.selectedScore,
+                    period = this.selectedPeriod,
+                    driverTimeline = timelineSource,
+                    selectedDate = date,
+                    statistics = this.communityStatistics
                 )
             }
         } ?: run {

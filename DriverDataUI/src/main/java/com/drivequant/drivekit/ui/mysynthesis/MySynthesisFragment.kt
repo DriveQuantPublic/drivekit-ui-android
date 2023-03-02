@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelector
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
 
 internal class MySynthesisFragment : Fragment() {
@@ -30,7 +31,7 @@ internal class MySynthesisFragment : Fragment() {
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
     private lateinit var scoreCardView: MySynthesisScoreCardView
-    private lateinit var communityCardContainer: ViewGroup
+    private lateinit var communityCardView: MySynthesisCommunityCardView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
@@ -44,9 +45,9 @@ internal class MySynthesisFragment : Fragment() {
         this.scoreSelectorView = view.findViewById(R.id.scoreSelector)
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
-        this.scoreCardView = view.findViewById(R.id.scoreCard)
-        this.communityCardContainer = view.findViewById(R.id.communityCard_container)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
+        this.scoreCardView = view.findViewById(R.id.scoreCard)
+        this.communityCardView = view.findViewById(R.id.communityCard)
 
         checkViewModelInitialization()
 
@@ -60,6 +61,7 @@ internal class MySynthesisFragment : Fragment() {
             updatePeriodSelector()
             updateDateSelector()
             updateScoreCard()
+            updateCommunityCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -143,6 +145,10 @@ internal class MySynthesisFragment : Fragment() {
 
     private fun updateScoreCard() {
         this.scoreCardView.configure(viewModel.scoreCardViewModel)
+    }
+
+    private fun updateCommunityCard() {
+        this.communityCardView.configure(viewModel.communityCardViewModel)
     }
 
     private fun tagScreen() {
