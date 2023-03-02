@@ -16,7 +16,6 @@ fun circleDrawable(
     @ColorInt borderColor: Int,
     borderWidth: Float = 2.convertDpToPx().toFloat()
 ): Drawable {
-    val backgroundColor: Int = insideColor
     val extra = (borderWidth / 2f).roundToInt()
     val mainShape = ShapeDrawable().apply {
         shape = RectShape()
@@ -39,9 +38,20 @@ fun circleDrawable(
         shape = OvalShape()
         intrinsicWidth = size
         intrinsicHeight = size
-        paint.color = backgroundColor
+        paint.color = insideColor
         paint.style = Paint.Style.FILL
         paint.strokeWidth = borderWidth
     }
     return LayerDrawable(arrayOf<Drawable>(mainShape, backgroundShape, borderShape))
+}
+
+fun circleDrawable(
+    size: Int,
+    @ColorInt insideColor: Int
+): Drawable = ShapeDrawable().apply {
+    shape = OvalShape()
+    intrinsicWidth = size
+    intrinsicHeight = size
+    paint.color = insideColor
+    paint.style = Paint.Style.FILL
 }

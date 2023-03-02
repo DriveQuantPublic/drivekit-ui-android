@@ -16,6 +16,7 @@ import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelector
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
 
 internal class MySynthesisFragment : Fragment() {
@@ -31,7 +32,7 @@ internal class MySynthesisFragment : Fragment() {
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
     private lateinit var scoreCardView: MySynthesisScoreCardView
-    private lateinit var communityCardContainer: ViewGroup
+    private lateinit var communityGaugeView: MySynthesisCommunityGaugeView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
@@ -46,7 +47,7 @@ internal class MySynthesisFragment : Fragment() {
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         this.scoreCardView = view.findViewById(R.id.scoreCard)
-        this.communityCardContainer = view.findViewById(R.id.communityCard_container)
+        this.communityGaugeView = view.findViewById(R.id.communityGaugeView)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
 
         checkViewModelInitialization()
@@ -56,7 +57,7 @@ internal class MySynthesisFragment : Fragment() {
         configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
-
+        configureCommunityGaugeView()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
@@ -141,6 +142,10 @@ internal class MySynthesisFragment : Fragment() {
                 addView(dateSelectorView)
             }
         }
+    }
+
+    private fun configureCommunityGaugeView() {
+        this.communityGaugeView.configure(this.viewModel.communityGaugeViewModel)
     }
 
     private fun configureScoreCard() {

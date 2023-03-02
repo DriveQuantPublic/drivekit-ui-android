@@ -10,14 +10,20 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.add
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
+import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
+import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
@@ -29,12 +35,14 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val scoreCardViewModel = MySynthesisScoreCardViewModel()
+    val communityGaugeViewModel = MySynthesisCommunityGaugeViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     private var selectedScore: DKScoreType
     private var selectedPeriod: DKPeriod = this.periods.last()
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
+    private var communityStatistics: DKCommunityStatistics? = null
 
     init {
         this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
@@ -47,6 +55,12 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 update()
             }
         }
+        DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { status, statistics ->
+            if (status == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
+                this.communityStatistics = statistics
+                updateCommunityGauge()
+            }
+        }
         updateData()
     }
 
@@ -57,6 +71,10 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 update(true)
             }
             syncStatus.postValue(status)
+        }
+        DriveKitDriverData.getCommunityStatistics(SynchronizationType.DEFAULT) { _, statistics ->
+            this.communityStatistics = statistics
+            updateCommunityGauge()
         }
     }
 
@@ -85,19 +103,29 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
+                val scoreSynthesis = getDriverScoreSynthesis(timelineSource, this.selectedScore, date)
                 this.scoreCardViewModel.configure(
                     this.selectedScore,
                     this.selectedPeriod,
-                    timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
+                    scoreSynthesis,
                     timelineSource.allContext.first { it.date == this.selectedDate }
                 )
-
+                updateCommunityGauge(scoreSynthesis)
             }
         } ?: run {
             configureWithNoData()
         }
         this.updateData.postValue(Any())
     }
+
+    private fun getDriverScoreSynthesis(selectedScore: DKScoreType, date: Date): DKScoreSynthesis? =
+        getDriverScoreSynthesis(getTimelineSource(), selectedScore, date)
+
+    private fun getDriverScoreSynthesis(
+        timeline: DKDriverTimeline?,
+        selectedScore: DKScoreType,
+        date: Date
+    ): DKScoreSynthesis? = timeline?.getDriverScoreSynthesis(selectedScore, date)
 
     private fun configureWithNoData() {
         when (this.selectedPeriod) {
@@ -159,6 +187,25 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         if (this.selectedDate != date) {
             this.selectedDate = date
             update()
+        }
+    }
+
+    private fun updateCommunityGauge() {
+        this.selectedDate?.let { selectedDate ->
+            val scoreSynthesis = getDriverScoreSynthesis(this.selectedScore, selectedDate)
+            updateCommunityGauge(scoreSynthesis)
+        }
+    }
+
+    private fun updateCommunityGauge(scoreSynthesis: DKScoreSynthesis?) {
+        this.communityStatistics?.let { communityStatistics ->
+            val scoreStatistics: DKScoreStatistics = when (this.selectedScore) {
+                DKScoreType.SAFETY -> communityStatistics.safety
+                DKScoreType.ECO_DRIVING -> communityStatistics.ecoDriving
+                DKScoreType.DISTRACTION -> communityStatistics.distraction
+                DKScoreType.SPEEDING -> communityStatistics.speeding
+            }
+            this.communityGaugeViewModel.configure(this.selectedScore, scoreSynthesis?.scoreValue, scoreStatistics)
         }
     }
 

@@ -67,14 +67,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/scoreCard_container"
-                    app:cardElevation="0dp">
+                    app:layout_constraintTop_toBottomOf="@id/scoreCard_container">
 
-                    <include layout="@layout/dk_mysynthesis_gauge"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            android:id="@+id/communityGaugeView"
+                            layout="@layout/dk_mysynthesis_gauge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGauge xmlns:android="http://schemas.android.com/apk/res/android"
+<com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,7 +36,8 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="@dimen/dk_margin_half"
-        android:layout_marginBottom="@dimen/dk_margin_medium"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:background="@drawable/dk_mysynthesis_triangle_shape"
         app:layout_constraintBottom_toTopOf="@+id/gauge"
         app:layout_constraintEnd_toEndOf="@id/mainGuideline"
         app:layout_constraintStart_toStartOf="@id/mainGuideline"
@@ -238,7 +239,7 @@
     <View
         android:id="@+id/communityLine"
         android:layout_width="0dp"
-        android:layout_height="4dp"
+        android:layout_height="3dp"
         app:layout_constraintBottom_toBottomOf="@+id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
@@ -248,7 +249,7 @@
         android:id="@+id/communityMinValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintBottom_toTopOf="@+id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
@@ -326,4 +327,4 @@
         app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
         tools:text="max" />
 
-</com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGauge>
+</com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView>
