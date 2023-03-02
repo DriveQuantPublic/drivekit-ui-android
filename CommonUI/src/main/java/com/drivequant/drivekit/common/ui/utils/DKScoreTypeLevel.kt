@@ -4,7 +4,7 @@ import androidx.annotation.ColorRes
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 
-enum class DKScoreTypeLevels {
+enum class DKScoreTypeLevel {
     EXCELLENT, VERY_GOOD, GREAT, MEDIUM, NOT_GOOD, BAD, VERY_BAD;
 
     @ColorRes

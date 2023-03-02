@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
@@ -21,7 +20,7 @@ import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelector
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevels
+import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.ui.R
@@ -42,7 +41,6 @@ internal class MySynthesisFragment : Fragment() {
     private lateinit var scoreCardView: MySynthesisScoreCardView
     private lateinit var communityCardContainer: ViewGroup
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var legendTemporary: Button //TODO TEMPORARY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +56,6 @@ internal class MySynthesisFragment : Fragment() {
         this.scoreCardView = view.findViewById(R.id.scoreCard)
         this.communityCardContainer = view.findViewById(R.id.communityCard_container)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
-        this.legendTemporary = view.findViewById(R.id.button_legend_temp)
 
         checkViewModelInitialization()
 
@@ -67,12 +64,12 @@ internal class MySynthesisFragment : Fragment() {
         configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
-        configureScoreCard()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
             configureScoreCard()
+            configureLegendTemporary()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -193,7 +190,7 @@ internal class MySynthesisFragment : Fragment() {
         }
 
         alertDialog.findViewById<LinearLayout>(R.id.container_score_item)?.let { scoreItemContainer ->
-            DKScoreTypeLevels.values().forEach {
+            DKScoreTypeLevel.values().forEach {
                 configureScoreItem(scoreItemContainer, viewModel.selectedScore, it)
             }
         }
@@ -202,7 +199,7 @@ internal class MySynthesisFragment : Fragment() {
     private fun configureScoreItem(
         container: LinearLayout,
         dkScoreType: DKScoreType,
-        scoreLevel: DKScoreTypeLevels)
+        scoreLevel: DKScoreTypeLevel)
     {
         val view = View.inflate(requireContext(), R.layout.dk_my_synthesis_scores_legend_item, null)
         view.findViewById<View>(R.id.score_color)?.let { scoreColor ->
@@ -213,13 +210,13 @@ internal class MySynthesisFragment : Fragment() {
         }
         view.findViewById<TextView>(R.id.score_description)?.apply {
             val scoreValuesText: String = when (scoreLevel) {
-                DKScoreTypeLevels.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
-                DKScoreTypeLevels.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
-                DKScoreTypeLevels.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
-                DKScoreTypeLevels.MEDIUM -> R.string.dk_driverdata_mysynthesis_score_title_average
-                DKScoreTypeLevels.NOT_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_low
-                DKScoreTypeLevels.BAD -> R.string.dk_driverdata_mysynthesis_score_title_bad
-                DKScoreTypeLevels.VERY_BAD -> R.string.dk_driverdata_mysynthesis_score_title_very_bad
+                DKScoreTypeLevel.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
+                DKScoreTypeLevel.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
+                DKScoreTypeLevel.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
+                DKScoreTypeLevel.MEDIUM -> R.string.dk_driverdata_mysynthesis_score_title_average
+                DKScoreTypeLevel.NOT_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_low
+                DKScoreTypeLevel.BAD -> R.string.dk_driverdata_mysynthesis_score_title_bad
+                DKScoreTypeLevel.VERY_BAD -> R.string.dk_driverdata_mysynthesis_score_title_very_bad
             }.let {
                 getString(
                     it,
@@ -251,47 +248,47 @@ internal class MySynthesisFragment : Fragment() {
         view.layoutParams = params
     }
 
-    //TODO viewmodel
+    //TODO viewmodel or extension
     @StringRes
-    private fun getScoreLevelDescription(dkScoreType: DKScoreType, scoreLevel: DKScoreTypeLevels) =
+    private fun getScoreLevelDescription(dkScoreType: DKScoreType, scoreLevel: DKScoreTypeLevel) =
         when (scoreLevel) {
-            DKScoreTypeLevels.EXCELLENT -> when (dkScoreType) {
+            DKScoreTypeLevel.EXCELLENT -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_excellent
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_excellent
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_excellent
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_excellent
             }
-            DKScoreTypeLevels.VERY_GOOD -> when (dkScoreType) {
+            DKScoreTypeLevel.VERY_GOOD -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_good
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_good
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_good
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_very_good
             }
-            DKScoreTypeLevels.GREAT -> when (dkScoreType) {
+            DKScoreTypeLevel.GREAT -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_good
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_good
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_good
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_good
             }
-            DKScoreTypeLevels.MEDIUM -> when (dkScoreType) {
+            DKScoreTypeLevel.MEDIUM -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_average
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_average
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_average
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_average
             }
-            DKScoreTypeLevels.NOT_GOOD -> when (dkScoreType) {
+            DKScoreTypeLevel.NOT_GOOD -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_low
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_low
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_low
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_low
             }
-            DKScoreTypeLevels.BAD -> when (dkScoreType) {
+            DKScoreTypeLevel.BAD -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_bad
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_bad
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_bad
                 DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_bad
             }
-            DKScoreTypeLevels.VERY_BAD -> when (dkScoreType) {
+            DKScoreTypeLevel.VERY_BAD -> when (dkScoreType) {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_bad
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_bad
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_bad
