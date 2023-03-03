@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dk_margin"
@@ -32,5 +32,5 @@
             android:layout_marginVertical="@dimen/dk_margin_half"
             android:orientation="vertical" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
 </ScrollView>

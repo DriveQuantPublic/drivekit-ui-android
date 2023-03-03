@@ -291,7 +291,7 @@ internal class MySynthesisFragment : Fragment() {
                 DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_level_very_bad
                 DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_level_very_bad
                 DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_level_very_bad
-                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_very_good
+                DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_level_very_bad
             }
         }
 
@@ -316,5 +316,4 @@ internal class MySynthesisFragment : Fragment() {
             }
         }
     }
-
 }
