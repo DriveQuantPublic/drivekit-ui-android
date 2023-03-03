@@ -9,13 +9,22 @@ internal class MySynthesisCommunityGaugeViewModel {
 
     var scoreValue: Double? = null
         private set
+    var communityMinScore: Double? = null
+        private set
+    var communityMeanScore: Double? = null
+        private set
+    var communityMaxScore: Double? = null
+        private set
     private var score: DKScoreType? = null
-    private var scoreStatistics: DKScoreStatistics? = null
+    private var percentiles: List<Double>? = null
 
     fun configure(score: DKScoreType, scoreValue: Double?, scoreStatistics: DKScoreStatistics) {
         this.score = score
         this.scoreValue = scoreValue
-        this.scoreStatistics = scoreStatistics
+        this.communityMinScore = scoreStatistics.min
+        this.communityMeanScore = scoreStatistics.mean
+        this.communityMaxScore = scoreStatistics.max
+        this.percentiles = scoreStatistics.percentiles
         this.onUpdateCallback?.invoke()
     }
 
@@ -27,9 +36,5 @@ internal class MySynthesisCommunityGaugeViewModel {
             steps[index]
         }
     }
-
-    fun getCommunityMinScore(): Double? = this.scoreStatistics?.min
-    fun getCommunityMeanScore(): Double? = this.scoreStatistics?.mean
-    fun getCommunityMaxScore(): Double? = this.scoreStatistics?.max
 
 }

@@ -1,15 +1,19 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.community
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
@@ -26,6 +30,7 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     private lateinit var mainGuideline: Guideline
     private lateinit var titleTextView: TextView
     private lateinit var scoreDescription: View
+    private lateinit var scoreDescriptionIcon: ImageView
     private lateinit var scoreArrowIndicator: View
     private lateinit var scoreIndicator: View
     private lateinit var veryBadGaugeContainer: DKRoundedCornerFrameLayout
@@ -64,7 +69,8 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 
         this.titleTextView = findViewById(R.id.title)
         this.mainGuideline = findViewById(R.id.mainGuideline)
-        this.scoreDescription = findViewById(R.id.scoreDescription)
+        this.scoreDescription = findViewById(R.id.scoreDescriptionContainer)
+        this.scoreDescriptionIcon = findViewById(R.id.scoreDescriptionIcon)
         this.scoreArrowIndicator = findViewById(R.id.scoreArrowIndicator)
         this.veryBadGaugeContainer = findViewById(R.id.veryBadGaugeContainer)
         this.veryBadGauge = findViewById(R.id.veryBadGauge)
@@ -126,9 +132,9 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         this.level6TextView.text = getFormattedLevelValue(6)
         this.level7TextView.text = getFormattedLevelValue(7)
 
-        this.communityMinValueTextView.text = getFormattedValue(this.viewModel?.getCommunityMinScore())
-        this.communityMeanValueTextView.text = getFormattedValue(this.viewModel?.getCommunityMeanScore())
-        this.communityMaxValueTextView.text = getFormattedValue(this.viewModel?.getCommunityMaxScore())
+        this.communityMinValueTextView.text = getFormattedValue(this.viewModel?.communityMinScore)
+        this.communityMeanValueTextView.text = getFormattedValue(this.viewModel?.communityMeanScore)
+        this.communityMaxValueTextView.text = getFormattedValue(this.viewModel?.communityMaxScore)
 
         this.communityMinTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_minimum)
         this.communityMeanTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_average)
@@ -143,7 +149,7 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 
     private fun configure() {
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
-        // Score indicators.
+        ImageViewCompat.setImageTintList(this.scoreDescriptionIcon, ColorStateList.valueOf(DriveKitUI.colors.secondaryColor()))
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
         // Gauge corners.
         val cornerRadius = 7.convertDpToPx().toFloat()
@@ -192,17 +198,17 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
                     this.mainGuideline.setGuidelinePercent(percent)
                 }
             }
-            this.viewModel?.getCommunityMinScore()?.let { communityMinScore ->
+            this.viewModel?.communityMinScore?.let { communityMinScore ->
                 getPercent(communityMinScore, level0, level7)?.let { percent ->
                     this.communityMinGuideline.setGuidelinePercent(percent)
                 }
             }
-            this.viewModel?.getCommunityMeanScore()?.let { communityMeanScore ->
+            this.viewModel?.communityMeanScore?.let { communityMeanScore ->
                 getPercent(communityMeanScore, level0, level7)?.let { percent ->
                     this.communityMeanGuideline.setGuidelinePercent(percent)
                 }
             }
-            this.viewModel?.getCommunityMaxScore()?.let { communityMaxScore ->
+            this.viewModel?.communityMaxScore?.let { communityMaxScore ->
                 getPercent(communityMaxScore, level0, level7)?.let { percent ->
                     this.communityMaxGuideline.setGuidelinePercent(percent)
                 }

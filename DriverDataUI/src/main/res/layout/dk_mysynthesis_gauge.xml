@@ -22,15 +22,36 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <FrameLayout
-        android:id="@+id/scoreDescription"
-        android:layout_width="200dp"
-        android:layout_height="28dp"
+    <LinearLayout
+        android:id="@+id/scoreDescriptionContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="@dimen/dk_margin_medium"
-        android:padding="@dimen/dk_margin_quarter"
+        android:background="@drawable/mysynthesis_rounded_border"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dk_margin_half"
+        android:paddingVertical="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="@id/mainGuideline"
         app:layout_constraintStart_toStartOf="@id/mainGuideline"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <TextView
+            android:id="@+id/scoreDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            tools:textSize="11sp"
+            tools:text="Your score is excellent" />
+
+        <ImageView
+            android:id="@+id/scoreDescriptionIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dk_margin_half"
+            android:scaleType="centerInside"
+            android:src="@drawable/dk_common_info" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/scoreArrowIndicator"
@@ -42,7 +63,7 @@
         app:layout_constraintBottom_toTopOf="@+id/level0"
         app:layout_constraintEnd_toEndOf="@id/mainGuideline"
         app:layout_constraintStart_toStartOf="@id/mainGuideline"
-        app:layout_constraintTop_toBottomOf="@id/scoreDescription" />
+        app:layout_constraintTop_toBottomOf="@id/scoreDescriptionContainer" />
 
     <com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
         android:id="@+id/veryBadGaugeContainer"
