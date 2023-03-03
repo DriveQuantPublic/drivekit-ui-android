@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.common.ui.utils.circleDrawable
+import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.R
 import java.util.Date
@@ -35,7 +35,7 @@ internal object GraphConstants {
 
     fun circleIcon(context: Context, insideColor: Int = Color.WHITE): Drawable {
         val borderColor: Int = ContextCompat.getColor(context, R.color.dkChartStrokeColor)
-        return circleDrawable(iconSize, insideColor, borderColor, GRAPH_LINE_WIDTH.convertDpToPx().toFloat())
+        return DKDrawableUtils.circleDrawable(iconSize, insideColor, borderColor, GRAPH_LINE_WIDTH.convertDpToPx().toFloat())
     }
 
     fun invisibleIcon(): Drawable {

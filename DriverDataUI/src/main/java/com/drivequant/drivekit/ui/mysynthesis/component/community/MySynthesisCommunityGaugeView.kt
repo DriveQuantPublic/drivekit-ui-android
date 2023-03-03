@@ -11,7 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.utils.circleDrawable
+import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
+import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.extension.reduceAccuracy
 import com.drivequant.drivekit.ui.R
@@ -27,13 +28,14 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     private lateinit var scoreDescription: View
     private lateinit var scoreArrowIndicator: View
     private lateinit var scoreIndicator: View
-    private lateinit var gaugeContainer: View
+    private lateinit var veryBadGaugeContainer: DKRoundedCornerFrameLayout
     private lateinit var veryBadGauge: View
     private lateinit var badGauge: View
     private lateinit var badMeanGauge: View
     private lateinit var meanGauge: View
     private lateinit var goodMeanGauge: View
     private lateinit var goodGauge: View
+    private lateinit var excellentGaugeContainer: DKRoundedCornerFrameLayout
     private lateinit var excellentGauge: View
     private lateinit var level0TextView: TextView
     private lateinit var level1TextView: TextView
@@ -64,13 +66,14 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         this.mainGuideline = findViewById(R.id.mainGuideline)
         this.scoreDescription = findViewById(R.id.scoreDescription)
         this.scoreArrowIndicator = findViewById(R.id.scoreArrowIndicator)
-        this.gaugeContainer = findViewById(R.id.gauge)
+        this.veryBadGaugeContainer = findViewById(R.id.veryBadGaugeContainer)
         this.veryBadGauge = findViewById(R.id.veryBadGauge)
         this.badGauge = findViewById(R.id.badGauge)
         this.badMeanGauge = findViewById(R.id.badMeanGauge)
         this.meanGauge = findViewById(R.id.meanGauge)
         this.goodMeanGauge = findViewById(R.id.goodMeanGauge)
         this.goodGauge = findViewById(R.id.goodGauge)
+        this.excellentGaugeContainer = findViewById(R.id.excellentGaugeContainer)
         this.excellentGauge = findViewById(R.id.excellentGauge)
         this.level0TextView = findViewById(R.id.level0)
         this.level1TextView = findViewById(R.id.level1)
@@ -98,6 +101,15 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         configure()
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+
+        this.level6TextView.visibility = if (this.level6TextView.right > this.level7TextView.left) View.INVISIBLE else View.VISIBLE
+        this.level5TextView.visibility = if (this.level5TextView.right > this.level7TextView.left) View.INVISIBLE else View.VISIBLE
+        this.level4TextView.visibility = if (this.level4TextView.right > this.level5TextView.left && this.level5TextView.visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
+        this.level1TextView.visibility = if (this.level1TextView.left < this.level0TextView.right) View.INVISIBLE else View.VISIBLE
+    }
+
     fun configure(viewModel: MySynthesisCommunityGaugeViewModel) {
         this.viewModel = viewModel
         viewModel.onUpdateCallback = this::update
@@ -122,8 +134,6 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         this.communityMeanTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_average)
         this.communityMaxTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_maximum)
 
-        requestLayout()
-//        forceLayout()
         updateLayout()
     }
 
@@ -134,7 +144,11 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     private fun configure() {
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
         // Score indicators.
-        this.scoreIndicator.background = circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
+        this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
+        // Gauge corners.
+        val cornerRadius = 7.convertDpToPx().toFloat()
+        this.veryBadGaugeContainer.roundCorners(cornerRadius, 0f, 0f, cornerRadius)
+        this.excellentGaugeContainer.roundCorners(0f, cornerRadius, cornerRadius, 0f)
         // Gauge colors.
         this.veryBadGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkVeryBad))
         this.badGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkBad))
@@ -152,14 +166,8 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 
     private fun getColor(@ColorRes colorId: Int) = ContextCompat.getColor(context, colorId)
 
-    private fun getCommunityIndicator(@ColorInt color: Int): Drawable = circleDrawable(MySynthesisConstant.indicatorSize, borderColor = color,
+    private fun getCommunityIndicator(@ColorInt color: Int): Drawable = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, borderColor = color,
         borderWidth = MySynthesisConstant.INDICATOR_BORDER_WIDTH.convertDpToPx().toFloat())
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-
-        updateLayout()
-    }
 
     private fun updateLayout() {
         val level0 = getLevelValue(0)
@@ -172,7 +180,7 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         val level7 = getLevelValue(7)
         if (level0 != null && level1 != null && level2 != null && level3 != null && level4 != null && level5 != null && level6 != null && level7 != null) {
             val levelSize = level7 - level0
-            this.veryBadGauge.setPercent(level1 - level0, levelSize)
+            this.veryBadGaugeContainer.setPercent(level1 - level0, levelSize)
             this.badGauge.setPercent(level2 - level1, levelSize)
             this.badMeanGauge.setPercent(level3 - level2, levelSize)
             this.meanGauge.setPercent(level4 - level3, levelSize)
@@ -204,29 +212,28 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 
 
 
-        val scoreDescriptionParams = this.scoreDescription.layoutParams as LayoutParams
-
-        println("===========================")
-        println("=== measuredWidth = $measuredWidth")
-        println("=== left = ${scoreDescription.left}")
-        println("=== right = ${scoreDescription.right}")
-        println("=== width = ${scoreDescription.width}")
-        println("=== horizontalBias = ${scoreDescriptionParams.horizontalBias}")
-        println("===========================")
-
-        val left = this.scoreDescription.left
-        if (left < 0) {
-            val width = this.scoreDescription.width
-            val percent = -left/width.toFloat()
-            scoreDescriptionParams.horizontalBias = percent
-            println("=== percent = $percent")
-        }
+//        val scoreDescriptionParams = this.scoreDescription.layoutParams as LayoutParams
+//
+//        println("===========================")
+//        println("=== measuredWidth = $measuredWidth")
+//        println("=== left = ${scoreDescription.left}")
+//        println("=== right = ${scoreDescription.right}")
+//        println("=== width = ${scoreDescription.width}")
+//        println("=== horizontalBias = ${scoreDescriptionParams.horizontalBias}")
+//        println("===========================")
+//
+//        val left = this.scoreDescription.left
+//        if (left < 0) {
+//            val width = this.scoreDescription.width
+//            val percent = -left/width.toFloat()
+//            scoreDescriptionParams.horizontalBias = percent
+//            println("=== percent = $percent")
+//        }
     }
 
     private fun getPercent(scoreValue: Double, level0: Double, level7: Double): Float? {
-        val gaugeWidth = this.gaugeContainer.measuredWidth
-        return if (gaugeWidth > 0 && (level7 - level0) > 0) {
-            (((scoreValue.reduceAccuracy(1) - level0) * (this.excellentGauge.right - this.veryBadGauge.left) / (level7 - level0) + this.veryBadGauge.left) / gaugeWidth).toFloat()
+        return if ((level7 - level0) > 0) {
+            ((scoreValue - level0) / (level7 - level0)).toFloat()
         } else {
             null
         }
