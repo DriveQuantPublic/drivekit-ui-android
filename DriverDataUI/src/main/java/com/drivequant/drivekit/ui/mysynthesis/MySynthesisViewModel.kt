@@ -38,7 +38,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val communityGaugeViewModel = MySynthesisCommunityGaugeViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
-    private var selectedScore: DKScoreType
+    var selectedScore: DKScoreType
+        private set
     private var selectedPeriod: DKPeriod = this.periods.last()
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()

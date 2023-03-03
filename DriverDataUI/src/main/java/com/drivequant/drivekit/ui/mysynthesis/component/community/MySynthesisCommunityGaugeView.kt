@@ -233,7 +233,7 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 
     private fun getPercent(scoreValue: Double, level0: Double, level7: Double): Float? {
         return if ((level7 - level0) > 0) {
-            ((scoreValue - level0) / (level7 - level0)).toFloat()
+            ((scoreValue.reduceAccuracy(1) - level0) / (level7 - level0)).toFloat()
         } else {
             null
         }
