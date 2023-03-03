@@ -12,7 +12,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
@@ -146,7 +146,6 @@ internal class MySynthesisFragment : Fragment() {
     private fun updateScoreCard() {
         this.scoreCardView.configure(viewModel.scoreCardViewModel)
     }
-
     private fun updateCommunityCard() {
         this.communityCardView.configure(viewModel.communityCardViewModel)
     }
@@ -172,5 +171,4 @@ internal class MySynthesisFragment : Fragment() {
             }
         }
     }
-
 }
