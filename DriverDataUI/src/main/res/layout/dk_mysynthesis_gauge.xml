@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisGaugeView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:paddingHorizontal="@dimen/dk_margin">
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/mainGuideline"
@@ -26,14 +18,13 @@
         android:id="@+id/scoreDescriptionContainer"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="@dimen/dk_margin_medium"
         android:background="@drawable/mysynthesis_rounded_border"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dk_margin_half"
         android:paddingVertical="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="@id/mainGuideline"
         app:layout_constraintStart_toStartOf="@id/mainGuideline"
-        app:layout_constraintTop_toBottomOf="@id/title">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/scoreDescription"
@@ -350,4 +341,4 @@
         app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
         tools:text="max" />
 
-</com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView>
+</com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisGaugeView>

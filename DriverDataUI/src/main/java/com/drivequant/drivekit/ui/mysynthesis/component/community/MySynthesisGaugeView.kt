@@ -17,19 +17,22 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
+import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.core.extension.reduceAccuracy
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.getScoreLevelDescription
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisConstant
 import kotlin.math.abs
+import kotlin.math.ceil
 
-internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeSet?) :
+internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
-    private var viewModel: MySynthesisCommunityGaugeViewModel? = null
+    private var viewModel: MySynthesisGaugeViewModel? = null
     private lateinit var mainGuideline: Guideline
-    private lateinit var titleTextView: TextView
-    private lateinit var scoreDescription: View
+    private lateinit var scoreDescriptionContainer: View
+    private lateinit var scoreDescription: TextView
     private lateinit var scoreDescriptionIcon: ImageView
     private lateinit var scoreArrowIndicator: View
     private lateinit var scoreIndicator: View
@@ -50,6 +53,7 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     private lateinit var level5TextView: TextView
     private lateinit var level6TextView: TextView
     private lateinit var level7TextView: TextView
+    private lateinit var levelTextViews: List<TextView>
     private lateinit var communityMinGuideline: Guideline
     private lateinit var communityMeanGuideline: Guideline
     private lateinit var communityMaxGuideline: Guideline
@@ -67,9 +71,9 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     override fun onFinishInflate() {
         super.onFinishInflate()
 
-        this.titleTextView = findViewById(R.id.title)
         this.mainGuideline = findViewById(R.id.mainGuideline)
-        this.scoreDescription = findViewById(R.id.scoreDescriptionContainer)
+        this.scoreDescriptionContainer = findViewById(R.id.scoreDescriptionContainer)
+        this.scoreDescription = findViewById(R.id.scoreDescription)
         this.scoreDescriptionIcon = findViewById(R.id.scoreDescriptionIcon)
         this.scoreArrowIndicator = findViewById(R.id.scoreArrowIndicator)
         this.veryBadGaugeContainer = findViewById(R.id.veryBadGaugeContainer)
@@ -89,6 +93,16 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         this.level5TextView = findViewById(R.id.level5)
         this.level6TextView = findViewById(R.id.level6)
         this.level7TextView = findViewById(R.id.level7)
+        this.levelTextViews = listOf(
+            this.level0TextView,
+            this.level1TextView,
+            this.level2TextView,
+            this.level3TextView,
+            this.level4TextView,
+            this.level5TextView,
+            this.level6TextView,
+            this.level7TextView
+        )
         this.scoreIndicator = findViewById(R.id.scoreIndicator)
         this.communityMinGuideline = findViewById(R.id.communityMinGuideline)
         this.communityMeanGuideline = findViewById(R.id.communityMeanGuideline)
@@ -110,19 +124,44 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
-        this.level6TextView.visibility = if (this.level6TextView.right > this.level7TextView.left) View.INVISIBLE else View.VISIBLE
-        this.level5TextView.visibility = if (this.level5TextView.right > this.level7TextView.left) View.INVISIBLE else View.VISIBLE
-        this.level4TextView.visibility = if (this.level4TextView.right > this.level5TextView.left && this.level5TextView.visibility == View.VISIBLE) View.INVISIBLE else View.VISIBLE
-        this.level1TextView.visibility = if (this.level1TextView.left < this.level0TextView.right) View.INVISIBLE else View.VISIBLE
+        // Hide overlapping TextViews.
+        this.levelTextViews.forEach { it.visibility = View.VISIBLE }
+        val size = this.levelTextViews.size
+        val margin = 2.convertDpToPx()
+        for (i in 0 until size / 2) {
+            val leftTextView = this.levelTextViews[i]
+            if (leftTextView.visibility == View.VISIBLE) {
+                for (j in i + 1 until size) {
+                    val otherTextView = this.levelTextViews[j]
+                    if (leftTextView.right + margin >= otherTextView.left) {
+                        otherTextView.visibility = View.INVISIBLE
+                    } else {
+                        break
+                    }
+                }
+            }
+            val rightTextView = this.levelTextViews[size - 1 - i]
+            if (rightTextView.visibility == View.VISIBLE) {
+                for (j in size - 1 - i - 1 downTo 0) {
+                    val otherTextView = this.levelTextViews[j]
+                    if (rightTextView.left - margin <= otherTextView.right) {
+                        otherTextView.visibility = View.INVISIBLE
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
     }
 
-    fun configure(viewModel: MySynthesisCommunityGaugeViewModel) {
+    fun configure(viewModel: MySynthesisGaugeViewModel) {
         this.viewModel = viewModel
         viewModel.onUpdateCallback = this::update
         update()
     }
 
     private fun update() {
+        this.scoreDescription.text = this.viewModel?.scoreLevel?.getScoreLevelDescription()?.let { context.getString(it) }
         this.level0TextView.text = getFormattedLevelValue(0)
         this.level1TextView.text = getFormattedLevelValue(1)
         this.level2TextView.text = getFormattedLevelValue(2)
@@ -156,13 +195,13 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
         this.veryBadGaugeContainer.roundCorners(cornerRadius, 0f, 0f, cornerRadius)
         this.excellentGaugeContainer.roundCorners(0f, cornerRadius, cornerRadius, 0f)
         // Gauge colors.
-        this.veryBadGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkVeryBad))
-        this.badGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkBad))
-        this.badMeanGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkBadMean))
-        this.meanGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkMean))
-        this.goodMeanGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkGoodMean))
-        this.goodGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkGood))
-        this.excellentGauge.setBackgroundColor(getColor(com.drivequant.drivekit.common.ui.R.color.dkExcellent))
+        this.veryBadGauge.setBackgroundColor(getColor(DKScoreTypeLevel.VERY_BAD.getColorResId()))
+        this.badGauge.setBackgroundColor(getColor(DKScoreTypeLevel.BAD.getColorResId()))
+        this.badMeanGauge.setBackgroundColor(getColor(DKScoreTypeLevel.NOT_GOOD.getColorResId()))
+        this.meanGauge.setBackgroundColor(getColor(DKScoreTypeLevel.MEDIUM.getColorResId()))
+        this.goodMeanGauge.setBackgroundColor(getColor(DKScoreTypeLevel.GREAT.getColorResId()))
+        this.goodGauge.setBackgroundColor(getColor(DKScoreTypeLevel.VERY_GOOD.getColorResId()))
+        this.excellentGauge.setBackgroundColor(getColor(DKScoreTypeLevel.EXCELLENT.getColorResId()))
         // Community indicators.
         this.communityLine.setBackgroundColor(synthesisColor)
         this.communityMinIndicator.background = getCommunityIndicator(synthesisColor)
@@ -193,24 +232,27 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
             this.goodMeanGauge.setPercent(level5 - level4, levelSize)
             this.goodGauge.setPercent(level6 - level5, levelSize)
 
-            this.viewModel?.scoreValue?.let { scoreValue ->
-                getPercent(scoreValue, level0, level7)?.let { percent ->
-                    this.mainGuideline.setGuidelinePercent(percent)
+            val viewModel = this.viewModel
+            if (viewModel != null) {
+                viewModel.scoreValue?.let { scoreValue ->
+                    viewModel.getPercent(scoreValue, level0, level7)?.let { percent ->
+                        this.mainGuideline.setGuidelinePercent(percent)
+                    }
                 }
-            }
-            this.viewModel?.communityMinScore?.let { communityMinScore ->
-                getPercent(communityMinScore, level0, level7)?.let { percent ->
-                    this.communityMinGuideline.setGuidelinePercent(percent)
+                viewModel.communityMinScore?.let { communityMinScore ->
+                    viewModel.getPercent(communityMinScore, level0, level7)?.let { percent ->
+                        this.communityMinGuideline.setGuidelinePercent(percent)
+                    }
                 }
-            }
-            this.viewModel?.communityMeanScore?.let { communityMeanScore ->
-                getPercent(communityMeanScore, level0, level7)?.let { percent ->
-                    this.communityMeanGuideline.setGuidelinePercent(percent)
+                viewModel.communityMeanScore?.let { communityMeanScore ->
+                    viewModel.getPercent(communityMeanScore, level0, level7)?.let { percent ->
+                        this.communityMeanGuideline.setGuidelinePercent(percent)
+                    }
                 }
-            }
-            this.viewModel?.communityMaxScore?.let { communityMaxScore ->
-                getPercent(communityMaxScore, level0, level7)?.let { percent ->
-                    this.communityMaxGuideline.setGuidelinePercent(percent)
+                viewModel.communityMaxScore?.let { communityMaxScore ->
+                    viewModel.getPercent(communityMaxScore, level0, level7)?.let { percent ->
+                        this.communityMaxGuideline.setGuidelinePercent(percent)
+                    }
                 }
             }
         }
@@ -235,14 +277,6 @@ internal class MySynthesisCommunityGaugeView(context: Context, attrs: AttributeS
 //            scoreDescriptionParams.horizontalBias = percent
 //            println("=== percent = $percent")
 //        }
-    }
-
-    private fun getPercent(scoreValue: Double, level0: Double, level7: Double): Float? {
-        return if ((level7 - level0) > 0) {
-            ((scoreValue.reduceAccuracy(1) - level0) / (level7 - level0)).toFloat()
-        } else {
-            null
-        }
     }
 
     private fun View.setPercent(length: Double, totalLength: Double) {

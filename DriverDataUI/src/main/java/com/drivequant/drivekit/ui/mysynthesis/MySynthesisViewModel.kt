@@ -10,7 +10,6 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
-import com.drivequant.drivekit.core.extension.add
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -23,7 +22,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
-import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeViewModel
+import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisGaugeViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
@@ -35,7 +34,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val scoreCardViewModel = MySynthesisScoreCardViewModel()
-    val communityGaugeViewModel = MySynthesisCommunityGaugeViewModel()
+    val communityGaugeViewModel = MySynthesisGaugeViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
     var selectedScore: DKScoreType
@@ -206,7 +205,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 DKScoreType.DISTRACTION -> communityStatistics.distraction
                 DKScoreType.SPEEDING -> communityStatistics.speeding
             }
-            this.communityGaugeViewModel.configure(this.selectedScore, scoreSynthesis?.scoreValue, scoreStatistics)
+            this.communityGaugeViewModel.configure(this.selectedScore, scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.mean, scoreStatistics.max)
         }
     }
 

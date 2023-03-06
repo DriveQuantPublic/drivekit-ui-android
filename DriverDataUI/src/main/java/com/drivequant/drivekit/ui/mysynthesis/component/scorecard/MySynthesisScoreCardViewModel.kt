@@ -91,7 +91,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             return when (trend) {
                 DKScoreEvolutionTrend.UP -> R.drawable.dk_driver_data_trend_positive
                 DKScoreEvolutionTrend.DOWN -> R.drawable.dk_driver_data_trend_negative
-                DKScoreEvolutionTrend.SAME -> R.drawable.dk_driver_data_trend_steady
+                DKScoreEvolutionTrend.STABLE -> R.drawable.dk_driver_data_trend_steady
             }
         }
         return R.drawable.dk_driver_data_trend_steady

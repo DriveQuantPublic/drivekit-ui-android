@@ -23,7 +23,7 @@ import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisCommunityGaugeView
+import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisGaugeView
 import com.drivequant.drivekit.ui.extension.getScoreLevelDescription
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
 
@@ -40,7 +40,7 @@ internal class MySynthesisFragment : Fragment() {
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
     private lateinit var scoreCardView: MySynthesisScoreCardView
-    private lateinit var communityGaugeView: MySynthesisCommunityGaugeView
+    private lateinit var communityGaugeView: MySynthesisGaugeView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
