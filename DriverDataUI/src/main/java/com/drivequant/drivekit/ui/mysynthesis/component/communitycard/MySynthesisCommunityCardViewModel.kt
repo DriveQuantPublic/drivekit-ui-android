@@ -1,15 +1,15 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.communitycard
 
 import android.content.Context
-import androidx.annotation.DrawableRes
+import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.R
@@ -53,6 +53,9 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     }
 
     fun getTitleText(context: Context): String {
+        val percentileLowerThanIndex = 8
+        val percentileBetterThanIndex = 10
+
         if (hasNoTrip(this.allContextItem)) {
             return when (this.selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
@@ -62,15 +65,53 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
-            // dk_driverdata_mysynthesis_you_are_best + dk_driverdata_mysynthesis_you_are_average + lower
-            val scoreStatistics = when (this.selectedScoreType) {
-                DKScoreType.SAFETY -> this.statistics.safety
-                DKScoreType.ECO_DRIVING -> this.statistics.ecoDriving
-                DKScoreType.DISTRACTION -> this.statistics.distraction
-                DKScoreType.SPEEDING -> this.statistics.speeding
+            val score = getDriverScore(this.selectedScoreType, this.allContextItem)
+            val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
+            return score?.let {
+                if (score < scoreStatistics.percentiles[percentileLowerThanIndex]) {
+                    val percentValue = 100 - computeBetterThanPercentage(score, scoreStatistics.percentiles)
+                    context.getString(R.string.dk_driverdata_mysynthesis_you_are_lower, percentValue.toString())
+                } else if (score > scoreStatistics.percentiles[percentileBetterThanIndex]) {
+                    val percentValue = computeBetterThanPercentage(score, scoreStatistics.percentiles)
+                    context.getString(R.string.dk_driverdata_mysynthesis_you_are_best, percentValue.toString())
+                } else {
+                    context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
+                }
+            } ?: run {
+                return "-" // this should not happen
             }
-            return scoreStatistics.toString()
         }
+    }
+
+    @ColorInt
+    fun getTitleColor(): Int = if (hasNoTrip(this.allContextItem)) {
+        DriveKitUI.colors.complementaryFontColor()
+    } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
+        DriveKitUI.colors.complementaryFontColor()
+    } else {
+        DriveKitUI.colors.primaryColor()
+    }
+
+    private fun computeBetterThanPercentage(score: Double, percentiles: List<Double>): Int {
+        for (i in percentiles.indices) {
+            if (percentiles[i] > score) {
+                return i * (100 / percentiles.size)
+            }
+        }
+        return 100 // rare case when driver's score is higher than max percentile
+    }
+
+    private fun getDriverScore(scoreType: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?) = when (scoreType) {
+        DKScoreType.SAFETY -> allContextItem?.safety?.score
+        DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving?.score
+        DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction?.score
+        DKScoreType.SPEEDING -> allContextItem?.speeding?.score
+    }
+    private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {
+        DKScoreType.SAFETY -> this.statistics.safety
+        DKScoreType.ECO_DRIVING -> this.statistics.ecoDriving
+        DKScoreType.DISTRACTION -> this.statistics.distraction
+        DKScoreType.SPEEDING -> this.statistics.speeding
     }
 
     @StringRes
@@ -98,9 +139,5 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DKScoreTypeLevel.NOT_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_low
         DKScoreTypeLevel.BAD -> R.string.dk_driverdata_mysynthesis_score_title_bad
         DKScoreTypeLevel.VERY_BAD -> R.string.dk_driverdata_mysynthesis_score_title_very_bad
-    }
-
-    private fun compute() {
-
     }
 }

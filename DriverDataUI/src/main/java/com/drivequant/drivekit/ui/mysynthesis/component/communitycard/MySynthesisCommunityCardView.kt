@@ -71,7 +71,7 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     private fun configureTitle() {
         title.apply {
             text = viewModel.getTitleText(context)
-            //TODO style
+            headLine2(viewModel.getTitleColor())
         }
     }
 

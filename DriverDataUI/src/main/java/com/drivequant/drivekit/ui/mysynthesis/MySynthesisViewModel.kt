@@ -117,7 +117,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     period = this.selectedPeriod,
                     scoreSynthesis = timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
                     allContextItem = timelineSource.allContext[currentAllContextItemIndex],
-                    previousDate = if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null // TODO improve that check
+                    previousDate = if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null
                 )
 
                 this.communityCardViewModel.configure(
