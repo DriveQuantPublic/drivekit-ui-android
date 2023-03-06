@@ -5,7 +5,10 @@ import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
@@ -28,22 +31,33 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private lateinit var statistics: DKCommunityStatistics
     private lateinit var selectedDate: Date
 
-    fun configure(scoreType: DKScoreType, period: DKPeriod, driverTimeline: DKDriverTimeline?, selectedDate: Date?, statistics: DKCommunityStatistics) {
+    fun configure(
+        scoreType: DKScoreType,
+        period: DKPeriod,
+        driverTimeline: DKDriverTimeline?,
+        selectedDate: Date?,
+        statistics: DKCommunityStatistics
+    ) {
         this.statistics = statistics
         this.selectedScoreType = scoreType
         this.selectedPeriod = period
         if (driverTimeline != null && selectedDate != null) {
             this.selectedDate = selectedDate
             this.driverTimeline = driverTimeline
-            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
+            this.scoreSynthesis =
+                driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
             this.allContextItem = driverTimeline.allContext.first { it.date == this.selectedDate }
         }
         this.onViewModelUpdated?.invoke()
     }
 
-    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
+    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) =
+        allContextItem == null
 
-    private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?): Boolean {
+    private fun hasData(
+        score: DKScoreType,
+        allContextItem: DKDriverTimeline.DKAllContextItem?
+    ): Boolean {
         return when (score) {
             DKScoreType.SAFETY -> allContextItem?.safety != null
             DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving != null
@@ -69,11 +83,19 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
             return score?.let {
                 if (score < scoreStatistics.percentiles[percentileLowerThanIndex]) {
-                    val percentValue = 100 - computeBetterThanPercentage(score, scoreStatistics.percentiles)
-                    context.getString(R.string.dk_driverdata_mysynthesis_you_are_lower, percentValue.toString())
+                    val percentValue =
+                        100 - computeBetterThanPercentage(score, scoreStatistics.percentiles)
+                    context.getString(
+                        R.string.dk_driverdata_mysynthesis_you_are_lower,
+                        percentValue.toString()
+                    )
                 } else if (score > scoreStatistics.percentiles[percentileBetterThanIndex]) {
-                    val percentValue = computeBetterThanPercentage(score, scoreStatistics.percentiles)
-                    context.getString(R.string.dk_driverdata_mysynthesis_you_are_best, percentValue.toString())
+                    val percentValue =
+                        computeBetterThanPercentage(score, scoreStatistics.percentiles)
+                    context.getString(
+                        R.string.dk_driverdata_mysynthesis_you_are_best,
+                        percentValue.toString()
+                    )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
                 }
@@ -101,18 +123,39 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         return 100 // rare case when driver's score is higher than max percentile
     }
 
-    private fun getDriverScore(scoreType: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?) = when (scoreType) {
+    private fun getDriverScore(
+        scoreType: DKScoreType,
+        allContextItem: DKDriverTimeline.DKAllContextItem?
+    ) = when (scoreType) {
         DKScoreType.SAFETY -> allContextItem?.safety?.score
         DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving?.score
         DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction?.score
         DKScoreType.SPEEDING -> allContextItem?.speeding?.score
     }
+
     private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {
         DKScoreType.SAFETY -> this.statistics.safety
         DKScoreType.ECO_DRIVING -> this.statistics.ecoDriving
         DKScoreType.DISTRACTION -> this.statistics.distraction
         DKScoreType.SPEEDING -> this.statistics.speeding
     }
+
+    fun getCommunityTripsText(context: Context): String {
+        val tripsCount = this.statistics.tripNumber
+        val tripsString = context.resources.getQuantityString(
+            R.plurals.trip_plural,
+            tripsCount
+        )
+        return "$tripsCount $tripsString" // TODO what if 0 trip ?
+    }
+
+    fun getCommunityDistanceText(context: Context) = DKDataFormatter.formatMeterDistanceInKm(
+            context = context,
+            distance = statistics.distance * 1000,
+            minDistanceToRemoveFractions = 10.0
+        ).convertToString()
+
+    fun getCommunityActiveDriversText(context: Context) = "${statistics.activeDriverNumber} ${context.getString(R.string.dk_driverdata_mysynthesis_drivers)}"
 
     @StringRes
     fun getLegendTitle() = when (selectedScoreType) {

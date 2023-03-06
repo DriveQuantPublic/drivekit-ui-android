@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -22,10 +23,19 @@ internal class MySynthesisCommunityCardView : LinearLayout {
 
     private lateinit var viewModel: MySynthesisCommunityCardViewModel
 
-
     private lateinit var communityCardView: LinearLayout
     private lateinit var title: TextView
 
+    private lateinit var communityStats: ConstraintLayout
+    private lateinit var communityStatsTitle: TextView
+    private lateinit var communityStatsTrips: TextView
+    private lateinit var communityStatsDistance: TextView
+    private lateinit var communityStatsDriversCount: TextView
+
+    private lateinit var driverStats: ConstraintLayout
+    private lateinit var driverStatsTitle: TextView
+    private lateinit var driverStatsTrips: TextView
+    private lateinit var driverStatsDistance: TextView
 
     constructor(context: Context) : super(context) {
         init()
@@ -46,12 +56,22 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     }
 
     private fun init() {
-        communityCardView = View.inflate(context, R.layout.dk_my_synthesis_community_card_view, null) as LinearLayout
-        title = communityCardView.findViewById(R.id.community_card_title)
+        this.communityCardView = View.inflate(context, R.layout.dk_my_synthesis_community_card_view, null) as LinearLayout
+        this.title = communityCardView.findViewById(R.id.community_card_title)
 
-        communityCardView.setDKStyle()
+        this.communityStats = this.communityCardView.findViewById(R.id.community_stats)
+        this.communityStatsTitle = this.communityStats.findViewById(R.id.title)
+        this.communityStatsTitle.apply {
+            text = context.getString(R.string.dk_driverdata_mysynthesis_my_community)
+            smallText(DriveKitUI.colors.mainFontColor())
+        }
+        this.communityStatsTrips = this.communityStats.findViewById(R.id.trips_count_title)
+        this.communityStatsDistance = this.communityStats.findViewById(R.id.distance_count_title)
+        this.communityStatsDriversCount = this.communityStats.findViewById(R.id.drivers_count_title)
+
+        this.communityCardView.setDKStyle()
         addView(
-            communityCardView, ViewGroup.LayoutParams(
+            this.communityCardView, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
@@ -66,12 +86,28 @@ internal class MySynthesisCommunityCardView : LinearLayout {
 
     private fun update() {
         configureTitle()
+        configureCommunityInfos()
     }
 
     private fun configureTitle() {
         title.apply {
             text = viewModel.getTitleText(context)
             headLine2(viewModel.getTitleColor())
+        }
+    }
+
+    private fun configureCommunityInfos() {
+        this.communityStatsTrips.apply {
+            text = viewModel.getCommunityTripsText(context)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
+        this.communityStatsDistance.apply {
+            text = viewModel.getCommunityDistanceText(context)
+            normalText(DriveKitUI.colors.complementaryFontColor())
+        }
+        this.communityStatsDriversCount.apply {
+            text = viewModel.getCommunityActiveDriversText(context)
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
     }
 
