@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -142,11 +141,12 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     fun getCommunityTripsText(context: Context): String {
         val tripsCount = this.statistics.tripNumber
-        val tripsString = context.resources.getQuantityString(
-            R.plurals.trip_plural,
-            tripsCount
-        )
-        return "$tripsCount $tripsString" // TODO what if 0 trip ?
+        val tripsString = context.resources.getQuantityString(R.plurals.trip_plural, tripsCount)
+        return if (tripsCount == 0) {
+            context.getString(R.string.dk_common_no_trip)
+        } else {
+            "$tripsCount $tripsString"
+        }
     }
 
     fun getCommunityDistanceText(context: Context) = DKDataFormatter.formatMeterDistanceInKm(
@@ -156,6 +156,25 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         ).convertToString()
 
     fun getCommunityActiveDriversText(context: Context) = "${statistics.activeDriverNumber} ${context.getString(R.string.dk_driverdata_mysynthesis_drivers)}"
+
+    fun getDriverTripsText(context: Context): String {
+        val tripsCount = driverTimeline?.allContext?.sumOf { it.numberTripScored } ?: 0
+        val tripsString = context.resources.getQuantityString(R.plurals.trip_plural, tripsCount)
+        return if (tripsCount == 0) {
+            context.getString(R.string.dk_common_no_trip)
+        } else {
+            "$tripsCount $tripsString"
+        }
+    }
+
+    fun getDriverDistanceText(context: Context): String {
+        val distanceKm = driverTimeline?.allContext?.sumOf { it.distance } ?: 0.0
+        return DKDataFormatter.formatMeterDistanceInKm(
+            context = context,
+            distance = distanceKm * 1000,
+            minDistanceToRemoveFractions = 10.0
+        ).convertToString()
+    }
 
     @StringRes
     fun getLegendTitle() = when (selectedScoreType) {
