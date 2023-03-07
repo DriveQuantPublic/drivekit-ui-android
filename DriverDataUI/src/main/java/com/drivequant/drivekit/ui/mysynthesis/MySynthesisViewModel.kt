@@ -16,6 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
+import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
@@ -41,7 +42,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
 
-    private lateinit var communityStatistics: DKCommunityStatistics
+    private var communityStatistics: DKCommunityStatistics? = null
 
     init {
         this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
@@ -53,19 +54,11 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.timelineByPeriod = timelines.associateBy { it.period }
 
                 DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics? ->
-                    statistics?.let {
-                        if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
-                            this.communityStatistics = statistics
-                            update()
-                        } else {
-                            // throw an exception ?
-                        }
-                    } ?: run {
-                        // throw an exception ?
+                    if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
+                        this.communityStatistics = statistics
                     }
+                    update()
                 }
-            } else {
-                // TODO
             }
         }
         updateData()
@@ -130,7 +123,12 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     period = this.selectedPeriod,
                     driverTimeline = timelineSource,
                     selectedDate = date,
-                    statistics = this.communityStatistics
+                    statistics = this.communityStatistics ?: DKCommunityStatistics(0, 0, 0.0, 0,  // TODO update
+                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0)
+                    )
                 )
             }
         } ?: run {
@@ -147,7 +145,13 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
             scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
-            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics)
+            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics(0, 0, 0.0, 0,  // TODO update
+                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
+                DKScoreStatistics(listOf(), 0.0, 0.0,0.0)
+            )
+            )
         }
     }
 

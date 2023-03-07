@@ -15,6 +15,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.R
+import java.text.NumberFormat
 import java.util.*
 
 internal class MySynthesisCommunityCardViewModel : ViewModel() {
@@ -66,9 +67,6 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     }
 
     fun getTitleText(context: Context): String {
-        val percentileLowerThanIndex = 8
-        val percentileBetterThanIndex = 10
-
         if (hasNoTrip(this.allContextItem)) {
             return when (this.selectedPeriod) {
                 DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
@@ -81,19 +79,18 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             val score = getDriverScore(this.selectedScoreType, this.allContextItem)
             val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
             return score?.let {
-                if (score < scoreStatistics.percentiles[percentileLowerThanIndex]) {
-                    val percentValue =
-                        100 - computeBetterThanPercentage(score, scoreStatistics.percentiles)
-                    context.getString(
-                        R.string.dk_driverdata_mysynthesis_you_are_lower,
-                        percentValue.toString()
-                    )
-                } else if (score > scoreStatistics.percentiles[percentileBetterThanIndex]) {
-                    val percentValue =
-                        computeBetterThanPercentage(score, scoreStatistics.percentiles)
+                val lowerThanPercent = scoreStatistics.percentCommunityLowerThan(score)
+                val greaterThanPercent = scoreStatistics.percentCommunityGreaterThan(score)
+
+                if (lowerThanPercent > 55) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_best,
-                        percentValue.toString()
+                        lowerThanPercent.toString()
+                    )
+                } else if (greaterThanPercent > 45) {
+                    context.getString(
+                        R.string.dk_driverdata_mysynthesis_you_are_lower,
+                        greaterThanPercent.toString()
                     )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
@@ -111,15 +108,6 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DriveKitUI.colors.complementaryFontColor()
     } else {
         DriveKitUI.colors.primaryColor()
-    }
-
-    private fun computeBetterThanPercentage(score: Double, percentiles: List<Double>): Int {
-        for (i in percentiles.indices) {
-            if (percentiles[i] > score) {
-                return i * (100 / percentiles.size)
-            }
-        }
-        return 100 // rare case when driver's score is higher than max percentile
     }
 
     private fun getDriverScore(
@@ -145,17 +133,21 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         return if (tripsCount == 0) {
             context.getString(R.string.dk_common_no_trip)
         } else {
-            "$tripsCount $tripsString"
+            "${NumberFormat.getNumberInstance().format(tripsCount)} $tripsString"
         }
     }
 
-    fun getCommunityDistanceText(context: Context) = DKDataFormatter.formatMeterDistanceInKm(
+    fun getCommunityDistanceText(context: Context): String {
+        return DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = statistics.distance * 1000,
             minDistanceToRemoveFractions = 10.0
         ).convertToString()
+    }
 
-    fun getCommunityActiveDriversText(context: Context) = "${statistics.activeDriverNumber} ${context.getString(R.string.dk_driverdata_mysynthesis_drivers)}"
+    fun getCommunityActiveDriversText(context: Context) = "${
+        NumberFormat.getNumberInstance().format(statistics.activeDriverNumber)
+    } ${context.getString(R.string.dk_driverdata_mysynthesis_drivers)}"
 
     fun getDriverTripsText(context: Context): String {
         val tripsCount = driverTimeline?.allContext?.sumOf { it.numberTripScored } ?: 0
@@ -163,7 +155,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         return if (tripsCount == 0) {
             context.getString(R.string.dk_common_no_trip)
         } else {
-            "$tripsCount $tripsString"
+            "${NumberFormat.getNumberInstance().format(tripsCount)} $tripsString"
         }
     }
 
