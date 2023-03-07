@@ -98,7 +98,6 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                         index
                     }
                 } ?: (dates.size - 1)
-                this.selectedDate = dates[selectedDateIndex]
                 val date = dates[selectedDateIndex]
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
