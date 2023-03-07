@@ -3,7 +3,6 @@ package com.drivequant.drivekit.ui.mysynthesis.component.community
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.core.extension.reduceAccuracy
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
-import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.ui.extension.getLevelForValue
 
 internal class MySynthesisGaugeViewModel {

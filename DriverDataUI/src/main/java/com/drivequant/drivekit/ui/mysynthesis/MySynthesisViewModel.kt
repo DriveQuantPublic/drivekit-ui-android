@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.add
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -17,10 +18,7 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
-import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
-import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.mysynthesis.component.community.MySynthesisGaugeViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
@@ -156,7 +154,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 val selectedDate = this.selectedDate
                 val sourceTimeline = getTimelineSource(period)
                 if (selectedDate != null && sourceTimeline != null) {
-                    this.selectedDate = updateSelectedDate(selectedDate, oldPeriod, period, sourceTimeline.allContext.map { it.date })
+                    this.selectedDate = updateSelectedDate(selectedDate, oldPeriod, period, sourceTimeline, this.selectedScore)
                 }
                 this.selectedPeriod = period
                 update()
@@ -164,17 +162,34 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }
     }
 
-    private fun updateSelectedDate(currentSelectedDate: Date, oldPeriod: DKPeriod, newPeriod: DKPeriod, newDates: List<Date>): Date {
-        val compareDate: Date? = if (oldPeriod == newPeriod) {
-            null
-        } else if (newPeriod == DKPeriod.YEAR) {
-            currentSelectedDate.startingFrom(CalendarField.YEAR)
+    private fun updateSelectedDate(currentSelectedDate: Date, oldPeriod: DKPeriod, newPeriod: DKPeriod, timeline: DKDriverTimeline, score: DKScoreType): Date {
+        val comparePeriod: DKPeriod? = if (oldPeriod < newPeriod) {
+            newPeriod
         } else if (oldPeriod > newPeriod) {
-            currentSelectedDate
-        } else { // oldPeriod = WEEK, newPeriod = MONTH
-            currentSelectedDate.startingFrom(CalendarField.MONTH)
+            oldPeriod
+        } else {
+            null
         }
-        return compareDate?.let { date ->  newDates.firstOrNull { it >= date } } ?: currentSelectedDate
+        val compareDate: Date? = comparePeriod?.let { period ->
+            when (period) {
+                DKPeriod.MONTH -> currentSelectedDate.startingFrom(CalendarField.MONTH).add(1, CalendarField.MONTH).add(-1, CalendarField.DAY)
+                DKPeriod.YEAR -> currentSelectedDate.startingFrom(CalendarField.YEAR).add(1, CalendarField.YEAR).add(-1, CalendarField.DAY)
+                DKPeriod.WEEK -> null // Impossible case
+            }
+        }
+        return compareDate?.let {
+            var lastValidDate: Date? = null
+            for (allContextItem in timeline.allContext) {
+                if (allContextItem.date <= it) {
+                    if (allContextItem.hasValueForScoreType(score)) {
+                        lastValidDate = allContextItem.date
+                    }
+                } else {
+                    break
+                }
+            }
+            lastValidDate
+        } ?: currentSelectedDate
     }
 
     private fun configureDateSelector() {
