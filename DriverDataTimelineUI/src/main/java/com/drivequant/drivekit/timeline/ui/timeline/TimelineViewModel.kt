@@ -63,15 +63,18 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
         periodSelectorViewModel.configure(periods)
         periodSelectorViewModel.onPeriodSelected = { period ->
             if (currentPeriod != period) {
+                val oldPeriod = currentPeriod
                 currentPeriod = period
 
-                TimelineUtils.updateSelectedDateForNewPeriod(
-                    period,
-                    selectedDate,
-                    weekTimeline,
-                    monthTimeline
-                )?.let {
-                    this@TimelineViewModel.selectedDate = it
+                getTimelineSource()?.let { timeline ->
+                    TimelineUtils.updateSelectedDate(
+                        oldPeriod,
+                        this.selectedDate,
+                        timeline,
+                        this.selectedScore
+                    )?.let { newDate ->
+                        this.selectedDate = newDate
+                    }
                 }
                 update()
             }

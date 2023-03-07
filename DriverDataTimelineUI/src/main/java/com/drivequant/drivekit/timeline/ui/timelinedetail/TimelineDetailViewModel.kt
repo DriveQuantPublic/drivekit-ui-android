@@ -32,8 +32,6 @@ internal class TimelineDetailViewModel(
     var monthTimeline: DKRawTimeline
 ) : AndroidViewModel(application), TimelineGraphListener {
 
-    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
-
     val updateData = MutableLiveData<Any>()
 
     var listener: TimelineDetailViewModelListener? = null
@@ -42,6 +40,7 @@ internal class TimelineDetailViewModel(
     val dateSelectorViewModel: DKDateSelectorViewModel = DKDateSelectorViewModel()
     val roadContextViewModel: RoadContextViewModel = RoadContextViewModel()
     var timelineGraphViewModelByScoreItem: Map<TimelineScoreItemType, TimelineGraphViewModel> = mapOf()
+    private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
     private val orderedScoreItemTypeToDisplay = this.selectedScore.associatedScoreItemTypes()
 
     init {
@@ -70,6 +69,7 @@ internal class TimelineDetailViewModel(
 
             // Update view models.
             if (selectedDateIndex >= 0) {
+                this.periodSelectorViewModel.configure(this.periods)
                 this.periodSelectorViewModel.select(this.selectedPeriod)
                 this.periodSelectorViewModel.onPeriodSelected = this::onPeriodSelected
 
@@ -91,7 +91,7 @@ internal class TimelineDetailViewModel(
         updateData.postValue(Any())
     }
 
-    private fun getTimelineSource(): DKRawTimeline = when (this.selectedPeriod) {
+    private fun getTimelineSource(period: DKPeriod = this.selectedPeriod): DKRawTimeline = when (period) {
         DKPeriod.MONTH -> this.monthTimeline
         DKPeriod.WEEK -> this.weekTimeline
         DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
@@ -99,7 +99,12 @@ internal class TimelineDetailViewModel(
 
     private fun onPeriodSelected(period: DKPeriod) {
         if (this.selectedPeriod != period) {
-            val date = TimelineUtils.updateSelectedDateForNewPeriod(period, this.selectedDate, this.weekTimeline, this.monthTimeline)
+            val date = TimelineUtils.updateSelectedDate(
+                this.selectedPeriod,
+                this.selectedDate,
+                getTimelineSource(period),
+                this.selectedScore
+            )
             if (date != null) {
                 this.selectedPeriod = period
                 this.selectedDate = date
