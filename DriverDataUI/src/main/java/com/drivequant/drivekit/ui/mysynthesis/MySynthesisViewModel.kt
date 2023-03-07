@@ -52,13 +52,17 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
 
-                DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics ->
-                    if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
-                        this.communityStatistics = statistics
-                    } else {
-                        // TODO
+                DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics? ->
+                    statistics?.let {
+                        if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
+                            this.communityStatistics = statistics
+                            update()
+                        } else {
+                            // throw an exception ?
+                        }
+                    } ?: run {
+                        // throw an exception ?
                     }
-                    update()
                 }
             } else {
                 // TODO
@@ -74,7 +78,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             this.timelineByPeriod = timelines.associateBy { it.period }
             if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
                 DriveKitDriverData.getCommunityStatistics { _, statistics ->
-                    this.communityStatistics = statistics
+
+                    this.communityStatistics = statistics!!
                     update(true)
                     finish(status) //TODO à voir pour le status
                 }

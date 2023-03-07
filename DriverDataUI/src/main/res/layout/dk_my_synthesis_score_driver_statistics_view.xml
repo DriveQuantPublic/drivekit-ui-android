@@ -8,6 +8,7 @@
         android:id="@+id/icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginTop="@dimen/dk_margin_half"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,7 +18,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/icon" />
 
     <TextView
         android:id="@+id/trips_count_title"
@@ -35,11 +36,4 @@
         app:layout_constraintStart_toEndOf="@id/icon"
         app:layout_constraintTop_toBottomOf="@id/trips_count_title" />
 
-    <TextView
-        android:id="@+id/drivers_count_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toBottomOf="@id/distance_count_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

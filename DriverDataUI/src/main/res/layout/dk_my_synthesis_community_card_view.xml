@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <include
-                android:id="@+id/community_stats"
+                android:id="@+id/community_infos"
                 layout="@layout/dk_my_synthesis_score_community_statistics_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -43,11 +43,11 @@
 
             <include
                 android:id="@+id/driver_infos"
-                layout="@layout/dk_my_synthesis_score_community_statistics_view"
+                layout="@layout/dk_my_synthesis_score_driver_statistics_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/community_card_title"
-                app:layout_constraintStart_toEndOf="@id/community_stats"
+                app:layout_constraintStart_toEndOf="@id/community_infos"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
