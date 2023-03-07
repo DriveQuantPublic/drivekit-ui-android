@@ -16,7 +16,6 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
-import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
@@ -34,10 +33,9 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val scoreCardViewModel = MySynthesisScoreCardViewModel()
     val communityCardViewModel = MySynthesisCommunityCardViewModel()
-    val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
+    val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
-    var selectedScore: DKScoreType
-        private set
+    private var selectedScore: DKScoreType
     private var selectedPeriod: DKPeriod = this.periods.last()
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
@@ -65,19 +63,16 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     fun updateData() {
-        val finish = { status: TimelineSyncStatus -> syncStatus.postValue(status) }
-
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
                 DriveKitDriverData.getCommunityStatistics { _, statistics ->
-
-                    this.communityStatistics = statistics!!
+                    this.communityStatistics = statistics
                     update(true)
-                    finish(status) //TODO à voir pour le status
+                    syncStatus.postValue(Any())
                 }
             } else {
-                finish(status)
+                syncStatus.postValue(Any())
             }
         }
     }
@@ -123,12 +118,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     period = this.selectedPeriod,
                     driverTimeline = timelineSource,
                     selectedDate = date,
-                    statistics = this.communityStatistics ?: DKCommunityStatistics(0, 0, 0.0, 0,  // TODO update
-                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                        DKScoreStatistics(listOf(), 0.0, 0.0,0.0)
-                    )
+                    statistics = this.communityStatistics ?: DKCommunityStatistics.buildDefault()
                 )
             }
         } ?: run {
@@ -145,13 +135,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
             scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
-            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics(0, 0, 0.0, 0,  // TODO update
-                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                DKScoreStatistics(listOf(), 0.0, 0.0,0.0),
-                DKScoreStatistics(listOf(), 0.0, 0.0,0.0)
-            )
-            )
+            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics.buildDefault())
         }
     }
 
@@ -216,5 +200,4 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
             return MySynthesisViewModel(application) as T
         }
     }
-
 }
