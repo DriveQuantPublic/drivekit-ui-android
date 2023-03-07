@@ -154,6 +154,9 @@ internal class MySynthesisFragment : Fragment() {
 
     private fun configureCommunityGaugeView() {
         this.communityGaugeView.configure(this.viewModel.communityGaugeViewModel)
+        this.viewModel.communityGaugeViewModel.onScoreDescriptionButtonClick = {
+            showScoreLegend()
+        }
     }
 
     private fun configureScoreCard() {

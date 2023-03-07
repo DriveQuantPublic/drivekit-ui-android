@@ -9,6 +9,7 @@ import com.drivequant.drivekit.ui.extension.getLevelForValue
 internal class MySynthesisGaugeViewModel {
 
     var onUpdateCallback: (() -> Unit)? = null
+    var onScoreDescriptionButtonClick: (() -> Unit)? = null
 
     var scoreValue: Double? = null
         private set

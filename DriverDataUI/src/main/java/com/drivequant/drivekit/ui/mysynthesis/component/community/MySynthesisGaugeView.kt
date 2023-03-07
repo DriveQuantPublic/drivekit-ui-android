@@ -19,12 +19,10 @@ import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
-import com.drivequant.drivekit.core.extension.reduceAccuracy
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getScoreLevelDescription
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisConstant
 import kotlin.math.abs
-import kotlin.math.ceil
 
 internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
@@ -124,6 +122,12 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
+        if (this.scoreDescriptionContainer.left < 0) {
+            alignLeftScoreDescriptionContainer()
+        } else if (this.scoreDescriptionContainer.right > right) {
+            alignRightScoreDescriptionContainer()
+        }
+
         // Hide overlapping TextViews.
         this.levelTextViews.forEach { it.visibility = View.VISIBLE }
         val size = this.levelTextViews.size
@@ -190,6 +194,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
         ImageViewCompat.setImageTintList(this.scoreDescriptionIcon, ColorStateList.valueOf(DriveKitUI.colors.secondaryColor()))
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
+        this.scoreDescriptionContainer.setOnClickListener { this.viewModel?.onScoreDescriptionButtonClick?.invoke() }
         // Gauge corners.
         val cornerRadius = 7.convertDpToPx().toFloat()
         this.veryBadGaugeContainer.roundCorners(cornerRadius, 0f, 0f, cornerRadius)
@@ -256,27 +261,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
                 }
             }
         }
-
-
-
-
-//        val scoreDescriptionParams = this.scoreDescription.layoutParams as LayoutParams
-//
-//        println("===========================")
-//        println("=== measuredWidth = $measuredWidth")
-//        println("=== left = ${scoreDescription.left}")
-//        println("=== right = ${scoreDescription.right}")
-//        println("=== width = ${scoreDescription.width}")
-//        println("=== horizontalBias = ${scoreDescriptionParams.horizontalBias}")
-//        println("===========================")
-//
-//        val left = this.scoreDescription.left
-//        if (left < 0) {
-//            val width = this.scoreDescription.width
-//            val percent = -left/width.toFloat()
-//            scoreDescriptionParams.horizontalBias = percent
-//            println("=== percent = $percent")
-//        }
+        centerScoreDescriptionContainer()
     }
 
     private fun View.setPercent(length: Double, totalLength: Double) {
@@ -286,6 +271,33 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             params.matchConstraintPercentWidth = (length / totalLength).toFloat()
             this.layoutParams = params
         }
+    }
+
+    private fun centerScoreDescriptionContainer() {
+        val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
+        params.startToStart = this.mainGuideline.id
+        params.endToEnd = this.mainGuideline.id
+        params.marginStart = 0
+        params.marginEnd = 0
+        this.scoreDescriptionContainer.layoutParams = params
+    }
+
+    private fun alignLeftScoreDescriptionContainer() {
+        val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
+        params.startToStart = this.id
+        params.endToEnd = LayoutParams.UNSET
+        params.marginStart = - this.paddingStart + 4.convertDpToPx()
+        params.marginEnd = 0
+        this.scoreDescriptionContainer.layoutParams = params
+    }
+
+    private fun alignRightScoreDescriptionContainer() {
+        val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
+        params.startToStart = LayoutParams.UNSET
+        params.endToEnd = this.id
+        params.marginStart = 0
+        params.marginEnd = - this.paddingEnd + 4.convertDpToPx()
+        this.scoreDescriptionContainer.layoutParams = params
     }
 
 }
