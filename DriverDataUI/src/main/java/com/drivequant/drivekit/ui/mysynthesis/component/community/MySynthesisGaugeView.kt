@@ -195,6 +195,18 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         ImageViewCompat.setImageTintList(this.scoreDescriptionIcon, ColorStateList.valueOf(DriveKitUI.colors.secondaryColor()))
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
         this.scoreDescriptionContainer.setOnClickListener { this.viewModel?.onScoreDescriptionButtonClick?.invoke() }
+        // Texts color.
+        val textColor = DriveKitUI.colors.primaryColor()
+        this.scoreDescription.setTextColor(textColor)
+        for (levelTextView in this.levelTextViews) {
+            levelTextView.setTextColor(textColor)
+        }
+        this.communityMinValueTextView.setTextColor(textColor)
+        this.communityMeanValueTextView.setTextColor(textColor)
+        this.communityMaxValueTextView.setTextColor(textColor)
+        this.communityMinTextView.setTextColor(textColor)
+        this.communityMeanTextView.setTextColor(textColor)
+        this.communityMaxTextView.setTextColor(textColor)
         // Gauge corners.
         val cornerRadius = 7.convertDpToPx().toFloat()
         this.veryBadGaugeContainer.roundCorners(cornerRadius, 0f, 0f, cornerRadius)

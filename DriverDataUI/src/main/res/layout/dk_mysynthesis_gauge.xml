@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            tools:textSize="11sp"
+            android:textSize="11sp"
             tools:text="Your score is excellent" />
 
         <ImageView
@@ -143,81 +143,81 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@id/veryBadGaugeContainer"
         app:layout_constraintEnd_toStartOf="@id/veryBadGaugeContainer"
         app:layout_constraintStart_toStartOf="@id/veryBadGaugeContainer"
-        tools:text="3"
-        tools:textSize="11sp" />
+        tools:text="3" />
 
     <TextView
         android:id="@+id/level1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/badGauge"
         app:layout_constraintStart_toStartOf="@id/badGauge"
-        tools:text="6"
-        tools:textSize="11sp" />
+        tools:text="6" />
 
     <TextView
         android:id="@+id/level2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/badMeanGauge"
         app:layout_constraintStart_toStartOf="@id/badMeanGauge"
-        tools:text="7.5"
-        tools:textSize="11sp" />
+        tools:text="7.5" />
 
     <TextView
         android:id="@+id/level3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/meanGauge"
         app:layout_constraintStart_toStartOf="@id/meanGauge"
-        tools:text="8.5"
-        tools:textSize="11sp" />
+        tools:text="8.5" />
 
     <TextView
         android:id="@+id/level4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/goodMeanGauge"
         app:layout_constraintStart_toStartOf="@id/goodMeanGauge"
-        tools:text="9"
-        tools:textSize="11sp" />
+        tools:text="9" />
 
     <TextView
         android:id="@+id/level5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/goodGauge"
         app:layout_constraintStart_toStartOf="@id/goodGauge"
-        tools:text="9.5"
-        tools:textSize="11sp" />
+        tools:text="9.5" />
 
     <TextView
         android:id="@+id/level6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toStartOf="@id/excellentGaugeContainer"
         app:layout_constraintStart_toStartOf="@id/excellentGaugeContainer"
-        tools:text="9.8"
-        tools:textSize="11sp" />
+        tools:text="9.8" />
 
     <TextView
         android:id="@+id/level7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/level0"
         app:layout_constraintEnd_toEndOf="@id/excellentGaugeContainer"
         app:layout_constraintStart_toEndOf="@id/excellentGaugeContainer"
-        tools:text="10"
-        tools:textSize="11sp" />
+        tools:text="10" />
 
     <FrameLayout
         android:id="@+id/scoreIndicator"
@@ -264,6 +264,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
@@ -273,6 +274,7 @@
         android:id="@+id/communityMeanValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
         app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
@@ -282,6 +284,7 @@
         android:id="@+id/communityMaxValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
         app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
@@ -318,6 +321,7 @@
         android:id="@+id/communityMinText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
@@ -327,6 +331,7 @@
         android:id="@+id/communityMeanText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
         app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
@@ -336,6 +341,7 @@
         android:id="@+id/communityMaxText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
         app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMaxGuideline"
