@@ -65,13 +65,9 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     fun updateData() {
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
-            if (status != TimelineSyncStatus.NO_TIMELINE_YET) {
-                DriveKitDriverData.getCommunityStatistics { _, statistics ->
-                    this.communityStatistics = statistics
-                    update(true)
-                    syncStatus.postValue(Any())
-                }
-            } else {
+            DriveKitDriverData.getCommunityStatistics { _, statistics ->
+                this.communityStatistics = statistics
+                update(true)
                 syncStatus.postValue(Any())
             }
         }
