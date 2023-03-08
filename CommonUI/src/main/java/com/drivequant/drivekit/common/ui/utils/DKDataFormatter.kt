@@ -368,7 +368,7 @@ object DKDataFormatter {
             .plus(context.getString(R.string.dk_common_unit_score))
 
     @JvmOverloads
-    fun formatPercentage(value: Int, appendSpace: Boolean = false): String {
+    fun formatPercentage(value: Int, appendSpace: Boolean = true): String {
         val text = value.toString()
         if (appendSpace) {
             text.plus(nbsp)
@@ -377,7 +377,7 @@ object DKDataFormatter {
     }
 
     @JvmOverloads
-    fun formatPercentage(value: Double, appendSpace: Boolean = false): String {
+    fun formatPercentage(value: Double, appendSpace: Boolean = true): String {
         val text = value.format(1)
         if (appendSpace) {
             text.plus(nbsp)
