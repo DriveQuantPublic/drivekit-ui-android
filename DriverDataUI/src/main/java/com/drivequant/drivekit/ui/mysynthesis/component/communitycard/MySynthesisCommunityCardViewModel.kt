@@ -29,7 +29,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private var scoreSynthesis: DKScoreSynthesis? = null
     private var allContextItem: DKDriverTimeline.DKAllContextItem? = null
     private lateinit var statistics: DKCommunityStatistics
-    private lateinit var selectedDate: Date
+    private var selectedDate: Date? = null
 
     fun configure(
         scoreType: DKScoreType,
@@ -41,11 +41,11 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         this.statistics = statistics
         this.selectedScoreType = scoreType
         this.selectedPeriod = period
+        this.selectedDate = selectedDate
+        this.driverTimeline = driverTimeline
+
         if (driverTimeline != null && selectedDate != null) {
-            this.selectedDate = selectedDate
-            this.driverTimeline = driverTimeline
-            this.scoreSynthesis =
-                driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
+            this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
             this.allContextItem = driverTimeline.allContext.first { it.date == this.selectedDate }
         }
         this.onViewModelUpdated?.invoke()
