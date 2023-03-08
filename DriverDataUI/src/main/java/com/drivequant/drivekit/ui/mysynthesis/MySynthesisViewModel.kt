@@ -132,6 +132,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         }.let { startDate ->
             dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
             scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null)
+            updateCommunityGauge()
         }
     }
 
@@ -177,10 +178,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     private fun updateCommunityGauge() {
-        this.selectedDate?.let { selectedDate ->
-            val scoreSynthesis = getDriverScoreSynthesis(this.selectedScore, selectedDate)
-            updateCommunityGauge(scoreSynthesis)
-        }
+        val scoreSynthesis: DKScoreSynthesis? = this.selectedDate?.let { getDriverScoreSynthesis(this.selectedScore, it) }
+        updateCommunityGauge(scoreSynthesis)
     }
 
     private fun updateCommunityGauge(scoreSynthesis: DKScoreSynthesis?) {

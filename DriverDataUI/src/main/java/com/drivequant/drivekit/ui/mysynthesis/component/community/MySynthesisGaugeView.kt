@@ -165,7 +165,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     }
 
     private fun update() {
-        this.scoreDescription.text = this.viewModel?.scoreLevel?.getScoreLevelDescription()?.let { context.getString(it) }
+        this.scoreDescription.text = (this.viewModel?.scoreLevel?.getScoreLevelDescription() ?: R.string.dk_driverdata_mysynthesis_can_not_be_evaluated).let { context.getString(it) }
         this.level0TextView.text = getFormattedLevelValue(0)
         this.level1TextView.text = getFormattedLevelValue(1)
         this.level2TextView.text = getFormattedLevelValue(2)
@@ -239,10 +239,17 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
 
             val viewModel = this.viewModel
             if (viewModel != null) {
-                viewModel.scoreValue?.let { scoreValue ->
+                val scoreValue = viewModel.scoreValue
+                if (scoreValue != null) {
+                    this.scoreIndicator.visibility = View.VISIBLE
+                    this.scoreArrowIndicator.visibility = View.VISIBLE
                     viewModel.getPercent(scoreValue, level0, level7)?.let { percent ->
                         this.mainGuideline.setGuidelinePercent(percent)
                     }
+                } else {
+                    this.mainGuideline.setGuidelinePercent(0.5f)
+                    this.scoreIndicator.visibility = View.INVISIBLE
+                    this.scoreArrowIndicator.visibility = View.INVISIBLE
                 }
                 viewModel.communityMinScore?.let { communityMinScore ->
                     viewModel.getPercent(communityMinScore, level0, level7)?.let { percent ->
