@@ -8,9 +8,7 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.getValue
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
-import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
-import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
 import java.util.*
 
@@ -57,14 +55,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
 
-    private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?): Boolean {
-        return when (score) {
-            DKScoreType.SAFETY -> allContextItem?.safety != null
-            DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving != null
-            DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction != null
-            DKScoreType.SPEEDING -> allContextItem?.speeding != null
-        }
-    }
+    private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?) =
+        allContextItem?.hasValueForScoreType(score) ?: false
     fun getEvolutionText(context: Context): String {
         val allContextItem = this.allContextItem
         return if (hasNoTrip(allContextItem)) {

@@ -12,9 +12,7 @@ import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
-import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
-import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
 import java.text.NumberFormat
 import java.util.*
@@ -46,7 +44,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
         if (driverTimeline != null && selectedDate != null) {
             this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
-            this.allContextItem = driverTimeline.allContext.first { it.date == this.selectedDate }
+            this.allContextItem = driverTimeline.allContextItemAt(selectedDate)
         }
         this.onViewModelUpdated?.invoke()
     }
@@ -57,14 +55,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     private fun hasData(
         score: DKScoreType,
         allContextItem: DKDriverTimeline.DKAllContextItem?
-    ): Boolean {
-        return when (score) {
-            DKScoreType.SAFETY -> allContextItem?.safety != null
-            DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving != null
-            DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction != null
-            DKScoreType.SPEEDING -> allContextItem?.speeding != null
-        }
-    }
+    ) = allContextItem?.hasValueForScoreType(score) ?: false
 
     fun getTitleText(context: Context): String {
         if (hasNoTrip(this.allContextItem)) {
