@@ -10,8 +10,10 @@ internal class MySynthesisGaugeViewModel {
     var onUpdateCallback: (() -> Unit)? = null
     var onScoreDescriptionButtonClick: (() -> Unit)? = null
 
-    var scoreValue: Double? = null
+    var score: Double? = null
         private set
+    val hasScore: Boolean
+        get() = this.score != null
     var scoreLevel: DKScoreTypeLevel? = null
         private set
     var communityMinScore: Double? = null
@@ -20,12 +22,12 @@ internal class MySynthesisGaugeViewModel {
         private set
     var communityMaxScore: Double? = null
         private set
-    private var score: DKScoreType? = null
+    private var scoreType: DKScoreType? = null
 
-    fun configure(score: DKScoreType, scoreValue: Double?, communityMinScore: Double, communityMeanScore: Double, communityMaxScore: Double) {
+    fun configure(scoreType: DKScoreType, score: Double?, communityMinScore: Double, communityMeanScore: Double, communityMaxScore: Double) {
+        this.scoreType = scoreType
         this.score = score
-        this.scoreValue = scoreValue
-        this.scoreLevel = scoreValue?.let { score.getLevelForValue(it) }
+        this.scoreLevel = score?.let { scoreType.getLevelForValue(it) }
         this.communityMinScore = communityMinScore
         this.communityMeanScore = communityMeanScore
         this.communityMaxScore = communityMaxScore
@@ -33,7 +35,7 @@ internal class MySynthesisGaugeViewModel {
     }
 
     fun getLevelValue(index: Int): Double? {
-        val steps = this.score?.getSteps()
+        val steps = this.scoreType?.getSteps()
         return if (steps == null || index < 0 || index >= steps.size) {
             null
         } else {

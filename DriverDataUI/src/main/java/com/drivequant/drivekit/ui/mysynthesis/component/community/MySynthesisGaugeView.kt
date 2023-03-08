@@ -251,8 +251,8 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
 
             val viewModel = this.viewModel
             if (viewModel != null) {
-                val scoreValue = viewModel.scoreValue
-                if (scoreValue != null) {
+                val scoreValue = viewModel.score
+                if (viewModel.hasScore && scoreValue != null) {
                     this.scoreIndicator.visibility = View.VISIBLE
                     this.scoreArrowIndicator.visibility = View.VISIBLE
                     viewModel.getPercent(scoreValue, level0, level7)?.let { percent ->
