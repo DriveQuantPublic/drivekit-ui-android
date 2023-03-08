@@ -18,6 +18,7 @@ import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisti
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.driverdata.timeline.allContextItemAt
 import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardViewModel
@@ -98,14 +99,14 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
-                val currentAllContextItemIndex = timelineSource.allContext.indexOfFirst { it.date == this.selectedDate }
+                val currentAllContextItem = timelineSource.allContextItemAt(date)
 
                 this.scoreCardViewModel.configure(
                     score = this.selectedScore,
                     period = this.selectedPeriod,
                     scoreSynthesis = timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
-                    allContextItem = timelineSource.allContext[currentAllContextItemIndex],
-                    previousDate = if (currentAllContextItemIndex >= 1) { timelineSource.allContext[currentAllContextItemIndex - 1].date } else null
+                    allContextItem = currentAllContextItem,
+                    previousDate = currentAllContextItem?.date
                 )
 
                 this.communityCardViewModel.configure(

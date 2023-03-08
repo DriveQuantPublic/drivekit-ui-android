@@ -167,31 +167,4 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             minDistanceToRemoveFractions = 10.0
         ).convertToString()
     }
-
-    @StringRes
-    fun getLegendTitle() = when (selectedScoreType) {
-        DKScoreType.SAFETY -> R.string.dk_driverdata_safety_score
-        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_eco_score
-        DKScoreType.DISTRACTION -> R.string.dk_driverdata_distraction_score
-        DKScoreType.SPEEDING -> R.string.dk_driverdata_speeding_score
-    }
-
-    @StringRes
-    fun getLegendDescription() = when (selectedScoreType) {
-        DKScoreType.SAFETY -> R.string.dk_driverdata_mysynthesis_safety_score_info
-        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_mysynthesis_ecodriving_score_info
-        DKScoreType.DISTRACTION -> R.string.dk_driverdata_mysynthesis_distraction_score_info
-        DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score_info
-    }
-
-    @StringRes
-    fun getLegendScoreAppreciationTitle(scoreLevel: DKScoreTypeLevel) = when (scoreLevel) {
-        DKScoreTypeLevel.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
-        DKScoreTypeLevel.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
-        DKScoreTypeLevel.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
-        DKScoreTypeLevel.MEDIUM -> R.string.dk_driverdata_mysynthesis_score_title_average
-        DKScoreTypeLevel.NOT_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_low
-        DKScoreTypeLevel.BAD -> R.string.dk_driverdata_mysynthesis_score_title_bad
-        DKScoreTypeLevel.VERY_BAD -> R.string.dk_driverdata_mysynthesis_score_title_very_bad
-    }
 }
