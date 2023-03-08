@@ -16,10 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
-import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
-import com.drivequant.drivekit.driverdata.timeline.allContextItemAt
-import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
@@ -64,7 +61,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     fun updateData() {
-        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { status, timelines ->
+        DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.DEFAULT) { _, timelines ->
             this.timelineByPeriod = timelines.associateBy { it.period }
             DriveKitDriverData.getCommunityStatistics { _, statistics ->
                 this.communityStatistics = statistics
@@ -106,7 +103,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     period = this.selectedPeriod,
                     scoreSynthesis = timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
                     allContextItem = currentAllContextItem,
-                    previousDate = currentAllContextItem?.date
+                    previousDate = timelineSource.previousAllContextItemFrom(date)?.date
                 )
 
                 this.communityCardViewModel.configure(
