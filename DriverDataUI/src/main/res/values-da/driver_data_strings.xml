@@ -117,8 +117,8 @@
    <string name="dk_driverdata_mysynthesis_very_bad_score">Din score er meget dårlig</string>
    <string name="dk_driverdata_mysynthesis_very_good_score">Din score er meget god</string>
    <string name="dk_driverdata_mysynthesis_you_are_average">Du befinder dig i den gennemsnitlige</string>
-   <string name="dk_driverdata_mysynthesis_you_are_best">Du er bedre end %s% af brugerne</string>
-   <string name="dk_driverdata_mysynthesis_you_are_lower">%s% af brugerne er bedre end dig</string>
+   <string name="dk_driverdata_mysynthesis_you_are_best">Du er bedre end %s af brugerne</string>
+   <string name="dk_driverdata_mysynthesis_you_are_lower">%s af brugerne er bedre end dig</string>
    <string name="dk_driverdata_night">Natkørsel</string>
    <string name="dk_driverdata_no_call_congrats">Tillykke!</string>
    <string name="dk_driverdata_no_call_content">Ingen opkald</string>

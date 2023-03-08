@@ -85,12 +85,12 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
                 if (lowerThanPercent > 55) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_best,
-                        lowerThanPercent.toString()
+                        DKDataFormatter.formatPercentage(lowerThanPercent)
                     )
                 } else if (greaterThanPercent > 45) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_lower,
-                        greaterThanPercent.toString()
+                        DKDataFormatter.formatPercentage(greaterThanPercent)
                     )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
