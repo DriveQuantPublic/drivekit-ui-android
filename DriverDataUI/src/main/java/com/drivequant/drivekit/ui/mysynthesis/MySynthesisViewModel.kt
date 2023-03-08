@@ -81,7 +81,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 selectedDate = null
             }
             val dates = timelineSource.allContext.mapNotNull { allContextItem ->
-                if (this.selectedScore == DKScoreType.DISTRACTION || this.selectedScore == DKScoreType.SPEEDING || allContextItem.date == this.selectedDate || (allContextItem.safety != null && allContextItem.ecoDriving != null)) {
+                if (allContextItem.date == this.selectedDate || allContextItem.hasValueForScoreType(this.selectedScore)) {
                     allContextItem.date
                 } else {
                     null
