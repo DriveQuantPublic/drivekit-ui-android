@@ -54,7 +54,7 @@ internal class MySynthesisScoreLegendDialog {
     private fun configureLegendScoreItem(
         context: Context,
         container: LinearLayout,
-        dkScoreType: DKScoreType,
+        scoreType: DKScoreType,
         scoreLevel: DKScoreTypeLevel
     ) {
         val view = View.inflate(context, R.layout.dk_my_synthesis_scores_legend_item, null)
@@ -65,7 +65,7 @@ internal class MySynthesisScoreLegendDialog {
             )
         }
         view.findViewById<TextView>(R.id.score_description)?.apply {
-            val scoreLevels = scoreLevel.getScoreLevel(dkScoreType)
+            val scoreLevels = scoreLevel.getScoreLevel(scoreType)
             val scoreValuesText: String = scoreLevel.getScoreLevelTitle().let {
                 context.getString(
                     it,
@@ -79,7 +79,7 @@ internal class MySynthesisScoreLegendDialog {
                 size(R.dimen.dk_text_normal)
             }).space()
                 .append(
-                    context.getString(scoreLevel.getScoreLevelDescription(dkScoreType)),
+                    context.getString(scoreLevel.getScoreLevelDescription(scoreType)),
                     context.resSpans {
                         color(DriveKitUI.colors.complementaryFontColor())
                         typeface(Typeface.NORMAL)
