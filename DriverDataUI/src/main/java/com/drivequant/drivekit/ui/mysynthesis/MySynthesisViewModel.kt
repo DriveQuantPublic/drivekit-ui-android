@@ -34,15 +34,15 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val communityGaugeViewModel = MySynthesisGaugeViewModel()
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
     val updateData = MutableLiveData<Any>()
-    var selectedScore: DKScoreType
-        private set
-    private var selectedPeriod: DKPeriod = this.periods.last()
+    val selectedScore: DKScoreType
+        get() = this.scoreSelectorViewModel.selectedScore
+    private val selectedPeriod: DKPeriod
+        get() = this.periodSelectorViewModel.selectedPeriod
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
     private var communityStatistics: DKCommunityStatistics? = null
 
     init {
-        this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
         configureScoreSelector()
         configurePeriodSelector()
         configureDateSelector()
@@ -137,30 +137,23 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     private fun configureScoreSelector() {
-        this.scoreSelectorViewModel.configure(this.scores) { score ->
-            if (this.selectedScore != score) {
-                this.selectedScore = score
-                update()
-            }
+        this.scoreSelectorViewModel.configure(this.scores) { _ ->
+            update()
         }
     }
 
     private fun configurePeriodSelector() {
         this.periodSelectorViewModel.configure(periods)
         this.periodSelectorViewModel.select(this.selectedPeriod)
-        this.periodSelectorViewModel.onPeriodSelected = { period ->
-            if (this.selectedPeriod != period) {
-                val oldPeriod = this.selectedPeriod
-                val selectedDate = this.selectedDate
-                val sourceTimeline = getTimelineSource(period)
-                if (selectedDate != null && sourceTimeline != null) {
-                    this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date }) { _, date ->
-                        sourceTimeline.allContextItemAt(date)?.hasValueForScoreType(this.selectedScore) ?: false
-                    }
+        this.periodSelectorViewModel.onPeriodSelected = { oldPeriod, newPeriod ->
+            val selectedDate = this.selectedDate
+            val sourceTimeline = getTimelineSource(newPeriod)
+            if (selectedDate != null && sourceTimeline != null) {
+                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date }) { _, date ->
+                    sourceTimeline.allContextItemAt(date)?.hasValueForScoreType(this.selectedScore) ?: false
                 }
-                this.selectedPeriod = period
-                update()
             }
+            update()
         }
     }
 

@@ -42,6 +42,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
         this.onViewModelUpdated?.invoke()
     }
+
     fun showEvolutionScoreOutOfTen() = this.score != null && this.previousScore != null
 
     @StringRes
@@ -52,7 +53,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score
     }
 
-    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
+    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) =
+        allContextItem == null
 
     private fun hasData(
         score: DKScoreType,
@@ -62,7 +64,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     fun getEvolutionText(context: Context): String {
         val allContextItem = this.allContextItem
         return if (hasNoTrip(allContextItem)) {
-           context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
+            context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
         } else if (!hasData(this.selectedScore, allContextItem)) {
             context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else if (this.previousScore != null) {
@@ -71,7 +73,10 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
                 DKPeriod.MONTH -> context.getString(R.string.dk_driverdata_mysynthesis_previous_month)
                 DKPeriod.YEAR -> {
                     val currentYear = allContextItem?.date?.getValue(CalendarField.YEAR)
-                    String.format(context.getString(R.string.dk_driverdata_mysynthesis_previous_year), currentYear)
+                    String.format(
+                        context.getString(R.string.dk_driverdata_mysynthesis_previous_year),
+                        currentYear
+                    )
                 }
             }
         } else {

@@ -71,7 +71,9 @@ internal class TimelineDetailViewModel(
             if (selectedDateIndex >= 0) {
                 this.periodSelectorViewModel.configure(this.periods)
                 this.periodSelectorViewModel.select(this.selectedPeriod)
-                this.periodSelectorViewModel.onPeriodSelected = this::onPeriodSelected
+                this.periodSelectorViewModel.onPeriodSelected = { _, newPeriod ->
+                    onPeriodSelected(newPeriod)
+                }
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
                 this.dateSelectorViewModel.onDateSelected = this::onDateSelected
