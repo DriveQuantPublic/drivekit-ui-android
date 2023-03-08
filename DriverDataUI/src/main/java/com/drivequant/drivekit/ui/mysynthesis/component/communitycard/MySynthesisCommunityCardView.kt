@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.mysynthesis.component.scorelegend.MySynthesisScoreLegendDialog
 
 internal class MySynthesisCommunityCardView : LinearLayout {
 
@@ -90,8 +89,6 @@ internal class MySynthesisCommunityCardView : LinearLayout {
         configureTitle()
         configureCommunityInfo()
         configureDriverInfo()
-
-        MySynthesisScoreLegendDialog().show(context, viewModel.selectedScoreType)
     }
 
     private fun configureTitle() {
@@ -102,28 +99,13 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     }
 
     private fun configureCommunityInfo() {
-        this.communityInfoTrips.apply {
-            text = viewModel.getCommunityTripsText(context)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
-        this.communityInfoDistance.apply {
-            text = viewModel.getCommunityDistanceText(context)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
-        this.communityInfoDriversCount.apply {
-            text = viewModel.getCommunityActiveDriversText(context)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
+        this.communityInfoTrips.text = viewModel.getCommunityTripsCountText(context)
+        this.communityInfoDistance.text = viewModel.getCommunityDistanceKmText(context)
+        this.communityInfoDriversCount.text = viewModel.getCommunityActiveDriversText(context)
     }
 
     private fun configureDriverInfo() {
-        this.driverInfoTrips.apply {
-            text = viewModel.getDriverTripsText(context)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
-        this.driverInfoDistance.apply {
-            text = viewModel.getDriverDistanceText(context)
-            normalText(DriveKitUI.colors.complementaryFontColor())
-        }
+        this.driverInfoTrips.text = viewModel.getDriverTripsCountText(context)
+        this.driverInfoDistance.text = viewModel.getDriverDistanceKmText(context)
     }
 }

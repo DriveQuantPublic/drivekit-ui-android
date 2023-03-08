@@ -1,13 +1,14 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.communitycard
 
 import android.content.Context
+import android.text.SpannableString
 import androidx.annotation.ColorInt
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
-import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
@@ -22,8 +23,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     var onViewModelUpdated: (() -> Unit)? = null
 
-    var selectedScoreType: DKScoreType = DKScoreType.SAFETY
-        private set
+    private var selectedScoreType: DKScoreType = DKScoreType.SAFETY
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
     private var driverTimeline: DKDriverTimeline? = null
     private var scoreSynthesis: DKScoreSynthesis? = null
@@ -127,44 +127,68 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DKScoreType.SPEEDING -> this.statistics.speeding
     }
 
-    fun getCommunityTripsText(context: Context): String {
-        val tripsCount = this.statistics.tripNumber
+    fun getCommunityTripsCountText(context: Context) = getTripsCountText(context, this.statistics.tripNumber)
+
+    fun getCommunityDistanceKmText(context: Context) = getDistanceText(context, this.statistics.distance)
+
+    fun getDriverTripsCountText(context: Context) = getTripsCountText(context, driverTimeline?.allContext?.sumOf { it.numberTripScored } ?: 0)
+
+    fun getDriverDistanceKmText(context: Context) = getDistanceText(context, driverTimeline?.allContext?.sumOf { it.distance } ?: 0.0)
+
+    fun getCommunityActiveDriversText(context: Context) = DKSpannable().apply {
+        append(
+            context,
+            NumberFormat.getNumberInstance().format(statistics.activeDriverNumber),
+            DriveKitUI.colors.complementaryFontColor(),
+            DKStyle.NORMAL_TEXT
+        )
+        space()
+        append(
+            context,
+            context.getString(R.string.dk_driverdata_mysynthesis_drivers),
+            DriveKitUI.colors.complementaryFontColor(),
+            DKStyle.SMALL_TEXT
+        )
+    }.toSpannable()
+
+    private fun getTripsCountText(context: Context, tripsCount: Int): SpannableString {
+        val spannable = DKSpannable()
         val tripsString = context.resources.getQuantityString(R.plurals.trip_plural, tripsCount)
-        return if (tripsCount == 0) {
-            context.getString(R.string.dk_common_no_trip)
+        if (tripsCount == 0) {
+            spannable.append(
+                context,
+                context.getString(R.string.dk_common_no_trip),
+                DriveKitUI.colors.complementaryFontColor(),
+                DKStyle.SMALL_TEXT
+            )
         } else {
-            "${NumberFormat.getNumberInstance().format(tripsCount)} $tripsString"
+            spannable.append(
+                context,
+                NumberFormat.getNumberInstance().format(tripsCount),
+                DriveKitUI.colors.complementaryFontColor(),
+                DKStyle.NORMAL_TEXT
+            ).space().append(
+                context, tripsString,
+                DriveKitUI.colors.complementaryFontColor(),
+                DKStyle.SMALL_TEXT
+            )
         }
+        return spannable.toSpannable()
     }
 
-    fun getCommunityDistanceText(context: Context): String {
-        return DKDataFormatter.formatMeterDistanceInKm(
-            context = context,
-            distance = statistics.distance * 1000,
-            minDistanceToRemoveFractions = 10.0
-        ).convertToString()
-    }
-
-    fun getCommunityActiveDriversText(context: Context) = "${
-        NumberFormat.getNumberInstance().format(statistics.activeDriverNumber)
-    } ${context.getString(R.string.dk_driverdata_mysynthesis_drivers)}"
-
-    fun getDriverTripsText(context: Context): String {
-        val tripsCount = driverTimeline?.allContext?.sumOf { it.numberTripScored } ?: 0
-        val tripsString = context.resources.getQuantityString(R.plurals.trip_plural, tripsCount)
-        return if (tripsCount == 0) {
-            context.getString(R.string.dk_common_no_trip)
-        } else {
-            "${NumberFormat.getNumberInstance().format(tripsCount)} $tripsString"
-        }
-    }
-
-    fun getDriverDistanceText(context: Context): String {
-        val distanceKm = driverTimeline?.allContext?.sumOf { it.distance } ?: 0.0
-        return DKDataFormatter.formatMeterDistanceInKm(
+    private fun getDistanceText(context: Context, distanceKm: Double): SpannableString {
+        val spannable = DKSpannable()
+        DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = distanceKm * 1000,
             minDistanceToRemoveFractions = 10.0
-        ).convertToString()
+        ).forEach {
+            when (it) {
+                is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
+                is FormatType.UNIT -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.SMALL_TEXT)
+                is FormatType.SEPARATOR -> spannable.space()
+            }
+        }
+        return spannable.toSpannable()
     }
 }
