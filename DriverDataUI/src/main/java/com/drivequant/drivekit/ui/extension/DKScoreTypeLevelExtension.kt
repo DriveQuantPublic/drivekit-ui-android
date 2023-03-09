@@ -6,7 +6,7 @@ import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.ui.R
 
 @StringRes
-internal fun DKScoreTypeLevel.getScoreLevelTitle(dkScriptType: DKScoreType) = when (this) {
+internal fun DKScoreTypeLevel.getScoreLevelTitle() = when (this) {
     DKScoreTypeLevel.EXCELLENT -> R.string.dk_driverdata_mysynthesis_score_title_excellent
     DKScoreTypeLevel.VERY_GOOD -> R.string.dk_driverdata_mysynthesis_score_title_very_good
     DKScoreTypeLevel.GREAT -> R.string.dk_driverdata_mysynthesis_score_title_good
@@ -76,7 +76,7 @@ internal fun DKScoreTypeLevel.getScoreLevelDescription() = when (this) {
 
 internal fun DKScoreType.getLevelForValue(value: Double): DKScoreTypeLevel? {
     for (level in DKScoreTypeLevel.values()) {
-        val levels = level.getScoreLevels(this)
+        val levels = level.getScoreLevel(this)
         if (value >= levels.first && value <= levels.second) {
             return level
         }

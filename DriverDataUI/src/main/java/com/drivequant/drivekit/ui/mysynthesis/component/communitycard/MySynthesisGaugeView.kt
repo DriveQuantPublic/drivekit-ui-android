@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.ui.mysynthesis.component.community
+package com.drivequant.drivekit.ui.mysynthesis.component.communitycard
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -22,6 +22,7 @@ import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getScoreLevelDescription
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisConstant
+import com.drivequant.drivekit.ui.mysynthesis.component.scorelegend.MySynthesisScoreLegendDialog
 import kotlin.math.abs
 
 internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
@@ -194,7 +195,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
         ImageViewCompat.setImageTintList(this.scoreDescriptionIcon, ColorStateList.valueOf(DriveKitUI.colors.secondaryColor()))
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
-        this.scoreDescriptionContainer.setOnClickListener { this.viewModel?.onScoreDescriptionButtonClick?.invoke() }
+        this.scoreDescriptionContainer.setOnClickListener { showScoreLegend() }
         // Texts color.
         val textColor = DriveKitUI.colors.primaryColor()
         this.scoreDescription.setTextColor(textColor)
@@ -281,6 +282,12 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             }
         }
         centerScoreDescriptionContainer()
+    }
+
+    private fun showScoreLegend() {
+        this.viewModel?.scoreType?.let {
+            MySynthesisScoreLegendDialog().show(context, it)
+        }
     }
 
     private fun View.setPercent(length: Double, totalLength: Double) {

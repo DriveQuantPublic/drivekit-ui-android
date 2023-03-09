@@ -61,31 +61,19 @@
                 </FrameLayout>
 
 
-                <androidx.cardview.widget.CardView
+                <FrameLayout
                     android:id="@+id/communityCard_container"
-                    style="@style/DKCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scoreCard_container">
 
-                    <LinearLayout
+                    <com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
+                        android:id="@+id/communityCard"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <include
-                            android:id="@+id/communityGaugeView"
-                            layout="@layout/dk_mysynthesis_gauge"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
 
                 <Button
                     android:id="@+id/button_detail"
@@ -98,7 +86,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/communityCard_container" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

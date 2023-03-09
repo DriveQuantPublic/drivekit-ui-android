@@ -18,7 +18,7 @@ enum class DKScoreTypeLevel {
         VERY_BAD -> R.color.dkVeryBad
     }
 
-    fun getScoreLevels(dkScoreType: DKScoreType): Pair<Double, Double> {
+    fun getScoreLevel(dkScoreType: DKScoreType): Pair<Double, Double> {
         val steps = dkScoreType.getSteps()
         return when (this) {
             EXCELLENT -> Pair(steps[6], steps[7])

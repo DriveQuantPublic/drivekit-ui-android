@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.ui.mysynthesis.component.community
+package com.drivequant.drivekit.ui.mysynthesis.component.communitycard
 
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
 import com.drivequant.drivekit.core.extension.reduceAccuracy
@@ -8,7 +8,6 @@ import com.drivequant.drivekit.ui.extension.getLevelForValue
 internal class MySynthesisGaugeViewModel {
 
     var onUpdateCallback: (() -> Unit)? = null
-    var onScoreDescriptionButtonClick: (() -> Unit)? = null
 
     var score: Double? = null
         private set
@@ -22,7 +21,8 @@ internal class MySynthesisGaugeViewModel {
         private set
     var communityMaxScore: Double? = null
         private set
-    private var scoreType: DKScoreType? = null
+    var scoreType: DKScoreType? = null
+        private set
 
     fun configure(scoreType: DKScoreType, score: Double?, communityMinScore: Double, communityMeanScore: Double, communityMaxScore: Double) {
         this.scoreType = scoreType

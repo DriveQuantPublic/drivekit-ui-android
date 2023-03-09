@@ -45,7 +45,7 @@
    <string name="dk_driverdata_my_weekly_score_distraction">Min ugentlige score | Distraktion</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">Min ugentlige score | Øko-kørsel</string>
    <string name="dk_driverdata_my_weekly_score_safety">Min ugentlige score | Sikkerhed</string>
-   <string name="dk_driverdata_my_weekly_score_speeding">Not used</string>
+   <string name="dk_driverdata_my_weekly_score_speeding">Min ugentlige score | Hastighed</string>
    <string name="dk_driverdata_mysynthesis_average">gen.</string>
    <string name="dk_driverdata_mysynthesis_average_score">Din score er gennemsnitlig</string>
    <string name="dk_driverdata_mysynthesis_bad_score">Din score er ringe</string>
@@ -117,8 +117,8 @@
    <string name="dk_driverdata_mysynthesis_very_bad_score">Din score er meget dårlig</string>
    <string name="dk_driverdata_mysynthesis_very_good_score">Din score er meget god</string>
    <string name="dk_driverdata_mysynthesis_you_are_average">Du befinder dig i den gennemsnitlige</string>
-   <string name="dk_driverdata_mysynthesis_you_are_best">Du er bedre end %s% af brugerne</string>
-   <string name="dk_driverdata_mysynthesis_you_are_lower">%s% af brugerne er bedre end dig</string>
+   <string name="dk_driverdata_mysynthesis_you_are_best">Du er bedre end %s af brugerne</string>
+   <string name="dk_driverdata_mysynthesis_you_are_lower">%s af brugerne er bedre end dig</string>
    <string name="dk_driverdata_night">Natkørsel</string>
    <string name="dk_driverdata_no_call_congrats">Tillykke!</string>
    <string name="dk_driverdata_no_call_content">Ingen opkald</string>
@@ -148,7 +148,7 @@
    <string name="dk_driverdata_screen_lock_text">Din mobil blev brugt under kørslen. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, skal du først parkere bilen og slukke motoren.</string>
    <string name="dk_driverdata_screen_unlock_text">Din mobil blev brugt under kørslen. Det er forbudt at bruge håndholdt mobiltelefon, mens du kører - også selvom du holder i kø eller holder for rødt. En mobiltelefon i bilen gør dig uopmærksom, og det er farligt. Lad mobiltelefonen ligge i tasken eller handskerummet næste gang. Skal du ringe eller sende en besked, skal du først parkere bilen og slukke motoren.</string>
    <string name="dk_driverdata_speeding_event">Fartoverskridelse</string>
-   <string name="dk_driverdata_speeding_event_info_content">Bilist+ har måt, at fartgrænsen blev overskredet på denne del af turen. Fart er den første faktor i dødsulykker på vejen. For din sikkerhed og dine passagerer er det vigtigt at respektere fartgrænserne.</string>
+   <string name="dk_driverdata_speeding_event_info_content">Appen har måt, at fartgrænsen blev overskredet på denne del af turen. Fart er den første faktor i dødsulykker på vejen. For din sikkerhed og dine passagerer er det vigtigt at respektere fartgrænserne.</string>
    <string name="dk_driverdata_speeding_events_distance">Fartoverskridelse ift. afstand</string>
    <string name="dk_driverdata_speeding_events_duration">Fartoverskridelse ift. varighed</string>
    <string name="dk_driverdata_speeding_events_trip_description">eller %s af din tur</string>
