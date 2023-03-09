@@ -122,9 +122,19 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     fun getCommunityDistanceKmText(context: Context) = getDistanceText(context, this.statistics.distance)
 
-    fun getDriverTripsCountText(context: Context) = getTripsCountText(context, driverTimeline?.allContext?.sumOf { it.numberTripScored } ?: 0)
+    fun getDriverTripsCountText(context: Context): SpannableString {
+        val tripsCount = this.selectedDate?.let {
+            driverTimeline?.allContextItemAt(it)?.numberTripScored
+        } ?: 0
+        return getTripsCountText(context, tripsCount)
+    }
 
-    fun getDriverDistanceKmText(context: Context) = getDistanceText(context, driverTimeline?.allContext?.sumOf { it.distance } ?: 0.0)
+    fun getDriverDistanceKmText(context: Context): SpannableString {
+        val distance = this.selectedDate?.let {
+            driverTimeline?.allContextItemAt(it)?.distance
+        } ?: 0.0
+        return getDistanceText(context, distance)
+    }
 
     fun getCommunityActiveDriversText(context: Context) = DKSpannable().apply {
         append(
