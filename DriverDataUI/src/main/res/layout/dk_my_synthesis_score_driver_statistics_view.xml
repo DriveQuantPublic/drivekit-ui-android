@@ -16,6 +16,7 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
     <TextView
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/dk_margin_quarter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/trips_count_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

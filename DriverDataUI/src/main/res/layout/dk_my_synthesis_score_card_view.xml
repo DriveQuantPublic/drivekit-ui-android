@@ -10,7 +10,6 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="140dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingVertical="@dimen/dk_margin"
         app:cardCornerRadius="8dp"

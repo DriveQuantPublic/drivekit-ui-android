@@ -68,7 +68,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         return if (hasNoTrip(allContextItem)) {
             context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
         } else if (!hasData(this.selectedScore, allContextItem)) {
-            context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
+            //context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
+            ""
         } else if (this.previousScore != null) {
             when (selectedPeriod) {
                 DKPeriod.WEEK -> context.getString(R.string.dk_driverdata_mysynthesis_previous_week)

@@ -9,7 +9,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.mysynthesis.MySynthesisConstant
 
 internal class MySynthesisCommunityCardView : LinearLayout {
 
@@ -20,12 +23,14 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     private lateinit var gaugeView: MySynthesisGaugeView
 
     private lateinit var communityInfo: ConstraintLayout
+    private lateinit var communityInfoIcon: View
     private lateinit var communityInfoTitle: TextView
     private lateinit var communityInfoTrips: TextView
     private lateinit var communityInfoDistance: TextView
     private lateinit var communityInfoDriversCount: TextView
 
     private lateinit var driverInfo: ConstraintLayout
+    private lateinit var driverInfoIcon: View
     private lateinit var driverInfoTitle: TextView
     private lateinit var driverInfoTrips: TextView
     private lateinit var driverInfoDistance: TextView
@@ -49,11 +54,18 @@ internal class MySynthesisCommunityCardView : LinearLayout {
     }
 
     private fun init() {
+        val synthesisColor = context.getColor(R.color.dkMySynthesisColor)
+
         this.communityCardView = View.inflate(context, R.layout.dk_my_synthesis_community_card_view, null) as LinearLayout
         this.title = communityCardView.findViewById(R.id.community_card_title)
         this.gaugeView = communityCardView.findViewById(R.id.communityGaugeView)
 
         this.communityInfo = this.communityCardView.findViewById(R.id.community_infos)
+        this.communityInfoIcon = this.communityCardView.findViewById(R.id.icon)
+        this.communityInfoIcon.background = DKDrawableUtils.circleDrawable(
+            MySynthesisConstant.indicatorSize, borderColor = synthesisColor,
+            borderWidth = MySynthesisConstant.INDICATOR_BORDER_WIDTH.convertDpToPx().toFloat()
+        )
         this.communityInfoTitle = this.communityInfo.findViewById(R.id.title)
         this.communityInfoTitle.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_my_community)
@@ -64,6 +76,9 @@ internal class MySynthesisCommunityCardView : LinearLayout {
         this.communityInfoDriversCount = this.communityInfo.findViewById(R.id.drivers_count_title)
 
         this.driverInfo = this.communityCardView.findViewById(R.id.driver_infos)
+        this.driverInfoIcon = this.driverInfo.findViewById(R.id.icon)
+        this.driverInfoIcon.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, insideColor = synthesisColor)
+
         this.driverInfoTitle = this.driverInfo.findViewById(R.id.title)
         this.driverInfoTitle.apply {
             text = context.getString(R.string.dk_driverdata_mysynthesis_me)

@@ -24,7 +24,7 @@
             <TextView
                 android:id="@+id/community_card_title"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin_quarter"
                 android:paddingHorizontal="@dimen/dk_margin"
                 app:layout_constraintEnd_toEndOf="parent"
