@@ -67,7 +67,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
-            val score = getDriverScore(this.selectedScoreType, this.allContextItem)
+            val score = allContextItem?.getValue(this.selectedScoreType)
             val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
             return score?.let {
                 val lowerThanPercent = scoreStatistics.percentCommunityLowerThan(score)
@@ -99,16 +99,6 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DriveKitUI.colors.complementaryFontColor()
     } else {
         DriveKitUI.colors.primaryColor()
-    }
-
-    private fun getDriverScore(
-        scoreType: DKScoreType,
-        allContextItem: DKDriverTimeline.DKAllContextItem?
-    ) = when (scoreType) {
-        DKScoreType.SAFETY -> allContextItem?.safety?.score
-        DKScoreType.ECO_DRIVING -> allContextItem?.ecoDriving?.score
-        DKScoreType.DISTRACTION -> allContextItem?.phoneDistraction?.score
-        DKScoreType.SPEEDING -> allContextItem?.speeding?.score
     }
 
     private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {

@@ -57,6 +57,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
     private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?) =
         allContextItem?.hasValueForScoreType(score) ?: false
+
     fun getEvolutionText(context: Context): String {
         val allContextItem = this.allContextItem
         return if (hasNoTrip(allContextItem)) {
