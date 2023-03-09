@@ -67,7 +67,7 @@
     <string name="dk_common_take_picture">Tag et billede</string>
     <string name="dk_common_trip_plural">ture</string>
     <string name="dk_common_trip_singular">tur</string>
-    <string name="dk_common_unit_accel_meter_per_second_square">/ 10</string>
+    <string name="dk_common_unit_accel_meter_per_second_square">m/s²</string>
     <string name="dk_common_unit_day">d</string>
     <string name="dk_common_unit_g">g</string>
     <string name="dk_common_unit_g_per_km">g/km</string>
@@ -85,7 +85,7 @@
     <string name="dk_common_unit_mpg">mi/gal</string>
     <string name="dk_common_unit_mph">mi/t</string>
     <string name="dk_common_unit_power">hk</string>
-    <string name="dk_common_unit_score">m/s²</string>
+    <string name="dk_common_unit_score">/ 10</string>
     <string name="dk_common_unit_second">s</string>
     <string name="dk_common_unit_ton">t</string>
     <string name="dk_common_update_photo_title">Rediger billedet</string>

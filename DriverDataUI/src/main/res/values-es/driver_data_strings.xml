@@ -117,8 +117,8 @@
    <string name="dk_driverdata_mysynthesis_very_bad_score">Su puntuación es muy mala</string>
    <string name="dk_driverdata_mysynthesis_very_good_score">Su puntuación es muy buena</string>
    <string name="dk_driverdata_mysynthesis_you_are_average">Usted se encuentra en la media</string>
-   <string name="dk_driverdata_mysynthesis_you_are_best">Eres mejor que el %s% de los usuarios</string>
-   <string name="dk_driverdata_mysynthesis_you_are_lower">%s% de los usuarios son mejores que tú</string>
+   <string name="dk_driverdata_mysynthesis_you_are_best">Eres mejor que el %s de los usuarios</string>
+   <string name="dk_driverdata_mysynthesis_you_are_lower">%s de los usuarios son mejores que tú</string>
    <string name="dk_driverdata_night">Excursión nocturna</string>
    <string name="dk_driverdata_no_call_congrats">¡Felicitación!</string>
    <string name="dk_driverdata_no_call_content">Sin llamadas</string>
