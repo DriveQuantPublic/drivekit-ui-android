@@ -12,7 +12,6 @@ import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
-import androidx.core.widget.ImageViewCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
@@ -193,7 +192,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
 
     private fun configure() {
         val synthesisColor = getColor(R.color.dkMySynthesisColor)
-        ImageViewCompat.setImageTintList(this.scoreDescriptionIcon, ColorStateList.valueOf(DriveKitUI.colors.secondaryColor()))
+        this.scoreDescriptionIcon.imageTintList = ColorStateList.valueOf(DriveKitUI.colors.secondaryColor())
         this.scoreIndicator.background = DKDrawableUtils.circleDrawable(MySynthesisConstant.indicatorSize, synthesisColor)
         this.scoreDescriptionContainer.setOnClickListener { showScoreLegend() }
         // Texts color.
@@ -209,7 +208,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.communityMeanTextView.setTextColor(textColor)
         this.communityMaxTextView.setTextColor(textColor)
         // Gauge corners.
-        val cornerRadius = 7.convertDpToPx().toFloat()
+        val cornerRadius = MySynthesisConstant.getGaugeCornerRadius(context)
         this.veryBadGaugeContainer.roundCorners(cornerRadius, 0f, 0f, cornerRadius)
         this.excellentGaugeContainer.roundCorners(0f, cornerRadius, cornerRadius, 0f)
         // Gauge colors.
@@ -222,9 +221,11 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.excellentGauge.setBackgroundColor(getColor(DKScoreTypeLevel.EXCELLENT.getColorResId()))
         // Community indicators.
         this.communityLine.setBackgroundColor(synthesisColor)
-        this.communityMinIndicator.background = getCommunityIndicator(synthesisColor)
-        this.communityMeanIndicator.background = getCommunityIndicator(synthesisColor)
-        this.communityMaxIndicator.background = getCommunityIndicator(synthesisColor)
+        getCommunityIndicator(synthesisColor).let {
+            this.communityMinIndicator.background = it
+            this.communityMeanIndicator.background = it
+            this.communityMaxIndicator.background = it
+        }
     }
 
     private fun getColor(@ColorRes colorId: Int) = ContextCompat.getColor(context, colorId)

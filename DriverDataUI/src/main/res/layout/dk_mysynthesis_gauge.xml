@@ -59,7 +59,7 @@
     <com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
         android:id="@+id/veryBadGaugeContainer"
         android:layout_width="0dp"
-        android:layout_height="14dp"
+        android:layout_height="@dimen/dk_mysynthesis_gauge_height"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintBottom_toTopOf="@+id/communityMinValue"
         app:layout_constraintEnd_toStartOf="@+id/badGauge"
@@ -268,7 +268,7 @@
         app:layout_constraintBottom_toTopOf="@+id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline"
-        tools:text="x,x" />
+        tools:text="min" />
 
     <TextView
         android:id="@+id/communityMeanValue"
@@ -278,7 +278,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
         app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
-        tools:text="moy." />
+        tools:text="mean" />
 
     <TextView
         android:id="@+id/communityMaxValue"
@@ -292,8 +292,8 @@
 
     <View
         android:id="@+id/communityMinIndicator"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="@dimen/dk_mysynthesis_community_indicator_size"
+        android:layout_height="@dimen/dk_mysynthesis_community_indicator_size"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
         app:layout_constraintBottom_toTopOf="@+id/communityMinText"
         app:layout_constraintEnd_toEndOf="@id/communityMinGuideline"
@@ -301,7 +301,7 @@
 
     <View
         android:id="@+id/communityMeanIndicator"
-        android:layout_width="14dp"
+        android:layout_width="@dimen/dk_mysynthesis_community_indicator_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
@@ -310,7 +310,7 @@
 
     <View
         android:id="@+id/communityMaxIndicator"
-        android:layout_width="14dp"
+        android:layout_width="@dimen/dk_mysynthesis_community_indicator_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/communityMinIndicator"
         app:layout_constraintEnd_toEndOf="@id/communityMaxGuideline"
@@ -335,7 +335,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
         app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
         app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
-        tools:text="moy." />
+        tools:text="mean" />
 
     <TextView
         android:id="@+id/communityMaxText"
