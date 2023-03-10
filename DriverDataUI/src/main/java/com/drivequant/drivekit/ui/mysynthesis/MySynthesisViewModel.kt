@@ -88,24 +88,24 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
 
 
             //if (dates.isNotEmpty()) {
-                val selectedDateIndex: Int? = this.selectedDate?.let {
+                val selectedDateIndex: Int = this.selectedDate?.let {
                     val index = dates.indexOf(it)
                     if (index < 0) {
                         null
                     } else {
                         index
                     }
-                }
-                //val date = dates[selectedDateIndex]
-                //this.selectedDate = date
+                } ?: (dates.size - 1)
 
                 val date = selectedDate ?: when (this.selectedPeriod) {
                     DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
                     DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
                     DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
                 }
+                this.selectedDate = date
 
-                if (dates.isNotEmpty()) {
+
+            if (dates.isNotEmpty()) {
                     this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
                 } else {
                     this.dateSelectorViewModel.configure(listOf(date), 0, this.selectedPeriod)
