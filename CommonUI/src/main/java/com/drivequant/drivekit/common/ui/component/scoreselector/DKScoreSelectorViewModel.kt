@@ -9,7 +9,12 @@ class DKScoreSelectorViewModel {
             field = value.ifEmpty {
                 listOf(DKScoreType.SAFETY)
             }.filter { it.hasAccess() }
+            if (field.isNotEmpty() && !field.contains(this.selectedScore)) {
+                this.selectedScore = field.first()
+            }
         }
+    var selectedScore: DKScoreType = this.scores.first()
+        private set
     private var onScoreChangeCallback: ((score: DKScoreType) -> Unit)? = null
 
     fun configure(scores: List<DKScoreType>, onScoreChange: (score: DKScoreType) -> Unit) {
@@ -18,7 +23,10 @@ class DKScoreSelectorViewModel {
     }
 
     internal fun onScoreChange(score: DKScoreType) {
-        this.onScoreChangeCallback?.invoke(score)
+        if (this.selectedScore != score) {
+            this.selectedScore = score
+            this.onScoreChangeCallback?.invoke(score)
+        }
     }
 
 }

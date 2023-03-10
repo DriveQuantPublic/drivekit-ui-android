@@ -30,26 +30,28 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val scoreCardViewModel = MySynthesisScoreCardViewModel()
+    private val selectedScore: DKScoreType
+        get() = this.scoreSelectorViewModel.selectedScore
+    private val selectedPeriod: DKPeriod
+        get() = this.periodSelectorViewModel.selectedPeriod
     val communityCardViewModel = MySynthesisCommunityCardViewModel()
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
-    private var selectedScore: DKScoreType
-    private var selectedPeriod: DKPeriod = this.periods.last()
     private var selectedDate: Date? = null
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
-
     private var communityStatistics: DKCommunityStatistics? = null
 
     init {
-        this.selectedScore = this.scores.firstOrNull() ?: DKScoreType.SAFETY
         configureScoreSelector()
         configurePeriodSelector()
         configureDateSelector()
+        configureScoreCardViewModel()
+        configureCommunityCardViewModel()
         DriveKitDriverData.getDriverTimelines(this.periods, SynchronizationType.CACHE) { status, timelines ->
             if (status == TimelineSyncStatus.CACHE_DATA_ONLY) {
                 this.timelineByPeriod = timelines.associateBy { it.period }
 
-                DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus: CommunityStatisticsStatus, statistics: DKCommunityStatistics? ->
+                DriveKitDriverData.getCommunityStatistics(SynchronizationType.CACHE) { communityStatus, statistics ->
                     if (communityStatus == CommunityStatisticsStatus.CACHE_DATA_ONLY) {
                         this.communityStatistics = statistics
                     }
@@ -77,7 +79,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 selectedDate = null
             }
             val dates = timelineSource.allContext.mapNotNull { allContextItem ->
-                if (this.selectedScore == DKScoreType.DISTRACTION || this.selectedScore == DKScoreType.SPEEDING || allContextItem.date == this.selectedDate || (allContextItem.safety != null && allContextItem.ecoDriving != null)) {
+                if (allContextItem.date == this.selectedDate || allContextItem.hasValueForScoreType(this.selectedScore)) {
                     allContextItem.date
                 } else {
                     null
@@ -96,23 +98,10 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
-                val currentAllContextItem = timelineSource.allContextItemAt(date)
-
-                this.scoreCardViewModel.configure(
-                    score = this.selectedScore,
-                    period = this.selectedPeriod,
-                    scoreSynthesis = timelineSource.getDriverScoreSynthesis(this.selectedScore, date),
-                    allContextItem = currentAllContextItem,
-                    previousDate = timelineSource.previousAllContextItemFrom(date)?.date
-                )
-
-                this.communityCardViewModel.configure(
-                    scoreType = this.selectedScore,
-                    period = this.selectedPeriod,
-                    driverTimeline = timelineSource,
-                    selectedDate = date,
-                    statistics = this.communityStatistics ?: DKCommunityStatistics.buildDefault()
-                )
+                updateScoreCardViewModel()
+                updateCommunityCardViewModel()
+            } else {
+                configureWithNoData()
             }
         } ?: run {
             configureWithNoData()
@@ -120,61 +109,93 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
         this.updateData.postValue(Any())
     }
 
+    private fun getDriverScoreSynthesis(selectedScore: DKScoreType, date: Date): DKScoreSynthesis? =
+        getDriverScoreSynthesis(getTimelineSource(), selectedScore, date)
+
+    private fun getDriverScoreSynthesis(
+        timeline: DKDriverTimeline?,
+        selectedScore: DKScoreType,
+        date: Date
+    ): DKScoreSynthesis? = timeline?.getDriverScoreSynthesis(selectedScore, date)
+
     private fun configureWithNoData() {
-        when (this.selectedPeriod) {
-            DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
-            DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
-            DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
-        }.let { startDate ->
-            dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
-            scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
-            communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics.buildDefault())
-        }
+        configureEmptyDateSelector()
+        scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
+        communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics.buildDefault())
     }
 
     private fun configureScoreSelector() {
-        this.scoreSelectorViewModel.configure(this.scores) { score ->
-            if (this.selectedScore != score) {
-                this.selectedScore = score
-                update()
-            }
+        this.scoreSelectorViewModel.configure(this.scores) { _ ->
+            update()
         }
     }
 
     private fun configurePeriodSelector() {
         this.periodSelectorViewModel.configure(periods)
         this.periodSelectorViewModel.select(this.selectedPeriod)
-        this.periodSelectorViewModel.onPeriodSelected = { period ->
-            if (this.selectedPeriod != period) {
-                val oldPeriod = this.selectedPeriod
-                val selectedDate = this.selectedDate
-                val sourceTimeline = getTimelineSource(period)
-                if (selectedDate != null && sourceTimeline != null) {
-                    this.selectedDate = updateSelectedDate(selectedDate, oldPeriod, period, sourceTimeline.allContext.map { it.date })
+        this.periodSelectorViewModel.onPeriodSelected = { oldPeriod, newPeriod ->
+            val selectedDate = this.selectedDate
+            val sourceTimeline = getTimelineSource(newPeriod)
+            if (selectedDate != null && sourceTimeline != null) {
+                this.selectedDate = DKDateSelectorViewModel.newSelectedDate(selectedDate, oldPeriod, sourceTimeline.allContext.map { it.date }) { _, date ->
+                    sourceTimeline.allContextItemAt(date)?.hasValueForScoreType(this.selectedScore) ?: false
                 }
-                this.selectedPeriod = period
-                update()
             }
+            update()
         }
-    }
-
-    private fun updateSelectedDate(currentSelectedDate: Date, oldPeriod: DKPeriod, newPeriod: DKPeriod, newDates: List<Date>): Date {
-        val compareDate: Date? = if (oldPeriod == newPeriod) {
-            null
-        } else if (newPeriod == DKPeriod.YEAR) {
-            currentSelectedDate.startingFrom(CalendarField.YEAR)
-        } else if (oldPeriod > newPeriod) {
-            currentSelectedDate
-        } else { // oldPeriod = WEEK, newPeriod = MONTH
-            currentSelectedDate.startingFrom(CalendarField.MONTH)
-        }
-        return compareDate?.let { date ->  newDates.firstOrNull { it >= date } } ?: currentSelectedDate
     }
 
     private fun configureDateSelector() {
+        configureEmptyDateSelector()
         this.dateSelectorViewModel.onDateSelected = { date ->
             updateSelectedDate(date)
         }
+    }
+
+    private fun configureEmptyDateSelector() {
+        val startDate = when (this.selectedPeriod) {
+            DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+            DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+            DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+        }
+        dateSelectorViewModel.configure(listOf(startDate), 0, this.selectedPeriod)
+    }
+
+    private fun configureScoreCardViewModel() {
+        updateScoreCardViewModel()
+    }
+
+    private fun updateScoreCardViewModel() {
+        var scoreSynthesis: DKScoreSynthesis? = null
+        var allContextItem: DKDriverTimeline.DKAllContextItem? = null
+        var previousDate: Date? = null
+        this.selectedDate?.let {
+            val timeline = getTimelineSource()
+            scoreSynthesis = timeline?.getDriverScoreSynthesis(this.selectedScore, it)
+            allContextItem = timeline?.allContextItemAt(it)
+            previousDate = timeline?.previousAllContextItemFrom(it)?.date
+        }
+        this.scoreCardViewModel.configure(
+            this.selectedScore,
+            this.selectedPeriod,
+            scoreSynthesis,
+            allContextItem,
+            previousDate
+        )
+    }
+
+    private fun configureCommunityCardViewModel() {
+        updateCommunityCardViewModel()
+    }
+
+    private fun updateCommunityCardViewModel() {
+        this.communityCardViewModel.configure(
+            scoreType = this.selectedScore,
+            period = this.selectedPeriod,
+            driverTimeline = getTimelineSource(),
+            selectedDate = this.selectedDate,
+            statistics = this.communityStatistics ?: DKCommunityStatistics.buildDefault()
+        )
     }
 
     private fun updateSelectedDate(date: Date) {

@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.core.extension.CalendarField
-import com.drivequant.drivekit.core.extension.startingFrom
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
@@ -21,33 +20,24 @@ internal object TimelineUtils {
         return backendDateFormat
     }
 
-    fun updateSelectedDateForNewPeriod(period: DKPeriod, previousSelectedDate: Date?, weekTimeline: DKRawTimeline?, monthTimeline: DKRawTimeline?): Date? {
-        if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
-            if (weekTimeline.period != DKPeriod.WEEK || monthTimeline.period != DKPeriod.MONTH) {
-                throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
+    fun updateSelectedDate(oldPeriod: DKPeriod, previousSelectedDate: Date?, timeline: DKRawTimeline, score: DKScoreType): Date? {
+        return if (previousSelectedDate != null) {
+            val dates: MutableList<Date> = mutableListOf()
+            val dateToIndex: MutableMap<Date, Int> = mutableMapOf()
+            for ((index, rawDate) in timeline.allContext.date.withIndex()) {
+                val date = rawDate.toTimelineDate()!!
+                dates.add(date)
+                dateToIndex[date] = index
             }
-            val timeline: DKRawTimeline
-            val compareDate: Date
-            when (period) {
-                DKPeriod.WEEK -> {
-                    compareDate = previousSelectedDate
-                    timeline = weekTimeline
-                }
-                DKPeriod.MONTH -> {
-                    compareDate = previousSelectedDate.startingFrom(CalendarField.MONTH)
-                    timeline = monthTimeline
-                }
-                DKPeriod.YEAR -> throw IllegalAccessException("Not managed in Timeline")
+            DKDateSelectorViewModel.newSelectedDate(
+                previousSelectedDate,
+                oldPeriod,
+                dates
+            ) { _, date ->
+                dateToIndex[date]?.let { index ->
+                    timeline.hasValidTripScored(score, index)
+                } ?: false
             }
-            var newSelectedDate = previousSelectedDate
-            for (dateString in timeline.allContext.date) {
-                val date = dateString.toTimelineDate()!!
-                if (date >= compareDate) {
-                    newSelectedDate = date
-                    break
-                }
-            }
-            return newSelectedDate
         } else {
             return null
         }

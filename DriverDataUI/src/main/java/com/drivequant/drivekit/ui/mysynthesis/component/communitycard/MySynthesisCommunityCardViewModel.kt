@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.utils.FormatType
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
+import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
 import java.text.NumberFormat
@@ -20,6 +21,7 @@ import java.util.*
 internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     var onViewModelUpdated: (() -> Unit)? = null
+    val gaugeViewModel = MySynthesisGaugeViewModel()
 
     private var selectedScoreType: DKScoreType = DKScoreType.SAFETY
     private var selectedPeriod: DKPeriod = DKPeriod.WEEK
@@ -46,6 +48,14 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             this.scoreSynthesis = driverTimeline.getDriverScoreSynthesis(this.selectedScoreType, selectedDate)
             this.allContextItem = driverTimeline.allContextItemAt(selectedDate)
         }
+
+        val scoreStatistics: DKScoreStatistics = when (scoreType) {
+            DKScoreType.SAFETY -> statistics.safety
+            DKScoreType.ECO_DRIVING -> statistics.ecoDriving
+            DKScoreType.DISTRACTION -> statistics.distraction
+            DKScoreType.SPEEDING -> statistics.speeding
+        }
+        this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.mean, scoreStatistics.max)
         this.onViewModelUpdated?.invoke()
     }
 

@@ -47,19 +47,23 @@ sealed class GaugeConfiguration(open val value: Double) : DKGaugeConfiguration {
     override fun getGaugeType(): DKGaugeType = DKGaugeType.OPEN_WITH_IMAGE(getIcon())
 
     private fun getColorFromValue(value: Double, steps: List<Double>): Int {
-        if (value == 11.0)
-            return R.color.dkGaugeBackColor
-        if (value <= steps[1])
-            return R.color.dkVeryBad
-        if (value <= steps[2])
-            return R.color.dkBad
-        if (value <= steps[3])
-            return R.color.dkBadMean
-        if (value <= steps[4])
-            return R.color.dkMean
-        if (value <= steps[5])
-            return R.color.dkGoodMean
-        return if (value <= steps[6]) R.color.dkGood else R.color.dkExcellent
+        return if (value == 11.0) {
+            R.color.dkGaugeBackColor
+        } else if (value <= steps[1]) {
+            R.color.dkVeryBad
+        } else if (value <= steps[2]) {
+            R.color.dkBad
+        } else if (value <= steps[3]) {
+            R.color.dkBadMean
+        } else if (value <= steps[4]) {
+            R.color.dkMean
+        } else if (value <= steps[5]) {
+            R.color.dkGoodMean
+        } else if (value <= steps[6]) {
+            R.color.dkGood
+        } else {
+            R.color.dkExcellent
+        }
     }
 
     private fun getSteps() = when (this) {

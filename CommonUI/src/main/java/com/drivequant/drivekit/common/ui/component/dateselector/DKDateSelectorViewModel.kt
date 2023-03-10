@@ -1,6 +1,10 @@
 package com.drivequant.drivekit.common.ui.component.dateselector
 
 import androidx.lifecycle.ViewModel
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.add
+import com.drivequant.drivekit.core.extension.removeTime
+import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.*
 
@@ -81,4 +85,25 @@ class DKDateSelectorViewModel : ViewModel() {
         }
         return calendar.time
     }
+
+    companion object {
+        fun newSelectedDate(
+            date: Date,
+            period: DKPeriod,
+            dates: List<Date>,
+            isDateValid: (DKPeriod, Date) -> Boolean
+        ): Date {
+            val calendarField = when (period) {
+                DKPeriod.WEEK -> CalendarField.WEEK
+                DKPeriod.MONTH -> CalendarField.MONTH
+                DKPeriod.YEAR -> CalendarField.YEAR
+            }
+            val compareDate: Date =
+                date.startingFrom(calendarField).add(1, calendarField).add(-1, CalendarField.DAY)
+            return dates.lastOrNull {
+                it.removeTime() <= compareDate && isDateValid(period, it)
+            } ?: date
+        }
+    }
+
 }

@@ -60,6 +60,7 @@
                         android:layout_height="wrap_content" />
                 </FrameLayout>
 
+
                 <FrameLayout
                     android:id="@+id/communityCard_container"
                     android:layout_width="0dp"
@@ -67,6 +68,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/scoreCard_container">
+
                     <com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
                         android:id="@+id/communityCard"
                         android:layout_width="match_parent"

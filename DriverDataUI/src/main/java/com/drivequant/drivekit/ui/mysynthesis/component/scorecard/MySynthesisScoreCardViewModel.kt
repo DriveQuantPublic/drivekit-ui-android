@@ -8,7 +8,10 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.getValue
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
-import com.drivequant.drivekit.driverdata.timeline.*
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
+import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.hasValueForScoreType
 import com.drivequant.drivekit.ui.R
 import java.util.*
 
@@ -43,6 +46,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
 
         this.onViewModelUpdated?.invoke()
     }
+
     fun showEvolutionScoreOutOfTen() = this.score != null && this.previousScore != null
 
     @StringRes
@@ -53,7 +57,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         DKScoreType.SPEEDING -> R.string.dk_driverdata_mysynthesis_speeding_score
     }
 
-    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) = allContextItem == null
+    private fun hasNoTrip(allContextItem: DKDriverTimeline.DKAllContextItem?) =
+        allContextItem == null
 
     private fun hasData(score: DKScoreType, allContextItem: DKDriverTimeline.DKAllContextItem?) =
         allContextItem?.hasValueForScoreType(score) ?: false
@@ -63,7 +68,8 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
         return if (hasNoTrip(allContextItem)) {
             context.getString(R.string.dk_driverdata_mysynthesis_no_trip_at_all)
         } else if (!hasData(this.selectedScore, allContextItem)) {
-            context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
+            //context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
+            ""
         } else if (this.previousScore != null) {
             when (selectedPeriod) {
                 DKPeriod.WEEK -> context.getString(R.string.dk_driverdata_mysynthesis_previous_week)

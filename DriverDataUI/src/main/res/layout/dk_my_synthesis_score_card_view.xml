@@ -10,7 +10,6 @@
         style="@style/DKCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="140dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:paddingVertical="@dimen/dk_margin"
         app:cardCornerRadius="8dp"
@@ -57,7 +56,6 @@
                 app:layout_constraintEnd_toStartOf="@id/score_card_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/score_card_subtitle" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

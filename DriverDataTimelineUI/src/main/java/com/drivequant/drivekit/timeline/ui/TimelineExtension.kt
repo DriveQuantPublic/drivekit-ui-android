@@ -8,7 +8,7 @@ import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.TimelineRo
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.toTimelineRoadContext
 
 
-private fun DKRawTimeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
+internal fun DKRawTimeline.hasValidTripScored(selectedScore: DKScoreType, selectedIndex: Int) =
     selectedScore == DKScoreType.DISTRACTION
             || selectedScore == DKScoreType.SPEEDING
             || this.allContext.numberTripScored[selectedIndex, 0] > 0
