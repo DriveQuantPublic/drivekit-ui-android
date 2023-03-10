@@ -85,47 +85,64 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     null
                 }
             }
-            if (dates.isNotEmpty()) {
-                val selectedDateIndex: Int = this.selectedDate?.let {
+
+
+            //if (dates.isNotEmpty()) {
+                val selectedDateIndex: Int? = this.selectedDate?.let {
                     val index = dates.indexOf(it)
                     if (index < 0) {
                         null
                     } else {
                         index
                     }
-                } ?: (dates.size - 1)
-                val date = dates[selectedDateIndex]
-                this.selectedDate = date
-                this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+                }
+                //val date = dates[selectedDateIndex]
+                //this.selectedDate = date
 
-                updateScoreCardViewModel()
+                val date = selectedDate ?: when (this.selectedPeriod) {
+                    DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+                    DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+                    DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+                }
+
+                if (dates.isNotEmpty()) {
+                    this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+                } else {
+                    this.dateSelectorViewModel.configure(listOf(date), 0, this.selectedPeriod)
+                }
+
+                val previousPeriodContext = timelineSource.previousAllContextItemFrom(date, this.selectedScore)
+                val currentPeriodContext = timelineSource.allContextItemAt(date)
+
+                val hasOnlyShortTripsForPreviousPeriod = previousPeriodContext?.numberTripScored == 0
+                val hasOnlyShortTripsForCurrentPeriod = currentPeriodContext?.numberTripScored == 0
+
+                updateScoreCardViewModel(hasOnlyShortTripsForPreviousPeriod, hasOnlyShortTripsForCurrentPeriod)
                 updateCommunityCardViewModel()
-            } else {
+            /*} else {
                 configureWithNoData()
-            }
+            }*/
         } ?: run {
             configureWithNoData()
         }
         this.updateData.postValue(Any())
     }
 
-    private fun getDriverScoreSynthesis(selectedScore: DKScoreType, date: Date): DKScoreSynthesis? =
-        getDriverScoreSynthesis(getTimelineSource(), selectedScore, date)
-
-    private fun getDriverScoreSynthesis(
-        timeline: DKDriverTimeline?,
-        selectedScore: DKScoreType,
-        date: Date
-    ): DKScoreSynthesis? = timeline?.getDriverScoreSynthesis(selectedScore, date)
-
     private fun configureWithNoData() {
         configureEmptyDateSelector()
-        scoreCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, null)
+        scoreCardViewModel.configure(
+            this.selectedScore,
+            this.selectedPeriod,
+            scoreSynthesis = null,
+            hasOnlyShortTripsForCurrentPeriod = false,
+            hasOnlyShortTripsForPreviousPeriod = false,
+            previousPeriodDate = null
+        )
         communityCardViewModel.configure(this.selectedScore, this.selectedPeriod, null, null, this.communityStatistics ?: DKCommunityStatistics.buildDefault())
     }
 
     private fun configureScoreSelector() {
-        this.scoreSelectorViewModel.configure(this.scores) { _ ->
+        this.scoreSelectorViewModel.configure(this.scores) {
             update()
         }
     }
@@ -162,25 +179,31 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     }
 
     private fun configureScoreCardViewModel() {
-        updateScoreCardViewModel()
+        updateScoreCardViewModel(
+            hasOnlyShortTripsForPreviousPeriod = false,
+            hasOnlyShortTripsForCurrentPeriod = false
+        )
     }
 
-    private fun updateScoreCardViewModel() {
+    private fun updateScoreCardViewModel(
+        hasOnlyShortTripsForPreviousPeriod: Boolean,
+        hasOnlyShortTripsForCurrentPeriod: Boolean
+    ) {
         var scoreSynthesis: DKScoreSynthesis? = null
-        var allContextItem: DKDriverTimeline.DKAllContextItem? = null
         var previousDate: Date? = null
+
         this.selectedDate?.let {
             val timeline = getTimelineSource()
             scoreSynthesis = timeline?.getDriverScoreSynthesis(this.selectedScore, it)
-            allContextItem = timeline?.allContextItemAt(it)
             previousDate = timeline?.previousAllContextItemFrom(it)?.date
         }
         this.scoreCardViewModel.configure(
-            this.selectedScore,
-            this.selectedPeriod,
-            scoreSynthesis,
-            allContextItem,
-            previousDate
+            score = this.selectedScore,
+            period = this.selectedPeriod,
+            scoreSynthesis = scoreSynthesis,
+            hasOnlyShortTripsForCurrentPeriod = hasOnlyShortTripsForCurrentPeriod,
+            hasOnlyShortTripsForPreviousPeriod = hasOnlyShortTripsForPreviousPeriod,
+            previousPeriodDate = previousDate
         )
     }
 
