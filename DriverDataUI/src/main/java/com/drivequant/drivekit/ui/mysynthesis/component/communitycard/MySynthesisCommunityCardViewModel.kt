@@ -178,10 +178,12 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     private fun getDistanceText(context: Context, distanceKm: Double): SpannableString {
         val spannable = DKSpannable()
+
         DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = distanceKm * 1000,
-            minDistanceToRemoveFractions = 10.0
+            minDistanceToRemoveFractions = 10.0,
+            places = 0
         ).forEach {
             when (it) {
                 is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)
