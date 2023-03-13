@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="trip_plural">
+    <plurals name="trip_plural" translatable="false">
         <item quantity="one">@string/dk_common_trip_singular</item>
         <item quantity="other">@string/dk_common_trip_plural</item>
     </plurals>
-    <plurals name="day_plural">
+    <plurals name="day_plural" translatable="false">
         <item quantity="one">@string/dk_common_day_singular</item>
         <item quantity="other">@string/dk_common_day_plural</item>
     </plurals>

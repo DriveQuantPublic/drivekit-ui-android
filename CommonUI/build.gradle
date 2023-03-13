@@ -46,7 +46,7 @@ dependencies {
     api "com.github.bumptech.glide:glide:$glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
-    implementation "com.drivequant.drivekit:drivekit-core:$drivekit_version"
+    api "com.drivequant.drivekit:drivekit-core:$drivekit_version"
 }
 
 apply from: '../maven-publish.gradle'

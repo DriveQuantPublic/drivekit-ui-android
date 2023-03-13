@@ -35,7 +35,7 @@ dependencies {
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 
-    implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
+    api "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
 }
 
 apply from: '../maven-publish.gradle'
