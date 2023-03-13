@@ -77,9 +77,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             )
         }
 
-        return if (scoreSynthesis?.previousScoreValue == null &&
-            (!hasCurrentScore || !hasOnlyShortTripsForCurrentPeriod)
-        ) {
+        return if (scoreSynthesis?.previousScoreValue == null){
             dkSpannable.toSpannable()
         } else {
             val score = computeScoreOutOfTen(context, scoreSynthesis?.previousScoreValue)
