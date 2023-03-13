@@ -86,8 +86,7 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 }
             }
 
-
-            //if (dates.isNotEmpty()) {
+            if (dates.isNotEmpty()) {
                 val selectedDateIndex: Int = this.selectedDate?.let {
                     val index = dates.indexOf(it)
                     if (index < 0) {
@@ -97,19 +96,10 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                     }
                 } ?: (dates.size - 1)
 
-                val date = selectedDate ?: when (this.selectedPeriod) {
-                    DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
-                    DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
-                    DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
-                }
+                val date = dates[selectedDateIndex]
                 this.selectedDate = date
 
-
-            if (dates.isNotEmpty()) {
-                    this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
-                } else {
-                    this.dateSelectorViewModel.configure(listOf(date), 0, this.selectedPeriod)
-                }
+                this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
 
                 val previousPeriodContext = timelineSource.previousAllContextItemFrom(date, this.selectedScore)
                 val currentPeriodContext = timelineSource.allContextItemAt(date)
@@ -119,9 +109,24 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
 
                 updateScoreCardViewModel(hasOnlyShortTripsForPreviousPeriod, hasOnlyShortTripsForCurrentPeriod)
                 updateCommunityCardViewModel()
-            /*} else {
-                configureWithNoData()
-            }*/
+            } else {
+                val date = when (this.selectedPeriod) {
+                    DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+                    DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+                    DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+                }
+                this.selectedDate = date
+                this.dateSelectorViewModel.configure(listOf(date), 0, this.selectedPeriod)
+
+                val previousPeriodContext = timelineSource.previousAllContextItemFrom(date, this.selectedScore)
+                val currentPeriodContext = timelineSource.allContextItemAt(date)
+
+                val hasOnlyShortTripsForPreviousPeriod = previousPeriodContext?.numberTripScored == 0
+                val hasOnlyShortTripsForCurrentPeriod = currentPeriodContext?.numberTripScored == 0
+
+                updateScoreCardViewModel(hasOnlyShortTripsForPreviousPeriod, hasOnlyShortTripsForCurrentPeriod)
+                updateCommunityCardViewModel()
+            }
         } ?: run {
             configureWithNoData()
         }
