@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.mysynthesis.component.scorecard
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -81,6 +82,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
         subTitle.apply {
             text = viewModel.computeScoreOutOfTen(context, scoreValue)
             highlightBig(subtitleTextColor)
+            setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
     }
 
