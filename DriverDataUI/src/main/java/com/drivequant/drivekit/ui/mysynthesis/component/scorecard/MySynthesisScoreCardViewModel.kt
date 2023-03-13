@@ -73,7 +73,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
                 context,
                 evolutionTextPrefix.toString(),
                 DriveKitUI.colors.complementaryFontColor(),
-                DKStyle.HEADLINE2
+                DKStyle.SMALL_TEXT
             )
         }
 
@@ -81,7 +81,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
             dkSpannable.toSpannable()
         } else {
             val score = computeScoreOutOfTen(context, scoreSynthesis?.previousScoreValue)
-            dkSpannable.space().append(context, score, DriveKitUI.colors.complementaryFontColor(), DKStyle.SMALL_TEXT).toSpannable()
+            dkSpannable.space().append(context, score, DriveKitUI.colors.complementaryFontColor(), DKStyle.HEADLINE2).toSpannable()
         }
     }
 

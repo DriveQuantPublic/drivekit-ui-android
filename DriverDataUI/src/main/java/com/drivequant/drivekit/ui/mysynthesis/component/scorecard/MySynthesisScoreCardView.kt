@@ -85,7 +85,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
     }
 
     private fun configureEvolutionText() {
-        this.evolutionText.text = viewModel.getEvolutionText(context).toString()
+        this.evolutionText.text = viewModel.getEvolutionText(context)
     }
 
     private fun configureTrendIcon(score: Double?, previousScore: Double?) {
