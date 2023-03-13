@@ -29,8 +29,8 @@
    <string name="dk_driverdata_distance_travelled">%s gefahren</string>
    <string name="dk_driverdata_distraction_score">Ablenkungsmanöver</string>
    <string name="dk_driverdata_distraction_score_info">Der Ablenkungs-Score (Telefonnutzung während der Fahrt) misst die Interaktionen des Fahrers mit dem Smartphone während der Fahrt. Dazu gehören sowohl die Anzahl der Entsperrungen des Telefons als auch die Dauer der Telefonate während der Fahrt. Die Nutzung des Telefons kann die Aufmerksamkeit des Fahrers ablenken und erhöht das Risiko eines Autounfalls erheblich. Anrufe, die mit der Freisprecheinrichtung Ihres Fahrzeugs getätigt werden, sind erlaubt und verringern Ihren Score nicht.</string>
-   <string name="dk_driverdata_eco_score">Bewertung für umweltfreundliches Fahren</string>
-   <string name="dk_driverdata_eco_score_info">Die Bewertung für ökologisches Fahren reicht von 0 bis 10 und wird durch den Vergleich der tatsächlich während der Fahrt verbrauchten Energie und jener Energie, welche die bei Verwendung des optimalen Geschwindigkeitsprofils verbraucht worden wäre, berechnet. Die beste Bewertung für ökologisches Fahren entspricht der höchsten Fahreffizienz.</string>
+   <string name="dk_driverdata_ecodriving_score">Bewertung für umweltfreundliches Fahren</string>
+   <string name="dk_driverdata_ecodriving_score_info">Die Bewertung für ökologisches Fahren reicht von 0 bis 10 und wird durch den Vergleich der tatsächlich während der Fahrt verbrauchten Energie und jener Energie, welche die bei Verwendung des optimalen Geschwindigkeitsprofils verbraucht worden wäre, berechnet. Die beste Bewertung für ökologisches Fahren entspricht der höchsten Fahreffizienz.</string>
    <string name="dk_driverdata_end_authorized_call">Ende eines erlaubten Anrufs</string>
    <string name="dk_driverdata_end_authorized_call_info_content">Die App hat das Ende eines erlaubten Anrufs erkannt. Das bedeutet, dass er über Ihre Freisprecheinrichtung geführt wurde. Diese Aktion wirkt sich nicht negativ auf Ihren Punktestand für die Telefonnutzung aus, da sie gesetzlich zulässig ist. Es bleibt jedoch eine Ablenkung während der Fahrt. Zu Ihrer Sicherheit und jener anderer Verkehrsteilnehmer wird dringend empfohlen, dass Sie mit dem Telefonieren warten, bis Ihr Fahrzeug geparkt ist.</string>
    <string name="dk_driverdata_end_event">Ende der Fahrt</string>
@@ -59,7 +59,7 @@
    <string name="dk_driverdata_mysynthesis_distraction_level_very_good">Ihre Punktzahl ist sehr gut, machen Sie weiter so und Sie werden zu den Fahrern gehören, die ihr Handy am Steuer nie bedienen!</string>
    <string name="dk_driverdata_mysynthesis_distraction_score">Meine Punktzahl für Ablenkung</string>
    <string name="dk_driverdata_mysynthesis_distraction_score_info">Die Punktzahl für Ablenkung schwankt zwischen 0 und 10. Ihre Punktzahl bestimmt Ihre Stufe, die auf einer Farbskala dargestellt wird.</string>
-   <string name="dk_driverdata_mysynthesis_drivers">Fahrer</string>
+   <string name="dk_driverdata_mysynthesis_drivers">fahrer</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_average">Ihre Punktzahl liegt im Durchschnitt, aber Sie können sich verbessern! Setzen Sie die Tipps, die Sie am Ende Ihrer Fahrten erhalten haben, in die Praxis um, um Ihren Verbrauch zu senken.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_bad">Ihre Punktzahl liegt unter dem Durchschnitt der Nutzer und Sie neigen dazu, zu viel zu verbrauchen. Versuchen Sie es mit Eco-Drive, um Kraftstoff zu sparen.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_excellent">Bravo, Sie sind der Beste in Sachen umweltbewusstes Fahren! Der Planet dankt es Ihnen 🌎.</string>
@@ -78,9 +78,6 @@
    <string name="dk_driverdata_mysynthesis_minimum">Min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">Meine Gemeinschaft</string>
    <string name="dk_driverdata_mysynthesis_no_driving">You did not drive during this period</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_month">Sie sind diesen Monat nicht gefahren</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_week">Sie sind diese Woche nicht gefahren</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_year">Sie sind dieses Jahr nicht gefahren</string>
    <string name="dk_driverdata_mysynthesis_no_trip_at_all"/>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Sie sind im vorherigen Monat nicht gefahren</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Sie sind in der vorherigen Woche nicht gefahren</string>

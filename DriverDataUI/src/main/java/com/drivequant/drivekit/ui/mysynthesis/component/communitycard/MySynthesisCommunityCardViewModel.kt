@@ -69,11 +69,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     fun getTitleText(context: Context): String {
         if (hasNoTrip(this.allContextItem)) {
-            return when (this.selectedPeriod) {
-                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
-                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
-                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }.let { context.getString(it) }
+            return context.getString(R.string.dk_driverdata_mysynthesis_no_driving)
         } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {

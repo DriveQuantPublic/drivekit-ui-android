@@ -100,7 +100,7 @@ internal class MySynthesisScoreLegendDialog {
     @StringRes
     private fun DKScoreType.getTitle() = when (this) {
         DKScoreType.SAFETY -> R.string.dk_driverdata_safety_score
-        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_eco_score
+        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_ecodriving_score
         DKScoreType.DISTRACTION -> R.string.dk_driverdata_distraction_score
         DKScoreType.SPEEDING -> R.string.dk_driverdata_speeding_score
     }

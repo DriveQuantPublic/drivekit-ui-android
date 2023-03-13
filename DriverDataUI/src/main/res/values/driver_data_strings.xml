@@ -29,8 +29,8 @@
    <string name="dk_driverdata_distance_travelled">%s travelled</string>
    <string name="dk_driverdata_distraction_score">Distraction score</string>
    <string name="dk_driverdata_distraction_score_info">The distraction score (phone use while driving) measures the driver\'s interactions with the smartphone while driving. This includes both the number of times the phone is unlocked and the duration of phone calls during the trip. Using the phone can distract the driver\'s attention and significantly increases the risk of car accident. Calls made with the hands-free kit of your vehicle are allowed and will not lower your score.</string>
-   <string name="dk_driverdata_eco_score">Eco-driving score</string>
-   <string name="dk_driverdata_eco_score_info">The eco-driving score ranges from 0 and 10, and is calculated by comparing the actual energy consumed during the trip with the energy that would have been consumed using the optimal speed profile. The best eco-driving score corresponds to the highest driving efficiency.</string>
+   <string name="dk_driverdata_ecodriving_score">Eco-driving score</string>
+   <string name="dk_driverdata_ecodriving_score_info">The eco-driving score ranges from 0 and 10, and is calculated by comparing the actual energy consumed during the trip with the energy that would have been consumed using the optimal speed profile. The best eco-driving score corresponds to the highest driving efficiency.</string>
    <string name="dk_driverdata_end_authorized_call">End of authorized call</string>
    <string name="dk_driverdata_end_authorized_call_info_content">The application has detected the end of an authorized call, this means that it has been made to your hands-free car kit. This action does not penalize your phone usage score, as it is legally permitted. However, it remains a distraction while driving, for your safety and that of other road users, it is strongly recommended that you wait until your vehicle is parked to make a call.</string>
    <string name="dk_driverdata_end_event">End of trip</string>
@@ -51,7 +51,7 @@
    <string name="dk_driverdata_mysynthesis_bad_score">Your score is bad</string>
    <string name="dk_driverdata_mysynthesis_can_not_be_evaluated">You can not be evaluated</string>
    <string name="dk_driverdata_mysynthesis_distraction_level_average">Your score is in the average range but you can do much better! Stop touching your phone while driving to stay as focused as possible on what\'s happening on the road 👀.</string>
-   <string name="dk_driverdata_mysynthesis_distraction_level_bad">Savez-vous que l\'utilisation du téléphone au volant accroit votre risque d\'accident ? Soyez prudent et restez concentré sur la conduite !</string>
+   <string name="dk_driverdata_mysynthesis_distraction_level_bad">Did you know that using a phone while driving increases your risk of an accident? Be careful and stay focused on driving!</string>
    <string name="dk_driverdata_mysynthesis_distraction_level_excellent">Nice job you never use your phone while driving. You are an outstanding driver 🏆 !</string>
    <string name="dk_driverdata_mysynthesis_distraction_level_good">You rarely use your phone while driving, but you could drive without it completely. Come on, just a little more effort 💪</string>
    <string name="dk_driverdata_mysynthesis_distraction_level_low">Your score is under the average. The good news is that you have a nice progression margin, take advantage of it!</string>
@@ -78,9 +78,6 @@
    <string name="dk_driverdata_mysynthesis_minimum">min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">My community</string>
    <string name="dk_driverdata_mysynthesis_no_driving">You did not drive during this period</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_month">You did not drive this month</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_week">You did not drive this week</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_year">You did not drive this year</string>
    <string name="dk_driverdata_mysynthesis_no_trip_at_all"/>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">You did not drive the previous month</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">You did not drive the previous week</string>
@@ -88,7 +85,7 @@
    <string name="dk_driverdata_mysynthesis_not_enough_data">There is not enough data to evaluate your driving.</string>
    <string name="dk_driverdata_mysynthesis_previous_month">The previous month:</string>
    <string name="dk_driverdata_mysynthesis_previous_week">The previous week:</string>
-   <string name="dk_driverdata_mysynthesis_previous_year">In %1$s :</string>
+   <string name="dk_driverdata_mysynthesis_previous_year">In %1$s:</string>
    <string name="dk_driverdata_mysynthesis_safety_level_average">Your score is average but you can do much better! To improve your score, check out the driving tips that appear on your trip details.</string>
    <string name="dk_driverdata_mysynthesis_safety_level_bad">Your driving style is too aggressive and risky. Drive with a little more flexibility to help make the roads safer.</string>
    <string name="dk_driverdata_mysynthesis_safety_level_excellent">Great job, your driving style is outstanding 🏆 !</string>

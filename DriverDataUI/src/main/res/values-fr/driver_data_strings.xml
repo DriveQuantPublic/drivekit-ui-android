@@ -29,8 +29,8 @@
    <string name="dk_driverdata_distance_travelled">%s parcourus</string>
    <string name="dk_driverdata_distraction_score">Score de distraction</string>
    <string name="dk_driverdata_distraction_score_info">Le score de distraction (utilisation du téléphone au volant) mesure les interactions du conducteur avec son smartphone pendant la conduite. Cela comprend à la fois le nombre de déverrouillages du téléphone la durée de communication téléphonique durant le trajet. L\'utilisation du téléphone est susceptible de perturber l\'attention du conducteur et augmente sensiblement le risque d\'accident. Les appels réalisés avec le kit main libre de votre véhicule sont autorisés et ils ne feront pas baisser votre score.</string>
-   <string name="dk_driverdata_eco_score">Score d\'éco-conduite</string>
-   <string name="dk_driverdata_eco_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20% est atteignable.</string>
+   <string name="dk_driverdata_ecodriving_score">Score d\'éco-conduite</string>
+   <string name="dk_driverdata_ecodriving_score_info">Le score d\'éco-conduite mesure l\'écart entre l\'énergie consommée et l\'énergie minimale atteignable sur un trajet. Une note de 8 sur 10 indique qu\'une économie d\'énergie de 20% est atteignable.</string>
    <string name="dk_driverdata_end_authorized_call">Fin d\'appel autorisé</string>
    <string name="dk_driverdata_end_authorized_call_info_content">L\'application a détecté la fin d\'un appel autorisé, cela signifie qu\'il a été effectué à avec votre kit main-libre. Cette action ne pénalise pas votre score d\'utilisation du téléphone, car elle est légalement autorisée. Cependant, cela reste une distraction lorsque vous conduisez, pour votre sécurité et celle des autres utilisateurs de la route, il est fortement conseillé d\'attendre que votre véhicule soit stationné pour passer un appel.</string>
    <string name="dk_driverdata_end_event">Fin du trajet</string>
@@ -59,7 +59,7 @@
    <string name="dk_driverdata_mysynthesis_distraction_level_very_good">Votre score est très bon, continuez ainsi et vous rejoindrez les conducteurs qui ne manipulent jamais leur téléphone au volant !</string>
    <string name="dk_driverdata_mysynthesis_distraction_score">Mon score de distraction</string>
    <string name="dk_driverdata_mysynthesis_distraction_score_info">Le score de distraction varie entre 0 et 10. Votre score définit votre niveau qui est représenté sur une échelle de couleurs.</string>
-   <string name="dk_driverdata_mysynthesis_drivers">Conducteurs</string>
+   <string name="dk_driverdata_mysynthesis_drivers">conducteurs</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_average">Votre score est dans la moyenne mais vous pouvez progresser ! Mettez en pratique les conseils reçus à la fin de vos trajets pour réduire votre consommation.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_bad">Votre score est inférieur à la moyenne des utilisateurs et vous avez tendance a sur-consommer. Essayez l\'éco-conduite pour économiser du carburant.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_excellent">Bravo, vous êtes au top de l\'éco-conduite! La planète vous dit merci 🌎</string>
@@ -78,9 +78,6 @@
    <string name="dk_driverdata_mysynthesis_minimum">min</string>
    <string name="dk_driverdata_mysynthesis_my_community">Ma communauté</string>
    <string name="dk_driverdata_mysynthesis_no_driving">Vous n\’avez pas conduit durant cette période</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_month">Vous n\'avez pas conduit ce mois-ci</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_week">Vous n\'avez pas conduit cette semaine</string>
-   <string name="dk_driverdata_mysynthesis_no_driving_year">Vous n\'avez pas conduit cette année</string>
    <string name="dk_driverdata_mysynthesis_no_trip_at_all"/>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_month">Vous n\'avez pas conduit le mois précédent</string>
    <string name="dk_driverdata_mysynthesis_no_trip_prev_week">Vous n\'avez pas conduit la semaine précédente</string>
@@ -117,7 +114,7 @@
    <string name="dk_driverdata_mysynthesis_very_bad_score">Votre score est très mauvais</string>
    <string name="dk_driverdata_mysynthesis_very_good_score">Votre score est très bon</string>
    <string name="dk_driverdata_mysynthesis_you_are_average">Vous êtes dans la moyenne</string>
-   <string name="dk_driverdata_mysynthesis_you_are_best">Vous êtes meilleurs que %s des utilisateurs</string>
+   <string name="dk_driverdata_mysynthesis_you_are_best">Vous êtes meilleur que %s des utilisateurs</string>
    <string name="dk_driverdata_mysynthesis_you_are_lower">%s des utilisateurs sont meilleurs que vous</string>
    <string name="dk_driverdata_night">Trajet de nuit</string>
    <string name="dk_driverdata_no_call_congrats">Félicitations !</string>
