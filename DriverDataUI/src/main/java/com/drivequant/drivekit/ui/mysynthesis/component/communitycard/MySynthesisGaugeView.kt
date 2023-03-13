@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.DKScoreTypeLevel
@@ -165,7 +166,15 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     }
 
     private fun update() {
-        this.scoreDescription.text = (this.viewModel?.scoreLevel?.getScoreLevelDescription() ?: R.string.dk_driverdata_mysynthesis_can_not_be_evaluated).let { context.getString(it) }
+        this.scoreDescription.apply {
+            this@MySynthesisGaugeView.viewModel?.scoreLevel?.getScoreLevelDescription()?.let {
+                text = context.getString(it)
+                smallText(DriveKitUI.colors.primaryColor())
+            } ?: run {
+                text = context.getString(R.string.dk_driverdata_mysynthesis_can_not_be_evaluated)
+                smallText(DriveKitUI.colors.complementaryFontColor())
+            }
+        }
         this.level0TextView.text = getFormattedLevelValue(0)
         this.level1TextView.text = getFormattedLevelValue(1)
         this.level2TextView.text = getFormattedLevelValue(2)
