@@ -68,6 +68,9 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     ) = allContextItem?.hasValueForScoreType(score) ?: false
 
     fun getTitleText(context: Context): String {
+        val bestThanCommunityThreshold = 55
+        val worstThanCommunityThreshold = 45
+
         if (hasNoTrip(this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_no_driving)
         } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
@@ -76,18 +79,18 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             val score = allContextItem?.getValue(this.selectedScoreType)
             val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
             return score?.let {
-                val lowerThanPercent = scoreStatistics.percentCommunityLowerThan(score)
-                val greaterThanPercent = scoreStatistics.percentCommunityGreaterThan(score)
+                val userPositionFromLowerScores = scoreStatistics.percentCommunityLowerThan(score)
+                val userPositionFromHigherScores = scoreStatistics.percentCommunityGreaterThan(score)
 
-                if (lowerThanPercent > 55) {
+                if (userPositionFromLowerScores > bestThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_best,
-                        DKDataFormatter.formatPercentage(lowerThanPercent, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromLowerScores, appendSpace = false)
                     )
-                } else if (greaterThanPercent > 45) {
+                } else if (userPositionFromLowerScores < worstThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_lower,
-                        DKDataFormatter.formatPercentage(greaterThanPercent, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromHigherScores, appendSpace = false)
                     )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
