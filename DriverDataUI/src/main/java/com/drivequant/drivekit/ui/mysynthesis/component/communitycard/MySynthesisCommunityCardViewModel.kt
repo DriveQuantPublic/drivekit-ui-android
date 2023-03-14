@@ -85,12 +85,12 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
                 if (userPositionFromLowerScores > bestThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_best,
-                        DKDataFormatter.formatPercentage(userPositionFromLowerScores, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromLowerScores)
                     )
                 } else if (userPositionFromLowerScores < worstThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_lower,
-                        DKDataFormatter.formatPercentage(userPositionFromHigherScores, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromHigherScores)
                     )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)

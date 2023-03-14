@@ -124,21 +124,35 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         super.onLayout(changed, left, top, right, bottom)
 
         if (this.scoreDescriptionContainer.left < 0) {
-            alignLeftScoreDescriptionContainer()
+            alignScoreDescriptionContainer(ViewAlignment.START)
         } else if (this.scoreDescriptionContainer.right > right) {
-            alignRightScoreDescriptionContainer()
+            alignScoreDescriptionContainer(ViewAlignment.END)
+        }
+
+        val viewMargin = 2.convertDpToPx()
+        if (this.communityMeanTextView.left + viewMargin <= this.communityMinTextView.right) {
+            if (isMeanTextCentered()) {
+                alignMeanText(ViewAlignment.START)
+            } else {
+                this.communityMeanTextView.visibility = View.INVISIBLE
+            }
+        } else if (this.communityMeanTextView.right + viewMargin >= this.communityMaxTextView.left) {
+            if (isMeanTextCentered()) {
+                alignMeanText(ViewAlignment.END)
+            } else {
+                this.communityMeanTextView.visibility = View.INVISIBLE
+            }
         }
 
         // Hide overlapping TextViews.
         this.levelTextViews.forEach { it.visibility = View.VISIBLE }
         val size = this.levelTextViews.size
-        val margin = 2.convertDpToPx()
         for (i in 0 until size / 2) {
             val leftTextView = this.levelTextViews[i]
             if (leftTextView.visibility == View.VISIBLE) {
                 for (j in i + 1 until size) {
                     val otherTextView = this.levelTextViews[j]
-                    if (leftTextView.right + margin >= otherTextView.left) {
+                    if (leftTextView.right + viewMargin >= otherTextView.left) {
                         otherTextView.visibility = View.INVISIBLE
                     } else {
                         break
@@ -149,7 +163,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             if (rightTextView.visibility == View.VISIBLE) {
                 for (j in size - 1 - i - 1 downTo 0) {
                     val otherTextView = this.levelTextViews[j]
-                    if (rightTextView.left - margin <= otherTextView.right) {
+                    if (rightTextView.left - viewMargin <= otherTextView.right) {
                         otherTextView.visibility = View.INVISIBLE
                     } else {
                         break
@@ -291,7 +305,9 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
                 }
             }
         }
-        centerScoreDescriptionContainer()
+        alignScoreDescriptionContainer(ViewAlignment.CENTER)
+        alignMeanText(ViewAlignment.CENTER)
+        this.communityMeanTextView.visibility = View.VISIBLE
     }
 
     private fun showScoreLegend() {
@@ -309,31 +325,64 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    private fun centerScoreDescriptionContainer() {
+    private fun alignScoreDescriptionContainer(alignment: ViewAlignment) {
         val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
-        params.startToStart = this.mainGuideline.id
-        params.endToEnd = this.mainGuideline.id
-        params.marginStart = 0
-        params.marginEnd = 0
+        params.startToStart = when (alignment) {
+            ViewAlignment.START -> this.id
+            ViewAlignment.CENTER -> this.mainGuideline.id
+            ViewAlignment.END -> LayoutParams.UNSET
+        }
+        params.endToEnd = when (alignment) {
+            ViewAlignment.START -> LayoutParams.UNSET
+            ViewAlignment.CENTER -> this.mainGuideline.id
+            ViewAlignment.END -> this.id
+        }
+        params.marginStart = when (alignment) {
+            ViewAlignment.START -> - this.paddingStart + 4.convertDpToPx()
+            ViewAlignment.CENTER -> 0
+            ViewAlignment.END -> 0
+        }
+        params.marginEnd = when (alignment) {
+            ViewAlignment.START -> 0
+            ViewAlignment.CENTER -> 0
+            ViewAlignment.END -> - this.paddingEnd + 4.convertDpToPx()
+        }
         this.scoreDescriptionContainer.layoutParams = params
     }
 
-    private fun alignLeftScoreDescriptionContainer() {
-        val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
-        params.startToStart = this.id
-        params.endToEnd = LayoutParams.UNSET
-        params.marginStart = - this.paddingStart + 4.convertDpToPx()
-        params.marginEnd = 0
-        this.scoreDescriptionContainer.layoutParams = params
+    private fun alignMeanText(alignment: ViewAlignment) {
+        val indicatorHalfSize = (resources.getDimension(R.dimen.dk_mysynthesis_community_indicator_size) / 2f).toInt()
+        val params = this.communityMeanTextView.layoutParams as LayoutParams
+        params.startToStart = when (alignment) {
+            ViewAlignment.START -> this.communityMeanGuideline.id
+            ViewAlignment.CENTER -> this.communityMeanGuideline.id
+            ViewAlignment.END -> LayoutParams.UNSET
+        }
+        params.endToEnd = when (alignment) {
+            ViewAlignment.START -> LayoutParams.UNSET
+            ViewAlignment.CENTER -> this.communityMeanGuideline.id
+            ViewAlignment.END -> this.communityMeanGuideline.id
+        }
+        params.marginStart = when (alignment) {
+            ViewAlignment.START -> -indicatorHalfSize
+            ViewAlignment.CENTER -> 0
+            ViewAlignment.END -> 0
+        }
+        params.marginEnd = when (alignment) {
+            ViewAlignment.START -> 0
+            ViewAlignment.CENTER -> 0
+            ViewAlignment.END -> -indicatorHalfSize
+        }
+        this.communityMeanTextView.layoutParams = params
     }
 
-    private fun alignRightScoreDescriptionContainer() {
-        val params = this.scoreDescriptionContainer.layoutParams as LayoutParams
-        params.startToStart = LayoutParams.UNSET
-        params.endToEnd = this.id
-        params.marginStart = 0
-        params.marginEnd = - this.paddingEnd + 4.convertDpToPx()
-        this.scoreDescriptionContainer.layoutParams = params
+    private fun isMeanTextCentered(): Boolean {
+        val params = this.communityMeanTextView.layoutParams as LayoutParams
+        return params.startToStart == this.communityMeanGuideline.id && params.endToEnd == this.communityMeanGuideline.id
+    }
+
+    private enum class ViewAlignment {
+        START, CENTER, END;
     }
 
 }
