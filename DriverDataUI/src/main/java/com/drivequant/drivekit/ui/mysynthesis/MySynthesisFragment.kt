@@ -45,7 +45,6 @@ internal class MySynthesisFragment : Fragment() {
         this.scoreSelectorView = view.findViewById(R.id.scoreSelector)
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
-        this.scoreCardView = view.findViewById(R.id.scoreCard)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
         this.scoreCardView = view.findViewById(R.id.scoreCard)
         this.communityCardView = view.findViewById(R.id.communityCard)
