@@ -124,7 +124,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     fun getDriverTripsCountText(context: Context): SpannableString {
         val tripsCount = this.selectedDate?.let {
-            driverTimeline?.allContextItemAt(it)?.numberTripScored
+            driverTimeline?.allContextItemAt(it)?.numberTripTotal
         } ?: 0
         return getTripsCountText(context, tripsCount)
     }
