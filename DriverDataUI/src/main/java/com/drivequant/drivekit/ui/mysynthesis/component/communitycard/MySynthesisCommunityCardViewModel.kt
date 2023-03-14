@@ -108,7 +108,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
         DriveKitUI.colors.complementaryFontColor()
     } else {
-        DriveKitUI.colors.primaryColor()
+        DriveKitUI.colors.mainFontColor()
     }
 
     private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {

@@ -72,7 +72,7 @@ internal class MySynthesisScoreCardView : LinearLayout {
 
     private fun configureTitle() {
         title.apply {
-            headLine2(DriveKitUI.colors.primaryColor())
+            headLine2(DriveKitUI.colors.mainFontColor())
             text = context.getString(viewModel.getCardTitleResId())
         }
     }

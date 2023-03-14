@@ -189,22 +189,64 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
                 smallText(DriveKitUI.colors.complementaryFontColor())
             }
         }
-        this.level0TextView.text = getFormattedLevelValue(0)
-        this.level1TextView.text = getFormattedLevelValue(1)
-        this.level2TextView.text = getFormattedLevelValue(2)
-        this.level3TextView.text = getFormattedLevelValue(3)
-        this.level4TextView.text = getFormattedLevelValue(4)
-        this.level5TextView.text = getFormattedLevelValue(5)
-        this.level6TextView.text = getFormattedLevelValue(6)
-        this.level7TextView.text = getFormattedLevelValue(7)
+        this.level0TextView.apply {
+            text = getFormattedLevelValue(0)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level1TextView.apply {
+            text = getFormattedLevelValue(1)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level2TextView.apply {
+            text = getFormattedLevelValue(2)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level3TextView.apply {
+            text = getFormattedLevelValue(3)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level4TextView.apply {
+            text = getFormattedLevelValue(4)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level5TextView.apply {
+            text = getFormattedLevelValue(5)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level6TextView.apply {
+            text = getFormattedLevelValue(6)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.level7TextView.apply {
+            text = getFormattedLevelValue(7)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
 
-        this.communityMinValueTextView.text = getFormattedValue(this.viewModel?.communityMinScore)
-        this.communityMedianValueTextView.text = getFormattedValue(this.viewModel?.communityMedianScore)
-        this.communityMaxValueTextView.text = getFormattedValue(this.viewModel?.communityMaxScore)
+        this.communityMinValueTextView.apply {
+            text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMinScore)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.communityMedianValueTextView.apply {
+            text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMedianScore)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.communityMaxValueTextView.apply {
+            text = getFormattedValue(this@MySynthesisGaugeView.viewModel?.communityMaxScore)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
 
-        this.communityMinTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_minimum)
-        this.communityMedianTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_median)
-        this.communityMaxTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_maximum)
+        this.communityMinTextView.apply {
+            text = context.getString(R.string.dk_driverdata_mysynthesis_minimum)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.communityMedianTextView.apply {
+            text = context.getString(R.string.dk_driverdata_mysynthesis_median)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
+        this.communityMaxTextView.apply {
+            text = context.getString(R.string.dk_driverdata_mysynthesis_maximum)
+            setTextColor(DriveKitUI.colors.mainFontColor())
+        }
 
         updateLayout()
     }
