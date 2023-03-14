@@ -68,13 +68,14 @@
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_bad">Potentialet for energibesparelser er meget stort. Vi anbefaler, at du anvender de råd om miljøvenlig kørsel, som du får tilsendt ved afslutningen af din rejse. Du vil være i stand til at gøre hurtige fremskridt.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_good">Din score er meget god, bliv ved med at nå toppen!</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_score">Min score for miljøvenlig kørsel</string>
-   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Scoren for miljøvenlig kørsel varierer mellem 5 og 10. Din score definerer dit niveau, som er repræsenteret på en farveskala.</string>
+   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Scoren for miljøvenlig kørsel varierer mellem 4 og 10. Din score definerer dit niveau, som er repræsenteret på en farveskala.</string>
    <string name="dk_driverdata_mysynthesis_excellent_score">Din score er fremragende</string>
    <string name="dk_driverdata_mysynthesis_good_score">Din score er god</string>
    <string name="dk_driverdata_mysynthesis_low_score">Din score er dårlig</string>
    <string name="dk_driverdata_mysynthesis_main_title">Mit resumé</string>
    <string name="dk_driverdata_mysynthesis_maximum">maks.</string>
    <string name="dk_driverdata_mysynthesis_me">Mig</string>
+   <string name="dk_driverdata_mysynthesis_median">median</string>
    <string name="dk_driverdata_mysynthesis_minimum">min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">Mit fællesskab</string>
    <string name="dk_driverdata_mysynthesis_no_driving">Du har ikke kørt bil i denne periode</string>

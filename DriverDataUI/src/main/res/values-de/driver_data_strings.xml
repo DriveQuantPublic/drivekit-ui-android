@@ -68,13 +68,14 @@
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_bad">Das Energiesparpotenzial ist sehr groß. Wir empfehlen Ihnen, die Eco-Drive-Tipps, die Ihnen am Ende Ihrer Fahrten zugeschickt werden, in die Praxis umzusetzen. So können Sie schnell Fortschritte machen.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_good">Ihr Ergebnis ist sehr gut, bleiben Sie dran, um die Spitze zu erreichen!</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_score">Meine Punktzahl für umweltbewusstes Fahren</string>
-   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Die Punktzahl für umweltbewusstes Fahren variiert zwischen 5 und 10. Ihre Punktzahl bestimmt Ihre Stufe, die auf einer Farbskala dargestellt wird.</string>
+   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Die Punktzahl für umweltbewusstes Fahren variiert zwischen 4 und 10. Ihre Punktzahl bestimmt Ihre Stufe, die auf einer Farbskala dargestellt wird.</string>
    <string name="dk_driverdata_mysynthesis_excellent_score">Ihre Punktzahl ist ausgezeichnet</string>
    <string name="dk_driverdata_mysynthesis_good_score">Ihre Punktzahl ist gut</string>
    <string name="dk_driverdata_mysynthesis_low_score">Ihre Punktzahl ist niedrig</string>
    <string name="dk_driverdata_mysynthesis_main_title">Meine Zusammenfassung</string>
    <string name="dk_driverdata_mysynthesis_maximum">max.</string>
    <string name="dk_driverdata_mysynthesis_me">Ich</string>
+   <string name="dk_driverdata_mysynthesis_median">Median</string>
    <string name="dk_driverdata_mysynthesis_minimum">Min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">Meine Gemeinschaft</string>
    <string name="dk_driverdata_mysynthesis_no_driving">You did not drive during this period</string>

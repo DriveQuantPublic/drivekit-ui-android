@@ -68,13 +68,14 @@
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_bad">The energy saving potential is very high. We recommend that you apply the eco-driving tips sent at the end of your trips. You will be able to progress quickly.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_good">Your score is very good, keep it up to reach the top!</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_score">My eco-driving score</string>
-   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">The eco-driving score ranges from 5 to 10. Your score defines your level which is represented on a colour scale.</string>
+   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">The eco-driving score ranges from 4 to 10. Your score defines your level which is represented on a colour scale.</string>
    <string name="dk_driverdata_mysynthesis_excellent_score">Your score is excellent</string>
    <string name="dk_driverdata_mysynthesis_good_score">Your score is good</string>
    <string name="dk_driverdata_mysynthesis_low_score">Your score is low</string>
    <string name="dk_driverdata_mysynthesis_main_title">My synthesis</string>
    <string name="dk_driverdata_mysynthesis_maximum">max.</string>
    <string name="dk_driverdata_mysynthesis_me">Me</string>
+   <string name="dk_driverdata_mysynthesis_median">median</string>
    <string name="dk_driverdata_mysynthesis_minimum">min.</string>
    <string name="dk_driverdata_mysynthesis_my_community">My community</string>
    <string name="dk_driverdata_mysynthesis_no_driving">You did not drive during this period</string>

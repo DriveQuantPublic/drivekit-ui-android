@@ -68,13 +68,14 @@
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_bad">Le potentiel d\'économie d\'énergie est très important. Nous vous recommandons de mettre en pratique les conseils d\'eco-conduite envoyés à la fin de vos trajets. Vous pourrez progresser rapidement.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_good">Votre score est très bon, continuez ainsi pour atteindre le haut du panier !</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_score">Mon score d\'éco-conduite</string>
-   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Le score d’éco-conduite varie entre 5 et 10. Votre score définit votre niveau qui est représenté sur une échelle de couleurs.</string>
+   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">Le score d’éco-conduite varie entre 4 et 10. Votre score définit votre niveau qui est représenté sur une échelle de couleurs.</string>
    <string name="dk_driverdata_mysynthesis_excellent_score">Votre score est excellent</string>
    <string name="dk_driverdata_mysynthesis_good_score">Votre score est bon</string>
    <string name="dk_driverdata_mysynthesis_low_score">Votre score est faible</string>
    <string name="dk_driverdata_mysynthesis_main_title">Ma synthèse</string>
    <string name="dk_driverdata_mysynthesis_maximum">max</string>
    <string name="dk_driverdata_mysynthesis_me">Moi</string>
+   <string name="dk_driverdata_mysynthesis_median">médiane</string>
    <string name="dk_driverdata_mysynthesis_minimum">min</string>
    <string name="dk_driverdata_mysynthesis_my_community">Ma communauté</string>
    <string name="dk_driverdata_mysynthesis_no_driving">Vous n\’avez pas conduit durant cette période</string>

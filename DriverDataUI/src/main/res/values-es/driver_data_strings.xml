@@ -68,13 +68,14 @@
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_bad">El potencial de ahorro energético es muy elevado. Te recomendamos que pongas en práctica los consejos de conducción ecológica que te enviamos al final de tus viajes. Podrá progresar rápidamente.</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_level_very_good">Tu puntuación es muy buena, ¡sigue así para llegar a lo más alto!</string>
    <string name="dk_driverdata_mysynthesis_ecodriving_score">Mi puntuación en ecoconducción</string>
-   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">La puntuación de la conducción ecológica varía entre 5 y 10. Tu puntuación define tu nivel, que se representa en una escala de colores.</string>
+   <string name="dk_driverdata_mysynthesis_ecodriving_score_info">La puntuación de la conducción ecológica varía entre 4 y 10. Tu puntuación define tu nivel, que se representa en una escala de colores.</string>
    <string name="dk_driverdata_mysynthesis_excellent_score">Su puntuación es excelente</string>
    <string name="dk_driverdata_mysynthesis_good_score">Su puntuación es buena</string>
    <string name="dk_driverdata_mysynthesis_low_score">Su puntuación es baja</string>
    <string name="dk_driverdata_mysynthesis_main_title">Mi resumen</string>
    <string name="dk_driverdata_mysynthesis_maximum">máx.</string>
    <string name="dk_driverdata_mysynthesis_me">Yo</string>
+   <string name="dk_driverdata_mysynthesis_median">mediana</string>
    <string name="dk_driverdata_mysynthesis_minimum">mín.</string>
    <string name="dk_driverdata_mysynthesis_my_community">Mi comunidad</string>
    <string name="dk_driverdata_mysynthesis_no_driving">No condujo durante este periodo</string>
