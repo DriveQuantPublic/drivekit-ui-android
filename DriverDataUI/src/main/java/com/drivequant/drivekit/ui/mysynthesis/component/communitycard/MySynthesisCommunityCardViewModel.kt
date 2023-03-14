@@ -182,8 +182,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = distanceKm * 1000,
-            minDistanceToRemoveFractions = 10.0,
-            places = 0
+            minDistanceToRemoveFractions = 0.0,
         ).forEach {
             when (it) {
                 is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)

@@ -227,7 +227,7 @@ object DKDataFormatter {
     }
 
     @JvmOverloads
-    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true, minDistanceToRemoveFractions: Double = 100.0, places: Int = 1): List<FormatType> {
+    fun formatMeterDistanceInKm(context: Context, distance: Double?, unit: Boolean = true, minDistanceToRemoveFractions: Double = 100.0): List<FormatType> {
         val distanceInKm = distance?.div(1000)
         val distanceInMile = distanceInKm?.convertKmsToMiles()
 
@@ -235,14 +235,14 @@ object DKDataFormatter {
 
         when (DriveKitUI.distanceUnit) {
             DistanceUnit.MILE -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile, minDistanceToRemoveFractions, places) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInMile, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_mile)))
                 }
             }
             DistanceUnit.KM -> {
-                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm, minDistanceToRemoveFractions, places) ?: ""))
+                formattingTypes.add(FormatType.VALUE(formatDistanceValue(distanceInKm, minDistanceToRemoveFractions) ?: ""))
                 if (unit) {
                     formattingTypes.add(FormatType.SEPARATOR())
                     formattingTypes.add(FormatType.UNIT(context.getString(R.string.dk_common_unit_kilometer)))
@@ -287,9 +287,10 @@ object DKDataFormatter {
         }
     }
 
-    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double, places: Int = 1): String? {
+    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
         distance?.let {
-            val roundedDistance = BigDecimal(distance).setScale(places, RoundingMode.HALF_UP).toDouble()
+            val floatingNumber = 1
+            val roundedDistance = BigDecimal(distance).setScale(floatingNumber, RoundingMode.HALF_UP).toDouble()
             return if (roundedDistance >= minDistanceRemoveFraction) {
                 roundedDistance.format(0)
             } else {
