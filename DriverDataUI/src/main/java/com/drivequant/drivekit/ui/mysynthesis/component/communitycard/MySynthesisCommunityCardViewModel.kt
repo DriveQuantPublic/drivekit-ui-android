@@ -15,6 +15,7 @@ import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatis
 import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.getMedianScore
 import java.text.NumberFormat
 import java.util.*
 
@@ -55,7 +56,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             DKScoreType.DISTRACTION -> statistics.distraction
             DKScoreType.SPEEDING -> statistics.speeding
         }
-        this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.mean, scoreStatistics.max)
+        this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.getMedianScore(), scoreStatistics.max)
         this.onViewModelUpdated?.invoke()
     }
 

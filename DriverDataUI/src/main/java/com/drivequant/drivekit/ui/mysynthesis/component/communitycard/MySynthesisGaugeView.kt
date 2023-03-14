@@ -54,17 +54,17 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
     private lateinit var level7TextView: TextView
     private lateinit var levelTextViews: List<TextView>
     private lateinit var communityMinGuideline: Guideline
-    private lateinit var communityMeanGuideline: Guideline
+    private lateinit var communityMedianGuideline: Guideline
     private lateinit var communityMaxGuideline: Guideline
     private lateinit var communityLine: View
     private lateinit var communityMinValueTextView: TextView
-    private lateinit var communityMeanValueTextView: TextView
+    private lateinit var communityMedianValueTextView: TextView
     private lateinit var communityMaxValueTextView: TextView
     private lateinit var communityMinIndicator: View
-    private lateinit var communityMeanIndicator: View
+    private lateinit var communityMedianIndicator: View
     private lateinit var communityMaxIndicator: View
     private lateinit var communityMinTextView: TextView
-    private lateinit var communityMeanTextView: TextView
+    private lateinit var communityMedianTextView: TextView
     private lateinit var communityMaxTextView: TextView
 
     override fun onFinishInflate() {
@@ -104,17 +104,17 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         )
         this.scoreIndicator = findViewById(R.id.scoreIndicator)
         this.communityMinGuideline = findViewById(R.id.communityMinGuideline)
-        this.communityMeanGuideline = findViewById(R.id.communityMeanGuideline)
+        this.communityMedianGuideline = findViewById(R.id.communityMedianGuideline)
         this.communityMaxGuideline = findViewById(R.id.communityMaxGuideline)
         this.communityLine = findViewById(R.id.communityLine)
         this.communityMinValueTextView = findViewById(R.id.communityMinValue)
-        this.communityMeanValueTextView = findViewById(R.id.communityMeanValue)
+        this.communityMedianValueTextView = findViewById(R.id.communityMedianValue)
         this.communityMaxValueTextView = findViewById(R.id.communityMaxValue)
         this.communityMinIndicator = findViewById(R.id.communityMinIndicator)
-        this.communityMeanIndicator = findViewById(R.id.communityMeanIndicator)
+        this.communityMedianIndicator = findViewById(R.id.communityMedianIndicator)
         this.communityMaxIndicator = findViewById(R.id.communityMaxIndicator)
         this.communityMinTextView = findViewById(R.id.communityMinText)
-        this.communityMeanTextView = findViewById(R.id.communityMeanText)
+        this.communityMedianTextView = findViewById(R.id.communityMedianText)
         this.communityMaxTextView = findViewById(R.id.communityMaxText)
 
         configure()
@@ -130,17 +130,17 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         }
 
         val viewMargin = 2.convertDpToPx()
-        if (this.communityMeanTextView.left + viewMargin <= this.communityMinTextView.right) {
-            if (isMeanTextCentered()) {
-                alignMeanText(ViewAlignment.START)
+        if (this.communityMedianTextView.left + viewMargin <= this.communityMinTextView.right) {
+            if (isMedianTextCentered()) {
+                alignMedianText(ViewAlignment.START)
             } else {
-                this.communityMeanTextView.visibility = View.INVISIBLE
+                this.communityMedianTextView.visibility = View.INVISIBLE
             }
-        } else if (this.communityMeanTextView.right + viewMargin >= this.communityMaxTextView.left) {
-            if (isMeanTextCentered()) {
-                alignMeanText(ViewAlignment.END)
+        } else if (this.communityMedianTextView.right + viewMargin >= this.communityMaxTextView.left) {
+            if (isMedianTextCentered()) {
+                alignMedianText(ViewAlignment.END)
             } else {
-                this.communityMeanTextView.visibility = View.INVISIBLE
+                this.communityMedianTextView.visibility = View.INVISIBLE
             }
         }
 
@@ -199,11 +199,11 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.level7TextView.text = getFormattedLevelValue(7)
 
         this.communityMinValueTextView.text = getFormattedValue(this.viewModel?.communityMinScore)
-        this.communityMeanValueTextView.text = getFormattedValue(this.viewModel?.communityMeanScore)
+        this.communityMedianValueTextView.text = getFormattedValue(this.viewModel?.communityMedianScore)
         this.communityMaxValueTextView.text = getFormattedValue(this.viewModel?.communityMaxScore)
 
         this.communityMinTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_minimum)
-        this.communityMeanTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_average)
+        this.communityMedianTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_median)
         this.communityMaxTextView.text = context.getString(R.string.dk_driverdata_mysynthesis_maximum)
 
         updateLayout()
@@ -225,10 +225,10 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             levelTextView.setTextColor(textColor)
         }
         this.communityMinValueTextView.setTextColor(textColor)
-        this.communityMeanValueTextView.setTextColor(textColor)
+        this.communityMedianValueTextView.setTextColor(textColor)
         this.communityMaxValueTextView.setTextColor(textColor)
         this.communityMinTextView.setTextColor(textColor)
-        this.communityMeanTextView.setTextColor(textColor)
+        this.communityMedianTextView.setTextColor(textColor)
         this.communityMaxTextView.setTextColor(textColor)
         // Gauge corners.
         val cornerRadius = MySynthesisConstant.getGaugeCornerRadius(context)
@@ -246,7 +246,7 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.communityLine.setBackgroundColor(synthesisColor)
         getCommunityIndicator(synthesisColor).let {
             this.communityMinIndicator.background = it
-            this.communityMeanIndicator.background = it
+            this.communityMedianIndicator.background = it
             this.communityMaxIndicator.background = it
         }
     }
@@ -293,9 +293,9 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
                         this.communityMinGuideline.setGuidelinePercent(percent)
                     }
                 }
-                viewModel.communityMeanScore?.let { communityMeanScore ->
-                    viewModel.getPercent(communityMeanScore, level0, level7)?.let { percent ->
-                        this.communityMeanGuideline.setGuidelinePercent(percent)
+                viewModel.communityMedianScore?.let { communityMedianScore ->
+                    viewModel.getPercent(communityMedianScore, level0, level7)?.let { percent ->
+                        this.communityMedianGuideline.setGuidelinePercent(percent)
                     }
                 }
                 viewModel.communityMaxScore?.let { communityMaxScore ->
@@ -306,8 +306,8 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             }
         }
         alignScoreDescriptionContainer(ViewAlignment.CENTER)
-        alignMeanText(ViewAlignment.CENTER)
-        this.communityMeanTextView.visibility = View.VISIBLE
+        alignMedianText(ViewAlignment.CENTER)
+        this.communityMedianTextView.visibility = View.VISIBLE
     }
 
     private fun showScoreLegend() {
@@ -350,18 +350,18 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
         this.scoreDescriptionContainer.layoutParams = params
     }
 
-    private fun alignMeanText(alignment: ViewAlignment) {
+    private fun alignMedianText(alignment: ViewAlignment) {
         val indicatorHalfSize = (resources.getDimension(R.dimen.dk_mysynthesis_community_indicator_size) / 2f).toInt()
-        val params = this.communityMeanTextView.layoutParams as LayoutParams
+        val params = this.communityMedianTextView.layoutParams as LayoutParams
         params.startToStart = when (alignment) {
-            ViewAlignment.START -> this.communityMeanGuideline.id
-            ViewAlignment.CENTER -> this.communityMeanGuideline.id
+            ViewAlignment.START -> this.communityMedianGuideline.id
+            ViewAlignment.CENTER -> this.communityMedianGuideline.id
             ViewAlignment.END -> LayoutParams.UNSET
         }
         params.endToEnd = when (alignment) {
             ViewAlignment.START -> LayoutParams.UNSET
-            ViewAlignment.CENTER -> this.communityMeanGuideline.id
-            ViewAlignment.END -> this.communityMeanGuideline.id
+            ViewAlignment.CENTER -> this.communityMedianGuideline.id
+            ViewAlignment.END -> this.communityMedianGuideline.id
         }
         params.marginStart = when (alignment) {
             ViewAlignment.START -> -indicatorHalfSize
@@ -373,12 +373,12 @@ internal class MySynthesisGaugeView(context: Context, attrs: AttributeSet?) :
             ViewAlignment.CENTER -> 0
             ViewAlignment.END -> -indicatorHalfSize
         }
-        this.communityMeanTextView.layoutParams = params
+        this.communityMedianTextView.layoutParams = params
     }
 
-    private fun isMeanTextCentered(): Boolean {
-        val params = this.communityMeanTextView.layoutParams as LayoutParams
-        return params.startToStart == this.communityMeanGuideline.id && params.endToEnd == this.communityMeanGuideline.id
+    private fun isMedianTextCentered(): Boolean {
+        val params = this.communityMedianTextView.layoutParams as LayoutParams
+        return params.startToStart == this.communityMedianGuideline.id && params.endToEnd == this.communityMedianGuideline.id
     }
 
     private enum class ViewAlignment {
