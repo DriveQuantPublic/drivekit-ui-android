@@ -13,7 +13,6 @@ android {
         targetSdkVersion project.ext.target_sdk_version
         versionCode 1
         versionName "$drivekitui_version"
-        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
