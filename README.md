@@ -17,11 +17,16 @@ The components available in the Demo application are:
 * **[Trip Analysis](https://docs.drivequant.com/trip-analysis/introduction)** It is the heart of the reactor that allows access to the phone's sensors and contains autostart mechanisms to analyse trips while your app runs in background ;
 
 * **[Permissions Utils](https://docs.drivequant.com/permissions-utils/introduction)** is used to get user's permissions that allow the SDK to access the smartphone's sensors while running in background ;
-* **[Driver Data](https://docs.drivequant.com/driver-data/introduction)** manages the driver trips display (list and details) and ensures the synchronisation of driver data. This component also offers ready to use widgets to display information about user's last trips ;
+* **[Driver Data](https://docs.drivequant.com/driver-data/introduction)** manages the driver trips display (list and details) and ensures the synchronisation of driver data. This component also offers :
+	 * Ready to use widgets to display information about user's last trips ;
+	 * **[Driver Data Timeline](https://docs.drivequant.com/driver-data-timeline-ui/introduction)** manages display of timelines. These screens contain graphs that represent the chronological evolution of a driver’s weekly or monthly scores ;
+	 * **[My Synthesis](https://docs.drivequant.com/driver-data-my-synthesis-ui/introduction)** component which compares your average performances per week, month or year with reference levels and also with drivers from your community.
+
+
+
 * **[Vehicle](https://docs.drivequant.com/vehicle/introduction)** is made to select one or more vehicles, to choose the autostart mode for each of them and to manage odometer of each vehicle ;
 * **[Driver Achievement](https://docs.drivequant.com/driver-achievement/introduction)** contains gaming features (ranking, badges and streaks) that measure driver performance and stimulate driver improvement;
 * **[Challenge](https://docs.drivequant.com/challenge/introduction)** is used to display the list of challenges, join a challenge or display challenge details.
-* **[Driver Data Timeline](https://docs.drivequant.com/driver-data-timeline-ui/introduction)** manages display of timelines. These screens contain graphs that represent the chronological evolution of a driver’s weekly or monthly scores ;
 
 Before installing the **DriveKit SDK** in your mobile application, we recommend that you do some tests with the Demo application. It's fast and it will save you time. The Demo application has been specially designed to help you discover smartphone telematics. 
 
