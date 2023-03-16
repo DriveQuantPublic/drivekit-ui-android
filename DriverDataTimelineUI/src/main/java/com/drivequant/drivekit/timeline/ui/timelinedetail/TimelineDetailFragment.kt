@@ -66,7 +66,7 @@ internal class TimelineDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_timeline_detail, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_timeline_detail, container, false).setDKStyle()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
