@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorViewModel
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorViewModel
@@ -17,14 +18,13 @@ import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.community.statistics.CommunityStatisticsStatus
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.timeline.*
-import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardViewModel
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardViewModel
 import java.util.*
 
 internal class MySynthesisViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val scores = DriverDataUI.scores
+    private val scores = DriveKitUI.scores
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val scoreSelectorViewModel = DKScoreSelectorViewModel()
