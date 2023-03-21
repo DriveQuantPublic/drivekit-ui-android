@@ -47,7 +47,7 @@ class BeaconActivity : AppCompatActivity() {
                            vehicleId: String? = null,
                            beacon: Beacon? = null
         ) {
-            DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner launched in ${scanType.name} mode, vehicleId = $vehicleId, major=${beacon?.major}, minor=${beacon?.minor}")
+            DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner launched in ${scanType.name} mode, vehicleId=$vehicleId, major=${beacon?.major}, minor=${beacon?.minor}")
 
             val intent = Intent(context, BeaconActivity::class.java)
             intent.putExtra(SCAN_TYPE_EXTRA, scanType)

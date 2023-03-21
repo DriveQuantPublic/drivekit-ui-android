@@ -160,6 +160,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
     }
 
     override fun beaconFound(beacon: BeaconInfo) {
+        DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner - Found: major=${beacon.major}, minor=${beacon.minor}")
         stopBeaconScan()
         isBeaconFound = true
         viewModel.seenBeacon = beacon

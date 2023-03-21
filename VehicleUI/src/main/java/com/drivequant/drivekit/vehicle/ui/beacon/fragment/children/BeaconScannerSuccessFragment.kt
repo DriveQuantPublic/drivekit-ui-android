@@ -82,7 +82,7 @@ class BeaconScannerSuccessFragment : Fragment() {
 
         viewModel.beaconAddObserver.observe(viewLifecycleOwner) {
             it?.let { vehicleBeaconStatus ->
-                DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon add status : $vehicleBeaconStatus")
+                DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon add status: $vehicleBeaconStatus")
                 when (vehicleBeaconStatus) {
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
                     ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")
