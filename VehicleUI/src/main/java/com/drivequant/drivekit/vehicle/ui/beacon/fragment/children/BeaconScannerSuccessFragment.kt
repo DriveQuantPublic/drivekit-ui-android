@@ -12,8 +12,10 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconStatus.*
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
@@ -80,6 +82,7 @@ class BeaconScannerSuccessFragment : Fragment() {
 
         viewModel.beaconAddObserver.observe(viewLifecycleOwner) {
             it?.let { vehicleBeaconStatus ->
+                DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon add status : $vehicleBeaconStatus")
                 when (vehicleBeaconStatus) {
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
                     ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")

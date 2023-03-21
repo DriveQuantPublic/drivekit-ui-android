@@ -11,12 +11,14 @@ import com.drivequant.beaconutils.*
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.*
@@ -113,6 +115,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                     override fun onCheckVehiclePaired(isSameVehicle : Boolean) {
                         viewModel.vehiclePaired?.let {
                             if (isSameVehicle){
+                                DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner: beacon is already paired to this vehicle")
                                 Toast.makeText(requireContext(),
                                     DKResource.convertToString(requireContext(), "dk_vehicle_beacon_already_paired_to_vehicle"),
                                     Toast.LENGTH_LONG)
