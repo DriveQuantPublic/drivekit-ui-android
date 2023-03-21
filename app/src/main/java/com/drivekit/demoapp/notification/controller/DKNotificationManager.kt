@@ -18,6 +18,7 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
@@ -86,29 +87,48 @@ internal object DKNotificationManager : TripListener {
     }
 
     override fun beaconDetected() {
+        // Nothing to do.
     }
 
-    override fun crashDetected(crashInfo: DKCrashInfo) {}
+    override fun crashDetected(crashInfo: DKCrashInfo) {
+        // Nothing to do.
+    }
 
     override fun crashFeedbackSent(
         crashInfo: DKCrashInfo,
         feedbackType: CrashFeedbackType,
         severity: CrashFeedbackSeverity
-    ) {}
+    ) {
+        // Nothing to do.
+    }
 
-    override fun sdkStateChanged(state: State) {}
+    override fun sdkStateChanged(state: State) {
+        // Nothing to do.
+    }
 
-    override fun potentialTripStart(startMode: StartMode) {}
+    override fun tripCancelled(cancelTrip: CancelTrip) {
+        // Nothing to do.
+    }
 
-    override fun tripPoint(tripPoint: TripPoint) {}
+    override fun potentialTripStart(startMode: StartMode) {
+        // Nothing to do.
+    }
 
-    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {}
+    override fun tripPoint(tripPoint: TripPoint) {
+        // Nothing to do.
+    }
+
+    override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
+        // Nothing to do.
+    }
 
     override fun tripSavedForRepost() {
         sendNotification(DriveKit.applicationContext, NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_NETWORK))
     }
 
-    override fun tripStarted(startMode: StartMode) {}
+    override fun tripStarted(startMode: StartMode) {
+        // Nothing to do.
+    }
 
     override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
         if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED && deviceConfigEvent.btRequired) {
