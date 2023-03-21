@@ -17,12 +17,13 @@ The components available in the Demo application are:
 * **[Trip Analysis](https://docs.drivequant.com/trip-analysis/introduction)** It is the heart of the reactor that allows access to the phone's sensors and contains autostart mechanisms to analyse trips while your app runs in background ;
 
 * **[Permissions Utils](https://docs.drivequant.com/permissions-utils/introduction)** is used to get user's permissions that allow the SDK to access the smartphone's sensors while running in background ;
-* **[Driver Data](https://docs.drivequant.com/driver-data/introduction)** manages the driver trips display (list and details) and ensures the synchronisation of driver data. This component also offers :
+* **[Driver Data](https://docs.drivequant.com/driver-data/introduction)** manages the driver’s data synchronisation and display. Available screens within this component include:
+         
+	 * Trips list and details ;
 	 * Ready to use widgets to display information about user's last trips ;
-	 * **[Driver Data Timeline](https://docs.drivequant.com/driver-data-timeline-ui/introduction)** manages display of timelines. These screens contain graphs that represent the chronological evolution of a driver’s weekly or monthly scores ;
 	 * **[My Synthesis](https://docs.drivequant.com/driver-data-my-synthesis-ui/introduction)** component which compares your average performances per week, month or year with reference levels and also with drivers from your community.
 
-
+* **[Driver Data Timeline](https://docs.drivequant.com/driver-data-timeline-ui/introduction)** manages display of timelines. These screens contain graphs that represent the chronological evolution of a driver’s weekly or monthly scores ;
 
 * **[Vehicle](https://docs.drivequant.com/vehicle/introduction)** is made to select one or more vehicles, to choose the autostart mode for each of them and to manage odometer of each vehicle ;
 * **[Driver Achievement](https://docs.drivequant.com/driver-achievement/introduction)** contains gaming features (ranking, badges and streaks) that measure driver performance and stimulate driver improvement;
