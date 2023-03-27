@@ -128,6 +128,12 @@ internal object DriveKitConfig {
 
     private fun configureCommonUI() {
         DriveKitUI.initialize()
+        DriveKitUI.scores = listOf(
+            DKScoreType.SAFETY,
+            DKScoreType.ECO_DRIVING,
+            DKScoreType.DISTRACTION,
+            DKScoreType.SPEEDING
+        )
         DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener{
             override fun trackScreen(screen: String, className: String) {
                 // TODO: manage screen tracking here
@@ -146,12 +152,6 @@ internal object DriveKitConfig {
 
     private fun configureDriverDataTimelineUI() {
         DriveKitDriverDataTimelineUI.initialize()
-        DriveKitDriverDataTimelineUI.scores = listOf(
-            DKScoreType.SAFETY,
-            DKScoreType.ECO_DRIVING,
-            DKScoreType.DISTRACTION,
-            DKScoreType.SPEEDING
-        )
     }
 
     private fun configureVehicleUI() {

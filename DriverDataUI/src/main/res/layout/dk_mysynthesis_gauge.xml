@@ -237,7 +237,7 @@
         app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/communityMeanGuideline"
+        android:id="@+id/communityMedianGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -271,13 +271,13 @@
         tools:text="min" />
 
     <TextView
-        android:id="@+id/communityMeanValue"
+        android:id="@+id/communityMedianValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinValue"
-        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
-        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        app:layout_constraintEnd_toEndOf="@id/communityMedianGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMedianGuideline"
         tools:text="mean" />
 
     <TextView
@@ -300,12 +300,12 @@
         app:layout_constraintStart_toStartOf="@id/communityMinGuideline" />
 
     <View
-        android:id="@+id/communityMeanIndicator"
+        android:id="@+id/communityMedianIndicator"
         android:layout_width="@dimen/dk_mysynthesis_community_indicator_size"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/communityMinIndicator"
-        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
-        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        app:layout_constraintEnd_toEndOf="@id/communityMedianGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMedianGuideline"
         app:layout_constraintTop_toTopOf="@id/communityMinIndicator" />
 
     <View
@@ -328,13 +328,13 @@
         tools:text="min" />
 
     <TextView
-        android:id="@+id/communityMeanText"
+        android:id="@+id/communityMedianText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="11sp"
         app:layout_constraintBaseline_toBaselineOf="@id/communityMinText"
-        app:layout_constraintEnd_toEndOf="@id/communityMeanGuideline"
-        app:layout_constraintStart_toStartOf="@id/communityMeanGuideline"
+        app:layout_constraintEnd_toEndOf="@id/communityMedianGuideline"
+        app:layout_constraintStart_toStartOf="@id/communityMedianGuideline"
         tools:text="mean" />
 
     <TextView

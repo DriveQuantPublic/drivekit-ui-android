@@ -3,8 +3,6 @@ package com.drivequant.drivekit.common.ui.graphical
 import android.content.Context
 import android.graphics.Typeface
 import androidx.annotation.DimenRes
-import androidx.core.content.res.ResourcesCompat
-import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 
 enum class DKStyle {

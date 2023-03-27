@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.permissionsutils.permissions.model
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
@@ -71,6 +72,7 @@ enum class PermissionView {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun buildIntent(context: Context, permissionViews: ArrayList<PermissionView>): Intent {
         val selectedClass = when (this) {
             NOTIFICATIONS -> NotificationsPermissionActivity::class.java

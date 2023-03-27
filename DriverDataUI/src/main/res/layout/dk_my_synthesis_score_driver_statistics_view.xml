@@ -6,8 +6,8 @@
 
     <View
         android:id="@+id/icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/dk_mysynthesis_community_indicator_size"
+        android:layout_height="@dimen/dk_mysynthesis_community_indicator_size"
         android:layout_marginTop="@dimen/dk_margin_half"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

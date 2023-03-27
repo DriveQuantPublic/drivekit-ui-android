@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.TimelineQueryListener
@@ -27,13 +28,12 @@ import java.util.*
 
 internal class TimelineViewModel(application: Application) : AndroidViewModel(application) {
 
-    val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
+    private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH)
+    private val scores: List<DKScoreType> = DriveKitUI.scores
 
     val updateData = MutableLiveData<Any>()
 
-    val scores: List<DKScoreType> = DriveKitDriverDataTimelineUI.scores
-
-    var currentPeriod: DKPeriod = this.periods.first()
+    var currentPeriod: DKPeriod = this.periods.last()
         private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
@@ -56,7 +56,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
     val graphViewModel = TimelineGraphViewModel()
 
     init {
-        scoreSelectorViewModel.configure(DriveKitDriverDataTimelineUI.scores) { score ->
+        scoreSelectorViewModel.configure(this.scores) { score ->
             selectedScore = score
             update()
         }

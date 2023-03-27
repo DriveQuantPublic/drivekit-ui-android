@@ -8,6 +8,7 @@ import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import java.lang.ref.WeakReference
@@ -52,6 +53,12 @@ internal object TripListenerController : TripListener {
         }
         sdkStateChangeListeners.forEach {
             it.get()?.sdkStateChanged(state)
+        }
+    }
+
+    override fun tripCancelled(cancelTrip: CancelTrip) {
+        tripListeners.forEach {
+            it.get()?.tripCancelled(cancelTrip)
         }
     }
 

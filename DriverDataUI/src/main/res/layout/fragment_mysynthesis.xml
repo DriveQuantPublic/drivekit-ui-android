@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="@dimen/dk_margin_quarter" />
+            android:paddingHorizontal="@dimen/dk_margin_quarter" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="@dimen/dk_margin_quarter">
+                android:paddingHorizontal="@dimen/dk_margin_quarter">
 
                 <FrameLayout
                     android:id="@+id/scoreCard_container"

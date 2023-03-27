@@ -15,6 +15,7 @@ import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatis
 import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.extension.getMedianScore
 import java.text.NumberFormat
 import java.util.*
 
@@ -55,7 +56,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             DKScoreType.DISTRACTION -> statistics.distraction
             DKScoreType.SPEEDING -> statistics.speeding
         }
-        this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.mean, scoreStatistics.max)
+        this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.getMedianScore(), scoreStatistics.max)
         this.onViewModelUpdated?.invoke()
     }
 
@@ -68,30 +69,29 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     ) = allContextItem?.hasValueForScoreType(score) ?: false
 
     fun getTitleText(context: Context): String {
+        val bestThanCommunityThreshold = 55
+        val worstThanCommunityThreshold = 45
+
         if (hasNoTrip(this.allContextItem)) {
-            return when (this.selectedPeriod) {
-                DKPeriod.WEEK -> R.string.dk_driverdata_mysynthesis_no_driving_week
-                DKPeriod.MONTH -> R.string.dk_driverdata_mysynthesis_no_driving_month
-                DKPeriod.YEAR -> R.string.dk_driverdata_mysynthesis_no_driving_year
-            }.let { context.getString(it) }
+            return context.getString(R.string.dk_driverdata_mysynthesis_no_driving)
         } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
             return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
             val score = allContextItem?.getValue(this.selectedScoreType)
             val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
             return score?.let {
-                val lowerThanPercent = scoreStatistics.percentCommunityLowerThan(score)
-                val greaterThanPercent = scoreStatistics.percentCommunityGreaterThan(score)
+                val userPositionFromLowerScores = scoreStatistics.percentCommunityLowerThan(score)
+                val userPositionFromHigherScores = scoreStatistics.percentCommunityGreaterThan(score)
 
-                if (lowerThanPercent > 55) {
+                if (userPositionFromLowerScores > bestThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_best,
-                        DKDataFormatter.formatPercentage(lowerThanPercent, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromLowerScores)
                     )
-                } else if (greaterThanPercent > 45) {
+                } else if (userPositionFromLowerScores < worstThanCommunityThreshold) {
                     context.getString(
                         R.string.dk_driverdata_mysynthesis_you_are_lower,
-                        DKDataFormatter.formatPercentage(greaterThanPercent, appendSpace = false)
+                        DKDataFormatter.formatPercentage(userPositionFromHigherScores)
                     )
                 } else {
                     context.getString(R.string.dk_driverdata_mysynthesis_you_are_average)
@@ -108,7 +108,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     } else if (!hasData(this.selectedScoreType, this.allContextItem)) {
         DriveKitUI.colors.complementaryFontColor()
     } else {
-        DriveKitUI.colors.primaryColor()
+        DriveKitUI.colors.mainFontColor()
     }
 
     private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {
@@ -124,7 +124,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     fun getDriverTripsCountText(context: Context): SpannableString {
         val tripsCount = this.selectedDate?.let {
-            driverTimeline?.allContextItemAt(it)?.numberTripScored
+            driverTimeline?.allContextItemAt(it)?.numberTripTotal
         } ?: 0
         return getTripsCountText(context, tripsCount)
     }
@@ -179,10 +179,11 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     private fun getDistanceText(context: Context, distanceKm: Double): SpannableString {
         val spannable = DKSpannable()
+
         DKDataFormatter.formatMeterDistanceInKm(
             context = context,
             distance = distanceKm * 1000,
-            minDistanceToRemoveFractions = 10.0
+            minDistanceToRemoveFractions = 0.0,
         ).forEach {
             when (it) {
                 is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.complementaryFontColor(), DKStyle.NORMAL_TEXT)

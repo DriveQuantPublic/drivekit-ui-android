@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DimenRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -64,4 +65,9 @@ internal class PeriodSelectorItemView(
         }
     }
 
+    fun updateHorizontalPadding(@DimenRes padding: Int) {
+        context.resources.getDimensionPixelSize(padding).let {
+            textViewSelector.setPadding(it, 0, it, 0)
+        }
+    }
 }

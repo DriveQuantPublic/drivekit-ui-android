@@ -18,18 +18,15 @@ import com.drivequant.drivekit.core.networking.RequestError
 
 internal class UserIdViewModel : ViewModel(), DriveKitListener {
 
-    init {
-        DriveKitListenerManager.addListener(this)
-    }
-
     private var listener: UserIdDriveKitListener? = null
     var messageIdentifier: MutableLiveData<Int> = MutableLiveData()
     var syncStatus: MutableLiveData<SyncStatus> = MutableLiveData()
     var syncUserInfo: MutableLiveData<Boolean> = MutableLiveData()
 
     fun sendUserId(userId: String, listener: UserIdDriveKitListener) {
-        DriveKit.setUserId(userId)
+        DriveKitListenerManager.addListener(this)
         this.listener = listener
+        DriveKit.setUserId(userId)
     }
 
     override fun onConnected() {

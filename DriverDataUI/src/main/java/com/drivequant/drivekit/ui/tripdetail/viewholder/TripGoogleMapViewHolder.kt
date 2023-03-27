@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.content.DialogInterface
-import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.core.content.ContextCompat
@@ -43,7 +42,7 @@ internal class TripGoogleMapViewHolder(
     }
 
     init {
-        viewModel.displayMapItem.observe(fragment) {
+        viewModel.displayMapItem.observe(fragment.viewLifecycleOwner) {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
                 when (mapItem) {
@@ -64,7 +63,7 @@ internal class TripGoogleMapViewHolder(
                 }
             }
         }
-        viewModel.selection.observe(fragment) {
+        viewModel.selection.observe(fragment.viewLifecycleOwner) {
             it?.let { position ->
                 val marker = googleMarkerList[position]
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(
@@ -76,7 +75,7 @@ internal class TripGoogleMapViewHolder(
                 googleMap.animateCamera(cameraUpdate)
             }
         }
-        viewModel.selectedMapTraceType.observe(fragment) {
+        viewModel.selectedMapTraceType.observe(fragment.viewLifecycleOwner) {
             it?.let {
                 traceRoute(MapItem.DISTRACTION, it)
             }

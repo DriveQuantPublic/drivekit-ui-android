@@ -1,17 +1,20 @@
 package com.drivequant.drivekit.common.ui.component.scoreselector
 
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 
 class DKScoreSelectorViewModel {
 
-    var scores: List<DKScoreType> = DKScoreType.values().toList()
+    private var internalScores: List<DKScoreType> = DriveKitUI.scores
+    var scores: List<DKScoreType>
+        get() {
+            return this.internalScores.filter { it.hasAccess() }
+        }
         private set(value) {
-            field = value.ifEmpty {
+            this.internalScores = value.ifEmpty {
                 listOf(DKScoreType.SAFETY)
-            }.filter { it.hasAccess() }
-            if (field.isNotEmpty() && !field.contains(this.selectedScore)) {
-                this.selectedScore = field.first()
             }
+            this.selectedScore = this.internalScores.first()
         }
     var selectedScore: DKScoreType = this.scores.first()
         private set

@@ -15,7 +15,8 @@ class DKDateSelectorViewModel : ViewModel() {
     var period: DKPeriod? = null
         private set
     private var dates: List<Date>? = null
-    private var selectedDateIndex: Int = -1
+    var selectedDateIndex: Int = -1
+        private set
     var hasPreviousDate = false
         private set
     var hasNextDate = false

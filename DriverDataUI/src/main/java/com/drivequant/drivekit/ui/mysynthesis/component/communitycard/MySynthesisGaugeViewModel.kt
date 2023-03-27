@@ -17,19 +17,19 @@ internal class MySynthesisGaugeViewModel {
         private set
     var communityMinScore: Double? = null
         private set
-    var communityMeanScore: Double? = null
+    var communityMedianScore: Double? = null
         private set
     var communityMaxScore: Double? = null
         private set
     var scoreType: DKScoreType? = null
         private set
 
-    fun configure(scoreType: DKScoreType, score: Double?, communityMinScore: Double, communityMeanScore: Double, communityMaxScore: Double) {
+    fun configure(scoreType: DKScoreType, score: Double?, communityMinScore: Double, communityMedianScore: Double, communityMaxScore: Double) {
         this.scoreType = scoreType
         this.score = score
         this.scoreLevel = score?.let { scoreType.getLevelForValue(it) }
         this.communityMinScore = communityMinScore
-        this.communityMeanScore = communityMeanScore
+        this.communityMedianScore = communityMedianScore
         this.communityMaxScore = communityMaxScore
         this.onUpdateCallback?.invoke()
     }

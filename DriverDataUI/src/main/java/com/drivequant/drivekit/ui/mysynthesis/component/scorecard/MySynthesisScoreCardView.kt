@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.ui.R
 
 internal class MySynthesisScoreCardView : LinearLayout {
@@ -67,35 +66,28 @@ internal class MySynthesisScoreCardView : LinearLayout {
     private fun update() {
         configureTitle()
         configureCurrentScoreText(this.viewModel.score)
-        configureEvolutionText(this.viewModel.previousScore)
+        configureEvolutionText()
         configureTrendIcon(this.viewModel.score, this.viewModel.previousScore)
     }
 
     private fun configureTitle() {
         title.apply {
-            headLine2(DriveKitUI.colors.primaryColor())
+            headLine2(DriveKitUI.colors.mainFontColor())
             text = context.getString(viewModel.getCardTitleResId())
         }
     }
 
     private fun configureCurrentScoreText(scoreValue: Double?) {
         val subtitleTextColor = if (scoreValue != null) DriveKitUI.colors.primaryColor() else DriveKitUI.colors.complementaryFontColor()
-
         subTitle.apply {
-            text = DKSpannable().computeScoreOutOfTen(scoreValue).toSpannable()
+            text = viewModel.computeScoreOutOfTen(context, scoreValue)
             highlightBig(subtitleTextColor)
+            setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
     }
 
-    private fun configureEvolutionText(previousScore: Double?) {
-        val evolutionText = viewModel.getEvolutionText(context)
-
-        this.evolutionText.text = if (viewModel.showEvolutionScoreOutOfTen()) {
-            DKSpannable().append(evolutionText).space().computeScoreOutOfTen(previousScore).toSpannable()
-        } else {
-            evolutionText
-        }
-        this.evolutionText.normalText(DriveKitUI.colors.complementaryFontColor())
+    private fun configureEvolutionText() {
+        this.evolutionText.text = viewModel.getEvolutionText(context)
     }
 
     private fun configureTrendIcon(score: Double?, previousScore: Double?) {
@@ -107,12 +99,5 @@ internal class MySynthesisScoreCardView : LinearLayout {
             icon.tintDrawable(iconColor)
             trendIcon.setImageDrawable(icon)
         }
-    }
-
-    private fun DKSpannable.computeScoreOutOfTen(score: Double?): DKSpannable {
-        val scoreText = (score?.format(1) ?: "-")
-            .plus(" ")
-            .plus(context.getString(R.string.dk_common_unit_score))
-        return this.append(scoreText, context.resSpans { typeface(Typeface.BOLD) })
     }
 }

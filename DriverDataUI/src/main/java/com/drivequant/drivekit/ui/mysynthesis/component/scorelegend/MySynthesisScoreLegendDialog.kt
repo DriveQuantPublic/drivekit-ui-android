@@ -36,7 +36,7 @@ internal class MySynthesisScoreLegendDialog {
 
         alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_title)?.apply {
             text = context.getString(scoreType.getTitle())
-            headLine2(DriveKitUI.colors.primaryColor())
+            headLine2(DriveKitUI.colors.mainFontColor())
         }
 
         alertDialog.findViewById<TextView>(R.id.my_synthesis_score_legend_description)?.apply {
@@ -74,7 +74,7 @@ internal class MySynthesisScoreLegendDialog {
                 )
             }
             this.text = DKSpannable().append(scoreValuesText, context.resSpans {
-                color(DriveKitUI.colors.primaryColor())
+                color(DriveKitUI.colors.mainFontColor())
                 typeface(Typeface.NORMAL)
                 size(R.dimen.dk_text_normal)
             }).space()
@@ -100,7 +100,7 @@ internal class MySynthesisScoreLegendDialog {
     @StringRes
     private fun DKScoreType.getTitle() = when (this) {
         DKScoreType.SAFETY -> R.string.dk_driverdata_safety_score
-        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_eco_score
+        DKScoreType.ECO_DRIVING -> R.string.dk_driverdata_ecodriving_score
         DKScoreType.DISTRACTION -> R.string.dk_driverdata_distraction_score
         DKScoreType.SPEEDING -> R.string.dk_driverdata_speeding_score
     }

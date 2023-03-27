@@ -349,7 +349,7 @@ class TripDetailFragment : Fragment() {
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             this.feedbackAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
-               handleClassicFeedbackAnswer(checkedId, feedbackView)
+            handleClassicFeedbackAnswer(checkedId, feedbackView)
         }
 
         val builder = AlertDialog.Builder(context)

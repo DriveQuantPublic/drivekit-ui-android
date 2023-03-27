@@ -97,7 +97,7 @@ class ChallengeParticipationFragment : Fragment() {
         }
 
         if (!this::challengeHeaderView.isInitialized && context != null) {
-            challengeHeaderView = ChallengeHeaderView(context!!)
+            challengeHeaderView = ChallengeHeaderView(requireContext())
         }
         challengeHeaderView.configure(viewModel, requireActivity())
         challenge_header_view_container.addView(challengeHeaderView)
