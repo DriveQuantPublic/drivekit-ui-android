@@ -78,7 +78,6 @@
         android:id="@+id/fab_trip_advice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/dk_safety_advice"
         android:scaleType="center"
         app:maxImageSize="@dimen/dk_ic_big"
         android:visibility="gone"

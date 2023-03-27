@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -59,13 +59,13 @@ class ChallengeResultsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
-            ).get(ChallengeDetailViewModel::class.java)
+            )[ChallengeDetailViewModel::class.java]
         }
 
-        viewModel.syncChallengeDetailError.observe(this, Observer {
+        viewModel.syncChallengeDetailError.observe(viewLifecycleOwner, Observer {
             val colorStateList =
                 ColorStateList.valueOf(
                     ContextCompat.getColor(

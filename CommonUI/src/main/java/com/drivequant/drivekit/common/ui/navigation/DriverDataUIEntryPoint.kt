@@ -8,4 +8,6 @@ interface DriverDataUIEntryPoint {
     fun startTripDetailActivity(context: Context, tripId: String, openAdvice: Boolean = true)
     fun createTripListFragment(): Fragment
     fun createTripDetailFragment(tripId: String): Fragment
+
+    fun startMySynthesisActivity(context: Context)
 }

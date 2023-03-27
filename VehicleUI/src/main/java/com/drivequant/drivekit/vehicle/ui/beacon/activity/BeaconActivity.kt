@@ -4,7 +4,7 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -18,7 +18,9 @@ import androidx.core.app.ActivityCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.databaseutils.entity.Beacon
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -45,6 +47,8 @@ class BeaconActivity : AppCompatActivity() {
                            vehicleId: String? = null,
                            beacon: Beacon? = null
         ) {
+            DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner launched in ${scanType.name} mode, vehicleId=$vehicleId, major=${beacon?.major}, minor=${beacon?.minor}")
+
             val intent = Intent(context, BeaconActivity::class.java)
             intent.putExtra(SCAN_TYPE_EXTRA, scanType)
             intent.putExtra(VEHICLE_ID_EXTRA, vehicleId)
@@ -70,8 +74,8 @@ class BeaconActivity : AppCompatActivity() {
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
 
-        viewModel = ViewModelProviders.of(this,
-            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon)).get(BeaconViewModel::class.java)
+        viewModel = ViewModelProvider(this,
+            BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon))[BeaconViewModel::class.java]
         viewModel.init(this)
 
         viewModel.fragmentDispatcher.observe(this) { fragment ->

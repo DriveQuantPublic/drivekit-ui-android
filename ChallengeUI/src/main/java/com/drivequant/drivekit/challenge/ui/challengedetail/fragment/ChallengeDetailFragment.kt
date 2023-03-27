@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
@@ -61,13 +61,13 @@ class ChallengeDetailFragment : Fragment() {
             challengeId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
             ).get(ChallengeDetailViewModel::class.java)
         }
         startSyncType = if (viewModel.getLocalChallengeDetail() != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
-        viewModel.syncChallengeDetailError.observe(this) {
+        viewModel.syncChallengeDetailError.observe(viewLifecycleOwner) {
             if (!it) {
                 Toast.makeText(
                     requireContext(),

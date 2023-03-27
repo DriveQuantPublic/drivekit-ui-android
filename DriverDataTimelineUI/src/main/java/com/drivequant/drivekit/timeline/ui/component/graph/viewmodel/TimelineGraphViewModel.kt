@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.databaseutils.entity.Timeline
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
-import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.extension.*
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.*
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
@@ -36,7 +37,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     private var indexOfFirstPointInTimeline: Int? = null
     private var indexOfLastPointInTimeline: Int? = null
 
-    fun configure(context: Context, timeline: Timeline, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKTimelinePeriod) {
+    fun configure(context: Context, timeline: DKRawTimeline, timelineSelectedIndex: Int, graphItem: GraphItem, period: DKPeriod) {
         val sourceDates = timeline.allContext.date.map { it.toTimelineDate()!! }
         val dates: List<Date> = sourceDates.map { it.removeTime() }
         val calendarField = getCalendarField(period)
@@ -76,7 +77,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         configure(graphItem, graphPointNumber, graphPoints, graphDates, selectedIndexInGraph, graphItem.getGraphDescription(context, getValue(timelineSelectedIndex, graphItem, timeline)))
     }
 
-    fun showEmptyGraph(graphItem: GraphItem, period: DKTimelinePeriod) {
+    fun showEmptyGraph(graphItem: GraphItem, period: DKPeriod) {
         val calendarField = getCalendarField(period)
         val graphPointNumber = GraphConstants.GRAPH_POINT_NUMBER
         val now = Date()
@@ -136,22 +137,24 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         this.graphViewModelDidUpdate?.let { it() }
     }
 
-    private fun getCalendarField(period: DKTimelinePeriod): CalendarField = when (period) {
-        DKTimelinePeriod.WEEK -> CalendarField.WEEK
-        DKTimelinePeriod.MONTH -> CalendarField.MONTH
+    private fun getCalendarField(period: DKPeriod): CalendarField = when (period) {
+        DKPeriod.WEEK -> CalendarField.WEEK
+        DKPeriod.MONTH -> CalendarField.MONTH
+        DKPeriod.YEAR -> CalendarField.YEAR
     }
 
-    private fun getDateFormatPattern(period: DKTimelinePeriod): DKDatePattern {
+    private fun getDateFormatPattern(period: DKPeriod): DKDatePattern {
         return when (period) {
-            DKTimelinePeriod.WEEK -> DKDatePattern.DAY_MONTH
-            DKTimelinePeriod.MONTH -> DKDatePattern.MONTH_ABBREVIATION
+            DKPeriod.WEEK -> DKDatePattern.DAY_MONTH
+            DKPeriod.MONTH -> DKDatePattern.MONTH_ABBREVIATION
+            DKPeriod.YEAR -> DKDatePattern.YEAR
         }
     }
 
     private fun getGraphLabels(
         startDate: Date,
         calendarField: CalendarField,
-        period: DKTimelinePeriod,
+        period: DKPeriod,
         graphPointNumber: Int
     ): List<String> {
         val graphDates: MutableList<String> = mutableListOf()
@@ -185,7 +188,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return null
     }
 
-    private fun getInterpolatedStartOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: Timeline, xLabelDate: Date): GraphPoint? {
+    private fun getInterpolatedStartOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKRawTimeline, xLabelDate: Date): GraphPoint? {
         // Find next valid index
         var point: GraphPoint? = null
         var nextValidIndex: Int = -1
@@ -218,7 +221,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return point
     }
 
-    private fun getInterpolatedEndOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: Timeline, xLabelDate: Date): GraphPoint? {
+    private fun getInterpolatedEndOfGraphPoint(graphStartDate: Date, calendarField: CalendarField, dates: List<Date>, graphItem: GraphItem, timeline: DKRawTimeline, xLabelDate: Date): GraphPoint? {
         // Find previous valid index
         var point: GraphPoint? = null
         var previousValidIndex: Int = -1
@@ -252,7 +255,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         return point
     }
 
-    private fun getInterpolatedSelectableDateWithoutValue(dateIndex: Int, graphItem: GraphItem, timeline: Timeline, dates: List<Date>, calendarField: CalendarField, pointX: Double, sourceDates: List<Date>): GraphPoint? {
+    private fun getInterpolatedSelectableDateWithoutValue(dateIndex: Int, graphItem: GraphItem, timeline: DKRawTimeline, dates: List<Date>, calendarField: CalendarField, pointX: Double, sourceDates: List<Date>): GraphPoint? {
         val point: GraphPoint?
         if (dates.size == 1) {
             point = GraphPoint(pointX, 0.0, null)
@@ -292,7 +295,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         }
     }
 
-    private fun getValue(index: Int, graphItem: GraphItem, timeline: Timeline): Double? {
+    private fun getValue(index: Int, graphItem: GraphItem, timeline: DKRawTimeline): Double? {
         val totalDuration = timeline.allContext.duration.getSafe(index)?.toDouble() ?: 0.0
         val totalDistance = timeline.allContext.distance.getSafe(index) ?: 0.0
         return when (graphItem) {
@@ -397,7 +400,7 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
         }
     }
 
-    private fun getInterpolatedValue(date: Date, previousValidIndex: Int, nextValidIndex: Int, dates: List<Date>, calenderUnit: CalendarField, graphItem: GraphItem, timeline: Timeline): Double? {
+    private fun getInterpolatedValue(date: Date, previousValidIndex: Int, nextValidIndex: Int, dates: List<Date>, calenderUnit: CalendarField, graphItem: GraphItem, timeline: DKRawTimeline): Double? {
         val previousValidDate: Date = dates[previousValidIndex]
         val nextValidDate: Date = dates[nextValidIndex]
         val diffBetweenPreviousAndNext = nextValidDate.diffWith(previousValidDate, calenderUnit)

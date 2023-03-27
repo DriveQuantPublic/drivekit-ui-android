@@ -12,7 +12,7 @@ import android.widget.AdapterView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -62,8 +62,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             vehicleId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this,
-                OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId)).get(OdometerVehicleListViewModel::class.java)
+            viewModel = ViewModelProvider(this,
+                OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId))[OdometerVehicleListViewModel::class.java]
         }
         dk_swipe_refresh_odometer.setOnRefreshListener {
             updateSwipeRefreshOdometerVisibility(true)
@@ -74,7 +74,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
         context?.let { context ->
             viewModel.getVehicleListItems(context)
-            viewModel.vehicleOdometerData.observe(this) {
+            viewModel.vehicleOdometerData.observe(viewLifecycleOwner) {
                 if (it) {
                     viewModel.selection.value?.let { vehicleId ->
                         val viewModel = OdometerItemViewModel(vehicleId)
@@ -104,7 +104,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                     }
                 }
             }
-            viewModel.selection.observe(this) {
+            viewModel.selection.observe(viewLifecycleOwner) {
                 it?.let {
                     val vehicleOdometer =
                         DriveKitVehicle.vehiclesQuery().whereEqualTo("vehicleId", it).queryOne()
@@ -123,7 +123,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             }
         }
 
-        viewModel.filterData.observe(this) { position ->
+        viewModel.filterData.observe(viewLifecycleOwner) { position ->
             vehicle_filter.setItems(viewModel.filterItems, position)
             initVehicleFilter()
         }

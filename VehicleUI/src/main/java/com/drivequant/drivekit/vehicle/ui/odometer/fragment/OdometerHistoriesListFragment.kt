@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
@@ -73,8 +73,8 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
         }
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-                viewModel = ViewModelProviders.of(this,
-                OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId)).get(OdometerHistoriesViewModel::class.java)
+                viewModel = ViewModelProvider(this,
+                OdometerHistoriesViewModel.OdometerHistoriesViewModelFactory(vehicleId))[OdometerHistoriesViewModel::class.java]
                 initReadingsList(context)
                 addOdometerReading(context, vehicleId)
             }

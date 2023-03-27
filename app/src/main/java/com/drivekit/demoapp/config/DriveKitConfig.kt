@@ -14,11 +14,11 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
 import com.drivequant.drivekit.common.ui.analytics.DriveKitAnalyticsListener
-import com.drivequant.drivekit.common.ui.component.DKScoreType
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
@@ -128,6 +128,12 @@ internal object DriveKitConfig {
 
     private fun configureCommonUI() {
         DriveKitUI.initialize()
+        DriveKitUI.scores = listOf(
+            DKScoreType.SAFETY,
+            DKScoreType.ECO_DRIVING,
+            DKScoreType.DISTRACTION,
+            DKScoreType.SPEEDING
+        )
         DriveKitUI.configureAnalytics(object: DriveKitAnalyticsListener{
             override fun trackScreen(screen: String, className: String) {
                 // TODO: manage screen tracking here
@@ -146,12 +152,6 @@ internal object DriveKitConfig {
 
     private fun configureDriverDataTimelineUI() {
         DriveKitDriverDataTimelineUI.initialize()
-        DriveKitDriverDataTimelineUI.scores = listOf(
-            DKScoreType.SAFETY,
-            DKScoreType.ECO_DRIVING,
-            DKScoreType.DISTRACTION,
-            DKScoreType.SPEEDING
-        )
     }
 
     private fun configureVehicleUI() {

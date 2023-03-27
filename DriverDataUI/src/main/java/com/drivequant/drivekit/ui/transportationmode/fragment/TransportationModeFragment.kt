@@ -3,7 +3,7 @@ package com.drivequant.drivekit.ui.transportationmode.fragment
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -59,9 +59,9 @@ internal class TransportationModeFragment : Fragment(){
             itinId = it
         }
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this,
+            viewModel = ViewModelProvider(this,
                 TransportationModeViewModel.TransportationModeViewModelFactory(itinId)
-            ).get(TransportationModeViewModel::class.java)
+            )[TransportationModeViewModel::class.java]
         }
 
         (description_title.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
@@ -98,7 +98,7 @@ internal class TransportationModeFragment : Fragment(){
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(this, { status ->
+        viewModel.updateObserver.observe(viewLifecycleOwner, { status ->
             hideProgressCircular()
             if (status != null){
                 when (status){

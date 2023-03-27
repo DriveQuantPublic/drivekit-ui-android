@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -64,13 +64,13 @@ internal class SpeedingFragment : Fragment() {
             savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
 
         if (itinId != null && tripListConfigurationType != null) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 TripDetailViewModelFactory(
                     itinId,
                     tripListConfigurationType.getTripListConfiguration()
                 )
-            ).get(TripDetailViewModel::class.java)
+            )[TripDetailViewModel::class.java]
         }
 
         gauge_type_title.text = DKResource.convertToString(requireContext(), "dk_common_speed")
@@ -134,7 +134,7 @@ internal class SpeedingFragment : Fragment() {
         speeding_distance_item.setDistractionEventContent(
             DKResource.convertToString(requireContext(), "dk_driverdata_speeding_events_distance"),
             distanceContent)
-        
+
         speeding_duration_item.setDistractionEventContent(
             DKResource.convertToString(requireContext(), durationResId),
             durationContent)

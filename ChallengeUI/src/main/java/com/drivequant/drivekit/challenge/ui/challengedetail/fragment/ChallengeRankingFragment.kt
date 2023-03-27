@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDriverRanking
@@ -60,7 +60,7 @@ class ChallengeRankingFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             if (!this::viewModel.isInitialized) {
-                viewModel = ViewModelProviders.of(
+                viewModel = ViewModelProvider(
                     this,
                     ChallengeDetailViewModel.ChallengeDetailViewModelFactory(it)
                 ).get(ChallengeDetailViewModel::class.java)

@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.content.DialogInterface
-import androidx.lifecycle.Observer
 import android.content.res.ColorStateList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.core.content.ContextCompat
@@ -43,7 +42,7 @@ internal class TripGoogleMapViewHolder(
     }
 
     init {
-        viewModel.displayMapItem.observe(fragment, Observer {
+        viewModel.displayMapItem.observe(fragment.viewLifecycleOwner) {
             it?.let { mapItem ->
                 configureAdviceButton(mapItem)
                 when (mapItem) {
@@ -63,8 +62,8 @@ internal class TripGoogleMapViewHolder(
                     }
                 }
             }
-        })
-        viewModel.selection.observe(fragment, Observer {
+        }
+        viewModel.selection.observe(fragment.viewLifecycleOwner) {
             it?.let { position ->
                 val marker = googleMarkerList[position]
                 val cameraUpdate = CameraUpdateFactory.newCameraPosition(
@@ -75,12 +74,12 @@ internal class TripGoogleMapViewHolder(
                 )
                 googleMap.animateCamera(cameraUpdate)
             }
-        })
-        viewModel.selectedMapTraceType.observe(fragment, Observer {
+        }
+        viewModel.selectedMapTraceType.observe(fragment.viewLifecycleOwner) {
             it?.let {
                 traceRoute(MapItem.DISTRACTION, it)
             }
-        })
+        }
         googleMap.setOnInfoWindowClickListener(this)
         googleMap.uiSettings.isMapToolbarEnabled = false
 
@@ -109,7 +108,7 @@ internal class TripGoogleMapViewHolder(
                 description?.normalText()
         }
     }
-    
+
     private fun configureAdviceButton(mapItem: DKMapItem){
         val adviceFabButton = itemView.findViewById<FloatingActionButton>(R.id.fab_trip_advice)
         adviceFabButton.backgroundTintList =
@@ -312,11 +311,12 @@ internal class TripGoogleMapViewHolder(
                     .icon(BitmapDescriptorFactory.fromResource(event.getMapImageResource()))
                     .anchor(event.getXAnchor(), event.getYAnchor())
                     .title(event.getTitle(itemView.context))
-
             )
-            marker.tag = i
-            googleMarkerList.add(marker)
-            builder.include(location)
+            if (marker != null) {
+                marker.tag = i
+                googleMarkerList.add(marker)
+                builder.include(location)
+            }
         }
     }
 
@@ -349,11 +349,9 @@ internal class TripGoogleMapViewHolder(
         customInfoWindowAdapter.displayInfo(marker)
     }
 
-    override fun onMarkerClick(marker: Marker?): Boolean {
-        marker?.let {
-            viewModel.selection.postValue(it.tag as Int)
-            it.showInfoWindow()
-        }
+    override fun onMarkerClick(marker: Marker): Boolean {
+        viewModel.selection.postValue(marker.tag as Int)
+        marker.showInfoWindow()
         return true
     }
 }

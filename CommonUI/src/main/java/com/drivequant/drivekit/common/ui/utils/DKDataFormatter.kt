@@ -367,10 +367,9 @@ object DKDataFormatter {
             .plus(nbsp)
             .plus(context.getString(R.string.dk_common_unit_score))
 
-    fun formatPercentage(value: Double): String =
-        value.format(1)
-            .plus(nbsp)
-            .plus("%")
+    fun formatPercentage(value: Int) = value.toString().plus("%")
+
+    fun formatPercentage(value: Double) = value.format(1).plus("%")
 
     fun formatLiter(context: Context, liter: Double): String =
         liter.format(1)

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -69,9 +69,9 @@ class OdometerInitFragment : Fragment() {
         }
         vehicleId?.let { vehicleId ->
             context?.let { context ->
-                viewModel = ViewModelProviders.of(this,
+                viewModel = ViewModelProvider(this,
                     OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
-                        -1)).get(OdometerHistoryDetailViewModel::class.java)
+                        -1))[OdometerHistoryDetailViewModel::class.java]
                 addOdometerReading(context)
 
                 text_view_odometer_desc.apply {

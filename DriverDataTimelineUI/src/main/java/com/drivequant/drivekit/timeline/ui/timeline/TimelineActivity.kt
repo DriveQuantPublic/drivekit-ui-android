@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.R
 import java.util.*
 
@@ -61,7 +61,7 @@ internal class TimelineActivity : AppCompatActivity() {
             if (selectedPeriod != null && selectedDate > 0) {
                 val date = Date()
                 date.time = selectedDate
-                fragment.updateDataFromDetailScreen(DKTimelinePeriod.valueOf(selectedPeriod), date)
+                fragment.updateDataFromDetailScreen(DKPeriod.valueOf(selectedPeriod), date)
             }
         }
     }

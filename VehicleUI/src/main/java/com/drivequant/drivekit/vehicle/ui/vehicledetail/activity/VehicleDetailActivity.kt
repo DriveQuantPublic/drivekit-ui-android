@@ -3,7 +3,7 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -37,9 +37,9 @@ class VehicleDetailActivity : AppCompatActivity() {
 
         val vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA) as String
 
-        viewModel = ViewModelProviders.of(this,
+        viewModel = ViewModelProvider(this,
             VehicleDetailViewModel.VehicleDetailViewModelFactory(vehicleId)
-        ).get(VehicleDetailViewModel::class.java)
+        )[VehicleDetailViewModel::class.java]
         viewModel.init(this)
 
         viewModel.progressBarObserver.observe(this) {

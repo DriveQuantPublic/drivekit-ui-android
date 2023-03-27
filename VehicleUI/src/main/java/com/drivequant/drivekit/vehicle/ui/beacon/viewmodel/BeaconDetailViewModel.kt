@@ -111,7 +111,7 @@ class BeaconDetailViewModel(
         private val beaconRetrievedInfo: DKBeaconRetrievedInfo,
         private val seenBeacon: BeaconInfo
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return BeaconDetailViewModel(vehicleId, vehicleName, beaconRetrievedInfo,  seenBeacon) as T
         }
     }

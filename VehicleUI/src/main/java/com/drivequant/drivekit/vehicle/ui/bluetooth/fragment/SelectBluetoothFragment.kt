@@ -51,12 +51,12 @@ class SelectBluetoothFragment: Fragment() {
 
         setupRecyclerView()
 
-        viewModel.addBluetoothObserver.observe(this, Observer { identifier ->
+        viewModel.addBluetoothObserver.observe(viewLifecycleOwner) { identifier ->
             identifier?.let {
                 val message = DKResource.convertToString(requireContext(), it)
                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
             }
-        })
+        }
     }
 
     private fun setupRecyclerView() {

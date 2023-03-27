@@ -78,7 +78,7 @@ internal class DKSynthesisCardViewModel(
     class DKSynthesisCardViewModelFactory(
         private val synthesisCard: DKSynthesisCard
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DKSynthesisCardViewModel(synthesisCard) as T
         }
     }

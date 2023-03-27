@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AlertDialog
@@ -14,6 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.core.utils.getPackageInfoCompat
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 
@@ -24,6 +24,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
 
     @Suppress("UNCHECKED_CAST")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS) {
             if (verifyPermissions(grantResults)) {
                 permissionCallback?.onPermissionGranted(permissions as Array<String>)
@@ -92,7 +93,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
 
     private fun permissionExists(context: Context, permissionName: String): Boolean {
         try {
-            val packageInfo = context.packageManager.getPackageInfo(
+            val packageInfo = context.packageManager.getPackageInfoCompat(
                 context.packageName,
                 PackageManager.GET_PERMISSIONS
             )

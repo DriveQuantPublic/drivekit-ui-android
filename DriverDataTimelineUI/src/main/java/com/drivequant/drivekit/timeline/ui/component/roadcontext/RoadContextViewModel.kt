@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.databaseutils.entity.Timeline
-import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.enum.EmptyRoadContextType
@@ -30,7 +30,7 @@ internal class RoadContextViewModel : ViewModel() {
     var emptyRoadContextType: EmptyRoadContextType? = null
         private set
 
-    fun configure(timeline: Timeline?, selectedScore: DKScoreType, selectedIndex: Int?) {
+    fun configure(timeline: DKRawTimeline?, selectedScore: DKScoreType, selectedIndex: Int?) {
         if (timeline != null && selectedIndex != null && timeline.hasData()) {
             this.selectedScore = selectedScore
             this.totalDistanceForAllContext = timeline.totalDistanceForAllContexts(selectedScore, selectedIndex)

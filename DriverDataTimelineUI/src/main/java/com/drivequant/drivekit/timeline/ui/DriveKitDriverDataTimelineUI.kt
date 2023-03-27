@@ -1,19 +1,19 @@
 package com.drivequant.drivekit.timeline.ui
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataTimelineUIEntryPoint
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.timeline.ui.timeline.TimelineActivity
 
 object DriveKitDriverDataTimelineUI : DriverDataTimelineUIEntryPoint {
 
-    var scores: List<DKScoreType> = DKScoreType.values().toList()
-        get() = field.filter { it.hasAccess() }
+    @Deprecated("You should use DriveKitUI.scores now.", ReplaceWith("DriveKitUI.scores"))
+    var scores: List<DKScoreType>
+        get() = DriveKitUI.scores
         set(value) {
-            field = value.ifEmpty {
-                listOf(DKScoreType.SAFETY)
-            }
+            DriveKitUI.scores = value
         }
 
     fun initialize() {

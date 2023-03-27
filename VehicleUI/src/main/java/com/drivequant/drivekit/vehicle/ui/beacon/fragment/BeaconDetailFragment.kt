@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
@@ -62,7 +62,7 @@ class BeaconDetailFragment : Fragment() {
             val txPower = it.getInt("txPower")
             val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo?
             if (vehicleId != null && vehicleName != null && seenBeacon != null) {
-                viewModel = ViewModelProviders.of(
+                viewModel = ViewModelProvider(
                     this,
                     BeaconDetailViewModel.BeaconDetailViewModelFactory(
                         vehicleId,
@@ -70,7 +70,7 @@ class BeaconDetailFragment : Fragment() {
                         DKBeaconRetrievedInfo(batteryLevel, estimatedDistance, rssi, txPower),
                         seenBeacon
                     )
-                ).get(BeaconDetailViewModel::class.java)
+                )[BeaconDetailViewModel::class.java]
             }
         }
 

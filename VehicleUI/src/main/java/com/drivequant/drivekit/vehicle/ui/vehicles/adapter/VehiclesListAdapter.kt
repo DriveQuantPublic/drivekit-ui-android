@@ -48,15 +48,17 @@ class VehiclesListAdapter(
                 if (touched) {
                     val detectionModes = viewModel.buildDetectionModeSpinnerItems(view.context)
                     val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
-                    DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, viewModel, vehicles[position])
+                    DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, viewModel, vehicles[holder.adapterPosition])
                     touched = false
                 }
             }
-            override fun onNothingSelected(adapterView: AdapterView<*>?) {}
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
+                // Nothing to do.
+            }
         }
 
-        holder.bind(vehicles[position])
-        holder.selectDetectionMode(context, vehicles[position])
+        holder.bind(vehicles[holder.adapterPosition])
+        holder.selectDetectionMode(context, vehicles[holder.adapterPosition])
     }
 
     override fun getItemId(position: Int): Long {

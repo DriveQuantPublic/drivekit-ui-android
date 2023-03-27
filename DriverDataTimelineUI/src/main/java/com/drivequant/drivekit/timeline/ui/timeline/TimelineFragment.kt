@@ -7,38 +7,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorListener
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
+import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorItemListener
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
 
-internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
+internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private lateinit var viewModel: TimelineViewModel
 
     private lateinit var dispatchTouchFrameLayout: DispatchTouchFrameLayout
 
+    private lateinit var scoreSelectorView: DKScoreSelectorView
+
     private lateinit var periodSelectorContainer: LinearLayout
-    private lateinit var periodSelectorView: PeriodSelectorView
+    private lateinit var periodSelectorView: DKPeriodSelectorView
 
     private lateinit var dateSelectorContainer: LinearLayout
-    private lateinit var dateSelectorView: DateSelectorView
+    private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
@@ -53,13 +52,14 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_timeline, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_timeline, container, false).setDKStyle()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         dispatchTouchFrameLayout = view.findViewById(R.id.dispatch_touch_frame_layout)
+        scoreSelectorView = view.findViewById(R.id.score_selector_view)
         periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
@@ -67,7 +67,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
         checkViewModelInitialization()
 
-        viewModel.updateData.observe(this) {
+        viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
 
@@ -77,10 +77,8 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
             } else {
                 dateSelectorContainer.visibility = View.GONE
             }
-            viewModel.dateSelectorViewModel.listener = object : DateSelectorListener {
-                override fun onDateSelected(date: Date) {
-                    viewModel.updateTimelineDate(date)
-                }
+            viewModel.dateSelectorViewModel.onDateSelected = { date ->
+                viewModel.updateTimelineDate(date)
             }
 
             button_display_timeline_detail.visibility = if (viewModel.roadContextViewModel.displayData()) {
@@ -92,24 +90,22 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
         setupSwipeToRefresh()
 
-        configureTabLayout()
+        configureScoreSelectorView()
         configurePeriodContainer()
         configureDateContainer()
         configureRoadContextContainer()
         configureGraphContainer()
 
         configureTimelineDetailButton()
+
+        viewModel.syncStatus.observe(viewLifecycleOwner) {
+            updateSwipeRefreshTripsVisibility(false)
+        }
+
         updateTimeline()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel.syncStatus.observe(this) {
-            updateProgressVisibility(false)
-        }
-    }
-
-    fun updateDataFromDetailScreen(selectedPeriod: DKTimelinePeriod, selectedDate: Date) {
+    fun updateDataFromDetailScreen(selectedPeriod: DKPeriod, selectedDate: Date) {
         viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
@@ -129,48 +125,20 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         }
     }
 
-    private fun configureTabLayout() {
-        context?.let { context ->
-            viewModel.scores.forEach {
-                val tab = tab_layout_timeline.newTab()
-                val icon = DKResource.convertToDrawable(context, it.getIconResId())
-                icon?.let { drawable ->
-                    tab.setIcon(drawable)
-                }
-                tab_layout_timeline.addTab(tab)
-            }
-        }
-
-        for (i in 0 until tab_layout_timeline.tabCount) {
-            tab_layout_timeline.getTabAt(i)?.setCustomView(R.layout.dk_icon_view_tab)
-        }
-
-        if (viewModel.scores.size < 2) {
-            tab_layout_timeline.visibility = View.GONE
-        }
-
-        tab_layout_timeline.apply {
-            setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
-            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkTimelineBackgroundColor))
-
-            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    viewModel.updateTimelineScore(tab_layout_timeline.selectedTabPosition)
-                }
-                override fun onTabUnselected(tab: TabLayout.Tab?) {}
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
-            })
-        }
+    private fun configureScoreSelectorView() {
+        scoreSelectorView.configure(viewModel.scoreSelectorViewModel)
+        scoreSelectorView.visibility = if (scoreSelectorView.scoreCount() < 2) View.GONE else View.VISIBLE
     }
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it)
+            periodSelectorView = DKPeriodSelectorView(it)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
+                configure(viewModel.periodSelectorViewModel)
             }
             periodSelectorContainer.apply {
                 removeAllViews()
@@ -181,7 +149,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
 
     private fun configureDateContainer() {
         context?.let {
-            dateSelectorView = DateSelectorView(it)
+            dateSelectorView = DKDateSelectorView(it)
             dateSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -203,7 +171,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
                 addView(roadContextView)
             }
         }
-        viewModel.roadContextViewModel.changeObserver.observe(this) {
+        viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
             roadContextView.configure(viewModel.roadContextViewModel)
         }
     }
@@ -221,29 +189,18 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
     }
 
     private fun updateTimeline() {
-        updateProgressVisibility(true)
+        updateSwipeRefreshTripsVisibility(true)
         viewModel.updateTimeline()
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        }
-        updateSwipeRefreshTripsVisibility(displayProgress)
     }
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    viewModel = ViewModelProviders.of(
+                    viewModel = ViewModelProvider(
                         this,
                         TimelineViewModel.TimelineViewModelFactory(application)
-                    ).get(TimelineViewModel::class.java)
+                    )[TimelineViewModel::class.java]
                 }
             }
         }
@@ -264,7 +221,7 @@ internal class TimelineFragment : Fragment(), PeriodSelectorItemListener {
         )
     }
 
-    override fun onPeriodSelected(period: DKTimelinePeriod) {
+    override fun onPeriodSelected(period: DKPeriod) {
         viewModel.updateTimelinePeriod(period)
     }
 

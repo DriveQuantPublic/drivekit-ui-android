@@ -4,7 +4,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
@@ -44,7 +44,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         setContentView(R.layout.dk_layout_activity_crash_feedback_step1)
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(CrashFeedbackStep1ViewModel::class.java)
+            viewModel = ViewModelProvider(this)[CrashFeedbackStep1ViewModel::class.java]
         }
 
         DriveKitTripAnalysis.setCrashFeedbackListener(object : DKCrashFeedbackListener {

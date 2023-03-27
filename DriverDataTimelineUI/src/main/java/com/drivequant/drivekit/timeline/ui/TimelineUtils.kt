@@ -1,11 +1,9 @@
 package com.drivequant.drivekit.timeline.ui
 
-import com.drivequant.drivekit.common.ui.component.DKScoreType
-import com.drivequant.drivekit.common.ui.extension.CalendarField
-import com.drivequant.drivekit.common.ui.extension.startingFrom
-import com.drivequant.drivekit.databaseutils.entity.Timeline
-import com.drivequant.drivekit.databaseutils.entity.TimelinePeriod
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -15,11 +13,6 @@ import kotlin.math.ceil
 internal fun String.toTimelineDate(): Date? = TimelineUtils.getBackendDateFormat().parse(this)
 internal fun Date.toTimelineString(): String = TimelineUtils.getBackendDateFormat().format(this)
 
-internal fun DKTimelinePeriod.getTitleResId() = when(this) {
-    DKTimelinePeriod.WEEK -> "dk_timeline_per_week"
-    DKTimelinePeriod.MONTH -> "dk_timeline_per_month"
-}
-
 internal object TimelineUtils {
     fun getBackendDateFormat(): DateFormat {
         val backendDateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
@@ -27,32 +20,24 @@ internal object TimelineUtils {
         return backendDateFormat
     }
 
-    fun updateSelectedDateForNewPeriod(period: DKTimelinePeriod, previousSelectedDate: Date?, weekTimeline: Timeline?, monthTimeline: Timeline?): Date? {
-        if (previousSelectedDate != null && weekTimeline != null && monthTimeline != null) {
-            if (weekTimeline.period != TimelinePeriod.WEEK || monthTimeline.period != TimelinePeriod.MONTH) {
-                throw IllegalArgumentException("Given timeline period are invalid, please check your parameters")
+    fun updateSelectedDate(oldPeriod: DKPeriod, previousSelectedDate: Date?, timeline: DKRawTimeline, score: DKScoreType): Date? {
+        return if (previousSelectedDate != null) {
+            val dates: MutableList<Date> = mutableListOf()
+            val dateToIndex: MutableMap<Date, Int> = mutableMapOf()
+            for ((index, rawDate) in timeline.allContext.date.withIndex()) {
+                val date = rawDate.toTimelineDate()!!
+                dates.add(date)
+                dateToIndex[date] = index
             }
-            val timeline: Timeline
-            val compareDate: Date
-            when (period) {
-                DKTimelinePeriod.WEEK -> {
-                    compareDate = previousSelectedDate
-                    timeline = weekTimeline
-                }
-                DKTimelinePeriod.MONTH -> {
-                    compareDate = previousSelectedDate.startingFrom(CalendarField.MONTH)
-                    timeline = monthTimeline
-                }
+            DKDateSelectorViewModel.newSelectedDate(
+                previousSelectedDate,
+                oldPeriod,
+                dates
+            ) { _, date ->
+                dateToIndex[date]?.let { index ->
+                    timeline.hasValidTripScored(score, index)
+                } ?: false
             }
-            var newSelectedDate = previousSelectedDate
-            for (dateString in timeline.allContext.date) {
-                val date = dateString.toTimelineDate()!!
-                if (date >= compareDate) {
-                    newSelectedDate = date
-                    break
-                }
-            }
-            return newSelectedDate
         } else {
             return null
         }
@@ -75,7 +60,6 @@ internal fun <E> List<E>.addValueIfNotEmpty(index: Int, list: MutableList<E>) {
         list.add(this[index])
     }
 }
-
 
 internal fun DKScoreType.associatedScoreItemTypes(): List<TimelineScoreItemType> {
     return when (this) {

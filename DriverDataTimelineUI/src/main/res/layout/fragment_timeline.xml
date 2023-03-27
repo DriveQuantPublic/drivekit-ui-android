@@ -17,20 +17,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout_timeline"
+            <com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
+                android:id="@+id/score_selector_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dk_margin_half"
-                app:tabMode="fixed" />
-
-            <LinearLayout
-                android:id="@+id/period_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dk_margin_quarter" />
+                android:layout_marginBottom="@dimen/dk_margin_half" />
 
             <LinearLayout
                 android:id="@+id/period_selector_container"
@@ -87,17 +78,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/graph_container"/>
+                        app:layout_constraintTop_toBottomOf="@id/graph_container" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
 </com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout>

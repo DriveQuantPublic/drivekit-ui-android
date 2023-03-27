@@ -86,8 +86,8 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
             val identifier = when (it.meteo) {
                 1 -> "dk_driverdata_weather_sun"
                 2 -> "dk_driverdata_weather_cloud"
-                3 -> "dk_driverdata_weather_rain"
-                4 -> "dk_driverdata_weather_fog"
+                3 -> "dk_driverdata_weather_fog"
+                4 -> "dk_driverdata_weather_rain"
                 5 -> "dk_driverdata_weather_snow"
                 6 -> "dk_driverdata_weather_hail"
                 else -> "dk_driverdata_unknown"
@@ -124,7 +124,7 @@ internal class AlternativeTripViewModel(private var trip: Trip) : ViewModel() {
     @Suppress("UNCHECKED_CAST")
     class AlternativeTripViewModelFactory(private val trip: Trip) :
         ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return AlternativeTripViewModel(trip) as T
         }
     }

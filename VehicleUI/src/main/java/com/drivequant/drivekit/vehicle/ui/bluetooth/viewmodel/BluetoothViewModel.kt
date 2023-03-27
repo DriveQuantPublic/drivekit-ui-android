@@ -79,7 +79,7 @@ class BluetoothViewModel(
 
     @Suppress("UNCHECKED_CAST")
     class BluetoothViewModelFactory(private val vehicleId: String, private val vehicleName: String) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return BluetoothViewModel(vehicleId, vehicleName) as T
         }
     }

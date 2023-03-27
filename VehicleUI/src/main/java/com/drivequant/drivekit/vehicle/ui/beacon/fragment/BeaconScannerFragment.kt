@@ -15,7 +15,9 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.databaseutils.entity.Beacon
+import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
@@ -134,6 +136,7 @@ class BeaconScannerFragment : Fragment(), ScanState {
     }
 
     override fun onStateUpdated(step: BeaconStep) {
+        DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner step update: $step")
         updateStep(step)
         updateChildFragment()
     }

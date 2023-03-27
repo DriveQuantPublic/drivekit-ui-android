@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.settings.viewmodel.DeleteAccountViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
@@ -63,7 +63,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(this).get(DeleteAccountViewModel::class.java)
+            viewModel = ViewModelProvider(this)[DeleteAccountViewModel::class.java]
         }
     }
 

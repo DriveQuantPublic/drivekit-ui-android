@@ -6,18 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.component.DKScoreType
+import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.Timeline
-import com.drivequant.drivekit.driverdata.timeline.DKTimelinePeriod
+import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.timeline.ui.component.dateselector.DateSelectorView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.timeline.ui.component.periodselector.PeriodSelectorView
 import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
 import com.google.gson.Gson
 import java.util.*
@@ -29,16 +29,16 @@ internal class TimelineDetailFragment : Fragment() {
 
     private lateinit var dispatchTouchLinearLayout: DispatchTouchLinearLayout
     private lateinit var selectedScore: DKScoreType
-    private lateinit var selectedPeriod: DKTimelinePeriod
+    private lateinit var selectedPeriod: DKPeriod
     private lateinit var selectedDate: Date
-    private lateinit var weekTimeline: Timeline
-    private lateinit var monthTimeline: Timeline
+    private lateinit var weekTimeline: DKRawTimeline
+    private lateinit var monthTimeline: DKRawTimeline
 
     private lateinit var periodSelectorContainer: LinearLayout
-    private lateinit var periodSelectorView: PeriodSelectorView
+    private lateinit var periodSelectorView: DKPeriodSelectorView
 
     private lateinit var dateSelectorContainer: LinearLayout
-    private lateinit var dateSelectorView: DateSelectorView
+    private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
     private lateinit var roadContextView: RoadContextView
@@ -48,10 +48,10 @@ internal class TimelineDetailFragment : Fragment() {
     companion object {
         fun newInstance(
             selectedScore: DKScoreType,
-            selectedPeriod: DKTimelinePeriod,
+            selectedPeriod: DKPeriod,
             selectedDate: Date,
-            weekTimeline: Timeline,
-            monthTimeline: Timeline
+            weekTimeline: DKRawTimeline,
+            monthTimeline: DKRawTimeline
         ): TimelineDetailFragment {
             val fragment = TimelineDetailFragment()
             fragment.selectedScore = selectedScore
@@ -66,7 +66,7 @@ internal class TimelineDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_timeline_detail, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_timeline_detail, container, false).setDKStyle()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -94,7 +94,7 @@ internal class TimelineDetailFragment : Fragment() {
                 selectedScore = DKScoreType.valueOf(savedScore)
             }
             it.getString("selectedPeriod")?.let { savedPeriod ->
-                selectedPeriod = DKTimelinePeriod.valueOf(savedPeriod)
+                selectedPeriod = DKPeriod.valueOf(savedPeriod)
             }
             val savedDate = it.getLong("selectedDate")
             if (savedDate > 0) {
@@ -103,10 +103,10 @@ internal class TimelineDetailFragment : Fragment() {
                 selectedDate = date
             }
             it.getString("weekTimeline")?.let { savedWeekTimeline ->
-                weekTimeline = Gson().fromJson(savedWeekTimeline, Timeline::class.java)
+                weekTimeline = Gson().fromJson(savedWeekTimeline, DKRawTimeline::class.java)
             }
             it.getString("monthTimeline")?.let { savedMonthTimeline ->
-                monthTimeline = Gson().fromJson(savedMonthTimeline, Timeline::class.java)
+                monthTimeline = Gson().fromJson(savedMonthTimeline, DKRawTimeline::class.java)
             }
         }
 
@@ -114,7 +114,7 @@ internal class TimelineDetailFragment : Fragment() {
 
         activity?.setTitle(viewModel.titleId)
 
-        viewModel.updateData.observe(this) {
+        viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
             roadContextView.configure(viewModel.roadContextViewModel)
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
@@ -157,12 +157,13 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configurePeriodContainer() {
         context?.let {
-            periodSelectorView = PeriodSelectorView(it)
+            periodSelectorView = DKPeriodSelectorView(it)
             periodSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
+                configure(viewModel.periodSelectorViewModel)
             }
             periodSelectorContainer.apply {
                 removeAllViews()
@@ -173,7 +174,7 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configureDateContainer() {
         context?.let {
-            dateSelectorView = DateSelectorView(it)
+            dateSelectorView = DKDateSelectorView(it)
             dateSelectorView.apply {
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -195,7 +196,7 @@ internal class TimelineDetailFragment : Fragment() {
                 addView(roadContextView)
             }
         }
-        viewModel.roadContextViewModel.changeObserver.observe(this) {
+        viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
             roadContextView.configure(viewModel.roadContextViewModel)
         }
     }
@@ -204,7 +205,7 @@ internal class TimelineDetailFragment : Fragment() {
         if (!this::viewModel.isInitialized) {
             activity?.application?.let { application ->
                 if (!this::viewModel.isInitialized) {
-                    viewModel = ViewModelProviders.of(
+                    viewModel = ViewModelProvider(
                         this,
                         TimelineDetailViewModel.TimelineDetailViewModelFactory(
                             application,
@@ -214,7 +215,7 @@ internal class TimelineDetailFragment : Fragment() {
                             weekTimeline,
                             monthTimeline
                         )
-                    ).get(TimelineDetailViewModel::class.java)
+                    )[TimelineDetailViewModel::class.java]
                 }
             }
         }

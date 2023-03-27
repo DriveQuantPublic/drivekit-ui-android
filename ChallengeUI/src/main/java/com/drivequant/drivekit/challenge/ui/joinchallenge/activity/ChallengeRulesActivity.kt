@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -84,10 +84,10 @@ class ChallengeRulesActivity : AppCompatActivity() {
         }
 
         if (!this::viewModel.isInitialized) {
-            viewModel = ViewModelProviders.of(
+            viewModel = ViewModelProvider(
                 this,
                 ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)
-            ).get(ChallengeParticipationViewModel::class.java)
+            )[ChallengeParticipationViewModel::class.java]
         }
 
         viewModel.syncJoinChallengeError.observe(this) {

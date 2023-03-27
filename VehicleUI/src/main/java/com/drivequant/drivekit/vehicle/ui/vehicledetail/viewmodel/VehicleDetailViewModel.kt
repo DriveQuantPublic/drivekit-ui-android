@@ -41,7 +41,7 @@ class VehicleDetailViewModel(private val vehicleId: String): ViewModel(), Serial
     @Suppress("UNCHECKED_CAST")
     class VehicleDetailViewModelFactory(private val vehicleId: String)
         : ViewModelProvider.NewInstanceFactory() {
-        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
+        override fun <T: ViewModel> create(modelClass: Class<T>): T {
             return VehicleDetailViewModel(vehicleId) as T
         }
     }

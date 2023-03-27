@@ -1,8 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'maven'
+
+project.ext {
+    artifactId = "drivekit-driver-achievement-ui"
+}
+
 android {
+    namespace 'com.drivequant.drivekit.driverachievement.ui'
+    buildToolsVersion project.ext.build_tools_version
     compileSdkVersion project.ext.compile_sdk_version
 
     defaultConfig {
@@ -19,32 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    publishing {
+        singleVariant('release')
+    }
 }
 
 dependencies {
     debugApi project(':CommonUI')
     releaseApi "com.drivequant.drivekit:drivekit-common-ui:$drivekitui_version"
 
-    implementation "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
+    api "com.drivequant.drivekit:drivekit-driver-achievement:$drivekit_version"
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            if (System.env.REPO_PATH){
-                repository(url: "$System.env.REPO_PATH") {
-                    authentication(userName: "$System.env.MAVEN_LOGIN", password: "$System.env.MAVEN_PASSWORD")
-                    pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-driver-achievement-ui"
-                    pom.version = android.defaultConfig.versionName
-                }
-            }else{
-                repository(url: mavenLocal().url) {
-                    pom.groupId = "com.drivequant.drivekit"
-                    pom.artifactId = "drivekit-driver-achievement-ui"
-                    pom.version = android.defaultConfig.versionName
-                }
-            }
-        }
-    }
-}
+apply from: '../maven-publish.gradle'
