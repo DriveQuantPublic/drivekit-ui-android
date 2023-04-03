@@ -316,7 +316,7 @@ object DKDataFormatter {
                     .plus(nbsp)
                     .plus(unit)
             }
-            minUnit >= Co2Unit.TON || maxUnit >= Co2Unit.TON || (co2mass > 1000) -> {
+            minUnit >= Co2Unit.TON || (co2mass >= 1000 && maxUnit >= Co2Unit.TON) -> {
                 formatMassInTon(context, co2mass)
             }
             else -> {
