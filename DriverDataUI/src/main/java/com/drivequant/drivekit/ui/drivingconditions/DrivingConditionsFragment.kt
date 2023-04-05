@@ -26,7 +26,7 @@ internal class DrivingConditionsFragment : Fragment() {
     private lateinit var periodSelectorView: DKPeriodSelectorView
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
-    private lateinit var tripsInfoContainer: ViewGroup
+    private lateinit var drivingConditionsSummaryContainer: ViewGroup
     private lateinit var drivingConditionsContainer: ViewGroup
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -40,7 +40,7 @@ internal class DrivingConditionsFragment : Fragment() {
 
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
-        this.tripsInfoContainer = view.findViewById(R.id.trips_info_container)
+        this.drivingConditionsSummaryContainer = view.findViewById(R.id.driving_conditions_summary_container)
         this.drivingConditionsContainer = view.findViewById(R.id.driving_conditions_container)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_drivingconditions)
 
