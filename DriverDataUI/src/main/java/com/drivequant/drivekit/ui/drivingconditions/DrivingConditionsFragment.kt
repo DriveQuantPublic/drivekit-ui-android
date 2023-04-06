@@ -13,14 +13,29 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import java.util.*
 
 internal class DrivingConditionsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DrivingConditionsFragment()
+        const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
+        const val SELECTED_DATE_ID_EXTRA = "selectedDate"
+
+        fun newInstance(
+            selectedPeriod: DKPeriod?,
+            selectedDate: Date?
+        ) = DrivingConditionsFragment().also {
+            it.initialSelectedPeriod = selectedPeriod
+            it.initialSelectedDate = selectedDate
+        }
     }
 
+    val selectedPeriod: DKPeriod
+        get() = this.viewModel.periodSelectorViewModel.selectedPeriod
+    val selectedDate: Date?
+        get() = this.viewModel.selectedDate
     private lateinit var viewModel: DrivingConditionsViewModel
     private lateinit var periodSelectorContainer: ViewGroup
     private lateinit var periodSelectorView: DKPeriodSelectorView
@@ -29,6 +44,8 @@ internal class DrivingConditionsFragment : Fragment() {
     private lateinit var drivingConditionsSummaryContainer: ViewGroup
     private lateinit var drivingConditionsContainer: ViewGroup
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private var initialSelectedPeriod: DKPeriod? = null
+    private var initialSelectedDate: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +61,17 @@ internal class DrivingConditionsFragment : Fragment() {
         this.drivingConditionsContainer = view.findViewById(R.id.driving_conditions_container)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_drivingconditions)
 
+        savedInstanceState?.let {
+            it.getString(SELECTED_PERIOD_ID_EXTRA)?.let { savedPeriod ->
+                this.initialSelectedPeriod = DKPeriod.valueOf(savedPeriod)
+            }
+            val savedDate = it.getLong(SELECTED_DATE_ID_EXTRA, 0L)
+            if (savedDate > 0) {
+                val date = Date(savedDate)
+                this.initialSelectedDate = date
+            }
+        }
+
         checkViewModelInitialization()
 
         setupSwipeToRefresh()
@@ -58,7 +86,12 @@ internal class DrivingConditionsFragment : Fragment() {
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
         }
-        updateData()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        this.selectedDate?.let { outState.putLong(SELECTED_DATE_ID_EXTRA, it.time) }
     }
 
     override fun onResume() {
@@ -145,7 +178,9 @@ internal class DrivingConditionsFragment : Fragment() {
                 if (!this::viewModel.isInitialized) {
                     viewModel = ViewModelProvider(
                         this,
-                        DrivingConditionsViewModel.DrivingConditionsViewModelFactory(application)
+                        DrivingConditionsViewModel.DrivingConditionsViewModelFactory(
+                            application, this.initialSelectedPeriod, this.initialSelectedDate
+                        )
                     )[DrivingConditionsViewModel::class.java]
                 }
             }
