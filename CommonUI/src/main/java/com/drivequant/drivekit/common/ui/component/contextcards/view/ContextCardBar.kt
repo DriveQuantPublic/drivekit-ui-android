@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.timeline.ui.component.roadcontext
+package com.drivequant.drivekit.common.ui.component.contextcards.view
 
 import android.content.Context
 import android.graphics.*
@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
-internal class CustomRoadContextBar @JvmOverloads constructor(
+internal class ContextCardBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

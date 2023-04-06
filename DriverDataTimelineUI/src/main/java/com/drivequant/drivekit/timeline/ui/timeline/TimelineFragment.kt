@@ -20,7 +20,7 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
+import com.drivequant.drivekit.common.ui.component.contextcards.view.DKContextCardView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
@@ -40,7 +40,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
-    private lateinit var roadContextView: RoadContextView
+    private lateinit var contextCardView: DKContextCardView
 
     private lateinit var graphContainer: LinearLayout
     private lateinit var graphView: TimelineGraphView
@@ -69,7 +69,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
         viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
-            roadContextView.configure(viewModel.roadContextViewModel)
+            contextCardView.configure(viewModel.roadContextViewModel)
 
             if (viewModel.dateSelectorViewModel.hasDates()) {
                 dateSelectorContainer.visibility = View.VISIBLE
@@ -165,14 +165,14 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private fun configureRoadContextContainer() {
         context?.let {
-            roadContextView = RoadContextView(it)
+            contextCardView = DKContextCardView(it)
             roadContextContainer.apply {
                 removeAllViews()
-                addView(roadContextView)
+                addView(contextCardView)
             }
         }
         viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
-            roadContextView.configure(viewModel.roadContextViewModel)
+            contextCardView.configure(viewModel.roadContextViewModel)
         }
     }
 
