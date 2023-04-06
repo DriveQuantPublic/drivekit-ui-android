@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.contextcards.viewholder
+package com.drivequant.drivekit.common.ui.component.contextcard.viewholder
 
 import android.view.View
 import android.widget.ImageView

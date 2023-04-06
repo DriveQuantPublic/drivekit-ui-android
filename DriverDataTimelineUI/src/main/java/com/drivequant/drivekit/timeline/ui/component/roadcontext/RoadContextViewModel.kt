@@ -5,8 +5,8 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.common.ui.component.contextcards.DKContextCard
-import com.drivequant.drivekit.common.ui.component.contextcards.DKContextCardItem
+import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
+import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
@@ -102,7 +102,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
             } ?: run { 0.0 }
         }
 
-    override fun getItemsToDraw(): List<DKContextCardItem> = this.contextCards
+    override fun getItems(): List<DKContextCardItem> = this.contextCards
 
     override fun getTitle(context: Context): String {
         return this.emptyRoadContextType?.let {

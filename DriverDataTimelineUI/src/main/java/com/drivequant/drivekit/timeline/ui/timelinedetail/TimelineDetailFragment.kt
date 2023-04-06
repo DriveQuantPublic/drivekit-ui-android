@@ -18,7 +18,7 @@ import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.common.ui.component.contextcards.view.DKContextCardView
+import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import com.google.gson.Gson
 import java.util.*
 

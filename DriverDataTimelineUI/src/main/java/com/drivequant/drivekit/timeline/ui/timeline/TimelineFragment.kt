@@ -20,7 +20,7 @@ import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorVi
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.common.ui.component.contextcards.view.DKContextCardView
+import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*

@@ -39,7 +39,7 @@
                     android:layout_marginBottom="@dimen/dk_margin_half"
                     android:paddingHorizontal="@dimen/dk_margin_eigth" />
 
-                <com.drivequant.drivekit.common.ui.component.contextcards.view.ContextCardBar
+                <com.drivequant.drivekit.common.ui.component.contextcard.view.ContextCardBar
                     android:id="@+id/context_card_bar"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"

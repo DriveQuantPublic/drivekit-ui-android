@@ -1,11 +1,11 @@
-package com.drivequant.drivekit.common.ui.component.contextcards
+package com.drivequant.drivekit.common.ui.component.contextcard
 
 import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 
 interface DKContextCard {
-    fun getItemsToDraw(): List<DKContextCardItem>
+    fun getItems(): List<DKContextCardItem>
     fun getTitle(context: Context): String
     fun getEmptyDataDescription(context: Context): String
 }

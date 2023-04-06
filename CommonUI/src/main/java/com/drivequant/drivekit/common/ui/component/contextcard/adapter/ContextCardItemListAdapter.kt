@@ -1,12 +1,12 @@
-package com.drivequant.drivekit.common.ui.component.contextcards.adapter
+package com.drivequant.drivekit.common.ui.component.contextcard.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.contextcards.DKContextCard
-import com.drivequant.drivekit.common.ui.component.contextcards.viewholder.ContextCardItemViewHolder
+import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
+import com.drivequant.drivekit.common.ui.component.contextcard.viewholder.ContextCardItemViewHolder
 
 internal class ContextCardItemListAdapter(
     private var context: Context,
@@ -19,11 +19,11 @@ internal class ContextCardItemListAdapter(
     }
 
     override fun onBindViewHolder(holder: ContextCardItemViewHolder, position: Int) {
-        this.contextCard.getItemsToDraw().getOrNull(position)?.let {
+        this.contextCard.getItems().getOrNull(position)?.let {
             holder.bind(it.getColorResId(), it.getTitleResId())
         }
     }
 
-    override fun getItemCount() = this.contextCard.getItemsToDraw().size
+    override fun getItemCount() = this.contextCard.getItems().size
 
 }

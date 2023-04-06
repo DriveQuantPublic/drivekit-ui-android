@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.common.ui.component.contextcards.view
+package com.drivequant.drivekit.common.ui.component.contextcard.view
 
 import android.content.Context
 import android.view.View
@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.component.contextcards.DKContextCard
-import com.drivequant.drivekit.common.ui.component.contextcards.adapter.ContextCardItemListAdapter
+import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCard
+import com.drivequant.drivekit.common.ui.component.contextcard.adapter.ContextCardItemListAdapter
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class DKContextCardView(context: Context) : LinearLayout(context) {
 
@@ -75,13 +74,12 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
 
     private fun initProgressItems() {
         this.contextCard?.let { contextCard ->
-            val progressItems = contextCard.getItemsToDraw().map { ProgressItem(it.getColorResId(), it.getPercent()) }
-            this.contextCardBar.init(progressItems)
+            this.contextCardBar.init(contextCard.getItems())
         }
     }
 
     private fun initContextCardContainer() {
-        if (this.contextCard?.getItemsToDraw().isNullOrEmpty()) {
+        if (this.contextCard?.getItems().isNullOrEmpty()) {
             displayEmptyContextCardUI()
         } else {
             displayContextCardUI()
