@@ -28,12 +28,13 @@
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dk_margin_quarter" />
 
-        <FrameLayout
-            android:id="@+id/driving_conditions_summary_container"
+        <include
+            android:id="@+id/driving_conditions_summary"
+            layout="@layout/dk_drivingconditions_summary_card"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin"
-            android:paddingHorizontal="@dimen/dk_margin_quarter" />
+            android:layout_marginHorizontal="@dimen/dk_margin_quarter" />
 
         <FrameLayout
             android:id="@+id/driving_conditions_container"

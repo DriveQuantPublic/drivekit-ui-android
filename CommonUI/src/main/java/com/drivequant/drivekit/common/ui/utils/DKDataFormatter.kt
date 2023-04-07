@@ -287,7 +287,7 @@ object DKDataFormatter {
         }
     }
 
-    private fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
+    fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
         distance?.let {
             val floatingNumber = 1
             val roundedDistance = BigDecimal(distance).setScale(floatingNumber, RoundingMode.HALF_UP).toDouble()

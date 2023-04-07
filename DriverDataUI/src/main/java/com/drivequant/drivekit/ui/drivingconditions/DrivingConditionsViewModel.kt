@@ -13,6 +13,7 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
+import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
 import java.util.*
 
 internal class DrivingConditionsViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,10 +26,12 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
     private var selectedDate: Date? = null
     private val selectedPeriod: DKPeriod
         get() = this.periodSelectorViewModel.selectedPeriod
+    val summaryCardViewModel = DrivingConditionsSummaryCardViewModel()
 
     init {
         configurePeriodSelector()
         configureDateSelector()
+        configureSummaryCardViewModel()
         DriveKitDriverData.getDriverTimelines(
             this.periods,
             SynchronizationType.CACHE
@@ -69,6 +72,7 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
                 this.selectedDate = date
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+                this.summaryCardViewModel.configure(this.selectedPeriod, timelineSource, selectedDateIndex)
             } else {
                 val date = when (this.selectedPeriod) {
                     DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
@@ -106,6 +110,18 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
         this.dateSelectorViewModel.onDateSelected = { date ->
             updateSelectedDate(date)
         }
+    }
+
+    private fun configureSummaryCardViewModel() {
+        updateSummaryCardViewModel()
+    }
+
+    private fun updateSummaryCardViewModel() {
+        this.summaryCardViewModel.configure(
+            period = this.selectedPeriod,
+            driverTimeline = getTimelineSource(),
+            0
+        )
     }
 
     private fun configureEmptyDateSelector() {

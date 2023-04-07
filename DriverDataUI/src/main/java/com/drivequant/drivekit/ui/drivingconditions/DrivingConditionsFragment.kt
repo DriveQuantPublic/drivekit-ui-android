@@ -14,6 +14,7 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView
 
 internal class DrivingConditionsFragment : Fragment() {
 
@@ -26,7 +27,7 @@ internal class DrivingConditionsFragment : Fragment() {
     private lateinit var periodSelectorView: DKPeriodSelectorView
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
-    private lateinit var drivingConditionsSummaryContainer: ViewGroup
+    private lateinit var summaryCardView: DrivingConditionsSummaryCardView
     private lateinit var drivingConditionsContainer: ViewGroup
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -40,7 +41,7 @@ internal class DrivingConditionsFragment : Fragment() {
 
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
-        this.drivingConditionsSummaryContainer = view.findViewById(R.id.driving_conditions_summary_container)
+        this.summaryCardView = view.findViewById(R.id.driving_conditions_summary)
         this.drivingConditionsContainer = view.findViewById(R.id.driving_conditions_container)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_drivingconditions)
 
@@ -50,10 +51,12 @@ internal class DrivingConditionsFragment : Fragment() {
 
         configurePeriodSelector()
         configureDateSelector()
+        configureSummaryCard()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
+            configureSummaryCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
@@ -127,6 +130,12 @@ internal class DrivingConditionsFragment : Fragment() {
                 removeAllViews()
                 addView(dateSelectorView)
             }
+        }
+    }
+
+    private fun configureSummaryCard() {
+        context?.let {
+            this.summaryCardView.configure(this.viewModel.summaryCardViewModel)
         }
     }
 
