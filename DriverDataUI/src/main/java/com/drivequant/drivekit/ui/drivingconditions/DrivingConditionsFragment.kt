@@ -1,10 +1,9 @@
-package com.drivequant.drivekit.ui.mysynthesis
+package com.drivequant.drivekit.ui.drivingconditions
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,78 +11,93 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
-import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
-import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
-import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
 import java.util.*
 
-internal class MySynthesisFragment : Fragment() {
+internal class DrivingConditionsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MySynthesisFragment()
+        const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
+        const val SELECTED_DATE_ID_EXTRA = "selectedDate"
+
+        fun newInstance(
+            selectedPeriod: DKPeriod?,
+            selectedDate: Date?
+        ) = DrivingConditionsFragment().also {
+            it.initialSelectedPeriod = selectedPeriod
+            it.initialSelectedDate = selectedDate
+        }
     }
 
-    private lateinit var viewModel: MySynthesisViewModel
-    private lateinit var scoreSelectorView: DKScoreSelectorView
+    val selectedPeriod: DKPeriod
+        get() = this.viewModel.periodSelectorViewModel.selectedPeriod
+    val selectedDate: Date?
+        get() = this.viewModel.selectedDate
+    private lateinit var viewModel: DrivingConditionsViewModel
     private lateinit var periodSelectorContainer: ViewGroup
     private lateinit var periodSelectorView: DKPeriodSelectorView
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
-    private lateinit var scoreCardView: MySynthesisScoreCardView
-    private lateinit var communityCardView: MySynthesisCommunityCardView
+    private lateinit var drivingConditionsSummaryContainer: ViewGroup
+    private lateinit var drivingConditionsContainer: ViewGroup
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var buttonDetail: Button
+    private var initialSelectedPeriod: DKPeriod? = null
+    private var initialSelectedDate: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_mysynthesis, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.fragment_drivingconditions, container, false).setDKStyle()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.scoreSelectorView = view.findViewById(R.id.scoreSelector)
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
-        this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
-        this.scoreCardView = view.findViewById(R.id.scoreCard)
-        this.communityCardView = view.findViewById(R.id.communityCard)
-        this.buttonDetail = view.findViewById(R.id.button_detail)
+        this.drivingConditionsSummaryContainer = view.findViewById(R.id.driving_conditions_summary_container)
+        this.drivingConditionsContainer = view.findViewById(R.id.driving_conditions_container)
+        this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_drivingconditions)
+
+        savedInstanceState?.let {
+            it.getString(SELECTED_PERIOD_ID_EXTRA)?.let { savedPeriod ->
+                this.initialSelectedPeriod = DKPeriod.valueOf(savedPeriod)
+            }
+            val savedDate = it.getLong(SELECTED_DATE_ID_EXTRA, 0L)
+            if (savedDate > 0) {
+                val date = Date(savedDate)
+                this.initialSelectedDate = date
+            }
+        }
 
         checkViewModelInitialization()
 
         setupSwipeToRefresh()
 
-        configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
-        configureButton()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
             updateDateSelector()
-            updateScoreCard()
-            updateCommunityCard()
         }
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
         }
-        updateData()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        this.selectedDate?.let { outState.putLong(SELECTED_DATE_ID_EXTRA, it.time) }
     }
 
     override fun onResume() {
         super.onResume()
         tagScreen()
         checkViewModelInitialization()
-    }
-
-    fun updateData(selectedPeriod: DKPeriod, selectedDate: Date) {
-        this.viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
     private fun setupSwipeToRefresh() {
@@ -113,11 +127,6 @@ internal class MySynthesisFragment : Fragment() {
 
     private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
         this.swipeRefreshLayout.isRefreshing = display
-    }
-
-    private fun configureScoreSelectorView() {
-        this.scoreSelectorView.configure(this.viewModel.scoreSelectorViewModel)
-        this.scoreSelectorView.visibility = if (this.scoreSelectorView.scoreCount() < 2) View.GONE else View.VISIBLE
     }
 
     private fun configurePeriodSelector() {
@@ -154,32 +163,11 @@ internal class MySynthesisFragment : Fragment() {
         }
     }
 
-    private fun configureButton() {
-        this.buttonDetail.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
-        this.buttonDetail.setOnClickListener { _ ->
-            activity?.let {
-                DrivingConditionsActivity.launchActivity(
-                    it,
-                    this.viewModel.periodSelectorViewModel.selectedPeriod,
-                    this.viewModel.selectedDate,
-                    MySynthesisActivity.DRIVING_CONDITIONS_REQUEST_CODE
-                )
-            }
-        }
-    }
-
-    private fun updateScoreCard() {
-        this.scoreCardView.configure(viewModel.scoreCardViewModel)
-    }
-    private fun updateCommunityCard() {
-        this.communityCardView.configure(viewModel.communityCardViewModel)
-    }
-
     private fun tagScreen() {
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
-                "dk_tag_my_synthesis"
+                "dk_tag_driving_conditions"
             ), javaClass.simpleName
         )
     }
@@ -190,10 +178,13 @@ internal class MySynthesisFragment : Fragment() {
                 if (!this::viewModel.isInitialized) {
                     viewModel = ViewModelProvider(
                         this,
-                        MySynthesisViewModel.MySynthesisViewModelFactory(application)
-                    )[MySynthesisViewModel::class.java]
+                        DrivingConditionsViewModel.DrivingConditionsViewModelFactory(
+                            application, this.initialSelectedPeriod, this.initialSelectedDate
+                        )
+                    )[DrivingConditionsViewModel::class.java]
                 }
             }
         }
     }
+
 }

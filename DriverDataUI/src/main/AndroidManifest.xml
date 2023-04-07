@@ -16,5 +16,9 @@
             android:name=".mysynthesis.MySynthesisActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".drivingconditions.DrivingConditionsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

@@ -50,12 +50,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             this.allContextItem = driverTimeline.allContextItemAt(selectedDate)
         }
 
-        val scoreStatistics: DKScoreStatistics = when (scoreType) {
-            DKScoreType.SAFETY -> statistics.safety
-            DKScoreType.ECO_DRIVING -> statistics.ecoDriving
-            DKScoreType.DISTRACTION -> statistics.distraction
-            DKScoreType.SPEEDING -> statistics.speeding
-        }
+        val scoreStatistics: DKScoreStatistics = statistics.getScoreStatistics(scoreType)
         this.gaugeViewModel.configure(scoreType, this.scoreSynthesis?.scoreValue, scoreStatistics.min, scoreStatistics.getMedianScore(), scoreStatistics.max)
         this.onViewModelUpdated?.invoke()
     }
@@ -78,7 +73,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
             return context.getString(R.string.dk_driverdata_mysynthesis_not_enough_data)
         } else {
             val score = allContextItem?.getValue(this.selectedScoreType)
-            val scoreStatistics = getDKScoreStatistics(this.selectedScoreType)
+            val scoreStatistics = this.statistics.getScoreStatistics(this.selectedScoreType)
             return score?.let {
                 val userPositionFromLowerScores = scoreStatistics.percentCommunityLowerThan(score)
                 val userPositionFromHigherScores = scoreStatistics.percentCommunityGreaterThan(score)
@@ -109,13 +104,6 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         DriveKitUI.colors.complementaryFontColor()
     } else {
         DriveKitUI.colors.mainFontColor()
-    }
-
-    private fun getDKScoreStatistics(scoreType: DKScoreType) = when (scoreType) {
-        DKScoreType.SAFETY -> this.statistics.safety
-        DKScoreType.ECO_DRIVING -> this.statistics.ecoDriving
-        DKScoreType.DISTRACTION -> this.statistics.distraction
-        DKScoreType.SPEEDING -> this.statistics.speeding
     }
 
     fun getCommunityTripsCountText(context: Context) = getTripsCountText(context, this.statistics.tripNumber)
