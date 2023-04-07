@@ -68,14 +68,15 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
             emptyList()
         } else {
             val contexts = listOf(TimelineRoadContext.HEAVY_URBAN_TRAFFIC, TimelineRoadContext.CITY, TimelineRoadContext.SUBURBAN, TimelineRoadContext.EXPRESSWAYS)
-            contexts.mapNotNull { context ->
-                val percent = getPercent(context)
+            contexts.mapNotNull { roadContext ->
+                val percent = getPercent(roadContext)
                 if (percent <= 0) {
                     null
                 } else {
                     object : DKContextCardItem {
-                        override fun getColorResId(): Int = context.getColorResId()
-                        override fun getTitleResId(): Int = context.getTitleResId()
+                        override fun getColorResId(): Int = roadContext.getColorResId()
+                        override fun getTitle(context: Context): String = context.getString(roadContext.getTitleResId())
+                        override fun getSubtitle(context: Context): String? = null
                         override fun getPercent(): Double = percent
                     }
                 }

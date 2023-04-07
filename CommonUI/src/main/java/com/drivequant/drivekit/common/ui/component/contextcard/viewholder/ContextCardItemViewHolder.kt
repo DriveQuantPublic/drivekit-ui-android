@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -16,9 +15,10 @@ import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 internal class ContextCardItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val indicator: ImageView = itemView.findViewById(R.id.image_view_context_card_indicator)
-    private val title: TextView = itemView.findViewById(R.id.text_view_context_card_title)
+    private val titleView: TextView = itemView.findViewById(R.id.text_view_context_card_title)
+    private val subtitleView: TextView = itemView.findViewById(R.id.text_view_context_card_subtitle)
 
-    fun bind(@ColorRes sourceColor: Int, @StringRes text: Int) {
+    fun bind(@ColorRes sourceColor: Int, title: String, subtitle: String?) {
         val drawable = ContextCompat.getDrawable(
             itemView.context,
             R.drawable.dk_context_card_indicator
@@ -30,9 +30,22 @@ internal class ContextCardItemViewHolder(itemView: View) : RecyclerView.ViewHold
             ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
         )
         this.indicator.setImageDrawable(drawable)
-        with(this.title) {
-            setText(text)
-            smallText(DriveKitUI.colors.complementaryFontColor())
+        if (subtitle != null) {
+            with(this.titleView) {
+                this.text = title
+                smallText(DriveKitUI.colors.primaryColor())
+            }
+            with(this.subtitleView) {
+                this.text = subtitle
+                smallText(DriveKitUI.colors.complementaryFontColor())
+                visibility = View.VISIBLE
+            }
+        } else {
+            with(this.titleView) {
+                this.text = title
+                smallText(DriveKitUI.colors.complementaryFontColor())
+            }
+            this.subtitleView.visibility = View.GONE
         }
     }
 }

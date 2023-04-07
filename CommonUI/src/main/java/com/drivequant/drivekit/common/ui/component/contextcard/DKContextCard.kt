@@ -12,6 +12,7 @@ interface DKContextCard {
 
 interface DKContextCardItem {
     @ColorRes fun getColorResId(): Int
-    @StringRes fun getTitleResId(): Int
+    fun getTitle(context: Context): String
+    fun getSubtitle(context: Context): String?
     fun getPercent(): Double
 }

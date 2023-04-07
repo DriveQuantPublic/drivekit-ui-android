@@ -20,7 +20,7 @@ internal class ContextCardItemListAdapter(
 
     override fun onBindViewHolder(holder: ContextCardItemViewHolder, position: Int) {
         this.contextCard.getItems().getOrNull(position)?.let {
-            holder.bind(it.getColorResId(), it.getTitleResId())
+            holder.bind(it.getColorResId(), it.getTitle(context), it.getSubtitle(context))
         }
     }
 
