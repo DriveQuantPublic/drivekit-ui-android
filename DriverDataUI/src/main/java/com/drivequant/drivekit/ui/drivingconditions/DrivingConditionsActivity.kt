@@ -1,22 +1,47 @@
 package com.drivequant.drivekit.ui.drivingconditions
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import java.util.*
 
 internal class DrivingConditionsActivity : AppCompatActivity() {
 
     companion object {
+        const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
+        const val SELECTED_DATE_ID_EXTRA = "selectedDate"
+
         fun launchActivity(context: Context) {
             val intent = Intent(context, DrivingConditionsActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
+
+        fun launchActivity(
+            activity: Activity,
+            selectedPeriod: DKPeriod?,
+            selectedDate: Date?,
+            requestCode: Int?
+        ) {
+            val intent = Intent(activity, DrivingConditionsActivity::class.java)
+            intent.putExtra(SELECTED_PERIOD_ID_EXTRA, selectedPeriod?.name)
+            intent.putExtra(SELECTED_DATE_ID_EXTRA, selectedDate?.time)
+            if (requestCode != null && requestCode > 0) {
+                activity.startActivityForResult(intent, requestCode)
+            } else {
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                activity.startActivity(intent)
+            }
+        }
     }
+
+    private lateinit var fragment: DrivingConditionsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +55,13 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val fragment = DrivingConditionsFragment.newInstance()
+        val selectedPeriod = intent.getStringExtra(SELECTED_PERIOD_ID_EXTRA)?.let { DKPeriod.valueOf(it) }
+        val selectedDate = intent.getLongExtra(SELECTED_DATE_ID_EXTRA, 0L).let { if (it > 0L) Date(it) else null }
+
+        this.fragment = DrivingConditionsFragment.newInstance(selectedPeriod, selectedDate)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, fragment)
+            .replace(R.id.container, this.fragment)
             .commit()
     }
 
@@ -44,8 +72,21 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        finishActivity()
         return true
+    }
+
+    override fun onBackPressed() {
+        finishActivity()
+        super.onBackPressed()
+    }
+
+    private fun finishActivity() {
+        val intent = Intent()
+        intent.putExtra(SELECTED_PERIOD_ID_EXTRA, fragment.selectedPeriod.name)
+        intent.putExtra(SELECTED_DATE_ID_EXTRA, fragment.selectedDate?.time)
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
 }

@@ -21,6 +21,7 @@ import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
 import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.core.utils.getApplicationInfoCompat
+import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisActivity
@@ -141,6 +142,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         TripDetailFragment.newInstance(tripId)
 
     override fun startMySynthesisActivity(context: Context) = MySynthesisActivity.launchActivity(context)
+    override fun startDrivingConditionsActivity(context: Context) = DrivingConditionsActivity.launchActivity(context)
 
     private fun checkGoogleApiKey() {
         try {

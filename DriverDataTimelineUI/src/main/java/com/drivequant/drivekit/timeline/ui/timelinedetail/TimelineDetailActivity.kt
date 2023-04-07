@@ -95,8 +95,8 @@ internal class TimelineDetailActivity : AppCompatActivity() {
 
     private fun finishActivity() {
         val intent = Intent()
-        intent.putExtra("selectedPeriod", fragment.viewModel.selectedPeriod.name)
-        intent.putExtra("selectedDate", fragment.viewModel.selectedDate.time)
+        intent.putExtra(SELECTED_PERIOD_ID_EXTRA, fragment.viewModel.selectedPeriod.name)
+        intent.putExtra(SELECTED_DATE_ID_EXTRA, fragment.viewModel.selectedDate.time)
         setResult(RESULT_OK, intent)
         finish()
     }

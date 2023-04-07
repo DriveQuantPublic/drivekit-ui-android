@@ -10,4 +10,5 @@ interface DriverDataUIEntryPoint {
     fun createTripDetailFragment(tripId: String): Fragment
 
     fun startMySynthesisActivity(context: Context)
+    fun startDrivingConditionsActivity(context: Context)
 }

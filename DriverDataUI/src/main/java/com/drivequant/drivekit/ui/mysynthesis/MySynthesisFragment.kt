@@ -15,10 +15,12 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
+import java.util.*
 
 internal class MySynthesisFragment : Fragment() {
 
@@ -78,6 +80,10 @@ internal class MySynthesisFragment : Fragment() {
         super.onResume()
         tagScreen()
         checkViewModelInitialization()
+    }
+
+    fun updateData(selectedPeriod: DKPeriod, selectedDate: Date) {
+        this.viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
     private fun setupSwipeToRefresh() {
@@ -150,8 +156,15 @@ internal class MySynthesisFragment : Fragment() {
 
     private fun configureButton() {
         this.buttonDetail.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
-        this.buttonDetail.setOnClickListener {
-            DrivingConditionsActivity.launchActivity(requireContext())
+        this.buttonDetail.setOnClickListener { _ ->
+            activity?.let {
+                DrivingConditionsActivity.launchActivity(
+                    it,
+                    this.viewModel.periodSelectorViewModel.selectedPeriod,
+                    this.viewModel.selectedDate,
+                    MySynthesisActivity.DRIVING_CONDITIONS_REQUEST_CODE
+                )
+            }
         }
     }
 
