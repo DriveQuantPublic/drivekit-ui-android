@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.drivingconditions
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,12 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
     companion object {
         const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
         const val SELECTED_DATE_ID_EXTRA = "selectedDate"
+
+        fun launchActivity(context: Context) {
+            val intent = Intent(context, DrivingConditionsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
 
         fun launchActivity(
             activity: Activity,
