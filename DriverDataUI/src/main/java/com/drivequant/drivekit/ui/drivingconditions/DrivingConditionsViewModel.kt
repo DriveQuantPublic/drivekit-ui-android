@@ -13,6 +13,7 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
+import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
 import java.util.*
 
 internal class DrivingConditionsViewModel(
@@ -20,10 +21,11 @@ internal class DrivingConditionsViewModel(
     initialSelectedPeriod: DKPeriod?,
     initialSelectedDate: Date?
 ) : AndroidViewModel(application) {
-    internal val periodSelectorViewModel = DKPeriodSelectorViewModel()
-    internal val dateSelectorViewModel = DKDateSelectorViewModel()
-    internal val syncStatus = MutableLiveData<Any>()
-    internal val updateData = MutableLiveData<Any>()
+    val periodSelectorViewModel = DKPeriodSelectorViewModel()
+    val dateSelectorViewModel = DKDateSelectorViewModel()
+    val summaryCardViewModel = DrivingConditionsSummaryCardViewModel()
+    val syncStatus = MutableLiveData<Any>()
+    val updateData = MutableLiveData<Any>()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
     var selectedDate: Date? = initialSelectedDate
@@ -103,9 +105,9 @@ internal class DrivingConditionsViewModel(
         this.summaryCardViewModel.configure(0, 0.0)
     }
 
-    private fun configurePeriodSelector() {
+    private fun configurePeriodSelector(selectedPeriod: DKPeriod) {
         this.periodSelectorViewModel.configure(periods)
-        this.periodSelectorViewModel.select(this.selectedPeriod)
+        this.periodSelectorViewModel.select(selectedPeriod)
         this.periodSelectorViewModel.onPeriodSelected = { oldPeriod, newPeriod ->
             val selectedDate = this.selectedDate
             val sourceTimeline = getTimelineSource(newPeriod)

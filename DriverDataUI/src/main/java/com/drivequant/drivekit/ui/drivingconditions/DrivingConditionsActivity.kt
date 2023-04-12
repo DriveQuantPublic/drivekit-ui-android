@@ -17,6 +17,12 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
         const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
         const val SELECTED_DATE_ID_EXTRA = "selectedDate"
 
+        fun launchActivity(context: Context) {
+            val intent = Intent(context, DrivingConditionsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+
         fun launchActivity(
             activity: Activity,
             selectedPeriod: DKPeriod?,

@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView
 import java.util.*
 
 internal class DrivingConditionsFragment : Fragment() {
@@ -43,7 +44,6 @@ internal class DrivingConditionsFragment : Fragment() {
     private lateinit var dateSelectorView: DKDateSelectorView
     private lateinit var summaryCardView: DrivingConditionsSummaryCardView
     private lateinit var drivingConditionsContainer: ViewGroup
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var initialSelectedPeriod: DKPeriod? = null
     private var initialSelectedDate: Date? = null
@@ -197,5 +197,4 @@ internal class DrivingConditionsFragment : Fragment() {
             }
         }
     }
-
 }
