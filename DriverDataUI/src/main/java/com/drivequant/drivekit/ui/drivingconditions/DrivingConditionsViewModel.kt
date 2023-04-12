@@ -102,7 +102,7 @@ internal class DrivingConditionsViewModel(
 
     private fun configureWithNoData() {
         configureEmptyDateSelector()
-        this.summaryCardViewModel.configure(0, 0.0)
+        this.summaryCardViewModel.configure()
     }
 
     private fun configurePeriodSelector(selectedPeriod: DKPeriod) {

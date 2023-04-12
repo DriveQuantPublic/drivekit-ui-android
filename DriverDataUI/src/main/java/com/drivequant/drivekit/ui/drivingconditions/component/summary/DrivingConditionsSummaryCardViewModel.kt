@@ -12,7 +12,7 @@ internal class DrivingConditionsSummaryCardViewModel : ViewModel() {
     var distance: Double = 0.0
         private set
 
-    fun configure(tripCount: Int, distance: Double) {
+    fun configure(tripCount: Int = 0, distance: Double = 0.0) {
         this.tripCount = tripCount
         this.distance = distance
         this.onViewModelUpdated?.invoke()
