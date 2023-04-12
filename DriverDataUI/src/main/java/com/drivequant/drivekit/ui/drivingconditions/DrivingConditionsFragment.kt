@@ -90,7 +90,6 @@ internal class DrivingConditionsFragment : Fragment() {
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
         }
-        updateData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
