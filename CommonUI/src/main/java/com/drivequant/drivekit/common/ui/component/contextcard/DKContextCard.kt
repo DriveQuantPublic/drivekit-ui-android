@@ -2,7 +2,6 @@ package com.drivequant.drivekit.common.ui.component.contextcard
 
 import android.content.Context
 import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
 
 interface DKContextCard {
     fun getItems(): List<DKContextCardItem>
