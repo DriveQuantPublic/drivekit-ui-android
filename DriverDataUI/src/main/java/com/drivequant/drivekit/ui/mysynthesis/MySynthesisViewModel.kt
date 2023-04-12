@@ -37,7 +37,8 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
     val communityCardViewModel = MySynthesisCommunityCardViewModel()
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
-    private var selectedDate: Date? = null
+    var selectedDate: Date? = null
+        private set
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
     private var communityStatistics: DKCommunityStatistics? = null
 
@@ -70,6 +71,21 @@ internal class MySynthesisViewModel(application: Application) : AndroidViewModel
                 update(true)
                 syncStatus.postValue(Any())
             }
+        }
+    }
+
+    fun updateTimelineDateAndPeriod(period: DKPeriod, date: Date) {
+        var shouldUpdate = false
+        if (this.selectedPeriod != period) {
+            shouldUpdate = true
+            this.periodSelectorViewModel.select(period)
+        }
+        if (this.selectedDate != date) {
+            shouldUpdate = true
+            this.selectedDate = date
+        }
+        if (shouldUpdate) {
+            update()
         }
     }
 

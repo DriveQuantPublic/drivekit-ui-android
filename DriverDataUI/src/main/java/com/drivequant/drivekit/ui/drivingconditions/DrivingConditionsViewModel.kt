@@ -13,23 +13,26 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
-import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
 import java.util.*
 
-internal class DrivingConditionsViewModel(application: Application) : AndroidViewModel(application) {
+internal class DrivingConditionsViewModel(
+    application: Application,
+    initialSelectedPeriod: DKPeriod?,
+    initialSelectedDate: Date?
+) : AndroidViewModel(application) {
     internal val periodSelectorViewModel = DKPeriodSelectorViewModel()
     internal val dateSelectorViewModel = DKDateSelectorViewModel()
     internal val syncStatus = MutableLiveData<Any>()
     internal val updateData = MutableLiveData<Any>()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
-    private var selectedDate: Date? = null
+    var selectedDate: Date? = initialSelectedDate
+        private set
     private val selectedPeriod: DKPeriod
         get() = this.periodSelectorViewModel.selectedPeriod
-    val summaryCardViewModel = DrivingConditionsSummaryCardViewModel()
 
     init {
-        configurePeriodSelector()
+        configurePeriodSelector(initialSelectedPeriod ?: this.selectedPeriod)
         configureDateSelector()
         DriveKitDriverData.getDriverTimelines(
             this.periods,
@@ -40,7 +43,13 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
                 update()
             }
         }
-        updateData()
+
+        if (initialSelectedPeriod == null && initialSelectedDate == null) {
+            updateData()
+        } else {
+            // Do not sync in this case because the timeline as probably been synchronized previously.
+            syncStatus.postValue(Any())
+        }
     }
 
     fun updateData() {
@@ -132,11 +141,15 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
 
     private fun getTimelineSource(period: DKPeriod = this.selectedPeriod) = this.timelineByPeriod[period]
 
-    class DrivingConditionsViewModelFactory(private val application: Application) :
+    class DrivingConditionsViewModelFactory(
+        private val application: Application,
+        private val selectedPeriod: DKPeriod?,
+        private val selectedDate: Date?
+    ) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return DrivingConditionsViewModel(application) as T
+            return DrivingConditionsViewModel(application, selectedPeriod, selectedDate) as T
         }
     }
 }
