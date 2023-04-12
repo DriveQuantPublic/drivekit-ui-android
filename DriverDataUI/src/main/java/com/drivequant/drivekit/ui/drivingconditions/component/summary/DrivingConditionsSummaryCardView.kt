@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.ui.drivingconditions.component.summary
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -64,6 +65,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         this.tripsValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.formatTripsCount()
             highlightMedium(DriveKitUI.colors.primaryColor())
+            setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.tripsLabel.apply {
             text = context.resources.getQuantityString(
@@ -75,6 +77,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         this.distanceValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.getDistanceKm()
             highlightMedium(DriveKitUI.colors.primaryColor())
+            setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.distanceLabel.apply {
             text = "km parcourus" //TODO mock, waiting for keys
