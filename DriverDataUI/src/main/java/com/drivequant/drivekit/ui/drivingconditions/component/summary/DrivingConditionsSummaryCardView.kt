@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -17,16 +16,16 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
     ConstraintLayout(context, attrs) {
 
     private var viewModel: DrivingConditionsSummaryCardViewModel? = null
-    private lateinit var emptyView: FrameLayout
+    private lateinit var emptyView: ConstraintLayout
     private lateinit var emptyViewTitle: TextView
     private lateinit var emptyViewDescription: TextView
 
-    private lateinit var container: FrameLayout
+    private lateinit var container: ConstraintLayout
     private lateinit var tripsValue: TextView
     private lateinit var tripsLabel: TextView
     private lateinit var distanceValue: TextView
     private lateinit var distanceLabel: TextView
-    private lateinit var separator: TextView
+    private lateinit var separator: View
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -71,7 +70,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
                 R.plurals.trip_plural,
                 this@DrivingConditionsSummaryCardView.viewModel?.tripCount ?: 0
             )
-            smallText()
+            smallText(DriveKitUI.colors.complementaryFontColor())
         }
         this.distanceValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm()
@@ -80,7 +79,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         }
         this.distanceLabel.apply {
             text = "km parcourus" //TODO mock, waiting for keys
-            smallText()
+            smallText(DriveKitUI.colors.complementaryFontColor())
         }
         this.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
