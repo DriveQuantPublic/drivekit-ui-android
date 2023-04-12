@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.smallText
@@ -70,12 +69,12 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         this.tripsLabel.apply {
             text = context.resources.getQuantityString(
                 R.plurals.trip_plural,
-                this@DrivingConditionsSummaryCardView.viewModel?.getTripsCount() ?: 0
-            ).capitalizeFirstLetter()
+                this@DrivingConditionsSummaryCardView.viewModel?.tripCount ?: 0
+            )
             smallText()
         }
         this.distanceValue.apply {
-            text = this@DrivingConditionsSummaryCardView.viewModel?.getDistanceKm()
+            text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm()
             highlightMedium(DriveKitUI.colors.primaryColor())
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }

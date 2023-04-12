@@ -31,7 +31,6 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
     init {
         configurePeriodSelector()
         configureDateSelector()
-        configureSummaryCardViewModel()
         DriveKitDriverData.getDriverTimelines(
             this.periods,
             SynchronizationType.CACHE
@@ -72,7 +71,9 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
                 this.selectedDate = date
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
-                this.summaryCardViewModel.configure(this.selectedPeriod, timelineSource, selectedDateIndex)
+                timelineSource.allContext[selectedDateIndex].let {
+                    this.summaryCardViewModel.configure(it.numberTripTotal, it.distance)
+                }
             } else {
                 val date = when (this.selectedPeriod) {
                     DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
@@ -90,6 +91,7 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
 
     private fun configureWithNoData() {
         configureEmptyDateSelector()
+        this.summaryCardViewModel.configure(0, 0.0)
     }
 
     private fun configurePeriodSelector() {
@@ -110,18 +112,6 @@ internal class DrivingConditionsViewModel(application: Application) : AndroidVie
         this.dateSelectorViewModel.onDateSelected = { date ->
             updateSelectedDate(date)
         }
-    }
-
-    private fun configureSummaryCardViewModel() {
-        updateSummaryCardViewModel()
-    }
-
-    private fun updateSummaryCardViewModel() {
-        this.summaryCardViewModel.configure(
-            period = this.selectedPeriod,
-            driverTimeline = getTimelineSource(),
-            0
-        )
     }
 
     private fun configureEmptyDateSelector() {
