@@ -24,17 +24,17 @@ internal class DrivingConditionsSummaryCardViewModel : ViewModel() {
         this.onViewModelUpdated?.invoke()
     }
 
-    fun getTripsCount() = driverTimeline?.allContext?.let {
-        NumberFormat.getNumberInstance().format(it[selectedDateIndex].numberTripTotal)
+    fun hasData(): Boolean {
+        return driverTimeline?.allContext?.get(selectedDateIndex)?.numberTripTotal?.let {
+            it > 0
+        } ?: false
     }
+    fun getTripsCount() = driverTimeline?.allContext?.get(selectedDateIndex)?.numberTripTotal ?: 0
+
+    fun formatTripsCount(): String = NumberFormat.getNumberInstance().format(getTripsCount())
 
     fun getDistanceKm(): String? {
-        val distanceKm = driverTimeline?.allContext?.let {
-            it[selectedDateIndex].distance
-        }
-        distanceKm?.let {
-            return DKDataFormatter.formatDistanceValue(distanceKm, 100.0)
-        }
-        return null
+        val distanceKm = driverTimeline?.allContext?.get(selectedDateIndex)?.distance ?: 0.0
+        return DKDataFormatter.formatDistanceValue(distanceKm, 100.0)
     }
 }
