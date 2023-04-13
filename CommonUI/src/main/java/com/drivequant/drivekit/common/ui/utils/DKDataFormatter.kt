@@ -10,11 +10,21 @@ import com.drivequant.drivekit.common.ui.extension.formatLeadingZero
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.NumberFormat
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.text.Typography.nbsp
 
 object DKDataFormatter {
+
+    @JvmOverloads
+    fun formatNumber(value: Number, maximumFractionDigits: Int? = null): String {
+        val numberFormat = NumberFormat.getNumberInstance()
+        if (maximumFractionDigits != null) {
+            numberFormat.maximumFractionDigits = maximumFractionDigits
+        }
+        return numberFormat.format(value)
+    }
 
     @JvmOverloads
     fun formatDuration(

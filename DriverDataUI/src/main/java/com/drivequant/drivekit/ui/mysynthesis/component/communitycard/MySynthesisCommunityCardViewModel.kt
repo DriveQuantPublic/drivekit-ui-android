@@ -16,7 +16,6 @@ import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getMedianScore
-import java.text.NumberFormat
 import java.util.*
 
 internal class MySynthesisCommunityCardViewModel : ViewModel() {
@@ -127,7 +126,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
     fun getCommunityActiveDriversText(context: Context) = DKSpannable().apply {
         append(
             context,
-            NumberFormat.getNumberInstance().format(statistics.activeDriverNumber),
+            DKDataFormatter.formatNumber(statistics.activeDriverNumber),
             DriveKitUI.colors.complementaryFontColor(),
             DKStyle.NORMAL_TEXT
         )
@@ -153,7 +152,7 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
         } else {
             spannable.append(
                 context,
-                NumberFormat.getNumberInstance().format(tripsCount),
+                DKDataFormatter.formatNumber(tripsCount),
                 DriveKitUI.colors.complementaryFontColor(),
                 DKStyle.NORMAL_TEXT
             ).space().append(
