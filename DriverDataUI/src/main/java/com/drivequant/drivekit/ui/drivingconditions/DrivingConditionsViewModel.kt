@@ -13,6 +13,7 @@ import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
+import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
 import java.util.*
 
 internal class DrivingConditionsViewModel(
@@ -20,10 +21,11 @@ internal class DrivingConditionsViewModel(
     initialSelectedPeriod: DKPeriod?,
     initialSelectedDate: Date?
 ) : AndroidViewModel(application) {
-    internal val periodSelectorViewModel = DKPeriodSelectorViewModel()
-    internal val dateSelectorViewModel = DKDateSelectorViewModel()
-    internal val syncStatus = MutableLiveData<Any>()
-    internal val updateData = MutableLiveData<Any>()
+    val periodSelectorViewModel = DKPeriodSelectorViewModel()
+    val dateSelectorViewModel = DKDateSelectorViewModel()
+    val summaryCardViewModel = DrivingConditionsSummaryCardViewModel()
+    val syncStatus = MutableLiveData<Any>()
+    val updateData = MutableLiveData<Any>()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
     private var timelineByPeriod: Map<DKPeriod, DKDriverTimeline> = mapOf()
     var selectedDate: Date? = initialSelectedDate
@@ -43,6 +45,7 @@ internal class DrivingConditionsViewModel(
                 update()
             }
         }
+
         if (initialSelectedPeriod == null && initialSelectedDate == null) {
             updateData()
         } else {
@@ -79,6 +82,9 @@ internal class DrivingConditionsViewModel(
                 this.selectedDate = date
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
+                timelineSource.allContext[selectedDateIndex].let {
+                    this.summaryCardViewModel.configure(it.numberTripTotal, it.distance)
+                }
             } else {
                 val date = when (this.selectedPeriod) {
                     DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
@@ -96,6 +102,7 @@ internal class DrivingConditionsViewModel(
 
     private fun configureWithNoData() {
         configureEmptyDateSelector()
+        this.summaryCardViewModel.configure()
     }
 
     private fun configurePeriodSelector(selectedPeriod: DKPeriod) {

@@ -88,5 +88,4 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
         setResult(RESULT_OK, intent)
         finish()
     }
-
 }

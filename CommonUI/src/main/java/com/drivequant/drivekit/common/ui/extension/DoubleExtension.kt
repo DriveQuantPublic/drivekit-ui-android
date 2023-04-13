@@ -1,17 +1,14 @@
 @file:JvmName("DKDoubleUtils")
 package com.drivequant.drivekit.common.ui.extension
 
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.text.NumberFormat
 import java.util.*
 
 @JvmOverloads
-fun Double.removeZeroDecimal(floatingPointNumber: Int = 1): String {
-    val numberFormat = NumberFormat.getNumberInstance()
-    numberFormat.maximumFractionDigits = floatingPointNumber
-    return numberFormat.format(this)
-}
+fun Double.removeZeroDecimal(floatingPointNumber: Int = 1) =
+    DKDataFormatter.formatNumber(this, floatingPointNumber)
 
 fun Double.convertKmsToMiles(): Double = this * 0.621371
 

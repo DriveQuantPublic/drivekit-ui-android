@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false">
+
+    <androidx.cardview.widget.CardView
+        style="@style/DKCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dk_margin"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dk_margin"
+            android:paddingVertical="@dimen/dk_margin"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/empty_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="You have no data yet" />
+
+            <TextView
+                android:id="@+id/empty_view_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empty_view_title"
+                tools:text="Make a first trip to see your first driving conditions." />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dk_margin">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <View
+                android:id="@+id/line_separator"
+                style="@style/Separator.Vertical"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/container"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/container" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView_tripscountvalue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="123" />
+
+                <TextView
+                    android:id="@+id/textView_tripscountlabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Trips" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView_distancevalue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="456" />
+
+                <TextView
+                    android:id="@+id/textView_distancelabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="km traveled" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView>
