@@ -26,7 +26,7 @@ internal class ContextCardBar @JvmOverloads constructor(
 
     private var paints = mutableMapOf<DKContextCardItem, Paint>()
 
-    fun init(progressItems: List<DKContextCardItem>) {
+    fun update(progressItems: List<DKContextCardItem>) {
         this.progressItems = progressItems
 
         paints.clear()

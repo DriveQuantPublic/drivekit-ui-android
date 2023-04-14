@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.common.ui.component.contextcard.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,8 +11,14 @@ import com.drivequant.drivekit.common.ui.component.contextcard.viewholder.Contex
 
 internal class ContextCardItemListAdapter(
     private var context: Context,
-    private val contextCard: DKContextCard
+    private var contextCard: DKContextCard
 ) : RecyclerView.Adapter<ContextCardItemViewHolder>() {
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun update(contextCard: DKContextCard) {
+        this.contextCard = contextCard
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContextCardItemViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.dk_context_card_list_item, parent, false)

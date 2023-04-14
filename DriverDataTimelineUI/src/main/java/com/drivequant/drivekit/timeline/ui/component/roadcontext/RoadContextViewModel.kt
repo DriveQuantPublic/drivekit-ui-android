@@ -108,7 +108,7 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
     override fun getTitle(context: Context): String {
         return this.emptyRoadContextType?.let {
             when (it) {
-                EmptyRoadContextType.EMPTY_DATA -> R.string.dk_timeline_road_context_title_empty_data
+                EmptyRoadContextType.EMPTY_DATA -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_data_yet
                 EmptyRoadContextType.NO_DATA_SAFETY,
                 EmptyRoadContextType.NO_DATA_ECODRIVING-> R.string.dk_timeline_road_context_title_no_data
                 EmptyRoadContextType.NO_DATA -> null

@@ -43,6 +43,7 @@
     <string name="dk_common_mass">Masse</string>
     <string name="dk_common_mean_speed">Gennemsnitshastighed</string>
     <string name="dk_common_no">Nej</string>
+    <string name="dk_common_no_data_yet">Du har endnu ikke nogen data</string>
     <string name="dk_common_no_pseudo_set">For at dele din ranglisteplacering med de andre deltagere kan du vælge et brugernavn. Uden et brugernavn vises du som anonym.</string>
     <string name="dk_common_no_trip">Ingen rejse</string>
     <string name="dk_common_ok">Ok</string>

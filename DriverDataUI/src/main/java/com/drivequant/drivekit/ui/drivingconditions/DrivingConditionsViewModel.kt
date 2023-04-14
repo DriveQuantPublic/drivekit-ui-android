@@ -11,9 +11,12 @@ import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
+import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.timeline.*
 import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardViewModel
+import com.drivequant.drivekit.ui.DriverDataUI
+import com.drivequant.drivekit.ui.drivingconditions.component.context.DrivingConditionsContextsViewModel
 import java.util.*
 
 internal class DrivingConditionsViewModel(
@@ -24,6 +27,7 @@ internal class DrivingConditionsViewModel(
     val periodSelectorViewModel = DKPeriodSelectorViewModel()
     val dateSelectorViewModel = DKDateSelectorViewModel()
     val summaryCardViewModel = DrivingConditionsSummaryCardViewModel()
+    val contextsViewModel = DrivingConditionsContextsViewModel()
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
     private val periods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
@@ -32,6 +36,7 @@ internal class DrivingConditionsViewModel(
         private set
     private val selectedPeriod: DKPeriod
         get() = this.periodSelectorViewModel.selectedPeriod
+    private val contexts = DriverDataUI.contextKinds
 
     init {
         configurePeriodSelector(initialSelectedPeriod ?: this.selectedPeriod)
@@ -84,6 +89,16 @@ internal class DrivingConditionsViewModel(
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
                 timelineSource.allContext[selectedDateIndex].let {
                     this.summaryCardViewModel.configure(it.numberTripTotal, it.distance)
+                    it.drivingConditions?.let { drivingConditions ->
+                        val roadContexts = HashMap<RoadContext, DKDriverTimeline.DKRoadContextItem>()
+                        for (roadContext in RoadContext.values()) {
+                            val roadContextItems = timelineSource.roadContexts[roadContext]
+                            roadContextItems?.let {
+                                roadContexts[roadContext] = roadContextItems[selectedDateIndex]
+                            }
+                        }
+                        this.contextsViewModel.configure(this.getApplication(), this.contexts, drivingConditions, roadContexts)
+                    }
                 }
             } else {
                 val date = when (this.selectedPeriod) {
