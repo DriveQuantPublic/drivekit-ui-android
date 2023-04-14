@@ -78,7 +78,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
             setTypeface(DriveKitUI.secondaryFont(context), Typeface.BOLD)
         }
         this.distanceLabel.apply {
-            text = "km parcourus" //TODO mock, waiting for keys
+            text = context.resources.getQuantityString(R.plurals.dk_driverdata_drivingconditions_distance, viewModel?.tripCount ?: 0)
             smallText(DriveKitUI.colors.complementaryFontColor())
         }
         this.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
@@ -89,11 +89,11 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         this.container.visibility = View.GONE
 
         this.emptyViewTitle.apply {
-            text = "Vous n'avez pas encore de données" //TODO mock, waiting for keys
+            setText(R.string.dk_common_no_data_yet)
             headLine2(DriveKitUI.colors.primaryColor())
         }
         this.emptyViewDescription.apply {
-            text = "Conduisez avec l'application et enregistrez vos trajets pour visualiser et obtenir une synthèse de vos conditions de conduite." //TODO mock, waiting for keys
+            setText(R.string.dk_driverdata_drivingconditions_empty_data)
             smallText(DriveKitUI.colors.complementaryFontColor())
         }
     }

@@ -63,7 +63,7 @@ internal class DrivingConditionsContextsViewModel {
         val dayCard = if (drivingConditions.dayDistance > 0) {
             getContextCardItem(
                 context.getString(R.string.dk_driverdata_drivingconditions_day),
-                R.color.dkGrayColor, //TODO
+                com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1,
                 drivingConditions.dayDistance,
                 totalDistance
             )
@@ -73,7 +73,7 @@ internal class DrivingConditionsContextsViewModel {
         val nightCard = if (drivingConditions.nightDistance > 0) {
             getContextCardItem(
                 context.getString(R.string.dk_driverdata_drivingconditions_night),
-                R.color.dkGrayColor, //TODO
+                com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2,
                 drivingConditions.nightDistance,
                 totalDistance
             )
@@ -116,7 +116,7 @@ internal class DrivingConditionsContextsViewModel {
                 if (distance > 0) {
                     getContextCardItem(
                         roadContext.getTitle(context),
-                        R.color.dkGrayColor, //TODO
+                        roadContext.getColor(),
                         distance,
                         totalDistance
                     )
@@ -151,7 +151,7 @@ internal class DrivingConditionsContextsViewModel {
                 if (it > 0) {
                     getContextCardItem(
                         category.getTitle(context),
-                        R.color.dkGrayColor, //TODO
+                        category.getColor(),
                         it,
                         totalDistance
                     )
@@ -197,7 +197,7 @@ internal class DrivingConditionsContextsViewModel {
                     if (it > 0) {
                         getContextCardItem(
                             weather.getTitle(context),
-                            R.color.dkGrayColor, //TODO
+                            weather.getColor(),
                             it,
                             totalDistance
                         )
@@ -227,7 +227,7 @@ internal class DrivingConditionsContextsViewModel {
         val weekdaysCard = if (drivingConditions.weekdaysDistance > 0) {
             getContextCardItem(
                 context.getString(R.string.dk_driverdata_drivingconditions_weekdays),
-                R.color.dkGrayColor, //TODO
+                com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1,
                 drivingConditions.weekdaysDistance,
                 totalDistance
             )
@@ -237,7 +237,7 @@ internal class DrivingConditionsContextsViewModel {
         val weekendCard = if (drivingConditions.weekendDistance > 0) {
             getContextCardItem(
                 context.getString(R.string.dk_driverdata_drivingconditions_weekend),
-                R.color.dkGrayColor, //TODO
+                com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2,
                 drivingConditions.weekendDistance,
                 totalDistance
             )
@@ -281,7 +281,7 @@ internal class DrivingConditionsContextsViewModel {
             override fun getColorResId(): Int = color
             override fun getTitle(context: Context): String = title
             override fun getSubtitle(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, true, 10.0).convertToString()
-            override fun getPercent(): Double = distance / totalDistance
+            override fun getPercent(): Double = distance / totalDistance * 100
         }
     }
 
@@ -291,6 +291,15 @@ internal class DrivingConditionsContextsViewModel {
         DKDriverTimeline.DKDrivingCategory.FROM_10_TO_50_KM -> context.getString(R.string.dk_driverdata_drivingconditions_interval_distance, 10, 50)
         DKDriverTimeline.DKDrivingCategory.FROM_50_TO_100_KM -> context.getString(R.string.dk_driverdata_drivingconditions_interval_distance, 50, 100)
         DKDriverTimeline.DKDrivingCategory.MORE_THAN_100_KM -> context.getString(R.string.dk_driverdata_drivingconditions_long_trips)
+    }
+
+    @ColorRes
+    private fun DKDriverTimeline.DKDrivingCategory.getColor(): Int = when (this) {
+        DKDriverTimeline.DKDrivingCategory.LESS_THAN_2_KM -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
+        DKDriverTimeline.DKDrivingCategory.FROM_2_TO_10_KM -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2
+        DKDriverTimeline.DKDrivingCategory.FROM_10_TO_50_KM -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor3
+        DKDriverTimeline.DKDrivingCategory.FROM_50_TO_100_KM -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor4
+        DKDriverTimeline.DKDrivingCategory.MORE_THAN_100_KM -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5
     }
 
     private fun DKWeather.getTitle(context: Context): String = when (this) {
@@ -309,6 +318,17 @@ internal class DrivingConditionsContextsViewModel {
         }
     }
 
+    @ColorRes
+    private fun DKWeather.getColor(): Int = when (this) {
+        DKWeather.CLOUD -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2
+        DKWeather.FOG -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor3
+        DKWeather.HAIL -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor6
+        DKWeather.RAIN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor4
+        DKWeather.SNOW -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5
+        DKWeather.SUN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
+        DKWeather.UNKNOWN -> throw IllegalArgumentException()
+    }
+
     private fun RoadContext.getTitle(context: Context): String = when (this) {
         RoadContext.CITY -> com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_city
         RoadContext.EXPRESSWAYS -> com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_fastlane
@@ -318,5 +338,14 @@ internal class DrivingConditionsContextsViewModel {
     }?.let {
         context.getString(it).capitalizeFirstLetter()
     } ?: ""
+
+    @ColorRes
+    private fun RoadContext.getColor(): Int = when (this) {
+        RoadContext.HEAVY_URBAN_TRAFFIC -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
+        RoadContext.CITY -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2
+        RoadContext.SUBURBAN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor3
+        RoadContext.EXPRESSWAYS -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor4
+        RoadContext.TRAFFIC_JAM -> throw IllegalArgumentException()
+    }
 
 }

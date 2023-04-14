@@ -134,10 +134,10 @@ internal class RoadContextViewModel : ViewModel(), DKContextCard {
 
 @ColorRes
 internal fun TimelineRoadContext.getColorResId() = when (this) {
-    TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> R.color.dkRoadContextHeavyUrbanTrafficColor
-    TimelineRoadContext.CITY -> R.color.dkRoadContextCityColor
-    TimelineRoadContext.SUBURBAN -> R.color.dkRoadContextSuburbanColor
-    TimelineRoadContext.EXPRESSWAYS -> R.color.dkRoadContextExpresswaysColor
+    TimelineRoadContext.HEAVY_URBAN_TRAFFIC -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
+    TimelineRoadContext.CITY -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2
+    TimelineRoadContext.SUBURBAN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor3
+    TimelineRoadContext.EXPRESSWAYS -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor4
 }
 
 @StringRes
