@@ -62,7 +62,7 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
                     recyclerView.layoutManager = GridLayoutManager(context, 2)
                     adapter = ContextCardItemListAdapter(
                         context,
-                        contextCard,
+                        contextCard.getItems(),
                     )
                     recyclerView.adapter = adapter
                 }

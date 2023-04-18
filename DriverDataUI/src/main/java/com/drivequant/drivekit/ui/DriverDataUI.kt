@@ -34,6 +34,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
     private const val TAG = "DriveKit DriverData UI"
 
     var contextKinds: List<DKContextKind> = DKContextKind.values().toList()
+        private set
     var tripData: TripData = TripData.SAFETY
         private set
     var enableAlternativeTrips: Boolean = false
@@ -101,6 +102,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun configureHeaderDay(headerDay: HeaderDay) {
         this.headerDay = headerDay
+    }
+
+    fun configureContextKings(contextKinds: List<DKContextKind>) {
+        this.contextKinds = contextKinds
     }
 
     fun enableVehicleFilter(enableVehicleFilter: Boolean) {
