@@ -46,7 +46,7 @@ internal abstract class BaseContextCard : DKContextCard {
         var maxValue: Double? = null
         var maxKey: T? = null
         for ((key, value) in map) {
-            if (maxValue == null || value > maxValue) {
+            if (value > 0 && (maxValue == null || value > maxValue)) {
                 maxValue = value
                 maxKey = key
             }
