@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.drivingconditions.component.context.ContextCardScrollState
 import com.drivequant.drivekit.ui.drivingconditions.component.context.DrivingConditionsContextsView
 import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView
 import java.util.*
@@ -176,6 +177,9 @@ internal class DrivingConditionsFragment : Fragment() {
 
     private fun configureContextsView() {
         this.drivingConditionsContextsView.configure(this.viewModel.contextsViewModel)
+        this.drivingConditionsContextsView.onContextCardScrollStateChangeCallback = {
+            this.swipeRefreshLayout.isEnabled = it != ContextCardScrollState.MOVING
+        }
     }
 
     private fun tagScreen() {

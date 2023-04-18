@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 internal class DrivingConditionsContextsView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
+    var onContextCardScrollStateChangeCallback: ((state: ContextCardScrollState) -> Unit)? = null
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
     private var viewModel: DrivingConditionsContextsViewModel? = null
@@ -42,6 +43,18 @@ internal class DrivingConditionsContextsView(context: Context, attrs: AttributeS
 
     private fun configureViewPager() {
         this.viewPager.adapter = this.adapter
+
+        this.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                val contextCardScrollState: ContextCardScrollState = if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    ContextCardScrollState.IDLE
+                } else {
+                    ContextCardScrollState.MOVING
+                }
+                onContextCardScrollStateChangeCallback?.invoke(contextCardScrollState)
+            }
+        })
     }
 
     private fun configureTabLayout() {
@@ -82,4 +95,8 @@ internal class DrivingConditionsContextsView(context: Context, attrs: AttributeS
         }
     }
 
+}
+
+internal enum class ContextCardScrollState {
+    IDLE, MOVING
 }

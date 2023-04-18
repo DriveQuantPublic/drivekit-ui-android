@@ -22,7 +22,7 @@ internal abstract class BaseContextCard : DKContextCard {
         return object : DKContextCardItem {
             override fun getColorResId(): Int = color
             override fun getTitle(context: Context): String = title
-            override fun getSubtitle(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, true, 10.0).convertToString()
+            override fun getSubtitle(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, true, 100.0).convertToString()
             override fun getPercent(): Double = distance / totalDistance * 100
         }
     }
