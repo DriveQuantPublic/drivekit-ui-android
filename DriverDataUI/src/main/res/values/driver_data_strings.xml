@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_main_day">You mostly drive during the day</string>
    <string name="dk_driverdata_drivingconditions_main_expressways">You drive mostly on highways</string>
    <string name="dk_driverdata_drivingconditions_main_fog">You drive mostly on foggy days</string>
-   <string name="dk_driverdata_drivingconditions_main_ice">Most of you drive on an icy road</string>
+   <string name="dk_driverdata_drivingconditions_main_ice">You drive mostly on icy roads</string>
    <string name="dk_driverdata_drivingconditions_main_interval_distance">Most of your trips are between %d and %d kilometers</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">You mainly make long trips</string>
    <string name="dk_driverdata_drivingconditions_main_night">You often drive at night</string>

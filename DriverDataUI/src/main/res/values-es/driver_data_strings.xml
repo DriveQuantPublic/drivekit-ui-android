@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_main_day">Conduce principalmente durante el día</string>
    <string name="dk_driverdata_drivingconditions_main_expressways">Conduces principalmente por vías rápidas</string>
    <string name="dk_driverdata_drivingconditions_main_fog">Conduce sobre todo en días con niebla</string>
-   <string name="dk_driverdata_drivingconditions_main_ice">Conduce casi siempre por carreteras heladas</string>
+   <string name="dk_driverdata_drivingconditions_main_ice">Conduce sobre todo por carreteras heladas</string>
    <string name="dk_driverdata_drivingconditions_main_interval_distance">Sueles hacer trayectos de %d a %d kilómetros</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">Sueles hacer viajes largos</string>
    <string name="dk_driverdata_drivingconditions_main_night">Conduces a menudo de noche</string>
