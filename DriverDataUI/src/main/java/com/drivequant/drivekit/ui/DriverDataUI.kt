@@ -104,7 +104,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         this.headerDay = headerDay
     }
 
-    fun configureContextKings(contextKinds: List<DKContextKind>) {
+    fun configureContextKinds(contextKinds: List<DKContextKind>) {
         this.contextKinds = contextKinds
     }
 
