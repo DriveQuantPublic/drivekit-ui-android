@@ -71,7 +71,7 @@
     <string name="dk_vehicle_beacon_setup_successlink_message">Herzlichen Glückwunsch! \n\n Der BEACON %1$s ist jetzt mit dem Fahrzeug %2$s verbunden.</string>
     <string name="dk_vehicle_beacon_start_scan">Platzieren Sie den BEACON in der Nähe des Telefons und tippen Sie auf den Bildschirm</string>
     <string name="dk_vehicle_beacon_verify_wrong_vehicle">Die erkannte Bake ist nicht mit diesem Fahrzeug verbunden.</string>
-    <string name="dk_vehicle_beacon_wait_scan">Warten Sie zirka 10 Sekunden ...</string>
+    <string name="dk_vehicle_beacon_wait_scan">Warten Sie zirka 10 Sekunden...</string>
     <string name="dk_vehicle_begin">Beginnen</string>
     <string name="dk_vehicle_bluetooth_already_paired">Das Bluetooth %1$s-Gerät ist bereits mit einem anderen Fahrzeug verbunden. Sie müssen dieses Gerät zuerst freigeben, bevor Sie es mit %2$s koppeln können.</string>
     <string name="dk_vehicle_bluetooth_combination_view_title">Zuordnen eines Bluetooth-Geräts</string>
@@ -105,7 +105,6 @@
     <string name="dk_vehicle_category_car_sport_title">Sportwagen</string>
     <string name="dk_vehicle_category_car_suv_description">Diese Kategorie entspricht Crossover-Fahrzeugen oder Geländefahrzeugen mit Allradantrieb (4x4), deren Länge im Durchschnitt von 4,10 bis 5,20 m variiert.</string>
     <string name="dk_vehicle_category_car_suv_title">4x4, SUV, Crossover</string>
-    <string name="dk_vehicle_category_display_brands">Fahren Sie fort, die Marke und das Modell Ihres Fahrzeugs auszuwählen</string>
     <string name="dk_vehicle_category_truck_selection_title">Was für einen Lkw fahren Sie?</string>
     <string name="dk_vehicle_category_truck_straight">Lkw-Fahrer</string>
     <string name="dk_vehicle_category_truck_straight_2_axles">Zweiachsiger gerader Lkw</string>
@@ -122,6 +121,8 @@
     <string name="dk_vehicle_delete">Löschen</string>
     <string name="dk_vehicle_delete_confirm">Bestätigen Sie die Entfernung des Fahrzeugs %s? Laufleistungstracking und Wartungsdaten gehen dauerhaft verloren.</string>
     <string name="dk_vehicle_detail_back_edit_alert">Die Fahrzeugdaten wurden geändert. Möchtest du sie speichern?</string>
+    <string name="dk_vehicle_detail_category_button_description">Sie kennen die Marke, das Modell und die Eigenschaften Ihres Fahrzeugs</string>
+    <string name="dk_vehicle_detail_category_button_title">Mein Fahrzeug finden</string>
     <string name="dk_vehicle_detection_mode_title">Automatischer Start:</string>
     <string name="dk_vehicle_engine_description">Motortyp?</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
@@ -185,6 +186,8 @@
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">Dieser Wert darf 44 Tonnen nicht überschreiten</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">Dieser Wert muss größer als das Leergewicht sein</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_info">Abhängig von der Art des Anhängers oder der Konfiguration Ihres Fahrzeugs können Sie das zulässige Gesamtgewicht der Kombination aus Lkw und Anhänger anpassen.</string>
+    <string name="dk_vehicle_quick_category_button_description">Wenn Sie die Merkmale Ihres Fahrzeugs nicht kennen, wird es automatisch eingerichtet.</string>
+    <string name="dk_vehicle_quick_category_button_title">Ich habe keine Zeit</string>
     <string name="dk_vehicle_rename">Umbenennen</string>
     <string name="dk_vehicle_rename_description">Wählen Sie einen Namen, um Ihr Fahrzeug zu identifizieren.</string>
     <string name="dk_vehicle_rename_title">Benennen Sie dieses Fahrzeug um</string>

@@ -71,7 +71,7 @@
     <string name="dk_vehicle_beacon_setup_successlink_message">Congratulazioni! \n\n Il beacon %1$s è ora associato al veicolo %2$s</string>
     <string name="dk_vehicle_beacon_start_scan">Posiziona il tuo beacon vicino al telefono e tocca lo schermo</string>
     <string name="dk_vehicle_beacon_verify_wrong_vehicle">Il beacon rilevato non è associato a questo veicolo.</string>
-    <string name="dk_vehicle_beacon_wait_scan">Attendi circa 10 secondi ...</string>
+    <string name="dk_vehicle_beacon_wait_scan">Attendi circa 10 secondi...</string>
     <string name="dk_vehicle_begin">Inizio</string>
     <string name="dk_vehicle_bluetooth_already_paired">Il dispositivo Bluetooth %1$s è già collegato ad un altro veicolo. È necessario rilasciare questo apparecchio prima di accoppiarlo con %2$s.</string>
     <string name="dk_vehicle_bluetooth_combination_view_title">Collegare un dispositivo Bluetooth</string>
@@ -105,7 +105,6 @@
     <string name="dk_vehicle_category_car_sport_title">Auto sportiva</string>
     <string name="dk_vehicle_category_car_suv_description">Questa categoria corrisponde a veicoli incrociati (o \"crossover\") o fuoristrada a trazione integrale (4x4) e la cui lunghezza media varia da 4,10 a 5,20 m.</string>
     <string name="dk_vehicle_category_car_suv_title">4X4, SUV, Crossover</string>
-    <string name="dk_vehicle_category_display_brands">Continua a selezionare la marca e il modello del tuo veicolo</string>
     <string name="dk_vehicle_category_truck_selection_title">Che tipo di camion guidi?</string>
     <string name="dk_vehicle_category_truck_straight">Autocarro classico</string>
     <string name="dk_vehicle_category_truck_straight_2_axles">Autocarro a due assi dritti</string>
@@ -122,6 +121,8 @@
     <string name="dk_vehicle_delete">Cancellare</string>
     <string name="dk_vehicle_delete_confirm">Conferma la rimozione della %s del veicolo? I dati relativi al chilometraggio e alla manutenzione andranno persi in modo permanente.</string>
     <string name="dk_vehicle_detail_back_edit_alert">I dati del veicolo sono stati modificati. Volete salvarli?</string>
+    <string name="dk_vehicle_detail_category_button_description">Conoscete la marca, il modello e le caratteristiche del vostro veicolo</string>
+    <string name="dk_vehicle_detail_category_button_title">Trova la mia auto</string>
     <string name="dk_vehicle_detection_mode_title">Inizio auto:</string>
     <string name="dk_vehicle_engine_description">Tipo de motore</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
@@ -185,6 +186,8 @@
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">Questo valore non può superare 44 tonnellate</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">Questo valore deve essere maggiore del peso a vuoto</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_info">A seconda del tipo di rimorchio o della configurazione del vostro veicolo, è possibile regolare il peso lordo della combinazione di autocarro e rimorchio.</string>
+    <string name="dk_vehicle_quick_category_button_description">Se non si conoscono le caratteristiche del veicolo, la configurazione avverrà automaticamente.</string>
+    <string name="dk_vehicle_quick_category_button_title">Non ho tempo</string>
     <string name="dk_vehicle_rename">Rinomina</string>
     <string name="dk_vehicle_rename_description">Scegli un nome per identificare il tuo veicolo</string>
     <string name="dk_vehicle_rename_title">Rinomina questo veicolo</string>

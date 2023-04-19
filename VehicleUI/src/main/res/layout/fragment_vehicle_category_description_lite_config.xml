@@ -29,26 +29,23 @@
         app:layout_constraintTop_toBottomOf="@id/image_view_icon2"
         tools:text="Ceci est une description" />
 
-    <include
-        android:id="@+id/text_view_brands"
-        layout="@layout/dk_vehicle_button"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/button_validate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dk_margin_half"
-        android:layout_marginTop="@dimen/dk_margin_double"
+        android:layout_margin="@dimen/dk_margin_half"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/dk_margin_half"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_description" />
 
-    <include
-        android:id="@+id/button_validate"
-        layout="@layout/dk_vehicle_button"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/text_view_brands"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dk_margin_half"
-        android:layout_marginTop="@dimen/dk_margin_double"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/dk_margin_half"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_brands" />
-
+        app:layout_constraintTop_toBottomOf="@id/button_validate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

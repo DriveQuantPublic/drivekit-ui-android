@@ -105,7 +105,6 @@
    <string name="dk_vehicle_category_car_sport_title">Coupé</string>
    <string name="dk_vehicle_category_car_suv_description">Cette catégorie correspond aux véhicules de type Crossover (ou \"multisegment\") ou aux véhicules tout-terrains à transmission intégrale (4x4) et dont la longueur varie en moyenne de 4,10 à 5,20 m.</string>
    <string name="dk_vehicle_category_car_suv_title">4x4, SUV, Crossover</string>
-   <string name="dk_vehicle_category_display_brands">Continuer pour sélectionner la marque et le modèle de votre véhicule</string>
    <string name="dk_vehicle_category_truck_selection_title">Quel type de camion conduisez-vous ?</string>
    <string name="dk_vehicle_category_truck_straight">Porteur</string>
    <string name="dk_vehicle_category_truck_straight_2_axles">Porteur à deux essieux</string>
@@ -122,6 +121,8 @@
    <string name="dk_vehicle_delete">Supprimer</string>
    <string name="dk_vehicle_delete_confirm">Confirmez-vous la suppression du véhicule %s ? Les données de suivi kilométrique et de maintenance seront définitivement perdues.</string>
    <string name="dk_vehicle_detail_back_edit_alert">Les données du véhicule ont été modifiées. Souhaitez-vous les sauvegarder ?</string>
+   <string name="dk_vehicle_detail_category_button_description">Vous connaissez la marque, le modèle et les caractéristiques de votre véhicule</string>
+   <string name="dk_vehicle_detail_category_button_title">Trouver mon véhicule</string>
    <string name="dk_vehicle_detection_mode_title">Démarrage auto :</string>
    <string name="dk_vehicle_engine_description">Motorisation ?</string>
    <string name="dk_vehicle_engine_diesel">Diesel</string>
@@ -185,6 +186,8 @@
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">Cette valeur ne peut pas dépasser 44 tonnes</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">Cette valeur doit être supérieure au poids à vide</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_info">Selon le type de remorque ou la configuration de votre véhicule, vous pouvez ajuster le poids total autorisé en charge de l\'ensemble routier.</string>
+   <string name="dk_vehicle_quick_category_button_description">Si vous ne connaissez pas les caractéristiques de votre véhicule, il sera configuré automatiquement.</string>
+   <string name="dk_vehicle_quick_category_button_title">Je n\'ai pas le temps</string>
    <string name="dk_vehicle_rename">Renommer</string>
    <string name="dk_vehicle_rename_description">Choisissez un nom pour identifier votre véhicule</string>
    <string name="dk_vehicle_rename_title">Renommer ce véhicule</string>
