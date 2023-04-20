@@ -105,7 +105,6 @@
    <string name="dk_vehicle_category_car_sport_title">Coche deportivo</string>
    <string name="dk_vehicle_category_car_suv_description">Esta categoría corresponde a los vehículos crossover o todoterreno con tracción integral (4x4) y cuya longitud varía en promedio de 4,10 a 5,20 m.</string>
    <string name="dk_vehicle_category_car_suv_title">4X4, SUV, Crossover</string>
-   <string name="dk_vehicle_category_display_brands">Continúe seleccionando la marca y el modelo de su vehículo</string>
    <string name="dk_vehicle_category_truck_selection_title">¿Qué tipo de camión conduces?</string>
    <string name="dk_vehicle_category_truck_straight">Camión rígido</string>
    <string name="dk_vehicle_category_truck_straight_2_axles">Camión rígido de dos ejes</string>
@@ -122,6 +121,8 @@
    <string name="dk_vehicle_delete">Borrar</string>
    <string name="dk_vehicle_delete_confirm">¿Confirma la retirada de los %s del vehículo? Los datos de seguimiento y mantenimiento del kilometraje se perderán permanentemente.</string>
    <string name="dk_vehicle_detail_back_edit_alert">Los datos del vehículo han sido modificados. ¿Te gustaría salvarlos?</string>
+   <string name="dk_vehicle_detail_category_button_description">Conoce la marca, el modelo y las características de su vehículo</string>
+   <string name="dk_vehicle_detail_category_button_title">Encontrar mi vehículo</string>
    <string name="dk_vehicle_detection_mode_title">Auto inicio:</string>
    <string name="dk_vehicle_engine_description">¿Tipo de motor?</string>
    <string name="dk_vehicle_engine_diesel">Diésel</string>
@@ -185,6 +186,8 @@
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">Este valor no puede ser superior a 44 toneladas</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">Este valor debe ser mayor que el peso en vacío</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_info">Dependiendo del tipo de remolque o de la configuración de su vehículo, puede ajustar el peso bruto del vehículo de la combinación de camión y remolque.</string>
+   <string name="dk_vehicle_quick_category_button_description">Si no conoce las características de su vehículo, se configurará automáticamente.</string>
+   <string name="dk_vehicle_quick_category_button_title">No tengo tiempo</string>
    <string name="dk_vehicle_rename">Renombrar</string>
    <string name="dk_vehicle_rename_description">Elija un nombre para identificar su vehículo</string>
    <string name="dk_vehicle_rename_title">Renombrar este vehículo</string>
