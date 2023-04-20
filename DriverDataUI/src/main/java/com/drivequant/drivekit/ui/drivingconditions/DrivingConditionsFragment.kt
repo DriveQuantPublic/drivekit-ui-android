@@ -15,6 +15,8 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.drivingconditions.component.context.ContextCardScrollState
+import com.drivequant.drivekit.ui.drivingconditions.component.context.DrivingConditionsContextsView
 import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView
 import java.util.*
 
@@ -43,7 +45,7 @@ internal class DrivingConditionsFragment : Fragment() {
     private lateinit var dateSelectorContainer: ViewGroup
     private lateinit var dateSelectorView: DKDateSelectorView
     private lateinit var summaryCardView: DrivingConditionsSummaryCardView
-    private lateinit var drivingConditionsContainer: ViewGroup
+    private lateinit var drivingConditionsContextsView: DrivingConditionsContextsView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var initialSelectedPeriod: DKPeriod? = null
     private var initialSelectedDate: Date? = null
@@ -59,8 +61,7 @@ internal class DrivingConditionsFragment : Fragment() {
         this.periodSelectorContainer = view.findViewById(R.id.period_selector_container)
         this.dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         this.summaryCardView = view.findViewById(R.id.driving_conditions_summary)
-
-        this.drivingConditionsContainer = view.findViewById(R.id.driving_conditions_container)
+        this.drivingConditionsContextsView = view.findViewById(R.id.driving_conditions)
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_drivingconditions)
 
         savedInstanceState?.let {
@@ -81,6 +82,7 @@ internal class DrivingConditionsFragment : Fragment() {
         configurePeriodSelector()
         configureDateSelector()
         configureSummaryCard()
+        configureContextsView()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
@@ -170,6 +172,13 @@ internal class DrivingConditionsFragment : Fragment() {
     private fun configureSummaryCard() {
         context?.let {
             this.summaryCardView.configure(this.viewModel.summaryCardViewModel)
+        }
+    }
+
+    private fun configureContextsView() {
+        this.drivingConditionsContextsView.configure(this.viewModel.contextsViewModel)
+        this.drivingConditionsContextsView.onContextCardScrollStateChangeCallback = {
+            this.swipeRefreshLayout.isEnabled = it != ContextCardScrollState.MOVING
         }
     }
 

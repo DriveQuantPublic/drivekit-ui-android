@@ -28,7 +28,6 @@
     <string name="dk_timeline_road_context_no_context_description">In diesem Zeitraum gibt es nicht genügend Daten, um die Verteilung der Straßenkontexte zu berechnen.</string>
     <string name="dk_timeline_road_context_suburban">Extra städtlig</string>
     <string name="dk_timeline_road_context_title">Straßenkontext (%s)</string>
-    <string name="dk_timeline_road_context_title_empty_data">Sie haben noch keine Daten</string>
     <string name="dk_timeline_road_context_title_no_data">Keine Daten anzeigen</string>
     <string name="dk_timeline_safety_score">Sicherheitspunkte: %s</string>
     <string name="dk_timeline_speeding_score">Geschwindigkeitswert: %s</string>

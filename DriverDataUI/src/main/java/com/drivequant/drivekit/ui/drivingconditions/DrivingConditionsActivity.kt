@@ -67,8 +67,7 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        setActivityTitle(getString(R.string.dk_driverdata_drivingconditions_main_title))
-        setActivityTitle("TODO")
+        setActivityTitle(getString(R.string.dk_driverdata_drivingconditions_title))
     }
 
     override fun onSupportNavigateUp(): Boolean {

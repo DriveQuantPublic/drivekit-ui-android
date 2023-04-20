@@ -43,6 +43,7 @@
    <string name="dk_common_mass">Massa</string>
    <string name="dk_common_mean_speed">Velocità media</string>
    <string name="dk_common_no">No</string>
+   <string name="dk_common_no_data_yet">Non si dispone ancora di dati</string>
    <string name="dk_common_no_pseudo_set">Per condividere la tua classifica con gli altri partecipanti, ti invitiamo a scegliere uno pseudo. Senza uno pseudo apparirai come anonimo.</string>
    <string name="dk_common_no_trip">Nessun viaggio</string>
    <string name="dk_common_ok">OK</string>

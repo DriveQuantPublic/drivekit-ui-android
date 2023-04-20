@@ -22,17 +22,19 @@ import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.core.utils.getApplicationInfoCompat
 import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
+import com.drivequant.drivekit.ui.drivingconditions.component.context.DKContextKind
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisActivity
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
-
 object DriverDataUI : DriverDataUIEntryPoint {
 
     private const val TAG = "DriveKit DriverData UI"
 
+    var contextKinds: List<DKContextKind> = DKContextKind.values().toList()
+        private set
     var tripData: TripData = TripData.SAFETY
         private set
     var enableAlternativeTrips: Boolean = false
@@ -100,6 +102,10 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     fun configureHeaderDay(headerDay: HeaderDay) {
         this.headerDay = headerDay
+    }
+
+    fun configureContextKinds(contextKinds: List<DKContextKind>) {
+        this.contextKinds = contextKinds
     }
 
     fun enableVehicleFilter(enableVehicleFilter: Boolean) {

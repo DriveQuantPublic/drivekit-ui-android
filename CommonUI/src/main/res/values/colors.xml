@@ -10,4 +10,11 @@
     <color name="dkExcellent">#30C8FC</color>
     <color name="dkValid">#148014</color>
     <color name="dkGrayColor">#616161</color>
+
+    <color name="dkContextCardColor1">#036A82</color>
+    <color name="dkContextCardColor2">#3B8497</color>
+    <color name="dkContextCardColor3">#699DAD</color>
+    <color name="dkContextCardColor4">#8FB7C2</color>
+    <color name="dkContextCardColor5">#9ACBDA</color>
+    <color name="dkContextCardColor6">#D5E6EB</color>
 </resources>

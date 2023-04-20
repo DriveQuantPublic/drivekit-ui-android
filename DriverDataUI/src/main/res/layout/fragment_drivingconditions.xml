@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dk_swipe_refresh_drivingconditions"
     android:layout_width="match_parent"
@@ -17,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dk_margin"
             android:orientation="horizontal"
             android:padding="@dimen/dk_margin_quarter" />
 
@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dk_margin_half"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dk_margin_quarter" />
 
@@ -33,12 +34,13 @@
             layout="@layout/dk_drivingconditions_summary_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin"
-            android:layout_marginHorizontal="@dimen/dk_margin_quarter" />
+            android:layout_marginHorizontal="@dimen/dk_margin_quarter"
+            android:layout_marginTop="@dimen/dk_margin" />
 
 
-        <FrameLayout
-            android:id="@+id/driving_conditions_container"
+        <include
+            android:id="@+id/driving_conditions"
+            layout="@layout/dk_drivingconditions_contexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin"

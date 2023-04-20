@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
@@ -33,7 +32,7 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
         this.emptyView = view.findViewById(R.id.empty_context_card_view)
@@ -51,34 +50,33 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
     }
 
     private fun update() {
-        initContextCardContainer()
-        initProgressItems()
+        updateContextCardContainer()
+        updateProgressItems()
         displayContextCardItems()
     }
 
     private fun displayContextCardItems() {
         context?.let { context ->
             contextCard?.let { contextCard ->
-                recyclerView.layoutManager = GridLayoutManager(context, 2)
-                adapter?.notifyDataSetChanged() ?: run {
+                adapter?.update(contextCard) ?: run {
+                    recyclerView.layoutManager = GridLayoutManager(context, 2)
                     adapter = ContextCardItemListAdapter(
                         context,
-                        contextCard,
+                        contextCard.getItems(),
                     )
-                    recyclerView.layoutManager = LinearLayoutManager(context)
                     recyclerView.adapter = adapter
                 }
             }
         }
     }
 
-    private fun initProgressItems() {
+    private fun updateProgressItems() {
         this.contextCard?.let { contextCard ->
-            this.contextCardBar.init(contextCard.getItems())
+            this.contextCardBar.update(contextCard.getItems())
         }
     }
 
-    private fun initContextCardContainer() {
+    private fun updateContextCardContainer() {
         if (this.contextCard?.getItems().isNullOrEmpty()) {
             displayEmptyContextCardUI()
         } else {
