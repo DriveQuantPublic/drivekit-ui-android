@@ -88,8 +88,8 @@ internal class DrivingConditionsViewModel(
 
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, this.selectedPeriod)
                 timelineSource.allContext[selectedDateIndex].let {
-                    this.summaryCardViewModel.configure(it.numberTripTotal, it.distance)
                     it.drivingConditions?.let { drivingConditions ->
+                        this.summaryCardViewModel.configure(it.numberTripTotal, it.distance)
                         val roadContexts = HashMap<RoadContext, DKDriverTimeline.DKRoadContextItem>()
                         for (roadContext in RoadContext.values()) {
                             val roadContextItems = timelineSource.roadContexts[roadContext]
@@ -98,7 +98,7 @@ internal class DrivingConditionsViewModel(
                             }
                         }
                         this.contextsViewModel.configure(this.getApplication(), this.contexts, drivingConditions, roadContexts)
-                    }
+                    } ?: configureWithNoData()
                 }
             } else {
                 val date = when (this.selectedPeriod) {
