@@ -18,11 +18,23 @@ internal abstract class BaseContextCard : DKContextCard {
 
     override fun getEmptyDataDescription(context: Context): String = ""
 
-    fun getContextCardItem(title: String, @ColorRes color: Int, distance: Double, totalDistance: Double): DKContextCardItem {
+    fun getContextCardItem(
+        title: String,
+        @ColorRes color: Int,
+        distance: Double,
+        totalDistance: Double
+    ): DKContextCardItem {
         return object : DKContextCardItem {
             override fun getColorResId(): Int = color
             override fun getTitle(context: Context): String = title
-            override fun getSubtitle(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, true, 100.0).convertToString()
+            override fun getSubtitle(context: Context): String =
+                DKDataFormatter.formatMeterDistanceInKm(
+                    context,
+                    distance * 1000,
+                    true,
+                    if (totalDistance < 10) 10.0 else 0.0
+                ).convertToString()
+
             override fun getPercent(): Double = distance / totalDistance * 100
         }
     }
