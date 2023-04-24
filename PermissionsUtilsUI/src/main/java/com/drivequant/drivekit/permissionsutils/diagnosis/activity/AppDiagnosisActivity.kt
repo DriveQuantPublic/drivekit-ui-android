@@ -1,7 +1,5 @@
 package com.drivequant.drivekit.permissionsutils.diagnosis.activity
 
-
-import kotlinx.android.synthetic.main.activity_app_diagnosis.*
 import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
 import com.drivequant.drivekit.permissionsutils.R
 import android.os.Bundle
@@ -21,7 +19,10 @@ import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.widget.Toolbar
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -30,26 +31,73 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import com.drivequant.drivekit.common.ui.utils.ContactType
+import com.drivequant.drivekit.common.ui.utils.TextArg
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
-import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.core.utils.PermissionType
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
-
 
 class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private var sensorsReceiver: SensorsReceiver? = null
     private var errorsCount = 0
 
+    private lateinit var itemLocation: DiagnosisItemView
+    private lateinit var itemActivityRecognition: DiagnosisItemView
+    private lateinit var itemAutoResetPermissions: DiagnosisItemView
+    private lateinit var itemNearbyDevices: DiagnosisItemView
+    private lateinit var itemNotification: DiagnosisItemView
+    private lateinit var itemBluetooth: DiagnosisItemView
+    private lateinit var itemLocationSensor: DiagnosisItemView
+    private lateinit var itemConnectivity: DiagnosisItemView
+    private lateinit var itemBatteryOptimization: DiagnosisItemView
+    private lateinit var summaryIcon: ImageView
+    private lateinit var summaryTitle: TextView
+    private lateinit var summaryDescription: TextView
+    private lateinit var helpTitle: TextView
+    private lateinit var helpDescription: TextView
+    private lateinit var helpReport: Button
+    private lateinit var batteryTitle: TextView
+    private lateinit var batteryDescription: TextView
+    private lateinit var summaryViewSeparator: View
+    private lateinit var diagViewSeparator: View
+    private lateinit var batteryViewSeparator: View
+    private lateinit var diagnosisRoot: View
+
+
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_diagnosis"), javaClass.simpleName)
+
         setContentView(R.layout.activity_app_diagnosis)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        this.itemLocation = findViewById(R.id.diag_item_location)
+        this.itemActivityRecognition = findViewById(R.id.diag_item_activity_recognition)
+        this.itemAutoResetPermissions = findViewById(R.id.diag_item_auto_reset_permissions)
+        this.itemNearbyDevices = findViewById(R.id.diag_item_nearby_devices)
+        this.itemNotification = findViewById(R.id.diag_item_notification)
+        this.itemBluetooth = findViewById(R.id.diag_item_bluetooth)
+        this.itemLocationSensor = findViewById(R.id.diag_item_location_sensor)
+        this.itemConnectivity = findViewById(R.id.diag_item_connectivity)
+        this.itemBatteryOptimization = findViewById(R.id.diag_item_battery_optimization)
+        this.summaryIcon = findViewById(R.id.image_view_summary_icon)
+        this.summaryTitle = findViewById(R.id.text_view_summary_title)
+        this.summaryDescription = findViewById(R.id.text_view_summary_description)
+        this.helpTitle = findViewById(R.id.text_view_help_title)
+        this.helpDescription = findViewById(R.id.text_view_help_description)
+        this.helpReport = findViewById(R.id.button_help_report)
+        this.batteryTitle = findViewById(R.id.text_view_battery_title)
+        this.batteryDescription = findViewById(R.id.text_view_battery_description)
+        this.summaryViewSeparator = findViewById(R.id.summary_view_separator)
+        this.diagViewSeparator = findViewById(R.id.diag_view_separator)
+        this.batteryViewSeparator = findViewById(R.id.battery_view_separator)
+        this.diagnosisRoot = findViewById(R.id.dk_diagnosis_root)
+
         setToolbar()
         init()
         displayBluetoothItem()
@@ -58,7 +106,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         displayNearbyDevicesItem()
         displayBatteryOptimizationItem()
         displayBatteryOptimizationSection()
-        displayBatteryOptimizationUrl()
         displayReportSection()
         setStyle()
     }
@@ -71,11 +118,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun init() {
-        checkPermissionItem(PermissionType.LOCATION, diag_item_location)
-        checkPermissionItem(PermissionType.ACTIVITY, diag_item_activity_recognition)
-        checkPermissionItem(PermissionType.AUTO_RESET, diag_item_auto_reset_permissions)
-        checkPermissionItem(PermissionType.NEARBY, diag_item_nearby_devices)
-        checkPermissionItem(PermissionType.NOTIFICATION, diag_item_notification)
+        checkPermissionItem(PermissionType.LOCATION, this.itemLocation)
+        checkPermissionItem(PermissionType.ACTIVITY, this.itemActivityRecognition)
+        checkPermissionItem(PermissionType.AUTO_RESET, this.itemAutoResetPermissions)
+        checkPermissionItem(PermissionType.NEARBY, this.itemNearbyDevices)
+        checkPermissionItem(PermissionType.NOTIFICATION, this.itemNotification)
         checkGPS()
         checkBluetooth()
         checkNetwork()
@@ -85,20 +132,20 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun setSummaryContent() {
         if (errorsCount == 0) {
-            image_view_summary_icon.setImageDrawable(
+            this.summaryIcon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_checked")
             )
-            text_view_summary_title.text =
+            this.summaryTitle.text =
                 DKResource.convertToString(this, "dk_perm_utils_diag_app_ok")
-            text_view_summary_description.text =
+            this.summaryDescription.text =
                 DKResource.convertToString(this, "dk_perm_utils_diag_app_ok_text")
         } else {
-            text_view_summary_description.text =
+            this.summaryDescription.text =
                 DKResource.convertToString(this, "dk_perm_utils_app_diag_app_ko_text")
-            image_view_summary_icon.setImageDrawable(
+            this.summaryIcon.setImageDrawable(
                 DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
             )
-            text_view_summary_title.text = resources.getQuantityString(
+            this.summaryTitle.text = resources.getQuantityString(
                 R.plurals.diagnosis_error_plural,
                 errorsCount,
                 errorsCount
@@ -109,17 +156,17 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkBluetooth() =
         if (DiagnosisHelper.isActivated(this, ConnectivityType.BLUETOOTH)) {
-            diag_item_bluetooth.setNormalState()
+            this.itemBluetooth.setNormalState()
         } else {
             if (PermissionsUtilsUI.isBluetoothNeeded) {
                 errorsCount++
             }
-            diag_item_bluetooth.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
-            diag_item_bluetooth.setOnClickListener {
+            this.itemBluetooth.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
+            this.itemBluetooth.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_bluetooth.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemBluetooth.getDiagnosisLink()) { _, _ ->
                         enableSensor(ConnectivityType.BLUETOOTH)
                     }
                     .show()
@@ -128,10 +175,10 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                titleTextView?.text = diag_item_bluetooth.getDiagnosisTitle()
-                descriptionTextView?.text = diag_item_bluetooth.getDiagnosticTextKO()
+                titleTextView?.text = this.itemBluetooth.getDiagnosisTitle()
+                descriptionTextView?.text = this.itemBluetooth.getDiagnosticTextKO()
                 descriptionTextView?.text =
-                    diag_item_bluetooth.getDiagnosticTextKO()
+                    this.itemBluetooth.getDiagnosticTextKO()
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
@@ -139,15 +186,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkGPS() {
         if (DiagnosisHelper.isActivated(this, ConnectivityType.GPS)) {
-            diag_item_location_sensor.setNormalState()
+            this.itemLocationSensor.setNormalState()
         } else {
             errorsCount++
-            diag_item_location_sensor.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
-            diag_item_location_sensor.setOnClickListener {
+            this.itemLocationSensor.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
+            this.itemLocationSensor.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_location_sensor.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemLocationSensor.getDiagnosisLink()) { _, _ ->
                         enableSensor(ConnectivityType.GPS)
                     }
                     .show()
@@ -156,9 +203,9 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                titleTextView?.text = diag_item_location_sensor.getDiagnosisTitle()
+                titleTextView?.text = this.itemLocationSensor.getDiagnosisTitle()
                 descriptionTextView?.text =
-                    diag_item_location_sensor.getDiagnosticTextKO()
+                    this.itemLocationSensor.getDiagnosticTextKO()
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
@@ -184,15 +231,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun checkNetwork() {
         if (DiagnosisHelper.isNetworkReachable(this)) {
-            diag_item_connectivity.setNormalState()
+            this.itemConnectivity.setNormalState()
         } else {
             errorsCount++
-            diag_item_connectivity.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
-            diag_item_connectivity.setOnClickListener {
+            this.itemConnectivity.setDiagnosisDrawable(PermissionStatus.NOT_VALID)
+            this.itemConnectivity.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
                     .layout(R.layout.template_alert_dialog_layout)
-                    .positiveButton(diag_item_connectivity.getDiagnosisLink()) { _, _ ->
+                    .positiveButton(this.itemConnectivity.getDiagnosisLink()) { _, _ ->
                         val networkIntent = Intent(Settings.ACTION_SETTINGS)
                         startActivity(networkIntent)
                     }
@@ -201,8 +248,8 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
-                titleTextView?.text = diag_item_connectivity.getDiagnosisTitle()
-                descriptionTextView?.text = diag_item_connectivity.getDiagnosticTextKO()
+                titleTextView?.text = this.itemConnectivity.getDiagnosisTitle()
+                descriptionTextView?.text = this.itemConnectivity.getDiagnosticTextKO()
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }
@@ -212,14 +259,14 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun checkBatteryOptimization() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             when (DiagnosisHelper.getBatteryOptimizationsStatus(this)) {
-                PermissionStatus.VALID -> diag_item_battery_optimization.setNormalState()
+                PermissionStatus.VALID -> this.itemBatteryOptimization.setNormalState()
                 PermissionStatus.WARNING -> {
                     // do nothing
                 }
                 PermissionStatus.NOT_VALID -> {
                     errorsCount++
                     setProblemState(
-                        diag_item_battery_optimization, PermissionStatus.NOT_VALID, object : ResolveProblemStateListener {
+                        this.itemBatteryOptimization, PermissionStatus.NOT_VALID, object : ResolveProblemStateListener {
                             override fun onSubmit() {
                                 DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
                             }})
@@ -228,64 +275,36 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
     }
 
-    private fun batteryOptimizationContent12() {
-        text_view_battery_description_1.visibility = View.GONE
-        text_view_battery_description_2.visibility = View.GONE
-    }
-
-    private fun displayBatteryOptimizationUrl() {
-        text_view_battery_description_4.apply {
-            text = DKResource.buildString(this@AppDiagnosisActivity,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.secondaryColor(),
-                "dk_perm_utils_app_diag_battery_optim_tutorial_text",
-                DKResource.convertToString(
-                    this@AppDiagnosisActivity,
-                    "dk_perm_utils_app_diag_battery_optim_tutorial_url"))
-            PermissionsUtilsUI.tutorialUrl?.let { redirectUrl ->
-                setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(redirectUrl)
-                    startActivity(intent)
-                }
-            } ?: run {
-                visibility = View.GONE
-            }
-            typeface = DriveKitUI.primaryFont(context)
-        }
-    }
-
-    private fun batteryOptimizationContent() {
-        text_view_battery_description_3.text = DKResource.convertToString(this,"dk_perm_utils_app_diag_battery_text_android_03")
-        text_view_battery_description_2.apply {
-            setOnClickListener {
-                DiagnosisHelper.requestBatteryOptimization(this@AppDiagnosisActivity)
-            }
-            text = DKResource.buildString(
-                this@AppDiagnosisActivity,
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.secondaryColor(),
-                "dk_perm_utils_app_diag_battery_text_android_02",
-                DKResource.convertToString(
-                    this@AppDiagnosisActivity,
-                    "dk_perm_utils_app_diag_battery_link_android"
-                )
-            )
-            if (DiagnosisHelper.getBatteryOptimizationsStatus(this@AppDiagnosisActivity) == PermissionStatus.VALID) {
-                visibility = View.GONE
-            }
-        }
-    }
-
     private fun displayBatteryOptimizationSection() {
-        when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> batteryOptimizationContent12()
-            else -> batteryOptimizationContent()
+        val brand = Brand.from(Build.MANUFACTURER)
+        if (brand == Brand.UNKNOWN) {
+            this.batteryDescription.text = DKResource.buildString(
+                this,
+                R.string.dk_perm_utils_energy_saver_android_unknown_brand_main,
+                DriveKitUI.colors.complementaryFontColor(),
+                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_unknown_brand_link_text), DriveKitUI.colors.secondaryColor())
+            )
+        } else {
+            this.batteryDescription.text = DKResource.buildString(
+                this,
+                R.string.dk_perm_utils_energy_saver_android_known_brand_main,
+                DriveKitUI.colors.complementaryFontColor(),
+                TextArg(brand.name),
+                TextArg(getString(R.string.dk_perm_utils_energy_saver_android_known_brand_link_text), DriveKitUI.colors.secondaryColor())
+            )
+        }
+        this.batteryDescription.apply {
+            typeface = DriveKitUI.primaryFont(context)
+            setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(getString(brand.linkKey()))
+                startActivity(intent)
+            }
         }
     }
 
     private fun displayActivityItem() {
-        diag_item_activity_recognition.visibility =
+        this.itemActivityRecognition.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 View.VISIBLE
             } else {
@@ -294,7 +313,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayAutoResetItem() {
-        diag_item_auto_reset_permissions.visibility =
+        this.itemAutoResetPermissions.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 View.VISIBLE
             } else {
@@ -303,7 +322,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun displayNearbyDevicesItem() {
-        diag_item_nearby_devices.visibility =
+        this.itemNearbyDevices.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 View.VISIBLE
             } else {
@@ -314,18 +333,18 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun displayReportSection() {
         when (val contactType = PermissionsUtilsUI.contactType) {
             is ContactType.NONE -> {
-                text_view_help_title.visibility = View.GONE
-                text_view_help_description.visibility = View.GONE
-                button_help_report.visibility = View.GONE
+                this.helpTitle.visibility = View.GONE
+                this.helpDescription.visibility = View.GONE
+                this.helpReport.visibility = View.GONE
             }
             is ContactType.WEB -> {
-                button_help_report.setOnClickListener {
+                this.helpReport.setOnClickListener {
                     val intent = Intent(Intent.ACTION_VIEW, contactType.url)
                     startActivity(intent)
                 }
             }
             is ContactType.EMAIL -> {
-                button_help_report.setOnClickListener {
+                this.helpReport.setOnClickListener {
                     val contentMail = contactType.contentMail
                     val recipients = contentMail.getRecipients().toTypedArray()
                     val bccRecipients = contentMail.getBccRecipients().toTypedArray()
@@ -356,11 +375,11 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun displayBluetoothItem() {
         val visibility = if (PermissionsUtilsUI.isBluetoothNeeded) View.VISIBLE else View.GONE
-        diag_item_bluetooth.visibility = visibility
+        this.itemBluetooth.visibility = visibility
     }
 
     private fun displayBatteryOptimizationItem() {
-        diag_item_battery_optimization.visibility =
+        this.itemBatteryOptimization.visibility =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 View.VISIBLE
             } else {
@@ -383,15 +402,15 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     private fun registerReceiver() {
         sensorsReceiver = object : SensorsReceiver() {
             override fun getBluetoothState(bluetoothState: Boolean) {
-                //If you want to get the bluetooth state individually
+                // If you want to get the bluetooth state individually
             }
 
             override fun getConnectivityState(connectivityState: Boolean) {
-                //If you want to get the connectivity state individually
+                // If you want to get the connectivity state individually
             }
 
             override fun getGpsState(gpsState: Boolean) {
-                //If you want to get the GPS state individually
+                // If you want to get the GPS state individually
             }
 
             override fun onSensorBroadcastReceived() {
@@ -423,7 +442,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         permissionCallback = object :
             OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-
+                // Nothing to do.
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -468,6 +487,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         permissionCallback = object :
             OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
+                // Nothing to do.
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -495,7 +515,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         permissionCallback = object :
             OnPermissionCallback {
             override fun onPermissionGranted(permissionName: Array<String>) {
-
+                // Nothing to do.
             }
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
@@ -557,21 +577,18 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_summary_title.headLine1()
-        text_view_summary_description.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.summaryTitle.headLine1()
+        this.summaryTitle.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        text_view_battery_title.headLine1()
-        text_view_battery_description_1.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_battery_description_2.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_battery_description_3.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.batteryTitle.headLine1()
+        this.batteryDescription.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        button_help_report.button()
-        text_view_help_title.headLine1()
-        text_view_help_description.normalText(DriveKitUI.colors.complementaryFontColor())
-        summary_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        diag_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        battery_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        dk_diagnosis_root.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+        this.helpReport.button()
+        this.helpTitle.headLine1()
+        this.helpDescription.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.diagViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        this.batteryViewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        this.diagnosisRoot.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 
     override fun onResume() {
@@ -587,20 +604,57 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_PERMISSIONS_OPEN_SETTINGS -> alertDialog?.dismiss()
-            REQUEST_BATTERY_OPTIMIZATION -> {
-                if (DiagnosisHelper.getBatteryOptimizationsStatus(this) == PermissionStatus.VALID &&
-                    Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-                    text_view_battery_description_2.visibility = View.GONE
-                }
-            }
+        if (requestCode == REQUEST_PERMISSIONS_OPEN_SETTINGS) {
+            alertDialog?.dismiss()
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+}
+
+private enum class Brand {
+    UNKNOWN,
+    ASUS,
+    BLACKVIEW,
+    GOOGLE,
+    HUAWEI,
+    HONOR,
+    ONEPLUS,
+    REALME,
+    SAMSUNG,
+    VIVO,
+    WIKO,
+    XIAOMI;
+
+    companion object {
+        fun from(value: String): Brand {
+            val uppercaseValue = value.uppercase()
+            for (brand in values()) {
+                if (brand.name.uppercase() == uppercaseValue) {
+                    return brand
+                }
+            }
+            return UNKNOWN
+        }
+    }
+
+    @StringRes
+    fun linkKey(): Int = when (this) {
+        UNKNOWN -> 0
+        ASUS -> R.string.dk_perm_utils_brand_asus
+        BLACKVIEW -> R.string.dk_perm_utils_brand_blackview
+        GOOGLE -> R.string.dk_perm_utils_brand_google
+        HUAWEI -> R.string.dk_perm_utils_brand_huawei
+        HONOR -> R.string.dk_perm_utils_brand_honor
+        ONEPLUS -> R.string.dk_perm_utils_brand_oneplus
+        REALME -> R.string.dk_perm_utils_brand_realme
+        SAMSUNG -> R.string.dk_perm_utils_brand_samsung
+        VIVO -> R.string.dk_perm_utils_brand_vivo
+        WIKO -> R.string.dk_perm_utils_brand_wiko
+        XIAOMI -> R.string.dk_perm_utils_brand_xiaomi
     }
 }
 
