@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/dk_diagnosis_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dk_diagnosis_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -193,45 +192,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_battery_title"
+                android:text="@string/dk_perm_utils_energy_saver_title"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/diag_view_separator" />
 
             <TextView
-                android:id="@+id/text_view_battery_description_1"
+                android:id="@+id/text_view_battery_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_battery_text_android_01"
+                android:foreground="?android:attr/selectableItemBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_battery_title" />
-
-            <TextView
-                android:id="@+id/text_view_battery_description_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_battery_text_android_02"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_1" />
-
-            <TextView
-                android:id="@+id/text_view_battery_description_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dk_margin_half"
-                android:text="@string/dk_perm_utils_app_diag_battery_text_android_03"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_2" />
-
-            <TextView
-                android:id="@+id/text_view_battery_description_4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dk_margin_half"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_3" />
 
             <TextView
                 android:id="@+id/battery_view_separator"
@@ -239,7 +212,7 @@
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description_4" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_battery_description" />
 
             <TextView
                 android:id="@+id/text_view_help_title"
@@ -263,7 +236,6 @@
                 android:id="@+id/button_help_report"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.8"
                 android:layout_margin="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -272,11 +244,11 @@
                 android:paddingEnd="@dimen/dk_margin_half"
                 android:paddingBottom="@dimen/dk_margin_half"
                 android:text="@string/dk_perm_utils_app_diag_help_request_button"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_help_description"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintWidth_percent="0.8" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>
-
