@@ -84,7 +84,7 @@
     <string name="dk_perm_utils_diag_app_ok">Everything is normal</string>
     <string name="dk_perm_utils_diag_app_ok_text">The settings of your phone are good and the sensors necessary for the analysis of your trips are activated.</string>
     <string name="dk_perm_utils_energy_saver_android_known_brand_link_text">this link</string>
-    <string name="dk_perm_utils_energy_saver_android_known_brand_main">If the app does not record your trips, we invite you to disable the energy saver of your %s phone using the guide available via %s.</string>
+    <string name="dk_perm_utils_energy_saver_android_known_brand_main">If the app does not record your trips, we invite you to disable the energy saver of your %1$s phone using the guide available via %2$s.</string>
     <string name="dk_perm_utils_energy_saver_android_unknown_brand_link_text">this link</string>
     <string name="dk_perm_utils_energy_saver_android_unknown_brand_main">If the app does not record your trips, we invite you to disable the energy saver of your phone using the guide available via %s.</string>
     <string name="dk_perm_utils_energy_saver_iOS_link_text">this link</string>
