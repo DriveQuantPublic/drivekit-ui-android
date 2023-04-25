@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.ui.R
 
 internal class DrivingConditionsSummaryCardView(context: Context, attrs: AttributeSet?) :
@@ -70,7 +70,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
                 R.plurals.trip_plural,
                 this@DrivingConditionsSummaryCardView.viewModel?.tripCount ?: 0
             )
-            smallText(DriveKitUI.colors.complementaryFontColor())
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
         this.distanceValue.apply {
             text = this@DrivingConditionsSummaryCardView.viewModel?.formatDistanceKm()
@@ -79,7 +79,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         }
         this.distanceLabel.apply {
             text = context.resources.getQuantityString(R.plurals.dk_driverdata_drivingconditions_distance, viewModel?.tripCount ?: 0)
-            smallText(DriveKitUI.colors.complementaryFontColor())
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
         this.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
@@ -94,7 +94,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         }
         this.emptyViewDescription.apply {
             setText(R.string.dk_driverdata_drivingconditions_empty_data)
-            smallText(DriveKitUI.colors.complementaryFontColor())
+            normalText(DriveKitUI.colors.complementaryFontColor())
         }
     }
 }
