@@ -7,7 +7,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.ui.drivingconditions.component.context.card.*
 import com.drivequant.drivekit.ui.drivingconditions.component.context.card.DayNightContextCard
 import com.drivequant.drivekit.ui.drivingconditions.component.context.card.RoadContextCard
-import com.drivequant.drivekit.ui.drivingconditions.component.context.card.TripDistanceContextCard
+import com.drivequant.drivekit.ui.drivingconditions.component.context.card.TripCategoryContextCard
 import com.drivequant.drivekit.ui.drivingconditions.component.context.card.WeatherContextCard
 
 internal class DrivingConditionsContextsViewModel {
@@ -22,7 +22,7 @@ internal class DrivingConditionsContextsViewModel {
             when(contextKind) {
                 DKContextKind.DAY_NIGHT -> DayNightContextCard(context, drivingConditions)
                 DKContextKind.ROAD -> RoadContextCard(context, roadContexts)
-                DKContextKind.TRIP_DISTANCE -> TripDistanceContextCard(context, drivingConditions)
+                DKContextKind.TRIP_DISTANCE -> TripCategoryContextCard(context, drivingConditions)
                 DKContextKind.WEATHER -> WeatherContextCard(context, drivingConditions)
                 DKContextKind.WEEK -> WeekContextCard(context, drivingConditions)
             }

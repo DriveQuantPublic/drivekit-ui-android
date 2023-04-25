@@ -33,7 +33,8 @@ internal class RoadContextCard(
                         roadContext.getTitle(context),
                         roadContext.getColor(),
                         distance,
-                        totalDistance
+                        totalDistance,
+                        UnitKind.KILOMETER
                     )
                 } else {
                     null

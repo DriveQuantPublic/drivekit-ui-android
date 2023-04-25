@@ -29,7 +29,8 @@ internal class WeatherContextCard(
                             weather.getTitle(context),
                             weather.getColor(),
                             it,
-                            totalDistance
+                            totalDistance,
+                            UnitKind.KILOMETER
                         )
                     } else {
                         null

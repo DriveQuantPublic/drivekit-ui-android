@@ -23,7 +23,8 @@ internal class WeekContextCard(
                 context.getString(R.string.dk_driverdata_drivingconditions_weekdays),
                 com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1,
                 drivingConditions.weekdaysDistance,
-                totalDistance
+                totalDistance,
+                UnitKind.KILOMETER
             )
         } else {
             null
@@ -33,7 +34,8 @@ internal class WeekContextCard(
                 context.getString(R.string.dk_driverdata_drivingconditions_weekend),
                 com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2,
                 drivingConditions.weekendDistance,
-                totalDistance
+                totalDistance,
+                UnitKind.KILOMETER
             )
         } else {
             null

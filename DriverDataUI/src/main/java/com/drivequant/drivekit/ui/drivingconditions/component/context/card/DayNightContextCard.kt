@@ -22,7 +22,8 @@ internal class DayNightContextCard(
                 context.getString(R.string.dk_driverdata_drivingconditions_day),
                 com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1,
                 drivingConditions.dayDistance,
-                totalDistance
+                totalDistance,
+                UnitKind.KILOMETER
             )
         } else {
             null
@@ -32,7 +33,8 @@ internal class DayNightContextCard(
                 context.getString(R.string.dk_driverdata_drivingconditions_night),
                 com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2,
                 drivingConditions.nightDistance,
-                totalDistance
+                totalDistance,
+                UnitKind.KILOMETER
             )
         } else {
             null
