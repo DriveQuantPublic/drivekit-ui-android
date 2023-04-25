@@ -17,11 +17,11 @@ internal class DrivingConditionsContextsViewModel {
 
     var onViewModelUpdate: (() -> Unit)? = null
 
-    fun configure(context: Context, contextKinds: List<DKContextKind>, drivingConditions: DKDriverTimeline.DKDrivingConditions, roadContexts: Map<RoadContext, DKDriverTimeline.DKRoadContextItem>) {
+    fun configure(context: Context, contextKinds: List<DKContextKind>, totalDistance: Double, drivingConditions: DKDriverTimeline.DKDrivingConditions, roadContexts: Map<RoadContext, DKDriverTimeline.DKRoadContextItem>) {
         this.contextCards = contextKinds.map { contextKind ->
             when(contextKind) {
                 DKContextKind.DAY_NIGHT -> DayNightContextCard(context, drivingConditions)
-                DKContextKind.ROAD -> RoadContextCard(context, roadContexts)
+                DKContextKind.ROAD -> RoadContextCard(context, totalDistance, roadContexts)
                 DKContextKind.TRIP_DISTANCE -> TripCategoryContextCard(context, drivingConditions)
                 DKContextKind.WEATHER -> WeatherContextCard(context, drivingConditions)
                 DKContextKind.WEEK -> WeekContextCard(context, drivingConditions)

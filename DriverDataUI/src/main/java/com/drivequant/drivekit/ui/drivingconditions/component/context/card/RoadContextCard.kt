@@ -7,9 +7,11 @@ import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.ui.R
+import kotlin.math.roundToInt
 
 internal class RoadContextCard(
     private val context: Context,
+    private val totalDistance: Double,
     private val roadContexts: Map<RoadContext, DKDriverTimeline.DKRoadContextItem>
 ) : BaseContextCard() {
 
@@ -19,20 +21,26 @@ internal class RoadContextCard(
         this.items?.let {
             return it
         }
-        val totalDistance = roadContexts.map { (roadContext, roadContextItem) ->
-            if (roadContext != RoadContext.TRAFFIC_JAM) {
-                roadContextItem.distance
+        val factor = if (totalDistance < 10) 10.0 else 1.0
+        val heavyUrbanDistance = ((totalDistance * factor).roundToInt() - roadContexts.map { (roadContext, roadContextItem) ->
+            if (roadContext != RoadContext.HEAVY_URBAN_TRAFFIC) {
+                (roadContextItem.distance * factor).roundToInt()
             } else {
-                0.0
+                0
             }
-        }.sum()
+        }.sum()) / factor
         val cards = listOf(RoadContext.HEAVY_URBAN_TRAFFIC, RoadContext.CITY, RoadContext.SUBURBAN, RoadContext.EXPRESSWAYS).mapNotNull { roadContext ->
-            roadContexts[roadContext]?.distance?.let { distance ->
-                if (distance > 0) {
+            val distance: Double? = if (roadContext == RoadContext.HEAVY_URBAN_TRAFFIC) {
+                heavyUrbanDistance
+            } else {
+                roadContexts[roadContext]?.distance
+            }
+            distance?.let {
+                if (it > 0) {
                     getContextCardItem(
                         roadContext.getTitle(context),
                         roadContext.getColor(),
-                        distance,
+                        it,
                         totalDistance,
                         UnitKind.KILOMETER
                     )
@@ -47,10 +55,9 @@ internal class RoadContextCard(
     }
 
     override fun getTitle(context: Context): String {
-        val cityDistance = getDistance(RoadContext.CITY, roadContexts) + getDistance(
-            RoadContext.HEAVY_URBAN_TRAFFIC, roadContexts)
         val expresswaysDistance = getDistance(RoadContext.EXPRESSWAYS, roadContexts)
         val suburbanDistance = getDistance(RoadContext.SUBURBAN, roadContexts)
+        val cityDistance = this.totalDistance - expresswaysDistance - suburbanDistance
         return when (max(cityDistance, expresswaysDistance, suburbanDistance)) {
             cityDistance -> R.string.dk_driverdata_drivingconditions_main_city
             expresswaysDistance -> R.string.dk_driverdata_drivingconditions_main_expressways

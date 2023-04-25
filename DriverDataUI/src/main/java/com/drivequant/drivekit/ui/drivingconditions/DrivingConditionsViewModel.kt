@@ -97,7 +97,7 @@ internal class DrivingConditionsViewModel(
                                 roadContexts[roadContext] = roadContextItems[selectedDateIndex]
                             }
                         }
-                        this.contextsViewModel.configure(this.getApplication(), this.contexts, drivingConditions, roadContexts)
+                        this.contextsViewModel.configure(this.getApplication(), this.contexts, it.distance, drivingConditions, roadContexts)
                     } ?: configureWithNoData()
                 }
             } else {

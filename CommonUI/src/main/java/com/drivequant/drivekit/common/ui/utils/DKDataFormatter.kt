@@ -299,13 +299,8 @@ object DKDataFormatter {
 
     fun formatDistanceValue(distance: Double?, minDistanceRemoveFraction: Double): String? {
         distance?.let {
-            val floatingNumber = 1
-            val roundedDistance = BigDecimal(distance).setScale(floatingNumber, RoundingMode.HALF_UP).toDouble()
-            return if (roundedDistance >= minDistanceRemoveFraction) {
-                roundedDistance.format(0)
-            } else {
-                roundedDistance.removeZeroDecimal()
-            }
+            val floatingNumber = if (distance >= minDistanceRemoveFraction) 0 else 1
+            return distance.format(floatingNumber)
         }
         return null
     }
