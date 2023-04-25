@@ -63,6 +63,7 @@
    <string name="dk_driverdata_drivingconditions_snow">Sne</string>
    <string name="dk_driverdata_drivingconditions_sun">Sun</string>
    <string name="dk_driverdata_drivingconditions_title">Kørselsforhold</string>
+   <string name="dk_driverdata_drivingconditions_title_empty_data">Du har ikke registreret en rejse</string>
    <string name="dk_driverdata_drivingconditions_weekdays">Uge</string>
    <string name="dk_driverdata_drivingconditions_weekend">Weekend</string>
    <string name="dk_driverdata_ecodriving_score">Øko-kørselsscore</string>

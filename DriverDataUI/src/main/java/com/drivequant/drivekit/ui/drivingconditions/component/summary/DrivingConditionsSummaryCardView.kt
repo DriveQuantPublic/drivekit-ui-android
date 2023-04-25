@@ -89,7 +89,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         this.container.visibility = View.GONE
 
         this.emptyViewTitle.apply {
-            setText(R.string.dk_common_no_data_yet)
+            setText(R.string.dk_driverdata_drivingconditions_title_empty_data)
             headLine2(DriveKitUI.colors.primaryColor())
         }
         this.emptyViewDescription.apply {

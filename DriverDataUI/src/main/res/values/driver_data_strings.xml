@@ -63,6 +63,7 @@
    <string name="dk_driverdata_drivingconditions_snow">Snowy</string>
    <string name="dk_driverdata_drivingconditions_sun">Sunny</string>
    <string name="dk_driverdata_drivingconditions_title">Driving conditions</string>
+   <string name="dk_driverdata_drivingconditions_title_empty_data">You have not recorded any trips</string>
    <string name="dk_driverdata_drivingconditions_weekdays">Week</string>
    <string name="dk_driverdata_drivingconditions_weekend">Weekend</string>
    <string name="dk_driverdata_ecodriving_score">Eco-driving score</string>
