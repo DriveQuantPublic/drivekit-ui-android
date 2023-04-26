@@ -15,8 +15,8 @@
             android:id="@+id/period_selector_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="@dimen/dk_margin"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/dk_margin_quarter" />
 
@@ -24,27 +24,39 @@
             android:id="@+id/date_selector_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="@dimen/dk_margin_half"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dk_margin_quarter" />
 
-        <include
-            android:id="@+id/driving_conditions_summary"
-            layout="@layout/dk_drivingconditions_summary_card"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dk_margin_quarter"
-            android:layout_marginTop="@dimen/dk_margin" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <include
-            android:id="@+id/driving_conditions"
-            layout="@layout/dk_drivingconditions_contexts"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dk_margin"
-            android:paddingHorizontal="@dimen/dk_margin_quarter" />
+                <include
+                    android:id="@+id/driving_conditions_summary"
+                    layout="@layout/dk_drivingconditions_summary_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dk_margin_quarter"
+                    android:layout_marginTop="@dimen/dk_margin" />
 
+                <include
+                    android:id="@+id/driving_conditions"
+                    layout="@layout/dk_drivingconditions_contexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dk_margin"
+                    android:paddingHorizontal="@dimen/dk_margin_quarter" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
