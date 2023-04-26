@@ -15,10 +15,10 @@
     <string name="dk_common_delete">Delete</string>
     <string name="dk_common_distance">Distance</string>
     <string name="dk_common_distraction">Distraction</string>
-    <string name="dk_common_driving_context_city">urban traffic</string>
-    <string name="dk_common_driving_context_city_dense">dense urban traffic</string>
-    <string name="dk_common_driving_context_external">Suburban</string>
-    <string name="dk_common_driving_context_fastlane">Expressways</string>
+    <string name="dk_common_driving_context_city">city</string>
+    <string name="dk_common_driving_context_city_dense">heavy urban traffic</string>
+    <string name="dk_common_driving_context_external">suburban</string>
+    <string name="dk_common_driving_context_fastlane">expressways</string>
     <string name="dk_common_duration">Duration</string>
     <string name="dk_common_ecodriving">Eco-driving</string>
     <string name="dk_common_ecodriving_accel_good">Good acceleration</string>
