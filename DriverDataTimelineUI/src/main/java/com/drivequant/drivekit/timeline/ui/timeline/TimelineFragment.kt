@@ -116,9 +116,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
                     requireActivity(),
                     viewModel.selectedScore,
                     viewModel.currentPeriod,
-                    viewModel.selectedDate,
-                    viewModel.weekTimeline,
-                    viewModel.monthTimeline
+                    viewModel.selectedDate
                 )
             }
             button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
