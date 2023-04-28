@@ -33,7 +33,7 @@ internal class TimelineViewModel(application: Application) : AndroidViewModel(ap
 
     val updateData = MutableLiveData<Any>()
 
-    var currentPeriod: DKPeriod = this.periods.last()
+    var currentPeriod: DKPeriod = this.periods.first()
         private set
 
     val syncStatus: MutableLiveData<TimelineSyncStatus> = MutableLiveData()
