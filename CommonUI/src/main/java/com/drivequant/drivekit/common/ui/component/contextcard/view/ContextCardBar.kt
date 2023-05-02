@@ -1,15 +1,15 @@
-package com.drivequant.drivekit.timeline.ui.component.roadcontext
+package com.drivequant.drivekit.common.ui.component.contextcard.view
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
-internal class CustomRoadContextBar @JvmOverloads constructor(
+internal class ContextCardBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -22,11 +22,11 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
     private var measuredWidth = 0f
     private var measuredHeight = 0f
 
-    private var progressItems = listOf<ProgressItem>()
+    private var progressItems = listOf<DKContextCardItem>()
 
-    private var paints = mutableMapOf<ProgressItem, Paint>()
+    private var paints = mutableMapOf<DKContextCardItem, Paint>()
 
-    fun init(progressItems: List<ProgressItem>) {
+    fun update(progressItems: List<DKContextCardItem>) {
         this.progressItems = progressItems
 
         paints.clear()
@@ -74,20 +74,15 @@ internal class CustomRoadContextBar @JvmOverloads constructor(
         }
     }
 
-    private fun computeProgressWidth(progressItem: ProgressItem) =
-        (progressItem.progressItemPercentage * width / 100).toInt()
+    private fun computeProgressWidth(progressItem: DKContextCardItem) =
+        (progressItem.getPercent() * width / 100).toInt()
 
-    private fun createPaint(progressItem: ProgressItem): Paint {
+    private fun createPaint(progressItem: DKContextCardItem): Paint {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         paint.color = ContextCompat.getColor(
             context,
-            progressItem.color
+            progressItem.getColorResId()
         ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
         return paint
     }
 }
-
-internal data class ProgressItem(
-    @ColorRes val color: Int,
-    val progressItemPercentage: Double
-)

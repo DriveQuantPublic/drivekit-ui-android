@@ -12,14 +12,12 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.timeline.ui.component.roadcontext.RoadContextView
-import com.google.gson.Gson
+import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import java.util.*
 
 internal class TimelineDetailFragment : Fragment() {
@@ -31,8 +29,6 @@ internal class TimelineDetailFragment : Fragment() {
     private lateinit var selectedScore: DKScoreType
     private lateinit var selectedPeriod: DKPeriod
     private lateinit var selectedDate: Date
-    private lateinit var weekTimeline: DKRawTimeline
-    private lateinit var monthTimeline: DKRawTimeline
 
     private lateinit var periodSelectorContainer: LinearLayout
     private lateinit var periodSelectorView: DKPeriodSelectorView
@@ -41,24 +37,24 @@ internal class TimelineDetailFragment : Fragment() {
     private lateinit var dateSelectorView: DKDateSelectorView
 
     private lateinit var roadContextContainer: LinearLayout
-    private lateinit var roadContextView: RoadContextView
+    private lateinit var contextCardView: DKContextCardView
 
     private lateinit var graphContainer: LinearLayout
 
     companion object {
+        private const val SELECTED_SCORE_ID_EXTRA = "selectedScore"
+        private const val SELECTED_PERIOD_ID_EXTRA = "selectedPeriod"
+        private const val SELECTED_DATE_ID_EXTRA = "selectedDate"
+
         fun newInstance(
             selectedScore: DKScoreType,
             selectedPeriod: DKPeriod,
-            selectedDate: Date,
-            weekTimeline: DKRawTimeline,
-            monthTimeline: DKRawTimeline
+            selectedDate: Date
         ): TimelineDetailFragment {
             val fragment = TimelineDetailFragment()
             fragment.selectedScore = selectedScore
             fragment.selectedPeriod = selectedPeriod
             fragment.selectedDate = selectedDate
-            fragment.weekTimeline = weekTimeline
-            fragment.monthTimeline = monthTimeline
             return fragment
         }
     }
@@ -80,33 +76,25 @@ internal class TimelineDetailFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("selectedScore", selectedScore.name)
-        outState.putString("selectedPeriod", selectedPeriod.name)
-        outState.putLong("selectedDate", selectedDate.time)
-        outState.putString("weekTimeline", Gson().toJson(weekTimeline))
-        outState.putString("monthTimeline", Gson().toJson(monthTimeline))
+        outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
+        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
-            it.getString("selectedScore")?.let { savedScore ->
+            it.getString(SELECTED_SCORE_ID_EXTRA)?.let { savedScore ->
                 selectedScore = DKScoreType.valueOf(savedScore)
             }
-            it.getString("selectedPeriod")?.let { savedPeriod ->
+            it.getString(SELECTED_PERIOD_ID_EXTRA)?.let { savedPeriod ->
                 selectedPeriod = DKPeriod.valueOf(savedPeriod)
             }
-            val savedDate = it.getLong("selectedDate")
+            val savedDate = it.getLong(SELECTED_DATE_ID_EXTRA)
             if (savedDate > 0) {
                 val date = Date()
                 date.time = savedDate
                 selectedDate = date
-            }
-            it.getString("weekTimeline")?.let { savedWeekTimeline ->
-                weekTimeline = Gson().fromJson(savedWeekTimeline, DKRawTimeline::class.java)
-            }
-            it.getString("monthTimeline")?.let { savedMonthTimeline ->
-                monthTimeline = Gson().fromJson(savedMonthTimeline, DKRawTimeline::class.java)
             }
         }
 
@@ -116,7 +104,7 @@ internal class TimelineDetailFragment : Fragment() {
 
         viewModel.updateData.observe(viewLifecycleOwner) {
             periodSelectorView.configure(viewModel.periodSelectorViewModel)
-            roadContextView.configure(viewModel.roadContextViewModel)
+            contextCardView.configure(viewModel.roadContextViewModel)
             dateSelectorView.configure(viewModel.dateSelectorViewModel)
 
             configureGraphContainer()
@@ -190,14 +178,18 @@ internal class TimelineDetailFragment : Fragment() {
 
     private fun configureRoadContextContainer() {
         context?.let {
-            roadContextView = RoadContextView(it)
+            contextCardView = DKContextCardView(it)
+            contextCardView.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
             roadContextContainer.apply {
                 removeAllViews()
-                addView(roadContextView)
+                addView(contextCardView)
             }
         }
         viewModel.roadContextViewModel.changeObserver.observe(viewLifecycleOwner) {
-            roadContextView.configure(viewModel.roadContextViewModel)
+            contextCardView.configure(viewModel.roadContextViewModel)
         }
     }
 
@@ -211,9 +203,7 @@ internal class TimelineDetailFragment : Fragment() {
                             application,
                             selectedScore,
                             selectedPeriod,
-                            selectedDate,
-                            weekTimeline,
-                            monthTimeline
+                            selectedDate
                         )
                     )[TimelineDetailViewModel::class.java]
                 }

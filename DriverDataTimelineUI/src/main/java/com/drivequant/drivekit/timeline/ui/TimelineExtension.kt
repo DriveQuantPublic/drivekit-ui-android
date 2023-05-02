@@ -66,6 +66,12 @@ internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex
     val efficiencyBrake = mutableListOf<Double>()
     val efficiencyAcceleration = mutableListOf<Double>()
     val efficiencySpeedMaintain = mutableListOf<Double>()
+    val tripCategory = mutableListOf<List<Int>>()
+    val tripCategoryDistance = mutableListOf<List<Double>>()
+    val weather = mutableListOf<List<Int>>()
+    val weatherDistance = mutableListOf<List<Double>>()
+    val dayDistance = mutableListOf<Double>()
+    val weekDayDistance = mutableListOf<Double>()
 
     val allContextItem = this.allContext
 
@@ -106,6 +112,12 @@ internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex
             allContextItem.efficiencyBrake.addValueIfNotEmpty(index, efficiencyBrake)
             allContextItem.efficiencyAcceleration.addValueIfNotEmpty(index, efficiencyAcceleration)
             allContextItem.efficiencySpeedMaintain.addValueIfNotEmpty(index, efficiencySpeedMaintain)
+            allContextItem.tripCategory.addValueIfNotEmpty(index, tripCategory)
+            allContextItem.tripCategoryDistance.addValueIfNotEmpty(index, tripCategoryDistance)
+            allContextItem.weather.addValueIfNotEmpty(index, weather)
+            allContextItem.weatherDistance.addValueIfNotEmpty(index, weatherDistance)
+            allContextItem.dayDistance.addValueIfNotEmpty(index, dayDistance)
+            allContextItem.weekDayDistance.addValueIfNotEmpty(index, weekDayDistance)
         }
     }
 
@@ -199,7 +211,13 @@ internal fun DKRawTimeline.cleanedTimeline(score: DKScoreType, selectedDateIndex
         speedingDistance,
         efficiencyBrake,
         efficiencyAcceleration,
-        efficiencySpeedMaintain
+        efficiencySpeedMaintain,
+        tripCategory,
+        tripCategoryDistance,
+        weather,
+        weatherDistance,
+        dayDistance,
+        weekDayDistance
     )
     return DKRawTimeline(this.period, allContext, roadContexts)
 }

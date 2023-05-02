@@ -34,7 +34,7 @@
     <LinearLayout
         android:id="@+id/road_context_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="190dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dk_margin_quarter" />

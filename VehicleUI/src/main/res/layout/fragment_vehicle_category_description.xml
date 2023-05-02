@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:clickable="true"
+    android:focusable="true"
     android:padding="@dimen/dk_margin_medium">
 
     <ImageView
@@ -13,10 +13,10 @@
         android:layout_width="168dp"
         android:layout_height="168dp"
         android:layout_margin="@dimen/dk_margin_half"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/dk_image_luxury"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/dk_image_luxury"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_view_description"
@@ -24,28 +24,31 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dk_margin_half"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/image_view_icon2"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Ceci est une description"/>
-
-    <Button
-        android:id="@+id/button_validate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:padding="@dimen/dk_margin_half"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintTop_toBottomOf="@id/text_view_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/image_view_icon2"
+        tools:text="Ceci est une description" />
 
-    <TextView
+    <include
         android:id="@+id/text_view_brands"
-        android:layout_width="match_parent"
+        layout="@layout/dk_vehicle_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dk_margin_half"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/button_validate"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginHorizontal="@dimen/dk_margin_half"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_description" />
+
+    <include
+        android:id="@+id/button_validate"
+        layout="@layout/dk_vehicle_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dk_margin_half"
+        android:layout_marginTop="@dimen/dk_margin_double"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_brands" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,10 +15,10 @@
     <string name="dk_common_delete">Slet</string>
     <string name="dk_common_distance">Afstand</string>
     <string name="dk_common_distraction">Distraktion</string>
-    <string name="dk_common_driving_context_city">Bytrafik</string>
-    <string name="dk_common_driving_context_city_dense">Tæt bytrafik</string>
-    <string name="dk_common_driving_context_external">Meget tæt bymiljø</string>
-    <string name="dk_common_driving_context_fastlane">Motorvej</string>
+    <string name="dk_common_driving_context_city">by</string>
+    <string name="dk_common_driving_context_city_dense">tæt bymiljø</string>
+    <string name="dk_common_driving_context_external">tæt bytrafik</string>
+    <string name="dk_common_driving_context_fastlane">motorvej</string>
     <string name="dk_common_duration">Varighed</string>
     <string name="dk_common_ecodriving">Øko-kørsel</string>
     <string name="dk_common_ecodriving_accel_good">God acceleration</string>
@@ -43,6 +43,7 @@
     <string name="dk_common_mass">Masse</string>
     <string name="dk_common_mean_speed">Gennemsnitshastighed</string>
     <string name="dk_common_no">Nej</string>
+    <string name="dk_common_no_data_yet">Du har endnu ikke nogen data</string>
     <string name="dk_common_no_pseudo_set">For at dele din ranglisteplacering med de andre deltagere kan du vælge et brugernavn. Uden et brugernavn vises du som anonym.</string>
     <string name="dk_common_no_trip">Ingen rejse</string>
     <string name="dk_common_ok">Ok</string>

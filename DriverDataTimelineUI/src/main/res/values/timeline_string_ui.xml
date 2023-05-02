@@ -28,7 +28,6 @@
     <string name="dk_timeline_road_context_no_context_description">There is not enough data in this period to calculate the distribution of road contexts.</string>
     <string name="dk_timeline_road_context_suburban">Suburban</string>
     <string name="dk_timeline_road_context_title">Driving context (%s)</string>
-    <string name="dk_timeline_road_context_title_empty_data">You don\'t have any data yet</string>
     <string name="dk_timeline_road_context_title_no_data">No data to display</string>
     <string name="dk_timeline_safety_score">Safety score: %s</string>
     <string name="dk_timeline_speeding_score">Speeding score: %s</string>

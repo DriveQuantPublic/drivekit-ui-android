@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,9 +15,12 @@ import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelect
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
+import java.util.*
 
 internal class MySynthesisFragment : Fragment() {
 
@@ -33,6 +37,7 @@ internal class MySynthesisFragment : Fragment() {
     private lateinit var scoreCardView: MySynthesisScoreCardView
     private lateinit var communityCardView: MySynthesisCommunityCardView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var buttonDetail: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +53,7 @@ internal class MySynthesisFragment : Fragment() {
         this.swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_mysynthesis)
         this.scoreCardView = view.findViewById(R.id.scoreCard)
         this.communityCardView = view.findViewById(R.id.communityCard)
+        this.buttonDetail = view.findViewById(R.id.button_detail)
 
         checkViewModelInitialization()
 
@@ -56,6 +62,7 @@ internal class MySynthesisFragment : Fragment() {
         configureScoreSelectorView()
         configurePeriodSelector()
         configureDateSelector()
+        configureButton()
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updatePeriodSelector()
@@ -73,6 +80,10 @@ internal class MySynthesisFragment : Fragment() {
         super.onResume()
         tagScreen()
         checkViewModelInitialization()
+    }
+
+    fun updateData(selectedPeriod: DKPeriod, selectedDate: Date) {
+        this.viewModel.updateTimelineDateAndPeriod(selectedPeriod, selectedDate)
     }
 
     private fun setupSwipeToRefresh() {
@@ -139,6 +150,20 @@ internal class MySynthesisFragment : Fragment() {
             dateSelectorContainer.apply {
                 removeAllViews()
                 addView(dateSelectorView)
+            }
+        }
+    }
+
+    private fun configureButton() {
+        this.buttonDetail.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
+        this.buttonDetail.setOnClickListener { _ ->
+            activity?.let {
+                DrivingConditionsActivity.launchActivity(
+                    it,
+                    this.viewModel.periodSelectorViewModel.selectedPeriod,
+                    this.viewModel.selectedDate,
+                    MySynthesisActivity.DRIVING_CONDITIONS_REQUEST_CODE
+                )
             }
         }
     }

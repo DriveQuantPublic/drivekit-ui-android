@@ -71,7 +71,7 @@
    <string name="dk_vehicle_beacon_setup_successlink_message">Congratulations! \n\n The beacon %1$s is now associated with the vehicle %2$s</string>
    <string name="dk_vehicle_beacon_start_scan">Place your beacon near your phone and tap on the screen</string>
    <string name="dk_vehicle_beacon_verify_wrong_vehicle">The detected beacon is not associated with this vehicle.</string>
-   <string name="dk_vehicle_beacon_wait_scan">Wait about 10 seconds ...</string>
+   <string name="dk_vehicle_beacon_wait_scan">Wait about 10 seconds...</string>
    <string name="dk_vehicle_begin">Begin</string>
    <string name="dk_vehicle_bluetooth_already_paired">The Bluetooth %1$s device is already connected to another vehicle. You must first detach the device before pairing it with %2$s.</string>
    <string name="dk_vehicle_bluetooth_combination_view_title">Link a Bluetooth device</string>
@@ -105,7 +105,6 @@
    <string name="dk_vehicle_category_car_sport_title">Sport car</string>
    <string name="dk_vehicle_category_car_suv_description">This category corresponds to crossover vehicles or off-road vehicles with all-wheel drive (4x4) and whose length varies on average from 4.10 to 5.20 m.</string>
    <string name="dk_vehicle_category_car_suv_title">4x4, SUV, Crossover</string>
-   <string name="dk_vehicle_category_display_brands">Continue to select the brand and model of your vehicle</string>
    <string name="dk_vehicle_category_truck_selection_title">What kind of truck do you drive?</string>
    <string name="dk_vehicle_category_truck_straight">Straight truck</string>
    <string name="dk_vehicle_category_truck_straight_2_axles">Two-axle straight truck</string>
@@ -122,6 +121,8 @@
    <string name="dk_vehicle_delete">Delete</string>
    <string name="dk_vehicle_delete_confirm">Do you confirm the suppression of the vehicle %s? Mileage monitoring and maintenance data will be definitively deleted.</string>
    <string name="dk_vehicle_detail_back_edit_alert">The vehicle data has been modified. Would you like to save them?</string>
+   <string name="dk_vehicle_detail_category_button_description">You know the brand, model and characteristics of your vehicle</string>
+   <string name="dk_vehicle_detail_category_button_title">Find my vehicle</string>
    <string name="dk_vehicle_detection_mode_title">Auto start:</string>
    <string name="dk_vehicle_engine_description">Engine type ?</string>
    <string name="dk_vehicle_engine_diesel">Diesel</string>
@@ -185,6 +186,8 @@
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">This value may not exceed 44 tonnes</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">This value must be greater than the curb weight</string>
    <string name="dk_vehicle_ptac_truck_and_trailer_info">Depending on the type of trailer or the configuration of your vehicle, you can adjust the gross vehicle weight rating of the truck and trailer combination.</string>
+   <string name="dk_vehicle_quick_category_button_description">If you don\'t know the characteristics of your vehicle, it will be setup automatically.</string>
+   <string name="dk_vehicle_quick_category_button_title">I don\'t have time</string>
    <string name="dk_vehicle_rename">Rename</string>
    <string name="dk_vehicle_rename_description">Choose a name to identify your vehicle</string>
    <string name="dk_vehicle_rename_title">Rename this vehicle</string>

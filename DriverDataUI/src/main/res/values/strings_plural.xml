@@ -4,4 +4,8 @@
         <item quantity="one">@string/dk_driverdata_phone_call_sing</item>
         <item quantity="other">@string/dk_driverdata_phone_call_plur</item>
     </plurals>
+    <plurals name="dk_driverdata_drivingconditions_distance" translatable="false">
+        <item quantity="one">@string/dk_driverdata_drivingconditions_distance_singular</item>
+        <item quantity="other">@string/dk_driverdata_drivingconditions_distance_plural</item>
+    </plurals>
 </resources>

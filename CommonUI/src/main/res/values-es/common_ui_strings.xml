@@ -15,10 +15,10 @@
    <string name="dk_common_delete">Borrar</string>
    <string name="dk_common_distance">Distancia</string>
    <string name="dk_common_distraction">Distracción</string>
-   <string name="dk_common_driving_context_city">tráfico urbano</string>
-   <string name="dk_common_driving_context_city_dense">tráfico urbano denso</string>
-   <string name="dk_common_driving_context_external">entorno extraurbano</string>
-   <string name="dk_common_driving_context_fastlane">Autopistas</string>
+   <string name="dk_common_driving_context_city">urbano</string>
+   <string name="dk_common_driving_context_city_dense">urbano denso</string>
+   <string name="dk_common_driving_context_external">extra urbano</string>
+   <string name="dk_common_driving_context_fastlane">autopistas</string>
    <string name="dk_common_duration">Duración</string>
    <string name="dk_common_ecodriving">Eco-conducción</string>
    <string name="dk_common_ecodriving_accel_good">Buena aceleración</string>
@@ -43,6 +43,7 @@
    <string name="dk_common_mass">Masa</string>
    <string name="dk_common_mean_speed">Velocidad media</string>
    <string name="dk_common_no">No</string>
+   <string name="dk_common_no_data_yet">Todavía no tiene datos</string>
    <string name="dk_common_no_pseudo_set">Para compartir su clasificación con los demás participantes, le invitamos a elegir un pseudo. Sin un pseudo aparecerá como anónimo.</string>
    <string name="dk_common_no_trip">Sin viaje</string>
    <string name="dk_common_ok">OK</string>

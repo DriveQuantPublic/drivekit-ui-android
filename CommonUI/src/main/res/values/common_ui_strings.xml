@@ -15,10 +15,10 @@
     <string name="dk_common_delete">Delete</string>
     <string name="dk_common_distance">Distance</string>
     <string name="dk_common_distraction">Distraction</string>
-    <string name="dk_common_driving_context_city">urban traffic</string>
-    <string name="dk_common_driving_context_city_dense">dense urban traffic</string>
-    <string name="dk_common_driving_context_external">Extra-urban environment</string>
-    <string name="dk_common_driving_context_fastlane">Espressways</string>
+    <string name="dk_common_driving_context_city">city</string>
+    <string name="dk_common_driving_context_city_dense">heavy urban traffic</string>
+    <string name="dk_common_driving_context_external">suburban</string>
+    <string name="dk_common_driving_context_fastlane">expressways</string>
     <string name="dk_common_duration">Duration</string>
     <string name="dk_common_ecodriving">Eco-driving</string>
     <string name="dk_common_ecodriving_accel_good">Good acceleration</string>
@@ -43,6 +43,7 @@
     <string name="dk_common_mass">Mass</string>
     <string name="dk_common_mean_speed">Average speed</string>
     <string name="dk_common_no">No</string>
+    <string name="dk_common_no_data_yet">You don\'t have any data yet</string>
     <string name="dk_common_no_pseudo_set">To share your ranking with the other participants, we invite you to choose a pseudo. Without a pseudo you will appear as anonymous.</string>
     <string name="dk_common_no_trip">No trip</string>
     <string name="dk_common_ok">OK</string>

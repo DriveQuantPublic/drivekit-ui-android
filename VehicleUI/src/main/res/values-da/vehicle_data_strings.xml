@@ -105,7 +105,6 @@
     <string name="dk_vehicle_category_car_sport_title">Sportsvogn</string>
     <string name="dk_vehicle_category_car_suv_description">Denne kategori svarer til crossover-køretøjer eller off-road køretøjer med firehjulstræk (4x4), og hvis længde varierer i gennemsnit fra 4,10 til 5,20 m.</string>
     <string name="dk_vehicle_category_car_suv_title">4x4, SUV, crossover</string>
-    <string name="dk_vehicle_category_display_brands">Vælg mærke og model på dit køretøj</string>
     <string name="dk_vehicle_category_truck_selection_title">Hvilken slags lastbil kører du?</string>
     <string name="dk_vehicle_category_truck_straight">Lige lastbil</string>
     <string name="dk_vehicle_category_truck_straight_2_axles">To-akslet lige lastbil</string>
@@ -122,6 +121,8 @@
     <string name="dk_vehicle_delete">Slet</string>
     <string name="dk_vehicle_delete_confirm">Er du sikker på at du vil slette %s? Overvågning af kilometertal og vedligeholdelsesdata slettes permanent.</string>
     <string name="dk_vehicle_detail_back_edit_alert">Køretøjsdataene er blevet ændret. Vil du gemme dem?</string>
+    <string name="dk_vehicle_detail_category_button_description">Du kender dit køretøjs mærke, model og egenskaber</string>
+    <string name="dk_vehicle_detail_category_button_title">Find min bil</string>
     <string name="dk_vehicle_detection_mode_title">Autostart</string>
     <string name="dk_vehicle_engine_description">Motortype?</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
@@ -185,6 +186,8 @@
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_max">Denne værdi må ikke overstige 44 ton</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_alert_min">Denne værdi skal være større end kantstenen</string>
     <string name="dk_vehicle_ptac_truck_and_trailer_info">Afhængig af typen af ​​trailer eller konfigurationen af ​​dit køretøj, kan du justere bruttovægtens vægtvurdering af lastbil- og trailerkombinationen.</string>
+    <string name="dk_vehicle_quick_category_button_description">Hvis du ikke kender dit køretøjs egenskaber, konfigureres det automatisk.</string>
+    <string name="dk_vehicle_quick_category_button_title">Jeg har ikke tid til det</string>
     <string name="dk_vehicle_rename">Omdøb</string>
     <string name="dk_vehicle_rename_description">Vælg et navn for at identificere dit køretøj</string>
     <string name="dk_vehicle_rename_title">Omdøb dette køretøj</string>
