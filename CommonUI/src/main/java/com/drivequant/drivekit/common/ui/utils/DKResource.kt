@@ -143,7 +143,7 @@ object DKResource {
 
 data class TextArg(
     val text: String,
-    @ColorInt var color: Int? = null,
-    @DimenRes var size: Int? = null,
-    var style: Int = Typeface.BOLD
+    @ColorInt val color: Int? = null,
+    @DimenRes val size: Int? = null,
+    val style: Int = Typeface.BOLD
 )
