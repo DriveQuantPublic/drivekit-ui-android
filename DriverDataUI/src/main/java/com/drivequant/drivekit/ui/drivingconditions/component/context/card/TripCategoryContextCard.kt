@@ -6,7 +6,7 @@ import com.drivequant.drivekit.common.ui.component.contextcard.DKContextCardItem
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.ui.R
 
-internal class TripDistanceContextCard(
+internal class TripCategoryContextCard(
     private val context: Context,
     private val drivingConditions: DKDriverTimeline.DKDrivingConditions
 ) : BaseContextCard() {
@@ -17,15 +17,16 @@ internal class TripDistanceContextCard(
         this.items?.let {
             return it
         }
-        val totalDistance = drivingConditions.distanceByCategory.values.sum()
+        val numberOfTrips = this.drivingConditions.tripCountByCategory.values.sum().toDouble()
         val cards = DKDriverTimeline.DKDrivingCategory.values().mapNotNull { category ->
-            drivingConditions.distanceByCategory[category]?.let {
+            drivingConditions.tripCountByCategory[category]?.let {
                 if (it > 0) {
                     getContextCardItem(
                         category.getTitle(context),
                         category.getColor(),
-                        it,
-                        totalDistance
+                        it.toDouble(),
+                        numberOfTrips,
+                        UnitKind.TRIP
                     )
                 } else {
                     null
@@ -38,7 +39,7 @@ internal class TripDistanceContextCard(
     }
 
     override fun getTitle(context: Context): String {
-        val maxCategory = getMaxKey(drivingConditions.distanceByCategory)
+        val maxCategory = getMaxKey(this.drivingConditions.tripCountByCategory)
         return if (maxCategory == null) {
             ""
         } else {

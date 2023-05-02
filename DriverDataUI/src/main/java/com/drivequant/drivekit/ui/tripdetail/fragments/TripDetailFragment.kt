@@ -435,7 +435,9 @@ class TripDetailFragment : Fragment() {
             hideProgressCircular()
         }
         center_button.setOnClickListener {
-            tripMapViewHolder.updateCamera()
+            if (this::tripMapViewHolder.isInitialized) {
+                tripMapViewHolder.updateCamera()
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
+import com.drivequant.drivekit.ui.R
 
 internal abstract class BaseContextCard : DKContextCard {
 
@@ -18,12 +19,27 @@ internal abstract class BaseContextCard : DKContextCard {
 
     override fun getEmptyDataDescription(context: Context): String = ""
 
-    fun getContextCardItem(title: String, @ColorRes color: Int, distance: Double, totalDistance: Double): DKContextCardItem {
+    fun getContextCardItem(
+        title: String,
+        @ColorRes color: Int,
+        itemValue: Double,
+        totalItemsValue: Double,
+        kind: UnitKind
+    ): DKContextCardItem {
         return object : DKContextCardItem {
             override fun getColorResId(): Int = color
             override fun getTitle(context: Context): String = title
-            override fun getSubtitle(context: Context): String = DKDataFormatter.formatMeterDistanceInKm(context, distance * 1000, true, 100.0).convertToString()
-            override fun getPercent(): Double = distance / totalDistance * 100
+            override fun getSubtitle(context: Context): String = when (kind) {
+                UnitKind.TRIP -> "${DKDataFormatter.formatNumber(itemValue, 0)} ${context.resources.getQuantityString(R.plurals.trip_plural, itemValue.toInt())}"
+                UnitKind.KILOMETER -> DKDataFormatter.formatMeterDistanceInKm(
+                    context,
+                    itemValue * 1000,
+                    true,
+                    if (totalItemsValue < 10) 10.0 else 0.0
+                ).convertToString()
+            }
+
+            override fun getPercent(): Double = itemValue / totalItemsValue * 100
         }
     }
 
@@ -42,16 +58,21 @@ internal abstract class BaseContextCard : DKContextCard {
         return max
     }
 
-    fun <T> getMaxKey(map: Map<T, Double>): T? {
+    fun <T> getMaxKey(map: Map<T, Number>): T? {
         var maxValue: Double? = null
         var maxKey: T? = null
         for ((key, value) in map) {
-            if (value > 0 && (maxValue == null || value > maxValue)) {
-                maxValue = value
+            val doubleValue = value.toDouble()
+            if (doubleValue > 0 && (maxValue == null || doubleValue > maxValue)) {
+                maxValue = doubleValue
                 maxKey = key
             }
         }
         return maxKey
     }
 
+}
+
+internal enum class UnitKind {
+    KILOMETER, TRIP
 }

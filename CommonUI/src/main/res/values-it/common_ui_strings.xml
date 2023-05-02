@@ -15,10 +15,10 @@
    <string name="dk_common_delete">Cancellare</string>
    <string name="dk_common_distance">Distanza</string>
    <string name="dk_common_distraction">Distrazione</string>
-   <string name="dk_common_driving_context_city">traffico urbano</string>
-   <string name="dk_common_driving_context_city_dense">traffico urbano intenso</string>
-   <string name="dk_common_driving_context_external">ambiente extraurbano</string>
-   <string name="dk_common_driving_context_fastlane">Strade a scorrimento veloce</string>
+   <string name="dk_common_driving_context_city">urbano</string>
+   <string name="dk_common_driving_context_city_dense">urbano denso</string>
+   <string name="dk_common_driving_context_external">extra urbano</string>
+   <string name="dk_common_driving_context_fastlane">corsie veloci</string>
    <string name="dk_common_duration">Durata</string>
    <string name="dk_common_ecodriving">Guida ecologica</string>
    <string name="dk_common_ecodriving_accel_good">Buona accelerazione</string>

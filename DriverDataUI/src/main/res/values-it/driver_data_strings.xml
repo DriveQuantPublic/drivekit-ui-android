@@ -63,6 +63,7 @@
    <string name="dk_driverdata_drivingconditions_snow">Neve</string>
    <string name="dk_driverdata_drivingconditions_sun">Il sole</string>
    <string name="dk_driverdata_drivingconditions_title">Condizioni di guida</string>
+   <string name="dk_driverdata_drivingconditions_title_empty_data">Non avete registrato un viaggio</string>
    <string name="dk_driverdata_drivingconditions_weekdays">Settimana</string>
    <string name="dk_driverdata_drivingconditions_weekend">Weekend</string>
    <string name="dk_driverdata_ecodriving_score">Punteggio di guida ecologica</string>

@@ -87,7 +87,7 @@ class DKContextCardView(context: Context) : LinearLayout(context) {
     private fun displayContextCardUI() {
         with(this.titleView) {
             text = contextCard?.getTitle(context)
-            smallText(DriveKitUI.colors.mainFontColor())
+            headLine2(DriveKitUI.colors.mainFontColor())
             visibility = View.VISIBLE
         }
         this.emptyView.visibility = GONE

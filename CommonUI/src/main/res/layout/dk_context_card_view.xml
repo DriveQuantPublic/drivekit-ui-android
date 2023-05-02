@@ -36,6 +36,7 @@
                     android:id="@+id/context_card_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dk_margin_quarter"
                     android:layout_marginBottom="@dimen/dk_margin_half"
                     android:paddingHorizontal="@dimen/dk_margin_eigth" />
 
@@ -44,12 +45,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginHorizontal="@dimen/dk_margin_eigth"
+                    android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginBottom="@dimen/dk_margin_half" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dk_margin_quarter" />
             </LinearLayout>
         </FrameLayout>
     </androidx.cardview.widget.CardView>

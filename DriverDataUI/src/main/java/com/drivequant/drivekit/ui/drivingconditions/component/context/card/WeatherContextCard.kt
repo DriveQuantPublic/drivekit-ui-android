@@ -29,7 +29,8 @@ internal class WeatherContextCard(
                             weather.getTitle(context),
                             weather.getColor(),
                             it,
-                            totalDistance
+                            totalDistance,
+                            UnitKind.KILOMETER
                         )
                     } else {
                         null
@@ -50,7 +51,7 @@ internal class WeatherContextCard(
             when (maxCategory) {
                 DKWeather.CLOUD -> R.string.dk_driverdata_drivingconditions_main_cloud
                 DKWeather.FOG -> R.string.dk_driverdata_drivingconditions_main_fog
-                DKWeather.HAIL -> R.string.dk_driverdata_drivingconditions_main_ice
+                DKWeather.ICE -> R.string.dk_driverdata_drivingconditions_main_ice
                 DKWeather.RAIN -> R.string.dk_driverdata_drivingconditions_main_rain
                 DKWeather.SNOW -> R.string.dk_driverdata_drivingconditions_main_snow
                 DKWeather.SUN -> R.string.dk_driverdata_drivingconditions_main_sun
@@ -69,7 +70,7 @@ internal class WeatherContextCard(
 private fun DKWeather.getTitle(context: Context): String = when (this) {
     DKWeather.CLOUD -> R.string.dk_driverdata_drivingconditions_cloud
     DKWeather.FOG -> R.string.dk_driverdata_drivingconditions_fog
-    DKWeather.HAIL -> R.string.dk_driverdata_drivingconditions_ice
+    DKWeather.ICE -> R.string.dk_driverdata_drivingconditions_ice
     DKWeather.RAIN -> R.string.dk_driverdata_drivingconditions_rain
     DKWeather.SNOW -> R.string.dk_driverdata_drivingconditions_snow
     DKWeather.SUN -> R.string.dk_driverdata_drivingconditions_sun
@@ -86,7 +87,7 @@ private fun DKWeather.getTitle(context: Context): String = when (this) {
 private fun DKWeather.getColor(): Int = when (this) {
     DKWeather.CLOUD -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor2
     DKWeather.FOG -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor3
-    DKWeather.HAIL -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor6
+    DKWeather.ICE -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor6
     DKWeather.RAIN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor4
     DKWeather.SNOW -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5
     DKWeather.SUN -> com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1

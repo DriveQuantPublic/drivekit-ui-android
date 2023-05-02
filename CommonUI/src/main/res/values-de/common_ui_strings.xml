@@ -15,9 +15,9 @@
     <string name="dk_common_delete">Löschen</string>
     <string name="dk_common_distance">Entfernung</string>
     <string name="dk_common_distraction">Ablenkung</string>
-    <string name="dk_common_driving_context_city">Stadtverkehr</string>
+    <string name="dk_common_driving_context_city">Städtisch</string>
     <string name="dk_common_driving_context_city_dense">dichtem Stadtverkehr</string>
-    <string name="dk_common_driving_context_external">außerstädtischer Umgebung</string>
+    <string name="dk_common_driving_context_external">Extra städtlig</string>
     <string name="dk_common_driving_context_fastlane">Autobahnen</string>
     <string name="dk_common_duration">Dauer</string>
     <string name="dk_common_ecodriving">Eco-Driving</string>

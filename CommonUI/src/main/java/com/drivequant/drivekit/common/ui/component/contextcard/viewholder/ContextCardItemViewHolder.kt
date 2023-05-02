@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 
@@ -33,17 +33,17 @@ internal class ContextCardItemViewHolder(itemView: View) : RecyclerView.ViewHold
         if (subtitle != null) {
             with(this.titleView) {
                 this.text = title
-                smallText(DriveKitUI.colors.primaryColor())
+                normalText(DriveKitUI.colors.primaryColor())
             }
             with(this.subtitleView) {
                 this.text = subtitle
-                smallText(DriveKitUI.colors.complementaryFontColor())
+                normalText(DriveKitUI.colors.complementaryFontColor())
                 visibility = View.VISIBLE
             }
         } else {
             with(this.titleView) {
                 this.text = title
-                smallText(DriveKitUI.colors.complementaryFontColor())
+                normalText(DriveKitUI.colors.complementaryFontColor())
             }
             this.subtitleView.visibility = View.GONE
         }

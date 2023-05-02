@@ -15,10 +15,10 @@
     <string name="dk_common_delete">Slet</string>
     <string name="dk_common_distance">Afstand</string>
     <string name="dk_common_distraction">Distraktion</string>
-    <string name="dk_common_driving_context_city">Bytrafik</string>
-    <string name="dk_common_driving_context_city_dense">Tæt bytrafik</string>
-    <string name="dk_common_driving_context_external">Meget tæt bymiljø</string>
-    <string name="dk_common_driving_context_fastlane">Motorvej</string>
+    <string name="dk_common_driving_context_city">by</string>
+    <string name="dk_common_driving_context_city_dense">tæt bymiljø</string>
+    <string name="dk_common_driving_context_external">tæt bytrafik</string>
+    <string name="dk_common_driving_context_fastlane">motorvej</string>
     <string name="dk_common_duration">Varighed</string>
     <string name="dk_common_ecodriving">Øko-kørsel</string>
     <string name="dk_common_ecodriving_accel_good">God acceleration</string>
