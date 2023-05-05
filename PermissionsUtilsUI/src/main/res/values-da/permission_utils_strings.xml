@@ -75,6 +75,7 @@
    <string name="dk_perm_utils_brand_honor">https://info.drivequant.com/smartphone-configuration/huawei</string>
    <string name="dk_perm_utils_brand_huawei">https://info.drivequant.com/smartphone-configuration/huawei</string>
    <string name="dk_perm_utils_brand_oneplus">https://info.drivequant.com/smartphone-configuration/oneplus</string>
+   <string name="dk_perm_utils_brand_oppo">https://info.drivequant.com/smartphone-configuration/oppo</string>
    <string name="dk_perm_utils_brand_realme">https://info.drivequant.com/smartphone-configuration/realme</string>
    <string name="dk_perm_utils_brand_samsung">https://info.drivequant.com/smartphone-configuration/samsung</string>
    <string name="dk_perm_utils_brand_unknown">https://info.drivequant.com/smartphone-configuration</string>
