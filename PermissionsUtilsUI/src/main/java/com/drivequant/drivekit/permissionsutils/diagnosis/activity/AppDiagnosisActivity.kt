@@ -623,6 +623,7 @@ private enum class Brand {
     HUAWEI,
     HONOR,
     ONEPLUS,
+    OPPO,
     REALME,
     SAMSUNG,
     VIVO,
@@ -643,13 +644,14 @@ private enum class Brand {
 
     @StringRes
     fun linkKey(): Int = when (this) {
-        UNKNOWN -> 0
+        UNKNOWN -> R.string.dk_perm_utils_brand_unknown
         ASUS -> R.string.dk_perm_utils_brand_asus
         BLACKVIEW -> R.string.dk_perm_utils_brand_blackview
         GOOGLE -> R.string.dk_perm_utils_brand_google
         HUAWEI -> R.string.dk_perm_utils_brand_huawei
         HONOR -> R.string.dk_perm_utils_brand_honor
         ONEPLUS -> R.string.dk_perm_utils_brand_oneplus
+        OPPO -> R.string.dk_perm_utils_brand_oppo
         REALME -> R.string.dk_perm_utils_brand_realme
         SAMSUNG -> R.string.dk_perm_utils_brand_samsung
         VIVO -> R.string.dk_perm_utils_brand_vivo
