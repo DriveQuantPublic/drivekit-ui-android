@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -24,18 +25,21 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.DKTripRecordingButton
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.activity_dashboard.*
 
 internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
     private var menu: Menu? = null
-    private lateinit var startStopTripButton: Button
+    private lateinit var startStopTripButton: DKTripRecordingButton
+    private lateinit var tripSimulatorButtonContainer: ViewGroup
     private lateinit var tripSimulatorButton: Button
+    private lateinit var infoBanners: ViewGroup
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -81,7 +85,7 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initInfoBanners() {
-        info_banners.removeAllViews()
+        infoBanners.removeAllViews()
         InfoBannerType.values().forEach {
             if (it.shouldDisplay(this)) {
                 val view = InfoBannerView(this, it, object : InfoBannerView.InfoBannerListener {
@@ -91,7 +95,7 @@ internal class DashboardActivity : AppCompatActivity() {
                         }
                     }
                 })
-                info_banners.addView(view)
+                infoBanners.addView(view)
             }
         }
     }
@@ -117,8 +121,13 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initFeatureCard() {
+        this.infoBanners = findViewById(R.id.info_banners)
+        this.startStopTripButton = findViewById(R.id.button_start_stop_trip)
+        this.tripSimulatorButtonContainer = findViewById(R.id.button_trip_simulator)
+        val cardFeatures: FeatureCard = findViewById(R.id.card_features)
+
         checkViewModelInitialization()
-        card_features.apply {
+        cardFeatures.apply {
             configureTitle(viewModel.getFeatureCardTitleResId())
             configureDescription(viewModel.getFeatureCardDescriptionResId())
             configureActionButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardActionClickListener{
@@ -130,22 +139,11 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initStartStopTripButton() {
-        button_start_stop_trip.findViewById<Button>(R.id.button_action).apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            startStopTripButton = this
-            startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
-            setOnClickListener {
-                viewModel.startStopTrip()
-            }
-        }
-
-        viewModel.sdkStateObserver.observe(this) {
-            startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
-        }
+        DriveKitTripAnalysisUI.configureTripRecordingButton(this.startStopTripButton)
     }
 
     private fun initTripSimulatorButton() {
-        button_trip_simulator.findViewById<Button>(R.id.button_action).apply {
+        tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.simulate_trip)

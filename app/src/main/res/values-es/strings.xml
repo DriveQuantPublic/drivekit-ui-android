@@ -162,8 +162,6 @@
    <string name="see_settings">Ver los ajustes</string>
    <string name="server_error">Error del servidor, por favor, inténtelo más tarde</string>
    <string name="simulate_trip">Simular un viaje</string>
-   <string name="start_trip">Iniciar un viaje</string>
-   <string name="stop_trip">Detener el viaje</string>
    <string name="sync_challenge_loading_message">Recuperando desafíos...</string>
    <string name="sync_trips_loading_message">Recuperación de las rutas existentes...</string>
    <string name="sync_user_info_loading_message">Recuperación de la información del usuario...</string>

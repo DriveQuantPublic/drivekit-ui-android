@@ -162,8 +162,6 @@
     <string name="see_settings">Go to the settings</string>
     <string name="server_error">Server error, please try later</string>
     <string name="simulate_trip">Simulate a trip</string>
-    <string name="start_trip">Start a trip</string>
-    <string name="stop_trip">Stop the trip</string>
     <string name="sync_challenge_loading_message">Retrieving challenges...</string>
     <string name="sync_trips_loading_message">Retrieving the existing trips...</string>
     <string name="sync_user_info_loading_message">Retrieving user information...</string>

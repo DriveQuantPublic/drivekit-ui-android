@@ -4,9 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.enum.FeatureType
-import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
@@ -47,18 +45,4 @@ internal class DashboardViewModel: ViewModel() {
     fun getFeatureCardDescriptionResId() = FeatureType.ALL.getDescriptionResId()
 
     fun getFeatureCardTextButtonButtonResId() = FeatureType.ALL.getActionButtonTitleResId()
-
-    fun startStopTrip() {
-        if (DriveKitTripAnalysis.isTripRunning()) {
-            DriveKitTripAnalysis.stopTrip()
-        } else {
-            DriveKitTripAnalysis.startTrip()
-        }
-    }
-
-    fun getStartStopTripButtonTitleResId() = if (DriveKitTripAnalysis.isTripRunning()) {
-        R.string.stop_trip
-    } else {
-        R.string.start_trip
-    }
 }

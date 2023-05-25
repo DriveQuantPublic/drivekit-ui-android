@@ -11,6 +11,15 @@
    <string name="dk_crash_detection_feedback_step2_option_no_crash">Nothing, everything is fine</string>
    <string name="dk_crash_detection_feedback_step2_title">We are reassured to know that you are doing well.</string>
    <string name="dk_crash_detection_feedback_step2option_critical_accident">Contact assistance</string>
+   <string name="dk_tripwidget_confirm_canceltrip_subtitle">Your trip will be cancelled and not recorded</string>
+   <string name="dk_tripwidget_confirm_canceltrip_title">I\'m not driving</string>
+   <string name="dk_tripwidget_confirm_continuetrip_subtitle">Your trip is not finished and will continue</string>
+   <string name="dk_tripwidget_confirm_continuetrip_title">Continue</string>
+   <string name="dk_tripwidget_confirm_endtrip_subtitle">Your trip will be analyzed and saved</string>
+   <string name="dk_tripwidget_confirm_endtrip_title">I\'ve completed my trip</string>
+   <string name="dk_tripwidget_disable_autostart_title">Temporarily disable automatic recording of your trips?</string>
+   <string name="dk_tripwidget_record_title">Trip started at %s</string>
+   <string name="dk_tripwidget_start_title">Record a trip</string>
    <string name="dk_working_hours_back_save_alert">The working hours have been changed. Would you like to save them?</string>
    <string name="dk_working_hours_enable_desc">This feature configures the automatic trip recording periods and labels the trips.</string>
    <string name="dk_working_hours_enable_title">Enable working hours</string>

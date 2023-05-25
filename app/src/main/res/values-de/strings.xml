@@ -163,8 +163,6 @@ Um Ihnen bei der Implementierung eines.\n\nTBerechtigungspfads zu helfen, haben 
    <string name="see_settings">Siehe die Einstellungen</string>
    <string name="server_error">Serverfehler, bitte versuchen Sie es später noch einmal</string>
    <string name="simulate_trip">Eine Fahrt simulieren</string>
-   <string name="start_trip">Fahrt beginnen</string>
-   <string name="stop_trip">Fahrt abbrechen</string>
    <string name="sync_challenge_loading_message">Herausforderungen abrufen...</string>
    <string name="sync_trips_loading_message">Abrufen bestehender Fahrten...</string>
    <string name="sync_user_info_loading_message">Abrufen von Benutzerinformationen...</string>

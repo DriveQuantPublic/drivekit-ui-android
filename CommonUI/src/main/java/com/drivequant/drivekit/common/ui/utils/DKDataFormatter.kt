@@ -173,6 +173,20 @@ object DKDataFormatter {
         return formattingTypes
     }
 
+    fun formatDurationWithColons(durationInSeconds: Double): List<FormatType> {
+        val nbHours: Int = (durationInSeconds / 3600.0).toInt()
+        val nbMinutes: Int = ((durationInSeconds - nbHours * 3600.0) / 60.0).toInt()
+        val nbSeconds: Int = (durationInSeconds - nbHours * 3600.0 - nbMinutes * 60.0).toInt()
+        val separator = ":"
+        return listOf(
+            FormatType.VALUE(nbHours.formatLeadingZero()),
+            FormatType.SEPARATOR(separator),
+            FormatType.VALUE(nbMinutes.formatLeadingZero()),
+            FormatType.SEPARATOR(separator),
+            FormatType.VALUE(nbSeconds.formatLeadingZero())
+        )
+    }
+
     @JvmOverloads
     fun getMeterDistanceInKmFormat(
         context: Context,
