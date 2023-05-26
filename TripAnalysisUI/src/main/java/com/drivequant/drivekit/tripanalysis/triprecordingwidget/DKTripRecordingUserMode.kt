@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis
+package com.drivequant.drivekit.tripanalysis.triprecordingwidget
 
 enum class DKTripRecordingUserMode {
     START_STOP,

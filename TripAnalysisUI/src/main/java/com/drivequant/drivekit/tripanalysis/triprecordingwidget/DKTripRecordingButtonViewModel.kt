@@ -3,13 +3,13 @@ package com.drivequant.drivekit.tripanalysis.triprecordingwidget
 import android.content.Context
 import androidx.annotation.IdRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.tripanalysis.DKTripRecordingUserMode
 import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -64,6 +64,17 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
     private val lock = Any()
 
     init {
+        if (DriveKitTripAnalysis.isTripRunning()) {
+            DriveKitTripAnalysis.getLastTripPoint()?.let {
+                tripPoint(it)
+            } ?: DriveKitTripAnalysis.getCurrentTripStartDate()?.let {
+                synchronized(this.lock) {
+                    if (this.state !is RecordingState.Recording) {
+                        this.state = RecordingState.Recording(it, null, durationFromDate(it))
+                    }
+                }
+            }
+        }
         DriveKitTripAnalysis.addTripListener(this)
     }
 
@@ -80,18 +91,22 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
 
     fun distanceSubtitle(context: Context): String? = this.state.let {
         when (it) {
-            is RecordingState.Recording -> DKDataFormatter.formatMeterDistanceInKm(
-                context,
-                it.distance,
-                true,
-                minDistanceToRemoveFractions = Double.MAX_VALUE
-            ).convertToString()
+            is RecordingState.Recording -> {
+                it.distance?.let { distance ->
+                    DKDataFormatter.formatMeterDistanceInKm(
+                        context,
+                        distance,
+                        true,
+                        minDistanceToRemoveFractions = Double.MAX_VALUE
+                    ).convertToString()
+                } ?: "- ${context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer)}"
+            }
 
             is RecordingState.Stopped -> null
         }
     }
 
-    fun durationSubtitle(context: Context): String? = this.state.let {
+    fun durationSubtitle(): String? = this.state.let {
         when (it) {
             is RecordingState.Recording -> DKDataFormatter.formatDurationWithColons(it.duration).convertToString()
             is RecordingState.Stopped -> null
@@ -138,7 +153,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
                     state.let {
                         synchronized(lock) {
                             if (it is RecordingState.Recording) {
-                                it.duration = round((System.currentTimeMillis() - it.startingDate.time) / 1000.0)
+                                it.duration = durationFromDate(it.startingDate)
                                 onViewModelUpdate?.invoke()
                             }
                         }
@@ -153,16 +168,26 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         this.timer = null
     }
 
+    private fun durationFromDate(date: Date): Double =
+        round((System.currentTimeMillis() - date.time) / 1000.0)
+
+    private fun startingDateFromDuration(duration: Double): Date =
+        Date(System.currentTimeMillis() - duration.toLong() * 1000L)
+
     override fun sdkStateChanged(state: State) {
-        when (state) {
-            State.INACTIVE, State.SENDING -> synchronized(this.lock) {
-                this.state = RecordingState.Stopped
-            }
-            State.RUNNING, State.STOPPING -> {
-                // Nothing to do.
-            }
-            State.STARTING -> synchronized(this.lock) {
-                this.state = RecordingState.Recording(Date(), 0.0, 0.0)
+        viewModelScope.launch {
+            when (state) {
+                State.INACTIVE, State.SENDING -> synchronized(lock) {
+                    this@DKTripRecordingButtonViewModel.state = RecordingState.Stopped
+                }
+
+                State.RUNNING, State.STOPPING -> {
+                    // Nothing to do.
+                }
+
+                State.STARTING -> synchronized(lock) {
+                    this@DKTripRecordingButtonViewModel.state = RecordingState.Recording(Date(), 0.0, 0.0)
+                }
             }
         }
     }
@@ -172,7 +197,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
             synchronized(this.lock) {
                 if (it is RecordingState.Stopped) {
                     this.state = RecordingState.Recording(
-                        Date(System.currentTimeMillis() - tripPoint.duration.toLong() * 1000L),
+                        startingDateFromDuration(tripPoint.duration),
                         tripPoint.distance,
                         tripPoint.duration
                     )
@@ -222,5 +247,13 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
 
     override fun tripStarted(startMode: StartMode) {
         // Nothing to do.
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    class DKTripRecordingButtonViewModelFactory(private val tripRecordingUserMode: DKTripRecordingUserMode) :
+        ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return DKTripRecordingButtonViewModel(tripRecordingUserMode) as T
+        }
     }
 }
