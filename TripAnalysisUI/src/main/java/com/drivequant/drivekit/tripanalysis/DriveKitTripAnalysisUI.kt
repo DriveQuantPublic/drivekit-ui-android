@@ -9,8 +9,8 @@ import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHours
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
-import com.drivequant.drivekit.tripanalysis.triprecordingwidget.DKTripRecordingButton
-import com.drivequant.drivekit.tripanalysis.triprecordingwidget.DKTripRecordingUserMode
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.tripanalysis.workinghours.activity.WorkingHoursActivity
 
 object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {

@@ -31,6 +31,16 @@
             app:layout_constraintStart_toStartOf="@id/iconBackground"
             app:layout_constraintTop_toTopOf="@id/iconBackground" />
 
+        <View
+            android:id="@+id/iconBorder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dk_trip_analysis_trip_recording_button_rounded_border"
+            app:layout_constraintBottom_toBottomOf="@id/iconBackground"
+            app:layout_constraintEnd_toEndOf="@id/iconBackground"
+            app:layout_constraintStart_toStartOf="@id/iconBackground"
+            app:layout_constraintTop_toTopOf="@id/iconBackground" />
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/iconGroup"
             android:layout_width="0dp"

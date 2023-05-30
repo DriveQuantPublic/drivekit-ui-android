@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis.triprecordingwidget
+package com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton
 
 import java.util.Date
 

@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis.triprecordingwidget
+package com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -15,8 +15,11 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
+import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.stopconfirmation.TripStopConfirmationView
 
 class DKTripRecordingButton : Fragment() {
 
@@ -26,6 +29,7 @@ class DKTripRecordingButton : Fragment() {
     private lateinit var durationTextView: TextView
     private lateinit var stateImageView: ImageView
     private lateinit var stateImageBackground: View
+    private lateinit var stateImageBorder: View
     private lateinit var stateImageGroup: Group
     private lateinit var viewModel: DKTripRecordingButtonViewModel
 
@@ -51,11 +55,13 @@ class DKTripRecordingButton : Fragment() {
         this.durationTextView = this.view.findViewById(R.id.durationSubtitle)
         this.stateImageView = this.view.findViewById(R.id.icon)
         this.stateImageBackground = this.view.findViewById(R.id.iconBackground)
+        this.stateImageBorder = this.view.findViewById(R.id.iconBorder)
         this.stateImageGroup = this.view.findViewById(R.id.iconGroup)
 
         (this.view.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
         (this.stateImageBackground.background as GradientDrawable).setColor(DriveKitUI.colors.fontColorOnSecondaryColor())
         this.stateImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
+        (this.stateImageBorder.background as GradientDrawable).setStroke(1.5F.convertDpToPx(), view.context.getColor(R.color.dkTripRecordingButtonBorder).tintFromHueOfColor(DriveKitUI.colors.secondaryColor()))
         this.distanceTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         this.durationTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
 
@@ -63,7 +69,7 @@ class DKTripRecordingButton : Fragment() {
     }
 
     fun showConfirmationDialog() {
-
+        TripStopConfirmationView.show(context)
     }
 
     private fun configure() {
@@ -74,10 +80,6 @@ class DKTripRecordingButton : Fragment() {
             )
         )[DKTripRecordingButtonViewModel::class.java]
         this.viewModel.onViewModelUpdate = this::update
-        this.view.setOnClickListener {
-            viewModel.toggleRecordingState()
-        }
-//        this.stateImageBackground = TODO()
         update()
     }
 
@@ -105,6 +107,16 @@ class DKTripRecordingButton : Fragment() {
             }
         }
         this.view.visibility = if (this.viewModel.isHidden()) View.GONE else View.VISIBLE
+        if (this.viewModel.canClick()) {
+            this.view.setOnClickListener {
+                if (viewModel.toggleRecordingState()) {
+                    showConfirmationDialog()
+                }
+            }
+        } else {
+            this.view.setOnClickListener(null)
+            this.view.isClickable = false
+        }
     }
 
 }

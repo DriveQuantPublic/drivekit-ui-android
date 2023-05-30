@@ -1,4 +1,4 @@
-package com.drivequant.drivekit.tripanalysis.triprecordingwidget
+package com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton
 
 import android.content.Context
 import androidx.annotation.IdRes
@@ -44,19 +44,20 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
             this.onViewModelUpdate?.invoke()
         }
 
-    @IdRes
-    internal val iconResId: Int? = when (this.state) {
-        is RecordingState.Recording -> when (this.tripRecordingUserMode) {
-            DKTripRecordingUserMode.NONE -> null
-            DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.STOP_ONLY -> R.drawable.dk_trip_analysis_stop
-            DKTripRecordingUserMode.START_ONLY -> R.drawable.dk_trip_analysis_record
-        }
+    @get:IdRes
+    internal val iconResId: Int?
+        get() = when (this.state) {
+            is RecordingState.Recording -> when (this.tripRecordingUserMode) {
+                DKTripRecordingUserMode.NONE -> null
+                DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.STOP_ONLY -> R.drawable.dk_trip_analysis_stop
+                DKTripRecordingUserMode.START_ONLY -> R.drawable.dk_trip_analysis_record
+            }
 
-        is RecordingState.Stopped -> when (this.tripRecordingUserMode) {
-            DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.STOP_ONLY -> null
-            DKTripRecordingUserMode.START_ONLY, DKTripRecordingUserMode.START_STOP -> R.drawable.dk_trip_analysis_play
+            is RecordingState.Stopped -> when (this.tripRecordingUserMode) {
+                DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.STOP_ONLY -> null
+                DKTripRecordingUserMode.START_ONLY, DKTripRecordingUserMode.START_STOP -> R.drawable.dk_trip_analysis_play
+            }
         }
-    }
 
     internal val hasSubtitle: Boolean
         get() = this.state is RecordingState.Recording
@@ -117,7 +118,14 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         val shouldShowConfirmationDialog: Boolean
         this.state.let {
             when (it) {
-                is RecordingState.Recording -> shouldShowConfirmationDialog = true
+                is RecordingState.Recording -> when (this.tripRecordingUserMode) {
+                    DKTripRecordingUserMode.START_STOP,
+                    DKTripRecordingUserMode.STOP_ONLY -> shouldShowConfirmationDialog = true
+
+                    DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> shouldShowConfirmationDialog =
+                        false
+                }
+
                 is RecordingState.Stopped -> {
                     synchronized(this.lock) {
                         this.state = RecordingState.Recording(Date(), 0.0, 0.0)
@@ -130,15 +138,26 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         return shouldShowConfirmationDialog
     }
 
+    fun canClick(): Boolean = when (this.tripRecordingUserMode) {
+        DKTripRecordingUserMode.NONE -> false
+        DKTripRecordingUserMode.START_ONLY -> when (this.state) {
+            is RecordingState.Recording -> false
+            is RecordingState.Stopped -> true
+        }
+
+        DKTripRecordingUserMode.START_STOP -> true
+        DKTripRecordingUserMode.STOP_ONLY -> when (this.state) {
+            is RecordingState.Recording -> true
+            is RecordingState.Stopped -> false
+        }
+    }
+
     fun canShowTripStopConfirmationDialog() = this.state is RecordingState.Recording
 
     fun isHidden(): Boolean = when (this.tripRecordingUserMode) {
         DKTripRecordingUserMode.NONE -> true
-        DKTripRecordingUserMode.START_STOP -> false
-        DKTripRecordingUserMode.START_ONLY -> when (this.state) {
-            is RecordingState.Recording -> true
-            is RecordingState.Stopped -> false
-        }
+        DKTripRecordingUserMode.START_STOP,
+        DKTripRecordingUserMode.START_ONLY-> false
         DKTripRecordingUserMode.STOP_ONLY -> when (this.state) {
             is RecordingState.Recording -> false
             is RecordingState.Stopped -> true
@@ -186,7 +205,8 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
                 }
 
                 State.STARTING -> synchronized(lock) {
-                    this@DKTripRecordingButtonViewModel.state = RecordingState.Recording(Date(), 0.0, 0.0)
+                    this@DKTripRecordingButtonViewModel.state =
+                        RecordingState.Recording(Date(), 0.0, 0.0)
                 }
             }
         }
