@@ -2,6 +2,8 @@ package com.drivekit.demoapp.config
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.drivekit.TripListenerController
@@ -34,6 +36,7 @@ import com.drivequant.drivekit.tripanalysis.entity.TripNotification
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -57,6 +60,7 @@ internal object DriveKitConfig {
 
     private val tripData: TripData = TripData.SAFETY
     private const val enableAlternativeTrips: Boolean = true
+    private val tripRecordingUserMode: DKTripRecordingUserMode = DKTripRecordingUserMode.START_STOP
 
     private val vehicleTypes: List<VehicleType> = VehicleType.values().toList()
     private val vehicleBrands: List<VehicleBrand> = VehicleBrand.values().toList()
@@ -185,6 +189,7 @@ internal object DriveKitConfig {
                 crashVelocityThreshold = 0.0
             )
         )
+        DriveKitTripAnalysisUI.tripRecordingUserMode = this.tripRecordingUserMode
     }
 
     private fun configureDriverAchievementUI() {
@@ -218,10 +223,22 @@ internal object DriveKitConfig {
             context.getString(R.string.notif_trip_started),
             R.drawable.ic_notification
         )
-        notification.enableCancel = true
-        notification.cancel = context.getString(R.string.cancel_trip)
-        notification.cancelIconId = R.drawable.ic_notification
+        if (DriveKitTripAnalysisUI.isUserAllowedToCancelTrip(this.tripRecordingUserMode)) {
+            notification.enableCancel = true
+            notification.cancel = context.getString(R.string.cancel_trip)
+            notification.cancelIconId = R.drawable.ic_notification
+        }
         notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
+
+        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        if (intent != null) {
+            DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
+            val contentIntent = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(intent)
+                .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+            notification.contentIntent = contentIntent
+        }
+
         return notification
     }
 

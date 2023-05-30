@@ -8,7 +8,7 @@ internal sealed class RecordingState {
 
     data class Recording(
         val startingDate: Date,
-        var distance: Double?,
+        var distance: Double,
         var duration: Double
     ) : RecordingState()
 

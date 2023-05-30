@@ -69,7 +69,9 @@ class DKTripRecordingButton : Fragment() {
     }
 
     fun showConfirmationDialog() {
-        TripStopConfirmationView.show(context)
+        if (this.viewModel.canShowTripStopConfirmationDialog()) {
+            TripStopConfirmationView.show(context)
+        }
     }
 
     private fun configure() {

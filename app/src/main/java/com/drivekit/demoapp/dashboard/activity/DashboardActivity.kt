@@ -12,12 +12,14 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.demoapp.utils.getSerializableCompat
@@ -33,6 +35,8 @@ import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
@@ -43,9 +47,12 @@ internal class DashboardActivity : AppCompatActivity() {
     private lateinit var infoBanners: ViewGroup
 
     companion object {
-        fun launchActivity(activity: Activity) {
+        fun launchActivity(activity: Activity, isTripAnalysisNotification: Boolean = false) {
             val intent = Intent(activity, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            if (isTripAnalysisNotification) {
+                DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
+            }
             activity.startActivity(intent)
         }
     }
@@ -64,7 +71,14 @@ internal class DashboardActivity : AppCompatActivity() {
         initFeatureCard()
         configureStartStopTripButton()
 
-        manageTripDetailRedirection()
+        if (!manageTripDetailRedirection()) {
+            if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+                lifecycleScope.launch {
+                    delay(300)
+                    startStopTripButton?.showConfirmationDialog()
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -159,7 +173,8 @@ internal class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageTripDetailRedirection() {
+    private fun manageTripDetailRedirection(): Boolean {
+        var managed = false
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
@@ -174,8 +189,10 @@ internal class DashboardActivity : AppCompatActivity() {
                     openAdvice,
                     tripListConfigurationType
                 )
+                managed = true
             }
         }
+        return managed
     }
 
     override fun onPause() {

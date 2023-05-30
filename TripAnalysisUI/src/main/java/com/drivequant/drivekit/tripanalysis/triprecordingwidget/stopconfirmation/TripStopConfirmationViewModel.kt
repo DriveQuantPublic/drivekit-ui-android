@@ -12,7 +12,7 @@ internal class TripStopConfirmationViewModel {
     @StringRes val cancelTripTitleId: Int = R.string.dk_tripwidget_confirm_canceltrip_title
     @StringRes val cancelTripSubtitleId: Int = R.string.dk_tripwidget_confirm_canceltrip_subtitle
 
-    fun stopTrip() {
+    fun endTrip() {
         DriveKitTripAnalysis.stopTrip()
     }
 

@@ -46,7 +46,7 @@ internal class TripStopConfirmationView(context: Context?, attrs: AttributeSet?)
         this.cancelTripButton.configure(viewModel.cancelTripTitleId, viewModel.cancelTripSubtitleId)
 
         this.endTripButton.setOnClickListener {
-            viewModel.stopTrip()
+            viewModel.endTrip()
             dismiss()
         }
         this.continueTripButton.setOnClickListener {

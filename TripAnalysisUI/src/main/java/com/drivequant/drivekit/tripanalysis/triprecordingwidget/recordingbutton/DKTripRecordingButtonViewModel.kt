@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -71,7 +72,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
             } ?: DriveKitTripAnalysis.getCurrentTripStartDate()?.let {
                 synchronized(this.lock) {
                     if (this.state !is RecordingState.Recording) {
-                        this.state = RecordingState.Recording(it, null, durationFromDate(it))
+                        this.state = RecordingState.Recording(it, 0.0, durationFromDate(it))
                     }
                 }
             }
@@ -92,16 +93,12 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
 
     fun distanceSubtitle(context: Context): String? = this.state.let {
         when (it) {
-            is RecordingState.Recording -> {
-                it.distance?.let { distance ->
-                    DKDataFormatter.formatMeterDistanceInKm(
-                        context,
-                        distance,
-                        true,
-                        minDistanceToRemoveFractions = Double.MAX_VALUE
-                    ).convertToString()
-                } ?: "- ${context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer)}"
-            }
+            is RecordingState.Recording -> DKDataFormatter.formatMeterDistanceInKm(
+                context,
+                it.distance,
+                true,
+                minDistanceToRemoveFractions = Double.MAX_VALUE
+            ).convertToString()
 
             is RecordingState.Stopped -> null
         }
@@ -152,7 +149,10 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         }
     }
 
-    fun canShowTripStopConfirmationDialog() = this.state is RecordingState.Recording
+    fun canShowTripStopConfirmationDialog(): Boolean =
+        this.state is RecordingState.Recording && DriveKitTripAnalysisUI.isUserAllowedToCancelTrip(
+            this.tripRecordingUserMode
+        )
 
     fun isHidden(): Boolean = when (this.tripRecordingUserMode) {
         DKTripRecordingUserMode.NONE -> true

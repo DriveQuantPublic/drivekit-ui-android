@@ -21,10 +21,7 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
     internal var crashFeedbackRoadsideAssistanceNumber: String? = null
     var tripRecordingUserMode: DKTripRecordingUserMode = DKTripRecordingUserMode.START_STOP
     val isUserAllowedToCancelTrip: Boolean
-        get() = when (this.tripRecordingUserMode) {
-            DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> false
-            DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.STOP_ONLY -> true
-        }
+        get() = isUserAllowedToCancelTrip(this.tripRecordingUserMode)
     val isUserAllowedToStartTripManually: Boolean
         get() = when (this.tripRecordingUserMode) {
             DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.START_ONLY -> true
@@ -73,4 +70,10 @@ object DriveKitTripAnalysisUI : TripAnalysisUIEntryPoint {
     }
 
     fun newTripRecordingButtonFragment(): DKTripRecordingButton = DKTripRecordingButton()
+
+    fun isUserAllowedToCancelTrip(tripRecordingUserMode: DKTripRecordingUserMode): Boolean =
+        when (tripRecordingUserMode) {
+            DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> false
+            DKTripRecordingUserMode.START_STOP, DKTripRecordingUserMode.STOP_ONLY -> true
+        }
 }
