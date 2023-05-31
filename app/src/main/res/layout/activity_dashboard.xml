@@ -17,41 +17,45 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/dk_margin_half"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="@dimen/dk_margin_half">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <FrameLayout
                 android:id="@+id/container_synthesis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
+
             <FrameLayout
                 android:id="@+id/container_last_trips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
             <com.drivekit.demoapp.component.FeatureCard
                 android:id="@+id/card_features"
-                android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dk_margin_half" />
         </LinearLayout>
     </ScrollView>
 
     <fragment
         android:id="@+id/button_start_stop_trip"
+        android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="@dimen/dk_margin"
-        android:layout_marginVertical="@dimen/dk_margin_half"
-        android:name="com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton" />
+        android:layout_marginVertical="@dimen/dk_margin_half" />
 
     <include
         android:id="@+id/button_trip_simulator"
         layout="@layout/layout_button_action"
-        android:layout_marginBottom="@dimen/dk_margin_medium"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_marginBottom="@dimen/dk_margin_medium" />
 </LinearLayout>
