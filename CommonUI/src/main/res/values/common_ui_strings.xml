@@ -38,10 +38,14 @@
     <string name="dk_common_error_empty_field">This field cannot be blank</string>
     <string name="dk_common_error_message">An error occurred during the request, please retry later.</string>
     <string name="dk_common_finish">Finish</string>
+    <string name="dk_common_hour_plural">hours</string>
+    <string name="dk_common_hour_singular">hour</string>
     <string name="dk_common_later">Later</string>
     <string name="dk_common_loading">Loading. Please wait...</string>
     <string name="dk_common_mass">Mass</string>
     <string name="dk_common_mean_speed">Average speed</string>
+    <string name="dk_common_minute_plural">minutes</string>
+    <string name="dk_common_minute_singular">minute</string>
     <string name="dk_common_no">No</string>
     <string name="dk_common_no_data_yet">You don\'t have any data yet</string>
     <string name="dk_common_no_pseudo_set">To share your ranking with the other participants, we invite you to choose a pseudo. Without a pseudo you will appear as anonymous.</string>
