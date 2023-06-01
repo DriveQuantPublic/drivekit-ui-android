@@ -150,9 +150,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
     }
 
     fun canShowTripStopConfirmationDialog(): Boolean =
-        this.state is RecordingState.Recording && DriveKitTripAnalysisUI.isUserAllowedToCancelTrip(
-            this.tripRecordingUserMode
-        )
+        this.state is RecordingState.Recording && DriveKitTripAnalysisUI.isUserAllowedToCancelTrip
 
     fun isHidden(): Boolean = when (this.tripRecordingUserMode) {
         DKTripRecordingUserMode.NONE -> true
