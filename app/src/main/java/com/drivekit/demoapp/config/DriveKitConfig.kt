@@ -5,7 +5,9 @@ import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
+import android.content.Intent
 import androidx.preference.PreferenceManager
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
@@ -230,14 +232,12 @@ internal object DriveKitConfig {
         }
         notification.channelId = DKNotificationChannel.TRIP_STARTED.getChannelId()
 
-        val intent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-        if (intent != null) {
-            DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
-            val contentIntent = TaskStackBuilder.create(context)
-                .addNextIntentWithParentStack(intent)
-                .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
-            notification.contentIntent = contentIntent
-        }
+        val intent = Intent(context, DashboardActivity::class.java)
+        DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
+        val contentIntent = TaskStackBuilder.create(context)
+            .addNextIntentWithParentStack(intent)
+            .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+        notification.contentIntent = contentIntent
 
         return notification
     }

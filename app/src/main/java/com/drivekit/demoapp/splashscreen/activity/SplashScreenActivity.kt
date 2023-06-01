@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.onboarding.activity.ApiKeyActivity
 import com.drivekit.demoapp.onboarding.activity.VehiclesActivity
 import com.drivekit.demoapp.splashscreen.viewmodel.SplashScreenViewModel
@@ -40,7 +39,7 @@ class SplashScreenActivity : AppCompatActivity() {
             if (it) {
                 VehiclesActivity.launchActivity(this)
             } else {
-                DashboardActivity.launchActivity(this, DKNotificationManager.isTripAnalysisNotificationIntent(intent))
+                DashboardActivity.launchActivity(this)
             }
             finish()
         }

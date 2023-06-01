@@ -107,17 +107,17 @@ class DKTripRecordingButton : Fragment() {
             } ?: run {
                 this.stateImageGroup.visibility = View.GONE
             }
-        }
-        this.view.visibility = if (this.viewModel.isHidden()) View.GONE else View.VISIBLE
-        if (this.viewModel.canClick()) {
-            this.view.setOnClickListener {
-                if (viewModel.toggleRecordingState()) {
-                    showConfirmationDialog()
+            this.view.visibility = if (this.viewModel.isHidden()) View.GONE else View.VISIBLE
+            if (this.viewModel.canClick()) {
+                this.view.setOnClickListener {
+                    if (viewModel.toggleRecordingState()) {
+                        showConfirmationDialog()
+                    }
                 }
+            } else {
+                this.view.setOnClickListener(null)
+                this.view.isClickable = false
             }
-        } else {
-            this.view.setOnClickListener(null)
-            this.view.isClickable = false
         }
     }
 

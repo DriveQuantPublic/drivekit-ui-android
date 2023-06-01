@@ -47,12 +47,9 @@ internal class DashboardActivity : AppCompatActivity() {
     private lateinit var infoBanners: ViewGroup
 
     companion object {
-        fun launchActivity(activity: Activity, isTripAnalysisNotification: Boolean = false) {
+        fun launchActivity(activity: Activity) {
             val intent = Intent(activity, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            if (isTripAnalysisNotification) {
-                DKNotificationManager.configureTripAnalysisNotificationIntent(intent)
-            }
             activity.startActivity(intent)
         }
     }

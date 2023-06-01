@@ -46,7 +46,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         }
 
     @get:IdRes
-    internal val iconResId: Int?
+    val iconResId: Int?
         get() = when (this.state) {
             is RecordingState.Recording -> when (this.tripRecordingUserMode) {
                 DKTripRecordingUserMode.NONE -> null
@@ -60,7 +60,7 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
             }
         }
 
-    internal val hasSubtitle: Boolean
+    val hasSubtitle: Boolean
         get() = this.state is RecordingState.Recording
     private var timer: Job? = null
     private val lock = Any()
@@ -227,8 +227,8 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         }
     }
 
-    override fun tripCancelled(cancelTrip: CancelTrip) = synchronized(this.lock) {
-        this.state = RecordingState.Stopped
+    override fun tripCancelled(cancelTrip: CancelTrip) {
+        // Nothing to do.
     }
 
     override fun beaconDetected() {
