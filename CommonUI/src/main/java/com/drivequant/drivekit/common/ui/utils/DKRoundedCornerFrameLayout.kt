@@ -7,7 +7,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.widget.FrameLayout
 
-class DKRoundedCornerFrameLayout : FrameLayout {
+open class DKRoundedCornerFrameLayout : FrameLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(

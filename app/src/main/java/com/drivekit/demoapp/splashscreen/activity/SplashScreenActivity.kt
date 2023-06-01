@@ -1,8 +1,8 @@
 package com.drivekit.demoapp.splashscreen.activity
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.activity.ApiKeyActivity
 import com.drivekit.demoapp.onboarding.activity.VehiclesActivity
@@ -18,6 +18,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (DriveKit.isUserConnected()) {
             viewModel.syncDriveKitModules()
         } else {

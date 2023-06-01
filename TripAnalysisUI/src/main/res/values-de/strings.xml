@@ -11,6 +11,15 @@
    <string name="dk_crash_detection_feedback_step2_option_no_crash">Nichts, alles in Ordnung</string>
    <string name="dk_crash_detection_feedback_step2_title">Es beruhigt uns zu wissen, dass es Ihnen gut geht.</string>
    <string name="dk_crash_detection_feedback_step2option_critical_accident">Unterstützung kontaktieren</string>
+   <string name="dk_tripwidget_confirm_canceltrip_subtitle">Ihre Reise wird storniert und nicht aufgezeichnet</string>
+   <string name="dk_tripwidget_confirm_canceltrip_title">Ich fahre nicht</string>
+   <string name="dk_tripwidget_confirm_continuetrip_subtitle">Ihre Reise ist noch nicht beendet und wird fortgesetzt</string>
+   <string name="dk_tripwidget_confirm_continuetrip_title">Weiter</string>
+   <string name="dk_tripwidget_confirm_endtrip_subtitle">Ihre Reise wird ausgewertet und gespeichert</string>
+   <string name="dk_tripwidget_confirm_endtrip_title">Ich habe meine Reise beendet</string>
+   <string name="dk_tripwidget_disable_autostart_title">Die automatische Aufzeichnung Ihrer Fahrten vorübergehend deaktivieren?</string>
+   <string name="dk_tripwidget_record_title">Fahrt begann um %s</string>
+   <string name="dk_tripwidget_start_title">Eine Reise aufzeichnen</string>
    <string name="dk_working_hours_back_save_alert">Die Arbeitszeiten sind geändert worden. Möchten Sie sie speichern?</string>
    <string name="dk_working_hours_enable_desc">Mit dieser Funktion können Sie die Zeiten für die Aktivierung des automatischen Modus einstellen und Fahrten mit einem Label versehen.</string>
    <string name="dk_working_hours_enable_title">Arbeitszeiten freigeben</string>

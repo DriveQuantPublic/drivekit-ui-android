@@ -11,6 +11,15 @@
    <string name="dk_crash_detection_feedback_step2_option_no_crash">Intet, alt er fint</string>
    <string name="dk_crash_detection_feedback_step2_title">Vi er beroliget med at vide, at du har det godt.</string>
    <string name="dk_crash_detection_feedback_step2option_critical_accident">Kontakthjælp</string>
+   <string name="dk_tripwidget_confirm_canceltrip_subtitle">Din rejse vil blive aflyst og ikke registreret</string>
+   <string name="dk_tripwidget_confirm_canceltrip_title">Jeg kører ikke</string>
+   <string name="dk_tripwidget_confirm_continuetrip_subtitle">Din rejse er ikke slut og vil fortsætte</string>
+   <string name="dk_tripwidget_confirm_continuetrip_title">Fortsæt</string>
+   <string name="dk_tripwidget_confirm_endtrip_subtitle">Din rejse vil blive analyseret og gemt</string>
+   <string name="dk_tripwidget_confirm_endtrip_title">Jeg har afsluttet min rejse</string>
+   <string name="dk_tripwidget_disable_autostart_title">Deaktivere den automatiske optagelse af dine ture midlertidigt?</string>
+   <string name="dk_tripwidget_record_title">Rejsen startede på %s</string>
+   <string name="dk_tripwidget_start_title">Optag en rejse</string>
    <string name="dk_working_hours_back_save_alert">Arbejdstiden er ændret. Vil du gemme dem?</string>
    <string name="dk_working_hours_enable_desc">Denne funktion konfigurerer de automatiske rejseoptagelsesperioder og analyserer turerne.</string>
    <string name="dk_working_hours_enable_title">Aktivér arbejdstid</string>

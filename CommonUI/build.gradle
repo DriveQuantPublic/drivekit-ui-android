@@ -41,7 +41,8 @@ dependencies {
     api "androidx.appcompat:appcompat:$appcompat"
     api "androidx.gridlayout:gridlayout:$grid_layout"
     api "androidx.constraintlayout:constraintlayout:$constraint_layout"
-    api "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     api "com.github.bumptech.glide:glide:$glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"

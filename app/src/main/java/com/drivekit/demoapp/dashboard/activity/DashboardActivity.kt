@@ -7,16 +7,19 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
+import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.demoapp.utils.getSerializableCompat
@@ -24,18 +27,24 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
+import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
     private var menu: Menu? = null
-    private lateinit var startStopTripButton: Button
+    private var startStopTripButton: DKTripRecordingButton? = null
+    private lateinit var tripSimulatorButtonContainer: ViewGroup
     private lateinit var tripSimulatorButton: Button
+    private lateinit var infoBanners: ViewGroup
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -54,9 +63,19 @@ internal class DashboardActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         title = getString(R.string.dashboard_header)
+        this.infoBanners = findViewById(R.id.info_banners)
+        this.tripSimulatorButtonContainer = findViewById(R.id.button_trip_simulator)
         initFeatureCard()
+        configureStartStopTripButton()
 
-        manageTripDetailRedirection()
+        if (!manageTripDetailRedirection()) {
+            if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+                lifecycleScope.launch {
+                    delay(300)
+                    startStopTripButton?.showConfirmationDialog()
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -76,12 +95,11 @@ internal class DashboardActivity : AppCompatActivity() {
         initInfoBanners()
         initSynthesisTripsCard()
         initLastTripsCard()
-        initStartStopTripButton()
         initTripSimulatorButton()
     }
 
     private fun initInfoBanners() {
-        info_banners.removeAllViews()
+        infoBanners.removeAllViews()
         InfoBannerType.values().forEach {
             if (it.shouldDisplay(this)) {
                 val view = InfoBannerView(this, it, object : InfoBannerView.InfoBannerListener {
@@ -91,7 +109,7 @@ internal class DashboardActivity : AppCompatActivity() {
                         }
                     }
                 })
-                info_banners.addView(view)
+                infoBanners.addView(view)
             }
         }
     }
@@ -117,8 +135,9 @@ internal class DashboardActivity : AppCompatActivity() {
     }
 
     private fun initFeatureCard() {
+        val cardFeatures: FeatureCard = findViewById(R.id.card_features)
         checkViewModelInitialization()
-        card_features.apply {
+        cardFeatures.apply {
             configureTitle(viewModel.getFeatureCardTitleResId())
             configureDescription(viewModel.getFeatureCardDescriptionResId())
             configureActionButton(viewModel.getFeatureCardTextButtonButtonResId(), object : FeatureCard.FeatureCardActionClickListener{
@@ -129,23 +148,8 @@ internal class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun initStartStopTripButton() {
-        button_start_stop_trip.findViewById<Button>(R.id.button_action).apply {
-            setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            startStopTripButton = this
-            startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
-            setOnClickListener {
-                viewModel.startStopTrip()
-            }
-        }
-
-        viewModel.sdkStateObserver.observe(this) {
-            startStopTripButton.text = getString(viewModel.getStartStopTripButtonTitleResId())
-        }
-    }
-
     private fun initTripSimulatorButton() {
-        button_trip_simulator.findViewById<Button>(R.id.button_action).apply {
+        tripSimulatorButtonContainer.findViewById<Button>(R.id.button_action).apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             tripSimulatorButton = this
             tripSimulatorButton.text = getString(R.string.simulate_trip)
@@ -155,7 +159,19 @@ internal class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageTripDetailRedirection() {
+    private fun configureStartStopTripButton() {
+        this.startStopTripButton =
+            supportFragmentManager.findFragmentById(R.id.button_start_stop_trip) as DKTripRecordingButton
+        if (DriveKitTripAnalysisUI.tripRecordingUserMode == DKTripRecordingUserMode.NONE) {
+            this.startStopTripButton?.let {
+                supportFragmentManager.beginTransaction().remove(it).commit()
+                this.startStopTripButton = null
+            }
+        }
+    }
+
+    private fun manageTripDetailRedirection(): Boolean {
+        var managed = false
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
@@ -170,8 +186,10 @@ internal class DashboardActivity : AppCompatActivity() {
                     openAdvice,
                     tripListConfigurationType
                 )
+                managed = true
             }
         }
+        return managed
     }
 
     override fun onPause() {

@@ -6,4 +6,5 @@
     <color name="dkCrashFeedbackMinorAccident_10">#16EBD37F</color>
     <color name="dkCrashFeedbackAssistance">#EA676B</color>
     <color name="dkCrashFeedbackAssistance_10">#16EA676B</color>
+    <color name="dkTripRecordingButtonBorder">#5DB089</color>
 </resources>
