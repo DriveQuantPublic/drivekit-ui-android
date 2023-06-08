@@ -48,6 +48,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
 
     internal var detectionModes = DetectionMode.values().toList()
+    private var userDetectionModes: List<DetectionMode>? = null
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
     internal var beaconDiagnosticMail: ContentMail? = null
     internal var vehiclePickerComplete: VehiclePickerCompleteListener? = null
@@ -56,66 +57,85 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
 
     @JvmOverloads
-    fun initialize(vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
-                   maxVehicles: Int? = null,
-                   categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
-                   detectionModes: List<DetectionMode> = DetectionMode.values().toList()) {
-        this.vehicleTypes = vehicleTypes
-        this.maxVehicles = maxVehicles
-        this.categoryConfigType = categoryConfigType
-        this.detectionModes = detectionModes
+    fun initialize(
+        vehicleTypes: List<VehicleType> = listOf(VehicleType.CAR),
+        maxVehicles: Int? = null,
+        categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG,
+        detectionModes: List<DetectionMode> = DetectionMode.values().toList()
+    ) {
+        configureVehiclesTypes(vehicleTypes)
+        configureMaxVehicles(maxVehicles)
+        configureCategoryConfigType(categoryConfigType)
+        configureDetectionModes(detectionModes)
         DriveKitNavigationController.vehicleUIEntryPoint = this
         DriveKitVehicle.addListener(this)
     }
 
-    fun configureVehiclesTypes(vehicleTypes: List<VehicleType>){
+    fun configureVehiclesTypes(vehicleTypes: List<VehicleType>) {
         if (vehicleTypes.isNotEmpty()) {
             this.vehicleTypes = vehicleTypes
+        } else {
+            this.vehicleTypes = listOf(VehicleType.CAR)
         }
     }
 
-    fun configureBrands(vehicleBrands: List<VehicleBrand>){
+    fun configureBrands(vehicleBrands: List<VehicleBrand>) {
         if (vehicleBrands.isNotEmpty()) {
             this.brands = vehicleBrands
         }
     }
 
-    fun configureCategoryConfigType(categoryConfigType: CategoryConfigType){
+    fun configureCategoryConfigType(categoryConfigType: CategoryConfigType) {
         this.categoryConfigType = categoryConfigType
     }
 
-    fun configureEngineIndexes(vehicleEnginesIndex: List<VehicleEngineIndex>){
+    fun configureEngineIndexes(vehicleEnginesIndex: List<VehicleEngineIndex>) {
         if (vehicleEnginesIndex.isNotEmpty()) {
             this.vehicleEngineIndexes = vehicleEnginesIndex
         }
     }
 
-    fun showBrandsWithIcons(displayBrandsWithIcons: Boolean){
+    fun showBrandsWithIcons(displayBrandsWithIcons: Boolean) {
         this.brandsWithIcons = displayBrandsWithIcons
     }
 
-    fun enableAddVehicle(canAddVehicle: Boolean){
+    fun enableAddVehicle(canAddVehicle: Boolean) {
         this.canAddVehicle = canAddVehicle
     }
 
-    fun enableRemoveBeacon(canRemoveBeacon: Boolean){
+    fun enableRemoveBeacon(canRemoveBeacon: Boolean) {
         this.canRemoveBeacon = canRemoveBeacon
     }
 
-    fun configureMaxVehicles(maxVehicles: Int?){
+    fun configureMaxVehicles(maxVehicles: Int?) {
         if (maxVehicles != null && maxVehicles >= 0) {
             this.maxVehicles = maxVehicles
+        } else {
+            this.maxVehicles = null
+        }
+        this.userDetectionModes?.let {
+            configureDetectionModes(it)
         }
     }
 
-    fun configureVehicleActions(vehicleActions: List<VehicleActionItem>){
+    fun configureVehicleActions(vehicleActions: List<VehicleActionItem>) {
         this.vehicleActions = vehicleActions
     }
 
-    fun configureDetectionModes(detectionModes: List<DetectionMode>){
-        if (detectionModes.isNotEmpty()) {
-            this.detectionModes = detectionModes
+    fun configureDetectionModes(detectionModes: List<DetectionMode>) {
+        this.userDetectionModes = detectionModes
+        val fixedModes: List<DetectionMode> = if (detectionModes.isEmpty()) {
+            listOf(DetectionMode.DISABLED)
+        } else {
+            detectionModes.toSet().run {
+                if (this.size == 1 && this.contains(DetectionMode.GPS) && (maxVehicles ?: 0) != 1) {
+                    listOf(DetectionMode.GPS, DetectionMode.DISABLED)
+                } else {
+                    detectionModes
+                }
+            }
         }
+        this.detectionModes = fixedModes
     }
 
     fun addCustomFieldsToGroup(groupField: GroupField, fieldsToAdd: List<Field>){

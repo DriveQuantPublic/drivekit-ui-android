@@ -3,28 +3,37 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewholder
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupMenu
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
+import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.DetectionModeSpinnerAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.DetectionModeType
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehicleActionItem
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-import com.drivequant.drivekit.vehicle.ui.R
-import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.DetectionModeSpinnerAdapter
 
 class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : RecyclerView.ViewHolder(itemView) {
     private val textViewTitle: TextView = itemView.findViewById(R.id.text_view_title)
@@ -95,7 +104,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     }
 
     private fun setupDetectionModeContainer(context: Context, vehicle: Vehicle){
-        if (DriveKitVehicleUI.detectionModes.size == 1){
+        if (DriveKitVehicleUI.detectionModes.size == 1) {
             linearLayoutDetectionMode.visibility = View.GONE
         } else {
             linearLayoutDetectionMode.visibility = View.VISIBLE
