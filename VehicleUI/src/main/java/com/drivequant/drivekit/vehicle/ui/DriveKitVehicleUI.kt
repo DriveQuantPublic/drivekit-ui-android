@@ -64,9 +64,9 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
         detectionModes: List<DetectionMode> = DetectionMode.values().toList()
     ) {
         configureVehiclesTypes(vehicleTypes)
-        configureMaxVehicles(maxVehicles)
         configureCategoryConfigType(categoryConfigType)
         configureDetectionModes(detectionModes)
+        configureMaxVehicles(maxVehicles)
         DriveKitNavigationController.vehicleUIEntryPoint = this
         DriveKitVehicle.addListener(this)
     }
@@ -108,13 +108,16 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     }
 
     fun configureMaxVehicles(maxVehicles: Int?) {
+        val previousConfiguration = this.maxVehicles
         if (maxVehicles != null && maxVehicles >= 0) {
             this.maxVehicles = maxVehicles
         } else {
             this.maxVehicles = null
         }
-        this.userDetectionModes?.let {
-            configureDetectionModes(it)
+        if (this.maxVehicles != previousConfiguration) {
+            this.userDetectionModes?.let {
+                configureDetectionModes(it)
+            }
         }
     }
 
