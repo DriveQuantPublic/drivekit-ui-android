@@ -63,8 +63,8 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `Kotlin = 1.7.21`
 * `Gson = 2.9.0`
 * `Volley = 1.2.1`
-* `Room = 2.5.0`
-* `WorkManager = 2.8.0`
+* `Room = 2.5.1`
+* `WorkManager = 2.8.1`
 * `Play Services = 20.0.0`
 
 ### 🧑‍💻 Install and run the Demo app
