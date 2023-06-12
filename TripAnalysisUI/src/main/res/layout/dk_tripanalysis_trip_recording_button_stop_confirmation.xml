@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.drivequant.drivekit.tripanalysis.triprecordingwidget.stopconfirmation.TripStopConfirmationView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tripStopConfirmationView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dk_margin"
+    android:paddingVertical="@dimen/dk_margin_double">
+
+    <include
+        android:id="@+id/endTrip"
+        layout="@layout/dk_tripanalysis_trip_recording_button_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/continueTrip"
+        layout="@layout/dk_tripanalysis_trip_recording_button_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp" />
+
+    <include
+        android:id="@+id/cancelTrip"
+        layout="@layout/dk_tripanalysis_trip_recording_button_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp" />
+
+</com.drivequant.drivekit.tripanalysis.triprecordingwidget.stopconfirmation.TripStopConfirmationView>

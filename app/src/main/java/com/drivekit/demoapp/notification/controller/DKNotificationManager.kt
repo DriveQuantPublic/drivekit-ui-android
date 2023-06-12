@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
@@ -23,6 +24,8 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
 internal object DKNotificationManager : TripListener {
+
+    private const val TRIP_ANALYSIS_NOTIFICATION_KEY = "dk_tripanalysis_notification"
 
     fun configure() {
         TripListenerController.addTripListener(this)
@@ -81,6 +84,13 @@ internal object DKNotificationManager : TripListener {
             }
         }
     }
+
+    fun configureTripAnalysisNotificationIntent(intent: Intent) {
+        intent.putExtra(TRIP_ANALYSIS_NOTIFICATION_KEY, true)
+    }
+
+    fun isTripAnalysisNotificationIntent(intent: Intent): Boolean =
+        intent.getBooleanExtra(TRIP_ANALYSIS_NOTIFICATION_KEY, false)
 
     private fun cancelNotification(context: Context, notificationType: NotificationType) {
         notificationType.cancel(context)

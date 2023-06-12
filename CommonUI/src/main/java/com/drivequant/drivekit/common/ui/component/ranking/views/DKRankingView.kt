@@ -4,17 +4,25 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 import com.drivequant.drivekit.common.ui.component.ranking.adapter.RankingListAdapter
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.extension.normalText
-import kotlinx.android.synthetic.main.dk_fragment_ranking_component.view.*
 
 class DKRankingView(context: Context) : LinearLayout(context) {
 
+    private val rootView: View
+    private val positionHeader: TextView
+    private val pseudoHeader: TextView
+    private val scoreHeader: TextView
+    private val separator: View
+    private val recyclerView: RecyclerView
+    private val headerView: RankingHeaderView
     private lateinit var rankingAdapter: RankingListAdapter
     private lateinit var viewModel: DKRankingViewModel
 
@@ -26,34 +34,42 @@ class DKRankingView(context: Context) : LinearLayout(context) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+        this.rootView = view.findViewById(R.id.root)
+        this.positionHeader = view.findViewById(R.id.dk_text_view_position_header)
+        this.pseudoHeader = view.findViewById(R.id.dk_text_view_pseudo_header)
+        this.scoreHeader = view.findViewById(R.id.dk_text_view_score_header)
+        this.separator = view.findViewById(R.id.dk_view_separator)
+        this.recyclerView = view.findViewById(R.id.dk_recycler_view_ranking)
+        this.headerView = view.findViewById(R.id.dk_ranking_header_view)
+
         if (!this::viewModel.isInitialized) {
             viewModel = DKRankingViewModel()
         }
         setStyle()
     }
     private fun setStyle() {
-        dk_text_view_position_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        dk_text_view_pseudo_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        dk_text_view_score_header.normalText(DriveKitUI.colors.complementaryFontColor())
-        dk_view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        this.positionHeader.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.pseudoHeader.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.scoreHeader.normalText(DriveKitUI.colors.complementaryFontColor())
+        this.separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
     fun configure(rankingComponent: DKDriverRanking) {
-        viewModel.setDKDriverRanking(rankingComponent)
-        dk_recycler_view_ranking.layoutManager =
+        this.viewModel.setDKDriverRanking(rankingComponent)
+        this.recyclerView.layoutManager =
             LinearLayoutManager(context)
         if (this::rankingAdapter.isInitialized) {
-            rankingAdapter.update()
+            this.rankingAdapter.update()
         } else {
-            rankingAdapter =
+            this.rankingAdapter =
                 RankingListAdapter(
                     context,
                     viewModel
                 )
-            dk_recycler_view_ranking.adapter = rankingAdapter
+            this.recyclerView.adapter = rankingAdapter
         }
-        dk_ranking_header_view.setHeaderData(viewModel)
-        dk_text_view_score_header.text = rankingComponent.getScoreTitle(context)
-        root.setBackgroundColor(rankingComponent.getBackgroundColor())
+        this.headerView.setHeaderData(viewModel)
+        this.scoreHeader.text = rankingComponent.getScoreTitle(context)
+        this.rootView.setBackgroundColor(rankingComponent.getBackgroundColor())
     }
 }

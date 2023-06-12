@@ -11,6 +11,15 @@
    <string name="dk_crash_detection_feedback_step2_option_no_crash">Rien, tout va bien</string>
    <string name="dk_crash_detection_feedback_step2_title">Nous sommes rassurés de savoir que vous allez bien.</string>
    <string name="dk_crash_detection_feedback_step2option_critical_accident">Contacter l\'assistance</string>
+   <string name="dk_tripwidget_confirm_canceltrip_subtitle">Votre trajet sera annulé et il ne sera pas enregistré</string>
+   <string name="dk_tripwidget_confirm_canceltrip_title">Je ne conduis pas</string>
+   <string name="dk_tripwidget_confirm_continuetrip_subtitle">Votre trajet n\'est pas terminé et il va se poursuivre</string>
+   <string name="dk_tripwidget_confirm_continuetrip_title">Continuer</string>
+   <string name="dk_tripwidget_confirm_endtrip_subtitle">Votre trajet sera analysé et enregistré</string>
+   <string name="dk_tripwidget_confirm_endtrip_title">J\'ai terminé mon trajet</string>
+   <string name="dk_tripwidget_disable_autostart_title">Désactiver temporairement l’enregistrement automatique de vos trajets ?</string>
+   <string name="dk_tripwidget_record_title">Trajet commencé à %s</string>
+   <string name="dk_tripwidget_start_title">Enregistrer un trajet</string>
    <string name="dk_working_hours_back_save_alert">Les horaires de travail ont été modifiés. Souhaitez-vous les sauvegarder ?</string>
    <string name="dk_working_hours_enable_desc">Cette fonction permet de configurer les horaires d\'activation du mode automatique et de labelliser les trajets.</string>
    <string name="dk_working_hours_enable_title">Activer la gestion des horaires</string>

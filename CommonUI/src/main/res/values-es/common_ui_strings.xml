@@ -38,10 +38,14 @@
    <string name="dk_common_error_empty_field">Este campo no puede estar vacío</string>
    <string name="dk_common_error_message">Se ha producido un error durante la solicitud, vuelva a intentarlo más tarde.</string>
    <string name="dk_common_finish">Acabado</string>
+   <string name="dk_common_hour_plural">horas</string>
+   <string name="dk_common_hour_singular">horas</string>
    <string name="dk_common_later">más tarde</string>
    <string name="dk_common_loading">Cargando. Por favor, espere...</string>
    <string name="dk_common_mass">Masa</string>
    <string name="dk_common_mean_speed">Velocidad media</string>
+   <string name="dk_common_minute_plural">minutos</string>
+   <string name="dk_common_minute_singular">minuto</string>
    <string name="dk_common_no">No</string>
    <string name="dk_common_no_data_yet">Todavía no tiene datos</string>
    <string name="dk_common_no_pseudo_set">Para compartir su clasificación con los demás participantes, le invitamos a elegir un pseudo. Sin un pseudo aparecerá como anónimo.</string>

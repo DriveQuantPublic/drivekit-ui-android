@@ -38,10 +38,14 @@
     <string name="dk_common_error_empty_field">Dieses Feld darf nicht leer bleiben.</string>
     <string name="dk_common_error_message">Bei der Anfrage ist ein Fehler aufgetreten. Versuchen Sie es später erneut.</string>
     <string name="dk_common_finish">Ende</string>
+    <string name="dk_common_hour_plural">Stunden</string>
+    <string name="dk_common_hour_singular">Stunden</string>
     <string name="dk_common_later">später</string>
     <string name="dk_common_loading">Lädt. Bitte warten...</string>
     <string name="dk_common_mass">Gewicht</string>
     <string name="dk_common_mean_speed">Mittlere Velocity</string>
+    <string name="dk_common_minute_plural">Minuten</string>
+    <string name="dk_common_minute_singular">Minuten</string>
     <string name="dk_common_no">Nein</string>
     <string name="dk_common_no_data_yet">Sie haben noch keine Daten</string>
     <string name="dk_common_no_pseudo_set">Um Ihr Ranking mit den anderen Teilnehmern zu teilen, laden wir Sie ein, ein Pseudo zu wählen. Ohne ein Pseudo erscheinen Sie als anonym.</string>

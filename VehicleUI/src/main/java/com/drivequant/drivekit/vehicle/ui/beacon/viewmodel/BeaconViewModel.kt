@@ -1,11 +1,11 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -175,7 +175,7 @@ class BeaconViewModel(
     }
 
     fun launchDetailFragment() {
-        beaconDetailObserver.postValue(null)
+        beaconDetailObserver.postValue(Any())
     }
 
     fun updateScanState(beaconStep: BeaconStep) {

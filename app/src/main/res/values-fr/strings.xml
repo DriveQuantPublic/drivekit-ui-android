@@ -162,8 +162,6 @@
    <string name="see_settings">Voir les réglages</string>
    <string name="server_error">Erreur serveur, veuillez réssayez plus tard</string>
    <string name="simulate_trip">Simuler un trajet</string>
-   <string name="start_trip">Démarrer un trajet</string>
-   <string name="stop_trip">Stopper le trajet</string>
    <string name="sync_challenge_loading_message">Récupération des challenges…</string>
    <string name="sync_trips_loading_message">Récupération des trajets…</string>
    <string name="sync_user_info_loading_message">Récupération des informations utilisateur…</string>
