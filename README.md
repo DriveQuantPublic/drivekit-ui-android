@@ -67,6 +67,12 @@ The DriveKit SDK uses the libraries listed below. These are minimal required ver
 * `WorkManager = 2.8.1`
 * `Play Services = 20.0.0`
 
+> 🚨 DriveKit is currently not compatible with *Play Services Location* `v21` since [breaking changes](https://developers.google.com/android/guides/releases#october_13_2022) are made on several classes.
+> 
+> If your app uses *Play Services Location* `v21`, it will crash at runtime.
+> 
+> We will upgrade *Play Services Location* into `v21` in Summer '23 and recommend you to stay in `v20` for the time being. 
+
 ### 🧑‍💻 Install and run the Demo app
 
 * The DriveKit SDK can only be used if you have a valid **DriveKit API Key**. To get a **DriveKit API key**, contact us at: <contact@drivequant.com>.
