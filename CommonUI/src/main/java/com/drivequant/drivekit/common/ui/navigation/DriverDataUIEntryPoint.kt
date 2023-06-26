@@ -11,4 +11,5 @@ interface DriverDataUIEntryPoint {
 
     fun startMySynthesisActivity(context: Context)
     fun startDrivingConditionsActivity(context: Context)
+    fun startDriverProfileActivity(context: Context)
 }

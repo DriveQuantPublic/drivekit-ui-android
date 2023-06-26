@@ -7,6 +7,7 @@ internal enum class FeatureType {
     DRIVERDATA_TRIPS,
     DRIVERDATA_TIMELINE,
     DRIVERDATA_MYSYNTHESIS,
+    DRIVERDATA_DRIVERPROFILE,
     PERMISSIONSUTILS_ONBOARDING,
     PERMISSIONSUTILS_DIAGNOSIS,
     VEHICLE_LIST,
@@ -31,6 +32,7 @@ internal enum class FeatureType {
         TRIPANALYSIS_WORKINGHOURS -> R.drawable.ic_feature_tripanalysis_workinghours
         DRIVERDATA_TIMELINE -> R.drawable.ic_feature_driverdata_timeline
         DRIVERDATA_MYSYNTHESIS -> R.drawable.ic_feature_my_driving
+        DRIVERDATA_DRIVERPROFILE -> R.drawable.ic_feature_my_driving //TODO
     }
 
     fun getTitleResId() = when (this) {
@@ -47,6 +49,7 @@ internal enum class FeatureType {
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_title
         DRIVERDATA_TIMELINE -> R.string.feature_timeline_title
         DRIVERDATA_MYSYNTHESIS -> R.string.feature_synthesis_title
+        DRIVERDATA_DRIVERPROFILE -> R.string.feature_synthesis_title //TODO
     }
 
     fun getDescriptionResId() = when (this) {
@@ -63,6 +66,7 @@ internal enum class FeatureType {
         TRIPANALYSIS_WORKINGHOURS -> R.string.feature_working_hours_description
         DRIVERDATA_TIMELINE -> R.string.feature_timeline_description
         DRIVERDATA_MYSYNTHESIS -> R.string.feature_synthesis_description
+        DRIVERDATA_DRIVERPROFILE -> R.string.feature_synthesis_description //TODO
     }
 
     fun getInfoUrlResId() = when (this) {
@@ -79,6 +83,7 @@ internal enum class FeatureType {
         TRIPANALYSIS_WORKINGHOURS -> R.string.drivekit_doc_android_working_hours
         DRIVERDATA_TIMELINE -> R.string.drivekit_doc_android_timeline
         DRIVERDATA_MYSYNTHESIS -> R.string.drivekit_doc_android_synthesis
+        DRIVERDATA_DRIVERPROFILE -> R.string.drivekit_doc_android_synthesis //TODO
     }
 
     fun getActionButtonTitleResId() = when (this) {
