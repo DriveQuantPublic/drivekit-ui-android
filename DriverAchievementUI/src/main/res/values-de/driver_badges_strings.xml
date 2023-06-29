@@ -123,8 +123,7 @@
     <string name="badge_expressway_distance_congrats_3">Glückwunsch, Sie haben das Ziel erreicht!</string>
     <string name="badge_expressway_distance_description_1">Sie müssen mindestens 100 km auf Schnellstraßen fahren, um sich diese Medaille zu holen. Achtung, diese Fahrten sind einseitiger und anstrengender. Versuchen Sie, Ihre Aufmerksamkeit beizubehalten.</string>
     <string name="badge_expressway_distance_description_2">Sie müssen lediglich 300 km auf Schnellstraßen fahren, um diese Medaille zu erhalten. Vor der Abfahrt sollten Sie den Zustand Ihres Fahrzeugs prüfen (Reifendruck, Bremsen, Beleuchtung und Scheibenwischer).</string>
-    <string name="badge_expressway_distance_description_3">Fahren Sie 1.000 km auf Schnellstraßen, um diese Medaille zu gewinnen. Vergessen Sie niemals die Grundregel: Um das Einschlafrisiko einzuschränken, sollten Sie alle zwei Stunden eine 15-minütige Pause einlegen.
-</string>
+    <string name="badge_expressway_distance_description_3">Fahren Sie 1.000 km auf Schnellstraßen, um diese Medaille zu gewinnen. Vergessen Sie niemals die Grundregel: Um das Einschlafrisiko einzuschränken, sollten Sie alle zwei Stunden eine 15-minütige Pause einlegen.</string>
     <string name="badge_expressway_distance_name_1">Fast and Serious</string>
     <string name="badge_expressway_distance_name_2">Road Trip</string>
     <string name="badge_expressway_distance_name_3">Easy Rider</string>
@@ -135,8 +134,7 @@
     <string name="badge_extra_urban_distance_congrats_1">Glückwunsch, Sie haben das Ziel erreicht!</string>
     <string name="badge_extra_urban_distance_congrats_2">Glückwunsch, Sie haben das Ziel erreicht!</string>
     <string name="badge_extra_urban_distance_congrats_3">Glückwunsch, Sie haben das Ziel erreicht!</string>
-    <string name="badge_extra_urban_distance_description_1">Fahren Sie mehr als 100 km außerhalb eines Ballungsgebiets, um diese Medaille zu validieren. Außerhalb der Städte ist der Verkehr flüssiger, es bestehen jedoch Gefahren. Achten Sie stets darauf, die Sicherheitsabstände einzuhalten und mit Weitsicht zu fahren, um alle Situationen antizipieren zu können.
-</string>
+    <string name="badge_extra_urban_distance_description_1">Fahren Sie mehr als 100 km außerhalb eines Ballungsgebiets, um diese Medaille zu validieren. Außerhalb der Städte ist der Verkehr flüssiger, es bestehen jedoch Gefahren. Achten Sie stets darauf, die Sicherheitsabstände einzuhalten und mit Weitsicht zu fahren, um alle Situationen antizipieren zu können.</string>
     <string name="badge_extra_urban_distance_description_2">Sie müssen 300 km außerhalb der Stadt fahren, um diese Medaille zu erhalten. Auf einer Landstraße sollten Sie an die Fahrräder denken, insbesondere am Ende einer Kurve.</string>
     <string name="badge_extra_urban_distance_description_3">Sie müssen 1.000 km außerhalb der Stadt schaffen, um diese Medaille zu gewinnen. Wenn man von der Stadt in außerstädtische Gebiete fährt, ist es wichtig, die Geschwindigkeitsveränderungen richtig handzuhaben. Steigern Sie Ihre Geschwindigkeit schrittweise, sobald Sie aus der Stadt heraus sind. Andersherum sollten Sie Ihr Abbremsen bis zu einer Geschwindigkeit von 50 km/h antizipieren, wenn Sie wieder in eine Stadt kommen.</string>
     <string name="badge_extra_urban_distance_name_1">Ausflug</string>

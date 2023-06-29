@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.ui.R
 
 internal class DriverProfileActivity : AppCompatActivity() {
@@ -16,8 +17,6 @@ internal class DriverProfileActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
     }
-
-    private var fragment: DriverProfileFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,13 +35,11 @@ internal class DriverProfileActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
-        this.fragment = fragment
     }
 
     override fun onResume() {
         super.onResume()
-        //TODO
-//        setActivityTitle(getString(R.string.dk_driverdata_mysynthesis_main_title))
+        setActivityTitle(getString(R.string.dk_driverdata_profile_title))
     }
 
     override fun onSupportNavigateUp(): Boolean {
