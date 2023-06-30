@@ -66,6 +66,7 @@ internal class DriverProfileFragment : Fragment() {
     }
 
     private fun onDataUpdated() {
+        this.driverProfileFeatureContainer.configure(this.viewModel.getDriverProfileFeatureViewModels())
 
         updateSwipeRefreshTripsVisibility(false)
     }

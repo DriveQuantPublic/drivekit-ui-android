@@ -10,11 +10,13 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfile
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfileStatus
+import com.drivequant.drivekit.driverdata.driverprofile.DKMobilityAreaType
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.DriverCommonTripFeatureViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureViewModel
+import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.extension.getViewModel
 
 internal class DriverProfileViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -61,7 +63,13 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
 
     fun getDriverProfileFeatureViewModels(): List<DriverProfileFeatureViewModel> =
         this.driverProfile?.let {
-            TODO()
+            listOf(
+                it.distance.getViewModel(),
+                it.mobility.getViewModel(it.mobilityAreaRadiusByType[DKMobilityAreaType.PERCENTILE_90TH]),
+                it.activity.getViewModel(it.statistics.getActiveWeekPercentage()),
+                it.regularity.getViewModel(it.weekRegularity.tripNumberMean, it.weekRegularity.distanceMean),
+                it.mainRoadContext.getViewModel(it.roadContextInfoByRoadContext[it.mainRoadContext]?.distancePercentage)
+            )
         } ?: run {
             emptyList()
         }
