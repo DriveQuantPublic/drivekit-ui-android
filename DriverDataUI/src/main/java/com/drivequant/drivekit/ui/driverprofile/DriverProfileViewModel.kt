@@ -36,13 +36,12 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                     if (timelineStatus == TimelineSyncStatus.CACHE_DATA_ONLY) {
                         updateDrivenDistances(timelines)
                     }
-                    onNewState(DataState.VALID)
+                    this.dataState = DataState.VALID
                 }
             } else {
-                onNewState(DataState.NO_DATA_YET)
+                this.dataState = DataState.NO_DATA_YET
             }
         }
-        updateData()
     }
 
     fun updateData() {

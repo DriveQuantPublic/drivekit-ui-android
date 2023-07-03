@@ -14,25 +14,26 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 internal open class DriverProfileContainer<ViewModel>(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
 
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
     var adapter: DriverProfileContainerViewPagerAdapter<ViewModel>? = null
         set(value) {
             field = value
             this.viewPager.adapter = value
 
-            if (!this.configured) {
-                this.configured = true
-
-                TabLayoutMediator(this.tabLayout, this.viewPager) { tab, _ ->
-                    tab.text = null
-                }.attach()
-
-                updateTabLayout(0)
+            this.tabLayoutMediator?.detach()
+            with(TabLayoutMediator(this.tabLayout, this.viewPager, true) { tab, _ ->
+                tab.text = null
+            }) {
+                tabLayoutMediator = this
+                attach()
             }
+            updateTabLayout(0)
 
             this.tabLayout.visibility = if (value != null && value.itemCount > 1) {
                 View.VISIBLE
             } else {
-                View.GONE
+                View.INVISIBLE
             }
         }
     var onScrollStateChangeCallback: ((state: DriverProfileScrollState) -> Unit)? = null

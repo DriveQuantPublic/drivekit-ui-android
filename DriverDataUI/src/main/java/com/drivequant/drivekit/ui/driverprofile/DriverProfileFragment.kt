@@ -63,6 +63,9 @@ internal class DriverProfileFragment : Fragment() {
         this.viewModel.dataUpdated.observe(viewLifecycleOwner) {
             onDataUpdated()
         }
+
+        onDataUpdated()
+        updateData()
     }
 
     override fun onResume() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     style="@style/DKCard"
@@ -17,4 +17,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationContainer>
+</com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationView>
