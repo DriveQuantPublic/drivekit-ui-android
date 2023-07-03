@@ -19,7 +19,7 @@ import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
+import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCard
 import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel

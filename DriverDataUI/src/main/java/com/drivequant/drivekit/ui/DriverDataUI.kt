@@ -5,28 +5,29 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.component.lasttripscards.DKLastTripsUI
+import com.drivequant.drivekit.common.ui.component.triplist.TripData
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.DriverDataUIEntryPoint
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
-import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
-import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
-import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
-import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
-import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
-import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
-import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
-import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.core.utils.getApplicationInfoCompat
+import com.drivequant.drivekit.ui.driverprofile.DriverProfileActivity
 import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
 import com.drivequant.drivekit.ui.drivingconditions.component.context.DKContextKind
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.lasttripscards.LastTripsWidgetUtils
 import com.drivequant.drivekit.ui.mysynthesis.MySynthesisActivity
+import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
+import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.ITINID_EXTRA
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity.Companion.OPEN_ADVICE_EXTRA
+import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
+import com.drivequant.drivekit.ui.trips.activity.TripsListActivity
+import com.drivequant.drivekit.ui.trips.fragment.TripsListFragment
 import com.drivequant.drivekit.ui.trips.viewmodel.DKTripInfo
 
 object DriverDataUI : DriverDataUIEntryPoint {
@@ -149,6 +150,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
 
     override fun startMySynthesisActivity(context: Context) = MySynthesisActivity.launchActivity(context)
     override fun startDrivingConditionsActivity(context: Context) = DrivingConditionsActivity.launchActivity(context)
+    override fun startDriverProfileActivity(context: Context) = DriverProfileActivity.launchActivity(context)
 
     private fun checkGoogleApiKey() {
         try {

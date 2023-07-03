@@ -115,6 +115,7 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                 DriveKitDriverDataTimelineUI.startTimelineActivity(context)
             }
             FeatureType.DRIVERDATA_MYSYNTHESIS -> DriverDataUI.startMySynthesisActivity(context)
+            FeatureType.DRIVERDATA_DRIVERPROFILE -> DriverDataUI.startDriverProfileActivity(context)
         }
     }
 

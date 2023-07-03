@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.TripAnalysisUIEntryPoint
+import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
-import com.drivequant.drivekit.tripanalysis.service.workinghours.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHours
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursDayConfiguration
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus

@@ -31,6 +31,7 @@
    <string name="drivekit_doc_android_odometer">https://docs.drivequant.com/vehicle/user-interface/android/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_android_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
    <string name="drivekit_doc_android_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/android/main-configuration#permission-management</string>
+   <string name="drivekit_doc_android_profile">https://docs.drivequant.com/driver-data/user-interface/android/driver-profile</string>
    <string name="drivekit_doc_android_ranking">https://docs.drivequant.com/driver-achievement/user-interface/android#select-ranking-themes</string>
    <string name="drivekit_doc_android_streaks">https://docs.drivequant.com/driver-achievement/user-interface/android#select-streak-themes</string>
    <string name="drivekit_doc_android_synthesis">https://docs.drivequant.com/driver-data-synthesis-ui/android/get-started</string>
@@ -48,6 +49,7 @@
    <string name="drivekit_doc_ios_odometer">https://docs.drivequant.com/vehicle/user-interface/ios/main-configurations#vehicle-mileage-tracking-and-editing</string>
    <string name="drivekit_doc_ios_permissions_management">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
    <string name="drivekit_doc_ios_permissions_utils">https://docs.drivequant.com/permissions-utils/permission-utils/ios/main-configurations#permission-management</string>
+   <string name="drivekit_doc_ios_profile">https://docs.drivequant.com/driver-data/user-interface/ios/driver-profile</string>
    <string name="drivekit_doc_ios_ranking">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-ranking-themes</string>
    <string name="drivekit_doc_ios_streaks">https://docs.drivequant.com/driver-achievement/user-interface/ios#select-streak-themes</string>
    <string name="drivekit_doc_ios_synthesis">https://docs.drivequant.com/driver-data-synthesis-ui/ios/get-started</string>
@@ -68,6 +70,8 @@
    <string name="feature_permission_utils_onboarding_description">Le composant Permissions Utils contient des écrans qui affichent les demandes de permissions indispensables au fonctionnement du mode automatique et à l\analyse des données. Nous vous invitons à utiliser ce composant ou à le répliquer dans votre app.</string>
    <string name="feature_permission_utils_onboarding_title">Permissions Utils | Recueil des permissions</string>
    <string name="feature_permission_utils_title">Permissions Utils | Diagnostic de l\'application</string>
+   <string name="feature_profile_description">Le composant Driver Data présente le profil du conducteur calculé à partir de son historique. Le profil du conducteur est composé de plusieurs facettes qui sont le reflet des habitudes de conduite : la distance parcourue annuellement, le rayon de mobilité, le niveau d\'activité, la régularité et le contexte routier majoritaire.</string>
+   <string name="feature_profile_title">Driver Data | Profil conducteur</string>
    <string name="feature_ranking_description">Le composant Driver Achievement affiche des classements par période et par score. Le conducteur peut visualiser sa position et comparer ses performances de conduite avec sa communauté.</string>
    <string name="feature_ranking_title">Driver Achievement | Classements</string>
    <string name="feature_streaks_description">Les combos récompensent les conducteurs qui parviennent à enchainer plusieurs trajets consécutifs avec de scores élevés. Pour installer cette fonction dans votre app, consultez la documentation du composant Driver Achievement.</string>

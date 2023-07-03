@@ -45,9 +45,9 @@
    <string name="dk_perm_utils_app_diag_help_request_text">Hvis appen stadig ikke fungerer efter at have fulgt anbefalingerne ovenfor, kan du kontakte os via e -mail. Vi vender hurtigst muligt tilbage, og e-mailen vil indeholde alle de nødvendige oplysninger til at fejlfinde på ​​dit problem.</string>
    <string name="dk_perm_utils_app_diag_help_request_title">Registrerer appen ikke dine ture?</string>
    <string name="dk_perm_utils_app_diag_learn_more">Lær mere</string>
-   <string name="dk_perm_utils_app_diag_loc_sensor_ko">Lokation er deaktiveret på din telefon. Appen fungerer ikke, hvis den ikke kan få adgang til disse oplysninger.</string>
-   <string name="dk_perm_utils_app_diag_loc_sensor_link">Aktiver lokation.</string>
-   <string name="dk_perm_utils_app_diag_loc_sensor_ok">Lokation er aktiveret. Det måler køretøjets hastighed og retning. Hvis den er deaktiveret, vil applikationen ikke fungere.</string>
+   <string name="dk_perm_utils_app_diag_loc_sensor_ko">Placeringssensoren er deaktiveret på din telefon. Appen fungerer ikke, hvis den ikke kan få adgang til disse oplysninger.</string>
+   <string name="dk_perm_utils_app_diag_loc_sensor_link">Aktiver placeringssensor.</string>
+   <string name="dk_perm_utils_app_diag_loc_sensor_ok">Placeringssensoren er aktiveret. Det måler køretøjets hastighed og retning. Hvis den er deaktiveret, vil applikationen ikke fungere.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_title">Lokation</string>
    <string name="dk_perm_utils_app_diag_location_full_ko_ios14">Du skal give appen adgang til den nøjagtige placering af telefonen, så den kan analysere dine ture. Aktivér \"Præcis placering\" i indstillingerne \"Placering\".</string>
    <string name="dk_perm_utils_app_diag_location_full_link">Brug præcis lokation</string>
@@ -55,7 +55,7 @@
    <string name="dk_perm_utils_app_diag_location_ko_android12">For at registrere og analysere dine ture skal appen være i stand til at få adgang til telefonens nøjagtige placering.</string>
    <string name="dk_perm_utils_app_diag_location_ko_ios">Du skal give appen tilladelse til at bruge mobilens placering, så den kan registrere og måle dine ture. I telefonindstillingerne er der tre muligheder tilgængelige: (1) aldrig, (2) når appen er aktiv og (3) altid. Det er vigtigt at vælge mulighed (3) altid. Ellers vil appen ikke fungere.</string>
    <string name="dk_perm_utils_app_diag_location_ko_ios13">Du skal give appen adgang til telefonens placering, så den kan registrere og analysere dine ture. I telefonindstillingerne er fire indstillinger tilgængelige: (1) aldrig, (2) spørg næste gang, (3) mens du bruger appen og (4) altid. Du skal vælge mulighed (4) for, at appen kan registrere dine ture.</string>
-   <string name="dk_perm_utils_app_diag_location_link">Tillad adgang til lokation</string>
+   <string name="dk_perm_utils_app_diag_location_link">Tillad adgang til placering</string>
    <string name="dk_perm_utils_app_diag_location_ok">Appen bruger lokation af ​​din telefon til at registrere og analysere dine ture. Det kan ikke fungere, hvis du ikke lader appen få adgang til placeringen.</string>
    <string name="dk_perm_utils_app_diag_location_title">Lokation</string>
    <string name="dk_perm_utils_app_diag_nearby_title">Enheder i nærheden</string>
