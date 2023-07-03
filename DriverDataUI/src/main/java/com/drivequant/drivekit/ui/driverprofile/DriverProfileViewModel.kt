@@ -13,8 +13,10 @@ import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfileStatus
 import com.drivequant.drivekit.driverdata.driverprofile.DKMobilityAreaType
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.DriverCommonTripFeatureViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationViewModel
+import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureDescription
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.extension.getViewModel
 
@@ -71,7 +73,13 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                 it.mainRoadContext.getViewModel(it.roadContextInfoByRoadContext[it.mainRoadContext]?.distancePercentage)
             )
         } ?: run {
-            emptyList()
+            listOf(
+                DriverProfileFeatureViewModel(
+                    R.string.dk_driverdata_profile_empty_card_title,
+                    DriverProfileFeatureDescription.SimpleDescription(R.string.dk_driverdata_profile_empty_card_text),
+                    R.drawable.dk_profile_empty
+                )
+            )
         }
 
     fun getDriverDistanceEstimationViewModels(): List<DriverDistanceEstimationViewModel> =

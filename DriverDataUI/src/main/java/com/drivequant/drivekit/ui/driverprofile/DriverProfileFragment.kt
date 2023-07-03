@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.DriverProfileScrollState
 import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.DriverCommonTripFeatureContainer
@@ -27,6 +30,7 @@ internal class DriverProfileFragment : Fragment() {
     private lateinit var driverProfileFeatureContainer: DriverProfileFeatureContainer
     private lateinit var driverDistanceEstimationContainer: DriverDistanceEstimationContainer
     private lateinit var driverCommonTripFeatureContainer: DriverCommonTripFeatureContainer
+    private lateinit var drivingConditionsButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +44,11 @@ internal class DriverProfileFragment : Fragment() {
         this.driverProfileFeatureContainer = view.findViewById(R.id.driverProfileFeatureContainer)
         this.driverDistanceEstimationContainer = view.findViewById(R.id.driverDistanceEstimationContainer)
         this.driverCommonTripFeatureContainer = view.findViewById(R.id.driverCommonTripFeatureContainer)
+        this.drivingConditionsButton = view.findViewById(R.id.button_detail)
 
         checkViewModelInitialization()
         setupSwipeToRefresh()
+        configureDrivingConditionsButton()
 
         this.driverProfileFeatureContainer.onScrollStateChangeCallback = {
             this.swipeRefreshLayout.isEnabled = it != DriverProfileScrollState.MOVING
@@ -67,6 +73,7 @@ internal class DriverProfileFragment : Fragment() {
 
     private fun onDataUpdated() {
         this.driverProfileFeatureContainer.configure(this.viewModel.getDriverProfileFeatureViewModels())
+        //TODO: configure other views
 
         updateSwipeRefreshTripsVisibility(false)
     }
@@ -75,6 +82,16 @@ internal class DriverProfileFragment : Fragment() {
         updateSwipeRefreshTripsVisibility(false)
         this.swipeRefreshLayout.setOnRefreshListener {
             updateData()
+        }
+    }
+
+    private fun configureDrivingConditionsButton() {
+        this.drivingConditionsButton.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
+        this.drivingConditionsButton.setText(R.string.dk_driverdata_drivingconditions_show)
+        this.drivingConditionsButton.setOnClickListener {
+            context?.let {
+                DriverDataUI.startDrivingConditionsActivity(it)
+            }
         }
     }
 
