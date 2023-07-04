@@ -43,45 +43,37 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         // Title.
         this.titleView.setText(viewModel.titleId)
         // Distance.
-        val distanceValue = if (viewModel.hasData && viewModel.distance != null) {
-            DKResource.buildString(
-                context,
-                "%s ${context.getString(viewModel.distanceUnitId)}",
-                DriveKitUI.colors.mainFontColor(),
-                TextArg(
-                    viewModel.distance.toDouble().format(0),
-                    DriveKitUI.colors.primaryColor(),
-                    DKStyle.HIGHLIGHT_SMALL
-                )
+        this.distanceView.text = DKResource.buildString(
+            context,
+            "%s ${context.getString(viewModel.distanceUnitId)}",
+            if (viewModel.hasData) DriveKitUI.colors.mainFontColor() else noDataColor,
+            TextArg(
+                viewModel.distance.toDouble().format(0),
+                if (viewModel.hasData) DriveKitUI.colors.primaryColor() else noDataColor,
+                DKStyle.HIGHLIGHT_SMALL
             )
-        } else {
-            DKResource.buildString(
-                context,
-                "%s ${context.getString(viewModel.distanceUnitId)}",
-                noDataColor,
-                TextArg(
-                    "-",
-                    noDataColor,
-                    DKStyle.HIGHLIGHT_SMALL
-                )
-            )
-        }
-        this.distanceView.text = distanceValue
+        )
         // Duration.
         val spannable = DKSpannable()
-        if (viewModel.hasData && viewModel.duration != null) {
-            val durationFormats = DKDataFormatter.formatDuration(context, viewModel.duration * 60.0)
-            durationFormats.forEach {
-                when (it) {
-                    is FormatType.VALUE -> spannable.append(context, it.value, DriveKitUI.colors.primaryColor(), DKStyle.HIGHLIGHT_SMALL)
-                    is FormatType.UNIT -> spannable.append(context, it.value, DriveKitUI.colors.mainFontColor(), DKStyle.NORMAL_TEXT)
-                    is FormatType.SEPARATOR -> spannable.space()
-                }
+        val durationFormats = DKDataFormatter.formatDuration(context, viewModel.duration * 60.0)
+        durationFormats.forEach {
+            when (it) {
+                is FormatType.VALUE -> spannable.append(
+                    context,
+                    it.value,
+                    if (viewModel.hasData) DriveKitUI.colors.primaryColor() else noDataColor,
+                    DKStyle.HIGHLIGHT_SMALL
+                )
+
+                is FormatType.UNIT -> spannable.append(
+                    context,
+                    it.value,
+                    if (viewModel.hasData) DriveKitUI.colors.mainFontColor() else noDataColor,
+                    DKStyle.NORMAL_TEXT
+                )
+
+                is FormatType.SEPARATOR -> spannable.space()
             }
-        } else {
-            spannable.append(context, "-", noDataColor, DKStyle.HIGHLIGHT_SMALL)
-            spannable.space()
-            spannable.append(context, context.getString(R.string.dk_common_unit_minute), noDataColor, DKStyle.NORMAL_TEXT)
         }
         this.durationView.text = spannable.toSpannable()
         // Road context.
