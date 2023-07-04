@@ -14,6 +14,64 @@
         android:paddingHorizontal="@dimen/dk_margin"
         android:paddingVertical="@dimen/dk_margin_medium">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dk_margin_half"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dk_margin_eigth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/duration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dk_margin_eigth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/distance"
+            app:layout_constraintWidth_percent="0.33" />
+
+        <TextView
+            android:id="@+id/roadContext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/dk_margin_eigth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/duration"
+            app:layout_constraintTop_toTopOf="@id/distance" />
+
+        <View
+            android:id="@+id/leftSeparator"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/distance"
+            app:layout_constraintStart_toStartOf="@id/duration"
+            app:layout_constraintTop_toTopOf="@id/distance" />
+
+        <View
+            android:id="@+id/rightSeparator"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/distance"
+            app:layout_constraintEnd_toEndOf="@id/duration"
+            app:layout_constraintTop_toTopOf="@id/distance" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

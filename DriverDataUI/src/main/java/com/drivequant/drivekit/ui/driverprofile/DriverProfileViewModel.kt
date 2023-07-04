@@ -10,6 +10,7 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.driverdata.driverprofile.DKCommonTripType
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfile
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfileStatus
 import com.drivequant.drivekit.driverdata.driverprofile.DKMobilityAreaType
@@ -17,6 +18,7 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.DriverCommonTripFeatureViewModel
+import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.extension.getTitle
 import com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureDescription
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureViewModel
@@ -118,11 +120,24 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
         }
 
     fun getDriverCommonTripFeatureViewModels(): List<DriverCommonTripFeatureViewModel> =
-        this.driverProfile?.let {
-            //TODO
-            emptyList()
+        this.driverProfile?.commonTripByType?.get(DKCommonTripType.MOST_FREQUENT)?.let {
+            listOf(
+                DriverCommonTripFeatureViewModel(
+                    R.string.dk_driverdata_usual_trip_card_title,
+                    it.distanceMean,
+                    it.durationMean,
+                    it.roadContext.getTitle()
+                )
+            )
         } ?: run {
-            emptyList()
+            listOf(
+                DriverCommonTripFeatureViewModel(
+                    R.string.dk_driverdata_usual_trip_card_title,
+                    null,
+                    null,
+                    R.string.dk_driverdata_usual_trip_card_context_suburban
+                )
+            )
         }
 
     private fun onNewState(dataState: DataState) {
