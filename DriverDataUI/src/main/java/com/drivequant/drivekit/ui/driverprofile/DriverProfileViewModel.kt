@@ -126,16 +126,18 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                     R.string.dk_driverdata_usual_trip_card_title,
                     it.distanceMean,
                     it.durationMean,
-                    it.roadContext.getTitle()
+                    it.roadContext.getTitle(),
+                    true
                 )
             )
         } ?: run {
             listOf(
                 DriverCommonTripFeatureViewModel(
                     R.string.dk_driverdata_usual_trip_card_title,
-                    null,
-                    null,
-                    R.string.dk_driverdata_usual_trip_card_context_suburban
+                    36,
+                    34,
+                    R.string.dk_driverdata_usual_trip_card_context_suburban,
+                    false
                 )
             )
         }

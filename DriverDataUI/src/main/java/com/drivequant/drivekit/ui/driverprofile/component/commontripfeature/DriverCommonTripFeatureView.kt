@@ -46,10 +46,10 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.distanceView.text = DKResource.buildString(
             context,
             "%s ${context.getString(viewModel.distanceUnitId)}",
-            if (viewModel.hasData) DriveKitUI.colors.mainFontColor() else noDataColor,
+            if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor,
             TextArg(
                 viewModel.distance.toDouble().format(0),
-                if (viewModel.hasData) DriveKitUI.colors.primaryColor() else noDataColor,
+                if (viewModel.isRealData) DriveKitUI.colors.primaryColor() else noDataColor,
                 DKStyle.HIGHLIGHT_SMALL
             )
         )
@@ -61,14 +61,14 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
                 is FormatType.VALUE -> spannable.append(
                     context,
                     it.value,
-                    if (viewModel.hasData) DriveKitUI.colors.primaryColor() else noDataColor,
+                    if (viewModel.isRealData) DriveKitUI.colors.primaryColor() else noDataColor,
                     DKStyle.HIGHLIGHT_SMALL
                 )
 
                 is FormatType.UNIT -> spannable.append(
                     context,
                     it.value,
-                    if (viewModel.hasData) DriveKitUI.colors.mainFontColor() else noDataColor,
+                    if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor,
                     DKStyle.NORMAL_TEXT
                 )
 
@@ -78,11 +78,8 @@ internal class DriverCommonTripFeatureView(context: Context, attrs: AttributeSet
         this.durationView.text = spannable.toSpannable()
         // Road context.
         this.roadContextView.setText(viewModel.roadContextId)
-        if (viewModel.hasData) {
-            this.roadContextView.setTextColor(DriveKitUI.colors.mainFontColor())
-        } else {
-            this.roadContextView.setTextColor(noDataColor)
-        }
+        val roadContextColor = if (viewModel.isRealData) DriveKitUI.colors.mainFontColor() else noDataColor
+        this.roadContextView.setTextColor(roadContextColor)
     }
 
     private fun configureUi() {
