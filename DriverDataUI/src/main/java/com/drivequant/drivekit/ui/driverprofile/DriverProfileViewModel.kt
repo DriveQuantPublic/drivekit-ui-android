@@ -83,14 +83,41 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
 
     fun getDriverDistanceEstimationViewModels(): List<DriverDistanceEstimationViewModel> =
         this.driverProfile?.let {
-            TODO()
+            listOf(
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_year,
+                    R.string.dk_driverdata_distance_card_current_year,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.YEAR] ?: 0.0,
+                    it.distanceEstimation.yearDistance
+                ),
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_month,
+                    R.string.dk_driverdata_distance_card_current_month,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.MONTH] ?: 0.0,
+                    it.distanceEstimation.monthDistance
+                ),
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_week,
+                    R.string.dk_driverdata_distance_card_current_week,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.WEEK] ?: 0.0,
+                    it.distanceEstimation.weekDistance
+                )
+            )
         } ?: run {
-            emptyList()
+            listOf(
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_year,
+                    R.string.dk_driverdata_distance_card_current_year,
+                    null,
+                    null
+                )
+            )
         }
 
     fun getDriverCommonTripFeatureViewModels(): List<DriverCommonTripFeatureViewModel> =
         this.driverProfile?.let {
-            TODO()
+            //TODO
+            emptyList()
         } ?: run {
             emptyList()
         }

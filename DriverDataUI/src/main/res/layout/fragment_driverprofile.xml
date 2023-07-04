@@ -39,7 +39,7 @@
                     android:id="@+id/driverDistanceEstimationContainer"
                     layout="@layout/dk_driver_profile_distance_estimation_container"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="@dimen/dk_margin" />
 
                 <include
