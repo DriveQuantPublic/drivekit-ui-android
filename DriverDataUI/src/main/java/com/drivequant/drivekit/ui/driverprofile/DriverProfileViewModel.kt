@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfile
@@ -19,6 +21,7 @@ import com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.Dri
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureDescription
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.extension.getViewModel
+import java.util.Date
 
 internal class DriverProfileViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -128,7 +131,24 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
     }
 
     private fun updateDrivenDistances(timelines: List<DKDriverTimeline>) {
-        this.currentDrivenDistanceByPeriod = timelines.associateBy({ it.period }, { it.allContext.lastOrNull()?.distance ?: 0.0 })
+        this.currentDrivenDistanceByPeriod = timelines.associateBy(
+            { it.period },
+            { driverTimeline ->
+                val distance = driverTimeline.allContext.lastOrNull()?.let {
+                    val date = when (driverTimeline.period) {
+                        DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+                        DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+                        DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+                    }
+                    if (it.date == date) {
+                        it.distance
+                    } else {
+                        null
+                    }
+                } ?: 0.0
+                distance
+            }
+        )
     }
 
     class DriverProfileViewModelFactory(private val application: Application) :
