@@ -213,6 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">Sie fahren mehrheitlich in außerstädtischen Gebieten</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">%s %% der Strecke, die Sie auf Ihren Fahrten zurücklegen, befinden sich in Staus.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">Sie fahren häufig in Staus</string>
+   <string name="dk_driverdata_profile_title">Mein Fahrerprofil</string>
    <string name="dk_driverdata_safety_accel">Starke Beschleunigung</string>
    <string name="dk_driverdata_safety_adherence">Adhäsionsgrenze</string>
    <string name="dk_driverdata_safety_decel">Starkes Bremsen</string>
@@ -228,7 +229,7 @@
    <string name="dk_driverdata_safety_list_brake_critical">Starkes Bremsen</string>
    <string name="dk_driverdata_safety_score">Sicherheitspunkte</string>
    <string name="dk_driverdata_safety_score_info">Dieser Wert ist ein Maß für die Fahrsicherheit. Er variiert je nach Anzahl der starken Beschleunigungen und Bremsungen und der Anzahl der Überschreitungen der Haftungsschwellen durch das Fahrzeug. Sein Wert reicht von 0 bis 10. Je höher die Anzahl der auf der Fahrt aufgezeichneten Sicherheitsereignisse ist, desto niedriger ist die Bewertung.</string>
-   <string name="dk_driverdata_screen_lock_text">fleet.tech DRIVER hat die Entsperrung Ihres Bildschirms erkannt. Die Bedienung Ihres Telefons während der Fahrt ist sehr gefährlich. Denken Sie immer daran, sich selbst sowie Ihre Fahrgäste und die anderen Verkehrsteilnehmer zu schützen. Wenn Sie anrufen oder eine Nachricht senden möchten muss Ihr Fahrzeug sicher geparkt sein.</string>
+   <string name="dk_driverdata_screen_lock_text">Die Anwendung hat die Entsperrung Ihres Bildschirms erkannt. Die Bedienung Ihres Telefons während der Fahrt ist sehr gefährlich. Denken Sie immer daran, sich selbst sowie Ihre Fahrgäste und die anderen Verkehrsteilnehmer zu schützen. Wenn Sie anrufen oder eine Nachricht senden möchten muss Ihr Fahrzeug sicher geparkt sein.</string>
    <string name="dk_driverdata_screen_unlock_text">Die App hat die Entsperrung Ihres Bildschirms erkannt. Die Bedienung Ihres Telefons während der Fahrt ist sehr gefährlich. Denken Sie immer daran, sich selbst sowie Ihre Fahrgäste und die anderen Verkehrsteilnehmer zu schützen. Wenn Sie anrufen oder eine Nachricht senden möchten muss Ihr Fahrzeug sicher geparkt sein.</string>
    <string name="dk_driverdata_speeding_event">Überdrehzahl</string>
    <string name="dk_driverdata_speeding_event_info_content">Die Anwendung hat festgestellt, dass die Geschwindigkeitsbegrenzung auf diesem Straßenabschnitt überschritten wurde. Zu schnelles Fahren ist die Hauptursache bei tödlichen Verkehrsunfällen. Für Ihre Sicherheit und die Ihrer Mitfahrer ist es unerlässlich, die Geschwindigkeitsbegrenzungen einzuhalten.</string>

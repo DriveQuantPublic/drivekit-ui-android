@@ -213,6 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">Guidate soprattutto in aree non urbane</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">Il %s %% della distanza percorsa è in un ingorgo.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">Si guida spesso in mezzo agli ingorghi</string>
+   <string name="dk_driverdata_profile_title">Il mio profilo di conducente</string>
    <string name="dk_driverdata_safety_accel">Accelerazioni brusche</string>
    <string name="dk_driverdata_safety_adherence">Limiti di aderenza</string>
    <string name="dk_driverdata_safety_decel">Frenate brusche</string>

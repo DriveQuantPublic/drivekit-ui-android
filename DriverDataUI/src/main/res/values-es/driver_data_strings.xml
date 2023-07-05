@@ -213,6 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">Conduce sobre todo en zonas no urbanas</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">%s %% de la distancia que recorres es en atascos.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">A menudo conduces en atascos</string>
+   <string name="dk_driverdata_profile_title">Mi perfil de conductor</string>
    <string name="dk_driverdata_safety_accel">Aceleraciones bruscas</string>
    <string name="dk_driverdata_safety_adherence">Límites de adherencia</string>
    <string name="dk_driverdata_safety_decel">Frenadas fuertes</string>
