@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/dk_margin"
+        android:layout_marginBottom="@dimen/dk_margin_quarter"
         android:paddingVertical="@dimen/dk_margin_medium">
 
         <TextView

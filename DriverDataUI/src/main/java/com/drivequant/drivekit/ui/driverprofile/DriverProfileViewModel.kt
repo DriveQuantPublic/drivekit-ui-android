@@ -29,6 +29,8 @@ import java.util.Date
 internal class DriverProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     val dataUpdated = MutableLiveData<Boolean>()
+    val hasDrivingConditions: Boolean
+        get() = this.dataState == DataState.VALID && this.driverProfile != null
     private var driverProfile: DKDriverProfile? = null
     private var currentDrivenDistanceByPeriod: Map<DKPeriod, Double> = mapOf()
     private val timelinePeriods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)

@@ -79,6 +79,8 @@ internal class DriverProfileFragment : Fragment() {
         this.driverDistanceEstimationContainer.configure(this.viewModel.getDriverDistanceEstimationViewModels())
         this.driverCommonTripFeatureContainer.configure(this.viewModel.getDriverCommonTripFeatureViewModels())
 
+        this.drivingConditionsButton.visibility = if (this.viewModel.hasDrivingConditions) View.VISIBLE else View.GONE
+
         updateSwipeRefreshTripsVisibility(false)
     }
 

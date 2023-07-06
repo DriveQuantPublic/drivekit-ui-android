@@ -46,7 +46,7 @@
                     android:id="@+id/driverCommonTripFeatureContainer"
                     layout="@layout/dk_driver_profile_common_trip_feature_container"
                     android:layout_width="match_parent"
-                    android:layout_height="126dp"
+                    android:layout_height="136dp"
                     android:layout_marginTop="@dimen/dk_margin" />
 
             </LinearLayout>
