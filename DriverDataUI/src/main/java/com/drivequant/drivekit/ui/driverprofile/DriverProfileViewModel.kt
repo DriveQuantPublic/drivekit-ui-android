@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.removeTime
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
@@ -157,7 +158,7 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
                         DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
                         DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
                     }
-                    if (it.date == date) {
+                    if (it.date.removeTime() == date) {
                         it.distance
                     } else {
                         null
