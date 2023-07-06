@@ -6,8 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.removeTime
+import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
+import com.drivequant.drivekit.driverdata.driverprofile.DKCommonTripType
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfile
 import com.drivequant.drivekit.driverdata.driverprofile.DKDriverProfileStatus
 import com.drivequant.drivekit.driverdata.driverprofile.DKMobilityAreaType
@@ -15,14 +19,18 @@ import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
 import com.drivequant.drivekit.driverdata.timeline.TimelineSyncStatus
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.DriverCommonTripFeatureViewModel
+import com.drivequant.drivekit.ui.driverprofile.component.commontripfeature.extension.getTitle
 import com.drivequant.drivekit.ui.driverprofile.component.distanceestimation.DriverDistanceEstimationViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureDescription
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.DriverProfileFeatureViewModel
 import com.drivequant.drivekit.ui.driverprofile.component.profilefeature.extension.getViewModel
+import java.util.Date
 
 internal class DriverProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     val dataUpdated = MutableLiveData<Boolean>()
+    val hasDrivingConditions: Boolean
+        get() = this.dataState == DataState.VALID && this.driverProfile != null
     private var driverProfile: DKDriverProfile? = null
     private var currentDrivenDistanceByPeriod: Map<DKPeriod, Double> = mapOf()
     private val timelinePeriods = listOf(DKPeriod.WEEK, DKPeriod.MONTH, DKPeriod.YEAR)
@@ -83,16 +91,58 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
 
     fun getDriverDistanceEstimationViewModels(): List<DriverDistanceEstimationViewModel> =
         this.driverProfile?.let {
-            TODO()
+            listOf(
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_year,
+                    R.string.dk_driverdata_distance_card_current_year,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.YEAR] ?: 0.0,
+                    it.distanceEstimation.yearDistance
+                ),
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_month,
+                    R.string.dk_driverdata_distance_card_current_month,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.MONTH] ?: 0.0,
+                    it.distanceEstimation.monthDistance
+                ),
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_week,
+                    R.string.dk_driverdata_distance_card_current_week,
+                    this.currentDrivenDistanceByPeriod[DKPeriod.WEEK] ?: 0.0,
+                    it.distanceEstimation.weekDistance
+                )
+            )
         } ?: run {
-            emptyList()
+            listOf(
+                DriverDistanceEstimationViewModel(
+                    R.string.dk_driverdata_distance_card_title_year,
+                    R.string.dk_driverdata_distance_card_current_year,
+                    null,
+                    null
+                )
+            )
         }
 
     fun getDriverCommonTripFeatureViewModels(): List<DriverCommonTripFeatureViewModel> =
-        this.driverProfile?.let {
-            TODO()
+        this.driverProfile?.commonTripByType?.get(DKCommonTripType.MOST_FREQUENT)?.let {
+            listOf(
+                DriverCommonTripFeatureViewModel(
+                    R.string.dk_driverdata_usual_trip_card_title,
+                    it.distanceMean,
+                    it.durationMean,
+                    it.roadContext.getTitle(),
+                    true
+                )
+            )
         } ?: run {
-            emptyList()
+            listOf(
+                DriverCommonTripFeatureViewModel(
+                    R.string.dk_driverdata_usual_trip_card_title,
+                    36,
+                    34,
+                    R.string.dk_driverdata_usual_trip_card_context_suburban,
+                    false
+                )
+            )
         }
 
     private fun onNewState(dataState: DataState) {
@@ -101,7 +151,24 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
     }
 
     private fun updateDrivenDistances(timelines: List<DKDriverTimeline>) {
-        this.currentDrivenDistanceByPeriod = timelines.associateBy({ it.period }, { it.allContext.lastOrNull()?.distance ?: 0.0 })
+        this.currentDrivenDistanceByPeriod = timelines.associateBy(
+            { it.period },
+            { driverTimeline ->
+                val distance = driverTimeline.allContext.lastOrNull()?.let {
+                    val date = when (driverTimeline.period) {
+                        DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
+                        DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
+                        DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+                    }
+                    if (it.date.removeTime() == date) {
+                        it.distance
+                    } else {
+                        null
+                    }
+                } ?: 0.0
+                distance
+            }
+        )
     }
 
     class DriverProfileViewModelFactory(private val application: Application) :

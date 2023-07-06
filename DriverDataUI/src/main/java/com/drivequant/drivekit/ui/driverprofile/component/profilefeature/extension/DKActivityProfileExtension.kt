@@ -21,8 +21,8 @@ private fun DKActivityProfile.getTitleId(): Int = when (this) {
 }
 
 private fun DKActivityProfile.getDescription(activeWeekPercentage: Int): DriverProfileFeatureDescription = when (activeWeekPercentage) {
-    in 0..10 -> DriverProfileFeatureDescription.SimpleDescription(R.string.dk_driverdata_profile_activity_very_low_text)
-    in 11..18 -> DriverProfileFeatureDescription.PluralDescription(R.plurals.dk_driverdata_profile_activity_main_text, 1, "1", "6")
+    in 0..12 -> DriverProfileFeatureDescription.SimpleDescription(R.string.dk_driverdata_profile_activity_very_low_text)
+    in 13..18 -> DriverProfileFeatureDescription.PluralDescription(R.plurals.dk_driverdata_profile_activity_main_text, 1, "1", "6")
     in 19..22 -> DriverProfileFeatureDescription.PluralDescription(R.plurals.dk_driverdata_profile_activity_main_text, 1, "1", "5")
     in 23..27 -> DriverProfileFeatureDescription.PluralDescription(R.plurals.dk_driverdata_profile_activity_main_text, 1, "1", "4")
     in 28..38 -> DriverProfileFeatureDescription.PluralDescription(R.plurals.dk_driverdata_profile_activity_main_text, 1, "1", "3")

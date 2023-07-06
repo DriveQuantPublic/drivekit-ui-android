@@ -213,6 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">Du kører mest i områder uden for byerne</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">%s %% af den distance, du tilbagelægger, er i trafikpropper.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">Du kører ofte i trafikpropper</string>
+   <string name="dk_driverdata_profile_title">Min chaufførprofil</string>
    <string name="dk_driverdata_safety_accel">Hårde accelerationer</string>
    <string name="dk_driverdata_safety_adherence">Hårde sving</string>
    <string name="dk_driverdata_safety_decel">Hårde opbremsning</string>

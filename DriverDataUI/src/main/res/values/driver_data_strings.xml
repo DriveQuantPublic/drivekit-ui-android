@@ -213,7 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">You mainly drive in extra-urban areas</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">%s %% of the distance you drive is in traffic jams.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">You often drive in traffic jams</string>
-   <string name="dk_driverdata_profile_title">My profile</string>
+   <string name="dk_driverdata_profile_title">My driver profile</string>
    <string name="dk_driverdata_safety_accel">Harsh accelerations</string>
    <string name="dk_driverdata_safety_adherence">Adherence limits</string>
    <string name="dk_driverdata_safety_decel">Hard brakings</string>

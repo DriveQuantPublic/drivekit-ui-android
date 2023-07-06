@@ -213,7 +213,7 @@
    <string name="dk_driverdata_profile_roadcontext_suburban_title">Vous conduisez majoritairement en zone extra-urbaine</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_text">%s %% de la distance parcourue lors de vos déplacements est dans des embouteillages.</string>
    <string name="dk_driverdata_profile_roadcontext_traffic_jam_title">Vous conduisez souvent dans les bouchons</string>
-   <string name="dk_driverdata_profile_title">Mon profil</string>
+   <string name="dk_driverdata_profile_title">Mon profil conducteur</string>
    <string name="dk_driverdata_safety_accel">Accélérations fortes</string>
    <string name="dk_driverdata_safety_adherence">Limites d\'adhérence</string>
    <string name="dk_driverdata_safety_decel">Freinages forts</string>

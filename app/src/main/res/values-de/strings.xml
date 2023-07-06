@@ -71,7 +71,7 @@
    <string name="feature_permission_utils_onboarding_title">Permissions Utils | Sammlung von Berechtigungen</string>
    <string name="feature_permission_utils_title">Permissions Utils | Anwendungsdiagnostik</string>
    <string name="feature_profile_description">Die Komponente Driver Data zeigt das aus der Historie des Fahrers berechnete Fahrerprofil. Das Fahrerprofil setzt sich aus mehreren Facetten zusammen, die die Fahrgewohnheiten widerspiegeln: die jährlich zurückgelegte Strecke, der Mobilitätsradius, das Aktivitätsniveau, die Regelmäßigkeit und der mehrheitliche Straßenkontext.</string>
-   <string name="feature_profile_title">Driver Data | Fahrerprofil</string>
+   <string name="feature_profile_title">Driver Data | Mein Fahrerprofil</string>
    <string name="feature_ranking_description">Die Komponente Driver Achievement zeigt Ranglisten nach Zeitraum und Punktzahl an. Der Fahrer kann sich seine Position anzeigen lassen und seine Fahrleistung mit seiner Gemeinschaft vergleichen.</string>
    <string name="feature_ranking_title">Driver Achievement | Rankings</string>
    <string name="feature_streaks_description">Mit Combos werden Fahrer belohnt, die es schaffen, mehrere aufeinanderfolgende Fahrten mit hohen Punktzahlen zu absolvieren. Um diese Funktion in Ihrer App zu installieren, lesen Sie bitte die Dokumentation der Komponente Driver Achievement.</string>
