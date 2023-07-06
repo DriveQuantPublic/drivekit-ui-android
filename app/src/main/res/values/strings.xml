@@ -71,7 +71,7 @@
     <string name="feature_permission_utils_onboarding_title">Permissions Utils | Onboarding permissions</string>
     <string name="feature_permission_utils_title">Permissions Utils | App diagnostic</string>
     <string name="feature_profile_description">The Driver Data component displays the driver profile based on the driver\'s history. The driver profile is composed of several faces that reflect driving habits: the annual driving distance, the mobility radius, the activity level, the regularity and the main road context.</string>
-    <string name="feature_profile_title">Driver Data | Driver profile</string>
+    <string name="feature_profile_title">Driver Data | My driver profile</string>
     <string name="feature_ranking_description">The Driver Achievement component displays rankings by time period and by score. The driver can visualise his rank and compare his driving performance with his community.</string>
     <string name="feature_ranking_title">Driver Achievement | Rankings</string>
     <string name="feature_streaks_description">Combos reward drivers who manage to complete several consecutive trips with high scores. To install this feature in your app, see the documentation for the Drivers Achievement component.</string>

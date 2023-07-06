@@ -71,7 +71,7 @@
    <string name="feature_permission_utils_onboarding_title">Permissions Utils | Raccolta dei permessi</string>
    <string name="feature_permission_utils_title">Permissions Utils | Diagnostica delle applicazioni</string>
    <string name="feature_profile_description">Il componente Driver Data presenta il profilo del conducente calcolato in base alla sua storia. Il profilo del conducente è composto da diverse sfaccettature che riflettono le abitudini di guida: distanza percorsa annualmente, raggio di mobilità, livello di attività, regolarità e condizioni stradali prevalenti.</string>
-   <string name="feature_profile_title">Driver Data | Profilo del conducente</string>
+   <string name="feature_profile_title">Driver Data | Il mio profilo di conducente</string>
    <string name="feature_ranking_description">Il componente Driver Achievement mostra le classifiche per periodo e punteggio. Il conducente può visualizzare la sua posizione e confrontare le sue prestazioni di guida con quelle della sua comunità.</string>
    <string name="feature_ranking_title">Driver Achievement | Classements</string>
    <string name="feature_streaks_description">Le combo premiano i piloti che riescono a completare diversi viaggi consecutivi con punteggi elevati. Per installare questa funzione nella tua app, vedi la documentazione del componente Driver Achievement.</string>
