@@ -25,7 +25,7 @@ private fun DKMobilityProfile.getTitleId(): Int = when (this) {
 }
 
 private fun DKMobilityProfile.getDescription(radius: Int?): DriverProfileFeatureDescription {
-    return DriverProfileFeatureDescription.ParametrizedDescription(
+    return DriverProfileFeatureDescription.ParameterizedDescription(
         R.string.dk_driverdata_profile_mobility_text,
         radius?.toDouble()?.format(0) ?: "-"
     )

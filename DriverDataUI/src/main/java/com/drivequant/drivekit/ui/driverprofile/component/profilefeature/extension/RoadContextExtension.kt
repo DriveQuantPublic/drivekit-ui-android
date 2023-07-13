@@ -34,7 +34,7 @@ private fun RoadContext.getDescription(
         RoadContext.SUBURBAN -> R.string.dk_driverdata_profile_roadcontext_suburban_text
         RoadContext.TRAFFIC_JAM -> R.string.dk_driverdata_profile_roadcontext_traffic_jam_text
     }
-    return DriverProfileFeatureDescription.ParametrizedDescription(stringId, formattedDistance)
+    return DriverProfileFeatureDescription.ParameterizedDescription(stringId, formattedDistance)
 }
 
 @DrawableRes
