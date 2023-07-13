@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.GestureDetectorCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
 import com.drivequant.drivekit.timeline.ui.OnInterceptMotionEventListener
@@ -105,7 +105,7 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
 }
 
 private class SwipeGestureDetector(private val viewModel: TimelineGraphViewModel) : GestureDetector.SimpleOnGestureListener() {
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         if (abs(velocityX) > abs(velocityY) && abs(velocityX) > 100.convertDpToPx()) {
             if (velocityX > 0) {
                 this.viewModel.showPreviousGraphData()

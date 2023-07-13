@@ -1,8 +1,11 @@
 package com.drivequant.drivekit.permissionsutils.permissions.receiver
 
+import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
+import android.net.ConnectivityManager
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 
@@ -14,9 +17,9 @@ import com.drivequant.drivekit.core.utils.DiagnosisHelper
 abstract class SensorsReceiver : BroadcastReceiver() {
 
     companion object {
-        const val LOCATION_INTENT_ACTION = "android.location.PROVIDERS_CHANGED"
-        const val BLUETOOTH_INTENT_ACTION = "android.bluetooth.adapter.action.STATE_CHANGED"
-        const val CONNECTIVITY_INTENT_ACTION = "android.net.conn.CONNECTIVITY_CHANGE"
+        const val LOCATION_INTENT_ACTION = LocationManager.PROVIDERS_CHANGED_ACTION
+        const val BLUETOOTH_INTENT_ACTION = BluetoothAdapter.ACTION_STATE_CHANGED
+        const val CONNECTIVITY_INTENT_ACTION = ConnectivityManager.CONNECTIVITY_ACTION
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -24,7 +27,7 @@ abstract class SensorsReceiver : BroadcastReceiver() {
             init(it)
         }
 
-        intent?.let { it ->
+        intent?.let {
             context?.let { context ->
                 when (it.action) {
                     LOCATION_INTENT_ACTION  -> getGpsState(DiagnosisHelper.isActivated(context, ConnectivityType.GPS))

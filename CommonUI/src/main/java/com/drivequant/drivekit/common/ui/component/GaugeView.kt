@@ -1,10 +1,12 @@
 package com.drivequant.drivekit.common.ui.component
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import android.graphics.RectF
 import kotlin.math.min
 
 
@@ -19,15 +21,15 @@ class GaugeView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var gaugeColor = Color.argb(0, 0, 0, 0)
     private var backGaugeColor = Color.argb(0, 0, 0, 0)
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         calculateDrawableArea()
 
         if (openAngle != 0F) {
-            canvas?.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
+            canvas.drawArc(drawingArea, 270F, openAngle, false, createPaint(Color.argb(0, 0, 0, 0)))
         }
-        canvas?.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
-        canvas?.drawArc(drawingArea, startAngle, computePercent(), false, createPaint(gaugeColor))
+        canvas.drawArc(drawingArea, startAngle, 360F - openAngle, false, createPaint(backGaugeColor))
+        canvas.drawArc(drawingArea, startAngle, computePercent(), false, createPaint(gaugeColor))
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
