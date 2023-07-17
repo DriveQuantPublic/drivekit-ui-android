@@ -449,7 +449,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             if (vehicles.map { it.detectionMode }.contains(DetectionMode.GPS)) {
                 detectionModes.firstOrNull { it != DetectionMode.GPS } ?: DetectionMode.DISABLED
             } else {
-                detectionModes.first()
+                DetectionMode.GPS
             }
         } else {
             detectionModes.first()

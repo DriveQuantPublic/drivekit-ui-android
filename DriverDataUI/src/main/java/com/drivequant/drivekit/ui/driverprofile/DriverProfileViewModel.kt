@@ -151,14 +151,15 @@ internal class DriverProfileViewModel(application: Application) : AndroidViewMod
     }
 
     private fun updateDrivenDistances(timelines: List<DKDriverTimeline>) {
+        val sourceDate = Date()
         this.currentDrivenDistanceByPeriod = timelines.associateBy(
             { it.period },
             { driverTimeline ->
                 val distance = driverTimeline.allContext.lastOrNull()?.let {
                     val date = when (driverTimeline.period) {
-                        DKPeriod.WEEK -> Date().startingFrom(CalendarField.WEEK)
-                        DKPeriod.MONTH -> Date().startingFrom(CalendarField.MONTH)
-                        DKPeriod.YEAR -> Date().startingFrom(CalendarField.YEAR)
+                        DKPeriod.WEEK -> sourceDate.startingFrom(CalendarField.WEEK)
+                        DKPeriod.MONTH -> sourceDate.startingFrom(CalendarField.MONTH)
+                        DKPeriod.YEAR -> sourceDate.startingFrom(CalendarField.YEAR)
                     }
                     if (it.date.removeTime() == date) {
                         it.distance

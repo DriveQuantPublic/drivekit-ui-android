@@ -32,7 +32,7 @@
                     android:id="@+id/driverProfileFeatureContainer"
                     layout="@layout/dk_driver_profile_feature_container"
                     android:layout_width="match_parent"
-                    android:layout_height="154dp"
+                    android:layout_height="160dp"
                     android:layout_marginTop="@dimen/dk_margin" />
 
                 <include
