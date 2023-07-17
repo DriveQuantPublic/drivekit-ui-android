@@ -27,8 +27,13 @@ import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListen
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
-import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.*
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.*
+import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.image_item
+import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.text_view_item_display_name
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.button_display_odometer_readings
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.button_update_odometer_reading
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.distance_analyzed_item
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.distance_estimated_item
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.mileage_vehicle_item
 
 class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
@@ -62,10 +67,10 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_detail, container, false).setDKStyle()
+    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_detail, container, false).setDKStyle()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),

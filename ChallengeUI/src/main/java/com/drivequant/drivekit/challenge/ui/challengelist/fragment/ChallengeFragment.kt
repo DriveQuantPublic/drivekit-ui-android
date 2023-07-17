@@ -2,11 +2,11 @@ package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
@@ -15,7 +15,9 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
-import kotlinx.android.synthetic.main.dk_fragment_challenge.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_challenge.tab_layout_challenge
+import kotlinx.android.synthetic.main.dk_fragment_challenge.view_pager_challenge
 
 
 class ChallengeFragment : Fragment() {
@@ -29,10 +31,6 @@ class ChallengeFragment : Fragment() {
         }
         updateProgressVisibility(true)
         viewModel.fetchChallengeList()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel.syncChallengesError.observe(viewLifecycleOwner) {
             if (!it) {
                 Toast.makeText(

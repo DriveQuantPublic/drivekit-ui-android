@@ -146,13 +146,13 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         timer.invalidate()
     }
 
-    fun onNoCrashButtonClicked(view: View) {
+    fun onNoCrashButtonClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         DriveKitTripAnalysis.stopCrashFeedbackTimer()
         startActivity(Intent(this, CrashFeedbackStep2Activity::class.java))
         finish()
     }
 
-    fun onAssistanceButtonClicked(view: View) {
+    fun onAssistanceButtonClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         dismissKeyguard()
         launchPhoneCall() // Do not wait the webservice response to make the phone call !
         DriveKitTripAnalysis.stopCrashFeedbackTimer()

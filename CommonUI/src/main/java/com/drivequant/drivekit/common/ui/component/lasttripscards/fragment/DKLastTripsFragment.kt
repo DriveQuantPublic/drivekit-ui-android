@@ -13,7 +13,11 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_last_trips.*
+import kotlinx.android.synthetic.main.dk_fragment_last_trips.container
+import kotlinx.android.synthetic.main.dk_fragment_last_trips.root
+import kotlinx.android.synthetic.main.dk_fragment_last_trips.text_view_last_trip_header
+import kotlinx.android.synthetic.main.dk_fragment_last_trips.text_view_see_more
+import kotlinx.android.synthetic.main.dk_fragment_last_trips.trip_item_container
 
 internal class DKLastTripsFragment : Fragment() {
 
@@ -34,21 +38,21 @@ internal class DKLastTripsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_last_trips, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         context?.let { context ->
             viewModel?.let { viewModel ->
                 text_view_last_trip_header.apply {
                     headLine2()
                     text = viewModel.getTripCardTitle(context)
                 }
-                val view = View.inflate(context, R.layout.item_trip_list, null)
-                view.setBackgroundColor(DriveKitUI.colors.transparentColor())
-                val holder = TripViewHolder(view)
+                val tripList = View.inflate(context, R.layout.item_trip_list, null)
+                tripList.setBackgroundColor(DriveKitUI.colors.transparentColor())
+                val holder = TripViewHolder(tripList)
                 viewModel.trip.let { tripListItem ->
                     holder.bind(tripListItem, viewModel.tripData, true)
                 }
-                trip_item_container.addView(view)
+                trip_item_container.addView(tripList)
                 root.setOnClickListener {
                     DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(
                         context,

@@ -1,17 +1,21 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.fragment.children
 
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.core.graphics.drawable.DrawableCompat
 import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
 import com.drivequant.beaconutils.BeaconData
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -20,10 +24,21 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.utils.BeaconInfoScannerManager
-import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfoListener
+import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.*
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.button_beacon_info
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.progress_circular
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_battery
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_connected_vehicle_name
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_distance
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_major_title
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_major_value
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_minor_title
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_minor_value
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_signal_intensity
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.view_border
+import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.view_separator
 
 class BeaconScannerInfoFragment : Fragment() {
     companion object {
@@ -52,12 +67,12 @@ class BeaconScannerInfoFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
-            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val scanType = it.getSerializableCompat("scanType", BeaconScanType::class.java)
             val vehicleId = it.getString("vehicleId")
-            val beacon = it.getSerializable("beacon") as Beacon?
+            val beacon = it.getSerializableCompat("beacon", Beacon::class.java)
             if (scanType != null) {
                 viewModel = BeaconViewModel(scanType, vehicleId, beacon)
                 viewModel.init(requireContext())

@@ -52,7 +52,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
-    fun onRequestPermissionClicked(view: View) {
+    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         if (DiagnosisHelper.hasFineLocationPermission(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
                 request(this,

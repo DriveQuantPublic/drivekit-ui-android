@@ -3,17 +3,19 @@ package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
-import kotlinx.android.synthetic.main.fragment_bluetooth_error.*
+import kotlinx.android.synthetic.main.fragment_bluetooth_error.button_cancel
+import kotlinx.android.synthetic.main.fragment_bluetooth_error.text_view_bluetooth_failed
+import kotlinx.android.synthetic.main.fragment_bluetooth_error.text_view_open_settings
 
 class ErrorBluetoothFragment: Fragment() {
 
@@ -33,8 +35,8 @@ class ErrorBluetoothFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_bluetooth_error, container, false).setDKStyle()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val secondaryColor = DriveKitUI.colors.secondaryColor()

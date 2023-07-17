@@ -18,7 +18,9 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.tab_layout_challenge_detail
+import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.view_pager_challenge_detail
 
 
 class ChallengeDetailFragment : Fragment() {
@@ -48,8 +50,8 @@ class ChallengeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_challenge_detail, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
@@ -57,14 +59,14 @@ class ChallengeDetailFragment : Fragment() {
             ), javaClass.simpleName
         )
 
-        (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
+        (savedInstanceState?.getString("challengeIdTag"))?.let {
             challengeId = it
         }
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(
                 this,
                 ChallengeDetailViewModel.ChallengeDetailViewModelFactory(challengeId)
-            ).get(ChallengeDetailViewModel::class.java)
+            )[ChallengeDetailViewModel::class.java]
         }
         startSyncType = if (viewModel.getLocalChallengeDetail() != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
         viewModel.syncChallengeDetailError.observe(viewLifecycleOwner) {

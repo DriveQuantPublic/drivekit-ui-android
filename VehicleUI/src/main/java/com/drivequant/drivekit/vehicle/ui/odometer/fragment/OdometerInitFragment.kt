@@ -17,8 +17,11 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.*
 import kotlinx.android.synthetic.main.dk_fragment_odometer_init.button_validate_reference
+import kotlinx.android.synthetic.main.dk_fragment_odometer_init.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_input_layout_distance
+import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_view_odometer_desc
+import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_view_vehicle_distance_field
 
 
 class OdometerInitFragment : Fragment() {
@@ -56,8 +59,8 @@ class OdometerInitFragment : Fragment() {
     ): View = inflater.inflate(R.layout.dk_fragment_odometer_init, container, false).setDKStyle(
         Color.WHITE)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),

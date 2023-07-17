@@ -3,16 +3,16 @@ package com.drivequant.drivekit.ui.transportationmode.fragment
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.CircularButtonItemView
 import com.drivequant.drivekit.common.ui.extension.button
@@ -25,7 +25,15 @@ import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.viewmodel.TransportationModeViewModel
 import com.drivequant.drivekit.ui.transportationmode.viewmodel.TransportationProfile
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.*
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.button_validate
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.comment_title
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.container_transportation_profile
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.description_title
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.edit_text_comment
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.text_comment_error
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.transportation_mode_title
+import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.transportation_profile_title
 
 
 internal class TransportationModeFragment : Fragment(){
@@ -52,8 +60,8 @@ internal class TransportationModeFragment : Fragment(){
         return inflater.inflate(R.layout.dk_fragment_transportation_mode, container, false).setDKStyle()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail_transportation_mode"), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it

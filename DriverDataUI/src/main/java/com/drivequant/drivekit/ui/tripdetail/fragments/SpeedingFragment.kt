@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -21,8 +22,11 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactor
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
 import kotlinx.android.synthetic.main.safety_fragment.score_gauge
-import kotlinx.android.synthetic.main.speeding_fragment.*
 import kotlinx.android.synthetic.main.speeding_fragment.score_info
+import kotlinx.android.synthetic.main.speeding_fragment.speeding_distance_item
+import kotlinx.android.synthetic.main.speeding_fragment.speeding_distance_value
+import kotlinx.android.synthetic.main.speeding_fragment.speeding_duration_item
+import kotlinx.android.synthetic.main.speeding_fragment.speeding_duration_value
 
 internal class SpeedingFragment : Fragment() {
 
@@ -56,12 +60,12 @@ internal class SpeedingFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val itinId = savedInstanceState?.getSerializable("itinId") as String?
+        val itinId = savedInstanceState?.getSerializableCompat("itinId", String::class.java)
         val tripListConfigurationType =
-            savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
+            savedInstanceState?.getSerializableCompat("tripListConfigurationType", TripListConfigurationType::class.java)
 
         if (itinId != null && tripListConfigurationType != null) {
             viewModel = ViewModelProvider(

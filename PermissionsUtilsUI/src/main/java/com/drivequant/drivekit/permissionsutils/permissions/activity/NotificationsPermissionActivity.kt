@@ -28,7 +28,7 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
         manageSkipButton()
     }
 
-    fun onRequestPermissionClicked(view: View) {
+    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         checkRequiredPermissions()
     }
 

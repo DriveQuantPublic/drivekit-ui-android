@@ -60,8 +60,8 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
     ): View = inflater.inflate(R.layout.dk_fragment_odometer_histories_list, container, false).setDKStyle(
         Color.WHITE)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),

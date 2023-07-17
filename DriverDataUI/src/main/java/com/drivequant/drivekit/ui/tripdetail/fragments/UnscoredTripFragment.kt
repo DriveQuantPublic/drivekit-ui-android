@@ -2,12 +2,13 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
@@ -18,7 +19,10 @@ import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
-import kotlinx.android.synthetic.main.unscored_trip_fragment.*
+import kotlinx.android.synthetic.main.unscored_trip_fragment.image_view_unscored_trip_info
+import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_duration
+import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_message
+import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_start_end
 
 class UnscoredTripFragment : Fragment() {
     companion object {
@@ -49,10 +53,10 @@ class UnscoredTripFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        (savedInstanceState?.getSerializable("viewModel") as UnscoredTripViewModel?)?.let {
+        savedInstanceState?.getSerializableCompat("viewModel", UnscoredTripViewModel::class.java)?.let {
             viewModel = it
         }
 
