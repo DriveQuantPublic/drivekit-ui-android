@@ -8,4 +8,8 @@
         <item quantity="one">@string/dk_driverdata_drivingconditions_distance_singular</item>
         <item quantity="other">@string/dk_driverdata_drivingconditions_distance_plural</item>
     </plurals>
+    <plurals name="dk_driverdata_profile_activity_main_text" translatable="false">
+        <item quantity="one">@string/dk_driverdata_profile_activity_main_singular_text</item>
+        <item quantity="other">@string/dk_driverdata_profile_activity_main_plural_text</item>
+    </plurals>
 </resources>

@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
@@ -327,16 +327,16 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             override fun onResponse(status: VehicleSyncStatus, vehicles: List<Vehicle>) {
                 val detectionMode = computeCreateVehicleDetectionMode(vehicles)
 
-                when (selectedVehicleTypeItem.vehicleType){
+                when (selectedVehicleTypeItem.vehicleType) {
                     VehicleType.CAR -> {
-                        DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object: VehicleCreateQueryListener{
+                        DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object : VehicleCreateQueryListener {
                             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                                 manageCreateVehicleResponse(status, vehicle)
                             }
                         }, isLiteConfig)
                     }
                     VehicleType.TRUCK -> {
-                        DriveKitVehicle.createTruckVehicle(truckCharacteristics, name, detectionMode, object : VehicleCreateQueryListener{
+                        DriveKitVehicle.createTruckVehicle(truckCharacteristics, name, detectionMode, object : VehicleCreateQueryListener {
                             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
                                 manageCreateVehicleResponse(status, vehicle)
                             }
@@ -435,7 +435,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     private fun buildVehicleTypesItems(): List<VehicleTypeItem> {
         val typesItem = mutableListOf<VehicleTypeItem>()
-        for (type in DriveKitVehicleUI.vehicleTypes){
+        for (type in DriveKitVehicleUI.vehicleTypes) {
             typesItem.add(VehicleTypeItem.getEnumByVehicleType(type))
         }
         return typesItem
@@ -446,10 +446,10 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         return if (detectionModes.isEmpty()) {
             DetectionMode.DISABLED
         } else if (detectionModes.contains(DetectionMode.GPS)) {
-            if (vehicles.isEmpty()){
-                DetectionMode.GPS
+            if (vehicles.map { it.detectionMode }.contains(DetectionMode.GPS)) {
+                detectionModes.firstOrNull { it != DetectionMode.GPS } ?: DetectionMode.DISABLED
             } else {
-                detectionModes.first()
+                DetectionMode.GPS
             }
         } else {
             detectionModes.first()

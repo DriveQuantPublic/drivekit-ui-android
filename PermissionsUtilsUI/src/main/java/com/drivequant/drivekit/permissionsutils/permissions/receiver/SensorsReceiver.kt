@@ -24,7 +24,7 @@ abstract class SensorsReceiver : BroadcastReceiver() {
             init(it)
         }
 
-        intent?.let { it ->
+        intent?.let {
             context?.let { context ->
                 when (it.action) {
                     LOCATION_INTENT_ACTION  -> getGpsState(DiagnosisHelper.isActivated(context, ConnectivityType.GPS))

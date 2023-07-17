@@ -8,14 +8,14 @@
    <string name="dk_achievements_streaks_adherence_reset">Du har foretaget et hårdt sving på din sidste tur</string>
    <string name="dk_achievements_streaks_adherence_text">Prøv at køre en række ture uden hårde sving. Hver gang du gør det, øges dit streak. \n\n Hvis du træder for hårdt på bremsen, nulstilles din score. Dit bedste streak gemmes, så du kan forsøge at overgå det.</string>
    <string name="dk_achievements_streaks_adherence_title">Ingen hårde sving</string>
-   <string name="dk_achievements_streaks_best_title">Bedste streak</string>
+   <string name="dk_achievements_streaks_best_title">Bedste streak siden du startede:</string>
    <string name="dk_achievements_streaks_brake_reset">Der blev målt en hård opbremsning under din sidste tur.</string>
    <string name="dk_achievements_streaks_brake_text">Prøv at køre så mange ture, som du kan uden hårde opbremsninger. \n\n Hver gang du gør bremser hårdt, øges dit streak. \n\n Hvis du træder for hårdt på bremsen, nulstilles din score. Dit bedste streak gemmes, så du kan forsøge at overgå det.</string>
    <string name="dk_achievements_streaks_brake_title">Ingen hårde opbremsninger</string>
    <string name="dk_achievements_streaks_call_reset">Du foretog et telefonopkald på din sidste tur</string>
    <string name="dk_achievements_streaks_congrats">Godt klaret!</string>
    <string name="dk_achievements_streaks_congrats_text">Du er ved at sætte ny rekord! Bliv ved med at overgå dig selv!</string>
-   <string name="dk_achievements_streaks_current_title">Nuværende</string>
+   <string name="dk_achievements_streaks_current_title">Nuværende streak er på:</string>
    <string name="dk_achievements_streaks_empty">Du har endnu ikke startet denne streak. Kør en tur for at starte din streak.</string>
    <string name="dk_achievements_streaks_phone_call_text">Prøv at lade være med at tale i mobilen under kørsel. \n\nHver gang du gør det, forøges dit streak. Hvis du taler i telefon, så nulstilles dit streak. \n\nDu må gerne tale håndfrit i mobilen - men forsøg så vidt muligt helt at undgå at ringe. \n\n Dit bedste streak gemmes, så du kan forsøge at overgå det.</string>
    <string name="dk_achievements_streaks_phone_call_title">Ring ikke</string>

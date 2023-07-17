@@ -13,14 +13,14 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.drivingconditions.DrivingConditionsActivity
 import com.drivequant.drivekit.ui.mysynthesis.component.communitycard.MySynthesisCommunityCardView
 import com.drivequant.drivekit.ui.mysynthesis.component.scorecard.MySynthesisScoreCardView
-import java.util.*
+import java.util.Date
 
 internal class MySynthesisFragment : Fragment() {
 
@@ -156,16 +156,7 @@ internal class MySynthesisFragment : Fragment() {
 
     private fun configureButton() {
         this.buttonDetail.button(DriveKitUI.colors.secondaryColor(), DriveKitUI.colors.transparentColor())
-        this.buttonDetail.setOnClickListener { _ ->
-            activity?.let {
-                DrivingConditionsActivity.launchActivity(
-                    it,
-                    this.viewModel.periodSelectorViewModel.selectedPeriod,
-                    this.viewModel.selectedDate,
-                    MySynthesisActivity.DRIVING_CONDITIONS_REQUEST_CODE
-                )
-            }
-        }
+        this.buttonDetail.visibility = View.GONE
     }
 
     private fun updateScoreCard() {

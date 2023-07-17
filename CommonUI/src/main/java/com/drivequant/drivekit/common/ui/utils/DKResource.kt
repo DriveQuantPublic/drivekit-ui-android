@@ -10,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.graphical.DKStyle
 
 object DKResource {
 
@@ -146,4 +147,10 @@ data class TextArg(
     @ColorInt val color: Int? = null,
     @DimenRes val size: Int? = null,
     val style: Int = Typeface.BOLD
-)
+) {
+    constructor(
+        text: String,
+        @ColorInt color: Int? = null,
+        style: DKStyle
+    ) : this(text, color, style.dimensionId(), style.typefaceStyle())
+}
