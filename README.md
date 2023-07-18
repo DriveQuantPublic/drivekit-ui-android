@@ -56,14 +56,14 @@ For an integration on Android you will need the following elements:
 
 Your project must be configured as follows: 
 * `minSdkVersion = 23`
-* `compileSdkVersion = 33`
-* `targetSdkVersion = 33`
+* `compileSdkVersion = 34`
+* `targetSdkVersion = 34`
 
 The DriveKit SDK uses the libraries listed below. These are minimal required versions. Check that they are compatible with your application.
 * `Kotlin = 1.7.21`
 * `Gson = 2.9.0`
 * `Volley = 1.2.1`
-* `Room = 2.5.1`
+* `Room = 2.5.2`
 * `WorkManager = 2.8.1`
 * `Play Services = 20.0.0`
 
