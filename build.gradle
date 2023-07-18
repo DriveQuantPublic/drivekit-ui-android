@@ -13,9 +13,7 @@ buildscript {
         legacy_preference = '1.0.0'
         lifecycle_version = '2.5.1'
         material = '1.9.0'
-        play_services_location = '20.0.0'
         play_services_maps = '18.1.0'
-        recycler_view = '1.1.0'
         swipe_refresh_layout = '1.1.0'
 
         glide = '4.14.2'
