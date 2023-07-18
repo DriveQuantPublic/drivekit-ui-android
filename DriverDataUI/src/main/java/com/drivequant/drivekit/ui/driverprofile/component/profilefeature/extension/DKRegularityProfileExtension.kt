@@ -24,7 +24,7 @@ internal fun DKRegularityProfile.getDescription(
     tripNumberMean: Int,
     distanceMean: Int
 ): DriverProfileFeatureDescription = when (this) {
-    DKRegularityProfile.REGULAR -> DriverProfileFeatureDescription.ParametrizedDescription(
+    DKRegularityProfile.REGULAR -> DriverProfileFeatureDescription.ParameterizedDescription(
         R.string.dk_driverdata_profile_regularity_regular_text,
         tripNumberMean.toDouble().format(0),
         distanceMean.toDouble().format(0)

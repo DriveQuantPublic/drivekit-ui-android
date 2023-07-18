@@ -17,7 +17,7 @@ internal sealed class DriverProfileFeatureDescription {
     data class SimpleDescription(@StringRes val descriptionId: Int) :
         DriverProfileFeatureDescription()
 
-    class ParametrizedDescription(@StringRes val descriptionId: Int, vararg param: String) :
+    class ParameterizedDescription(@StringRes val descriptionId: Int, vararg param: String) :
         DriverProfileFeatureDescription() {
         val params: Array<out String> = param
     }
@@ -32,7 +32,7 @@ internal sealed class DriverProfileFeatureDescription {
 
     fun getDescription(context: Context): String = when (this) {
         is SimpleDescription -> context.getString(this.descriptionId)
-        is ParametrizedDescription -> context.getString(this.descriptionId, *this.params)
+        is ParameterizedDescription -> context.getString(this.descriptionId, *this.params)
         is PluralDescription -> context.resources.getQuantityString(this.descriptionId, this.pluralArg, *this.params)
     }
 }

@@ -5,10 +5,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.tintFromHueOfColor
 import com.drivequant.drivekit.common.ui.utils.DKDrawableUtils
 import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.common.ui.utils.convertDpToPx
@@ -29,6 +32,16 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
     private lateinit var currentDistanceGaugeColorView: View
     private lateinit var distanceEstimationView: TextView
     private lateinit var currentDistanceView: TextView
+    @ColorInt
+    private val estimationDistanceColor: Int = ContextCompat.getColor(
+        context,
+        com.drivequant.drivekit.common.ui.R.color.dkContextCardColor1
+    ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
+    @ColorInt
+    private val currentDistanceColor: Int = ContextCompat.getColor(
+        context,
+        com.drivequant.drivekit.common.ui.R.color.dkContextCardColor5
+    ).tintFromHueOfColor(DriveKitUI.colors.primaryColor())
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -65,11 +78,11 @@ internal class DriverDistanceEstimationView(context: Context, attrs: AttributeSe
         this.currentDistanceView.text = viewModel.getDistanceString()
 
         if (viewModel.hasValue) {
-            this.estimationGaugeColorView.setBackgroundColor(DriveKitUI.colors.primaryColor())
-            this.currentDistanceGaugeColorView.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            this.estimationGaugeColorView.setBackgroundColor(estimationDistanceColor)
+            this.currentDistanceGaugeColorView.setBackgroundColor(currentDistanceColor)
 
-            this.estimationIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), DriveKitUI.colors.primaryColor())
-            this.currentDistanceIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), DriveKitUI.colors.secondaryColor())
+            this.estimationIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), estimationDistanceColor)
+            this.currentDistanceIconContainer.background = DKDrawableUtils.circleDrawable(16.convertDpToPx(), currentDistanceColor)
         } else {
             val color = DriveKitUI.colors.neutralColor()
             this.estimationGaugeColorView.setBackgroundColor(color)
