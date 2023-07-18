@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -12,7 +12,11 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.*
+import kotlinx.android.synthetic.main.fragment_bluetooth_guide.button_start
+import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc1
+import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc2
+import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc3
+import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_title
 
 class GuideBluetoothFragment: Fragment() {
 
@@ -32,8 +36,8 @@ class GuideBluetoothFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_bluetooth_guide, container, false).setDKStyle()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         text_view_guide_title.headLine1()
         text_view_guide_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_header")

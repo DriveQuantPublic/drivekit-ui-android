@@ -47,8 +47,8 @@ open class DKRoundedCornerFrameLayout : FrameLayout {
         this.path.addRoundRect(this.rect, this.corners, Path.Direction.CW)
     }
 
-    override fun dispatchDraw(canvas: Canvas?) {
-        canvas?.clipPath(this.path)
+    override fun dispatchDraw(canvas: Canvas) {
+        canvas.clipPath(this.path)
         super.dispatchDraw(canvas)
     }
 }

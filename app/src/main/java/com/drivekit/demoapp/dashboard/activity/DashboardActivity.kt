@@ -22,10 +22,10 @@ import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
 import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
-import com.drivekit.demoapp.utils.getSerializableCompat
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
@@ -175,7 +175,7 @@ internal class DashboardActivity : AppCompatActivity() {
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
-            val tripListConfigurationType = intent.getSerializableCompat(
+            val tripListConfigurationType = intent.getSerializableExtraCompat(
                 TripDetailActivity.TRIP_LIST_CONFIGURATION_TYPE_EXTRA,
                 TripListConfigurationType::class.java
             )

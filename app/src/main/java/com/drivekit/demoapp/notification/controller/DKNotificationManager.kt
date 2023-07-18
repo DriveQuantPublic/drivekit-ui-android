@@ -141,7 +141,7 @@ internal object DKNotificationManager : TripListener {
     }
 
     override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
-        if (deviceConfigEvent is DeviceConfigEvent.BLUETOOTH_SENSOR_STATE_CHANGED && deviceConfigEvent.btRequired) {
+        if (deviceConfigEvent is DeviceConfigEvent.BluetoothSensorStateChanged && deviceConfigEvent.btRequired) {
             val context = DriveKit.applicationContext
             if (deviceConfigEvent.btEnabled) {
                 cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)

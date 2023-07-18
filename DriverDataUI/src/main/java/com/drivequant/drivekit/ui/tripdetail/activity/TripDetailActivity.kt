@@ -4,11 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
@@ -55,7 +56,7 @@ class TripDetailActivity : AppCompatActivity() {
 
         val itinId = intent.getStringExtra(ITINID_EXTRA) as String
         val openAdvice = intent.getBooleanExtra(OPEN_ADVICE_EXTRA, false)
-        val tripListConfigurationType = intent.getSerializableExtra(TRIP_LIST_CONFIGURATION_TYPE_EXTRA) as TripListConfigurationType? ?: TripListConfigurationType.MOTORIZED
+        val tripListConfigurationType = intent.getSerializableExtraCompat(TRIP_LIST_CONFIGURATION_TYPE_EXTRA, TripListConfigurationType::class.java) ?: TripListConfigurationType.MOTORIZED
         supportFragmentManager.beginTransaction()
             .replace(R.id.container,
                 TripDetailFragment.newInstance(itinId, openAdvice, tripListConfigurationType))

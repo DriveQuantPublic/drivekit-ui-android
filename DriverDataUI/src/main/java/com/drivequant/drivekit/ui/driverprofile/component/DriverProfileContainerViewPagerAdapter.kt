@@ -16,7 +16,7 @@ internal class DriverProfileContainerViewPagerAdapter<ViewModel>(
         viewType: Int
     ): DriverProfileContainerViewHolder<ViewModel> {
         val layoutInflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = layoutInflater.inflate(this.viewResourceId, parent, false) as DriverProfileView<ViewModel>
+        @Suppress("UNCHECKED_CAST") val view = layoutInflater.inflate(this.viewResourceId, parent, false) as DriverProfileView<ViewModel>
         return DriverProfileContainerViewHolder(view)
     }
 

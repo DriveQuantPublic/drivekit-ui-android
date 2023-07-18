@@ -1,15 +1,16 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -18,8 +19,17 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModelFactory
 import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
-import kotlinx.android.synthetic.main.safety_fragment.*
+import kotlinx.android.synthetic.main.safety_fragment.accel_description
+import kotlinx.android.synthetic.main.safety_fragment.accel_image
+import kotlinx.android.synthetic.main.safety_fragment.accel_number_event
+import kotlinx.android.synthetic.main.safety_fragment.adherence_description
+import kotlinx.android.synthetic.main.safety_fragment.adherence_image
+import kotlinx.android.synthetic.main.safety_fragment.adherence_number_event
+import kotlinx.android.synthetic.main.safety_fragment.brake_description
+import kotlinx.android.synthetic.main.safety_fragment.brake_number_event
+import kotlinx.android.synthetic.main.safety_fragment.decel_image
 import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
+import kotlinx.android.synthetic.main.safety_fragment.score_info
 
 class SafetyFragment : Fragment() {
 
@@ -48,9 +58,9 @@ class SafetyFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("safety") as Safety?)?.let{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.getSerializableCompat("safety", Safety::class.java)?.let{
             safety = it
         }
         viewModel = ViewModelProvider(this,

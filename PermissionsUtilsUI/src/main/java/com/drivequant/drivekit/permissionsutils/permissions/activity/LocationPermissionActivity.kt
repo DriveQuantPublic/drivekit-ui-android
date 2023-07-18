@@ -52,11 +52,10 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
-    fun onRequestPermissionClicked(view: View) {
+    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         if (DiagnosisHelper.hasFineLocationPermission(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && permissionCallback != null) {
                 request(this,
-                    permissionCallback as OnPermissionCallback,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             } else {
                 checkRequiredPermissions()
@@ -120,7 +119,6 @@ class LocationPermissionActivity : BasePermissionActivity() {
                         )
                     } else {
                         request(this,
-                            permissionCallback as OnPermissionCallback,
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                     }
@@ -133,14 +131,12 @@ class LocationPermissionActivity : BasePermissionActivity() {
                 Build.VERSION_CODES.Q -> {
                     request(
                         this,
-                        permissionCallback as OnPermissionCallback,
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 }
                 else -> {
                     request(
                         this,
-                        permissionCallback as OnPermissionCallback,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                 }
             }

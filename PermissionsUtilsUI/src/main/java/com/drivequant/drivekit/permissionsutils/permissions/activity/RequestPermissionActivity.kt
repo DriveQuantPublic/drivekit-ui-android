@@ -4,11 +4,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.appcompat.app.AlertDialog
 import android.util.Log
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -45,7 +45,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected fun request(context: Activity, permissionCallback: OnPermissionCallback, vararg permissionName: String) {
+    protected fun request(context: Activity, vararg permissionName: String) {
         handlePermissions(context, permissionName as Array<String>)
     }
 

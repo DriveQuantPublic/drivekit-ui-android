@@ -11,7 +11,7 @@ import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_rules.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge_rules.layout_challenge_rules
 
 class ChallengeRulesFragment : Fragment() {
 
@@ -47,10 +47,7 @@ class ChallengeRulesFragment : Fragment() {
                 "dk_tag_challenge_detail_rules"
             ), javaClass.simpleName
         )
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(
                 this,
@@ -65,11 +62,11 @@ class ChallengeRulesFragment : Fragment() {
             )[ChallengeParticipationViewModel::class.java]
         }
 
-        val view =
+        val challengeHeaderView =
             ChallengeHeaderView(
                 requireContext()
             )
-        view.configure(viewModel, requireActivity())
-        layout_challenge_rules.addView(view)
+        challengeHeaderView.configure(viewModel, requireActivity())
+        layout_challenge_rules.addView(challengeHeaderView)
     }
 }

@@ -1,42 +1,41 @@
 package com.drivequant.drivekit.permissionsutils.diagnosis.activity
 
-import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
-import com.drivequant.drivekit.permissionsutils.R
-import android.os.Bundle
-import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.button
-import com.drivequant.drivekit.common.ui.extension.headLine1
-import com.drivequant.drivekit.common.ui.extension.normalText
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
-
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
-import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
+import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
+import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.core.DriveKitLog
-import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
-import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.common.ui.utils.TextArg
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.utils.ConnectivityType
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.core.utils.PermissionStatus
 import com.drivequant.drivekit.core.utils.PermissionType
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.permissionsutils.R
+import com.drivequant.drivekit.permissionsutils.commons.views.DiagnosisItemView
+import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
+import com.drivequant.drivekit.permissionsutils.permissions.activity.RequestPermissionActivity
 import com.drivequant.drivekit.permissionsutils.permissions.receiver.SensorsReceiver
 
 class AppDiagnosisActivity : RequestPermissionActivity() {
@@ -461,7 +460,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
         request(
             this,
-            permissionCallback as OnPermissionCallback,
             Manifest.permission.ACTIVITY_RECOGNITION
         )
     }
@@ -506,7 +504,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         }
         request(
             this,
-            permissionCallback as OnPermissionCallback,
             Manifest.permission.BLUETOOTH_SCAN, Manifest.permission.BLUETOOTH_CONNECT
         )
     }
@@ -538,7 +535,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
                 if (!DiagnosisHelper.hasBackgroundLocationApproved(this)) {
                     request(
                         this,
-                        permissionCallback as OnPermissionCallback,
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     )
                 }
@@ -546,7 +542,6 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         } else {
             request(
                 this,
-                permissionCallback as OnPermissionCallback,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         }

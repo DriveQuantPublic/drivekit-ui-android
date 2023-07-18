@@ -11,13 +11,14 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
-import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripListViewModel
-import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripsByDate
 import com.drivequant.drivekit.common.ui.component.triplist.viewholder.HeaderDayViewHolder
 import com.drivequant.drivekit.common.ui.component.triplist.viewholder.TripViewHolder
+import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.FontUtils
 
 internal class TripListAdapter(
     var context: Context?, private val tripsListViewModel: DKTripListViewModel) : BaseExpandableListAdapter() {
@@ -40,7 +41,7 @@ internal class TripListAdapter(
             view = convertView
         }
 
-        holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalize()
+        holder.tvDate.text = date.formatDate(DKDatePattern.WEEK_LETTER).capitalizeFirstLetter()
         val headerValue = tripsListViewModel.getCustomHeader()?.let {
               it.customTripListHeader(holder.itemView.context, trips?.trips) ?: run {
                   it.tripListHeader().text(holder.itemView.context, trips?.trips)

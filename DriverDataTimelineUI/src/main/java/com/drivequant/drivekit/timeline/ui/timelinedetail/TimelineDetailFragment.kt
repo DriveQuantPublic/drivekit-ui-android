@@ -1,24 +1,24 @@
 package com.drivequant.drivekit.timeline.ui.timelinedetail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
-import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
-import java.util.*
+import java.util.Date
 
 internal class TimelineDetailFragment : Fragment() {
 
@@ -72,17 +72,7 @@ internal class TimelineDetailFragment : Fragment() {
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
         graphContainer = view.findViewById(R.id.graph_container)
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
-        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
-        outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
             it.getString(SELECTED_SCORE_ID_EXTRA)?.let { savedScore ->
                 selectedScore = DKScoreType.valueOf(savedScore)
@@ -113,6 +103,13 @@ internal class TimelineDetailFragment : Fragment() {
         configurePeriodContainer()
         configureDateContainer()
         configureRoadContextContainer()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SELECTED_SCORE_ID_EXTRA, selectedScore.name)
+        outState.putString(SELECTED_PERIOD_ID_EXTRA, selectedPeriod.name)
+        outState.putLong(SELECTED_DATE_ID_EXTRA, selectedDate.time)
     }
 
     private fun configureGraphContainer() {

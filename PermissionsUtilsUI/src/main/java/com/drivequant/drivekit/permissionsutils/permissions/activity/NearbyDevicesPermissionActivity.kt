@@ -26,7 +26,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         setStyle()
     }
 
-    fun onRequestPermissionClicked(view: View) {
+    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         checkRequiredPermissions()
     }
 
@@ -56,7 +56,6 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
 
         request(
             this,
-            permissionCallback as OnPermissionCallback,
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT
         )

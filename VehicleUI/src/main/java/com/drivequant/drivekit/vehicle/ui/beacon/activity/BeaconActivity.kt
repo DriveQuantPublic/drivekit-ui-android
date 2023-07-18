@@ -4,21 +4,22 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
@@ -70,9 +71,9 @@ class BeaconActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        scanType = intent.getSerializableExtra(SCAN_TYPE_EXTRA) as BeaconScanType
+        scanType = intent.getSerializableExtraCompat(SCAN_TYPE_EXTRA, BeaconScanType::class.java)!!
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
-        beacon = intent.getSerializableExtra(BEACON_EXTRA) as Beacon?
+        beacon = intent.getSerializableExtraCompat(BEACON_EXTRA, Beacon::class.java)
 
         viewModel = ViewModelProvider(this,
             BeaconViewModel.BeaconViewModelFactory(scanType, vehicleId, beacon))[BeaconViewModel::class.java]

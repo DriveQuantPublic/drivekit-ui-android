@@ -3,7 +3,6 @@ package com.drivequant.drivekit.vehicle.ui.odometer.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -12,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -26,8 +26,17 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
-import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.*
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.*
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerAction
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerActionItem
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
+import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerVehicleListViewModel
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.dk_swipe_refresh_odometer
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.mileage_vehicle_item
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.root
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.text_view_no_vehicle
+import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.vehicle_filter
 
 
 class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
@@ -50,8 +59,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),

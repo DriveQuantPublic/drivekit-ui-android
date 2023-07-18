@@ -2,14 +2,19 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -18,7 +23,10 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
-import kotlinx.android.synthetic.main.fragment_beacon_input_id.*
+import kotlinx.android.synthetic.main.fragment_beacon_input_id.button_validate
+import kotlinx.android.synthetic.main.fragment_beacon_input_id.code_field
+import kotlinx.android.synthetic.main.fragment_beacon_input_id.code_wrapper
+import kotlinx.android.synthetic.main.fragment_beacon_input_id.text_view_beacon_code_text
 
 class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListener {
 
@@ -45,12 +53,12 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
-            val scanType = it.getSerializable("scanType") as BeaconScanType?
+            val scanType = it.getSerializableCompat("scanType", BeaconScanType::class.java)
             val vehicleId = it.getString("vehicleId")
-            val beacon = it.getSerializable("beacon") as Beacon?
+            val beacon = it.getSerializableCompat("beacon", Beacon::class.java)
             if (scanType != null) {
                 viewModel = BeaconViewModel(scanType, vehicleId, beacon)
                 viewModel.init(requireContext())

@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.view.View
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
@@ -63,7 +63,7 @@ internal class TransportationModeActivity : AppCompatActivity() {
         getFragment()?.onTransportationProfileClicked(view)
     }
 
-    fun onValidateClicked(view: View) {
+    fun onValidateClicked(@Suppress("UNUSED_PARAMETER")  view: View) {
         getFragment()?.onValidate()
     }
 

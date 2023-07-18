@@ -18,10 +18,23 @@ import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBa
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
-import com.drivequant.drivekit.common.ui.utils.*
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.*
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.resSpans
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.FormatType
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_header_view_container
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_layout
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_start
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.container_conditions_info
 import kotlinx.android.synthetic.main.dk_fragment_challenge_join.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_conditions_info
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_countdown
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_join_challenge
+import kotlinx.android.synthetic.main.dk_fragment_challenge_join.timer_container
 import kotlin.math.roundToInt
 
 
@@ -53,8 +66,8 @@ class ChallengeParticipationFragment : Fragment() {
     ): View? =
         inflater.inflate(R.layout.dk_fragment_challenge_join, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setStyle()
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
@@ -63,7 +76,7 @@ class ChallengeParticipationFragment : Fragment() {
             ), javaClass.simpleName
         )
 
-        (savedInstanceState?.getString("challengeIdTag"))?.let { it ->
+        (savedInstanceState?.getString("challengeIdTag"))?.let {
             challengeId = it
         }
 

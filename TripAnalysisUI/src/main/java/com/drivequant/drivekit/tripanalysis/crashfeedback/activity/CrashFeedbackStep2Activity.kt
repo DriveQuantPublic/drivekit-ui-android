@@ -74,11 +74,11 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
         }
     }
 
-    fun onNoCrashButtonClicked(view: View) {
+    fun onNoCrashButtonClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         sendNoCrash()
     }
 
-    fun onMinorCrashButtonClicked(view: View) {
+    fun onMinorCrashButtonClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         DriveKitTripAnalysis.sendUserFeedback(
             feedbackType = CrashFeedbackType.CRASH_CONFIRMED,
             severity = CrashFeedbackSeverity.MINOR,

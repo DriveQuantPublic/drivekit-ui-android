@@ -2,24 +2,36 @@ package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.extension.bigText
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_FULL
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_ICONS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY_DESCRIPTION
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.ENGINE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.MODELS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.NAME
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TRUCK_TYPE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TYPE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.VERSIONS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.YEARS
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
-import kotlinx.android.synthetic.main.fragment_item_list.*
+import kotlinx.android.synthetic.main.fragment_item_list.items_recycler_view
+import kotlinx.android.synthetic.main.fragment_item_list.text_view_description
 
 class VehicleItemListFragment : Fragment() {
 
@@ -80,10 +92,10 @@ class VehicleItemListFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
-            vehiclePickerStep = it.getSerializable("vehiclePickerStep") as VehiclePickerStep
+            vehiclePickerStep = it.getSerializableCompat("vehiclePickerStep", VehiclePickerStep::class.java)!!
         }
 
         if (vehiclePickerStep == TYPE) {
