@@ -56,7 +56,6 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
 
         request(
             this,
-            permissionCallback as OnPermissionCallback,
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT
         )

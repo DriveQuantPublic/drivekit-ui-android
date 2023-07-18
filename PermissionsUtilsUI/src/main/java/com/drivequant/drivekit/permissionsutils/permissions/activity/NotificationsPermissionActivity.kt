@@ -58,7 +58,6 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
 
         request(
             this,
-            permissionCallback as OnPermissionCallback,
             Manifest.permission.POST_NOTIFICATIONS
         )
     }
