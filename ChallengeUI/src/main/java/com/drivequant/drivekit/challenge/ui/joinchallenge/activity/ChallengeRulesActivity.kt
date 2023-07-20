@@ -67,7 +67,12 @@ class ChallengeRulesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val isRegistered = intent.getBooleanExtra(CONSULT_RULES_EXTRA, false)
-        challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
+        intent.getStringExtra(CHALLENGE_ID_EXTRA)?.apply {
+            challengeId = this
+        } ?: run {
+            finish()
+            return
+        }
 
         val acceptRulesText = if (isRegistered) {
             "dk_challenge_participate_button"
