@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9qMMsU8aKZTE1GHO7ByMMxT5T44aqsfw"/>
+            android:value="AIzaSyCZ6Z6xhkxP2_iV3Vq9wqlbeZkO1sX2ODs"/>
         <activity
             android:name="com.drivekit.demoapp.splashscreen.activity.SplashScreenActivity"
             android:theme="@style/SplashTheme"
