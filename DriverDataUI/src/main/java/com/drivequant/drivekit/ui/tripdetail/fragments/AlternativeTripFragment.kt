@@ -1,13 +1,13 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -18,7 +18,11 @@ import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.AlternativeTripViewModel
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.*
+import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.button_change
+import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_analyzed_text
+import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_declared_text
+import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_description
+import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_icon
 
 internal class AlternativeTripFragment : Fragment() {
 
@@ -56,8 +60,8 @@ internal class AlternativeTripFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (!this::trip.isInitialized) {
             (savedInstanceState?.getString("itinId"))?.let { itinId ->
                 DbTripAccess.findTrip(itinId).executeOneTrip()?.toTrip()?.let {

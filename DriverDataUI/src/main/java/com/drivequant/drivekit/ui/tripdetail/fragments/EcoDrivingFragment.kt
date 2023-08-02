@@ -9,13 +9,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
-import kotlinx.android.synthetic.main.eco_driving_fragment.*
+import kotlinx.android.synthetic.main.eco_driving_fragment.accelAdvice
+import kotlinx.android.synthetic.main.eco_driving_fragment.decelAdvice
+import kotlinx.android.synthetic.main.eco_driving_fragment.gauge_type_title
+import kotlinx.android.synthetic.main.eco_driving_fragment.image_accel_advice
+import kotlinx.android.synthetic.main.eco_driving_fragment.image_decel_advice
+import kotlinx.android.synthetic.main.eco_driving_fragment.image_main_advice
+import kotlinx.android.synthetic.main.eco_driving_fragment.mainAdvice
+import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
+import kotlinx.android.synthetic.main.eco_driving_fragment.score_info
 
 class EcoDrivingFragment : Fragment() {
 
@@ -44,9 +53,9 @@ class EcoDrivingFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("viewModel") as EcoDrivingViewModel?)?.let {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.getSerializableCompat("viewModel", EcoDrivingViewModel::class.java)?.let {
             viewModel = it
         }
         score_gauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)

@@ -6,14 +6,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController.permissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
-import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
-import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.utils.*
+import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
+import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by Mohamed on 2020-04-02.
@@ -38,7 +37,7 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     )
     fun showPermissionViews(
         context: Context,
-        permissionView: ArrayList<PermissionView>,
+        @Suppress("UNUSED_PARAMETER") permissionView: ArrayList<PermissionView>,
         permissionViewListener: PermissionViewListener
     ) {
         showPermissionViews(context, permissionViewListener)
@@ -70,14 +69,14 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     }
 
     @Deprecated("Logs are now enabled by default. To disable logging, just call DriveKit.disableLogging()")
-    fun configureDiagnosisLogs(shouldDisplayDiagnosisLogs: Boolean) { }
+    fun configureDiagnosisLogs(@Suppress("UNUSED_PARAMETER")shouldDisplayDiagnosisLogs: Boolean) { }
 
     fun configureContactType(ContactType: ContactType) {
         this.contactType = ContactType
     }
 
     @Deprecated("Logs are now only driven by DriveKit Core module.")
-    fun configureLogPathFile(logPathFile: String) { }
+    fun configureLogPathFile(@Suppress("UNUSED_PARAMETER") logPathFile: String) { }
 
     fun configureTutorialUrl(tutorialUrl: String) {
         this.tutorialUrl = tutorialUrl

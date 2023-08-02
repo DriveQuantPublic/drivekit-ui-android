@@ -2,13 +2,14 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
@@ -18,7 +19,7 @@ import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.trip_timeline_fragment.*
+import kotlinx.android.synthetic.main.trip_timeline_fragment.timeline_list
 
 class TripTimelineFragment : Fragment() {
 
@@ -54,11 +55,11 @@ class TripTimelineFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val itinId = savedInstanceState?.getSerializable("itinId") as String?
-        val tripListConfigurationType = savedInstanceState?.getSerializable("tripListConfigurationType") as TripListConfigurationType?
+        val itinId = savedInstanceState?.getSerializableCompat("itinId", String::class.java)
+        val tripListConfigurationType = savedInstanceState?.getSerializableCompat("tripListConfigurationType", TripListConfigurationType::class.java)
 
         if (itinId != null && tripListConfigurationType != null) {
             tripDetailViewModel = ViewModelProvider(

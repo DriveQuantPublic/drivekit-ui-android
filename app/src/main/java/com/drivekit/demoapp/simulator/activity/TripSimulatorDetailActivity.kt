@@ -2,11 +2,11 @@ package com.drivekit.demoapp.simulator.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
@@ -16,11 +16,21 @@ import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModel
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelListener
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.*
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.button_stop_start_trip_simulator
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.graph_container
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_automatic_stop_in
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_duration
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_sdk_state
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_time
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_velocity
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.text_view_description
+import kotlinx.android.synthetic.main.activity_trip_simulator_detail.text_view_title
 
 internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
 
@@ -55,10 +65,10 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
 
-        presetTripType = intent.getSerializableExtra(PRESET_TYPE_EXTRA) as PresetTripType
+        presetTripType = intent.getSerializableExtraCompat(PRESET_TYPE_EXTRA, PresetTripType::class.java)!!
 
-        (savedInstanceState?.getSerializable("presetTripTypeTag"))?.let { it ->
-            presetTripType = it as PresetTripType
+        savedInstanceState?.getSerializableCompat("presetTripTypeTag", PresetTripType::class.java)?.let {
+            presetTripType = it
         }
 
         if (!this::viewModel.isInitialized) {

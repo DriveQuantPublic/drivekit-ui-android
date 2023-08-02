@@ -9,25 +9,36 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item_no_padding.*
-import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.*
-import com.drivequant.drivekit.common.ui.extension.*
+import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item_no_padding.image_item
+import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item_no_padding.text_view_item_display_name
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.button_cancel_action
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.button_delete_reference
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.button_validate_reference
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.edit_text_date
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.edit_text_distance
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.text_view_history_detail_title
+import kotlinx.android.synthetic.main.dk_fragment_odometer_history_detail.vehicle_item
 
 
 class OdometerHistoryDetailFragment : Fragment() {
@@ -60,8 +71,8 @@ class OdometerHistoryDetailFragment : Fragment() {
         inflater.inflate(R.layout.dk_fragment_odometer_history_detail, container, false).setDKStyle(
             Color.WHITE)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         (savedInstanceState?.getString("vehicleIdTag"))?.let {
             vehicleId = it
         }

@@ -13,15 +13,16 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 
 class ChallengeParticipationActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : ChallengeParticipationViewModel
-    private lateinit var fragment : ChallengeParticipationFragment
+    private lateinit var viewModel: ChallengeParticipationViewModel
+    private lateinit var fragment: ChallengeParticipationFragment
 
     companion object {
         const val CHALLENGE_ID_EXTRA = "challenge-id-extra"
 
         fun launchActivity(
             activity: Activity,
-            challengeId: String) {
+            challengeId: String
+        ) {
             val intent = Intent(activity, ChallengeParticipationActivity::class.java)
             intent.putExtra(CHALLENGE_ID_EXTRA, challengeId)
             activity.startActivity(intent)
@@ -37,7 +38,11 @@ class ChallengeParticipationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
+        val challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA)
+        if (challengeId == null) {
+            finish()
+            return
+        }
 
         viewModel = ViewModelProvider(this,
             ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(challengeId)

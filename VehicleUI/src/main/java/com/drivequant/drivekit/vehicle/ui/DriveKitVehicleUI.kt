@@ -150,7 +150,7 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     }
 
     @Deprecated("This method is not used anymore.")
-    fun configureVehiclePickerExtraStep(listener: VehiclePickerCompleteListener) {}
+    fun configureVehiclePickerExtraStep(@Suppress("UNUSED_PARAMETER") listener: VehiclePickerCompleteListener) {}
 
     fun enableOdometer(hasOdometer: Boolean) {
         this.hasOdometer = hasOdometer

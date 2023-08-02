@@ -1,17 +1,26 @@
 package com.drivequant.drivekit.ui.tripdetail.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.*
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_co2_emission
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_co2_mass
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_condition
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_consumption
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_idling_duration
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_mean_speed
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_road_context
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_vehicle_used
+import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_weather
 
 class SynthesisFragment : Fragment() {
 
@@ -41,9 +50,9 @@ class SynthesisFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (savedInstanceState?.getSerializable("trip") as Trip?)?.let{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.getSerializableCompat("trip", Trip::class.java)?.let {
             trip = it
         }
 

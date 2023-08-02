@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
@@ -19,7 +19,8 @@ import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.*
+import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.challenge_header_view_container
+import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.challenge_trips_list
 
 
 class ChallengeTripListFragment : Fragment() {
@@ -54,10 +55,7 @@ class ChallengeTripListFragment : Fragment() {
                 "dk_tag_challenge_detail_trips"
             ), javaClass.simpleName
         )
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(
                 this,
@@ -88,14 +86,14 @@ class ChallengeTripListFragment : Fragment() {
             ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.getChallengeId())
         )[ChallengeParticipationViewModel::class.java]
 
-        val view =
+        val challengeHeaderView =
             ChallengeHeaderView(
                 requireContext()
             )
-        view.configure(viewModelParticipation, requireActivity())
-        view.displayRulesText(false)
-        view.displayConsultRulesText(false)
-        view.displayConditionsDescriptionText(false)
-        challenge_header_view_container.addView(view)
+        challengeHeaderView.configure(viewModelParticipation, requireActivity())
+        challengeHeaderView.displayRulesText(false)
+        challengeHeaderView.displayConsultRulesText(false)
+        challengeHeaderView.displayConditionsDescriptionText(false)
+        challenge_header_view_container.addView(challengeHeaderView)
     }
 }

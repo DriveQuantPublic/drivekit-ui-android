@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.beacon.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -11,10 +10,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.fragment.BeaconDetailFragment
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
@@ -70,8 +71,8 @@ class BeaconDetailActivity : AppCompatActivity() {
 
         vehicleId = intent.getStringExtra(VEHICLE_ID_EXTRA)
         vehicleName = intent.getStringExtra(VEHICLE_NAME_EXTRA)
-        beaconInfo = intent.getSerializableExtra(BEACON_INFO_EXTRA) as BeaconInfo?
-        beaconRetrievedInfo = intent.getSerializableExtra(BEACON_RETRIEVED_INFO_EXTRA) as DKBeaconRetrievedInfo?
+        beaconInfo = intent.getSerializableExtraCompat(BEACON_INFO_EXTRA, BeaconInfo::class.java)
+        beaconRetrievedInfo = intent.getSerializableExtraCompat(BEACON_RETRIEVED_INFO_EXTRA, DKBeaconRetrievedInfo::class.java)
 
         vehicleId?.let { vehicleId ->
             beaconInfo?.let { beaconInfo ->

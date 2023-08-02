@@ -1,35 +1,29 @@
 package com.drivequant.drivekit.driverachievement.ui.streaks.fragment
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.drivequant.drivekit.driverachievement.StreakSyncStatus
-
-import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
-import kotlinx.android.synthetic.main.dk_fragment_streaks_list.*
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
+import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
+import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
+import kotlinx.android.synthetic.main.dk_fragment_streaks_list.recycler_view_streaks
+import kotlinx.android.synthetic.main.dk_fragment_streaks_list.refresh_streaks
 
 
 class StreaksListFragment : Fragment() {
 
     private lateinit var listViewModel: StreaksListViewModel
     private lateinit var listAdapter: StreaksListAdapter
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if(!this::listViewModel.isInitialized) {
-            listViewModel = ViewModelProvider(this)[StreaksListViewModel::class.java]
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +36,10 @@ class StreaksListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!this::listViewModel.isInitialized) {
+            listViewModel = ViewModelProvider(this)[StreaksListViewModel::class.java]
+        }
+
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_streaks"), javaClass.simpleName)
 
         val layoutManager =

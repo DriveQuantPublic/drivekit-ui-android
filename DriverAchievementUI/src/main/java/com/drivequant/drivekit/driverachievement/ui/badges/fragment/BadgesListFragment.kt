@@ -1,13 +1,12 @@
 package com.drivequant.drivekit.driverachievement.ui.badges.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -15,7 +14,8 @@ import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListViewModel
-import kotlinx.android.synthetic.main.dk_fragment_badges_list.*
+import kotlinx.android.synthetic.main.dk_fragment_badges_list.recycler_view_badges
+import kotlinx.android.synthetic.main.dk_fragment_badges_list.refresh_badges
 import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
 
@@ -23,12 +23,6 @@ class BadgesListFragment : Fragment() {
 
     private lateinit var listViewModel: BadgesListViewModel
     private lateinit var listAdapter: BadgesListAdapter
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (!this::listViewModel.isInitialized)
-            listViewModel = ViewModelProvider(this)[BadgesListViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +32,9 @@ class BadgesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!this::listViewModel.isInitialized)
+            listViewModel = ViewModelProvider(this)[BadgesListViewModel::class.java]
+
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_badges"), javaClass.simpleName)
         recycler_view_badges.layoutManager =
             LinearLayoutManager(view.context)

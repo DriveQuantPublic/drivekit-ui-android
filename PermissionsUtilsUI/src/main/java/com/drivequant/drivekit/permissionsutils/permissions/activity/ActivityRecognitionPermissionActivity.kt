@@ -22,7 +22,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         setStyle()
     }
 
-    fun onRequestPermissionClicked(view: View) {
+    fun onRequestPermissionClicked(@Suppress("UNUSED_PARAMETER") view: View) {
         checkRequiredPermissions()
     }
 
@@ -43,7 +43,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
                 handlePermissionTotallyDeclined(this@ActivityRecognitionPermissionActivity, R.string.dk_perm_utils_app_diag_activity_ko)
             }
         }
-        request(this, permissionCallback as OnPermissionCallback, Manifest.permission.ACTIVITY_RECOGNITION)
+        request(this, Manifest.permission.ACTIVITY_RECOGNITION)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

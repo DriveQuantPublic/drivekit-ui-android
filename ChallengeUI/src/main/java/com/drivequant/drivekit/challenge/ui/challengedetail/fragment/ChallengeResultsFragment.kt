@@ -1,8 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.challengedetail.fragment
 
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +15,20 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_challenge_result_card_view.view.*
-import kotlinx.android.synthetic.main.dk_fragment_challenge_results.*
+import kotlinx.android.synthetic.main.dk_challenge_result_card_view.view.icon_distance
+import kotlinx.android.synthetic.main.dk_challenge_result_card_view.view.text_view_competitor_value
+import kotlinx.android.synthetic.main.dk_challenge_result_card_view.view.text_view_driver_value
 import kotlinx.android.synthetic.main.dk_fragment_challenge_results.card_view_distance
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.card_view_duration
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.card_view_trips_number
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.dk_challenge_progress_bar
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.dk_challenge_rating_bar
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.image_view_reward_icon
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.text_view_best
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.text_view_card_score
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.text_view_card_title
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.text_view_result_global_rank
+import kotlinx.android.synthetic.main.dk_fragment_challenge_results.text_view_worst
 
 
 class ChallengeResultsFragment : Fragment() {
@@ -54,10 +63,7 @@ class ChallengeResultsFragment : Fragment() {
                 "dk_tag_challenge_detail_results"
             ), javaClass.simpleName
         )
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(
                 this,

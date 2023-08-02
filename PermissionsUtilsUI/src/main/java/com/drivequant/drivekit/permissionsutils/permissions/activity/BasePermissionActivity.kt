@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
@@ -30,16 +31,16 @@ open class BasePermissionActivity : RequestPermissionActivity() {
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_onboarding"), javaClass.simpleName)
 
-        val permissionViewsListExtra = intent.getSerializableExtra(PERMISSION_VIEWS_LIST_EXTRA)
+        val permissionViewsListExtra = intent.getSerializableExtraCompat(PERMISSION_VIEWS_LIST_EXTRA, ArrayList::class.java)
         permissionViewsListExtra?.let {
             nextPermissionViews =
-                intent.getSerializableExtra(PERMISSION_VIEWS_LIST_EXTRA) as ArrayList<PermissionView>
+                intent.getSerializableExtraCompat(PERMISSION_VIEWS_LIST_EXTRA, ArrayList::class.java) as ArrayList<PermissionView>
         }
     }
 
-    protected fun forward(){
+    protected fun forward() {
         finish()
-        if (nextPermissionViews.isNotEmpty()){
+        if (nextPermissionViews.isNotEmpty()) {
             nextPermissionViews.remove(nextPermissionViews.first())
         }
         if (nextPermissionViews.isEmpty()) {

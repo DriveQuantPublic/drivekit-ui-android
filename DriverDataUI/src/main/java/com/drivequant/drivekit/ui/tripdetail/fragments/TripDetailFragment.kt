@@ -4,22 +4,39 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RadioGroup
+import android.widget.ScrollView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.HtmlCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.widget.AppCompatRadioButton
-import android.view.*
-import android.widget.*
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEvent
 import com.drivequant.drivekit.common.ui.analytics.DKAnalyticsEventKey
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -37,8 +54,15 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_trip_detail.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_trip_detail.center_button
+import kotlinx.android.synthetic.main.fragment_trip_detail.container_header_trip
+import kotlinx.android.synthetic.main.fragment_trip_detail.progress_circular
+import kotlinx.android.synthetic.main.fragment_trip_detail.tab_layout
+import kotlinx.android.synthetic.main.fragment_trip_detail.trip_date
+import kotlinx.android.synthetic.main.fragment_trip_detail.trip_header
+import kotlinx.android.synthetic.main.fragment_trip_detail.unscored_fragment
+import kotlinx.android.synthetic.main.fragment_trip_detail.view_pager
+import java.util.Locale
 
 class TripDetailFragment : Fragment() {
 
@@ -118,8 +142,8 @@ class TripDetailFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_trips_detail"), javaClass.simpleName)
         savedInstanceState?.getString("itinId")?.let{
             itinId = it

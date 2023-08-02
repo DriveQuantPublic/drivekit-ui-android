@@ -2,11 +2,11 @@ package com.drivequant.drivekit.challenge.ui.joinchallenge.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +19,9 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_activity_challenge_rules.*
 import kotlinx.android.synthetic.main.dk_activity_challenge_rules.progress_circular
+import kotlinx.android.synthetic.main.dk_activity_challenge_rules.text_view_accept_rule
+import kotlinx.android.synthetic.main.dk_activity_challenge_rules.text_view_challenge_rule
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
@@ -66,7 +67,12 @@ class ChallengeRulesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val isRegistered = intent.getBooleanExtra(CONSULT_RULES_EXTRA, false)
-        challengeId = intent.getStringExtra(CHALLENGE_ID_EXTRA) as String
+        intent.getStringExtra(CHALLENGE_ID_EXTRA)?.apply {
+            challengeId = this
+        } ?: run {
+            finish()
+            return
+        }
 
         val acceptRulesText = if (isRegistered) {
             "dk_challenge_participate_button"
@@ -79,7 +85,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             text = DKResource.convertToString(this@ChallengeRulesActivity, acceptRulesText)
             headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
-        (savedInstanceState?.getString("challengeId"))?.let { it ->
+        (savedInstanceState?.getString("challengeId"))?.let {
             challengeId = it
         }
 

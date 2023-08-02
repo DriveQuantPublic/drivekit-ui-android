@@ -1,14 +1,13 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.fragment
 
-import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -17,7 +16,8 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.adapter.BluetoothItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
-import kotlinx.android.synthetic.main.fragment_bluetooth_select.*
+import kotlinx.android.synthetic.main.fragment_bluetooth_select.text_view_select_description
+import kotlinx.android.synthetic.main.fragment_bluetooth_select.text_view_select_list_title
 
 class SelectBluetoothFragment: Fragment() {
 
@@ -40,8 +40,8 @@ class SelectBluetoothFragment: Fragment() {
         return globalView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         text_view_select_description.normalText(DriveKitUI.colors.mainFontColor())
         text_view_select_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_select_bluetooth_description")

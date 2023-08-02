@@ -1,7 +1,10 @@
 package com.drivequant.drivekit.common.ui.component.contextcard.view
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -45,9 +48,9 @@ internal class ContextCardBar @JvmOverloads constructor(
         rectPath.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.clipPath(rectPath)
+        canvas.clipPath(rectPath)
 
         var lastProgress = 0
 
@@ -67,7 +70,7 @@ internal class ContextCardBar @JvmOverloads constructor(
             )
 
             paints[progressItem]?.let { paint ->
-                canvas?.drawRect(rectF, paint)
+                canvas.drawRect(rectF, paint)
             }
 
             lastProgress = progressItemStart

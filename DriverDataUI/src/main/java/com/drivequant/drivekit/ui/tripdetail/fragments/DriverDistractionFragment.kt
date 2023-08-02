@@ -3,24 +3,30 @@ package com.drivequant.drivekit.ui.tripdetail.fragments
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeConfiguration
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.driver_distraction_fragment.*
 import kotlinx.android.synthetic.main.driver_distraction_fragment.gauge_type_title
+import kotlinx.android.synthetic.main.driver_distraction_fragment.phone_call_item
+import kotlinx.android.synthetic.main.driver_distraction_fragment.phone_call_selector
 import kotlinx.android.synthetic.main.driver_distraction_fragment.score_gauge
 import kotlinx.android.synthetic.main.driver_distraction_fragment.score_info
+import kotlinx.android.synthetic.main.driver_distraction_fragment.screen_unlock_item
+import kotlinx.android.synthetic.main.driver_distraction_fragment.screen_unlock_selector
 
 internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
@@ -51,11 +57,11 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
             val itinId = it.getString("itinId")
-            val tripListConfigurationType = it.getSerializable("tripListConfigurationType") as TripListConfigurationType?
+            val tripListConfigurationType = it.getSerializableCompat("tripListConfigurationType", TripListConfigurationType::class.java)
 
             if (itinId != null && tripListConfigurationType != null) {
                 viewModel = ViewModelProvider(

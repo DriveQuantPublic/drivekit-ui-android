@@ -4,7 +4,12 @@ package com.drivequant.drivekit.ui.trips.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
@@ -34,9 +39,15 @@ import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
-import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.*
-import kotlinx.android.synthetic.main.fragment_trips_list.*
-import kotlinx.android.synthetic.main.view_content_no_trips.*
+import kotlinx.android.synthetic.main.dk_view_content_no_car_trip.text_view_no_car_text
+import kotlinx.android.synthetic.main.fragment_trips_list.dk_trips_list_view
+import kotlinx.android.synthetic.main.fragment_trips_list.filter_view
+import kotlinx.android.synthetic.main.fragment_trips_list.no_car_trips
+import kotlinx.android.synthetic.main.fragment_trips_list.no_trips
+import kotlinx.android.synthetic.main.fragment_trips_list.progress_circular
+import kotlinx.android.synthetic.main.fragment_trips_list.text_view_trips_synthesis
+import kotlinx.android.synthetic.main.view_content_no_trips.image_view_no_trips
+import kotlinx.android.synthetic.main.view_content_no_trips.no_trips_recorded_text
 
 
 class TripsListFragment : Fragment() {
@@ -46,8 +57,16 @@ class TripsListFragment : Fragment() {
     private var shouldSyncTrips = true
     private lateinit var synchronizationType: SynchronizationType
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        DriveKitUI.analyticsListener?.trackScreen(
+            DKResource.convertToString(
+                requireContext(),
+                "dk_tag_trips_list"
+            ), javaClass.simpleName
+        )
+        activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
+
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(
                 this,
@@ -176,17 +195,6 @@ class TripsListFragment : Fragment() {
             text_view_trips_synthesis.visibility = View.GONE
             filter_view.visibility = View.GONE
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_trips_list"
-            ), javaClass.simpleName
-        )
-        activity?.title = context?.getString(R.string.dk_driverdata_trips_list_title)
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {

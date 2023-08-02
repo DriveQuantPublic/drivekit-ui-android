@@ -3,20 +3,25 @@ package com.drivequant.drivekit.vehicle.ui.beacon.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.*
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.beaconutils.BeaconInfo
+import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
-import kotlinx.android.synthetic.main.fragment_beacon_detail.*
-import java.lang.StringBuilder
+import kotlinx.android.synthetic.main.fragment_beacon_detail.recycler_view_container
 
 class BeaconDetailFragment : Fragment() {
     companion object {
@@ -51,8 +56,8 @@ class BeaconDetailFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
             val vehicleName = it.getString("vehicleName")
             val vehicleId = it.getString("vehicleId")
@@ -60,7 +65,7 @@ class BeaconDetailFragment : Fragment() {
             val estimatedDistance = it.getDouble("estimatedDistance")
             val rssi = it.getInt("rssi")
             val txPower = it.getInt("txPower")
-            val seenBeacon = it.getSerializable("seenBeacon") as BeaconInfo?
+            val seenBeacon = it.getSerializableCompat("seenBeacon", BeaconInfo::class.java)
             if (vehicleId != null && vehicleName != null && seenBeacon != null) {
                 viewModel = ViewModelProvider(
                     this,
