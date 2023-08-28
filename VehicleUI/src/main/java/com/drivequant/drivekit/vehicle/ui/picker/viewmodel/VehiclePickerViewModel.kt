@@ -363,7 +363,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     name = this.name,
                     liteConfig = this.isLiteConfig
                 ) { status, vehicle ->
-                    manageCreateOrReplaceVehicleResponse(status, vehicle)
+                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
                 }
             }
             VehicleType.TRUCK -> {
@@ -372,14 +372,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     truckCharacteristics = this.truckCharacteristics,
                     name = this.name,
                 ) { status, vehicle ->
-                    manageCreateOrReplaceVehicleResponse(status, vehicle)
+                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
                 }
             }
         }
     }
 
     private fun manageCreateOrReplaceVehicleResponse(
-        status: VehicleReplaceStatus,
+        status: Boolean,
         vehicle: Vehicle?
     ) {
         val state = if (status && vehicle != null) {
