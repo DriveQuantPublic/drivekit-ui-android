@@ -361,26 +361,28 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     oldVehicleId = oldVehicleId,
                     carCharacteristics = this.carCharacteristics,
                     name = this.name,
-                    isLiteConfig = this.isLiteConfig
-                ) {
-                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
+                    liteConfig = this.isLiteConfig
+                ) { status, vehicle ->
+                    manageCreateOrReplaceVehicleResponse(status, vehicle)
                 }
             }
             VehicleType.TRUCK -> {
                 DriveKitVehicle.replaceTruckVehicle(
                     oldVehicleId = oldVehicleId,
-                    carCharacteristics = this.carCharacteristics,
+                    truckCharacteristics = this.truckCharacteristics,
                     name = this.name,
-                    isLiteConfig = this.isLiteConfig
-                ) {
-                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
+                ) { status, vehicle ->
+                    manageCreateOrReplaceVehicleResponse(status, vehicle)
                 }
             }
         }
     }
 
-    private fun manageCreateOrReplaceVehicleResponse(status: Boolean, vehicle: Vehicle) {
-        val state = if (status){
+    private fun manageCreateOrReplaceVehicleResponse(
+        status: VehicleReplaceStatus,
+        vehicle: Vehicle?
+    ) {
+        val state = if (status && vehicle != null) {
             this.vehicleToDelete = null
             this.createdVehicleId = vehicle.vehicleId
             SUCCESS
