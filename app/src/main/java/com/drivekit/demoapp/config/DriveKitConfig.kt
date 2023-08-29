@@ -1,6 +1,5 @@
 package com.drivekit.demoapp.config
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -11,6 +10,7 @@ import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
+import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -31,13 +31,23 @@ import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSe
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
+import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
+import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
+import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
+import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
+import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
+import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
+import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -85,6 +95,35 @@ internal object DriveKitConfig {
 
         // TripAnalysis initialization:
         DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
+        DriveKitTripAnalysis.addTripListener(object : TripListener {
+            override fun beaconDetected() { }
+
+            override fun crashDetected(crashInfo: DKCrashInfo) {}
+
+            override fun crashFeedbackSent(
+                crashInfo: DKCrashInfo,
+                feedbackType: CrashFeedbackType,
+                severity: CrashFeedbackSeverity
+            ) {}
+
+            override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {}
+
+            override fun potentialTripStart(startMode: StartMode) {}
+
+            override fun tripCancelled(cancelTrip: CancelTrip) {
+                TripReceiver.tripCancelled(application, cancelTrip)
+            }
+
+            override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
+                TripReceiver.tripFinished(application, response)
+            }
+
+            override fun tripPoint(tripPoint: TripPoint) { }
+
+            override fun tripSavedForRepost() { }
+
+            override fun tripStarted(startMode: StartMode) { }
+        })
 
         // Initialize DriverData:
         DriveKitDriverData.initialize()
@@ -259,8 +298,7 @@ internal object DriveKitConfig {
         configureModules(context)
     }
 
-    @SuppressLint("ApplySharedPref")
-    fun reset(context: Context) {
+    private fun reset(context: Context) {
         // Reset DriveKit
         DriveKit.reset()
         DriveKitTripAnalysis.reset()
@@ -274,6 +312,6 @@ internal object DriveKitConfig {
 
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-        preferences.edit().clear().commit()
+        preferences.edit().clear().apply()
     }
 }
