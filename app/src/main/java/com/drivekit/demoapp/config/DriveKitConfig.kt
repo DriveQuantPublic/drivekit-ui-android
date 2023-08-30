@@ -156,7 +156,7 @@ internal object DriveKitConfig {
 
     private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {
-            if (apiKey != DriveKit.config.apiKey) {
+            if (DriveKit.config.apiKey != null && apiKey != DriveKit.config.apiKey) {
                 reset(context)
             }
             DriveKit.setApiKey(apiKey)

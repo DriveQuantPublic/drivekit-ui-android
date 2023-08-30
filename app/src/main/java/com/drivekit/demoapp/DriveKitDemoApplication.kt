@@ -7,7 +7,7 @@ import androidx.core.app.NotificationCompat
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.drivekitdemoapp.R
-import java.util.*
+import java.util.Random
 
 class DriveKitDemoApplication : Application() {
 
@@ -29,7 +29,7 @@ class DriveKitDemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DKNotificationManager.createChannels(this)
         DriveKitConfig.initialize(this)
+        DKNotificationManager.createChannels(this)
     }
 }
