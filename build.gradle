@@ -11,7 +11,7 @@ buildscript {
         core_ktx = '1.9.0'
         grid_layout = '1.0.0'
         legacy_preference = '1.0.0'
-        lifecycle_version = '2.6.2'
+        lifecycle_version = '2.5.1'
         material = '1.9.0'
         play_services_maps = '18.1.0'
         swipe_refresh_layout = '1.1.0'
