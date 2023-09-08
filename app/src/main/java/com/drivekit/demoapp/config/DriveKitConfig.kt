@@ -48,6 +48,7 @@ import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.Cras
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
+import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -109,6 +110,8 @@ internal object DriveKitConfig {
             override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {}
 
             override fun potentialTripStart(startMode: StartMode) {}
+
+            override fun sdkStateChanged(state: State) {}
 
             override fun tripCancelled(cancelTrip: CancelTrip) {
                 TripReceiver.tripCancelled(application, cancelTrip)
