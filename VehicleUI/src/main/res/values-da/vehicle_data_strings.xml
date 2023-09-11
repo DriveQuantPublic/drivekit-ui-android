@@ -10,7 +10,7 @@
     <string name="dk_beacon_paired_title">Tilføj en fyr</string>
     <string name="dk_beacon_rssi">RSSI (DBM)</string>
     <string name="dk_beacon_tx">TX (dBm)</string>
-    <string name="dk_beacon_uuid">Uuid</string>
+    <string name="dk_beacon_uuid">UUID</string>
     <string name="dk_beacon_vehicle_unknown">Ukendt køretøj</string>
     <string name="dk_beacon_vehicule_linked">Tilknyttet køretøj</string>
     <string name="dk_beacon_verify">Inspicer</string>
