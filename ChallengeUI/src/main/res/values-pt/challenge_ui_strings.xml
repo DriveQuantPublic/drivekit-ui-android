@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="dk_challenge_acceleration_score">Pontuação de aceleração</string>
+   <string name="dk_challenge_active">Ativo</string>
+   <string name="dk_challenge_adherence_score">Pontuação de adesão</string>
+   <string name="dk_challenge_braking_score">Pontuação de frenagem</string>
+   <string name="dk_challenge_competitors_distance">Distância total do desafio %s</string>
+   <string name="dk_challenge_competitors_duration">Os participantes dirigiram %s</string>
+   <string name="dk_challenge_competitors_trips">fora de um total de %s</string>
+   <string name="dk_challenge_consult_rule_button">Consulte as regras</string>
+   <string name="dk_challenge_distance_kilometer">Distância (km)</string>
+   <string name="dk_challenge_distraction_score">Pontuação de distração</string>
+   <string name="dk_challenge_driver_distance">Você passou por %s</string>
+   <string name="dk_challenge_driver_duration">Você dirigiu %s</string>
+   <string name="dk_challenge_driver_trips">Você percebeu %s</string>
+   <string name="dk_challenge_driving_time">Tempo de direção</string>
+   <string name="dk_challenge_eco_driving_score">Pontuação de direção ecológica</string>
+   <string name="dk_challenge_failed_to_join">Incapaz de participar do desafio, verifique se você está conectado à Internet ou tente novamente mais tarde.</string>
+   <string name="dk_challenge_failed_to_sync_challenges">Falha ao sincronizar os dados do desafio, tente novamente novamente.</string>
+   <string name="dk_challenge_finished">Completo</string>
+   <string name="dk_challenge_menu">Desafios</string>
+   <string name="dk_challenge_nb_trip">Número de viagens</string>
+   <string name="dk_challenge_no_active_challenge">Sem desafio contínuo</string>
+   <string name="dk_challenge_no_finished_challenge">Nenhum desafio concluído</string>
+   <string name="dk_challenge_not_a_participant">Você não participou desse desafio ou não preencheu as condições para ingressar no ranking.</string>
+   <string name="dk_challenge_optin_title">Aceitar as regras</string>
+   <string name="dk_challenge_participate_button">Eu participo</string>
+   <string name="dk_challenge_registered_confirmation">Você está registrado!</string>
+   <string name="dk_challenge_rule_title">Regras de desafio</string>
+   <string name="dk_challenge_safety_score">Pontuação de segurança</string>
+   <string name="dk_challenge_score_alert_message">Os resultados desse desafio estão sendo analisados, tente novamente mais tarde.</string>
+   <string name="dk_challenge_score_alert_title">Desafio em análise</string>
+   <string name="dk_challenge_signin_in_progress">Inscrever-se…</string>
+   <string name="dk_challenge_speeding_score">Pontuação de velocidade</string>
+   <string name="dk_challenge_start">Início do desafio em</string>
+   <string name="dk_challenge_traveled_distance">Distância viajada</string>
+   <string name="dk_challenge_unranked_conditions_info">Para entrar na tabela de classificação, você deve cumprir as condições abaixo:</string>
+</resources>

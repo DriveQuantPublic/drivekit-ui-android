@@ -10,7 +10,7 @@
     <string name="dk_beacon_paired_title">Tilføj en fyr</string>
     <string name="dk_beacon_rssi">RSSI (DBM)</string>
     <string name="dk_beacon_tx">TX (dBm)</string>
-    <string name="dk_beacon_uuid">Uuid</string>
+    <string name="dk_beacon_uuid">UUID</string>
     <string name="dk_beacon_vehicle_unknown">Ukendt køretøj</string>
     <string name="dk_beacon_vehicule_linked">Tilknyttet køretøj</string>
     <string name="dk_beacon_verify">Inspicer</string>
@@ -68,7 +68,7 @@
     <string name="dk_vehicle_beacon_setup_replace_description">Hvis du bekræfter dit valg, vil %s Beacon være forbundet med %s køretøjet.\n\n%s køretøjet vil ikke længere være forbundet med dette fyr.</string>
     <string name="dk_vehicle_beacon_setup_scan_title">Applikationen henter oplysningerne fra fyret og kontrollerer, at de kører ordentligt</string>
     <string name="dk_vehicle_beacon_setup_store_notice">Vi inviterer dig til at lægge fyret i handskekassen på dit køretøj</string>
-    <string name="dk_vehicle_beacon_setup_successlink_message">Tillykke!\n\nBeacon %s er nu forbundet med køretøjet %s</string>
+    <string name="dk_vehicle_beacon_setup_successlink_message">Tillykke!\n\nBeacon %1$s er nu forbundet med køretøjet %2$s</string>
     <string name="dk_vehicle_beacon_start_scan">Placer din fyr i nærheden af ​​din telefon, og tryk på skærmen</string>
     <string name="dk_vehicle_beacon_verify_wrong_vehicle">Det detekterede fyr er ikke forbundet med dette køretøj.</string>
     <string name="dk_vehicle_beacon_wait_scan">Vent cirka 10 sekunder ...</string>
