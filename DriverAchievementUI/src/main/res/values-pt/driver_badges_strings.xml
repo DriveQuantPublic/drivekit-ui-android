@@ -275,6 +275,6 @@
    <string name="badge_urban_distance_progress_3">Você tem %s quilômetros para ganhar esse crachá.</string>
    <string name="badge_urban_distance_theme">Dirigindo em uma área urbana</string>
    <string name="badge_your_progress_title">Seu progresso</string>
-   <string name="dk_achievements_failed_to_sync_badges">Falha ao sincronizar os crachás, tente novamente novamente.</string>
+   <string name="dk_achievements_failed_to_sync_badges">Falha ao sincronizar os crachás, tente novamente.</string>
    <string name="menu_mybadges">Meus crachás</string>
 </resources>

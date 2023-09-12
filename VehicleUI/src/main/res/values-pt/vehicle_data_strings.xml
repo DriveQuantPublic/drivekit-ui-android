@@ -134,7 +134,7 @@
    <string name="dk_vehicle_failed_to_paired_beacon">O dispositivo não pôde estar associado ao veículo, tente novamente mais tarde.</string>
    <string name="dk_vehicle_failed_to_paired_bluetooth">A conexão Bluetooth com o veículo falhou, tente novamente mais tarde.</string>
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">As características do veículo não puderam ser recuperadas.</string>
-   <string name="dk_vehicle_failed_to_sync">Falha ao recuperar os dados do veículo, tente novamente novamente</string>
+   <string name="dk_vehicle_failed_to_sync">Falha ao recuperar os dados do veículo, tente novamente</string>
    <string name="dk_vehicle_field_name_error">O nome do seu veículo não deve exceder 50 caracteres.</string>
    <string name="dk_vehicle_gps_already_exists_confirm">Deseja definir o modo de detecção %1$s para o veículo %2$s?\n\nO modo de detecção de veículo %3$s será alterado para %4$s.</string>
    <string name="dk_vehicle_list_empty">Adicione pelo menos um veículo</string>
@@ -156,7 +156,7 @@
    <string name="dk_vehicle_odometer_error_numeric">A entrada deve ser numérica</string>
    <string name="dk_vehicle_odometer_estimated_distance">Distância anual estimada</string>
    <string name="dk_vehicle_odometer_estimated_distance_subtitle">Para o ano %s</string>
-   <string name="dk_vehicle_odometer_failed_to_sync">Falha ao sincronizar o odômetro do veículo, tente novamente novamente.</string>
+   <string name="dk_vehicle_odometer_failed_to_sync">Falha ao sincronizar o odômetro do veículo, tente novamente.</string>
    <string name="dk_vehicle_odometer_histories_link">Veja leituras do odômetro</string>
    <string name="dk_vehicle_odometer_histories_title">Leituras de odômetro</string>
    <string name="dk_vehicle_odometer_history_add">Adicione rastreamento de milhagem</string>

@@ -9,7 +9,7 @@
    <string name="dk_driverdata_advice_feedback_05">Outra razão. Deixe um comentário.</string>
    <string name="dk_driverdata_advice_feedback_disagree_desc">Se você não entende o conselho ou isso não parece útil, pode avaliá -lo. Agradecemos antecipadamente por sua contribuição, seu feedback ajuda a melhorar o aplicativo, bem como a condução de dicas e isso beneficiará toda a comunidade de usuários.</string>
    <string name="dk_driverdata_advice_feedback_disagree_title">Sua opinião</string>
-   <string name="dk_driverdata_advice_feedback_error">Ocorreu um erro, tente novamente novamente.</string>
+   <string name="dk_driverdata_advice_feedback_error">Ocorreu um erro, tente novamente.</string>
    <string name="dk_driverdata_advice_feedback_success">Sua revisão foi levada em consideração. Obrigado !</string>
    <string name="dk_driverdata_alternative_transportation_remark">💡 Esta viagem não tem uma pontuação porque o aplicativo não mede sua direção enquanto você não está no seu veículo.</string>
    <string name="dk_driverdata_alternative_transportation_thanks">❤️ Obrigado por relatar esta viagem e por nos ajudar a melhorar o reconhecimento automático do modo de transporte.</string>
@@ -84,7 +84,7 @@
    <string name="dk_driverdata_extra_urban">%s na zona extra-urbana</string>
    <string name="dk_driverdata_failed_to_declare_transportation">O modo de transporte não pode ser atualizado, tente novamente.</string>
    <string name="dk_driverdata_failed_to_delete_trip">A viagem não pôde ser excluída, tente novamente mais tarde.</string>
-   <string name="dk_driverdata_failed_to_sync_trips">Falha ao sincronizar viagens, tente novamente novamente.</string>
+   <string name="dk_driverdata_failed_to_sync_trips">Falha ao sincronizar viagens, tente novamente.</string>
    <string name="dk_driverdata_lock_event">Bloqueio de tela</string>
    <string name="dk_driverdata_my_weekly_score_distraction">Minha pontuação semanal | Distração</string>
    <string name="dk_driverdata_my_weekly_score_ecodriving">Minha pontuação semanal | Dirigir ecológico</string>

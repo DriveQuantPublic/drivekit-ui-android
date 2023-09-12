@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string name="dk_achievements_failed_to_sync_rankings">Falha ao sincronizar as classificações, tente novamente novamente.</string>
+   <string name="dk_achievements_failed_to_sync_rankings">Falha ao sincronizar as classificações, tente novamente.</string>
    <string name="dk_achievements_ranking_legacy">Bimensal</string>
    <string name="dk_achievements_ranking_legacy_info">Essa classificação é calculada a partir da pontuação média das viagens das últimas duas semanas. Para aparecer no ranking, você deve ter concluído pelo menos uma viagem nos últimos 14 dias.</string>
    <string name="dk_achievements_ranking_menu_ranking">Minha classificação</string>

@@ -36,7 +36,7 @@
    <string name="dk_common_ecodriving_speed_weak_maintain">Velocidade irregular</string>
    <string name="dk_common_edit">Editar</string>
    <string name="dk_common_error_empty_field">Este campo não pode estar vazio</string>
-   <string name="dk_common_error_message">Ocorreu um erro durante a solicitação, tente novamente novamente.</string>
+   <string name="dk_common_error_message">Ocorreu um erro durante a solicitação, tente novamente.</string>
    <string name="dk_common_finish">Terminar</string>
    <string name="dk_common_hour_plural">horas</string>
    <string name="dk_common_hour_singular">hora</string>
