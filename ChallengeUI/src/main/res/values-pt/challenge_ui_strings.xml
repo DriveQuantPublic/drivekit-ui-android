@@ -16,7 +16,7 @@
    <string name="dk_challenge_driving_time">Tempo de direção</string>
    <string name="dk_challenge_eco_driving_score">Pontuação de direção ecológica</string>
    <string name="dk_challenge_failed_to_join">Incapaz de participar do desafio, verifique se você está conectado à Internet ou tente novamente mais tarde.</string>
-   <string name="dk_challenge_failed_to_sync_challenges">Falha ao sincronizar os dados do desafio, tente novamente novamente.</string>
+   <string name="dk_challenge_failed_to_sync_challenges">Falha ao sincronizar os dados do desafio, tente novamente.</string>
    <string name="dk_challenge_finished">Completo</string>
    <string name="dk_challenge_menu">Desafios</string>
    <string name="dk_challenge_nb_trip">Número de viagens</string>
