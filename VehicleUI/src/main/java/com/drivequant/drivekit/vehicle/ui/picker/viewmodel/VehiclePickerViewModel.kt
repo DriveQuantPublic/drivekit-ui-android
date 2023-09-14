@@ -112,7 +112,13 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             MODELS -> fetchVehicleYears()
             YEARS -> fetchVehicleVersions()
             VERSIONS -> fetchVehicleCharacteristics()
-            NAME -> createVehicle()
+            NAME -> {
+                vehicleToDelete?.let {
+                    replaceVehicle(it.vehicleId)
+                } ?: run {
+                    createVehicle()
+                }
+            }
         }
     }
 
@@ -331,14 +337,14 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     VehicleType.CAR -> {
                         DriveKitVehicle.createCarVehicle(carCharacteristics, name, detectionMode, object : VehicleCreateQueryListener {
                             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                                manageCreateVehicleResponse(status, vehicle)
+                                manageCreateOrReplaceVehicleResponse(status == VehicleManagerStatus.SUCCESS, vehicle)
                             }
                         }, isLiteConfig)
                     }
                     VehicleType.TRUCK -> {
                         DriveKitVehicle.createTruckVehicle(truckCharacteristics, name, detectionMode, object : VehicleCreateQueryListener {
                             override fun onResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-                                manageCreateVehicleResponse(status, vehicle)
+                                manageCreateOrReplaceVehicleResponse(status == VehicleManagerStatus.SUCCESS, vehicle)
                             }
                         })
                     }
@@ -347,30 +353,44 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }, SynchronizationType.CACHE)
     }
 
-    private fun manageCreateVehicleResponse(status: VehicleManagerStatus, vehicle: Vehicle) {
-        if (status == VehicleManagerStatus.SUCCESS){
-            vehicleToDelete?.let {
-                DriveKitVehicle.deleteVehicle(it, object: VehicleDeleteQueryListener {
-                    override fun onResponse(status: VehicleManagerStatus) {
-                        vehicleToDelete = null
-                        createdVehicleId = vehicle.vehicleId
-                        if (status == VehicleManagerStatus.SUCCESS) {
-                            endObserver.postValue(SUCCESS)
-                        } else {
-                            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-                        }
-                        progressBarObserver.postValue(false)
-                    }
-                })
-            }?: run {
-                createdVehicleId = vehicle.vehicleId
-                endObserver.postValue(SUCCESS)
-                progressBarObserver.postValue(false)
+    private fun replaceVehicle(oldVehicleId: String) {
+        progressBarObserver.postValue(true)
+        when (selectedVehicleTypeItem.vehicleType) {
+            VehicleType.CAR -> {
+                DriveKitVehicle.replaceCarVehicle(
+                    oldVehicleId = oldVehicleId,
+                    carCharacteristics = this.carCharacteristics,
+                    name = this.name,
+                    liteConfig = this.isLiteConfig
+                ) { status, vehicle ->
+                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
+                }
             }
-        } else {
-            endObserver.postValue(FAILED_TO_RETRIEVED_DATA)
-            progressBarObserver.postValue(false)
+            VehicleType.TRUCK -> {
+                DriveKitVehicle.replaceTruckVehicle(
+                    oldVehicleId = oldVehicleId,
+                    truckCharacteristics = this.truckCharacteristics,
+                    name = this.name,
+                ) { status, vehicle ->
+                    manageCreateOrReplaceVehicleResponse(status == VehicleReplaceStatus.SUCCESS, vehicle)
+                }
+            }
         }
+    }
+
+    private fun manageCreateOrReplaceVehicleResponse(
+        status: Boolean,
+        vehicle: Vehicle?
+    ) {
+        val state = if (status && vehicle != null) {
+            this.vehicleToDelete = null
+            this.createdVehicleId = vehicle.vehicleId
+            SUCCESS
+        } else {
+            FAILED_TO_RETRIEVED_DATA
+        }
+        endObserver.postValue(state)
+        progressBarObserver.postValue(false)
     }
 
     private fun manageBrands(context: Context) {
