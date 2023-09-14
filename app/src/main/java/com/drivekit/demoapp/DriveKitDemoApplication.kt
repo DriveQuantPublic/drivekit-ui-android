@@ -3,14 +3,11 @@ package com.drivekit.demoapp
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
-import android.content.IntentFilter
 import androidx.core.app.NotificationCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
-import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.drivekitdemoapp.R
-import java.util.*
+import java.util.Random
 
 class DriveKitDemoApplication : Application() {
 
@@ -32,14 +29,7 @@ class DriveKitDemoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DKNotificationManager.createChannels(this)
         DriveKitConfig.initialize(this)
-        registerReceiver()
-    }
-
-    private fun registerReceiver() {
-        val receiver = TripReceiver()
-        val filter = IntentFilter("com.drivequant.sdk.TRIP_ANALYSED")
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
+        DKNotificationManager.createChannels(this)
     }
 }

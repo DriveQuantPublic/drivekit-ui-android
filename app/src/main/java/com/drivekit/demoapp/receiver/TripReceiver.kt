@@ -18,22 +18,16 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
-import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
-import com.drivequant.drivekit.tripanalysis.receiver.TripAnalysedReceiver
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import java.util.*
 
-internal class TripReceiver : TripAnalysedReceiver() {
+internal object TripReceiver {
 
-    override fun onTripReceived(
-        context: Context,
-        post: PostGeneric,
-        response: PostGenericResponse
-    ) {
+    fun tripFinished(context: Context, response: PostGenericResponse) {
         if (response.isTripValid()) {
             var errorCode = 0
             if (response.safety != null && response.safety!!.safetyScore > 10
@@ -74,7 +68,7 @@ internal class TripReceiver : TripAnalysedReceiver() {
         }
     }
 
-    override fun onTripCancelled(context: Context, status: CancelTrip) {
+    fun tripCancelled(context: Context, status: CancelTrip) {
         when (status) {
             CancelTrip.NO_GPS_DATA -> R.string.notif_trip_cancelled_no_gps_data
             CancelTrip.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
