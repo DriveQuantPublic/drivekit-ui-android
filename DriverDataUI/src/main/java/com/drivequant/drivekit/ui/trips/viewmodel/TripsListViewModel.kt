@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.text.SpannableString
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -140,6 +141,7 @@ internal class TripsListViewModel(
         }
     }
 
+    @StringRes
     fun getNoTripsTextResId() = if (this.trips.isEmpty()) {
         R.string.dk_driverdata_no_trips_recorded
     } else {
