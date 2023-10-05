@@ -183,6 +183,7 @@ object DriverDataUI : DriverDataUIEntryPoint {
         headerDay: HeaderDay = HeaderDay.DISTANCE,
         lastTripMaxNumber: Int = 10): Fragment {
         val trips = LastTripsWidgetUtils.getLastTrips(lastTripMaxNumber)
-        return DKLastTripsUI.getLastTripWidget(trips.toDKTripList(), headerDay, tripData)
+        val hasTrips = LastTripsWidgetUtils.hasTrips()
+        return DKLastTripsUI.getLastTripWidget(trips.toDKTripList(), headerDay, tripData, hasTrips)
     }
 }

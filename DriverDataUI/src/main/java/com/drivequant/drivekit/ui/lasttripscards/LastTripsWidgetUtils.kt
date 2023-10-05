@@ -19,4 +19,6 @@ internal object LastTripsWidgetUtils {
         .whereIn("transportationMode", transportationModes.map { it.value })
         .orderBy("endDate", Query.Direction.DESCENDING).query().limit(limit).executeTrips()
         .toTrips()
+
+    fun hasTrips() = DriveKitDriverData.tripsQuery().noFilter().query().limit(1).executeTrips().isNotEmpty()
 }
