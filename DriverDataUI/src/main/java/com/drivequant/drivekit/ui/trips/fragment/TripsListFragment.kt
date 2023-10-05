@@ -2,8 +2,8 @@ package com.drivequant.drivekit.ui.trips.fragment
 
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -32,6 +32,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
@@ -43,9 +44,8 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.fragment_trips_list.dk_trips_list_view
 import kotlinx.android.synthetic.main.fragment_trips_list.filter_view
-import kotlinx.android.synthetic.main.fragment_trips_list.no_trips
+import kotlinx.android.synthetic.main.fragment_trips_list.no_trips_container
 import kotlinx.android.synthetic.main.fragment_trips_list.progress_circular
-import kotlinx.android.synthetic.main.view_content_no_trips.card_view_no_trips
 import kotlinx.android.synthetic.main.view_content_no_trips.no_trips_recorded_text
 
 
@@ -54,6 +54,7 @@ class TripsListFragment : Fragment() {
     private lateinit var tripsListView : DKTripListView
     private lateinit var tripsList: DKTripList
     private lateinit var textViewTripsSynthesis: TextView
+    private lateinit var noTripsView: DKRoundedCornerFrameLayout
     private var shouldSyncTrips = true
     private lateinit var synchronizationType: SynchronizationType
 
@@ -197,19 +198,22 @@ class TripsListFragment : Fragment() {
 
     private fun displayNoTrips() {
         this.no_trips_recorded_text.text = getString(viewModel.getNoTripsTextResId())
-        no_trips.visibility = View.VISIBLE
-        tripsListView.setTripsListEmptyView(no_trips)
+        no_trips_container.visibility = View.VISIBLE
+        tripsListView.setTripsListEmptyView(noTripsView)
         no_trips_recorded_text.normalText()
-        this.card_view_no_trips.apply {
-            setDKStyle(backgroundColor = null)
-            backgroundTintList = ColorStateList.valueOf(ColorUtils.setAlphaComponent(DriveKitUI.colors.primaryColor(), 102))
+
+        this.noTripsView.apply {
+            view?.resources?.getDimension(R.dimen.dk_margin_half)?.let { cornerRadius ->
+                roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+            }
+            (this.background as GradientDrawable).setColor(ColorUtils.setAlphaComponent(DriveKitUI.colors.primaryColor(), 102))
         }
         updateProgressVisibility(false)
     }
 
     private fun displayTripsList() {
         configureFilter()
-        no_trips.visibility = View.GONE
+        no_trips_container.visibility = View.GONE
         dk_trips_list_view.visibility = View.VISIBLE
         updateProgressVisibility(false)
     }
@@ -221,6 +225,7 @@ class TripsListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
         this.tripsListView = view.findViewById(R.id.dk_trips_list_view)
         this.textViewTripsSynthesis = view.findViewById(R.id.text_view_trips_synthesis)
+        this.noTripsView = view.findViewById(R.id.no_trips)
         view.setDKStyle(Color.WHITE)
         return view
     }

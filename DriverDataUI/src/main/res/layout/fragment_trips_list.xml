@@ -24,7 +24,7 @@
             android:gravity="center" />
 
         <include
-            android:id="@+id/no_trips"
+            android:id="@+id/no_trips_container"
             layout="@layout/view_content_no_trips"
             android:visibility="gone" />
 
