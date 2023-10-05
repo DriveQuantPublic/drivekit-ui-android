@@ -31,9 +31,11 @@ fun Drawable.tintDrawable(color: Int) {
     }
 }
 
-fun View.setDKStyle(color: Int = DriveKitUI.colors.backgroundViewColor()): View {
+fun View.setDKStyle(backgroundColor: Int? = DriveKitUI.colors.backgroundViewColor()): View {
     FontUtils.overrideFonts(this.context, this)
-    this.setBackgroundColor(color)
+    backgroundColor?.let {
+        this.setBackgroundColor(it)
+    }
     return this
 }
 

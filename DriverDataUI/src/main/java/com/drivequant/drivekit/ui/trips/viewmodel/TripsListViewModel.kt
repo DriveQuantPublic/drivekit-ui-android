@@ -140,6 +140,12 @@ internal class TripsListViewModel(
         }
     }
 
+    fun getNoTripsTextResId() = if (this.trips.isEmpty()) {
+        R.string.dk_driverdata_no_trips_recorded
+    } else {
+        R.string.dk_driverdata_no_trip_placeholder
+    }
+
     private fun getTransportationModeFilterItems(): List<FilterItem> {
         val transportationModeFilterItems = mutableListOf<FilterItem>()
         transportationModeFilterItems.add(AllTripsTransportationModeFilterItem())

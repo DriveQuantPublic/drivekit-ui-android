@@ -19,18 +19,13 @@
             android:id="@+id/text_view_trips_synthesis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dk_margin_half"
             android:layout_marginBottom="@dimen/dk_margin_half"
-            android:gravity="center"
-            android:visibility="gone" />
+            android:gravity="center" />
 
         <include
             android:id="@+id/no_trips"
             layout="@layout/view_content_no_trips"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/no_car_trips"
-            layout="@layout/dk_view_content_no_car_trip"
             android:visibility="gone" />
 
         <com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
