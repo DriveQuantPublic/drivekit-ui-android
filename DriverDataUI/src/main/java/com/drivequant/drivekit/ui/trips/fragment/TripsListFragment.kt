@@ -3,7 +3,6 @@ package com.drivequant.drivekit.ui.trips.fragment
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,7 +15,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -206,7 +205,7 @@ class TripsListFragment : Fragment() {
             view?.resources?.getDimension(R.dimen.dk_margin_half)?.let { cornerRadius ->
                 roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
-            (this.background as GradientDrawable).setColor(ColorUtils.setAlphaComponent(DriveKitUI.colors.primaryColor(), 102))
+            DrawableCompat.setTint(this.background, DriveKitUI.colors.neutralColor())
         }
         updateProgressVisibility(false)
     }
