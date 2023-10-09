@@ -5,26 +5,27 @@ import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory.*
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 
 fun VehicleCategory.getTitle(context: Context): String {
     val identifier = when (this){
-        MICRO -> "dk_vehicle_category_car_micro_title"
-        COMPACT -> "dk_vehicle_category_car_compact_title"
-        SEDAN -> "dk_vehicle_category_car_sedan_title"
-        SUV -> "dk_vehicle_category_car_suv_title"
-        MINIVAN -> "dk_vehicle_category_car_minivan_title"
-        COMMERCIAL -> "dk_vehicle_category_car_commercial_title"
-        LUXURY -> "dk_vehicle_category_car_luxury_title"
-        SPORT -> "dk_vehicle_category_car_sport_title"
-        TWO_AXLES_STRAIGHT_TRUCK -> "dk_vehicle_category_truck_straight_2_axles"
-        THREE_AXLES_STRAIGHT_TRUCK -> "dk_vehicle_category_truck_straight_3_axles"
-        FOUR_AXLES_STRAIGHT_TRUCK -> "dk_vehicle_category_truck_straight_4_axles"
-        TWO_AXLES_TRACTOR -> "dk_vehicle_category_truck_trailer_2_axles"
-        THREE_AXLES_TRACTOR -> "dk_vehicle_category_truck_trailer_3_axles"
-        FOUR_AXLES_TRACTOR -> "dk_vehicle_category_truck_trailer_4_axles"
+        MICRO -> R.string.dk_vehicle_category_car_micro_title
+        COMPACT -> R.string.dk_vehicle_category_car_compact_title
+        SEDAN -> R.string.dk_vehicle_category_car_sedan_title
+        SUV -> R.string.dk_vehicle_category_car_suv_title
+        MINIVAN -> R.string.dk_vehicle_category_car_minivan_title
+        COMMERCIAL -> R.string.dk_vehicle_category_car_commercial_title
+        LUXURY -> R.string.dk_vehicle_category_car_luxury_title
+        SPORT -> R.string.dk_vehicle_category_car_sport_title
+        TWO_AXLES_STRAIGHT_TRUCK -> R.string.dk_vehicle_category_truck_straight_2_axles
+        THREE_AXLES_STRAIGHT_TRUCK -> R.string.dk_vehicle_category_truck_straight_3_axles
+        FOUR_AXLES_STRAIGHT_TRUCK -> R.string.dk_vehicle_category_truck_straight_4_axles
+        TWO_AXLES_TRACTOR -> R.string.dk_vehicle_category_truck_trailer_2_axles
+        THREE_AXLES_TRACTOR -> R.string.dk_vehicle_category_truck_trailer_3_axles
+        FOUR_AXLES_TRACTOR -> R.string.dk_vehicle_category_truck_trailer_4_axles
     }
-    return DKResource.convertToString(context, identifier)
+    return context.getString(identifier)
 }
 
 fun VehicleCategory.getIcon(context: Context): Drawable? {
