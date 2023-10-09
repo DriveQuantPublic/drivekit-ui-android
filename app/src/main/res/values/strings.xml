@@ -129,7 +129,7 @@
     <string name="notif_trip_no_network_title">The analysis of the trip is postponed</string>
     <string name="notif_trip_postpone">Stop the trip recording if you\'re not driving</string>
     <string name="notif_trip_save_for_repost">The trip could not be analyzed because the internet connection is too slow. It will be analyzed later.</string>
-    <string name="notif_trip_skiing_detected">Your journey was made on skis</string>
+    <string name="notif_trip_skiing_detected">Your trip was made on skis</string>
     <string name="notif_trip_skiing_detected_not_displayed">Your trip is not scored because it was made by ski</string>
     <string name="notif_trip_started">A trip is recording</string>
     <string name="notif_trip_started_title">Start of trip</string>

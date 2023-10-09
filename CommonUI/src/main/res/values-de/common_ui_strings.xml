@@ -50,7 +50,7 @@
    <string name="dk_common_no_data_yet">Sie haben noch keine Daten</string>
    <string name="dk_common_no_pseudo_set">Um Ihr Ranking mit den anderen Teilnehmern zu teilen, laden wir Sie ein, ein Pseudo zu wählen. Ohne ein Pseudo erscheinen Sie als anonym.</string>
    <string name="dk_common_no_trip">Keine Reise</string>
-   <string name="dk_common_no_trips_yet">Die App hat Ihre Fahrten noch nicht ausgewertet.</string>
+   <string name="dk_common_no_trips_yet">Die App hat Ihr Verhalten noch nicht analysiert.</string>
    <string name="dk_common_ok">OK</string>
    <string name="dk_common_period_selector_month">Monat</string>
    <string name="dk_common_period_selector_week">Woche</string>
