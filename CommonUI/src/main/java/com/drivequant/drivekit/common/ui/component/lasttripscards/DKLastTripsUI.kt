@@ -16,14 +16,13 @@ object DKLastTripsUI {
         tripsToDisplay: List<DKTripListItem>,
         headerDay: HeaderDay = HeaderDay.DISTANCE,
         tripData: TripData = TripData.SAFETY,
-        hasTrips: Boolean
     ): Fragment {
         val fragments = mutableListOf<Fragment>()
         tripsToDisplay.forEach {
             val viewModel = DKLastTripsViewModel(tripData, headerDay, it)
             fragments.add(DKLastTripsFragment.newInstance(viewModel))
         }
-        fragments.add(DKLastTripsSeeMoreFragment.newInstance(hasMoreTrips = hasTrips))
+        fragments.add(DKLastTripsSeeMoreFragment.newInstance(hasMoreTrips = tripsToDisplay.isNotEmpty()))
         return DKLastTripsViewPagerFragment.newInstance(fragments)
     }
 }
