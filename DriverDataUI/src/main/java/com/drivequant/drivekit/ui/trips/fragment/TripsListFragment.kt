@@ -198,7 +198,7 @@ class TripsListFragment : Fragment() {
     private fun displayNoTrips() {
         this.no_trips_recorded_text.text = getString(viewModel.getNoTripsTextResId())
         no_trips_container.visibility = View.VISIBLE
-        tripsListView.setTripsListEmptyView(noTripsView)
+        tripsListView.setTripsListEmptyView(no_trips_container)
         no_trips_recorded_text.normalText()
 
         this.noTripsView.apply {
