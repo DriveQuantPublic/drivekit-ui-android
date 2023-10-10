@@ -215,7 +215,7 @@ internal class TripsListViewModel(
 
     fun getFilterVisibility() =
         when (tripListConfiguration) {
-            is TripListConfiguration.MOTORIZED -> DriverDataUI.enableVehicleFilter
+            is TripListConfiguration.MOTORIZED -> DriverDataUI.enableVehicleFilter && filterItems.size > 1
             is TripListConfiguration.ALTERNATIVE -> DriverDataUI.enableAlternativeTrips && filterItems.size > 1
         }
 

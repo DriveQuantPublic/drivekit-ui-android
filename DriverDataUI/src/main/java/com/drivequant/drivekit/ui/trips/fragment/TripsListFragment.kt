@@ -44,7 +44,6 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
 import kotlinx.android.synthetic.main.fragment_trips_list.dk_trips_list_view
 import kotlinx.android.synthetic.main.fragment_trips_list.filter_view
 import kotlinx.android.synthetic.main.fragment_trips_list.no_trips_container
-import kotlinx.android.synthetic.main.fragment_trips_list.progress_circular
 import kotlinx.android.synthetic.main.view_content_no_trips.no_trips_recorded_text
 
 
@@ -121,7 +120,7 @@ class TripsListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            updateProgressVisibility(false)
+            tripsListView.updateSwipeRefreshTripsVisibility(false)
         }
 
         synchronizationType = if (viewModel.hasLocalTrips()) {
@@ -191,11 +190,12 @@ class TripsListFragment : Fragment() {
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
-        updateProgressVisibility(true)
+        tripsListView.updateSwipeRefreshTripsVisibility(true)
         viewModel.fetchTrips(synchronizationType)
     }
 
     private fun displayNoTrips() {
+        configureFilter()
         this.no_trips_recorded_text.text = getString(viewModel.getNoTripsTextResId())
         no_trips_container.visibility = View.VISIBLE
         tripsListView.setTripsListEmptyView(no_trips_container)
@@ -207,14 +207,14 @@ class TripsListFragment : Fragment() {
             }
             DrawableCompat.setTint(this.background, DriveKitUI.colors.neutralColor())
         }
-        updateProgressVisibility(false)
+        tripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
     private fun displayTripsList() {
         configureFilter()
         no_trips_container.visibility = View.GONE
         dk_trips_list_view.visibility = View.VISIBLE
-        updateProgressVisibility(false)
+        tripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
     override fun onCreateView(
@@ -227,17 +227,6 @@ class TripsListFragment : Fragment() {
         this.noTripsView = view.findViewById(R.id.no_trips)
         view.setDKStyle(Color.WHITE)
         return view
-    }
-
-    private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-           visibility = if (displayProgress) {
-               View.VISIBLE
-           } else {
-               View.GONE
-           }
-        }
-        tripsListView.updateSwipeRefreshTripsVisibility(displayProgress)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
