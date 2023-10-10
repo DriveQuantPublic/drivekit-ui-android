@@ -9,14 +9,10 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.lasttripscards.viewmodel.DKLastTripsViewModel
 import com.drivequant.drivekit.common.ui.component.triplist.viewholder.TripViewHolder
-import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_last_trips.container
 import kotlinx.android.synthetic.main.dk_fragment_last_trips.root
 import kotlinx.android.synthetic.main.dk_fragment_last_trips.text_view_last_trip_header
-import kotlinx.android.synthetic.main.dk_fragment_last_trips.text_view_see_more
 import kotlinx.android.synthetic.main.dk_fragment_last_trips.trip_item_container
 
 internal class DKLastTripsFragment : Fragment() {
@@ -58,18 +54,6 @@ internal class DKLastTripsFragment : Fragment() {
                         context,
                         viewModel.trip.getItinId(),
                         false
-                    )
-                }
-            } ?: run {
-                text_view_see_more.apply {
-                    visibility = View.VISIBLE
-                    headLine1()
-                    text = DKResource.convertToString(context,"dk_common_see_more_trips")
-                }
-                container.visibility = View.GONE
-                root.setOnClickListener {
-                    DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(
-                        context
                     )
                 }
             }

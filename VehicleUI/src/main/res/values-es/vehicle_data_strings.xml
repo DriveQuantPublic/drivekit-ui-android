@@ -130,6 +130,7 @@
    <string name="dk_vehicle_engine_electric">Eléctrico</string>
    <string name="dk_vehicle_engine_gasoline">Gasolina</string>
    <string name="dk_vehicle_engine_gasoline_hybrid">Híbrido gasolina-eléctrico</string>
+   <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Gasolina híbrida recargable</string>
    <string name="dk_vehicle_error_message">Se ha producido un error durante la solicitud, vuelva a intentarlo más tarde.</string>
    <string name="dk_vehicle_failed_to_paired_beacon">La beacon no pudo ser asociada con el vehículo, por favor inténtelo de nuevo más tarde.</string>
    <string name="dk_vehicle_failed_to_paired_bluetooth">La conexión Bluetooth del vehículo falló, por favor inténtalo de nuevo más tarde.</string>
