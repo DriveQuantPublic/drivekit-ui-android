@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.drivequant.drivekit.common.ui.component.FilterView
+        android:id="@+id/filter_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.drivequant.drivekit.common.ui.component.FilterView
-            android:id="@+id/filter_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/text_view_trips_synthesis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin_half"
-            android:gravity="center"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/no_trips"
-            layout="@layout/view_content_no_trips"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/no_car_trips"
-            layout="@layout/dk_view_content_no_car_trip"
-            android:visibility="gone" />
-
-        <com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
-            android:id="@+id/dk_trips_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-</FrameLayout>
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_trips_synthesis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        android:layout_marginBottom="@dimen/dk_margin_half"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_view" />
+
+    <include
+        android:id="@+id/no_trips_container"
+        layout="@layout/view_content_no_trips"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_trips_synthesis" />
+
+    <com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
+        android:id="@+id/dk_trips_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dk_margin_half"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_trips_synthesis" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -50,6 +50,7 @@
    <string name="dk_common_no_data_yet">Você ainda não tem dados</string>
    <string name="dk_common_no_pseudo_set">Para compartilhar sua classificação com os outros participantes, convidamos você a escolher um pseudo -pseudo. Sem um pseudo, você aparecerá como anônimo.</string>
    <string name="dk_common_no_trip">Sem viagem</string>
+   <string name="dk_common_no_trips_yet">A app ainda não analisou a sua condução.</string>
    <string name="dk_common_ok">OK</string>
    <string name="dk_common_period_selector_month">Mês</string>
    <string name="dk_common_period_selector_week">Semana</string>

@@ -14,7 +14,7 @@
     <string name="dk_perm_utils_app_diag_battery_ok">Background task is allowed. The application uses the GPS sensor only driving. It has been optimized to avoid battery drain.</string>
     <string name="dk_perm_utils_app_diag_bluetooth_ko">The Bluetooth sensor on your phone is off. Your trips will not be analyzed if the Bluetooth badge is not detected.</string>
     <string name="dk_perm_utils_app_diag_bluetooth_link">Turn on Bluetooth</string>
-    <string name="dk_perm_utils_app_diag_bluetooth_ok">The Bluetooth is activated. This enables the BEACON to be recognized and identified. This makes it easier to identify your journeys and know which vehicle you are driving.</string>
+    <string name="dk_perm_utils_app_diag_bluetooth_ok">The Bluetooth is activated. This enables the BEACON to be recognized and identified. This makes it easier to identify your trips and know which vehicle you are driving.</string>
     <string name="dk_perm_utils_app_diag_bluetooth_title">Bluetooth sensor</string>
     <string name="dk_perm_utils_app_diag_email_account">User:</string>
     <string name="dk_perm_utils_app_diag_email_activity">Authorization to access activity monitoring:</string>
@@ -96,7 +96,7 @@
     <string name="dk_perm_utils_permissions_location_button_android">Allow location</string>
     <string name="dk_perm_utils_permissions_location_button_ios">Open the settings</string>
     <string name="dk_perm_utils_permissions_location_ios13_ko">To enjoy automatic recording of your trips, the application must access the phone\'s position. To do this, select \"Always\" in the phone settings by following the steps below</string>
-    <string name="dk_perm_utils_permissions_location_ios14_ko">To benefit from the automatic recording of your journeys, the application must access the exact phone location. To do this, follow the steps below.</string>
+    <string name="dk_perm_utils_permissions_location_ios14_ko">To benefit from the automatic recording of your trips, the application must access the exact phone location. To do this, follow the steps below.</string>
     <string name="dk_perm_utils_permissions_location_popup_title">Permissions</string>
     <string name="dk_perm_utils_permissions_location_pre_ios13_ko">You must allow the app to access the phone\'s location for it to detect and scan your trips.\n\nIn the phone settings, three options are available:\n(1) Never\n(2) While Using the App\n(3) Always\n\nIt is essential to select option (3) Always, otherwise, the application will not work.</string>
     <string name="dk_perm_utils_permissions_location_text1_android">The application must be allowed to access the phone\'s location to detect and analyze your trips when it is running in background.</string>

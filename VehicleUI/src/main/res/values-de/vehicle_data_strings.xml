@@ -130,6 +130,7 @@
     <string name="dk_vehicle_engine_electric">Elektromotor</string>
     <string name="dk_vehicle_engine_gasoline">Ottomotor</string>
     <string name="dk_vehicle_engine_gasoline_hybrid">Benzin-Elektro-Hybrid</string>
+    <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Plug-in-Hybrid Benzin</string>
     <string name="dk_vehicle_error_message">Bei der Anfrage ist ein Fehler aufgetreten. Versuchen Sie es später erneut.</string>
     <string name="dk_vehicle_failed_to_paired_beacon">Die Beacon konnte nicht mit dem Fahrzeug in Verbindung gebracht werden, bitte versuchen Sie es später noch einmal.</string>
     <string name="dk_vehicle_failed_to_paired_bluetooth">Die Bluetooth-Verbindung zum Fahrzeug ist fehlgeschlagen, bitte versuchen Sie es später noch einmal.</string>
