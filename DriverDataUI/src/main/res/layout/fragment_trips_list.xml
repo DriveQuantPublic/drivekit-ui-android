@@ -29,8 +29,9 @@
         android:id="@+id/no_trips_container"
         layout="@layout/view_content_no_trips"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_trips_synthesis" />
@@ -38,8 +39,9 @@
     <com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
         android:id="@+id/dk_trips_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/dk_margin_half"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_trips_synthesis" />
