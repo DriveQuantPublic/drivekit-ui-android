@@ -65,7 +65,6 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     internal var beaconDiagnosticMail: ContentMail? = null
         private set
     internal var vehiclePickerComplete: VehiclePickerCompleteListener? = null
-        private set
     private var vehiclesListFragment: VehiclesListFragment? = null
 
     private const val VEHICLE_ID_EXTRA = "vehicleId-extra"

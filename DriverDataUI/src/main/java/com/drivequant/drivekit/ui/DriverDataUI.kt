@@ -68,7 +68,6 @@ object DriverDataUI : DriverDataUIEntryPoint {
     internal var mapTraceMainColor: Int = R.color.dkMapTraceMainColor
     internal var mapTraceWarningColor: Int = R.color.dkMapTraceWarningColor
     internal var mapTraceAuthorizedCallColor: Int = R.color.dkMapTraceAuthorizedCallColor
-    internal var noTripsRecordedDrawable: Int = R.drawable.dk_no_trips_recorded
 
     @JvmOverloads
     fun initialize(tripData: TripData = TripData.SAFETY, mapItems: List<MapItem> = listOf(

@@ -17,11 +17,11 @@ import kotlinx.android.synthetic.main.dk_fragment_last_trips_card_viewpager.*
 
 internal class DKLastTripsViewPagerFragment : Fragment() {
 
-    private var lastTripsCards = listOf<DKLastTripsFragment>()
+    private var lastTripsCards = listOf<Fragment>()
     private lateinit var tabLayout: TabLayout
 
     companion object {
-        fun newInstance(lastTripsCards: List<DKLastTripsFragment>): DKLastTripsViewPagerFragment {
+        fun newInstance(lastTripsCards: List<Fragment>): DKLastTripsViewPagerFragment {
             val fragment = DKLastTripsViewPagerFragment()
             fragment.lastTripsCards = lastTripsCards
             return fragment
