@@ -423,7 +423,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                 fetchVehicleModels()
             }
             itemEngines.size == 1 -> {
-                selectedEngineIndex = VehicleEngineIndex.getEnumByName(itemEngines.first().value)
+                selectedEngineIndex = VehicleEngineIndex.valueOf(itemEngines.first().value)
                 fetchVehicleModels()
             }
             else -> stepDispatcher.postValue(ENGINE)

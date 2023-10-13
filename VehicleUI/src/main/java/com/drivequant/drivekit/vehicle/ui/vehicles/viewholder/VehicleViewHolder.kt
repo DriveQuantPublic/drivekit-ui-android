@@ -132,7 +132,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     fun selectDetectionMode(context: Context, vehicle: Vehicle){
         val detectionModes = viewModel.buildDetectionModeSpinnerItems(context)
         for (i in detectionModes.indices){
-            val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
+            val detectionMode = DetectionMode.valueOf(detectionModes[i].detectionModeType.name)
             if (detectionMode == vehicle.detectionMode){
                 spinnerDetectionMode.setSelection(i, false)
             }
