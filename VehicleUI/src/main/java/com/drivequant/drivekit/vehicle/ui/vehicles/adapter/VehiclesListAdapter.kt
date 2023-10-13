@@ -1,13 +1,13 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -47,7 +47,7 @@ class VehiclesListAdapter(
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {
                 if (touched) {
                     val detectionModes = viewModel.buildDetectionModeSpinnerItems(view.context)
-                    val detectionMode = DetectionMode.getEnumByName(detectionModes[i].detectionModeType.name)
+                    val detectionMode = DetectionMode.valueOf(detectionModes[i].detectionModeType.name)
                     DetectionModeType.getEnumByDetectionMode(detectionMode).detectionModeSelected(view.context, viewModel, vehicles[holder.adapterPosition])
                     touched = false
                 }
