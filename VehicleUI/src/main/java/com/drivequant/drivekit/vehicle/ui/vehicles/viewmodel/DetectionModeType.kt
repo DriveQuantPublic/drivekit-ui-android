@@ -21,7 +21,9 @@ import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
 import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus
-import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.*
+import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.ERROR
+import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.GPS_MODE_ALREADY_EXISTS
+import com.drivequant.drivekit.vehicle.manager.DetectionModeStatus.SUCCESS
 import com.drivequant.drivekit.vehicle.manager.VehicleUpdateDetectionModeQueryListener
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
@@ -129,7 +131,7 @@ enum class DetectionModeType(
     }
 
     fun detectionModeSelected(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle){
-        val detectionMode = DetectionMode.getEnumByName(this.name)
+        val detectionMode = DetectionMode.valueOf(this.name)
         updateDetectionMode(context, detectionMode, viewModel, vehicle)
     }
 
@@ -282,4 +284,3 @@ enum class DetectionModeType(
         }
     }
 }
-

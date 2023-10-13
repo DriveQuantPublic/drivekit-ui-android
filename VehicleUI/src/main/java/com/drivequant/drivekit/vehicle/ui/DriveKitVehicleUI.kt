@@ -36,21 +36,34 @@ object DriveKitVehicleUI : VehicleUIEntryPoint, DriveKitVehicleListener {
     internal const val TAG = "DriveKit Vehicle UI"
 
     internal var vehicleTypes: List<VehicleType> = VehicleType.values().asList()
+        private set
     internal var brands: List<VehicleBrand> = VehicleBrand.values().asList()
+        private set
     internal var categoryConfigType: CategoryConfigType = CategoryConfigType.BOTH_CONFIG
+        private set
     internal var vehicleEngineIndexes: List<VehicleEngineIndex> = VehicleEngineIndex.values().toList()
+        private set
     internal var brandsWithIcons: Boolean = true
+        private set
 
     internal var canAddVehicle: Boolean = true
+        private set
     internal var canRemoveBeacon: Boolean = true
+        private set
     internal var maxVehicles: Int? = null
+        private set
     internal var hasOdometer: Boolean = false
+        private set
     internal var vehicleActions: List<VehicleActionItem> = VehicleAction.values().toList()
+        private set
 
     internal var detectionModes = DetectionMode.values().toList()
+        private set
     private var userDetectionModes: List<DetectionMode>? = null
     internal var customFields: HashMap<GroupField, List<Field>> = hashMapOf()
+        private set
     internal var beaconDiagnosticMail: ContentMail? = null
+        private set
     internal var vehiclePickerComplete: VehiclePickerCompleteListener? = null
     private var vehiclesListFragment: VehiclesListFragment? = null
 

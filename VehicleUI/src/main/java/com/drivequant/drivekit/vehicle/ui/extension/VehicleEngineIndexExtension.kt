@@ -1,21 +1,22 @@
 package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex.*
 import com.drivequant.drivekit.vehicle.enums.VehicleType
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleEngineItem
 
 fun VehicleEngineIndex.getTitle(context: Context) : String {
     val identifier = when (this){
-        GASOLINE -> "dk_vehicle_engine_gasoline"
-        DIESEL -> "dk_vehicle_engine_diesel"
-        ELECTRIC -> "dk_vehicle_engine_electric"
-        GASOLINE_HYBRID -> "dk_vehicle_engine_gasoline_hybrid"
-        DIESEL_HYBRID -> "dk_vehicle_engine_diesel_hybrid"
+        GASOLINE -> R.string.dk_vehicle_engine_gasoline
+        DIESEL -> R.string.dk_vehicle_engine_diesel
+        ELECTRIC -> R.string.dk_vehicle_engine_electric
+        GASOLINE_HYBRID -> R.string.dk_vehicle_engine_gasoline_hybrid
+        DIESEL_HYBRID -> R.string.dk_vehicle_engine_diesel_hybrid
+        PLUG_IN_GASOLINE_HYBRID -> R.string.dk_vehicle_engine_gasoline_hybrid_plug_in
     }
-    return DKResource.convertToString(context, identifier)
+    return context.getString(identifier)
 }
 
 fun VehicleEngineIndex.buildEngineIndexItem(context: Context) : VehicleEngineItem {
