@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/root"
     style="@style/DKCard"
     android:layout_width="match_parent"
@@ -15,25 +16,11 @@
     app:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@android:color/white">
 
-    <LinearLayout
-        android:id="@+id/container"
+    <TextView
+        android:id="@+id/text_view_see_more"
         android:layout_width="match_parent"
         android:layout_height="109dp"
-        android:orientation="vertical"
-        android:padding="@dimen/dk_margin_half">
-
-        <TextView
-            android:id="@+id/text_view_last_trip_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dk_margin_half"
-            android:layout_marginBottom="@dimen/dk_margin_half" />
-
-        <FrameLayout
-            android:id="@+id/trip_item_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dk_margin_half"
-            android:paddingBottom="@dimen/dk_margin_half" />
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:gravity="center"
+        tools:text="@string/dk_common_see_more_trips" />
 </androidx.cardview.widget.CardView>

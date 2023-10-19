@@ -18,7 +18,7 @@
    <string name="dk_perm_utils_app_diag_bluetooth_title">Bluetooth-sensor</string>
    <string name="dk_perm_utils_app_diag_email_account">Bruger:</string>
    <string name="dk_perm_utils_app_diag_email_activity">Adgang til fysisk aktivitet:</string>
-   <string name="dk_perm_utils_app_diag_email_app">Ansøgning:</string>
+   <string name="dk_perm_utils_app_diag_email_app">App:</string>
    <string name="dk_perm_utils_app_diag_email_app_version">Version af applikationen:</string>
    <string name="dk_perm_utils_app_diag_email_auto_reset">Fastholder tilladelser:</string>
    <string name="dk_perm_utils_app_diag_email_battery">Optimering af batteriet:</string>
@@ -32,7 +32,7 @@
    <string name="dk_perm_utils_app_diag_email_lastname">Navn:</string>
    <string name="dk_perm_utils_app_diag_email_location">Tilladelse til at få adgang til din lokation:</string>
    <string name="dk_perm_utils_app_diag_email_location_accuracy">Præcis lokation:</string>
-   <string name="dk_perm_utils_app_diag_email_location_sensor">Placering (GPS)</string>
+   <string name="dk_perm_utils_app_diag_email_location_sensor">Placering (GPS):</string>
    <string name="dk_perm_utils_app_diag_email_model">Telefonmodel:</string>
    <string name="dk_perm_utils_app_diag_email_nearby_title">Tilladelse til at finde enheder i nærheden:</string>
    <string name="dk_perm_utils_app_diag_email_network">Mobilnetværk:</string>
@@ -48,7 +48,7 @@
    <string name="dk_perm_utils_app_diag_loc_sensor_ko">Placeringssensoren er deaktiveret på din telefon. Appen fungerer ikke, hvis den ikke kan få adgang til disse oplysninger.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_link">Aktiver placeringssensor.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ok">Placeringssensoren er aktiveret. Det måler køretøjets hastighed og retning. Hvis den er deaktiveret, vil applikationen ikke fungere.</string>
-   <string name="dk_perm_utils_app_diag_loc_sensor_title">Lokation</string>
+   <string name="dk_perm_utils_app_diag_loc_sensor_title">Adgang til placering</string>
    <string name="dk_perm_utils_app_diag_location_full_ko_ios14">Du skal give appen adgang til den nøjagtige placering af telefonen, så den kan analysere dine ture. Aktivér \"Præcis placering\" i indstillingerne \"Placering\".</string>
    <string name="dk_perm_utils_app_diag_location_full_link">Brug præcis lokation</string>
    <string name="dk_perm_utils_app_diag_location_ko_android">For at registrere og analysere dine ture skal appen have adgang til telefonens placering.</string>
@@ -57,7 +57,7 @@
    <string name="dk_perm_utils_app_diag_location_ko_ios13">Du skal give appen adgang til telefonens placering, så den kan registrere og analysere dine ture. I telefonindstillingerne er fire indstillinger tilgængelige: (1) aldrig, (2) spørg næste gang, (3) mens du bruger appen og (4) altid. Du skal vælge mulighed (4) for, at appen kan registrere dine ture.</string>
    <string name="dk_perm_utils_app_diag_location_link">Tillad adgang til placering</string>
    <string name="dk_perm_utils_app_diag_location_ok">Appen bruger lokation af ​​din telefon til at registrere og analysere dine ture. Det kan ikke fungere, hvis du ikke lader appen få adgang til placeringen.</string>
-   <string name="dk_perm_utils_app_diag_location_title">Lokation</string>
+   <string name="dk_perm_utils_app_diag_location_title">Placering</string>
    <string name="dk_perm_utils_app_diag_nearby_title">Enheder i nærheden</string>
    <string name="dk_perm_utils_app_diag_network_ko">Mobildata er ikke aktiveret. Din køretur bliver stadig registreret, men kan først vises, når der igen er oprettet forbindelse til et netværk.</string>
    <string name="dk_perm_utils_app_diag_network_link">Aktivér mobildata</string>

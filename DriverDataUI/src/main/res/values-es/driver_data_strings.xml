@@ -169,7 +169,7 @@
    <string name="dk_driverdata_no_speeding_events">No hay excesos</string>
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 ¡Bravo y gracias por su cautela!</string>
    <string name="dk_driverdata_no_trip_placeholder">Aún no has hecho ningún viaje con este vehículo.</string>
-   <string name="dk_driverdata_no_trips_recorded">Aún no has viajado.</string>
+   <string name="dk_driverdata_no_trips_recorded">La aplicación aún no ha analizado tus viajes.\n\nPara medir tu estilo de conducción y recibir consejos y sugerencias para mejorar, comprueba que la aplicación está bien configurada y realiza un viaje.\n\nCuando el modo automático está activado, la aplicación detecta y analiza tus movimientos aunque no esté abierta.</string>
    <string name="dk_driverdata_phone_call_plur">%s llamadas telefónicas</string>
    <string name="dk_driverdata_phone_call_sing">%s llamada telefónica</string>
    <string name="dk_driverdata_profile_activity_always_text">Desde que usas la aplicación, utilizas el coche todas las semanas.</string>

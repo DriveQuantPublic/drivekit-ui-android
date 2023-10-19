@@ -76,9 +76,6 @@ class DKTripListView : FrameLayout {
             false
         }
     }
-
-    fun isFilterPlacerHolder() = adapter != null
-
     fun updateSwipeRefreshTripsVisibility(display: Boolean) {
         if (display) {
             dk_swipe_refresh_trips.isRefreshing = display

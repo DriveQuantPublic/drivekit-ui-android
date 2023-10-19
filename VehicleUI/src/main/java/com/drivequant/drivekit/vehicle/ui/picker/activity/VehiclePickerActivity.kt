@@ -4,15 +4,15 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -168,7 +168,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 }
             }
             BRANDS_FULL -> viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
-            ENGINE -> viewModel.selectedEngineIndex = VehicleEngineIndex.getEnumByName(item.value)
+            ENGINE -> viewModel.selectedEngineIndex = VehicleEngineIndex.valueOf(item.value)
             MODELS -> viewModel.selectedModel = item.value
             YEARS -> viewModel.selectedYear = item.value
             VERSIONS -> item.text?.let {
