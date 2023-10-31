@@ -168,7 +168,7 @@
    <string name="dk_driverdata_no_speeding_content_congratulations">Hai rispettato i limiti di velocità durante tutto il tuo viaggio.</string>
    <string name="dk_driverdata_no_speeding_events">Nessun superamento</string>
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo e grazie per la tua prudenza!</string>
-   <string name="dk_driverdata_no_trip_placeholder">Non hai ancora fatto nessun viaggio con questo veicolo.</string>
+   <string name="dk_driverdata_no_trip_placeholder">Non avete ancora effettuato alcun viaggio con questo veicolo.</string>
    <string name="dk_driverdata_no_trips_recorded">L\'applicazione non ha ancora analizzato i vostri viaggi.\n\nPer misurare il proprio stile di guida e ricevere suggerimenti e consigli su come migliorare, verificare che l\'applicazione sia configurata correttamente ed effettuare un viaggio.\n\nQuando è attivata la modalità automatica, l\'applicazione rileva e analizza i vostri movimenti anche quando non è aperta.</string>
    <string name="dk_driverdata_phone_call_plur">%s telefonate</string>
    <string name="dk_driverdata_phone_call_sing">%s telefonata</string>

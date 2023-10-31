@@ -16,7 +16,7 @@
    <string name="dk_tripwidget_confirm_continuetrip_subtitle">Votre trajet n\'est pas terminé et il va se poursuivre</string>
    <string name="dk_tripwidget_confirm_continuetrip_title">Continuer</string>
    <string name="dk_tripwidget_confirm_endtrip_subtitle">Votre trajet sera analysé et enregistré</string>
-   <string name="dk_tripwidget_confirm_endtrip_title">J\'ai terminé mon trajet</string>
+   <string name="dk_tripwidget_confirm_endtrip_title">J\’ai terminé mon trajet</string>
    <string name="dk_tripwidget_disable_autostart_title">Désactiver temporairement l’enregistrement automatique de vos trajets ?</string>
    <string name="dk_tripwidget_record_title">Trajet commencé à %s</string>
    <string name="dk_tripwidget_start_title">Enregistrer un trajet</string>

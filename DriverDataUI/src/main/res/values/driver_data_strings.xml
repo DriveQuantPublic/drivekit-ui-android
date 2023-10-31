@@ -168,7 +168,7 @@
    <string name="dk_driverdata_no_speeding_content_congratulations">You have respected the authorized speed limits all along your trip.</string>
    <string name="dk_driverdata_no_speeding_events">No overruns</string>
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo and thank you for your caution!</string>
-   <string name="dk_driverdata_no_trip_placeholder">You haven\'t made any trips with this vehicle yet.</string>
+   <string name="dk_driverdata_no_trip_placeholder">You have not yet made any trips with this vehicle.</string>
    <string name="dk_driverdata_no_trips_recorded">The application has not yet analyzed your trips.\n\nTo measure your driving style and receive tips and advice on how to improve, check that the application is properly configured and carry out a trip.\n\nWhen automatic mode is activated, the application detects and analyzes your movements even when it is not open.</string>
    <string name="dk_driverdata_phone_call_plur">%s phone calls</string>
    <string name="dk_driverdata_phone_call_sing">%s phone call</string>
