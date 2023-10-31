@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
-import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -136,9 +135,6 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
         // Nothing to do.
     }
 
-    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
-        // Nothing to do.
-    }
     override fun potentialTripStart(startMode: StartMode) {
         // Nothing to do.
     }
