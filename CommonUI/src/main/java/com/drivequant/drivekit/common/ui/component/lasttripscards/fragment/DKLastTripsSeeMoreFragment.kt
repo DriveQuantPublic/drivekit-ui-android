@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import kotlinx.android.synthetic.main.dk_fragment_last_trips.root
 import kotlinx.android.synthetic.main.dk_fragment_last_trips_see_more.text_view_see_more
@@ -35,7 +36,7 @@ internal class DKLastTripsSeeMoreFragment : Fragment() {
         context?.let { context ->
             text_view_see_more.apply {
                 visibility = View.VISIBLE
-                headLine1()
+                normalText(DriveKitUI.colors.complementaryFontColor())
                 text = if (this@DKLastTripsSeeMoreFragment.hasMoreTrips) {
                     getString(R.string.dk_common_see_more_trips)
                 } else {
