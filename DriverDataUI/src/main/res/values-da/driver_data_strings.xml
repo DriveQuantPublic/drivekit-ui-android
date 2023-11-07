@@ -168,7 +168,7 @@
    <string name="dk_driverdata_no_speeding_content_congratulations">Du har respekteret fartgrænserne på din tur.</string>
    <string name="dk_driverdata_no_speeding_events">Ingen overskridelser</string>
    <string name="dk_driverdata_no_speeding_title_congratulations">Tillykke og tak for din forsigtighed!</string>
-   <string name="dk_driverdata_no_trip_placeholder">Du har endnu ikke foretaget ture med dette køretøj.</string>
+   <string name="dk_driverdata_no_trip_placeholder">Du har endnu ikke kørt nogen ture med dette køretøj.</string>
    <string name="dk_driverdata_no_trips_recorded">Applikationen har endnu ikke analyseret dine ture.\n\nFor at måle din kørestil og modtage tips og råd om, hvordan du kan forbedre dig, skal du kontrollere, at applikationen er korrekt konfigureret og gennemføre en rejse.\n\nNår automatisk tilstand er aktiveret, registrerer og analyserer applikationen dine bevægelser, selv når den ikke er åben.</string>
    <string name="dk_driverdata_phone_call_plur">%s telefonopkald</string>
    <string name="dk_driverdata_phone_call_sing">%s telefonopkald</string>

@@ -10,7 +10,6 @@ import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -244,10 +243,6 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         feedbackType: CrashFeedbackType,
         severity: CrashFeedbackSeverity
     ) {
-        // Nothing to do.
-    }
-
-    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
         // Nothing to do.
     }
 

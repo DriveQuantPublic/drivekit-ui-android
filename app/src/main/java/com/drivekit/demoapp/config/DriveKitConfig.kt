@@ -22,6 +22,8 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
@@ -31,7 +33,6 @@ import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSe
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
-import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.TripListener
@@ -56,6 +57,7 @@ import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import kotlin.random.Random
+
 
 /**
  * Created by Mohamed on 2020-05-14.
@@ -93,6 +95,11 @@ internal object DriveKitConfig {
     private fun initializeModules(application: Application) {
         // DriveKit Core Initialization:
         DriveKit.initialize(application)
+        DriveKit.addDeviceConfigurationEventListener(object : DKDeviceConfigurationListener {
+            override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
+                DKNotificationManager.onDeviceConfigurationChanged(application, event)
+            }
+        })
 
         // TripAnalysis initialization:
         DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
@@ -106,8 +113,6 @@ internal object DriveKitConfig {
                 feedbackType: CrashFeedbackType,
                 severity: CrashFeedbackSeverity
             ) {}
-
-            override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {}
 
             override fun potentialTripStart(startMode: StartMode) {}
 
