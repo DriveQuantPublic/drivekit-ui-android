@@ -2,15 +2,15 @@
 <resources>
    <string name="dk_achievements_failed_to_sync_streaks">Incapaz de sincronizar sequências de sucesso, tente novamente mais tarde.</string>
    <string name="dk_achievements_menu_streaks">Sequência de sucesso</string>
-   <string name="dk_achievements_streaks_acceleration_reset">Uma aceleração dura foi detectada em sua última viagem</string>
+   <string name="dk_achievements_streaks_acceleration_reset">Uma aceleração brusa foi detectada em sua última viagem</string>
    <string name="dk_achievements_streaks_acceleration_text">Tente fazer uma série de viagens sem nenhuma aceleração severa. \n\n Na sua melhor sequência de sucesso, é memorizado e você pode tentar superá -lo.</string>
    <string name="dk_achievements_streaks_acceleration_title">Sem aceleração severa</string>
-   <string name="dk_achievements_streaks_adherence_reset">Você cruzou um limite de adesão durante sua última viagem</string>
+   <string name="dk_achievements_streaks_adherence_reset">Você cometeu um limite de aderência na pista durante sua última viagem</string>
    <string name="dk_achievements_streaks_adherence_text">Tente fazer uma série de viagens sem cruzar nenhum limite de aderência. \n\n As viagens em sua melhor sequência de sucesso são memorizadas e você pode tentar superar.</string>
-   <string name="dk_achievements_streaks_adherence_title">Sem limite de adesão</string>
+   <string name="dk_achievements_streaks_adherence_title">Sem limite de aderência na pista</string>
    <string name="dk_achievements_streaks_best_title">Melhor faixa</string>
    <string name="dk_achievements_streaks_brake_reset">A frenagem áspera foi detectada durante sua última viagem.</string>
-   <string name="dk_achievements_streaks_brake_text">Tente fazer uma série de viagens sem frenagem dura. \n\nNeach tempo que você obtém sucesso, o balcão da viagem aumenta. \n\nSe você falhar, o contador é redefinido e você deve reiniciar do zero. \n\nO número de viagens Na sua melhor sequência de sucesso, é memorizado e você pode tentar superá -lo.</string>
+   <string name="dk_achievements_streaks_brake_text">Tente fazer uma série de viagens sem freadas bruscas. \n\nDe cada vez que você obtém sucesso, o balcão da viagem aumenta. \n\nSe você falhar, o contador é redefinido e você deve reiniciar do zero. \n\nO número de viagens Na sua melhor sequência de sucesso, é memorizado e você pode tentar superá -lo.</string>
    <string name="dk_achievements_streaks_brake_title">Sem freagem brusca</string>
    <string name="dk_achievements_streaks_call_reset">Você fez uma ligação em sua última viagem</string>
    <string name="dk_achievements_streaks_congrats">Bom trabalho!</string>

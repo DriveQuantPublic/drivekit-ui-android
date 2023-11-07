@@ -22,5 +22,6 @@
         android:layout_height="109dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:paddingHorizontal="@dimen/dk_margin_half"
         tools:text="@string/dk_common_see_more_trips" />
 </androidx.cardview.widget.CardView>

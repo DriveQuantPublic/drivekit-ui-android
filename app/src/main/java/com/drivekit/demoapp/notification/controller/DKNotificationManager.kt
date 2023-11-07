@@ -11,7 +11,7 @@ import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.tripanalysis.DeviceConfigEvent
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -140,18 +140,25 @@ internal object DKNotificationManager : TripListener {
         // Nothing to do.
     }
 
-    override fun onDeviceConfigEvent(deviceConfigEvent: DeviceConfigEvent) {
-        if (deviceConfigEvent is DeviceConfigEvent.BluetoothSensorStateChanged && deviceConfigEvent.btRequired) {
-            val context = DriveKit.applicationContext
-            if (deviceConfigEvent.btEnabled) {
-                cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)
-            } else {
-                val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
-                var contentIntent: PendingIntent? = null
-                if (intent != null) {
-                    contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+    fun onDeviceConfigurationChanged(context: Context, event: DKDeviceConfigurationEvent) {
+        when (event) {
+            is DKDeviceConfigurationEvent.BluetoothSensor -> {
+                if (event.isValid) {
+                    cancelNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE)
+                } else { // TODO check if btRequired ?
+                    val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
+                    var contentIntent: PendingIntent? = null
+                    if (intent != null) {
+                        contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                    }
+                    sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
                 }
-                sendNotification(context, NotificationType.SETTINGS_BLUETOOTH_STATE, contentIntent)
+            }
+            is DKDeviceConfigurationEvent.LocationSensor -> {
+                // do something
+            }
+            else -> {
+                // do something
             }
         }
     }

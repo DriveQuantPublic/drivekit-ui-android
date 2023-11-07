@@ -168,7 +168,7 @@
    <string name="dk_driverdata_no_speeding_content_congratulations">Sie haben während der gesamten Fahrt die Geschwindigkeitsbegrenzungen beachtet.</string>
    <string name="dk_driverdata_no_speeding_events">Keine Überschreitungen</string>
    <string name="dk_driverdata_no_speeding_title_congratulations">👍 Bravo und vielen Dank für Ihre Vorsicht!</string>
-   <string name="dk_driverdata_no_trip_placeholder">Du hast noch keine Fahrten mit diesem Fahrzeug gemacht.</string>
+   <string name="dk_driverdata_no_trip_placeholder">Sie haben noch keine Fahrten mit diesem Fahrzeug unternommen.</string>
    <string name="dk_driverdata_no_trips_recorded">Die Anwendung hat Ihre Fahrten noch nicht analysiert.\n\nUm Ihren Fahrstil zu messen und Tipps und Ratschläge zur Verbesserung zu erhalten, überprüfen Sie, ob die Anwendung richtig konfiguriert ist, und führen Sie eine Fahrt durch.\n\nWenn der automatische Modus aktiviert ist, erkennt und analysiert die Anwendung Ihre Bewegungen, auch wenn sie nicht geöffnet ist.</string>
    <string name="dk_driverdata_phone_call_plur">%s Telefonate</string>
    <string name="dk_driverdata_phone_call_sing">%s Telefonat</string>

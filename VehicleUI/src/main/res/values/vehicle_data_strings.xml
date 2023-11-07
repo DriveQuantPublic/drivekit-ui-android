@@ -126,10 +126,10 @@
    <string name="dk_vehicle_detection_mode_title">Auto start:</string>
    <string name="dk_vehicle_engine_description">Engine type ?</string>
    <string name="dk_vehicle_engine_diesel">Diesel</string>
-   <string name="dk_vehicle_engine_diesel_hybrid">Diesel-electric hybrid</string>
+   <string name="dk_vehicle_engine_diesel_hybrid">Diesel hybrid</string>
    <string name="dk_vehicle_engine_electric">Electric</string>
    <string name="dk_vehicle_engine_gasoline">Gasoline</string>
-   <string name="dk_vehicle_engine_gasoline_hybrid">Gasoline-electric hybrid</string>
+   <string name="dk_vehicle_engine_gasoline_hybrid">Gasoline hybrid</string>
    <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Plug-in gasoline hybrid</string>
    <string name="dk_vehicle_error_message">An error occurred during the request, please retry later</string>
    <string name="dk_vehicle_failed_to_paired_beacon">The beacon could not be associated with the vehicle, please try again later.</string>
