@@ -95,7 +95,7 @@ internal object DriveKitConfig {
     private fun initializeModules(application: Application) {
         // DriveKit Core Initialization:
         DriveKit.initialize(application)
-        DriveKit.addDeviceConfigurationEventListener(object : DKDeviceConfigurationListener {
+        DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
             override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
                 DKNotificationManager.onDeviceConfigurationChanged(application, event)
             }
