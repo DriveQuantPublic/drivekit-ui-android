@@ -16,9 +16,6 @@ import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
@@ -227,26 +224,6 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
     }
 
     override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
-    }
-
-    override fun beaconDetected() {
-        // Nothing to do.
-    }
-
-    override fun crashDetected(crashInfo: DKCrashInfo) {
-        // Nothing to do.
-    }
-
-    override fun crashFeedbackSent(
-        crashInfo: DKCrashInfo,
-        feedbackType: CrashFeedbackType,
-        severity: CrashFeedbackSeverity
-    ) {
-        // Nothing to do.
-    }
-
-    override fun potentialTripStart(startMode: StartMode) {
         // Nothing to do.
     }
 

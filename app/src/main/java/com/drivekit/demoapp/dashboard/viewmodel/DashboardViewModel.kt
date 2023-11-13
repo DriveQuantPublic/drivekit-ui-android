@@ -2,9 +2,14 @@ package com.drivekit.demoapp.dashboard.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
+import com.drivequant.drivekit.tripanalysis.TripListener
+import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
+import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
+import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
+import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
@@ -13,14 +18,16 @@ import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPag
 
 internal class DashboardViewModel: ViewModel() {
     var sdkStateObserver: MutableLiveData<Any> = MutableLiveData()
-    var sdkStateChangeListener: TripListenerController.SdkStateChangeListener = object : TripListenerController.SdkStateChangeListener {
-        override fun sdkStateChanged(state: State) {
-            sdkStateObserver.postValue(Any())
-        }
+    val tripListener = object : TripListener {
+        override fun tripCancelled(cancelTrip: CancelTrip) {}
+        override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {}
+        override fun tripSavedForRepost() {}
+        override fun tripStarted(startMode: StartMode) {}
+        override fun sdkStateChanged(state: State) { sdkStateObserver.postValue(Any()) }
     }
 
     init {
-        TripListenerController.addSdkStateChangeListener(sdkStateChangeListener)
+        DriveKitTripAnalysis.addTripListener(tripListener)
     }
 
     fun getSynthesisCardsView(listener: SynthesisCardsViewListener) {

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.receiver.TripReceiver
@@ -102,7 +101,7 @@ internal object DriveKitConfig {
         })
 
         // TripAnalysis initialization:
-        DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
+        DriveKitTripAnalysis.initialize(createForegroundNotification(application))
         DriveKitTripAnalysis.addTripListener(object : TripListener {
             override fun beaconDetected() { }
 
