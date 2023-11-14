@@ -111,12 +111,11 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         val shouldShowConfirmationDialog: Boolean
         this.state.let {
             when (it) {
-                is RecordingState.Recording -> when (this.tripRecordingUserMode) {
+                is RecordingState.Recording -> shouldShowConfirmationDialog = when (this.tripRecordingUserMode) {
                     DKTripRecordingUserMode.START_STOP,
-                    DKTripRecordingUserMode.STOP_ONLY -> shouldShowConfirmationDialog = true
+                    DKTripRecordingUserMode.STOP_ONLY -> true
 
-                    DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> shouldShowConfirmationDialog =
-                        false
+                    DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> false
                 }
 
                 is RecordingState.Stopped -> {
@@ -245,5 +244,10 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DKTripRecordingButtonViewModel(tripRecordingUserMode) as T
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        DriveKitTripAnalysis.removeTripListener(this)
     }
 }

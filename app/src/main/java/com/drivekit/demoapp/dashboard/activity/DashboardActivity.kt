@@ -26,7 +26,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingButton
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
@@ -81,7 +80,6 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
-        DriveKitTripAnalysis.addTripListener(viewModel.sdkStateChangeListener)
         showContent()
     }
 
@@ -190,11 +188,6 @@ internal class DashboardActivity : AppCompatActivity() {
             }
         }
         return managed
-    }
-
-    override fun onPause() {
-        super.onPause()
-        DriveKitTripAnalysis.removeTripListener(viewModel.tripListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
