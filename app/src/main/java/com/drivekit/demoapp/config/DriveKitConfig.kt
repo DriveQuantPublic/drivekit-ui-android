@@ -111,7 +111,7 @@ internal object DriveKitConfig {
 
             override fun onDisconnected() {
                 // You have to clean data
-                logout(application)
+                reset(application)
             }
 
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
@@ -327,7 +327,7 @@ internal object DriveKitConfig {
         configureModules(context)
     }
 
-    private fun reset(context: Context) {
+    fun reset(context: Context) {
         // Reset DriveKit
         DriveKit.reset()
         DriveKitTripAnalysis.reset()
