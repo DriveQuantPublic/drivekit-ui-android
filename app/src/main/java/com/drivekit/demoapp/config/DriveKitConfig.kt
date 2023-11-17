@@ -93,7 +93,7 @@ internal object DriveKitConfig {
         // DriveKit modules configuration:
         configureModules(application)
 
-        // Manage trips saved for repost notification // What ?
+        // Manage notifications on DriveKit SDK events
         DKNotificationManager.configure()
     }
 
