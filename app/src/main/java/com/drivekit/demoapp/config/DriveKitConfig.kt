@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.config
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -21,8 +22,13 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
+import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
+import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
+import com.drivequant.drivekit.core.networking.DriveKitListener
+import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
@@ -81,19 +87,35 @@ internal object DriveKitConfig {
     private const val enableVehicleOdometer: Boolean = true
 
     fun initialize(application: Application) {
-        // Manage trips saved for repost notification
-        DKNotificationManager.configure()
-
         // DriveKit modules initialization:
         initializeModules(application)
 
         // DriveKit modules configuration:
         configureModules(application)
+
+        // Manage trips saved for repost notification // What ?
+        DKNotificationManager.configure()
     }
 
     private fun initializeModules(application: Application) {
         // DriveKit Core Initialization:
         DriveKit.initialize(application)
+        DriveKitListenerManager.addListener(object : DriveKitListener {
+            override fun onAccountDeleted(status: DeleteAccountStatus) {
+            }
+
+            override fun onAuthenticationError(errorType: RequestError) {
+            }
+
+            override fun onConnected() { }
+
+            override fun onDisconnected() {
+                // You have to clean data
+                logout(application)
+            }
+
+            override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
+        })
         DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
             override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
                 DKNotificationManager.onDeviceConfigurationChanged(application, event)
