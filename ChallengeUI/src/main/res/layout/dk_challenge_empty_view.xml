@@ -11,13 +11,13 @@
         android:id="@+id/dk_image_view_no_challenge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/dk_challenge_waiting"
-        android:contentDescription="image" />
+        android:contentDescription="image"
+        tools:src="@drawable/dk_challenge_waiting" />
 
     <TextView
         android:id="@+id/dk_text_view_no_challenge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/dk_margin"/>
+        android:padding="@dimen/dk_margin" />
 </LinearLayout>

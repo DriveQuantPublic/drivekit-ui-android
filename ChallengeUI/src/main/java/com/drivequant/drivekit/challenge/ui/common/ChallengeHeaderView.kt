@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -12,9 +13,15 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_challenge_header_view.view.*
 
 class ChallengeHeaderView(context: Context) : LinearLayout(context) {
+
+    private val challengeRuleConsultTextView: TextView
+    private val conditionsTextView: TextView
+    private val rulesTextView: TextView
+    private val dateTextView: TextView
+    private val titleTextView: TextView
+    private val separatorView: View
 
     init {
         val view = View.inflate(context, R.layout.dk_challenge_header_view, null)
@@ -24,13 +31,19 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+        this.challengeRuleConsultTextView = view.findViewById(R.id.text_view_challenge_rule_consult)
+        this.conditionsTextView = view.findViewById(R.id.text_view_conditions)
+        this.rulesTextView = view.findViewById(R.id.text_view_rules)
+        this.dateTextView = view.findViewById(R.id.text_view_date)
+        this.titleTextView = view.findViewById(R.id.text_view_title)
+        this.separatorView = view.findViewById(R.id.view_separator)
         setStyle()
     }
 
     fun configure(viewModel: ChallengeParticipationViewModel, activity: Activity) {
         viewModel.challenge?.let { challenge ->
             if (!challenge.rules.isNullOrBlank()) {
-                text_view_challenge_rule_consult.apply {
+                challengeRuleConsultTextView.apply {
                     text = DKResource.convertToString(
                         context,
                         "dk_challenge_consult_rule_button"
@@ -48,37 +61,37 @@ class ChallengeHeaderView(context: Context) : LinearLayout(context) {
             }
 
             if (!challenge.conditionsDescription.isNullOrBlank()) {
-                text_view_conditions.text = challenge.conditionsDescription
-                text_view_conditions.visibility = View.VISIBLE
+                conditionsTextView.text = challenge.conditionsDescription
+                conditionsTextView.visibility = View.VISIBLE
             }
 
-            text_view_rules.text = challenge.description
-            text_view_date.text = viewModel.getDateRange()
-            text_view_title.text = challenge.title
+            rulesTextView.text = challenge.description
+            dateTextView.text = viewModel.getDateRange()
+            titleTextView.text = challenge.title
         }
     }
 
     fun displayRulesText(visibility: Boolean = true) {
-        text_view_rules.visibility = if (visibility) View.VISIBLE else GONE
+        rulesTextView.visibility = if (visibility) View.VISIBLE else GONE
     }
 
     fun displayConsultRulesText(visibility: Boolean = true) {
-        text_view_challenge_rule_consult.visibility = if (visibility) View.VISIBLE else GONE
+        challengeRuleConsultTextView.visibility = if (visibility) View.VISIBLE else GONE
     }
 
     fun displayConditionsDescriptionText(visibility: Boolean = true) {
-        text_view_conditions.visibility = if (visibility) View.VISIBLE else GONE
+        conditionsTextView.visibility = if (visibility) View.VISIBLE else GONE
     }
 
     private fun setStyle() {
-        text_view_title.apply {
+        titleTextView.apply {
             setTextColor(DriveKitUI.colors.mainFontColor())
             typeface = DriveKitUI.primaryFont(context)
         }
-        text_view_date.smallText(DriveKitUI.colors.complementaryFontColor())
-        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        text_view_conditions.normalText()
-        text_view_rules.normalText()
-        text_view_challenge_rule_consult.normalText(DriveKitUI.colors.complementaryFontColor())
+        dateTextView.smallText(DriveKitUI.colors.complementaryFontColor())
+        separatorView.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        conditionsTextView.normalText()
+        rulesTextView.normalText()
+        challengeRuleConsultTextView.normalText(DriveKitUI.colors.complementaryFontColor())
     }
 }

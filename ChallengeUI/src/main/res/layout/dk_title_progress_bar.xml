@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/dk_margin_half">
+    android:padding="@dimen/dk_margin_half"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/text_view_title_condition"

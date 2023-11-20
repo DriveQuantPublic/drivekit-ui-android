@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.databinding.DkActivityChallengeRulesBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -19,14 +19,12 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_activity_challenge_rules.progress_circular
-import kotlinx.android.synthetic.main.dk_activity_challenge_rules.text_view_accept_rule
-import kotlinx.android.synthetic.main.dk_activity_challenge_rules.text_view_challenge_rule
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
     private lateinit var challengeId: String
     private lateinit var viewModel: ChallengeParticipationViewModel
+    private lateinit var binding: DkActivityChallengeRulesBinding
 
     companion object {
         const val CONSULT_RULES_EXTRA = "consult-rules-extra"
@@ -53,7 +51,8 @@ class ChallengeRulesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dk_activity_challenge_rules)
+        binding = DkActivityChallengeRulesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 this,
@@ -61,8 +60,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ), javaClass.simpleName
         )
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar.dkToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -77,11 +75,11 @@ class ChallengeRulesActivity : AppCompatActivity() {
         val acceptRulesText = if (isRegistered) {
             "dk_challenge_participate_button"
         } else {
-            text_view_accept_rule.visibility = View.VISIBLE
+            binding.textViewAcceptRule.visibility = View.VISIBLE
             "dk_challenge_optin_title"
         }
 
-        text_view_accept_rule.apply {
+        binding.textViewAcceptRule.apply {
             text = DKResource.convertToString(this@ChallengeRulesActivity, acceptRulesText)
             headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
@@ -115,12 +113,12 @@ class ChallengeRulesActivity : AppCompatActivity() {
 
         viewModel.challenge?.rules?.let {
             if (it.isNotEmpty()) {
-                text_view_challenge_rule.text =
+                binding.textViewChallengeRule.text =
                     HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY)
             }
         }
 
-        text_view_accept_rule.setOnClickListener {
+        binding.textViewAcceptRule.setOnClickListener {
             if (!isRegistered) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
@@ -147,16 +145,14 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 descriptionTextView?.normalText()
             }
         }
-        text_view_accept_rule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        binding.textViewAcceptRule.setBackgroundColor(DriveKitUI.colors.secondaryColor())
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 

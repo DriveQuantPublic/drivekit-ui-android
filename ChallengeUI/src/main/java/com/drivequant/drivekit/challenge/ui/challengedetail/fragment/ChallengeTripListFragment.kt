@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
@@ -17,10 +18,9 @@ import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.challenge_header_view_container
-import kotlinx.android.synthetic.main.dk_fragment_challenge_trip_list.challenge_trips_list
 
 
 class ChallengeTripListFragment : Fragment() {
@@ -63,7 +63,10 @@ class ChallengeTripListFragment : Fragment() {
             )[ChallengeDetailViewModel::class.java]
         }
 
-        challenge_trips_list.configure(object : DKTripList {
+        val challengeTripsList: DKTripListView = view.findViewById(R.id.challenge_trips_list)
+        val challengeHeaderViewContainer: FrameLayout = view.findViewById(R.id.challenge_header_view_container)
+
+        challengeTripsList.configure(object : DKTripList {
             override fun getTripData(): TripData = viewModel.getTripData()
             override fun getTripsList(): List<DKTripListItem> =
                 viewModel.challengeDetailTrips.toDKTripList()
@@ -94,6 +97,6 @@ class ChallengeTripListFragment : Fragment() {
         challengeHeaderView.displayRulesText(false)
         challengeHeaderView.displayConsultRulesText(false)
         challengeHeaderView.displayConditionsDescriptionText(false)
-        challenge_header_view_container.addView(challengeHeaderView)
+        challengeHeaderViewContainer.addView(challengeHeaderView)
     }
 }

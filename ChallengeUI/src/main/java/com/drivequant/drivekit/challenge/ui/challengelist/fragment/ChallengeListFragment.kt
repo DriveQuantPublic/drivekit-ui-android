@@ -1,20 +1,25 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.*
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListener
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStatusList
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStringArray
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeListBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -23,7 +28,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
-import kotlinx.android.synthetic.main.dk_fragment_challenge_list.*
 
 
 class ChallengeListFragment : Fragment(), ChallengeListener {
@@ -31,7 +35,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     private lateinit var viewModel: ChallengeListViewModel
     private lateinit var status: List<ChallengeStatus>
     private var adapter: ChallengeListAdapter? = null
-
+    private var _binding: DkFragmentChallengeListBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(status: List<ChallengeStatus>, viewModel: ChallengeListViewModel): ChallengeListFragment {
@@ -45,9 +50,9 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.dk_fragment_challenge_list, container, false)
-        view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingListBackgroundColor))
-        return view
+        _binding = DkFragmentChallengeListBinding.inflate(inflater, container, false)
+        binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dkRankingListBackgroundColor))
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -78,7 +83,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
         }
 
-        dk_swipe_refresh_challenge.setOnRefreshListener {
+        binding.dkSwipeRefreshChallenge.setOnRefreshListener {
             updateSwipeRefreshChallengesVisibility(true)
             viewModel.fetchChallengeList()
         }
@@ -108,7 +113,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                     )
                 ) -> displayNoChallenges(status)
                 else -> {
-                    dk_recycler_view_challenge.layoutManager = LinearLayoutManager(requireContext())
+                    binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext())
                     adapter?.notifyDataSetChanged() ?: run {
                         adapter = ChallengeListAdapter(
                             requireContext(),
@@ -116,7 +121,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                             status,
                             this
                         )
-                        dk_recycler_view_challenge.adapter = adapter
+                        binding.dkRecyclerViewChallenge.adapter = adapter
                     }
                     displayChallenges()
                 }
@@ -125,18 +130,23 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateSwipeRefreshChallengesVisibility(display: Boolean) {
         if (display) {
-            dk_swipe_refresh_challenge.isRefreshing = display
+            binding.dkSwipeRefreshChallenge.isRefreshing = display
         } else {
-            dk_swipe_refresh_challenge.visibility = View.VISIBLE
-            dk_swipe_refresh_challenge.isRefreshing = display
+            binding.dkSwipeRefreshChallenge.visibility = View.VISIBLE
+            binding.dkSwipeRefreshChallenge.isRefreshing = display
         }
     }
 
     private fun displayChallenges() {
-        no_challenges.visibility = View.GONE
-        dk_recycler_view_challenge.visibility = View.VISIBLE
+        binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
+        binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
     }
 
     private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
@@ -153,15 +163,13 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 )
             }
         }
-        val textView = no_challenges.findViewById<TextView>(R.id.dk_text_view_no_challenge)
-        val imageView = no_challenges.findViewById<ImageView>(R.id.dk_image_view_no_challenge)
-        textView.text = DKResource.convertToString(requireContext(), pair.first)
+        binding.noChallenges.dkTextViewNoChallenge.text = DKResource.convertToString(requireContext(), pair.first)
         DKResource.convertToDrawable(requireContext(), pair.second)?.let {
-            imageView.setImageDrawable(it)
+            binding.noChallenges.dkImageViewNoChallenge.setImageDrawable(it)
         }
-        textView.headLine2(DriveKitUI.colors.mainFontColor())
-        no_challenges.visibility = View.VISIBLE
-        dk_recycler_view_challenge.visibility = View.GONE
+        binding.noChallenges.dkTextViewNoChallenge.headLine2(DriveKitUI.colors.mainFontColor())
+        binding.noChallenges.viewGroupEmptyScreen.visibility = View.VISIBLE
+        binding.dkRecyclerViewChallenge.visibility = View.GONE
     }
 
     override fun onClickChallenge(challengeData: ChallengeData) {

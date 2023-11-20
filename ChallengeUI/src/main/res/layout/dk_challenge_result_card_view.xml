@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_distance"
+    style="@style/DKCard"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    style="@style/DKCard">
+    android:layout_height="90dp">
 
     <RelativeLayout
         android:id="@+id/view_group_container_distance"

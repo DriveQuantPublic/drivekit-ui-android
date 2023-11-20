@@ -1,21 +1,24 @@
 package com.drivequant.drivekit.challenge.ui.joinchallenge.common
 
-
 import android.content.Context
 import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import kotlinx.android.synthetic.main.dk_title_progress_bar.view.*
 
 
 internal class TitleProgressBar(context: Context) : LinearLayout(context) {
+
+    private val conditionProgressBar: ProgressBar
+    private val titleConditionTextView: TextView
 
     init {
         val view = View.inflate(context, R.layout.dk_title_progress_bar, null)
@@ -25,11 +28,13 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+        this.conditionProgressBar = view.findViewById(R.id.progress_bar_condition)
+        this.titleConditionTextView = view.findViewById(R.id.text_view_title_condition)
         setStyle()
     }
 
     fun setProgress(progress: Int) {
-        progress_bar_condition.progress = progress
+        conditionProgressBar.progress = progress
     }
 
     fun setTitle(title: String, condition: String) {
@@ -38,7 +43,7 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
             "nbTrip" -> DKResource.convertToString(context,"dk_challenge_nb_trip")
             else -> ""
         }
-        text_view_title_condition.apply {
+        titleConditionTextView.apply {
             text = DKSpannable().append("$titleProgressBar : ", context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
             }).append(condition, context.resSpans {
@@ -49,10 +54,10 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
     }
 
     private fun setStyle() {
-        val foregroundDrawable = (progress_bar_condition.progressDrawable as LayerDrawable).getDrawable(1)
+        val foregroundDrawable = (conditionProgressBar.progressDrawable as LayerDrawable).getDrawable(1)
         foregroundDrawable.tintDrawable(DriveKitUI.colors.primaryColor())
 
-        val params = progress_bar_condition.layoutParams as MarginLayoutParams
+        val params = conditionProgressBar.layoutParams as MarginLayoutParams
         params.setMargins(
             context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
             params.topMargin,
