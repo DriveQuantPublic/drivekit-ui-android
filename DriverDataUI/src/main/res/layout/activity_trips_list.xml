@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".trips.activity.TripsListActivity">
+    tools:context=".trips.activity.TripsListActivity"
+    tools:viewBindingIgnore="true">
 
     <include layout="@layout/dk_layout_toolbar" />
 

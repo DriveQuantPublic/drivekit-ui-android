@@ -43,6 +43,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.FragmentTripDetailBinding
 import com.drivequant.drivekit.ui.extension.toDKTripItem
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripDetailFragmentPagerAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.TripGoogleMapViewHolder
@@ -54,19 +55,11 @@ import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_trip_detail.center_button
-import kotlinx.android.synthetic.main.fragment_trip_detail.container_header_trip
-import kotlinx.android.synthetic.main.fragment_trip_detail.progress_circular
-import kotlinx.android.synthetic.main.fragment_trip_detail.tab_layout
-import kotlinx.android.synthetic.main.fragment_trip_detail.trip_date
-import kotlinx.android.synthetic.main.fragment_trip_detail.trip_header
-import kotlinx.android.synthetic.main.fragment_trip_detail.unscored_fragment
-import kotlinx.android.synthetic.main.fragment_trip_detail.view_pager
 import java.util.Locale
 
 class TripDetailFragment : Fragment() {
 
-    private lateinit var viewModel : TripDetailViewModel
+    private lateinit var viewModel: TripDetailViewModel
 
     private lateinit var itinId: String
     private var tripListConfiguration: TripListConfiguration = TripListConfiguration.MOTORIZED()
@@ -78,7 +71,8 @@ class TripDetailFragment : Fragment() {
     private lateinit var tripMapViewHolder: TripGoogleMapViewHolder
     private var mapFragment: SupportMapFragment? = null
 
-    private lateinit var viewContentTrip: View
+    private var _binding: FragmentTripDetailBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(
@@ -86,7 +80,6 @@ class TripDetailFragment : Fragment() {
             openAdvice: Boolean = false,
             tripListConfigurationType: TripListConfigurationType = TripListConfigurationType.MOTORIZED
         ): TripDetailFragment {
-
             DriveKitUI.analyticsListener?.trackEvent(
                 DKAnalyticsEvent.TRIP_OPEN,
                 mapOf(DKAnalyticsEventKey.ITIN_ID to itinId)
@@ -104,11 +97,10 @@ class TripDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_trip_detail, container, false)
-        viewContentTrip = view.findViewById(R.id.container_trip)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = FragmentTripDetailBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -153,10 +145,10 @@ class TripDetailFragment : Fragment() {
                 TripDetailViewModelFactory(itinId, tripListConfiguration)
             )[TripDetailViewModel::class.java]
         }
-        progress_circular.visibility = View.VISIBLE
+        binding.progressCircular.visibility = View.VISIBLE
         activity?.title =  context?.getString(R.string.dk_driverdata_trip_detail_title)
-        container_header_trip.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        center_button.setColorFilter(DriveKitUI.colors.primaryColor())
+        binding.containerHeaderTrip.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        binding.centerButton.setColorFilter(DriveKitUI.colors.primaryColor())
 
         mapFragment = childFragmentManager.findFragmentById(R.id.google_map) as? SupportMapFragment
         if (DriverDataUI.enableDeleteTrip) {
@@ -168,6 +160,11 @@ class TripDetailFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("itinId", itinId)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun deleteTrip() {
@@ -288,7 +285,7 @@ class TripDetailFragment : Fragment() {
         if (openAdvice) {
             val index = viewModel.getFirstMapItemIndexWithAdvice()
             if (index > -1) {
-                view_pager.currentItem = index
+                binding.viewPager.currentItem = index
                 viewModel.trip?.let {
                     displayAdvice(viewModel.configurableMapItems[index])
                 }
@@ -449,7 +446,7 @@ class TripDetailFragment : Fragment() {
             tripMapViewHolder =
                 TripGoogleMapViewHolder(
                     this,
-                    viewContentTrip,
+                    binding.containerTrip,
                     viewModel,
                     googleMap
                 )
@@ -458,7 +455,7 @@ class TripDetailFragment : Fragment() {
             displayAdviceFromTripInfo()
             hideProgressCircular()
         }
-        center_button.setOnClickListener {
+        binding.centerButton.setOnClickListener {
             if (this::tripMapViewHolder.isInitialized) {
                 tripMapViewHolder.updateCamera()
             }
@@ -466,8 +463,8 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setUnScoredTripFragment() {
-        view_pager.visibility = View.INVISIBLE
-        unscored_fragment.visibility = View.VISIBLE
+        binding.viewPager.visibility = View.INVISIBLE
+        binding.unscoredFragment.visibility = View.VISIBLE
 
         val fragment = DriverDataUI.customMapItem?.let { item ->
             if (item.overrideShortTrip()) {
@@ -489,16 +486,16 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setViewPager() {
-        view_pager.adapter =
+        binding.viewPager.adapter =
             TripDetailFragmentPagerAdapter(
                 childFragmentManager,
                 viewModel)
-        tab_layout.setupWithViewPager(view_pager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
         if (viewModel.configurableMapItems.size == MapItem.values().size) {
-            tab_layout.tabMode = TabLayout.MODE_FIXED
+            binding.tabLayout.tabMode = TabLayout.MODE_FIXED
         }
         for ((index, mapItem) in viewModel.configurableMapItems.withIndex()) {
-            tab_layout.getTabAt(index)?.let {
+            binding.tabLayout.getTabAt(index)?.let {
                 val icon = ImageView(requireContext())
                 ContextCompat.getDrawable(requireContext(), mapItem.getImageResource())?.let { drawable ->
                     DrawableCompat.setTint(drawable, DriveKitUI.colors.primaryColor())
@@ -509,8 +506,8 @@ class TripDetailFragment : Fragment() {
                 }
             }
         }
-        DrawableCompat.setTint(center_button.drawable, DriveKitUI.colors.primaryColor())
-        view_pager.addOnPageChangeListener(
+        DrawableCompat.setTint(binding.centerButton.drawable, DriveKitUI.colors.primaryColor())
+        binding.viewPager.addOnPageChangeListener(
             DetailOnPageChangeListener(
                 viewModel
             )
@@ -518,8 +515,8 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun setHeaderSummary() {
-        trip_date.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalizeFirstLetter()
-        trip_date.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        binding.tripDate.text = viewModel.trip?.endDate?.formatDate(DKDatePattern.WEEK_LETTER)?.capitalizeFirstLetter()
+        binding.tripDate.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
 
         val headerValue =
             DriverDataUI.customHeader?.let {
@@ -527,14 +524,14 @@ class TripDetailFragment : Fragment() {
                     it.tripDetailHeader().text(requireContext(), viewModel.trip!!.toDKTripItem())
                 }
             }
-        trip_header.text = headerValue ?: run {
+        binding.tripHeader.text = headerValue ?: run {
             DriverDataUI.headerDay.text(requireContext(), viewModel.trip!!.toDKTripItem())
         }
-        trip_header.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
+        binding.tripHeader.setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     private fun showProgressCircular() {
-        progress_circular?.apply {
+        binding.progressCircular.apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
@@ -547,7 +544,7 @@ class TripDetailFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        progress_circular?.apply {
+        binding.progressCircular.apply {
             animate()
             .alpha(0f)
             .setDuration(200L)

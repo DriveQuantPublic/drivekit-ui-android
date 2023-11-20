@@ -5,14 +5,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
-import kotlinx.android.synthetic.main.dk_distraction_item.view.*
 
 internal class DistractionItem : LinearLayout {
+
+    private lateinit var distractionEventTextView: TextView
+    private lateinit var distractionContentTextView: TextView
 
     constructor(context: Context) : super(context) {
         init()
@@ -24,9 +26,12 @@ internal class DistractionItem : LinearLayout {
 
     private fun init() {
         val view = View.inflate(context, R.layout.dk_distraction_item, null)
-        view.text_view_distraction_event.headLine2()
-        view.text_view_distraction_content.smallText(DriveKitUI.colors.complementaryFontColor())
-        view.line_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        this.distractionEventTextView = view.findViewById(R.id.text_view_distraction_event)
+        this.distractionContentTextView = view.findViewById(R.id.text_view_distraction_content)
+        val separatorView = view.findViewById<View>(R.id.line_separator)
+        distractionEventTextView.headLine2()
+        distractionContentTextView.smallText(DriveKitUI.colors.complementaryFontColor())
+        separatorView.setBackgroundColor(DriveKitUI.colors.neutralColor())
         addView(
             view, ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -36,8 +41,8 @@ internal class DistractionItem : LinearLayout {
     }
 
     fun setDistractionEventContent(title: String, content: String) {
-        text_view_distraction_event.text = title
-        text_view_distraction_content.text = content
+        distractionEventTextView.text = title
+        distractionContentTextView.text = content
     }
 
     fun setDistractionContentColor(selected: Boolean) {
@@ -46,7 +51,7 @@ internal class DistractionItem : LinearLayout {
         } else {
             DriveKitUI.colors.complementaryFontColor()
         }.let {
-            text_view_distraction_content.setTextColor(it)
+            distractionContentTextView.setTextColor(it)
         }
     }
 }

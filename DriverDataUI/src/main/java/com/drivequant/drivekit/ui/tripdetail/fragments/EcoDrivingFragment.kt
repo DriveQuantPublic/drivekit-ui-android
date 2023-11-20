@@ -14,17 +14,8 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.databaseutils.entity.EcoDriving
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.EcoDrivingFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.EcoDrivingViewModel
-import kotlinx.android.synthetic.main.eco_driving_fragment.accelAdvice
-import kotlinx.android.synthetic.main.eco_driving_fragment.decelAdvice
-import kotlinx.android.synthetic.main.eco_driving_fragment.gauge_type_title
-import kotlinx.android.synthetic.main.eco_driving_fragment.image_accel_advice
-import kotlinx.android.synthetic.main.eco_driving_fragment.image_decel_advice
-import kotlinx.android.synthetic.main.eco_driving_fragment.image_main_advice
-import kotlinx.android.synthetic.main.eco_driving_fragment.mainAdvice
-import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
-import kotlinx.android.synthetic.main.eco_driving_fragment.score_info
 
 class EcoDrivingFragment : Fragment() {
 
@@ -37,15 +28,17 @@ class EcoDrivingFragment : Fragment() {
     }
 
     private lateinit var viewModel: EcoDrivingViewModel
+    private var _binding: EcoDrivingFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.eco_driving_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = EcoDrivingFragmentBinding.inflate(inflater, container, false)
+        FontUtils.overrideFonts(context, binding.root)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -58,23 +51,29 @@ class EcoDrivingFragment : Fragment() {
         savedInstanceState?.getSerializableCompat("viewModel", EcoDrivingViewModel::class.java)?.let {
             viewModel = it
         }
-        score_gauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.ECO_DRIVING(viewModel.getScore()))
 
-        accelAdvice.text = context?.getString(viewModel.getAccelMessage())
-        mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
-        decelAdvice.text = context?.getString(viewModel.getDecelMessage())
-        gauge_type_title.text = context?.getString(viewModel.getGaugeTitle())
+        binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.ECO_DRIVING(viewModel.getScore()), Typeface.BOLD)
+        binding.scoreInfo.init(GaugeConfiguration.ECO_DRIVING(viewModel.getScore()))
+
+        binding.accelAdvice.text = context?.getString(viewModel.getAccelMessage())
+        binding.mainAdvice.text = context?.getString(viewModel.getMaintainMessage())
+        binding.decelAdvice.text = context?.getString(viewModel.getDecelMessage())
+        binding.gaugeTypeTitle.text = context?.getString(viewModel.getGaugeTitle())
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
 
-        image_accel_advice.setColorFilter(mainFontColor)
-        image_decel_advice.setColorFilter(mainFontColor)
-        image_main_advice.setColorFilter(mainFontColor)
+        binding.imageAccelAdvice.setColorFilter(mainFontColor)
+        binding.imageDecelAdvice.setColorFilter(mainFontColor)
+        binding.imageMainAdvice.setColorFilter(mainFontColor)
 
-        accelAdvice.normalText(mainFontColor)
-        mainAdvice.normalText(mainFontColor)
-        decelAdvice.normalText(mainFontColor)
-        gauge_type_title.normalText(mainFontColor)
+        binding.accelAdvice.normalText(mainFontColor)
+        binding.mainAdvice.normalText(mainFontColor)
+        binding.decelAdvice.normalText(mainFontColor)
+        binding.gaugeTypeTitle.normalText(mainFontColor)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

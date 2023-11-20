@@ -10,22 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.TripSynthesisFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SynthesisViewModel
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_co2_emission
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_co2_mass
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_condition
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_consumption
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_idling_duration
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_mean_speed
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_road_context
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_vehicle_used
-import kotlinx.android.synthetic.main.trip_synthesis_fragment.item_weather
 
 class SynthesisFragment : Fragment() {
 
+    private var _binding: TripSynthesisFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
     companion object {
-        fun newInstance(trip: Trip) : SynthesisFragment {
+        fun newInstance(trip: Trip): SynthesisFragment {
             val fragment = SynthesisFragment()
             fragment.trip = trip
             fragment.viewModel = SynthesisViewModel(trip)
@@ -39,10 +33,10 @@ class SynthesisFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.trip_synthesis_fragment, container, false)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = TripSynthesisFragmentBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -64,29 +58,33 @@ class SynthesisFragment : Fragment() {
 
         viewModel.init(requireContext())
 
-        item_vehicle_used.setValueItem(viewModel.getVehicleDisplayName())
+        binding.itemVehicleUsed.setValueItem(viewModel.getVehicleDisplayName())
         viewModel.getVehicleId()?.let {
+            binding.itemVehicleUsed.setValueTypeFace()
+            binding.itemVehicleUsed.setValueColor()
 
-            item_vehicle_used.setValueTypeFace()
-            item_vehicle_used.setValueColor()
-
-            item_vehicle_used.setOnClickListener {
-                item_vehicle_used.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
+            binding.itemVehicleUsed.setOnClickListener {
+                binding.itemVehicleUsed.onTripItemSynthesisClick(requireContext(), viewModel.getVehicleId(), viewModel.liteConfig)
             }
         }
 
-        item_mean_speed.setValueItem(viewModel.getMeanSpeed(requireContext()))
-        item_idling_duration.setValueItem(viewModel.getIdlingDuration(requireContext()))
+        binding.itemMeanSpeed.setValueItem(viewModel.getMeanSpeed(requireContext()))
+        binding.itemIdlingDuration.setValueItem(viewModel.getIdlingDuration(requireContext()))
 
-        item_consumption.apply {
+        binding.itemConsumption.apply {
             setTitleItem(viewModel.getConsumptionTitle(requireContext()))
             setValueItem(viewModel.getConsumptionValue(requireContext()))
         }
-        item_co2_emission.setValueItem(viewModel.getCo2Emission(requireContext()))
-        item_co2_mass.setValueItem(viewModel.getCO2Mass(requireContext()))
+        binding.itemCo2Emission.setValueItem(viewModel.getCo2Emission(requireContext()))
+        binding.itemCo2Mass.setValueItem(viewModel.getCO2Mass(requireContext()))
 
-        item_condition.setValueItem(viewModel.getCondition(requireContext()))
-        item_weather.setValueItem(viewModel.getWeatherValue(requireContext()))
-        item_road_context.setValueItem(viewModel.getRoadContextValue(requireContext()))
+        binding.itemCondition.setValueItem(viewModel.getCondition(requireContext()))
+        binding.itemWeather.setValueItem(viewModel.getWeatherValue(requireContext()))
+        binding.itemRoadContext.setValueItem(viewModel.getRoadContextValue(requireContext()))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

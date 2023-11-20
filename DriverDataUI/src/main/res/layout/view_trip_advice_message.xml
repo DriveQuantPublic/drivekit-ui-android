@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_trip_advice_message"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="32dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
     <TextView
         android:id="@+id/text_view_advice_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:padding="@dimen/dk_margin_half"
         android:gravity="center"
+        android:padding="@dimen/dk_margin_half"
         android:textColor="@android:color/white"
-        tools:text="Title header"/>
+        tools:text="Title header" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
             android:id="@+id/text_view_advice_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dk_margin_half"
-            tools:text="Trip advice text"/>
+            tools:text="Trip advice text" />
     </ScrollView>
-    <include
-        layout="@layout/view_trip_advice_feedback_buttons"/>
+
+    <include layout="@layout/view_trip_advice_feedback_buttons" />
 </LinearLayout>

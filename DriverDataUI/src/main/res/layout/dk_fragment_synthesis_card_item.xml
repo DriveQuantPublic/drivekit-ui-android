@@ -22,8 +22,8 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dk_margin_half"
             android:layout_marginStart="@dimen/dk_margin_half"
+            android:layout_marginBottom="@dimen/dk_margin_half"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/container"
             app:layout_constraintTop_toTopOf="@id/container" />
@@ -65,22 +65,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
                     android:id="@+id/top_card_info"
                     style="@style/SynthesisCardInfo"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
                     android:id="@+id/middle_card_info"
                     style="@style/SynthesisCardInfo"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/dk_margin" />
+                    android:layout_marginTop="@dimen/dk_margin"
+                    android:visibility="gone" />
 
                 <com.drivequant.drivekit.ui.synthesiscards.view.DKSynthesisCardInfoView
                     android:id="@+id/bottom_card_info"
                     style="@style/SynthesisCardInfo"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/dk_margin"/>
+                    android:layout_marginTop="@dimen/dk_margin"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
@@ -92,7 +93,7 @@
             android:layout_marginBottom="@dimen/dk_margin_half"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/score_gauge"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/score_gauge" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
