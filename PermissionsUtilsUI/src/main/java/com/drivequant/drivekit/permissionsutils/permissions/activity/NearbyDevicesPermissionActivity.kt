@@ -13,15 +13,18 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
+import com.drivequant.drivekit.permissionsutils.databinding.ActivityNearbyDevicesPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import kotlinx.android.synthetic.main.activity_nearby_devices_permission.*
 
 @RequiresApi(Build.VERSION_CODES.S)
 class NearbyDevicesPermissionActivity : BasePermissionActivity() {
 
+    private lateinit var binding: ActivityNearbyDevicesPermissionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nearby_devices_permission)
+        binding = ActivityNearbyDevicesPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar("dk_perm_utils_app_diag_nearby_title")
         setStyle()
     }
@@ -45,7 +48,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_nearby_devices_permission.text =
+                binding.buttonRequestNearbyDevicesPermission.text =
                     DKResource.convertToString(applicationContext, "dk_perm_utils_permissions_text_button_nearby_devices_settings")
                 handlePermissionTotallyDeclined(
                     this@NearbyDevicesPermissionActivity,
@@ -69,10 +72,10 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_nearby_devices_permission_title.highlightMedium()
-        text_view_nearby_devices_permission_text1.normalText()
-        text_view_nearby_devices_permission_text2.normalText()
-        button_request_nearby_devices_permission.button()
+        binding.textViewNearbyDevicesPermissionTitle.highlightMedium()
+        binding.textViewNearbyDevicesPermissionText1.normalText()
+        binding.textViewNearbyDevicesPermissionText2.normalText()
+        binding.buttonRequestNearbyDevicesPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

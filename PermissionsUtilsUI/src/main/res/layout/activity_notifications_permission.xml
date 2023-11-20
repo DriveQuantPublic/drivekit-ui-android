@@ -29,7 +29,7 @@
                 android:src="@drawable/dk_perm_utils_notifications_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_notifications_permission_title"
@@ -81,11 +81,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view_notifications_permission_text2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
     <TextView
         android:id="@+id/button_skip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin"
         android:gravity="center"
+        android:padding="@dimen/dk_margin"
         android:text="@string/dk_perm_utils_permissions_text_button_skip" />
 </LinearLayout>

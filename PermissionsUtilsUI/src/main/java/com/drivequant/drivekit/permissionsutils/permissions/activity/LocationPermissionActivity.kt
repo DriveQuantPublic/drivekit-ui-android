@@ -12,33 +12,36 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
+import com.drivequant.drivekit.permissionsutils.databinding.ActivityLocationPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import kotlinx.android.synthetic.main.activity_location_permission.*
 
 class LocationPermissionActivity : BasePermissionActivity() {
 
+    private lateinit var binding: ActivityLocationPermissionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_location_permission)
+        binding = ActivityLocationPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar("dk_perm_utils_permissions_location_title")
         setStyle()
 
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 if (DiagnosisHelper.hasCoarseLocationPermission(this)) {
-                    text_view_location_permission_text1.text =
+                    binding.textViewLocationPermissionText1.text =
                         DKResource.convertToString(this,"dk_perm_utils_app_diag_location_ko_android12")
                 } else {
-                    text_view_location_permission_text1.text =
+                    binding.textViewLocationPermissionText1.text =
                         DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android12")
-                    text_view_location_permission_text2.text =
+                    binding.textViewLocationPermissionText2.text =
                         DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android12")
                 }
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                text_view_location_permission_text1.text =
+                binding.textViewLocationPermissionText1.text =
                     DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android11")
-                text_view_location_permission_text2.text =
+                binding.textViewLocationPermissionText2.text =
                     DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android11")
             }
             else -> {
@@ -47,7 +50,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
                         "dk_perm_utils_permissions_location_text2_post_android10"
                     else -> "dk_perm_utils_permissions_location_text2_pre_android10"
                 }
-                text_view_location_permission_text2.text = DKResource.convertToString(this, stringResId)
+                binding.textViewLocationPermissionText2.text = DKResource.convertToString(this, stringResId)
             }
         }
     }
@@ -87,7 +90,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                    button_request_location_permission.text =
+                binding.buttonRequestLocationPermission.text =
                         getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
                     handlePermissionTotallyDeclined(
                         this@LocationPermissionActivity,
@@ -101,19 +104,19 @@ class LocationPermissionActivity : BasePermissionActivity() {
                     forward()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        text_view_location_permission_text1.text = DKResource.convertToString(
+                        binding.textViewLocationPermissionText1.text = DKResource.convertToString(
                             this,
                             "dk_perm_utils_permissions_location_text3_android11"
                         )
                         val alwaysLabel = packageManager.backgroundPermissionOptionLabel
-                        text_view_location_permission_text2.text = DKResource.buildString(
+                        binding.textViewLocationPermissionText2.text = DKResource.buildString(
                             this,
                             DriveKitUI.colors.mainFontColor(),
                             DriveKitUI.colors.mainFontColor(),
                             "dk_perm_utils_permissions_location_text4_android11",
                             "$alwaysLabel"
                         )
-                        button_request_location_permission.text = DKResource.convertToString(
+                        binding.buttonRequestLocationPermission.text = DKResource.convertToString(
                             this,
                             "dk_perm_utils_permissions_text_button_location_settings"
                         )
@@ -151,10 +154,10 @@ class LocationPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_permission_location_title.highlightMedium()
-        text_view_location_permission_text1.normalText()
-        text_view_location_permission_text2.normalText()
-        button_request_location_permission.button()
+        binding.textViewPermissionLocationTitle.highlightMedium()
+        binding.textViewLocationPermissionText1.normalText()
+        binding.textViewLocationPermissionText2.normalText()
+        binding.buttonRequestLocationPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }
