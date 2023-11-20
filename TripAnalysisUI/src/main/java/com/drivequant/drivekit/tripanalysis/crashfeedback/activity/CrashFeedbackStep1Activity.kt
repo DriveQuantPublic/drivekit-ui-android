@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
+import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep1Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.*
@@ -21,16 +22,18 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
-import kotlinx.android.synthetic.main.dk_layout_activity_crash_feedback_step1.*
 import java.util.*
 
 
 class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     private lateinit var viewModel: CrashFeedbackStep1ViewModel
+    private lateinit var binding: DkLayoutActivityCrashFeedbackStep1Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = DkLayoutActivityCrashFeedbackStep1Binding.inflate(layoutInflater)
 
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
@@ -41,7 +44,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
         DriveKitTripAnalysis.setCrashFeedbackTimer(60) // 1 minute
 
-        setContentView(R.layout.dk_layout_activity_crash_feedback_step1)
+        setContentView(binding.root)
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[CrashFeedbackStep1ViewModel::class.java]
@@ -68,7 +71,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     private fun initTitle() {
         viewModel.getTitleResId().let { titleResId ->
-            text_view_title.apply {
+            binding.textViewTitle.apply {
                 setText(titleResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
                 setTextColor(DriveKitUI.colors.mainFontColor())
@@ -79,7 +82,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
 
     private fun initDescription() {
         viewModel.getDescriptionResId().let { descriptionResId ->
-            text_view_description.apply {
+            binding.textViewDescription.apply {
                 setText(descriptionResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal))
                 setLineSpacing(25f, 1f)
@@ -89,7 +92,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
     }
 
     private fun initTimer() {
-        timer.apply {
+        binding.timer.apply {
             setTouchEnabled(false)
             isRotationEnabled = false
             description = null
@@ -125,7 +128,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
             }
         }
 
-        timer.apply {
+        binding.timer.apply {
             highlightValues(arrayOf(Highlight(0f, 0f, 0)))
             centerText = spannable.toSpannable().toString()
             val textSize = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
@@ -142,8 +145,8 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
         pieData.setDrawValues(false)
         pieDataSet.selectionShift = 0f
         pieDataSet.sliceSpace = 0f
-        timer.data = pieData
-        timer.invalidate()
+        binding.timer.data = pieData
+        binding.timer.invalidate()
     }
 
     fun onNoCrashButtonClicked(@Suppress("UNUSED_PARAMETER") view: View) {

@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.tripanalysis.ui.R
+import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityWorkingHoursBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
@@ -22,8 +22,8 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCard
+import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursSpinnerSettings
 import com.drivequant.drivekit.tripanalysis.workinghours.viewmodel.WorkingHoursViewModel
-import kotlinx.android.synthetic.main.dk_layout_activity_working_hours.*
 
 class WorkingHoursActivity : AppCompatActivity() {
 
@@ -32,6 +32,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     private lateinit var outsideHours: WorkingHoursSpinnerSettings
     private lateinit var menu: Menu
     private val days: MutableList<WorkingHoursDayCard> = mutableListOf()
+    private lateinit var binding: DkLayoutActivityWorkingHoursBinding
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,8 @@ class WorkingHoursActivity : AppCompatActivity() {
             DKResource.convertToString(this, "dk_tag_trip_analysis_working_hours"), javaClass.simpleName
         )
 
-        setContentView(R.layout.dk_layout_activity_working_hours)
+        binding = DkLayoutActivityWorkingHoursBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         insideHours = findViewById(R.id.inside_hours_container)
         outsideHours = findViewById(R.id.outside_hours_container)
         setToolbar()
@@ -75,11 +77,11 @@ class WorkingHoursActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this)[WorkingHoursViewModel::class.java]
         }
 
-        separator_enable.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        separator_inside.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        separator_outside.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.separatorEnable.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.separatorInside.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.separatorOutside.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
-        switch_enable.apply {
+        binding.switchEnable.apply {
             isEnabled = false
             setTitle(DKResource.convertToString(context, "dk_working_hours_enable_title"))
             setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
@@ -127,7 +129,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                 if (viewModel.dataChanged) {
                     dataUpdated(true)
                 }
-                switch_enable.apply {
+                binding.switchEnable.apply {
                     isEnabled = true
                     setChecked(it.enable)
                     setListener(object : SwitchSettings.SwitchListener {
@@ -178,7 +180,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                         dataUpdated(true)
                     }
                 })
-                days_container.addView(
+                binding.daysContainer.addView(
                     day,
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -187,20 +189,18 @@ class WorkingHoursActivity : AppCompatActivity() {
     }
 
     private fun manageLabelsVisibility() {
-        if (switch_enable.isChecked()) {
-            scrollview.visibility = View.VISIBLE
+        if (binding.switchEnable.isChecked()) {
+            binding.scrollview.visibility = View.VISIBLE
         } else {
-            scrollview.visibility = View.GONE
+            binding.scrollview.visibility = View.GONE
         }
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
@@ -241,7 +241,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     private fun updateConfig(onBackPressed: Boolean) {
         updateProgressVisibility(true)
         viewModel.updateConfig(
-            switch_enable.isChecked(),
+            binding.switchEnable.isChecked(),
             insideHours.getSelectedTimeSlotStatus(),
             outsideHours.getSelectedTimeSlotStatus(),
             days.map { it.getConfig() },

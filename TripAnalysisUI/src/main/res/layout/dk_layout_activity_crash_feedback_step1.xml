@@ -60,26 +60,28 @@
         android:layout_marginHorizontal="@dimen/dk_margin_double"
         android:layout_marginBottom="@dimen/dk_margin_double"
         android:orientation="vertical">
+
         <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
             android:id="@+id/button_no_accident"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_double"
+            android:onClick="onNoCrashButtonClicked"
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackFine_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackFine"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_no_accident"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_no_crash"
-            android:onClick="onNoCrashButtonClicked"/>
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_no_crash" />
+
         <com.drivequant.drivekit.tripanalysis.crashfeedback.view.CrashFeedbackButton
             android:id="@+id/button_assistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dk_margin_double"
             android:layout_marginBottom="@dimen/dk_margin_half"
+            android:onClick="onAssistanceButtonClicked"
             app:dkCrashFeedbackButtonBackground="@color/dkCrashFeedbackAssistance_10"
             app:dkCrashFeedbackButtonBorder="@color/dkCrashFeedbackAssistance"
             app:dkCrashFeedbackButtonItemDrawable="@drawable/dk_crash_feedback_assistance"
-            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_critical_accident"
-            android:onClick="onAssistanceButtonClicked"/>
+            app:dkCrashFeedbackButtonItemTitle="@string/dk_crash_detection_feedback_step1_option_critical_accident" />
     </LinearLayout>
 </LinearLayout>
