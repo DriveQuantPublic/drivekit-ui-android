@@ -4,41 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.BadgeSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.adapter.BadgesListAdapter
 import com.drivequant.drivekit.driverachievement.ui.badges.viewmodel.BadgesListViewModel
-import kotlinx.android.synthetic.main.dk_fragment_badges_list.recycler_view_badges
-import kotlinx.android.synthetic.main.dk_fragment_badges_list.refresh_badges
-import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
 
 
 class BadgesListFragment : Fragment() {
 
     private lateinit var listViewModel: BadgesListViewModel
     private lateinit var listAdapter: BadgesListAdapter
+    private lateinit var badgesRecyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var progressView: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.dk_fragment_badges_list, container, false)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!this::listViewModel.isInitialized)
             listViewModel = ViewModelProvider(this)[BadgesListViewModel::class.java]
 
+        this.badgesRecyclerView = view.findViewById(R.id.recycler_view_badges)
+        this.swipeRefreshLayout = view.findViewById(R.id.refresh_badges)
+        this.progressView = view.findViewById(R.id.progress_circular)
+
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_badges"), javaClass.simpleName)
-        recycler_view_badges.layoutManager =
-            LinearLayoutManager(view.context)
-        refresh_badges.setOnRefreshListener {
+        badgesRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        swipeRefreshLayout.setOnRefreshListener {
             updateBadges()
         }
     }
@@ -49,7 +54,7 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateBadges() {
-        listViewModel.badgesData.observe(viewLifecycleOwner, {
+        listViewModel.badgesData.observe(viewLifecycleOwner) {
             if (listViewModel.syncStatus != BadgeSyncStatus.NO_ERROR) {
                 Toast.makeText(context,
                     context?.getString(R.string.dk_achievements_failed_to_sync_badges),
@@ -59,30 +64,28 @@ class BadgesListFragment : Fragment() {
                 listAdapter.notifyDataSetChanged()
             } else {
                 listAdapter = BadgesListAdapter(view?.context, listViewModel)
-                recycler_view_badges.adapter = listAdapter
+                badgesRecyclerView.adapter = listAdapter
             }
             updateProgressVisibility(false)
-        })
+        }
         updateProgressVisibility(true)
         listViewModel.fetchBadges()
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        progressView.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
 
         if (displayProgress) {
-            progress_circular?.visibility = View.VISIBLE
-            refresh_badges.isRefreshing = true
+            progressView.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = true
         } else {
-            progress_circular?.visibility = View.GONE
-            refresh_badges.visibility = View.VISIBLE
-            refresh_badges.isRefreshing = false
+            progressView.visibility = View.GONE
+            swipeRefreshLayout.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 }

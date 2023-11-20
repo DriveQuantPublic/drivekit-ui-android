@@ -4,33 +4,35 @@ import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
-import kotlinx.android.synthetic.main.dk_ranking_selector_view.view.*
+import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
 
 class RankingSelectorView(context: Context) : LinearLayout(context) {
     lateinit var rankingSelectorListener: RankingSelectorListener
+    private val selectorTextView: TextView
 
     init {
         val view = View.inflate(context, R.layout.dk_ranking_selector_view, null).setDKStyle()
         addView(view)
+        this.selectorTextView = view.findViewById(R.id.text_view_selector)
         setStyle()
     }
 
     fun configureRankingSelector(rankingSelectorData: RankingSelectorData) {
-        text_view_selector.text = DKResource.convertToString(context, rankingSelectorData.titleId)
-        text_view_selector.setOnClickListener {
+        selectorTextView.text = DKResource.convertToString(context, rankingSelectorData.titleId)
+        selectorTextView.setOnClickListener {
             rankingSelectorListener.onClickSelector(rankingSelectorData, this)
         }
     }
 
     private fun setStyle() {
-        val params = text_view_selector.layoutParams as MarginLayoutParams
+        val params = selectorTextView.layoutParams as MarginLayoutParams
         params.setMargins(
             context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
             params.topMargin,
@@ -38,18 +40,17 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
             params.bottomMargin
         )
         layoutParams = params
-        text_view_selector.normalText()
-        (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
+        selectorTextView.normalText()
+        (selectorTextView.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
     }
 
     fun setRankingSelectorSelected(selected: Boolean) {
         if (selected) {
-            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
-            text_view_selector.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+            (selectorTextView.background as GradientDrawable).setColor(DriveKitUI.colors.secondaryColor())
+            selectorTextView.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
         } else {
-            (text_view_selector.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
-            text_view_selector.normalText()
+            (selectorTextView.background as GradientDrawable).setColor(DriveKitUI.colors.neutralColor())
+            selectorTextView.normalText()
         }
     }
 }
-
