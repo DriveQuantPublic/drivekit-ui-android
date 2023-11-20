@@ -1,6 +1,5 @@
 package com.drivekit.demoapp.config
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -102,6 +101,7 @@ internal object DriveKitConfig {
         DriveKit.initialize(application)
         DriveKitListenerManager.addListener(object : DriveKitListener {
             override fun onAccountDeleted(status: DeleteAccountStatus) {
+                logout(application)
             }
 
             override fun onAuthenticationError(errorType: RequestError) {
@@ -111,7 +111,7 @@ internal object DriveKitConfig {
 
             override fun onDisconnected() {
                 // You have to clean data
-                reset(application)
+                logout(application)
             }
 
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
@@ -327,7 +327,7 @@ internal object DriveKitConfig {
         configureModules(context)
     }
 
-    fun reset(context: Context) {
+    private fun reset(context: Context) {
         // Reset DriveKit
         DriveKit.reset()
         DriveKitTripAnalysis.reset()
