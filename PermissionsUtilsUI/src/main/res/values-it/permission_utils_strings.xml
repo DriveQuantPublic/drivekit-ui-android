@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">questo link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Se l\'applicazione non registra i vostri viaggi, vi invitiamo a disattivare il risparmio energetico del vostro iPhone utilizzando la guida disponibile tramite %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Come si disattiva il risparmio energetico?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">L\'app non è autorizzata ad accedere all\'attività del telefono. Ciò può limitare la registrazione del viaggio.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">L\'app non può essere eseguita in background. Questo potrebbe limitare la registrazione del viaggio.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">La registrazione del viaggio non è possibile perché l\'app non è autorizzata ad accedere al sensore Bluetooth.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">La registrazione del viaggio non è possibile perché il sensore Bluetooth è disattivato.</string>
+   <string name="dk_perm_utils_notification_location_permission">La registrazione del viaggio non è possibile perché l\'app non può accedere alla posizione del telefono.</string>
+   <string name="dk_perm_utils_notification_location_sensor">La registrazione del viaggio non è possibile perché il sensore di posizione è disattivato.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Ci sono diversi problemi che impediscono la registrazione dei viaggi.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">La registrazione del viaggio non è possibile perché l\'app non è autorizzata ad accedere al sensore Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Aprire le impostazioni</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permessi</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizzare la posizione</string>

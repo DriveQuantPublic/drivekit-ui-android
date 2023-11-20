@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">ce lien</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Si l\’application n\’enregistre pas vos trajets, nous vous invitons à vérifier les réglages de votre iPhone et à désactiver l’économiseur d\’énergie en suivant le guide accessible via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Comment désactiver l\’économie d\’énergie ?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">L\'app n\'est pas autorisée à accéder à l\'activité du téléphone. Cela peut limiter l\'enregistrement de vos trajets.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">L\'app n\'est pas autorisée à fonctionner en arrière-plan. Cela peut limiter l\'enregistrement de vos trajets.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">L\'enregistrement de vos trajets n\'est pas possible car l\'app ne peut pas accéder au capteur Bluetooth.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">L\'enregistrement de vos trajets n\'est pas possible car le capteur Bluetooth est éteint.</string>
+   <string name="dk_perm_utils_notification_location_permission">L\'enregistrement de vos trajets n\'est pas possible car l\'app ne peut pas acceder à la postion du téléphone.</string>
+   <string name="dk_perm_utils_notification_location_sensor">L\'enregistrement de vos trajets n\'est pas possible car le capteur de position est éteint.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Plusieurs problèmes empêchent l\'enregistrement des trajets.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">L\'enregistrement de vos trajets n\'est pas possible car l\'app ne peut pas accéder au capteur Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Ouvrir les réglages</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Autorisations</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autoriser la localisation</string>

@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">esse link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Se o aplicativo não gravar suas viagens, convidamos você a desativar o economizador de energia do seu iPhone usando o guia disponível via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Como desabilito economizador de energia?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">A aplicação não está autorizada a aceder à atividade do telemóvel. Isto pode limitar a gravação da viagem.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">Não é permitido que a aplicação seja executada em segundo plano. Isto pode limitar a gravação da viagem.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">A gravação da viagem não é possível porque a aplicação não está autorizada a aceder ao sensor Bluetooth.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">Não é possível registar a viagem porque o sensor Bluetooth está desligado.</string>
+   <string name="dk_perm_utils_notification_location_permission">A gravação da viagem não é possível porque a aplicação não consegue aceder à localização do telemóvel.</string>
+   <string name="dk_perm_utils_notification_location_sensor">O registo de viagem não é possível porque o sensor de localização está desligado.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Há uma série de problemas que impedem o registo das viagens.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">A gravação da viagem não é possível porque a aplicação não está autorizada a aceder ao sensor Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Abra as configurações</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permissões</string>
    <string name="dk_perm_utils_permissions_location_button_android">Permitir localização</string>

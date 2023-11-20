@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">dette link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Hvis appen ikke registrerer dine ture, opfordrer vi dig til at deaktivere din iPhones energisparefunktion ved hjælp af den vejledning, der er tilgængelig via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">Hvordan deaktiverer jeg energibespareren?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">Appen er ikke autoriseret til at få adgang til telefonaktivitet. Det kan begrænse optagelsen af turen.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">Appen må ikke køre i baggrunden. Det kan begrænse optagelsen af turen.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">Det er ikke muligt at optage ture, fordi Bluetooth-sensoren er slået fra.</string>
+   <string name="dk_perm_utils_notification_location_permission">Det er ikke muligt at optage ture, fordi appen ikke har adgang til telefonens placering.</string>
+   <string name="dk_perm_utils_notification_location_sensor">Det er ikke muligt at optage ture, fordi placeringssensoren er slået fra.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Der er en række problemer, der forhindrer, at rejserne bliver registreret.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Åbn indstillingerne</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Tilladelser</string>
    <string name="dk_perm_utils_permissions_location_button_android">Tillad lokation</string>

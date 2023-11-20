@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">dieser Link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Wenn die App Ihre Fahrten nicht aufzeichnet, bitten wir Sie, den Energiesparmodus Ihres iPhones mithilfe der über %s verfügbaren Anleitung zu deaktivieren.</string>
    <string name="dk_perm_utils_energy_saver_title">Wie kann ich den Energiesparmodus deaktivieren?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">Die App ist nicht berechtigt, auf Telefonaktivitäten zuzugreifen. Dies kann die Aufzeichnung der Reise einschränken.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">Die App darf nicht im Hintergrund laufen. Dies kann die Aufzeichnung der Fahrt einschränken.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">Die Aufzeichnung einer Fahrt ist nicht möglich, da der Bluetooth-Sensor ausgeschaltet ist.</string>
+   <string name="dk_perm_utils_notification_location_permission">Die Aufzeichnung von Fahrten ist nicht möglich, da die App nicht auf den Standort des Telefons zugreifen kann.</string>
+   <string name="dk_perm_utils_notification_location_sensor">Die Aufzeichnung von Fahrten ist nicht möglich, da der Standortsensor ausgeschaltet ist.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Mehrere Probleme verhindern die Aufzeichnung von Fahrten.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Öffnen Sie die Einstellungen</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Genehmigungen</string>
    <string name="dk_perm_utils_permissions_location_button_android">Standort zulassen</string>
