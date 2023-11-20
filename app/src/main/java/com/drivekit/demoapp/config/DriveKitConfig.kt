@@ -101,7 +101,7 @@ internal object DriveKitConfig {
         DriveKit.initialize(application)
         DriveKitListenerManager.addListener(object : DriveKitListener {
             override fun onAccountDeleted(status: DeleteAccountStatus) {
-                logout(application)
+
             }
 
             override fun onAuthenticationError(errorType: RequestError) {
