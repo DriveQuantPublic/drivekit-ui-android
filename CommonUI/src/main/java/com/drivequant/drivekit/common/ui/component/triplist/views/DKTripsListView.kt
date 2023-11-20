@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
 import android.widget.FrameLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripList
 import com.drivequant.drivekit.common.ui.component.triplist.adapter.TripListAdapter
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKTripListViewModel
-import kotlinx.android.synthetic.main.dk_trips_list_fragment.view.*
 
 
 class DKTripListView : FrameLayout {
@@ -18,6 +18,7 @@ class DKTripListView : FrameLayout {
     private var adapter: TripListAdapter? = null
     private lateinit var view: View
     private lateinit var expandableListView: ExpandableListView
+    private lateinit var swipeToRefreshTrips: SwipeRefreshLayout
     private lateinit var viewModel: DKTripListViewModel
 
     constructor(context: Context) : super(context) {
@@ -39,6 +40,7 @@ class DKTripListView : FrameLayout {
     private fun init() {
         view = View.inflate(context, R.layout.dk_trips_list_fragment, null)
         expandableListView = view.findViewById(R.id.dk_trips_list)
+        swipeToRefreshTrips = view.findViewById(R.id.dk_swipe_refresh_trips)
         viewModel = DKTripListViewModel()
         addView(
             view, ViewGroup.LayoutParams(
@@ -51,11 +53,11 @@ class DKTripListView : FrameLayout {
     fun configure(tripsList: DKTripList) {
         updateSwipeRefreshTripsVisibility(false)
         if (tripsList.canSwipeToRefresh()) {
-            view.dk_swipe_refresh_trips.setOnRefreshListener {
+            swipeToRefreshTrips.setOnRefreshListener {
                 tripsList.onSwipeToRefresh()
             }
         } else {
-            view.dk_swipe_refresh_trips.isEnabled = false
+            swipeToRefreshTrips.isEnabled = false
         }
         viewModel.apply {
             setDKTripList(tripsList)
@@ -77,12 +79,10 @@ class DKTripListView : FrameLayout {
         }
     }
     fun updateSwipeRefreshTripsVisibility(display: Boolean) {
-        if (display) {
-            dk_swipe_refresh_trips.isRefreshing = display
-        } else {
-            dk_swipe_refresh_trips.visibility = View.VISIBLE
-            dk_swipe_refresh_trips.isRefreshing = display
+        if (!display) {
+            swipeToRefreshTrips.visibility = View.VISIBLE
         }
+        swipeToRefreshTrips.isRefreshing = display
     }
 
     fun setTripsListEmptyView(view: View) {

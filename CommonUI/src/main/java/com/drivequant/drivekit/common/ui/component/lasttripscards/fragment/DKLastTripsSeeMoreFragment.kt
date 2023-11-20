@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
+import com.drivequant.drivekit.common.ui.databinding.DkFragmentLastTripsSeeMoreBinding
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import kotlinx.android.synthetic.main.dk_fragment_last_trips.root
-import kotlinx.android.synthetic.main.dk_fragment_last_trips_see_more.text_view_see_more
 
 internal class DKLastTripsSeeMoreFragment : Fragment() {
 
     private var hasMoreTrips: Boolean = false
+    private var _binding: DkFragmentLastTripsSeeMoreBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(
@@ -29,12 +30,15 @@ internal class DKLastTripsSeeMoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_last_trips_see_more, container, false)
+    ): View {
+        _binding = DkFragmentLastTripsSeeMoreBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.let { context ->
-            text_view_see_more.apply {
+            binding.textViewSeeMore.apply {
                 visibility = View.VISIBLE
                 normalText(DriveKitUI.colors.complementaryFontColor())
                 text = if (this@DKLastTripsSeeMoreFragment.hasMoreTrips) {
@@ -43,9 +47,14 @@ internal class DKLastTripsSeeMoreFragment : Fragment() {
                     getString(R.string.dk_common_no_trips_yet)
                 }
             }
-            root.setOnClickListener {
+            binding.root.setOnClickListener {
                 DriveKitNavigationController.driverDataUIEntryPoint?.startTripListActivity(context)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
