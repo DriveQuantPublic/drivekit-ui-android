@@ -336,9 +336,6 @@ internal object DriveKitConfig {
         DriveKitDriverAchievement.reset()
         DriveKitChallenge.reset()
 
-        // Delete Notification Channels
-        DKNotificationManager.deleteChannels(context)
-
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().apply()

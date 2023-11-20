@@ -52,12 +52,6 @@ internal object DKNotificationManager : TripListener {
         }
     }
 
-    fun deleteChannels(context: Context) {
-        DKNotificationChannel.values().forEach {
-            deleteChannel(context, it)
-        }
-    }
-
     fun deleteChannel(context: Context, channel: DKNotificationChannel) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && manager != null) {
