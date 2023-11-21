@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".odometer.activity.OdometerHistoryDetailActivity">
+    tools:context=".odometer.activity.OdometerHistoryDetailActivity"
+    tools:viewBindingIgnore="true">
 
-    <include android:id="@+id/toolbar"
+    <include
+        android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar" />
 
     <FrameLayout

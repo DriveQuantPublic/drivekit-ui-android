@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 project.ext {
     artifactId = "drivekit-vehicle-ui"
@@ -19,6 +18,10 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

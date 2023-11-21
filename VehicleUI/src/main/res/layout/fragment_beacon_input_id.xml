@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".beacon.activity.BeaconActivity"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".beacon.activity.BeaconActivity">
+
     <TextView
         android:id="@+id/text_view_beacon_code_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/dk_margin"
         android:layout_weight="0.4"
-        android:gravity="center"
-        android:layout_margin="@dimen/dk_margin" />
+        android:gravity="center" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/code_wrapper"
         android:layout_width="match_parent"
@@ -22,18 +24,20 @@
         android:layout_marginStart="@dimen/dk_margin"
         android:layout_marginEnd="@dimen/dk_margin"
         app:errorTextAppearance="@style/Error_Appearance">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/code_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/button_validate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin"
         android:foreground="?android:attr/selectableItemBackground" />
 </LinearLayout>

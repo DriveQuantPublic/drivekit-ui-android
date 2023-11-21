@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
 
     <androidx.cardview.widget.CardView
         style="@style/DKCard"
@@ -12,10 +13,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:padding="@dimen/dk_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/dk_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,10 +41,10 @@
             </LinearLayout>
 
             <TextView
-                android:layout_marginBottom="@dimen/dk_margin_half"
-                android:layout_marginTop="@dimen/dk_margin_half"
                 android:id="@+id/dk_view_separator"
-                style="@style/Separator.Horizontal"/>
+                style="@style/Separator.Horizontal"
+                android:layout_marginTop="@dimen/dk_margin_half"
+                android:layout_marginBottom="@dimen/dk_margin_half" />
 
             <TextView
                 android:id="@+id/text_view_odometer_distance_value"
@@ -52,10 +53,10 @@
                 android:layout_marginTop="@dimen/dk_margin_half"
                 android:layout_marginBottom="@dimen/dk_margin_half"
                 android:textAlignment="viewEnd"
-                tools:textColor="#000"
                 android:textSize="34sp"
                 android:textStyle="bold"
-                tools:text="123 456 km" />
+                tools:text="123 456 km"
+                tools:textColor="#000" />
 
             <TextView
                 android:id="@+id/text_view_odometer_distance_description"

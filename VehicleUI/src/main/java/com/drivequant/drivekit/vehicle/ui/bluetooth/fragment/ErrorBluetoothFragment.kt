@@ -12,12 +12,9 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.ui.R
-import kotlinx.android.synthetic.main.fragment_bluetooth_error.button_cancel
-import kotlinx.android.synthetic.main.fragment_bluetooth_error.text_view_bluetooth_failed
-import kotlinx.android.synthetic.main.fragment_bluetooth_error.text_view_open_settings
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothErrorBinding
 
-class ErrorBluetoothFragment: Fragment() {
+class ErrorBluetoothFragment : Fragment() {
 
     companion object {
         private const val REQUEST_ENABLE_BT = 1
@@ -29,10 +26,14 @@ class ErrorBluetoothFragment: Fragment() {
         }
     }
 
-    private lateinit var vehicleId : String
+    private lateinit var vehicleId: String
+    private var _binding: FragmentBluetoothErrorBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_bluetooth_error, container, false).setDKStyle()
+        _binding = FragmentBluetoothErrorBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,20 +42,25 @@ class ErrorBluetoothFragment: Fragment() {
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val secondaryColor = DriveKitUI.colors.secondaryColor()
 
-        text_view_bluetooth_failed.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_not_found")
-        text_view_bluetooth_failed.normalText(mainFontColor)
+        binding.textViewBluetoothFailed.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_not_found")
+        binding.textViewBluetoothFailed.normalText(mainFontColor)
 
-        button_cancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
-        button_cancel.button()
-        button_cancel.setOnClickListener {
+        binding.buttonCancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonCancel.button()
+        binding.buttonCancel.setOnClickListener {
             activity?.finish()
         }
 
-        text_view_open_settings.text = DKResource.convertToString(requireContext(), "dk_vehicle_open_bluetooth_settings")
-        text_view_open_settings.normalText(secondaryColor)
-        text_view_open_settings.setOnClickListener {
+        binding.textViewOpenSettings.text = DKResource.convertToString(requireContext(), "dk_vehicle_open_bluetooth_settings")
+        binding.textViewOpenSettings.normalText(secondaryColor)
+        binding.textViewOpenSettings.setOnClickListener {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

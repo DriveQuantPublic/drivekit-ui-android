@@ -15,19 +15,15 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerInitBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.button_validate_reference
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_input_layout_distance
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_view_odometer_desc
-import kotlinx.android.synthetic.main.dk_fragment_odometer_init.text_view_vehicle_distance_field
-
 
 class OdometerInitFragment : Fragment() {
 
     private var vehicleId: String? = null
     private lateinit var viewModel: OdometerHistoryDetailViewModel
+    private var _binding: DkFragmentOdometerInitBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(vehicleId: String?) =
@@ -56,8 +52,11 @@ class OdometerInitFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_odometer_init, container, false).setDKStyle(
-        Color.WHITE)
+    ): View {
+        _binding = DkFragmentOdometerInitBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,12 +76,12 @@ class OdometerInitFragment : Fragment() {
                         -1))[OdometerHistoryDetailViewModel::class.java]
                 addOdometerReading(context)
 
-                text_view_odometer_desc.apply {
+                binding.textViewOdometerDesc.apply {
                     text = DKResource.convertToString(context, "dk_vehicle_odometer_car_desc")
                     normalText()
                 }
 
-                text_view_vehicle_distance_field.apply {
+                binding.textViewVehicleDistanceField.apply {
                     hint = DKResource.convertToString(context, "dk_vehicle_odometer_enter_mileage")
                     setHintTextColor(DriveKitUI.colors.complementaryFontColor())
                     normalText()
@@ -103,26 +102,29 @@ class OdometerInitFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
     private fun addOdometerReading(context: Context) {
-        button_validate_reference.apply {
+        binding.buttonValidateReference.apply {
             text = DKResource.convertToString(context, "dk_common_validate")
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                val isEditTextDistanceBlank = text_view_vehicle_distance_field.editableText.toString().isBlank()
-                viewModel.mileageDistance = if (isEditTextDistanceBlank) 0.0 else text_view_vehicle_distance_field.editableText.toString().toDouble()
+                val isEditTextDistanceBlank = binding.textViewVehicleDistanceField.editableText.toString().isBlank()
+                viewModel.mileageDistance = if (isEditTextDistanceBlank) 0.0 else binding.textViewVehicleDistanceField.editableText.toString().toDouble()
                 if (viewModel.showMileageDistanceErrorMessage() || isEditTextDistanceBlank) {
-                    text_input_layout_distance.apply {
+                    binding.textInputLayoutDistance.apply {
                         isErrorEnabled = true
                         error = DKResource.convertToString(context, "dk_vehicle_odometer_history_error")
                         typeface = DriveKitUI.primaryFont(context)

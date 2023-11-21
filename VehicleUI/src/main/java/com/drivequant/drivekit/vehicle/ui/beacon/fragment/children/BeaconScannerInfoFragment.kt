@@ -22,25 +22,15 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerInfoBinding
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.utils.BeaconInfoScannerManager
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconInfoListener
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.button_beacon_info
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.progress_circular
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_battery
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_connected_vehicle_name
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_distance
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_major_title
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_major_value
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_minor_title
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_minor_value
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.text_view_signal_intensity
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.view_border
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_info.view_separator
 
 class BeaconScannerInfoFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel, isValid: Boolean): BeaconScannerInfoFragment {
             val fragment = BeaconScannerInfoFragment()
@@ -53,9 +43,13 @@ class BeaconScannerInfoFragment : Fragment() {
     private lateinit var viewModel: BeaconViewModel
     private var isValid: Boolean = false
     private var beaconBatteryScannerManager: BeaconInfoScannerManager? = null
+    private var _binding: FragmentBeaconChildScannerInfoBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_child_scanner_info, container, false).setDKStyle()
+        _binding = FragmentBeaconChildScannerInfoBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -88,7 +82,7 @@ class BeaconScannerInfoFragment : Fragment() {
                         override fun onBeaconInfoRetrieved(beaconRetrievedInfo: DKBeaconRetrievedInfo) {
                             beaconBatteryScannerManager?.stopBatteryReaderScanner()
                             updateProgressVisibility(false)
-                            button_beacon_info.visibility = View.VISIBLE
+                            binding.buttonBeaconInfo.visibility = View.VISIBLE
                             viewModel.apply {
                                 this.batteryLevel = beaconRetrievedInfo.batteryLevel
                                 this.estimatedDistance = beaconRetrievedInfo.estimatedDistance
@@ -96,19 +90,19 @@ class BeaconScannerInfoFragment : Fragment() {
                                 this.txPower = beaconRetrievedInfo.txPower
                             }
                             if (isAdded) {
-                                text_view_battery.text = buildBeaconCharacteristics("${beaconRetrievedInfo.batteryLevel}", "%")
+                                binding.textViewBattery.text = buildBeaconCharacteristics("${beaconRetrievedInfo.batteryLevel}", "%")
                                 computeBatteryDrawable(beaconRetrievedInfo.batteryLevel)?.let { drawable ->
-                                    text_view_battery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
+                                    binding.textViewBattery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
-                                text_view_distance.text = buildBeaconCharacteristics(beaconRetrievedInfo.estimatedDistance.format(1), "dk_common_unit_meter")
+                                binding.textViewDistance.text = buildBeaconCharacteristics(beaconRetrievedInfo.estimatedDistance.format(1), "dk_common_unit_meter")
                                 DKResource.convertToDrawable(requireContext(), "dk_beacon_distance")?.let { drawable ->
-                                    text_view_distance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
+                                    binding.textViewDistance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
-                                text_view_signal_intensity.text = buildBeaconCharacteristics("${beaconRetrievedInfo.rssi}", "dBm")
+                                binding.textViewSignalIntensity.text = buildBeaconCharacteristics("${beaconRetrievedInfo.rssi}", "dBm")
                                 DKResource.convertToDrawable(requireContext(), "dk_beacon_signal_intensity")?.let { drawable ->
-                                    text_view_signal_intensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
+                                    binding.textViewSignalIntensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
                             }
                         }
@@ -118,18 +112,18 @@ class BeaconScannerInfoFragment : Fragment() {
             }
         }
 
-        view_border.setBackgroundColor(DriveKitUI.colors.mainFontColor())
+        binding.viewBorder.setBackgroundColor(DriveKitUI.colors.mainFontColor())
 
-        text_view_connected_vehicle_name.headLine2()
+        binding.textViewConnectedVehicleName.headLine2()
 
         if (isValid) {
-            view_border.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            text_view_connected_vehicle_name.text = viewModel.vehicleName ?:run {
+            binding.viewBorder.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+            binding.textViewConnectedVehicleName.text = viewModel.vehicleName ?:run {
                 DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
             }
         } else {
-            view_border.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
-            text_view_connected_vehicle_name.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
+            binding.viewBorder.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
+            binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
                  vehicle.buildFormattedName(requireContext())
             }?: run {
                 DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
@@ -138,30 +132,35 @@ class BeaconScannerInfoFragment : Fragment() {
 
         configureInfoButton()
 
-        view_separator.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.viewSeparator.setBackgroundColor(DriveKitUI.colors.neutralColor())
 
-        text_view_major_title.apply {
+        binding.textViewMajorTitle.apply {
             normalText(DriveKitUI.colors.complementaryFontColor())
             text = DKResource.convertToString(requireContext(), "dk_beacon_major")
         }
-        text_view_major_value.apply {
+        binding.textViewMajorValue.apply {
             headLine2()
             text = viewModel.seenBeacon?.major.toString()
         }
-        text_view_minor_title.apply {
+        binding.textViewMinorTitle.apply {
             normalText(DriveKitUI.colors.complementaryFontColor())
             text = DKResource.convertToString(requireContext(), "dk_beacon_minor")
         }
-        text_view_minor_value.apply {
+        binding.textViewMinorValue.apply {
             headLine2()
             text = viewModel.seenBeacon?.minor.toString()
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun configureInfoButton() {
-        button_beacon_info.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_info"))
-        DrawableCompat.setTint(button_beacon_info.drawable, DriveKitUI.colors.secondaryColor())
-        button_beacon_info.setOnClickListener {
+        binding.buttonBeaconInfo.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_info"))
+        DrawableCompat.setTint(binding.buttonBeaconInfo.drawable, DriveKitUI.colors.secondaryColor())
+        binding.buttonBeaconInfo.setOnClickListener {
             viewModel.launchDetailFragment()
         }
     }
@@ -201,12 +200,10 @@ class BeaconScannerInfoFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }

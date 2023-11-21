@@ -50,9 +50,9 @@
                     android:id="@+id/text_view_vehicle_distance_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:textSize="@dimen/dk_text_normal"
+                    android:inputType="number"
                     tools:hint="@string/dk_vehicle_odometer_enter_mileage"
-                    android:inputType="number" />
+                    tools:textSize="@dimen/dk_text_normal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

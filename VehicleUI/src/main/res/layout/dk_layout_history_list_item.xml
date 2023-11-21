@@ -6,11 +6,12 @@
     android:layout_height="80dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    tools:viewBindingIgnore="true">
 
     <LinearLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:padding="@dimen/dk_margin_half">
 
@@ -29,9 +30,9 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            tools:text="330 000 km"
             tools:textColor="#000"
-            tools:textStyle="bold"
-            tools:text="330 000 km" />
+            tools:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_date"
@@ -42,8 +43,8 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="viewEnd"
+            tools:text="Dimanche 14 Décembre 2019"
             tools:textColor="#000"
-            tools:textSize="12sp"
-            tools:text="Dimanche 14 Décembre 2019" />
+            tools:textSize="12sp" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
