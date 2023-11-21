@@ -8,6 +8,7 @@ import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.drivekit.TripListenerController
+import com.drivekit.demoapp.manager.DiagnosisNotificationManager
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.receiver.TripReceiver
@@ -97,7 +98,7 @@ internal object DriveKitConfig {
         DriveKit.initialize(application)
         DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
             override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
-                DKNotificationManager.onDeviceConfigurationChanged(application, event)
+                DiagnosisNotificationManager.onDeviceConfigurationChanged()
             }
         })
 
@@ -252,7 +253,6 @@ internal object DriveKitConfig {
 
     private fun configurePermissionsUtilsUI() {
         PermissionsUtilsUI.initialize()
-        PermissionsUtilsUI.configureBluetooth(isBluetoothNeeded())
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("")
             override fun getMailBody() = "Mail body to configure"
@@ -287,15 +287,6 @@ internal object DriveKitConfig {
         notification.contentIntent = contentIntent
 
         return notification
-    }
-
-    private fun isBluetoothNeeded(): Boolean {
-        DriveKitVehicle.vehiclesQuery().noFilter().query().execute().forEach {
-            if (it.detectionMode == DetectionMode.BEACON || it.detectionMode == DetectionMode.BLUETOOTH) {
-                return true
-            }
-        }
-        return false
     }
 
     fun logout(context: Context) {

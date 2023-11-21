@@ -42,17 +42,17 @@ internal object TripReceiver {
             for (comment in response.comments) {
                 if (comment.errorCode == 21) {
                     notificationType =
-                        NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_API_KEY)
+                        NotificationType.TripAnalysisError(TripAnalysisError.NO_API_KEY)
                     break
                 }
                 if (comment.errorCode == 29 || comment.errorCode == 30) {
                     notificationType =
-                        NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.NO_BEACON)
+                        NotificationType.TripAnalysisError(TripAnalysisError.NO_BEACON)
                     break
                 }
                 if (comment.errorCode == 31) {
                     notificationType =
-                        NotificationType.TRIP_ANALYSIS_ERROR(TripAnalysisError.DUPLICATE_TRIP)
+                        NotificationType.TripAnalysisError(TripAnalysisError.DUPLICATE_TRIP)
                     break
                 }
             }
@@ -89,7 +89,7 @@ internal object TripReceiver {
             CancelTrip.BLUETOOTH_DEVICE_NO_SPEED -> null
             CancelTrip.NO_BLUETOOTH_DEVICE -> TripCancellationReason.NO_BLUETOOTH_DEVICE
         }?.let {
-            DKNotificationManager.sendNotification(context, NotificationType.TRIP_CANCELLED(it))
+            DKNotificationManager.sendNotification(context, NotificationType.TripCancelled(it))
         }
     }
 
@@ -99,7 +99,7 @@ internal object TripReceiver {
             val contentIntent = buildContentIntent(context, dkTrip.transportationMode, dkTrip.tripAdvices, dkTrip.itinId)
             if (errorCode == 0) {
                 if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isAlternativeNotificationManaged()) {
-                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
+                    DKNotificationManager.sendNotification(context, NotificationType.TripEnded(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
                 } else {
                     val additionalBody = when (DriverDataUI.tripData) {
                         TripData.SAFETY -> "${context.getString(R.string.notif_trip_finished_safety)} : ${dkTrip.safety!!.safetyScore.removeZeroDecimal()}/10"
@@ -109,10 +109,10 @@ internal object TripReceiver {
                         TripData.DURATION -> null
                         TripData.DISTANCE -> null
                     }
-                    DKNotificationManager.sendNotification(context, NotificationType.TRIP_ENDED(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
+                    DKNotificationManager.sendNotification(context, NotificationType.TripEnded(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
                 }
             } else {
-                DKNotificationManager.sendNotification(context, NotificationType.TRIP_TOO_SHORT, contentIntent)
+                DKNotificationManager.sendNotification(context, NotificationType.TripTooShort, contentIntent)
             }
         }
     }

@@ -9,54 +9,56 @@ import com.drivekit.demoapp.utils.getAlternativeNotificationNotDisplayedBodyResI
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
+import com.drivequant.drivekit.permissionsutils.diagnosisnotification.model.DKDiagnosisNotificationInfo
 import com.drivequant.drivekit.ui.DriverDataUI
 
 internal sealed class NotificationType {
-    data class TRIP_ENDED(
+    data class TripEnded(
         val transportationMode: TransportationMode,
         val advices: Int,
         val additionalBody: String? = null
     ) : NotificationType()
-    data class TRIP_CANCELLED(val reason: TripCancellationReason) : NotificationType()
-    data class TRIP_ANALYSIS_ERROR(val error: TripAnalysisError) : NotificationType()
-    object TRIP_TOO_SHORT : NotificationType()
-    object SETTINGS_BLUETOOTH_STATE : NotificationType()
+    data class TripCancelled(val reason: TripCancellationReason) : NotificationType()
+    data class TripAnalysisError(val error: com.drivekit.demoapp.notification.enum.TripAnalysisError) : NotificationType()
+    object TripTooShort : NotificationType()
+
+    data class Diagnosis(val notificationContent: DKDiagnosisNotificationInfo?): NotificationType()
 
     fun getChannel() = when (this) {
-        is TRIP_ANALYSIS_ERROR -> when (this.error) {
-            TripAnalysisError.DUPLICATE_TRIP,
-            TripAnalysisError.NO_NETWORK,
-            TripAnalysisError.NO_API_KEY -> DKNotificationChannel.TRIP_ENDED
-            TripAnalysisError.NO_BEACON,
-            TripAnalysisError.NO_BLUETOOTH_DEVICE -> DKNotificationChannel.TRIP_CANCELLED
+        is TripAnalysisError -> when (this.error) {
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.DUPLICATE_TRIP,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_NETWORK,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_API_KEY -> DKNotificationChannel.TRIP_ENDED
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BEACON,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BLUETOOTH_DEVICE -> DKNotificationChannel.TRIP_CANCELLED
         }
-        is TRIP_CANCELLED -> DKNotificationChannel.TRIP_CANCELLED
-        is TRIP_ENDED -> {
+        is TripCancelled -> DKNotificationChannel.TRIP_CANCELLED
+        is TripEnded -> {
             if (!transportationMode.isAlternative() || (transportationMode.isAlternativeNotificationManaged() && DriverDataUI.enableAlternativeTrips)) {
                 DKNotificationChannel.TRIP_ENDED
             } else {
                 DKNotificationChannel.TRIP_CANCELLED
             }
         }
-        TRIP_TOO_SHORT -> DKNotificationChannel.TRIP_ENDED
-        SETTINGS_BLUETOOTH_STATE -> DKNotificationChannel.DEMO_APP
+        TripTooShort -> DKNotificationChannel.TRIP_ENDED
+        is Diagnosis -> DKNotificationChannel.DEMO_APP
     }
 
     fun getNotificationId(): Int = when (this) {
-        is TRIP_ANALYSIS_ERROR -> when (this.error) {
-            TripAnalysisError.DUPLICATE_TRIP -> 203
-            TripAnalysisError.NO_NETWORK -> 205
-            TripAnalysisError.NO_API_KEY -> 204
-            TripAnalysisError.NO_BEACON -> 252
-            TripAnalysisError.NO_BLUETOOTH_DEVICE -> 253
+        is TripAnalysisError -> when (this.error) {
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.DUPLICATE_TRIP -> 203
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_NETWORK -> 205
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_API_KEY -> 204
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BEACON -> 252
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BLUETOOTH_DEVICE -> 253
         }
-        is TRIP_CANCELLED -> when (this.reason) {
+        is TripCancelled -> when (this.reason) {
             TripCancellationReason.NO_BEACON -> 252
             TripCancellationReason.NO_BLUETOOTH_DEVICE -> 253
             TripCancellationReason.HIGH_SPEED -> 250
             TripCancellationReason.NO_GPS_POINT -> 251
         }
-        is TRIP_ENDED -> {
+        is TripEnded -> {
             when (transportationMode) {
                 TransportationMode.TRAIN -> 300
                 TransportationMode.BOAT -> 301
@@ -73,42 +75,42 @@ internal sealed class NotificationType {
                 }
             }
         }
-        TRIP_TOO_SHORT -> 202
-        SETTINGS_BLUETOOTH_STATE -> 401
+        TripTooShort -> 202
+        is Diagnosis -> 401
     }
 
     private fun getIconResId() = R.drawable.ic_notification
 
     private fun getTitleResId() = when (this) {
-        is TRIP_ANALYSIS_ERROR -> when (this.error) {
-            TripAnalysisError.DUPLICATE_TRIP,
-            TripAnalysisError.NO_BEACON,
-            TripAnalysisError.NO_BLUETOOTH_DEVICE,
-            TripAnalysisError.NO_API_KEY -> R.string.app_name
-            TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network_title
+        is TripAnalysisError -> when (this.error) {
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.DUPLICATE_TRIP,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BEACON,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BLUETOOTH_DEVICE,
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_API_KEY -> R.string.app_name
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network_title
         }
-        is TRIP_CANCELLED -> when (this.reason) {
+        is TripCancelled -> when (this.reason) {
             TripCancellationReason.NO_BEACON,
             TripCancellationReason.NO_BLUETOOTH_DEVICE,
             TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_title
             TripCancellationReason.NO_GPS_POINT -> R.string.notif_trip_cancelled_no_gps_data_title
         }
-        is TRIP_ENDED -> R.string.notif_trip_finished_title
-        TRIP_TOO_SHORT -> R.string.notif_trip_too_short_title
-        SETTINGS_BLUETOOTH_STATE -> R.string.app_name
+        is TripEnded -> R.string.notif_trip_finished_title
+        TripTooShort -> R.string.notif_trip_too_short_title
+        is Diagnosis -> R.string.app_name
     }
 
     private fun getDescription(context: Context, additionalBody: String?): String = when (this) {
-        is TRIP_ANALYSIS_ERROR -> when (this.error) {
-            TripAnalysisError.DUPLICATE_TRIP -> R.string.notif_trip_error_duplicate_trip
-            TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network
-            TripAnalysisError.NO_API_KEY -> R.string.notif_trip_error_unauthorized
-            TripAnalysisError.NO_BEACON -> R.string.notif_trip_finished_no_beacon
-            TripAnalysisError.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_finished_no_bluetooth_device
+        is TripAnalysisError -> when (this.error) {
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.DUPLICATE_TRIP -> R.string.notif_trip_error_duplicate_trip
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_NETWORK -> R.string.notif_trip_no_network
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_API_KEY -> R.string.notif_trip_error_unauthorized
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BEACON -> R.string.notif_trip_finished_no_beacon
+            com.drivekit.demoapp.notification.enum.TripAnalysisError.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_finished_no_bluetooth_device
         }.let {
             context.getString(it)
         }
-        is TRIP_CANCELLED -> when (this.reason) {
+        is TripCancelled -> when (this.reason) {
             TripCancellationReason.NO_BEACON -> R.string.notif_trip_cancelled_no_beacon
             TripCancellationReason.NO_BLUETOOTH_DEVICE -> R.string.notif_trip_cancelled_no_bluetooth_device
             TripCancellationReason.HIGH_SPEED -> R.string.notif_trip_cancelled_highspeed
@@ -116,7 +118,7 @@ internal sealed class NotificationType {
         }.let {
             context.getString(it)
         }
-        is TRIP_ENDED -> {
+        is TripEnded -> {
             var body = context.getString(R.string.notif_trip_finished)
             if (!this.transportationMode.isAlternative()) {
                 if (!additionalBody.isNullOrBlank()) {
@@ -142,11 +144,8 @@ internal sealed class NotificationType {
                 body
             }
         }
-        TRIP_TOO_SHORT -> context.getString(R.string.notif_trip_too_short)
-        SETTINGS_BLUETOOTH_STATE -> {
-            val appName = context.getString(R.string.app_name)
-            context.getString(R.string.notif_app_bluetooth_deactivated, appName)
-        }
+        TripTooShort -> context.getString(R.string.notif_trip_too_short)
+        is Diagnosis -> context.getString(this.notificationContent!!.messageResId)
     }
 
     fun createNotification(
