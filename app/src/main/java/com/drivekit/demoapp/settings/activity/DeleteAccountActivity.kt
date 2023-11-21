@@ -8,18 +8,18 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.settings.viewmodel.DeleteAccountViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivityDeleteAccountBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import kotlinx.android.synthetic.main.activity_delete_account.*
 
 internal class DeleteAccountActivity : AppCompatActivity() {
 
     private lateinit var viewModel: DeleteAccountViewModel
+    private lateinit var binding: ActivityDeleteAccountBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -29,23 +29,23 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_delete_account)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityDeleteAccountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar.dkToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title =  getString(R.string.delete_account_header)
         checkViewModelInitialization()
 
-        button_delete_account.setOnClickListener {
+        binding.buttonDeleteAccount.setOnClickListener {
             displayAccountDeletionConfirmation()
         }
-        button_cancel_account_deletion.setOnClickListener {
+        binding.buttonCancelAccountDeletion.setOnClickListener {
             finish()
         }
 
-        text_view_explaining_text.setTextColor(DriveKitUI.colors.mainFontColor())
-        text_view_warning_text.setTextColor(DriveKitUI.colors.mainFontColor())
+        binding.textViewExplainingText.setTextColor(DriveKitUI.colors.mainFontColor())
+        binding.textViewWarningText.setTextColor(DriveKitUI.colors.mainFontColor())
 
         viewModel.accountDeletionError.observe(this) {
             updateProgressVisibility(false)
@@ -78,12 +78,10 @@ internal class DeleteAccountActivity : AppCompatActivity() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 

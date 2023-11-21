@@ -2,24 +2,25 @@ package com.drivekit.demoapp.simulator.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
-import androidx.appcompat.widget.Toolbar
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.highlightSmall
-import kotlinx.android.synthetic.main.activity_trip_simulator.*
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-
 
 internal class TripSimulatorActivity : AppCompatActivity() {
 
     val viewModel = TripSimulatorViewModel()
+    private lateinit var binding: ActivityTripSimulatorBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -29,20 +30,20 @@ internal class TripSimulatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trip_simulator)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityTripSimulatorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar.dkToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
 
-        text_view_select_trip.highlightSmall()
-        text_view_description.normalText(DriveKitUI.colors.complementaryFontColor())
-        text_view_trip_description.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textViewSelectTrip.highlightSmall()
+        binding.textViewDescription.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textViewTripDescription.normalText(DriveKitUI.colors.complementaryFontColor())
         initFilter()
         checkSimulationError()
 
-        button_simulate_trip.findViewById<Button>(R.id.button_action).apply {
+        binding.buttonSimulateTrip.buttonAction.apply {
             text = getString(R.string.trip_simulator_start_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
@@ -69,7 +70,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
     }
 
     private fun checkSimulationError() {
-        text_view_error_message.apply {
+        binding.textViewErrorMessage.apply {
             setTextColor(DriveKitUI.colors.warningColor())
             if (viewModel.shouldShowMockLocationErrorMessage()) {
                 visibility = View.VISIBLE
@@ -100,7 +101,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
             viewModel.presetTripItems.map { getString(it.getTitleResId()) }
         )
 
-        trips_dropdown_spinner.apply {
+        binding.tripsDropdownSpinner.apply {
             setAdapter(adapter)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -120,7 +121,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
 
     private fun updateTripDescription() {
         viewModel.selectedPresetTripType.value?.let {
-            text_view_trip_description.text = getString(it.getDescriptionResId())
+            binding.textViewTripDescription.text = getString(it.getDescriptionResId())
         }
     }
 

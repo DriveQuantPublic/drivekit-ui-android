@@ -5,15 +5,18 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.smallText
-import kotlinx.android.synthetic.main.trip_simulator_detail_item.view.*
 
 internal class TripSimulatorDetailView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
+
+    private val itemTitleTextView: TextView
+    private val itemValueTextView: TextView
 
     init {
         val view = View.inflate(context, R.layout.trip_simulator_detail_item, null)
@@ -25,19 +28,22 @@ internal class TripSimulatorDetailView @JvmOverloads constructor(
             )
         )
 
+        this.itemTitleTextView = view.findViewById(R.id.text_view_item_title)
+        this.itemValueTextView = view.findViewById(R.id.text_view_item_value)
+
         setStyle()
     }
 
     private fun setStyle() {
-        text_view_item_title.smallText(DriveKitUI.colors.complementaryFontColor())
-        text_view_item_value.headLine1(DriveKitUI.colors.mainFontColor())
+        itemTitleTextView.smallText(DriveKitUI.colors.complementaryFontColor())
+        itemValueTextView.headLine1(DriveKitUI.colors.mainFontColor())
     }
 
     fun setItemTitle(title: String) {
-        text_view_item_title.text = title
+        itemTitleTextView.text = title
     }
 
     fun setItemValue(value: String) {
-        text_view_item_value.text = value
+        itemValueTextView.text = value
     }
 }

@@ -47,11 +47,11 @@
         android:layout_marginBottom="@dimen/dk_margin"
         android:background="@color/colorAccent"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/vehicle_intro_button"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:text="@string/vehicle_intro_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
