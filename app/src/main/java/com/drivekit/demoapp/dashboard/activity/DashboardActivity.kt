@@ -25,6 +25,7 @@ import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -68,12 +69,17 @@ internal class DashboardActivity : AppCompatActivity() {
         initFeatureCard()
         configureStartStopTripButton()
 
+        // TODO improve that
         if (!manageTripDetailRedirection()) {
-            if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
-                lifecycleScope.launch {
-                    delay(300)
-                    startStopTripButton?.showConfirmationDialog()
-                }
+
+        }
+        if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
+            DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
+        }
+        if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+            lifecycleScope.launch {
+                delay(300)
+                startStopTripButton?.showConfirmationDialog()
             }
         }
     }

@@ -8,7 +8,6 @@ import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.drivekit.TripListenerController
-import com.drivekit.demoapp.manager.DiagnosisNotificationManager
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.receiver.TripReceiver
@@ -98,7 +97,7 @@ internal object DriveKitConfig {
         DriveKit.initialize(application)
         DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
             override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
-                DiagnosisNotificationManager.onDeviceConfigurationChanged()
+                DKNotificationManager.onDeviceConfigurationChanged(event)
             }
         })
 

@@ -22,7 +22,7 @@ internal sealed class NotificationType {
     data class TripAnalysisError(val error: com.drivekit.demoapp.notification.enum.TripAnalysisError) : NotificationType()
     object TripTooShort : NotificationType()
 
-    data class Diagnosis(val notificationContent: DKDiagnosisNotificationInfo?): NotificationType()
+    data class DeviceConfiguration(val notificationContent: DKDiagnosisNotificationInfo?): NotificationType()
 
     fun getChannel() = when (this) {
         is TripAnalysisError -> when (this.error) {
@@ -41,7 +41,7 @@ internal sealed class NotificationType {
             }
         }
         TripTooShort -> DKNotificationChannel.TRIP_ENDED
-        is Diagnosis -> DKNotificationChannel.DEMO_APP
+        is DeviceConfiguration -> DKNotificationChannel.DEMO_APP
     }
 
     fun getNotificationId(): Int = when (this) {
@@ -76,7 +76,7 @@ internal sealed class NotificationType {
             }
         }
         TripTooShort -> 202
-        is Diagnosis -> 401
+        is DeviceConfiguration -> 401
     }
 
     private fun getIconResId() = R.drawable.ic_notification
@@ -97,7 +97,7 @@ internal sealed class NotificationType {
         }
         is TripEnded -> R.string.notif_trip_finished_title
         TripTooShort -> R.string.notif_trip_too_short_title
-        is Diagnosis -> R.string.app_name
+        is DeviceConfiguration -> R.string.app_name
     }
 
     private fun getDescription(context: Context, additionalBody: String?): String = when (this) {
@@ -145,7 +145,7 @@ internal sealed class NotificationType {
             }
         }
         TripTooShort -> context.getString(R.string.notif_trip_too_short)
-        is Diagnosis -> context.getString(this.notificationContent!!.messageResId)
+        is DeviceConfiguration -> context.getString(this.notificationContent!!.messageResId)
     }
 
     fun createNotification(

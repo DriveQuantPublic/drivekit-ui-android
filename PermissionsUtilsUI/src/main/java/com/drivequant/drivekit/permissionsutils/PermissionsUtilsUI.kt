@@ -110,9 +110,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         return !DiagnosisHelper.isNetworkReachable(context)
     }
 
-    fun getDeviceConfigurationEventNotification(): DKDiagnosisNotificationInfo? {
-        return DKDeviceConfigurationEventNotificationManager.getNotificationInfo()
-    }
+    fun getDeviceConfigurationEventNotification(): DKDiagnosisNotificationInfo? =
+        DKDeviceConfigurationEventNotificationManager.getNotificationInfo()
 
     fun getDiagnosisDescription(context: Context): String {
         val locationMail =

@@ -6,11 +6,16 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
+import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
+import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
@@ -22,11 +27,13 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
-internal object DKNotificationManager : TripListener {
+internal object DKNotificationManager : TripListener, DKDeviceConfigurationListener {
 
     private const val TRIP_ANALYSIS_NOTIFICATION_KEY = "dk_tripanalysis_notification"
+    private const val APP_DIAGNOSIS_NOTIFICATION_KEY = "dk_app_diagnosis_notification"
 
     fun configure() {
+        DriveKit.addDeviceConfigurationListener(this)
         TripListenerController.addTripListener(this)
     }
 
@@ -91,7 +98,10 @@ internal object DKNotificationManager : TripListener {
     fun isTripAnalysisNotificationIntent(intent: Intent): Boolean =
         intent.getBooleanExtra(TRIP_ANALYSIS_NOTIFICATION_KEY, false)
 
-    fun cancelNotification(context: Context, notificationType: NotificationType) {
+    fun isAppDiagnosisNotificationIntent(intent: Intent): Boolean =
+         intent.getBooleanExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, false)
+
+    private fun cancelNotification(context: Context, notificationType: NotificationType) {
         notificationType.cancel(context)
     }
 
@@ -137,5 +147,29 @@ internal object DKNotificationManager : TripListener {
 
     override fun tripStarted(startMode: StartMode) {
         // Nothing to do.
+    }
+
+    override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
+        val context = DriveKit.applicationContext
+        PermissionsUtilsUI.getDeviceConfigurationEventNotification()?.let {
+            if (DriveKitTripAnalysis.getConfig().autoStartActivate) {
+                sendNotification(context, NotificationType.DeviceConfiguration(it), buildAppDiagnosisContentIntent(context))
+                // TODO start periodic worker
+            }
+        } ?: run {
+            cancelNotification(context, NotificationType.DeviceConfiguration(null))
+            // TODO stop worker
+        }
+    }
+
+    private fun buildAppDiagnosisContentIntent(context: Context): PendingIntent? {
+        //val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
+        val intent = Intent(context, DashboardActivity::class.java) // TODO improve
+        var contentIntent: PendingIntent? = null
+        if (intent != null) {
+            intent.putExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, true)
+            contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
+        }
+        return contentIntent
     }
 }
