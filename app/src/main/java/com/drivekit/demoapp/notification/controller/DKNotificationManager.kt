@@ -122,8 +122,10 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     fun manageDeviceConfigurationEventNotification() {
         val context = DriveKit.applicationContext
         val notificationInfo = PermissionsUtilsUI.getDeviceConfigurationEventNotification()
-        if (DriveKitTripAnalysis.getConfig().autoStartActivate && notificationInfo != null) {
-            sendNotification(context, NotificationType.DeviceConfiguration(notificationInfo), buildAppDiagnosisContentIntent(context))
+        if (notificationInfo != null) {
+            if (DriveKitTripAnalysis.getConfig().autoStartActivate) {
+                sendNotification(context, NotificationType.DeviceConfiguration(notificationInfo), buildAppDiagnosisContentIntent(context))
+            }
             WorkerManager.startAppDiagnosisWorker(context)
         } else {
             cancelNotification(context, NotificationType.DeviceConfiguration(null))
