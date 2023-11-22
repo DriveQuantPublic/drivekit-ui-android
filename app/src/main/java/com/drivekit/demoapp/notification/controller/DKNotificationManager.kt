@@ -11,6 +11,7 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
+import com.drivekit.demoapp.receiver.TripReceiver
 import com.drivekit.demoapp.utils.WorkerManager
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
@@ -31,6 +32,7 @@ import com.drivequant.drivekit.tripanalysis.service.recorder.State
 internal object DKNotificationManager : TripListener, DKDeviceConfigurationListener {
 
     private const val TRIP_ANALYSIS_NOTIFICATION_KEY = "dk_tripanalysis_notification"
+    const val TRIP_DETAIL_NOTIFICATION_KEY = "dk_trip_detail_notification"
     private const val APP_DIAGNOSIS_NOTIFICATION_KEY = "dk_app_diagnosis_notification"
 
     fun configure() {
@@ -99,6 +101,9 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     fun isTripAnalysisNotificationIntent(intent: Intent): Boolean =
         intent.getBooleanExtra(TRIP_ANALYSIS_NOTIFICATION_KEY, false)
 
+    fun isTripDetailNotificationIntent(intent: Intent): Boolean =
+        intent.getBooleanExtra(TRIP_DETAIL_NOTIFICATION_KEY, false)
+
     fun isAppDiagnosisNotificationIntent(intent: Intent): Boolean =
          intent.getBooleanExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, false)
 
@@ -127,7 +132,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
+        TripReceiver.tripCancelled(DriveKit.applicationContext, cancelTrip)
     }
 
     override fun potentialTripStart(startMode: StartMode) {
@@ -139,7 +144,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
-        // Nothing to do.
+        TripReceiver.tripFinished(DriveKit.applicationContext, response)
     }
 
     override fun tripSavedForRepost() {

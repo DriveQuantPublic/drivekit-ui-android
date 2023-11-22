@@ -49,7 +49,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         }
 
         // Notification permission: do not check
-        // Auto-reset permission : do not check
+        // Auto-reset permission: do not check
 
         return events.filterByBluetoothUsage()
     }

@@ -69,9 +69,8 @@ internal class DashboardActivity : AppCompatActivity() {
         initFeatureCard()
         configureStartStopTripButton()
 
-        // TODO improve that
-        if (!manageTripDetailRedirection()) {
-
+        if (DKNotificationManager.isTripDetailNotificationIntent(intent)) {
+            manageTripDetailRedirection()
         }
         if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
             DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
@@ -176,8 +175,7 @@ internal class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageTripDetailRedirection(): Boolean {
-        var managed = false
+    private fun manageTripDetailRedirection() {
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
@@ -192,10 +190,8 @@ internal class DashboardActivity : AppCompatActivity() {
                     openAdvice,
                     tripListConfigurationType
                 )
-                managed = true
             }
         }
-        return managed
     }
 
     override fun onPause() {

@@ -126,6 +126,7 @@ internal object TripReceiver {
         val intent = Intent(context, DashboardActivity::class.java)
         if (!TextUtils.isEmpty(itinId)) {
             val hasTripAdvices = !tripAdvices.isNullOrEmpty()
+            intent.putExtra(DKNotificationManager.TRIP_DETAIL_NOTIFICATION_KEY, true)
             intent.putExtra(TripDetailActivity.ITINID_EXTRA, itinId)
             intent.putExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, hasTripAdvices)
             if (transportationMode != null && transportationMode.isAlternative()) {
