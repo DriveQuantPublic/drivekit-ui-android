@@ -71,11 +71,9 @@ internal class DashboardActivity : AppCompatActivity() {
 
         if (DKNotificationManager.isTripDetailNotificationIntent(intent)) {
             manageTripDetailRedirection()
-        }
-        if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
+        } else if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
             DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
-        }
-        if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+        } else if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
             lifecycleScope.launch {
                 delay(300)
                 startStopTripButton?.showConfirmationDialog()
@@ -184,12 +182,7 @@ internal class DashboardActivity : AppCompatActivity() {
                 TripListConfigurationType::class.java
             )
             if (!itinId.isNullOrBlank() && tripListConfigurationType != null) {
-                TripDetailActivity.launchActivity(
-                    this,
-                    itinId,
-                    openAdvice,
-                    tripListConfigurationType
-                )
+                TripDetailActivity.launchActivity(this, itinId, openAdvice, tripListConfigurationType)
             }
         }
     }
