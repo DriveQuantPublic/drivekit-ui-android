@@ -22,8 +22,6 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitListenerManager
-import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
-import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -102,11 +100,6 @@ internal object DriveKitConfig {
             }
 
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
-        })
-        DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
-            override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
-                DKNotificationManager.onDeviceConfigurationChanged(event)
-            }
         })
 
         // TripAnalysis initialization:
