@@ -11,6 +11,7 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
+import com.drivekit.demoapp.utils.WorkerManager
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
@@ -150,26 +151,24 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
+        manageDeviceConfigurationEventNotification()
+    }
+
+    fun manageDeviceConfigurationEventNotification() {
         val context = DriveKit.applicationContext
-        PermissionsUtilsUI.getDeviceConfigurationEventNotification()?.let {
-            if (DriveKitTripAnalysis.getConfig().autoStartActivate) {
-                sendNotification(context, NotificationType.DeviceConfiguration(it), buildAppDiagnosisContentIntent(context))
-                // TODO start periodic worker
-            }
-        } ?: run {
+        val notificationInfo = PermissionsUtilsUI.getDeviceConfigurationEventNotification()
+        if (DriveKitTripAnalysis.getConfig().autoStartActivate && notificationInfo != null) {
+            sendNotification(context, NotificationType.DeviceConfiguration(notificationInfo), buildAppDiagnosisContentIntent(context))
+            WorkerManager.startAppDiagnosisWorker(context)
+        } else {
             cancelNotification(context, NotificationType.DeviceConfiguration(null))
-            // TODO stop worker
+            WorkerManager.stopAppDiagnosisWorker(context)
         }
     }
 
     private fun buildAppDiagnosisContentIntent(context: Context): PendingIntent? {
-        //val intent = context.applicationContext.packageManager.getLaunchIntentForPackage(context.packageName)
-        val intent = Intent(context, DashboardActivity::class.java) // TODO improve
-        var contentIntent: PendingIntent? = null
-        if (intent != null) {
-            intent.putExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, true)
-            contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
-        }
-        return contentIntent
+        val intent = Intent(context, DashboardActivity::class.java)
+        intent.putExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, true)
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
     }
 }

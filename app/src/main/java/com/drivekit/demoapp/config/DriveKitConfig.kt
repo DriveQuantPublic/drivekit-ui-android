@@ -11,6 +11,7 @@ import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.receiver.TripReceiver
+import com.drivekit.demoapp.utils.WorkerManager
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -307,6 +308,9 @@ internal object DriveKitConfig {
 
         // Delete Notification Channels
         DKNotificationManager.deleteChannels(context)
+
+        // Cancel Workers of the Demo App
+        WorkerManager.reset(context)
 
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
