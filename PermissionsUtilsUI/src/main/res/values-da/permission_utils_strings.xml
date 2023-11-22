@@ -95,7 +95,7 @@
    <string name="dk_perm_utils_notification_app_battery_optimization">Appen må ikke køre i baggrunden. Det kan begrænse optagelsen af turen.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>
    <string name="dk_perm_utils_notification_bluetooth_sensor">Det er ikke muligt at optage ture, fordi Bluetooth-sensoren er slået fra.</string>
-   <string name="dk_perm_utils_notification_location_permission">Det er ikke muligt at optage ture, fordi appen ikke har adgang til telefonens placering.</string>
+   <string name="dk_perm_utils_notification_location_permission">Det er ikke muligt at optage ture, fordi appen ikke kan få adgang til telefonens præcise placering, mens den kører i baggrunden.</string>
    <string name="dk_perm_utils_notification_location_sensor">Det er ikke muligt at optage ture, fordi placeringssensoren er slået fra.</string>
    <string name="dk_perm_utils_notification_multiple_issues">Der er en række problemer, der forhindrer, at rejserne bliver registreret.</string>
    <string name="dk_perm_utils_notification_nearby_devices_permission">Turoptagelse er ikke mulig, fordi appen ikke er autoriseret til at få adgang til Bluetooth-sensoren.</string>

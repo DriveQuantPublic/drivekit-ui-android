@@ -95,7 +95,7 @@
    <string name="dk_perm_utils_notification_app_battery_optimization">The app is not allowed to run in the background. This may limit the trip recording.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
    <string name="dk_perm_utils_notification_bluetooth_sensor">Trip recording is not possible because the Bluetooth sensor is turned off.</string>
-   <string name="dk_perm_utils_notification_location_permission">Trip recording is not possible because the app is not authorized to access the phone\'s location.</string>
+   <string name="dk_perm_utils_notification_location_permission">Trip recording is not possible because the app cannot access the phone\'s precise location while it is running in background.</string>
    <string name="dk_perm_utils_notification_location_sensor">Trip recording is not possible because the Location sensor is turned off.</string>
    <string name="dk_perm_utils_notification_multiple_issues">Several problems are blocking the trip recording.</string>
    <string name="dk_perm_utils_notification_nearby_devices_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>

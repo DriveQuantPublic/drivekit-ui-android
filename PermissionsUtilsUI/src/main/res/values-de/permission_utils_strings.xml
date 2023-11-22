@@ -95,7 +95,7 @@
    <string name="dk_perm_utils_notification_app_battery_optimization">Die App darf nicht im Hintergrund laufen. Dies kann die Aufzeichnung der Fahrt einschränken.</string>
    <string name="dk_perm_utils_notification_bluetooth_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
    <string name="dk_perm_utils_notification_bluetooth_sensor">Die Aufzeichnung einer Fahrt ist nicht möglich, da der Bluetooth-Sensor ausgeschaltet ist.</string>
-   <string name="dk_perm_utils_notification_location_permission">Die Aufzeichnung von Fahrten ist nicht möglich, da die App nicht auf den Standort des Telefons zugreifen kann.</string>
+   <string name="dk_perm_utils_notification_location_permission">Die Aufzeichnung von Fahrten ist nicht möglich, da die App nicht auf den genauen Standort des Telefons zugreifen kann, während sie im Hintergrund läuft.</string>
    <string name="dk_perm_utils_notification_location_sensor">Die Aufzeichnung von Fahrten ist nicht möglich, da der Standortsensor ausgeschaltet ist.</string>
    <string name="dk_perm_utils_notification_multiple_issues">Mehrere Probleme verhindern die Aufzeichnung von Fahrten.</string>
    <string name="dk_perm_utils_notification_nearby_devices_permission">Eine Fahrtenaufzeichnung ist nicht möglich, da die App nicht berechtigt ist, auf den Bluetooth-Sensor zuzugreifen.</string>
