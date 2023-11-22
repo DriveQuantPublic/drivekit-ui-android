@@ -4,7 +4,6 @@ import android.content.Context
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripAnalysisConfig
@@ -38,7 +37,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
     private var stoppingTimer: Timer? = null
 
     init {
-        TripListenerController.addTripListener(this)
+        DriveKitTripAnalysis.addTripListener(this)
         startSimulation()
     }
 
@@ -48,7 +47,7 @@ internal class TripSimulatorDetailViewModel(private val presetTripType: PresetTr
 
     fun unregisterListener() {
         this.listener = null
-        TripListenerController.removeTripListener(this)
+        DriveKitTripAnalysis.removeTripListener(this)
     }
 
     fun startSimulation() {

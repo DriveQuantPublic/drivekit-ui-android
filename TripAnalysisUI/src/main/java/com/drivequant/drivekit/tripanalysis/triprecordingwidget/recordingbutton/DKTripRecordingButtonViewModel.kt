@@ -16,9 +16,6 @@ import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripPoint
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
 import com.drivequant.drivekit.tripanalysis.service.recorder.State
@@ -114,12 +111,11 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         val shouldShowConfirmationDialog: Boolean
         this.state.let {
             when (it) {
-                is RecordingState.Recording -> when (this.tripRecordingUserMode) {
+                is RecordingState.Recording -> shouldShowConfirmationDialog = when (this.tripRecordingUserMode) {
                     DKTripRecordingUserMode.START_STOP,
-                    DKTripRecordingUserMode.STOP_ONLY -> shouldShowConfirmationDialog = true
+                    DKTripRecordingUserMode.STOP_ONLY -> true
 
-                    DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> shouldShowConfirmationDialog =
-                        false
+                    DKTripRecordingUserMode.NONE, DKTripRecordingUserMode.START_ONLY -> false
                 }
 
                 is RecordingState.Stopped -> {
@@ -230,26 +226,6 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         // Nothing to do.
     }
 
-    override fun beaconDetected() {
-        // Nothing to do.
-    }
-
-    override fun crashDetected(crashInfo: DKCrashInfo) {
-        // Nothing to do.
-    }
-
-    override fun crashFeedbackSent(
-        crashInfo: DKCrashInfo,
-        feedbackType: CrashFeedbackType,
-        severity: CrashFeedbackSeverity
-    ) {
-        // Nothing to do.
-    }
-
-    override fun potentialTripStart(startMode: StartMode) {
-        // Nothing to do.
-    }
-
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
         // Nothing to do.
     }
@@ -268,5 +244,10 @@ internal class DKTripRecordingButtonViewModel(private val tripRecordingUserMode:
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return DKTripRecordingButtonViewModel(tripRecordingUserMode) as T
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        DriveKitTripAnalysis.removeTripListener(this)
     }
 }

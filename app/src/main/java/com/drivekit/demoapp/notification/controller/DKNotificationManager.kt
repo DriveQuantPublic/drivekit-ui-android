@@ -21,13 +21,8 @@ import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
-import com.drivequant.drivekit.tripanalysis.entity.TripPoint
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
-import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
 internal object DKNotificationManager : TripListener, DKDeviceConfigurationListener {
 
@@ -37,7 +32,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
 
     fun configure() {
         DriveKit.addDeviceConfigurationListener(this)
-        TripListenerController.addTripListener(this)
+        DriveKitTripAnalysis.addTripListener(this)
     }
 
     fun createChannels(context: Context) {
@@ -63,12 +58,6 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(notificationChannel)
-        }
-    }
-
-    fun deleteChannels(context: Context) {
-        DKNotificationChannel.values().forEach {
-            deleteChannel(context, it)
         }
     }
 
@@ -111,36 +100,8 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         notificationType.cancel(context)
     }
 
-    override fun beaconDetected() {
-        // Nothing to do.
-    }
-
-    override fun crashDetected(crashInfo: DKCrashInfo) {
-        // Nothing to do.
-    }
-
-    override fun crashFeedbackSent(
-        crashInfo: DKCrashInfo,
-        feedbackType: CrashFeedbackType,
-        severity: CrashFeedbackSeverity
-    ) {
-        // Nothing to do.
-    }
-
-    override fun sdkStateChanged(state: State) {
-        // Nothing to do.
-    }
-
     override fun tripCancelled(cancelTrip: CancelTrip) {
         TripReceiver.tripCancelled(DriveKit.applicationContext, cancelTrip)
-    }
-
-    override fun potentialTripStart(startMode: StartMode) {
-        // Nothing to do.
-    }
-
-    override fun tripPoint(tripPoint: TripPoint) {
-        // Nothing to do.
     }
 
     override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {

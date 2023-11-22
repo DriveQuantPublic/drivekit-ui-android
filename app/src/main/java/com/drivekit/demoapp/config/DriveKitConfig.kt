@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.utils.WorkerManager
@@ -22,8 +21,13 @@ import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitListenerManager
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
+import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
+import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
+import com.drivequant.drivekit.core.networking.DriveKitListener
+import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.*
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
@@ -72,19 +76,33 @@ internal object DriveKitConfig {
     private const val enableVehicleOdometer: Boolean = true
 
     fun initialize(application: Application) {
-        // Manage trips saved for repost notification
-        DKNotificationManager.configure()
-
         // DriveKit modules initialization:
         initializeModules(application)
 
         // DriveKit modules configuration:
         configureModules(application)
+
+        // Manage notifications for DriveKit SDK events, for example when a trip is finished, cancelled or saved for repost
+        DKNotificationManager.configure()
     }
 
     private fun initializeModules(application: Application) {
         // DriveKit Core Initialization:
         DriveKit.initialize(application)
+        DriveKitListenerManager.addListener(object : DriveKitListener {
+            override fun onAccountDeleted(status: DeleteAccountStatus) {}
+
+            override fun onAuthenticationError(errorType: RequestError) {}
+
+            override fun onConnected() {}
+
+            override fun onDisconnected() {
+                // Data needs to be cleaned
+                logout(application)
+            }
+
+            override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
+        })
         DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
             override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
                 DKNotificationManager.onDeviceConfigurationChanged(event)
@@ -92,7 +110,7 @@ internal object DriveKitConfig {
         })
 
         // TripAnalysis initialization:
-        DriveKitTripAnalysis.initialize(createForegroundNotification(application), TripListenerController)
+        DriveKitTripAnalysis.initialize(createForegroundNotification(application))
 
         // Initialize DriverData:
         DriveKitDriverData.initialize()
@@ -266,12 +284,9 @@ internal object DriveKitConfig {
         DriveKitDriverAchievement.reset()
         DriveKitChallenge.reset()
 
-        // Delete Notification Channels
-        DKNotificationManager.deleteChannels(context)
-
         // Cancel Workers of the Demo App
         WorkerManager.reset(context)
-
+        
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().apply()
