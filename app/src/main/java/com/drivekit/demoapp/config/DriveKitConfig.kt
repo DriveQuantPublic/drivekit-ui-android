@@ -100,17 +100,14 @@ internal object DriveKitConfig {
         // DriveKit Core Initialization:
         DriveKit.initialize(application)
         DriveKitListenerManager.addListener(object : DriveKitListener {
-            override fun onAccountDeleted(status: DeleteAccountStatus) {
+            override fun onAccountDeleted(status: DeleteAccountStatus) {}
 
-            }
+            override fun onAuthenticationError(errorType: RequestError) {}
 
-            override fun onAuthenticationError(errorType: RequestError) {
-            }
-
-            override fun onConnected() { }
+            override fun onConnected() {}
 
             override fun onDisconnected() {
-                // You have to clean data
+                // Data needs to be cleaned
                 logout(application)
             }
 
