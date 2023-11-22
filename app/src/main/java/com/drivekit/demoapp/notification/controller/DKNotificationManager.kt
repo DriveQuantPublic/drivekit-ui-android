@@ -6,29 +6,24 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
 import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
+import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
-import com.drivequant.drivekit.tripanalysis.entity.TripPoint
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
-import com.drivequant.drivekit.tripanalysis.service.recorder.State
 
 internal object DKNotificationManager : TripListener {
 
     private const val TRIP_ANALYSIS_NOTIFICATION_KEY = "dk_tripanalysis_notification"
 
     fun configure() {
-        TripListenerController.addTripListener(this)
+        DriveKitTripAnalysis.addTripListener(this)
     }
 
     fun createChannels(context: Context) {
@@ -54,12 +49,6 @@ internal object DKNotificationManager : TripListener {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(notificationChannel)
-        }
-    }
-
-    fun deleteChannels(context: Context) {
-        DKNotificationChannel.values().forEach {
-            deleteChannel(context, it)
         }
     }
 
@@ -96,35 +85,7 @@ internal object DKNotificationManager : TripListener {
         notificationType.cancel(context)
     }
 
-    override fun beaconDetected() {
-        // Nothing to do.
-    }
-
-    override fun crashDetected(crashInfo: DKCrashInfo) {
-        // Nothing to do.
-    }
-
-    override fun crashFeedbackSent(
-        crashInfo: DKCrashInfo,
-        feedbackType: CrashFeedbackType,
-        severity: CrashFeedbackSeverity
-    ) {
-        // Nothing to do.
-    }
-
-    override fun sdkStateChanged(state: State) {
-        // Nothing to do.
-    }
-
     override fun tripCancelled(cancelTrip: CancelTrip) {
-        // Nothing to do.
-    }
-
-    override fun potentialTripStart(startMode: StartMode) {
-        // Nothing to do.
-    }
-
-    override fun tripPoint(tripPoint: TripPoint) {
         // Nothing to do.
     }
 

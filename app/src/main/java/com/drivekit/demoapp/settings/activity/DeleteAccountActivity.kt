@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.settings.viewmodel.DeleteAccountViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
@@ -57,6 +58,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         }
         viewModel.accountDeleted.observe(this) {
             updateProgressVisibility(false)
+            DriveKitConfig.logout(this)
             restartApplication()
         }
     }

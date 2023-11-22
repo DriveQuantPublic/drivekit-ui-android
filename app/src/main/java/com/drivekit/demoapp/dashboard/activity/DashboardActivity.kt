@@ -17,7 +17,6 @@ import com.drivekit.demoapp.component.FeatureCard
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
@@ -81,7 +80,6 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
-        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
         showContent()
     }
 
@@ -190,11 +188,6 @@ internal class DashboardActivity : AppCompatActivity() {
             }
         }
         return managed
-    }
-
-    override fun onPause() {
-        super.onPause()
-        TripListenerController.removeSdkStateChangeListener(viewModel.sdkStateChangeListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
