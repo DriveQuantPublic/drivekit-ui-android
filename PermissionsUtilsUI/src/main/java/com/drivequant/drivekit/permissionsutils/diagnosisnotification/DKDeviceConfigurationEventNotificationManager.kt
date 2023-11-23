@@ -25,7 +25,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         }
 
         // Bluetooth sensor
-        if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH) && bluetoothItemRequired) {
+        if (bluetoothItemRequired && !DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) {
             events.add(DKDeviceConfigurationEvent.BluetoothSensor(false))
         }
 
@@ -35,7 +35,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         }
 
         // Nearby devices permission
-        if (DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID && bluetoothItemRequired) {
+        if (bluetoothItemRequired && DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID) {
             events.add(DKDeviceConfigurationEvent.NearbyDevicesPermission(false))
         }
 
