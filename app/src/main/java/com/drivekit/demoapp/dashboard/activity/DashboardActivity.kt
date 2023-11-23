@@ -59,7 +59,7 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DriveKitConfig.setUserHasOnboarded(this)
+        DriveKitConfig.setUserOnboarded(this)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

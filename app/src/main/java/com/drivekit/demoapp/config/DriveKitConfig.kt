@@ -137,7 +137,7 @@ internal object DriveKitConfig {
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setUserHasOnboarded(context: Context) {
+    fun setUserOnboarded(context: Context) {
         if (!PreferenceManager.getDefaultSharedPreferences(context).contains(USER_ALREADY_ONBOARDED_PREF_KEY)) {
             PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, true).commit()
         }
