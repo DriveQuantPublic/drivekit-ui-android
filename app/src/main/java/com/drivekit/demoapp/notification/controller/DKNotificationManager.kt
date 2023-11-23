@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.text.TextUtils
 import com.drivekit.demoapp.DriveKitDemoApplication
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
@@ -225,15 +226,17 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
 
     fun manageDeviceConfigurationEventNotification() {
         val context = DriveKit.applicationContext
-        val notificationInfo = PermissionsUtilsUI.getDeviceConfigurationEventNotification()
-        if (notificationInfo != null) {
-            if (DriveKitTripAnalysis.getConfig().autoStartActivate) {
-                sendNotification(context, NotificationType.DeviceConfiguration(notificationInfo), buildAppDiagnosisContentIntent(context))
+        if (DriveKitConfig.isUserOnboarded(context)) {
+            val notificationInfo = PermissionsUtilsUI.getDeviceConfigurationEventNotification()
+            if (notificationInfo != null) {
+                if (DriveKitTripAnalysis.getConfig().autoStartActivate) {
+                    sendNotification(context, NotificationType.DeviceConfiguration(notificationInfo), buildAppDiagnosisContentIntent(context))
+                }
+                WorkerManager.startAppDiagnosisWorker(context)
+            } else {
+                cancelNotification(context, NotificationType.DeviceConfiguration(null))
+                WorkerManager.stopAppDiagnosisWorker(context)
             }
-            WorkerManager.startAppDiagnosisWorker(context)
-        } else {
-            cancelNotification(context, NotificationType.DeviceConfiguration(null))
-            WorkerManager.stopAppDiagnosisWorker(context)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.config
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -62,6 +63,7 @@ internal object DriveKitConfig {
     private const val apiKey = ""
 
     private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
+    private const val USER_ALREADY_ONBOARDED_PREF_KEY = "userAlreadyOnboardedPrefKey"
 
     private const val enableTripAnalysisCrashDetection: Boolean = true
 
@@ -133,6 +135,16 @@ internal object DriveKitConfig {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
         DriveKitTripAnalysis.activateAutoStart(activate)
     }
+
+    @SuppressLint("ApplySharedPref")
+    fun setUserHasOnboarded(context: Context) {
+        if (!PreferenceManager.getDefaultSharedPreferences(context).contains(TRIP_ANALYSIS_AUTO_START_PREF_KEY)) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, true).commit()
+        }
+    }
+
+    fun isUserOnboarded(context: Context): Boolean =
+        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, false)
 
     private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {

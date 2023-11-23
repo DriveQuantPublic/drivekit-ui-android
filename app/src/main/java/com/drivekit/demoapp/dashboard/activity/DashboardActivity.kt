@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
@@ -57,6 +58,9 @@ internal class DashboardActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        DriveKitConfig.setUserHasOnboarded(this)
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContentView(R.layout.activity_dashboard)
