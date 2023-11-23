@@ -17,6 +17,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
     private fun getInvalidNotifiableEvents(): List<DKDeviceConfigurationEvent> {
         val context = DriveKit.applicationContext
         val events = mutableListOf<DKDeviceConfigurationEvent>()
+        val bluetoothItemRequired = DriveKit.modules.tripAnalysis?.getBluetoothUsage() == BluetoothUsage.REQUIRED
 
         // Location sensor
         if (!DiagnosisHelper.isActivated(context, ConnectivityType.GPS)) {
@@ -24,7 +25,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         }
 
         // Bluetooth sensor
-        if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) {
+        if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH) && bluetoothItemRequired) {
             events.add(DKDeviceConfigurationEvent.BluetoothSensor(false))
         }
 
@@ -34,7 +35,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         }
 
         // Nearby devices permission
-        if (DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID) {
+        if (DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID && bluetoothItemRequired) {
             events.add(DKDeviceConfigurationEvent.NearbyDevicesPermission(false))
         }
 
@@ -51,7 +52,7 @@ internal object DKDeviceConfigurationEventNotificationManager {
         // Notification permission: do not check
         // Auto-reset permission: do not check
 
-        return events.filterByBluetoothUsage()
+        return events
     }
 
     private fun List<DKDeviceConfigurationEvent>.toDKDiagnosisNotificationInfo(): DKDiagnosisNotificationInfo? {
@@ -73,14 +74,5 @@ internal object DKDeviceConfigurationEventNotificationManager {
             else -> return null
         }
         return DKDiagnosisNotificationInfo(messageId)
-    }
-
-    private fun List<DKDeviceConfigurationEvent>.filterByBluetoothUsage(): List<DKDeviceConfigurationEvent> {
-        val filterBluetoothEvents = DriveKit.modules.tripAnalysis?.getBluetoothUsage() != BluetoothUsage.REQUIRED
-        return if (filterBluetoothEvents) {
-            this.filterNot { it is DKDeviceConfigurationEvent.BluetoothSensor || it is DKDeviceConfigurationEvent.NearbyDevicesPermission }
-        } else {
-            this
-        }
     }
 }

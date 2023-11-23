@@ -277,8 +277,8 @@ internal object DriveKitConfig {
         DriveKitDriverAchievement.reset()
         DriveKitChallenge.reset()
 
-        // Cancel Workers of the Demo App
-        WorkerManager.reset(context)
+        // Reset the Demo App NotificationManager
+        DKNotificationManager.reset(context)
         
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
