@@ -24,19 +24,21 @@ internal object DKDeviceConfigurationEventNotificationManager {
             events.add(DKDeviceConfigurationEvent.LocationSensor(false))
         }
 
-        // Bluetooth sensor
-        if (bluetoothItemRequired && !DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) {
-            events.add(DKDeviceConfigurationEvent.BluetoothSensor(false))
+        if (bluetoothItemRequired) {
+            // Bluetooth sensor
+            if (!DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) {
+                events.add(DKDeviceConfigurationEvent.BluetoothSensor(false))
+            }
+
+            // Nearby devices permission
+            if (DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID) {
+                events.add(DKDeviceConfigurationEvent.NearbyDevicesPermission(false))
+            }
         }
 
         // Location permission
         if (DiagnosisHelper.getPermissionStatus(context, PermissionType.LOCATION) != PermissionStatus.VALID) {
             events.add(DKDeviceConfigurationEvent.LocationPermission(false))
-        }
-
-        // Nearby devices permission
-        if (bluetoothItemRequired && DiagnosisHelper.getPermissionStatus(context, PermissionType.NEARBY) != PermissionStatus.VALID) {
-            events.add(DKDeviceConfigurationEvent.NearbyDevicesPermission(false))
         }
 
         // Physical Activity permission
