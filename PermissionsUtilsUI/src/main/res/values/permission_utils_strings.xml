@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">this link</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">If the app does not record your trips, we invite you to disable the energy saver of your iPhone using the guide available via %s.</string>
    <string name="dk_perm_utils_energy_saver_title">How do I disable energy saver?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">The app is not authorized to access phone activity. This may limit the trip recording.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">The app is not allowed to run in the background. This may limit the trip recording.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">Trip recording is not possible because the Bluetooth sensor is turned off.</string>
+   <string name="dk_perm_utils_notification_location_permission">Trip recording is not possible because the app cannot access the phone\'s precise location while it is running in background.</string>
+   <string name="dk_perm_utils_notification_location_sensor">Trip recording is not possible because the Location sensor is turned off.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Several problems are blocking the trip recording.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">Trip recording is not possible because the app is not authorized to access the Bluetooth sensor.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Open the settings</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permissions</string>
    <string name="dk_perm_utils_permissions_location_button_android">Allow location</string>

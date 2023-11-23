@@ -1,5 +1,6 @@
 package com.drivekit.demoapp.config
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -9,7 +10,7 @@ import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
-import com.drivekit.demoapp.receiver.TripReceiver
+import com.drivekit.demoapp.utils.WorkerManager
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -22,8 +23,6 @@ import com.drivequant.drivekit.common.ui.listener.ContentMail
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.DriveKitListenerManager
-import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
-import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.core.driver.UpdateUserIdStatus
 import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
@@ -39,21 +38,11 @@ import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.timeline.ui.DriveKitDriverDataTimelineUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysis
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
-import com.drivequant.drivekit.tripanalysis.TripListener
 import com.drivequant.drivekit.tripanalysis.crashfeedback.activity.CrashFeedbackStep1Activity
-import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
-import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.entity.TripNotification
-import com.drivequant.drivekit.tripanalysis.entity.TripPoint
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashAlert
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackConfig
 import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashFeedbackNotification
-import com.drivequant.drivekit.tripanalysis.model.crashdetection.DKCrashInfo
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
-import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
-import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
-import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
-import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.tripanalysis.triprecordingwidget.recordingbutton.DKTripRecordingUserMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
@@ -74,6 +63,7 @@ internal object DriveKitConfig {
     private const val apiKey = ""
 
     private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
+    private const val USER_ALREADY_ONBOARDED_PREF_KEY = "userAlreadyOnboardedPrefKey"
 
     private const val enableTripAnalysisCrashDetection: Boolean = true
 
@@ -113,43 +103,9 @@ internal object DriveKitConfig {
 
             override fun userIdUpdateStatus(status: UpdateUserIdStatus, userId: String?) {}
         })
-        DriveKit.addDeviceConfigurationListener(object : DKDeviceConfigurationListener {
-            override fun onDeviceConfigurationChanged(event: DKDeviceConfigurationEvent) {
-                DKNotificationManager.onDeviceConfigurationChanged(application, event)
-            }
-        })
 
         // TripAnalysis initialization:
         DriveKitTripAnalysis.initialize(createForegroundNotification(application))
-        DriveKitTripAnalysis.addTripListener(object : TripListener {
-            override fun beaconDetected() { }
-
-            override fun crashDetected(crashInfo: DKCrashInfo) {}
-
-            override fun crashFeedbackSent(
-                crashInfo: DKCrashInfo,
-                feedbackType: CrashFeedbackType,
-                severity: CrashFeedbackSeverity
-            ) {}
-
-            override fun potentialTripStart(startMode: StartMode) {}
-
-            override fun sdkStateChanged(state: State) {}
-
-            override fun tripCancelled(cancelTrip: CancelTrip) {
-                TripReceiver.tripCancelled(application, cancelTrip)
-            }
-
-            override fun tripFinished(post: PostGeneric, response: PostGenericResponse) {
-                TripReceiver.tripFinished(application, response)
-            }
-
-            override fun tripPoint(tripPoint: TripPoint) { }
-
-            override fun tripSavedForRepost() { }
-
-            override fun tripStarted(startMode: StartMode) { }
-        })
 
         // Initialize DriverData:
         DriveKitDriverData.initialize()
@@ -179,6 +135,16 @@ internal object DriveKitConfig {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(TRIP_ANALYSIS_AUTO_START_PREF_KEY, activate).apply()
         DriveKitTripAnalysis.activateAutoStart(activate)
     }
+
+    @SuppressLint("ApplySharedPref")
+    fun setUserOnboarded(context: Context) {
+        if (!PreferenceManager.getDefaultSharedPreferences(context).contains(USER_ALREADY_ONBOARDED_PREF_KEY)) {
+            PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, true).commit()
+        }
+    }
+
+    fun isUserOnboarded(context: Context): Boolean =
+        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(USER_ALREADY_ONBOARDED_PREF_KEY, false)
 
     private fun configureCore(context: Context) {
         if (apiKey.isNotBlank()) {
@@ -270,7 +236,6 @@ internal object DriveKitConfig {
 
     private fun configurePermissionsUtilsUI() {
         PermissionsUtilsUI.initialize()
-        PermissionsUtilsUI.configureBluetooth(isBluetoothNeeded())
         PermissionsUtilsUI.configureContactType(ContactType.EMAIL(object : ContentMail {
             override fun getBccRecipients(): List<String> = listOf("")
             override fun getMailBody() = "Mail body to configure"
@@ -307,15 +272,6 @@ internal object DriveKitConfig {
         return notification
     }
 
-    private fun isBluetoothNeeded(): Boolean {
-        DriveKitVehicle.vehiclesQuery().noFilter().query().execute().forEach {
-            if (it.detectionMode == DetectionMode.BEACON || it.detectionMode == DetectionMode.BLUETOOTH) {
-                return true
-            }
-        }
-        return false
-    }
-
     fun logout(context: Context) {
         // Reset DriveKit modules:
         reset(context)
@@ -333,6 +289,9 @@ internal object DriveKitConfig {
         DriveKitDriverAchievement.reset()
         DriveKitChallenge.reset()
 
+        // Reset the Demo App NotificationManager
+        DKNotificationManager.reset(context)
+        
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().apply()
