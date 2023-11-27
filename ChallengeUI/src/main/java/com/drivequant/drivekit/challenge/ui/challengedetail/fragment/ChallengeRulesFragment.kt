@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
@@ -11,7 +12,6 @@ import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_rules.layout_challenge_rules
 
 class ChallengeRulesFragment : Fragment() {
 
@@ -41,6 +41,7 @@ class ChallengeRulesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val container = view as LinearLayout
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
                 requireContext(),
@@ -67,6 +68,6 @@ class ChallengeRulesFragment : Fragment() {
                 requireContext()
             )
         challengeHeaderView.configure(viewModel, requireActivity())
-        layout_challenge_rules.addView(challengeHeaderView)
+        container.addView(challengeHeaderView)
     }
 }

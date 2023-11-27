@@ -3,21 +3,21 @@ package com.drivequant.drivekit.common.ui.component
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import kotlinx.android.synthetic.main.dk_layout_circular_button_item_view.view.*
 
 class CircularButtonItemView : FrameLayout {
     private var itemSelected = false
     private lateinit var imageView: ImageView
+    private lateinit var circleView: View
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -40,6 +40,7 @@ class CircularButtonItemView : FrameLayout {
     private fun init(attrs: AttributeSet?) {
         val view = View.inflate(context, R.layout.dk_layout_circular_button_item_view, null)
         imageView = view.findViewById(R.id.image_view)
+        circleView = view.findViewById(R.id.circle_view)
         if (attrs != null) {
             val typedArray = context.theme.obtainStyledAttributes(
                 attrs,
@@ -84,8 +85,8 @@ class CircularButtonItemView : FrameLayout {
         }
         (circle as GradientDrawable).setColor(bgColor)
         DrawableCompat.setTint(wrapped, tintColor)
-        image_view.setImageDrawable(wrapped)
-        circle_view.background = circle
+        imageView.setImageDrawable(wrapped)
+        circleView.background = circle
     }
 
     private fun setItemDrawable(resDrawableId: Int) {

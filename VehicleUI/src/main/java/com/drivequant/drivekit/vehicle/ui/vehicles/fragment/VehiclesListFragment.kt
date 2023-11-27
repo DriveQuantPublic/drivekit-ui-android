@@ -17,27 +17,26 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehiclesListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
 import com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel.VehiclesListViewModel
-import kotlinx.android.synthetic.main.fragment_vehicles_list.button_vehicle
-import kotlinx.android.synthetic.main.fragment_vehicles_list.dk_progress_circular
-import kotlinx.android.synthetic.main.fragment_vehicles_list.refresh_vehicles
-import kotlinx.android.synthetic.main.fragment_vehicles_list.vehicles_list
-import kotlinx.android.synthetic.main.header_vehicle_list.linear_layout_header_vehicle_list
-import kotlinx.android.synthetic.main.header_vehicle_list.text_view_header_title
-import kotlinx.android.synthetic.main.header_vehicle_list.text_view_summary_icon
 
 class VehiclesListFragment : Fragment() {
-    private lateinit var viewModel : VehiclesListViewModel
+
+    private lateinit var viewModel: VehiclesListViewModel
     private var adapter: VehiclesListAdapter? = null
     private var shouldSyncVehicles = true
     private lateinit var synchronizationType: SynchronizationType
+    private var _binding: FragmentVehiclesListBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.fragment_vehicles_list, container, false).setDKStyle()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentVehiclesListBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +47,7 @@ class VehiclesListFragment : Fragment() {
             ), javaClass.simpleName
         )
 
-        refresh_vehicles.setOnRefreshListener {
+        binding.refreshVehicles.setOnRefreshListener {
             updateVehicles(SynchronizationType.DEFAULT)
         }
 
@@ -68,6 +67,11 @@ class VehiclesListFragment : Fragment() {
                 viewModel.fetchVehicles(requireContext(), SynchronizationType.CACHE)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onResume() {
@@ -97,19 +101,19 @@ class VehiclesListFragment : Fragment() {
                 ).show()
             }
             if (it.isNullOrEmpty()) {
-                linear_layout_header_vehicle_list.visibility = View.VISIBLE
+                binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.VISIBLE
             } else {
-                vehicles_list.layoutManager = LinearLayoutManager(context)
+                binding.vehiclesList.layoutManager = LinearLayoutManager(context)
                 displayVehiclesList()
                 adapter?.let { adapter ->
                     adapter.setVehicles(it)
                     adapter.notifyDataSetChanged()
                 } ?: run {
                     adapter = VehiclesListAdapter(requireContext(), viewModel, it.toMutableList())
-                    vehicles_list.adapter = adapter
+                    binding.vehiclesList.adapter = adapter
                 }
             }
-            refresh_vehicles.apply {
+            binding.refreshVehicles.apply {
                 visibility = View.VISIBLE
                 isRefreshing = false
             }
@@ -120,13 +124,13 @@ class VehiclesListFragment : Fragment() {
                 updateVehicles(SynchronizationType.DEFAULT)
             }
         }
-        refresh_vehicles.isRefreshing = true
+        binding.refreshVehicles.isRefreshing = true
         viewModel.fetchVehicles(requireContext(), synchronizationType = synchronizationType)
     }
 
     private fun setupAddReplaceButton() {
         if (viewModel.shouldDisplayAddReplaceButton()) {
-            button_vehicle.apply {
+            binding.buttonVehicle.apply {
                 visibility = View.VISIBLE
                 button()
                 text = DKResource.convertToString(requireContext(), viewModel.getAddReplaceButtonTextResId())
@@ -139,37 +143,37 @@ class VehiclesListFragment : Fragment() {
                 }
             }
         } else {
-            button_vehicle.visibility = View.GONE
+            binding.buttonVehicle.visibility = View.GONE
         }
     }
 
     private fun displayVehiclesList() {
         if (viewModel.vehiclesList.isNotEmpty()) {
-            linear_layout_header_vehicle_list.visibility = View.GONE
-            vehicles_list.visibility = View.VISIBLE
+            binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.GONE
+            binding.vehiclesList.visibility = View.VISIBLE
         } else {
             setupEmptyListLayout()
-            linear_layout_header_vehicle_list.visibility = View.VISIBLE
-            vehicles_list.visibility = View.GONE
+            binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.VISIBLE
+            binding.vehiclesList.visibility = View.GONE
         }
         hideProgressCircular()
     }
 
     private fun setupEmptyListLayout() {
-        text_view_summary_icon.setImageDrawable(
+        binding.vehicleListHeader.textViewSummaryIcon.setImageDrawable(
             DKResource.convertToDrawable(
                 requireContext(),
                 "dk_common_warning"
             )
         )
-        text_view_header_title.apply {
+        binding.vehicleListHeader.textViewHeaderTitle.apply {
             typeface = Typeface.DEFAULT_BOLD
             text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
         }
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.dkProgressCircular.dkProgressCircular.apply {
             animate()
             .alpha(0f)
             .setDuration(200L)
@@ -182,7 +186,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.dkProgressCircular.dkProgressCircular.apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

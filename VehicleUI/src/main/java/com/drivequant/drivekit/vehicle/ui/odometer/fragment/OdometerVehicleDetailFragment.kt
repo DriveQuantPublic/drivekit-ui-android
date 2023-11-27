@@ -21,24 +21,20 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerVehicleDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoriesListActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
-import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.image_item
-import kotlinx.android.synthetic.main.dk_custom_filter_spinner_item.text_view_item_display_name
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.button_display_odometer_readings
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.button_update_odometer_reading
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.distance_analyzed_item
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.distance_estimated_item
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_detail.mileage_vehicle_item
 
 class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
 
     private var vehicleId: String? = null
     private lateinit var viewModel: OdometerDetailViewModel
+    private var _binding: DkFragmentOdometerVehicleDetailBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(vehicleId: String) =
@@ -67,7 +63,11 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_detail, container, false).setDKStyle()
+    ): View {
+        _binding = DkFragmentOdometerVehicleDetailBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,6 +84,11 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         initVehicleOdometerDetail()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initVehicleOdometerDetail() {
         vehicleId?.let { vehicleId ->
             context?.let { context ->
@@ -98,7 +103,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun displayOdometerReadings(context: Context, vehicleId: String) {
-        button_display_odometer_readings.apply {
+        binding.buttonDisplayOdometerReadings.apply {
             visibility = if(viewModel.shouldShowDisplayReadingButton()) View.VISIBLE else View.GONE
             text = DKResource.convertToString(context, "dk_vehicle_odometer_histories_link")
             headLine2(DriveKitUI.colors.secondaryColor())
@@ -111,7 +116,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun updateOdometerClicked(context: Context, vehicleId: String) {
-        button_update_odometer_reading.apply {
+        binding.buttonUpdateOdometerReading.apply {
             text = DKResource.convertToString(context, "dk_vehicle_odometer_history_update")
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
@@ -127,24 +132,24 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
                 .load(drawable)
                 .apply(RequestOptions.circleCropTransform())
                 .placeholder(drawable)
-                .into(image_item)
+                .into(binding.spinnerItem.imageItem)
         }
-        text_view_item_display_name.text = viewModel.getVehicleDisplayName(context)
+        binding.spinnerItem.textViewItemDisplayName.text = viewModel.getVehicleDisplayName(context)
     }
 
     private fun initOdometerItems(vehicleId: String) {
         val itemViewModel = OdometerItemViewModel(vehicleId)
-        mileage_vehicle_item.configureOdometerItem(
+        binding.mileageVehicleItem.configureOdometerItem(
             itemViewModel,
             OdometerItemType.ODOMETER,
             this)
 
-        distance_estimated_item.configureOdometerItem(
+        binding.distanceEstimatedItem.configureOdometerItem(
             itemViewModel,
             OdometerItemType.ESTIMATED,
             this)
 
-        distance_analyzed_item.configureOdometerItem(
+        binding.distanceAnalyzedItem.configureOdometerItem(
             itemViewModel,
             OdometerItemType.ANALYZED,
             this)

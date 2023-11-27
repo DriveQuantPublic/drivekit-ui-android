@@ -16,25 +16,14 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.databaseutils.entity.Safety
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.SafetyFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.SafetyViewModelFactory
-import kotlinx.android.synthetic.main.eco_driving_fragment.score_gauge
-import kotlinx.android.synthetic.main.safety_fragment.accel_description
-import kotlinx.android.synthetic.main.safety_fragment.accel_image
-import kotlinx.android.synthetic.main.safety_fragment.accel_number_event
-import kotlinx.android.synthetic.main.safety_fragment.adherence_description
-import kotlinx.android.synthetic.main.safety_fragment.adherence_image
-import kotlinx.android.synthetic.main.safety_fragment.adherence_number_event
-import kotlinx.android.synthetic.main.safety_fragment.brake_description
-import kotlinx.android.synthetic.main.safety_fragment.brake_number_event
-import kotlinx.android.synthetic.main.safety_fragment.decel_image
-import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
-import kotlinx.android.synthetic.main.safety_fragment.score_info
 
 class SafetyFragment : Fragment() {
 
     companion object {
-        fun newInstance(safety : Safety) : SafetyFragment {
+        fun newInstance(safety: Safety): SafetyFragment {
             val fragment = SafetyFragment()
             fragment.safety = safety
             return fragment
@@ -42,15 +31,17 @@ class SafetyFragment : Fragment() {
     }
 
     private lateinit var safety: Safety
-    private lateinit var viewModel : SafetyViewModel
+    private lateinit var viewModel: SafetyViewModel
+    private var _binding: SafetyFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.safety_fragment, container, false)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = SafetyFragmentBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,32 +58,37 @@ class SafetyFragment : Fragment() {
             SafetyViewModelFactory(safety)
         )[SafetyViewModel::class.java]
 
-        gauge_type_title.text = context?.getString(R.string.dk_common_safety)
-        accel_description.text = context?.getString(R.string.dk_driverdata_safety_accel)
-        brake_description.text = context?.getString(R.string.dk_driverdata_safety_decel)
-        adherence_description.text = context?.getString(R.string.dk_driverdata_safety_adherence)
+        binding.gaugeTypeTitle.text = context?.getString(R.string.dk_common_safety)
+        binding.accelDescription.text = context?.getString(R.string.dk_driverdata_safety_accel)
+        binding.brakeDescription.text = context?.getString(R.string.dk_driverdata_safety_decel)
+        binding.adherenceDescription.text = context?.getString(R.string.dk_driverdata_safety_adherence)
 
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val primaryColor = DriveKitUI.colors.primaryColor()
 
-        gauge_type_title.normalText(mainFontColor)
-        accel_description.normalText(mainFontColor)
-        brake_description.normalText(mainFontColor)
-        adherence_description.normalText(mainFontColor)
+        binding.gaugeTypeTitle.normalText(mainFontColor)
+        binding.accelDescription.normalText(mainFontColor)
+        binding.brakeDescription.normalText(mainFontColor)
+        binding.adherenceDescription.normalText(mainFontColor)
 
-        accel_image.setColorFilter(mainFontColor)
-        decel_image.setColorFilter(mainFontColor)
-        adherence_image.setColorFilter(mainFontColor)
+        binding.accelImage.setColorFilter(mainFontColor)
+        binding.decelImage.setColorFilter(mainFontColor)
+        binding.adherenceImage.setColorFilter(mainFontColor)
 
-        accel_number_event.highlightSmall(primaryColor)
-        brake_number_event.highlightSmall(primaryColor)
-        adherence_number_event.highlightSmall(primaryColor)
+        binding.accelNumberEvent.highlightSmall(primaryColor)
+        binding.brakeNumberEvent.highlightSmall(primaryColor)
+        binding.adherenceNumberEvent.highlightSmall(primaryColor)
 
-        score_gauge.configure(viewModel.getScore(), GaugeConfiguration.SAFETY(viewModel.getScore()), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.SAFETY(viewModel.getScore()))
+        binding.scoreGauge.configure(viewModel.getScore(), GaugeConfiguration.SAFETY(viewModel.getScore()), Typeface.BOLD)
+        binding.scoreInfo.init(GaugeConfiguration.SAFETY(viewModel.getScore()))
 
-        accel_number_event.text = viewModel.getAccelNumberEvent().toString()
-        brake_number_event.text = viewModel.getBrakeNumberEvent().toString()
-        adherence_number_event.text = viewModel.getAdherenceNumberEvent().toString()
+        binding.accelNumberEvent.text = viewModel.getAccelNumberEvent().toString()
+        binding.brakeNumberEvent.text = viewModel.getBrakeNumberEvent().toString()
+        binding.adherenceNumberEvent.text = viewModel.getAdherenceNumberEvent().toString()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

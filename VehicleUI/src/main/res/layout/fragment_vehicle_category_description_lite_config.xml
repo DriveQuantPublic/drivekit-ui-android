@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:padding="@dimen/dk_margin_medium">
+    android:padding="@dimen/dk_margin_medium"
+    tools:viewBindingIgnore="true">
 
     <ImageView
         android:id="@+id/image_view_icon2"

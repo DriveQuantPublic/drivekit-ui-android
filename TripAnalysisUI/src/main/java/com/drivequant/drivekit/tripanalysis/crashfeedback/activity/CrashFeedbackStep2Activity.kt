@@ -4,7 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.drivekit.tripanalysis.ui.R
+import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep2Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -15,14 +15,16 @@ import com.drivequant.drivekit.tripanalysis.model.crashdetection.CrashUserFeedba
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackSeverity
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.CrashFeedbackType
 import com.drivequant.drivekit.tripanalysis.service.crashdetection.feedback.DKCrashFeedbackListener
-import kotlinx.android.synthetic.main.dk_layout_activity_crash_feedback_step1.*
 
 class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
     private lateinit var viewModel: CrashFeedbackStep2ViewModel
+    private lateinit var binding: DkLayoutActivityCrashFeedbackStep2Binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = DkLayoutActivityCrashFeedbackStep2Binding.inflate(layoutInflater)
 
         DriveKitUI.analyticsListener?.trackScreen(
             DKResource.convertToString(
@@ -31,7 +33,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
             ), javaClass.simpleName
         )
 
-        setContentView(R.layout.dk_layout_activity_crash_feedback_step2)
+        setContentView(binding.root)
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[CrashFeedbackStep2ViewModel::class.java]
@@ -54,7 +56,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
     private fun initTitle() {
         viewModel.getTitleResId().let { titleResId ->
-            text_view_title.apply {
+            binding.textViewTitle.apply {
                 setText(titleResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
                 setTextColor(DriveKitUI.colors.mainFontColor())
@@ -65,7 +67,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
     private fun initDescription() {
         viewModel.getDescriptionResId().let { descriptionResId ->
-            text_view_description.apply {
+            binding.textViewDescription.apply {
                 setText(descriptionResId)
                 pixelToSp(context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbigger))
                 setTextColor(DriveKitUI.colors.mainFontColor())

@@ -8,4 +8,5 @@
     android:layout_marginHorizontal="@dimen/dk_margin_half"
     android:layout_marginVertical="@dimen/dk_margin"
     android:padding="@dimen/dk_margin"
-    tools:text="Button simple" />
+    tools:text="Button simple"
+    tools:viewBindingIgnore="true" />

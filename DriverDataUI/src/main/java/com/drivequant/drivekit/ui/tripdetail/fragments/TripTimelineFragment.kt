@@ -12,14 +12,13 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.TripTimelineFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.adapter.TripTimelineAdapter
 import com.drivequant.drivekit.ui.tripdetail.viewholder.OnItemClickListener
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.trip_timeline_fragment.timeline_list
 
 class TripTimelineFragment : Fragment() {
 
@@ -32,15 +31,17 @@ class TripTimelineFragment : Fragment() {
     }
 
     private lateinit var tripDetailViewModel: DKTripDetailViewModel
+    private var _binding: TripTimelineFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.trip_timeline_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = TripTimelineFragmentBinding.inflate(inflater, container, false)
+        FontUtils.overrideFonts(context, binding.root)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -68,18 +69,23 @@ class TripTimelineFragment : Fragment() {
             )[TripDetailViewModel::class.java]
         }
 
-        timeline_list.layoutManager =
+        binding.timelineList.layoutManager =
             LinearLayoutManager(requireContext())
-        timeline_list.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
+        binding.timelineList.adapter = TripTimelineAdapter(tripDetailViewModel.getTripEvents(), object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
                 tripDetailViewModel.getSelectedEvent().postValue(position)
             }
         }, DriveKitUI.colors.secondaryColor())
         tripDetailViewModel.getSelectedEvent().observe(viewLifecycleOwner) {
             it?.let { position ->
-                (timeline_list.adapter as TripTimelineAdapter).selectedPosition = position
-                timeline_list.smoothScrollToPosition(position)
+                (binding.timelineList.adapter as TripTimelineAdapter).selectedPosition = position
+                binding.timelineList.smoothScrollToPosition(position)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

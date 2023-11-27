@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
     <TextView
         android:id="@+id/text_view_description"
-        android:padding="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" />
+        android:gravity="center"
+        android:padding="@dimen/dk_margin_half" />
+
     <Button
         android:id="@+id/button_validate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginStart="@dimen/dk_margin"
+        android:layout_marginTop="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin"
         android:foreground="?android:attr/selectableItemBackground" />
 </LinearLayout>

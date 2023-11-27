@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.drivequant.beaconutils.BeaconData
@@ -31,9 +32,9 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.PAIRIN
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType.VERIFY
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_progress.text_view_description
 
 class BeaconScannerProgressFragment : Fragment(), BeaconListener {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerProgressFragment {
             val fragment = BeaconScannerProgressFragment()
@@ -73,8 +74,10 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
             }
         }
 
-        text_view_description.normalText()
-        text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
+        view.findViewById<TextView>(R.id.text_view_description).apply {
+            normalText()
+            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
+        }
 
         view.let {
             progressBar = it.findViewById(R.id.progress_bar)

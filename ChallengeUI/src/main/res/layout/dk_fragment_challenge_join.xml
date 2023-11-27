@@ -24,10 +24,10 @@
                 android:paddingBottom="@dimen/dk_margin_half">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:id="@+id/challenge_header_view_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
 
                 <LinearLayout
                     android:id="@+id/container_conditions_info"
@@ -35,9 +35,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dk_margin_half"
                     android:layout_marginBottom="@dimen/dk_margin_half"
-                    tools:background="@color/dkGood"
                     android:padding="@dimen/dk_margin"
                     android:visibility="gone"
+                    tools:background="@color/dkGood"
                     tools:visibility="visible">
 
                     <TextView
@@ -62,9 +62,9 @@
     </FrameLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_view_join_challenge"
@@ -72,9 +72,9 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:text="@string/dk_challenge_registered_confirmation"
-            tools:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            tools:textColor="@android:color/white" />
 
         <LinearLayout
             android:id="@+id/timer_container"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingLeft="@dimen/dk_margin"
-                android:paddingRight="@dimen/dk_margin"/>
+                android:paddingRight="@dimen/dk_margin" />
 
             <TextView
                 android:id="@+id/text_view_countdown"

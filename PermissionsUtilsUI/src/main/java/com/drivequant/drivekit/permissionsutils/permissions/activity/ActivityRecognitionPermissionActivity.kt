@@ -10,14 +10,17 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
 import com.drivequant.drivekit.permissionsutils.R
+import com.drivequant.drivekit.permissionsutils.databinding.ActivityRecognitionPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
-import kotlinx.android.synthetic.main.activity_recognition_permission.*
 
 class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
 
+    private lateinit var binding: ActivityRecognitionPermissionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recognition_permission)
+        binding = ActivityRecognitionPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar("dk_perm_utils_permissions_phone_settings_activity_title")
         setStyle()
     }
@@ -39,7 +42,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_activity_permission.text = getString(R.string.dk_perm_utils_permissions_text_button_activity_settings)
+                binding.buttonRequestActivityPermission.text = getString(R.string.dk_perm_utils_permissions_text_button_activity_settings)
                 handlePermissionTotallyDeclined(this@ActivityRecognitionPermissionActivity, R.string.dk_perm_utils_app_diag_activity_ko)
             }
         }
@@ -54,9 +57,9 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_activity_permission_title.highlightMedium()
-        text_view_activity_permission_text.normalText()
-        button_request_activity_permission.button()
+        binding.textViewActivityPermissionTitle.highlightMedium()
+        binding.textViewActivityPermissionText.normalText()
+        binding.buttonRequestActivityPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

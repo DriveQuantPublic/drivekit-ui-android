@@ -1,16 +1,17 @@
 package com.drivequant.drivekit.common.ui.component.triplist.views
 
 import android.content.Context
-import androidx.core.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import kotlinx.android.synthetic.main.trip_info_item.view.*
 
 internal class TripInfoView : LinearLayout {
 
@@ -23,18 +24,21 @@ internal class TripInfoView : LinearLayout {
     private fun init(trip: DKTripListItem) {
         val view = View.inflate(context, R.layout.trip_info_item, null)
 
+        val tripInfoImageView: ImageView = view.findViewById(R.id.image_view_trip_info)
+        val tripInfoTextView: TextView = view.findViewById(R.id.text_view_trip_info)
+
         DrawableCompat.setTint(view.background, DriveKitUI.colors.secondaryColor())
         trip.infoImageResource()?.let {
-            view.image_view_trip_info.setImageResource(it)
+            tripInfoImageView.setImageResource(it)
         }
 
         trip.infoText(context)?.let {
-            view.text_view_trip_info.apply {
+            tripInfoTextView.apply {
                 visibility = View.VISIBLE
                 text = it
             }
         } ?: run {
-            view.text_view_trip_info.visibility = View.GONE
+            tripInfoTextView.visibility = View.GONE
         }
         view.setOnClickListener {
             if (trip.hasInfoActionConfigured()) {

@@ -9,18 +9,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeDetailBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.tab_layout_challenge_detail
-import kotlinx.android.synthetic.main.dk_fragment_challenge_detail.view_pager_challenge_detail
 
 
 class ChallengeDetailFragment : Fragment() {
@@ -29,6 +26,8 @@ class ChallengeDetailFragment : Fragment() {
     private lateinit var viewModel: ChallengeDetailViewModel
     private lateinit var startSyncType: SynchronizationType
     private var shouldSyncDetail = true
+    private var _binding: DkFragmentChallengeDetailBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(challengeId: String): ChallengeDetailFragment {
@@ -48,7 +47,10 @@ class ChallengeDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_challenge_detail, container, false)
+    ): View {
+        _binding = DkFragmentChallengeDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -92,21 +94,26 @@ class ChallengeDetailFragment : Fragment() {
         updateChallengeDetail(startSyncType)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateChallengeDetail(synchronizationType: SynchronizationType) {
         updateProgressVisibility(true)
         viewModel.fetchChallengeDetail(synchronizationType)
     }
 
     private fun setViewPager() {
-        view_pager_challenge_detail.offscreenPageLimit = ChallengeUI.challengeDetailItems.size
-        view_pager_challenge_detail.adapter = ChallengeDetailFragmentPagerAdapter(
+        binding.viewPagerChallengeDetail.offscreenPageLimit = ChallengeUI.challengeDetailItems.size
+        binding.viewPagerChallengeDetail.adapter = ChallengeDetailFragmentPagerAdapter(
             childFragmentManager,
             viewModel
         )
 
-        tab_layout_challenge_detail.setupWithViewPager(view_pager_challenge_detail)
+        binding.tabLayoutChallengeDetail.setupWithViewPager(binding.viewPagerChallengeDetail)
         for ((index, item) in ChallengeUI.challengeDetailItems.withIndex()) {
-            tab_layout_challenge_detail?.getTabAt(index)?.let {
+            binding.tabLayoutChallengeDetail.getTabAt(index)?.let {
                 val drawable = ContextCompat.getDrawable(requireContext(), item.getImageResource())
                 if (index == 0) {
                     drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
@@ -114,7 +121,7 @@ class ChallengeDetailFragment : Fragment() {
                 it.icon = drawable
             }
         }
-        tab_layout_challenge_detail.addOnTabSelectedListener(object : OnTabSelectedListener {
+        binding.tabLayoutChallengeDetail.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 updateTabLayout(tab.position)
             }
@@ -125,30 +132,28 @@ class ChallengeDetailFragment : Fragment() {
     }
 
     private fun updateTabLayout(position: Int) {
-        for (i in 0 until tab_layout_challenge_detail.tabCount) {
-            tab_layout_challenge_detail.getTabAt(i)?.let {
+        for (i in 0 until binding.tabLayoutChallengeDetail.tabCount) {
+            binding.tabLayoutChallengeDetail.getTabAt(i)?.let {
                 if (i == position) {
                     val drawable = ContextCompat.getDrawable(requireContext(),
                         ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
                     drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
-                    tab_layout_challenge_detail.getTabAt(i)?.icon = drawable
+                    binding.tabLayoutChallengeDetail.getTabAt(i)?.icon = drawable
                 } else {
                     val drawable = ContextCompat.getDrawable(requireContext(),
                         ChallengeUI.challengeDetailItems[i].getImageResource())?.mutate()
                     drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
-                    tab_layout_challenge_detail.getTabAt(i)?.icon = drawable
+                    binding.tabLayoutChallengeDetail.getTabAt(i)?.icon = drawable
                 }
             }
         }
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }

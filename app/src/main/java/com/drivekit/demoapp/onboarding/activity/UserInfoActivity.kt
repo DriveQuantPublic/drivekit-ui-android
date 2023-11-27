@@ -3,26 +3,23 @@ package com.drivekit.demoapp.onboarding.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.UserInfoViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivityUserInfoBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import kotlinx.android.synthetic.main.activity_user_info.*
-import kotlinx.android.synthetic.main.activity_user_info.button_validate
-import kotlinx.android.synthetic.main.activity_user_info.progress_circular
 
 internal class UserInfoActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserInfoViewModel
+    private lateinit var binding: ActivityUserInfoBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -32,9 +29,9 @@ internal class UserInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_info)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityUserInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar.dkToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (!this::viewModel.isInitialized) {
@@ -42,35 +39,35 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
 
         title = getString(R.string.user_info_header)
-        text_view_user_info_title.apply {
+        binding.textViewUserInfoTitle.apply {
             text = getString(R.string.user_info_title)
             headLine1()
             addInfoIconAtTheEnd(this@UserInfoActivity)
         }
-        text_view_user_info_description.apply {
+        binding.textViewUserInfoDescription.apply {
             text = getString(R.string.user_info_description)
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
 
-        text_input_layout_firstname.editText?.setText(viewModel.getFirstName())
-        text_input_layout_lastname.editText?.setText(viewModel.getLastName())
-        text_input_layout_pseudo.editText?.setText(viewModel.getPseudo())
+        binding.textInputLayoutFirstname.editText?.setText(viewModel.getFirstName())
+        binding.textInputLayoutLastname.editText?.setText(viewModel.getLastName())
+        binding.textInputLayoutPseudo.editText?.setText(viewModel.getPseudo())
 
-        text_view_user_info_title.setOnClickListener {
+        binding.textViewUserInfoTitle.setOnClickListener {
             openDriveKitUserInfoDoc()
         }
 
-        button_next_step.setOnClickListener {
+        binding.buttonNextStep.setOnClickListener {
             goToNext()
         }
 
-        button_validate.findViewById<Button>(R.id.button_action).apply {
+        binding.buttonValidate.buttonAction.apply {
             text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
-                val firstName = text_view_firstname_field.editableText.toString()
-                val lastName = text_view_lastname_field.editableText.toString()
-                val pseudo = text_view_pseudo_field.editableText.toString()
+                val firstName = binding.textViewFirstnameField.editableText.toString()
+                val lastName = binding.textViewLastnameField.editableText.toString()
+                val pseudo = binding.textViewPseudoField.editableText.toString()
                 updateProgressVisibility(true)
                 viewModel.updateUser(firstName, lastName, pseudo)
             }
@@ -105,12 +102,10 @@ internal class UserInfoActivity : AppCompatActivity() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 

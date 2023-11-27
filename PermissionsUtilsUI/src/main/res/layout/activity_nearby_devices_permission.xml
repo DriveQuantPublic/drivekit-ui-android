@@ -28,7 +28,7 @@
                 android:src="@drawable/dk_perm_utils_nearby_devices_permission"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_nearby_devices_permission_title"

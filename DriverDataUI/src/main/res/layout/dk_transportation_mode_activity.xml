@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".tripdetail.activity.TripDetailActivity">
+    tools:context=".tripdetail.activity.TripDetailActivity"
+    tools:viewBindingIgnore="true">
 
     <include layout="@layout/dk_layout_toolbar" />
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

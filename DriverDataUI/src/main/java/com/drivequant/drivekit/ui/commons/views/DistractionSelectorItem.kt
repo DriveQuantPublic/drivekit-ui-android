@@ -6,14 +6,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.ui.R
-import kotlinx.android.synthetic.main.dk_distraction_selector_item.view.*
 
 internal class DistractionSelectorItem : LinearLayout {
+
+    private lateinit var distractionSelectorTextView: TextView
 
     constructor(context: Context) : super(context) {
         init()
@@ -31,20 +33,21 @@ internal class DistractionSelectorItem : LinearLayout {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+        this.distractionSelectorTextView = view.findViewById(R.id.distraction_selector)
     }
 
     fun setSelectorContent(content: String) {
-        distraction_selector.text = content
+        distractionSelectorTextView.text = content
     }
 
     fun setSelection(selected: Boolean) {
-        val drawable = (distraction_selector.background as GradientDrawable).mutate()
+        val drawable = (distractionSelectorTextView.background as GradientDrawable).mutate()
         DrawableCompat.setTint(
             drawable,
             if (selected) DriveKitUI.colors.secondaryColor()
             else ContextCompat.getColor(context, R.color.dkDistractionSelectorColor)
         )
-        distraction_selector.smallText(
+        distractionSelectorTextView.smallText(
             textColor = if (selected) DriveKitUI.colors.fontColorOnSecondaryColor() else DriveKitUI.colors.primaryColor(),
             isTypeFaceBold = true
         )

@@ -13,16 +13,19 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.permissionsutils.R
+import com.drivequant.drivekit.permissionsutils.databinding.ActivityNotificationsPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
-import kotlinx.android.synthetic.main.activity_notifications_permission.*
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class NotificationsPermissionActivity : BasePermissionActivity() {
 
+    private lateinit var binding: ActivityNotificationsPermissionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notifications_permission)
+        binding = ActivityNotificationsPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar("dk_perm_utils_app_diag_notification_title")
         setStyle()
         manageSkipButton()
@@ -47,7 +50,7 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                button_request_notifications_permission.text =
+                binding.buttonRequestNotificationsPermission.text =
                     DKResource.convertToString(applicationContext, "dk_perm_utils_permissions_text_button_notifications_settings")
                 handlePermissionTotallyDeclined(
                     this@NotificationsPermissionActivity,
@@ -63,7 +66,7 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
     }
 
     private fun manageSkipButton() {
-        button_skip.setOnClickListener {
+        binding.buttonSkip.setOnClickListener {
             skip(PermissionView.NOTIFICATIONS)
         }
     }
@@ -76,11 +79,11 @@ class NotificationsPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_notifications_permission_title.highlightMedium()
-        text_view_notifications_permission_text1.normalText()
-        text_view_notifications_permission_text2.normalText()
-        button_request_notifications_permission.button()
-        button_skip.normalText(DriveKitUI.colors.secondaryColor())
+        binding.textViewNotificationsPermissionTitle.highlightMedium()
+        binding.textViewNotificationsPermissionText1.normalText()
+        binding.textViewNotificationsPermissionText2.normalText()
+        binding.buttonRequestNotificationsPermission.button()
+        binding.buttonSkip.normalText(DriveKitUI.colors.secondaryColor())
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

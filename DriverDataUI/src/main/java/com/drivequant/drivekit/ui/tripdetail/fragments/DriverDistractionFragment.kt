@@ -15,20 +15,17 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.DriverDistractionFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.driver_distraction_fragment.gauge_type_title
-import kotlinx.android.synthetic.main.driver_distraction_fragment.phone_call_item
-import kotlinx.android.synthetic.main.driver_distraction_fragment.phone_call_selector
-import kotlinx.android.synthetic.main.driver_distraction_fragment.score_gauge
-import kotlinx.android.synthetic.main.driver_distraction_fragment.score_info
-import kotlinx.android.synthetic.main.driver_distraction_fragment.screen_unlock_item
-import kotlinx.android.synthetic.main.driver_distraction_fragment.screen_unlock_selector
 
 internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
+
+    private var _binding: DriverDistractionFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(tripDetailViewModel: DKTripDetailViewModel): DriverDistractionFragment {
@@ -43,10 +40,10 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.driver_distraction_fragment, container, false)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = DriverDistractionFragmentBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -71,11 +68,11 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             }
         }
 
-        phone_call_selector.apply {
+        binding.phoneCallSelector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent(viewModel.getPhoneCallsDuration(requireContext()))
         }
-        screen_unlock_selector.apply {
+        binding.screenUnlockSelector.apply {
             setOnClickListener(this@DriverDistractionFragment)
             setSelectorContent("${viewModel.getUnlockNumberEvent()}")
         }
@@ -86,12 +83,12 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             onSelectorChanged(MapTraceType.UNLOCK_SCREEN)
         }
 
-        score_gauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()))
-        gauge_type_title.text = requireContext().getString(R.string.dk_common_distraction)
-        gauge_type_title.normalText()
+        binding.scoreGauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()), Typeface.BOLD)
+        binding.scoreInfo.init(GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()))
+        binding.gaugeTypeTitle.text = requireContext().getString(R.string.dk_common_distraction)
+        binding.gaugeTypeTitle.normalText()
 
-        phone_call_item.apply {
+        binding.phoneCallItem.apply {
             setDistractionEventContent(
                 viewModel.getPhoneCallsNumber(requireContext()).first,
                 viewModel.getPhoneCallsNumber(requireContext()).second
@@ -112,25 +109,30 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
             } else {
                 DKResource.convertToString(requireContext(), "dk_driverdata_no_screen_unlocking")
             }
-        screen_unlock_item.setDistractionEventContent(
+        binding.screenUnlockItem.setDistractionEventContent(
             unlockEvent,
             unlockContent
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun onSelectorChanged(mapTraceType: MapTraceType) {
         when(mapTraceType) {
             MapTraceType.UNLOCK_SCREEN -> {
-                screen_unlock_selector.setSelection(true)
-                phone_call_selector.setSelection(false)
-                screen_unlock_item.setDistractionContentColor(true)
-                phone_call_item.setDistractionContentColor(false)
+                binding.screenUnlockSelector.setSelection(true)
+                binding.phoneCallSelector.setSelection(false)
+                binding.screenUnlockItem.setDistractionContentColor(true)
+                binding.phoneCallItem.setDistractionContentColor(false)
             }
             MapTraceType.PHONE_CALL ->{
-                phone_call_selector.setSelection(true)
-                screen_unlock_selector.setSelection(false)
-                screen_unlock_item.setDistractionContentColor(false)
-                phone_call_item.setDistractionContentColor(true)
+                binding.phoneCallSelector.setSelection(true)
+                binding.screenUnlockSelector.setSelection(false)
+                binding.screenUnlockItem.setDistractionContentColor(false)
+                binding.phoneCallItem.setDistractionContentColor(true)
             }
             else -> {
                 //DO NOTHING

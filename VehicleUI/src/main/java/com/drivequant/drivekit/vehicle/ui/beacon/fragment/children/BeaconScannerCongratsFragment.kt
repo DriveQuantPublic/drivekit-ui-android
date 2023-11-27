@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
@@ -14,10 +16,9 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_progress.text_view_description
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_success.button_validate
 
 class BeaconScannerCongratsFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerCongratsFragment {
             val fragment = BeaconScannerCongratsFragment()
@@ -55,12 +56,12 @@ class BeaconScannerCongratsFragment : Fragment() {
             }
         }
 
-        text_view_description.apply {
+        view.findViewById<TextView>(R.id.text_view_description).apply {
             normalText()
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_store_notice")
         }
 
-        button_validate.apply {
+        view.findViewById<Button>(R.id.button_validate).apply {
             button()
             text = DKResource.convertToString(requireContext(), "dk_common_finish")
             setOnClickListener {

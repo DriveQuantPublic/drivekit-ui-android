@@ -10,21 +10,22 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDriverRanking
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeRankingBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.PseudoChangeListener
 import com.drivequant.drivekit.common.ui.component.PseudoCheckListener
 import com.drivequant.drivekit.common.ui.component.PseudoUtils
 import com.drivequant.drivekit.common.ui.component.ranking.views.DKRankingView
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_fragment_challenge_ranking.container
 
 
 class ChallengeRankingFragment : Fragment() {
 
     private lateinit var viewModel: ChallengeDetailViewModel
+    private var _binding: DkFragmentChallengeRankingBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(viewModel: ChallengeDetailViewModel):ChallengeRankingFragment {
@@ -44,7 +45,10 @@ class ChallengeRankingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_challenge_ranking, container, false)
+    ): View {
+        _binding = DkFragmentChallengeRankingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +67,11 @@ class ChallengeRankingFragment : Fragment() {
                 )[ChallengeDetailViewModel::class.java]
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onResume() {
@@ -119,7 +128,7 @@ class ChallengeRankingFragment : Fragment() {
             )
         }
         if (this.isVisible) {
-            container.addView(ranking)
+            binding.container.addView(ranking)
         }
     }
 }

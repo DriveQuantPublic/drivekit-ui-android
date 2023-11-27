@@ -12,19 +12,23 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.DkFragmentSynthesisCardItemBinding
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
-import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_item.*
 
 class DKSynthesisCardFragment : Fragment() {
 
     private lateinit var synthesisCard: DKSynthesisCard
     private lateinit var viewModel: DKSynthesisCardViewModel
+    private var _binding: DkFragmentSynthesisCardItemBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(synthesisCard : DKSynthesisCard) : DKSynthesisCardFragment {
@@ -38,11 +42,10 @@ class DKSynthesisCardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.dk_fragment_synthesis_card_item, container, false)
-        FontUtils.overrideFonts(context, view)
-        return view
+        _binding = DkFragmentSynthesisCardItemBinding.inflate(inflater, container, false)
+        FontUtils.overrideFonts(context, binding.root)
+        return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,19 +60,24 @@ class DKSynthesisCardFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateContent() {
-        title.text = viewModel.getTitle(requireContext())
-        title.headLine2()
+        binding.title.text = viewModel.getTitle(requireContext())
+        binding.title.headLine2()
 
         viewModel.getExplanationContent(requireContext())?.let { explanation ->
-            explanation_content.visibility = View.VISIBLE
+            binding.explanationContent.visibility = View.VISIBLE
 
             ContextCompat.getDrawable(requireContext(), R.drawable.dk_common_info)?.let {
                 DrawableCompat.setTint(it, DriveKitUI.colors.secondaryColor())
-                explanation_content.setImageDrawable(it)
+                binding.explanationContent.setImageDrawable(it)
             }
 
-            explanation_content.setOnClickListener {
+            binding.explanationContent.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(R.layout.template_alert_dialog_layout)
@@ -87,10 +95,10 @@ class DKSynthesisCardFragment : Fragment() {
                 descriptionTextView?.normalText()
             }
         } ?: run {
-            explanation_content.visibility = View.GONE
+            binding.explanationContent.visibility = View.GONE
         }
 
-        score_gauge.configure(
+        binding.scoreGauge.configure(
             viewModel.getScore(),
             synthesisCard.getGaugeConfiguration(),
             Typeface.NORMAL,
@@ -100,7 +108,7 @@ class DKSynthesisCardFragment : Fragment() {
         val icon = viewModel.getTopSynthesisCardIcon(requireContext())
         val text = viewModel.getTopSynthesisCardInfo(requireContext())
         if (icon != null && text.isNotEmpty()) {
-            top_card_info.apply {
+            binding.topCardInfo.apply {
                 visibility = View.VISIBLE
                 init(icon, text)
             }
@@ -109,7 +117,7 @@ class DKSynthesisCardFragment : Fragment() {
         val middleIcon = viewModel.getMiddleSynthesisCardIcon(requireContext())
         val middleText = viewModel.getMiddleSynthesisCardInfo(requireContext())
         if (middleIcon != null && middleText.isNotEmpty()) {
-            middle_card_info.apply {
+            binding.middleCardInfo.apply {
                 visibility = View.VISIBLE
                 init(middleIcon, middleText)
             }
@@ -118,7 +126,7 @@ class DKSynthesisCardFragment : Fragment() {
         val bottomIcon = viewModel.getBottomSynthesisCardIcon(requireContext())
         val bottomText = viewModel.getBottomSynthesisCardInfo(requireContext())
         if (bottomIcon != null && bottomText.isNotEmpty()) {
-            bottom_card_info.apply {
+            binding.bottomCardInfo.apply {
                 visibility = View.VISIBLE
                 init(bottomIcon, bottomText)
             }
@@ -126,17 +134,17 @@ class DKSynthesisCardFragment : Fragment() {
 
         val bottomTextValue = viewModel.getBottomText(requireContext())
         if (bottomTextValue != null) {
-            bottom_text.text = bottomTextValue
-            bottom_text.visibility = View.VISIBLE
+            binding.bottomText.text = bottomTextValue
+            binding.bottomText.visibility = View.VISIBLE
         } else {
-            bottom_text.visibility = View.GONE
+            binding.bottomText.visibility = View.GONE
         }
 
         if (viewModel.shouldHideCardInfoContainer(requireContext())) {
-            val scoreParams = score_gauge.layoutParams as ConstraintLayout.LayoutParams
-            scoreParams.endToEnd = container.id
-            scoreParams.bottomToBottom = container.id
-            card_info_container.visibility = View.GONE
+            val scoreParams = binding.scoreGauge.layoutParams as ConstraintLayout.LayoutParams
+            scoreParams.endToEnd = binding.container.id
+            scoreParams.bottomToBottom = binding.container.id
+            binding.cardInfoContainer.visibility = View.GONE
         }
     }
 }

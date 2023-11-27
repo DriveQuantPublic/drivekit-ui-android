@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingStart="@dimen/dk_margin"
-    android:paddingEnd="@dimen/dk_margin">
+    android:paddingEnd="@dimen/dk_margin"
+    tools:viewBindingIgnore="true">
+
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dk_margin_medium"
-        android:paddingBottom="@dimen/dk_margin_medium"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dk_margin_medium"
+        android:paddingBottom="@dimen/dk_margin_medium">
+
         <TextView
             android:id="@+id/text_view_title"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dk_text_medium"
             android:layout_gravity="start|center_vertical"
-            tools:text="Bluetooth Device Name"/>
+            android:layout_weight="1"
+            android:textSize="@dimen/dk_text_medium"
+            tools:text="Bluetooth Device Name" />
+
         <ImageView
             android:id="@+id/image_view_arrow"
             android:layout_width="@dimen/dk_ic_small"
             android:layout_height="@dimen/dk_ic_small"
-            android:src="@drawable/dk_common_arrow_forward"
             android:layout_gravity="end|center_vertical"
             android:paddingTop="@dimen/dk_margin_quarter"
-            android:paddingBottom="@dimen/dk_margin_quarter" />
+            android:paddingBottom="@dimen/dk_margin_quarter"
+            android:src="@drawable/dk_common_arrow_forward" />
     </LinearLayout>
-    <View android:id="@+id/view_separator" android:visibility="gone" style="@style/Separator.Horizontal"/>
+
+    <View
+        android:id="@+id/view_separator"
+        style="@style/Separator.Horizontal"
+        android:visibility="gone" />
 </LinearLayout>

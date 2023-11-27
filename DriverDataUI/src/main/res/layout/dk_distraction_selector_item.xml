@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/distraction_selector"
-        android:gravity="center"
-        android:background="@drawable/dk_distraction_rounded_edges"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dk_distraction_rounded_edges"
+        android:gravity="center"
         android:paddingTop="@dimen/dk_margin_half"
-        android:paddingBottom="@dimen/dk_margin_half"
-        android:layout_height="match_parent" />
+        android:paddingBottom="@dimen/dk_margin_half" />
 </LinearLayout>

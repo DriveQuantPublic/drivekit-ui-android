@@ -4,7 +4,8 @@
     android:id="@+id/alert_dialog_edit_value_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/text_view_title"
@@ -18,9 +19,9 @@
         tools:textColor="#FFF" />
 
     <LinearLayout
-        android:layout_margin="@dimen/dk_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/dk_margin"
         android:orientation="vertical"
         android:paddingTop="@dimen/dk_margin"
         android:paddingBottom="@dimen/dk_margin">

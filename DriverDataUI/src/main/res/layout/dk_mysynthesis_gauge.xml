@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:paddingHorizontal="@dimen/dk_margin">
+    android:paddingHorizontal="@dimen/dk_margin"
+    tools:viewBindingIgnore="true">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/mainGuideline"

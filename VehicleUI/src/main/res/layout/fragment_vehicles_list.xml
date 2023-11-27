@@ -5,28 +5,35 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <include
         android:id="@+id/dk_progress_circular"
-        layout="@layout/dk_layout_progress_bar"/>
+        layout="@layout/dk_layout_progress_bar" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_vehicles"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <include layout="@layout/header_vehicle_list"/>
+
+                <include
+                    android:id="@+id/vehicleListHeader"
+                    layout="@layout/header_vehicle_list" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/vehicles_list"
                     android:layout_width="match_parent"
@@ -36,16 +43,17 @@
                     android:scrollbars="vertical" />
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         <Button
             android:id="@+id/button_vehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="center"
             android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
             android:visibility="gone"
-            tools:text="New vehicle"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            tools:text="New vehicle" />
     </LinearLayout>
 </FrameLayout>

@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getScoreInfoContent
 import com.drivequant.drivekit.ui.extension.getScoreInfoTitle
-import kotlinx.android.synthetic.main.score_info_item.view.*
 
 class ScoreInfoView : LinearLayout {
     constructor(context: Context, gaugeConfiguration: GaugeConfiguration) : super(context) {
@@ -29,7 +28,8 @@ class ScoreInfoView : LinearLayout {
 
     fun init(gaugeConfiguration: GaugeConfiguration) {
         val view = View.inflate(context, R.layout.score_info_item, null)
-        view.image_view_score_info.setColorFilter(DriveKitUI.colors.secondaryColor())
+        val scoreInfoImageView = view.findViewById<ImageView>(R.id.image_view_score_info)
+        scoreInfoImageView.setColorFilter(DriveKitUI.colors.secondaryColor())
         view.setOnClickListener {
             val alert = DKAlertDialog.LayoutBuilder()
                 .init(context)

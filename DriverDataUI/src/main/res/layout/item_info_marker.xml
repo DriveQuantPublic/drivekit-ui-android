@@ -5,17 +5,18 @@
     android:layout_height="wrap_content"
     android:background="@drawable/dk_speech_bubble"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/dk_margin">
+    android:paddingBottom="@dimen/dk_margin"
+    tools:viewBindingIgnore="true">
 
     <TextView
-        android:gravity="center_vertical"
         android:id="@+id/text_view_time"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="@dimen/dk_margin_quarter"
-        android:textSize="@dimen/dk_text_small"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginEnd="@dimen/dk_margin_half"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dk_margin_quarter"
+        android:textSize="@dimen/dk_text_small"
         tools:text="9h42" />
 
     <LinearLayout

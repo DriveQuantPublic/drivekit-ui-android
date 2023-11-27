@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 project.ext {
     artifactId = "drivekit-challenge-ui"
@@ -17,6 +16,10 @@ android {
         versionCode 1
         versionName "$drivekitui_version"
         consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

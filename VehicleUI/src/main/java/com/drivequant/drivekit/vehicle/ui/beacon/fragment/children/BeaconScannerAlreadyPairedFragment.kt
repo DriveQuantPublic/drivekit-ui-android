@@ -25,12 +25,11 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerAlreadyPairedBinding
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_already_paired.button_abort
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_already_paired.button_validate
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_already_paired.text_view_description
 
 class BeaconScannerAlreadyPairedFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerAlreadyPairedFragment {
             val fragment = BeaconScannerAlreadyPairedFragment()
@@ -40,17 +39,17 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
     }
 
     private lateinit var viewModel: BeaconViewModel
+    private var _binding: FragmentBeaconChildScannerAlreadyPairedBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(
-            R.layout.fragment_beacon_child_scanner_already_paired,
-            container,
-            false
-        ).setDKStyle()
+        _binding = FragmentBeaconChildScannerAlreadyPairedBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -79,7 +78,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
 
         viewModel.vehiclePaired?.let {
             val vehiclePairedName = it.buildFormattedName(requireContext())
-            text_view_description.text = DKResource.buildString(
+            binding.textViewDescription.text = DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
@@ -89,18 +88,18 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
                 vehiclePairedName
             )
         }
-        text_view_description.normalText()
+        binding.textViewDescription.normalText()
 
-        button_validate.button()
-        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_confirm")
-        button_validate.setOnClickListener {
+        binding.buttonValidate.button()
+        binding.buttonValidate.text = DKResource.convertToString(requireContext(), "dk_common_confirm")
+        binding.buttonValidate.setOnClickListener {
             viewModel.changeBeaconToVehicle()
         }
 
-        button_abort.button()
-        button_abort.typeface = Typeface.DEFAULT_BOLD
-        button_abort.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
-        button_abort.setOnClickListener {
+        binding.buttonAbort.button()
+        binding.buttonAbort.typeface = Typeface.DEFAULT_BOLD
+        binding.buttonAbort.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonAbort.setOnClickListener {
             viewModel.scanValidationFinished()
         }
 
@@ -115,6 +114,11 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun displayErrorAlert(identifier: String) {

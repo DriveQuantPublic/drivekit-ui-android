@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 project.ext {
     artifactId = "drivekit-trip-analysis-ui"
@@ -18,6 +17,10 @@ android {
         versionName "$drivekitui_version"
 
         consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

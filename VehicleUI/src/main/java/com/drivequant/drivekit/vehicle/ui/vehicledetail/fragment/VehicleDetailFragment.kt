@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.EditableText
@@ -52,13 +53,15 @@ import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailV
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_vehicle_detail.vehicle_fields
 import kotlin.math.abs
 
 class VehicleDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance(viewModel: VehicleDetailViewModel, vehicleId: String) : VehicleDetailFragment {
+        fun newInstance(
+            viewModel: VehicleDetailViewModel,
+            vehicleId: String
+        ): VehicleDetailFragment {
             val fragment = VehicleDetailFragment()
             fragment.viewModel = viewModel
             fragment.vehicleId = vehicleId
@@ -66,9 +69,9 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private lateinit var vehicleId : String
-    private lateinit var viewModel : VehicleDetailViewModel
-    private var fieldsAdapter : VehicleFieldsListAdapter? = null
+    private lateinit var vehicleId: String
+    private lateinit var viewModel: VehicleDetailViewModel
+    private var fieldsAdapter: VehicleFieldsListAdapter? = null
 
     private var editableFields: MutableList<EditableField> = mutableListOf()
     private var hasChangesToUpdate = false
@@ -76,7 +79,7 @@ class VehicleDetailFragment : Fragment() {
     private var imageView: ImageView? = null
     private var defaultVehicleImage: Int = 0
 
-    private var imageUri : Uri? = null
+    private var imageUri: Uri? = null
 
     private lateinit var onCameraCallback: OnCameraPictureTakenCallback
     private lateinit var menu: Menu
@@ -121,13 +124,12 @@ class VehicleDetailFragment : Fragment() {
             setDisplayShowHomeEnabled(true)
         }
 
-        val collapsingToolbar =
-            activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
-        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
+        val appBarLayout = view.findViewById<AppBarLayout>(R.id.app_bar_layout)
         collapsingToolbar?.let { collapsingToolbarLayout ->
             appBarLayout?.let {
                 viewModel.vehicleName?.let { vehicleName ->
-                    it.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                    it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                         if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                             collapsingToolbarLayout.setCollapsedTitleTypeface(
                                 DriveKitUI.secondaryFont(
@@ -150,13 +152,13 @@ class VehicleDetailFragment : Fragment() {
 
                             }
                         }
-                    })
+                    }
                 }
             }
             collapsingToolbarLayout.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         }
 
-        val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
+        val fab = view.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
             DKResource.convertToDrawable(requireContext(), "dk_gallery_image")?.let {drawable ->
                 val wrapped = DrawableCompat.wrap(drawable)
@@ -171,12 +173,13 @@ class VehicleDetailFragment : Fragment() {
             }
         }
 
+        val vehicleFields = view.findViewById<RecyclerView>(R.id.vehicle_fields)
         fieldsAdapter?.apply {
             setGroupFields(viewModel.groupFields)
             notifyDataSetChanged()
         } ?: run {
             fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel)
-            vehicle_fields.adapter = fieldsAdapter
+            vehicleFields.adapter = fieldsAdapter
         }
 
         onCameraCallback = object : OnCameraPictureTakenCallback {
@@ -188,7 +191,7 @@ class VehicleDetailFragment : Fragment() {
         if (vehicleUriSharedPrefs != null) {
             imageUri = Uri.parse(vehicleUriSharedPrefs)
         }
-        imageView = activity?.findViewById(R.id.image_view_vehicle)
+        imageView = view.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
             defaultVehicleImage = it.getDefaultImage()
@@ -201,7 +204,7 @@ class VehicleDetailFragment : Fragment() {
                 .into(it)
         }
 
-        vehicle_fields.layoutManager = LinearLayoutManager(view.context)
+        vehicleFields.layoutManager = LinearLayoutManager(view.context)
         viewModel.newEditableFieldObserver.observe(viewLifecycleOwner) {
             it?.let { newEditableField ->
                 if (!editableFields.contains(newEditableField)) {
@@ -305,7 +308,7 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun allFieldsValid() : Boolean {
+    private fun allFieldsValid(): Boolean {
         viewModel.vehicle?.let { vehicle ->
             for (item in editableFields) {
                 if (!item.field.isValid(item.editableText.text, vehicle)) {

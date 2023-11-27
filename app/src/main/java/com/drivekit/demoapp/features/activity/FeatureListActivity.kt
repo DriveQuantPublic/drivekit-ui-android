@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.drivekit.demoapp.features.adapter.FeatureListAdapter
 import com.drivekit.demoapp.features.viewmodel.FeatureListViewModel
 import com.drivekit.drivekitdemoapp.R
-import kotlinx.android.synthetic.main.activity_feature_list.*
 
 @SuppressLint("SourceLockedOrientationActivity")
 internal class FeatureListActivity : AppCompatActivity() {
@@ -32,8 +32,10 @@ internal class FeatureListActivity : AppCompatActivity() {
         }
 
         adapter = FeatureListAdapter(this, viewModel.features)
-        features_list.layoutManager = LinearLayoutManager(this)
-        features_list.adapter = adapter
+        findViewById<RecyclerView>(R.id.features_list).let {
+            it.layoutManager = LinearLayoutManager(this)
+            it.adapter = adapter
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

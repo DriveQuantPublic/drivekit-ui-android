@@ -10,15 +10,10 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.button_start
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc1
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc2
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_desc3
-import kotlinx.android.synthetic.main.fragment_bluetooth_guide.text_view_guide_title
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothGuideBinding
 
-class GuideBluetoothFragment: Fragment() {
+class GuideBluetoothFragment : Fragment() {
 
     companion object {
         fun newInstance(viewModel: BluetoothViewModel, vehicleId: String): GuideBluetoothFragment {
@@ -29,32 +24,43 @@ class GuideBluetoothFragment: Fragment() {
         }
     }
 
-    private lateinit var viewModel : BluetoothViewModel
-    private lateinit var vehicleId : String
+    private lateinit var viewModel: BluetoothViewModel
+    private lateinit var vehicleId: String
+    private var _binding: FragmentBluetoothGuideBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_bluetooth_guide, container, false).setDKStyle()
+        _binding = FragmentBluetoothGuideBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        text_view_guide_title.headLine1()
-        text_view_guide_title.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_header")
+        binding.textViewGuideTitle.headLine1()
+        binding.textViewGuideTitle.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_header")
 
-        text_view_guide_desc1.normalText()
-        text_view_guide_desc1.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc1_android")
+        binding.textViewGuideDesc1.normalText()
+        binding.textViewGuideDesc1.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc1_android")
 
-        text_view_guide_desc2.normalText()
-        text_view_guide_desc2.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc2_android")
+        binding.textViewGuideDesc2.normalText()
+        binding.textViewGuideDesc2.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc2_android")
 
-        text_view_guide_desc3.normalText()
-        text_view_guide_desc3.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc3_android")
+        binding.textViewGuideDesc3.normalText()
+        binding.textViewGuideDesc3.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc3_android")
 
-        button_start.button()
-        button_start.text = DKResource.convertToString(requireContext(), "dk_vehicle_begin")
-        button_start.setOnClickListener {
-            viewModel.onStartButtonClicked()
+        binding.buttonStart.apply {
+            button()
+            text = DKResource.convertToString(requireContext(), "dk_vehicle_begin")
+            setOnClickListener {
+                viewModel.onStartButtonClicked()
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

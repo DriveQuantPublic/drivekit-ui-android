@@ -15,20 +15,16 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.SpeedingFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModelFactory
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import kotlinx.android.synthetic.main.safety_fragment.gauge_type_title
-import kotlinx.android.synthetic.main.safety_fragment.score_gauge
-import kotlinx.android.synthetic.main.speeding_fragment.score_info
-import kotlinx.android.synthetic.main.speeding_fragment.speeding_distance_item
-import kotlinx.android.synthetic.main.speeding_fragment.speeding_distance_value
-import kotlinx.android.synthetic.main.speeding_fragment.speeding_duration_item
-import kotlinx.android.synthetic.main.speeding_fragment.speeding_duration_value
 
 internal class SpeedingFragment : Fragment() {
+
+    private var _binding: SpeedingFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(tripDetailViewModel: DKTripDetailViewModel): SpeedingFragment {
@@ -43,10 +39,10 @@ internal class SpeedingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.speeding_fragment, container, false)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = SpeedingFragmentBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -77,9 +73,9 @@ internal class SpeedingFragment : Fragment() {
             )[TripDetailViewModel::class.java]
         }
 
-        gauge_type_title.text = DKResource.convertToString(requireContext(), "dk_common_speed")
-        score_gauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()), Typeface.BOLD)
-        score_info.init(GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()))
+        binding.gaugeTypeTitle.text = DKResource.convertToString(requireContext(), "dk_common_speed")
+        binding.scoreGauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()), Typeface.BOLD)
+        binding.scoreInfo.init(GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()))
 
         val speedingDistance = viewModel.getSpeedingDistanceAndPercent(requireContext()).first
         val totalDistancePercent = viewModel.getSpeedingDistanceAndPercent(requireContext()).second
@@ -98,18 +94,18 @@ internal class SpeedingFragment : Fragment() {
             requireContext(),
             DKDataFormatter.ceilDuration(speedingDuration.toDouble(), 600)).convertToString()
 
-        speeding_distance_value.apply {
+        binding.speedingDistanceValue.apply {
             setSelectorContent(totalDistancePercent)
             setSelection(false)
         }
 
-        speeding_duration_value.apply {
+        binding.speedingDurationValue.apply {
             setSelectorContent(totalDurationPercent)
             setSelection(false)
         }
 
         val durationContent = if (speedingDuration == 0) {
-                speeding_duration_value.visibility = View.GONE
+            binding.speedingDurationValue.visibility = View.GONE
                 DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_content_congratulations")
             } else {
                 DKResource.buildString(
@@ -135,12 +131,17 @@ internal class SpeedingFragment : Fragment() {
             "dk_driverdata_speeding_events_duration"
         }
 
-        speeding_distance_item.setDistractionEventContent(
+        binding.speedingDistanceItem.setDistractionEventContent(
             DKResource.convertToString(requireContext(), "dk_driverdata_speeding_events_distance"),
             distanceContent)
 
-        speeding_duration_item.setDistractionEventContent(
+        binding.speedingDurationItem.setDistractionEventContent(
             DKResource.convertToString(requireContext(), durationResId),
             durationContent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

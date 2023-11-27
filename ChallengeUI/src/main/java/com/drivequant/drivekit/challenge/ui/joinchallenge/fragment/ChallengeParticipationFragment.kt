@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeJoinBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
 import com.drivequant.drivekit.challenge.ui.joinchallenge.common.TitleProgressBar
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationDisplayState
@@ -26,17 +27,7 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_header_view_container
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_layout
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.challenge_start
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.container_conditions_info
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_conditions_info
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_countdown
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.text_view_join_challenge
-import kotlinx.android.synthetic.main.dk_fragment_challenge_join.timer_container
 import kotlin.math.roundToInt
-
 
 class ChallengeParticipationFragment : Fragment() {
 
@@ -44,6 +35,8 @@ class ChallengeParticipationFragment : Fragment() {
     private lateinit var viewModel: ChallengeParticipationViewModel
     private lateinit var countDownTimer: CountDownTimer
     private lateinit var challengeHeaderView:ChallengeHeaderView
+    private var _binding: DkFragmentChallengeJoinBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(challengeId: String): ChallengeParticipationFragment {
@@ -63,8 +56,10 @@ class ChallengeParticipationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.dk_fragment_challenge_join, container, false)
+    ): View {
+        _binding = DkFragmentChallengeJoinBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,12 +108,12 @@ class ChallengeParticipationFragment : Fragment() {
             challengeHeaderView = ChallengeHeaderView(requireContext())
         }
         challengeHeaderView.configure(viewModel, requireActivity())
-        challenge_header_view_container.addView(challengeHeaderView)
+        binding.challengeHeaderViewContainer.addView(challengeHeaderView)
 
         dispatch()
 
         viewModel.challenge?.let { challenge ->
-            text_view_join_challenge.setOnClickListener {
+            binding.textViewJoinChallenge.setOnClickListener {
                 challenge.rules?.let { rules ->
                     if (rules.isNotEmpty()) {
                         ChallengeRulesActivity.launchActivity(
@@ -135,6 +130,11 @@ class ChallengeParticipationFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     fun dispatch() {
         context?.let { context ->
             viewModel.manageChallengeDisplayState()?.let {
@@ -148,7 +148,7 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun join(context: Context) {
-        text_view_join_challenge.apply {
+        binding.textViewJoinChallenge.apply {
             text = DKResource.convertToString(context, "dk_challenge_participate_button")
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
@@ -157,8 +157,8 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun progress(context: Context) {
-        container_conditions_info.visibility = View.VISIBLE
-        text_view_join_challenge.apply {
+        binding.containerConditionsInfo.visibility = View.VISIBLE
+        binding.textViewJoinChallenge.apply {
             text =
                 DKResource.convertToString(context, "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
@@ -183,13 +183,13 @@ class ChallengeParticipationFragment : Fragment() {
                         LinearLayout.LayoutParams.MATCH_PARENT
                     )
                 }
-                challenge_layout.addView(progressBar)
+                binding.challengeLayout.addView(progressBar)
             }
         }
     }
 
     private fun countDown(context: Context) {
-        text_view_join_challenge.apply {
+        binding.textViewJoinChallenge.apply {
             text =
                 DKResource.convertToString(context, "dk_challenge_registered_confirmation")
             setBackgroundColor(DriveKitUI.colors.primaryColor())
@@ -198,11 +198,11 @@ class ChallengeParticipationFragment : Fragment() {
         }
         if (viewModel.getTimeLeft() > 0) {
             startCountDown(context)
-            timer_container.apply {
+            binding.timerContainer.apply {
                 setBackgroundColor(DriveKitUI.colors.primaryColor())
                 visibility = View.VISIBLE
             }
-            challenge_start.apply {
+            binding.challengeStart.apply {
                 text = DKResource.convertToString(context, "dk_challenge_start")
                 setTextColor(DriveKitUI.colors.fontColorOnPrimaryColor())
                 typeface = DriveKitUI.primaryFont(context)
@@ -241,7 +241,7 @@ class ChallengeParticipationFragment : Fragment() {
                         is FormatType.SEPARATOR -> spannable.append(it.value)
                     }
                 }
-                text_view_countdown?.text = spannable.toSpannable()
+                binding.textViewCountdown.text = spannable.toSpannable()
             }
 
             override fun onFinish() {}
@@ -249,23 +249,21 @@ class ChallengeParticipationFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
     private fun setStyle() {
-        text_view_conditions_info.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
-        container_conditions_info.setBackgroundColor(DriveKitUI.colors.primaryColor())
-        text_view_join_challenge.apply {
+        binding.textViewConditionsInfo.headLine2(DriveKitUI.colors.fontColorOnPrimaryColor())
+        binding.containerConditionsInfo.setBackgroundColor(DriveKitUI.colors.primaryColor())
+        binding.textViewJoinChallenge.apply {
             setBackgroundColor(DriveKitUI.colors.primaryColor())
             headLine1(DriveKitUI.colors.fontColorOnPrimaryColor())
         }
-        text_view_countdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
+        binding.textViewCountdown.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
     }
 
     override fun onPause() {

@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_vertical"
     android:layout_marginTop="@dimen/dk_margin_half"
     android:layout_marginBottom="@dimen/dk_margin_half"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
     android:weightSum="3">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -15,77 +16,85 @@
         android:orientation="horizontal"
         android:paddingStart="@dimen/dk_margin_half"
         android:paddingEnd="@dimen/dk_margin_half">
+
         <ImageView
             android:id="@+id/transportation_mode_icon"
             android:layout_width="@dimen/dk_ic_xxbig"
             android:layout_height="@dimen/dk_ic_xxbig"
             android:layout_gravity="center_vertical" />
+
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/transportation_mode_analyzed_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingStart="@dimen/dk_margin_half"
-                android:paddingEnd="@dimen/dk_margin_half"
-                android:ellipsize="end" />
+                android:paddingEnd="@dimen/dk_margin_half" />
+
             <TextView
                 android:id="@+id/transportation_mode_declared_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:paddingStart="@dimen/dk_margin_half"
                 android:paddingEnd="@dimen/dk_margin_half"
-                android:ellipsize="end"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
+
         <Button
             android:id="@+id/button_change"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dk_ic_xbig"
-            android:textSize="@dimen/dk_text_small"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/dk_text_small" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/transportation_mode_description"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
-        android:textSize="@dimen/dk_text_small"
         android:layout_gravity="center_vertical"
+        android:layout_weight="0.8"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/dk_margin_medium"
-        android:paddingEnd="@dimen/dk_margin_medium" />
+        android:paddingEnd="@dimen/dk_margin_medium"
+        android:textSize="@dimen/dk_text_small" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
         android:layout_weight="1"
+        android:orientation="horizontal"
         android:weightSum="3">
+
         <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
             android:id="@+id/item_condition"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:tripSynthesisTitle="@string/dk_driverdata_synthesis_condition" />
+
         <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
             android:id="@+id/item_weather"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:tripSynthesisTitle="@string/dk_driverdata_synthesis_weather" />
+
         <com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
             android:id="@+id/item_mean_speed"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:tripSynthesisTitle="@string/dk_driverdata_synthesis_mean_speed" />
     </LinearLayout>
 </LinearLayout>
