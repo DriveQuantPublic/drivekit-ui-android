@@ -51,7 +51,7 @@ internal class DKLastTripsFragment : Fragment() {
                 viewModel.trip.let { tripListItem ->
                     holder.bind(tripListItem, viewModel.tripData, true)
                 }
-                binding.container.addView(tripList)
+                binding.tripItemContainer.addView(tripList)
                 binding.root.setOnClickListener {
                     DriveKitNavigationController.driverDataUIEntryPoint?.startTripDetailActivity(
                         context,
