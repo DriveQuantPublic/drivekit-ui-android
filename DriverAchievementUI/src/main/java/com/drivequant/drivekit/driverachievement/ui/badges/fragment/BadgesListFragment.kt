@@ -73,12 +73,6 @@ class BadgesListFragment : Fragment() {
     }
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progressView.visibility = if (displayProgress) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-
         if (displayProgress) {
             progressView.visibility = View.VISIBLE
             swipeRefreshLayout.isRefreshing = true
