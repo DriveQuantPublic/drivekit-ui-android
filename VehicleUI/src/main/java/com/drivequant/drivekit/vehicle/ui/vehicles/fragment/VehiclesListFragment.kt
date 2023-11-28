@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +18,9 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehiclesListBinding
+import com.drivequant.drivekit.vehicle.ui.databinding.HeaderVehicleListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.activity.VehiclesListActivity
 import com.drivequant.drivekit.vehicle.ui.vehicles.adapter.VehiclesListAdapter
@@ -101,7 +104,7 @@ class VehiclesListFragment : Fragment() {
                 ).show()
             }
             if (it.isNullOrEmpty()) {
-                binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.VISIBLE
+                getVehicleListHeaderBinding().linearLayoutHeaderVehicleList.visibility = View.VISIBLE
             } else {
                 binding.vehiclesList.layoutManager = LinearLayoutManager(context)
                 displayVehiclesList()
@@ -149,31 +152,31 @@ class VehiclesListFragment : Fragment() {
 
     private fun displayVehiclesList() {
         if (viewModel.vehiclesList.isNotEmpty()) {
-            binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.GONE
+            getVehicleListHeaderBinding().linearLayoutHeaderVehicleList.visibility = View.GONE
             binding.vehiclesList.visibility = View.VISIBLE
         } else {
             setupEmptyListLayout()
-            binding.vehicleListHeader.linearLayoutHeaderVehicleList.visibility = View.VISIBLE
+            getVehicleListHeaderBinding().linearLayoutHeaderVehicleList.visibility = View.VISIBLE
             binding.vehiclesList.visibility = View.GONE
         }
         hideProgressCircular()
     }
 
     private fun setupEmptyListLayout() {
-        binding.vehicleListHeader.textViewSummaryIcon.setImageDrawable(
+        getVehicleListHeaderBinding().textViewSummaryIcon.setImageDrawable(
             DKResource.convertToDrawable(
                 requireContext(),
                 "dk_common_warning"
             )
         )
-        binding.vehicleListHeader.textViewHeaderTitle.apply {
+        getVehicleListHeaderBinding().textViewHeaderTitle.apply {
             typeface = Typeface.DEFAULT_BOLD
             text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
         }
     }
 
     private fun hideProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
             .alpha(0f)
             .setDuration(200L)
@@ -186,7 +189,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun showProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
@@ -196,5 +199,11 @@ class VehiclesListFragment : Fragment() {
                     }
                 })
         }
+    }
+
+    @SuppressWarnings("kotlin:S6531")
+    private fun getVehicleListHeaderBinding(): HeaderVehicleListBinding {
+        @Suppress("USELESS_CAST")
+        return binding.vehicleListHeader as HeaderVehicleListBinding // DO NOT REMOVE THIS "USELESS CAST". It's actually necessary for compilation.
     }
 }

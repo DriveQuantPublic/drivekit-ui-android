@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,7 @@ class BluetoothActivity : AppCompatActivity() {
         setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -95,7 +96,7 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
             .alpha(0f)
             .setDuration(200L)
@@ -108,7 +109,7 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
             .alpha(1f)
             .setDuration(200L)

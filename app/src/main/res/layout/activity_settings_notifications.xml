@@ -7,9 +7,7 @@
     android:orientation="vertical"
     tools:context="com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar" />
+    <include layout="@layout/dk_layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"

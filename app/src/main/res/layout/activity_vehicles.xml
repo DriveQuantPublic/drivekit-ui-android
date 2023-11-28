@@ -8,7 +8,6 @@
     tools:context="com.drivekit.demoapp.onboarding.activity.VehiclesActivity">
 
     <include
-        android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

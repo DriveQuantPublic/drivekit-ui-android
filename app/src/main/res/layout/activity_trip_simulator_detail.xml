@@ -6,9 +6,7 @@
     android:orientation="vertical"
     tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorDetailActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar" />
+    <include layout="@layout/dk_layout_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -100,7 +98,6 @@
     </ScrollView>
 
     <include
-        android:id="@+id/button_stop_start_trip_simulator"
         layout="@layout/layout_button_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

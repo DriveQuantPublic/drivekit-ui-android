@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
@@ -31,7 +32,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPermissionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         title = getString(R.string.permissions_intro_header)
 
@@ -47,7 +48,7 @@ internal class PermissionsActivity : AppCompatActivity() {
             text = getString(R.string.permissions_intro_description)
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
-        binding.buttonRequestPermissions.buttonAction.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.permissions_intro_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

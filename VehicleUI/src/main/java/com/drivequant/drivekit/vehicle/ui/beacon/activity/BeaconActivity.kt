@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -65,7 +66,7 @@ class BeaconActivity : AppCompatActivity() {
         setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -155,7 +156,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -168,7 +169,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

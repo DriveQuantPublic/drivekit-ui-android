@@ -7,7 +7,6 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/dk_progress_circular"
         layout="@layout/dk_layout_progress_bar" />
 
     <LinearLayout

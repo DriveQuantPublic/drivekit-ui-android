@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.vehicle.ui.R
@@ -57,7 +58,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -70,7 +71,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        binding.dkProgressCircular.dkProgressCircular.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
