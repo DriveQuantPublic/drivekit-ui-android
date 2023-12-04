@@ -52,7 +52,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     fun createChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DKNotificationChannel.values().forEach { channel ->
-                if (channel.create() && channel.isEnabled(context)) {
+                if (channel.canCreate() && channel.isEnabled(context)) {
                     createChannel(context, channel)
                 }
             }
