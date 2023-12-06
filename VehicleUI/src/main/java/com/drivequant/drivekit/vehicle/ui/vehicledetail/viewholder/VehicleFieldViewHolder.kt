@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewholder
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.component.EditableText
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.vehicle.ui.R
@@ -20,18 +20,17 @@ class VehicleFieldViewHolder(
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val container: LinearLayout = itemView.findViewById(R.id.group_container)
-    private lateinit var context: Context
 
-    fun bind(groupField: GroupField){
-        context = itemView.context
+    fun bind(groupField: GroupField) {
         viewModel.vehicle?.let {
-            for (field in groupField.getFields(it)){
-                container.addView(buildField(field))
+            container.removeAllViews()
+            for (field in groupField.getFields(it)) {
+                container.addView(buildField(itemView.context, field))
             }
         }
     }
 
-    private fun buildField(field: Field) : EditableText {
+    private fun buildField(context: Context, field: Field) : EditableText {
         val editTextSettings = EditableText(context)
         FontUtils.overrideFonts(context, editTextSettings)
         viewModel.vehicle?.let {
@@ -45,7 +44,7 @@ class VehicleFieldViewHolder(
             editTextSettings.setInputType(it)
         }
         editTextSettings.setIsEditable(field.isEditable())
-        if (field.isEditable()){
+        if (field.isEditable()) {
             viewModel.newEditableFieldObserver.value = EditableField(field, editTextSettings)
         }
         return editTextSettings
