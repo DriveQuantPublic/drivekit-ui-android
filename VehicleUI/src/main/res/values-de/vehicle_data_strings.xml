@@ -46,7 +46,7 @@
     <string name="dk_vehicle_add">Eine Fahrt hinzufügen</string>
     <string name="dk_vehicle_beacon_already_paired">Die Beacon ist nicht verfügbar. Sie ist bereits an ein anderes Fahrzeug gekoppelt.</string>
     <string name="dk_vehicle_beacon_already_paired_to_vehicle">Diese beacon ist bereits an dieses Fahrzeug gekoppelt.</string>
-    <string name="dk_vehicle_beacon_deactivate_alert">Das %s Bake wird vom %s Fahrzeug getrennt. \n Bist du sicher, dass du weitermachen willst?</string>
+    <string name="dk_vehicle_beacon_deactivate_alert">Das %1$s Bake wird vom %2$s Fahrzeug getrennt.\nBist du sicher, dass du weitermachen willst?</string>
     <string name="dk_vehicle_beacon_diagnostic_alert">Du hast noch kein Bake konfiguriert.</string>
     <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Sie müssen den Bluetooth-Sensor auf Ihrem Telefon aktivieren, um das Vorhandensein der Bluetooth-Box zu überprüfen.</string>
     <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Bluetooth-Sensor</string>
@@ -65,7 +65,7 @@
     <string name="dk_vehicle_beacon_setup_guide_desc2">Achten Sie darauf, dass die Identifikationsnummer vom BEACON lesbar ist</string>
     <string name="dk_vehicle_beacon_setup_guide_desc3">Entfernen Sie die Lasche, die die Batterie der BEACON schützt.</string>
     <string name="dk_vehicle_beacon_setup_guide_title">Bevor Sie beginnen</string>
-    <string name="dk_vehicle_beacon_setup_replace_description">Wenn Sie Ihre Wahl bestätigen, wird der %1$s-BEACON dem %2$s-Fahrzeug zugeordnet.\n\n Das %3$s-Fahrzeug wird nicht mehr mit diesem Sender in Verbindung gebracht.</string>
+    <string name="dk_vehicle_beacon_setup_replace_description">Wenn Sie Ihre Wahl bestätigen, wird der %1$s-BEACON dem %2$s-Fahrzeug zugeordnet.\n\nDas %3$s-Fahrzeug wird nicht mehr mit diesem Sender in Verbindung gebracht.</string>
     <string name="dk_vehicle_beacon_setup_scan_title">Die Anwendung ruft die Informationen vom BEACON ab und überprüft, ob er ordnungsgemäß läuft</string>
     <string name="dk_vehicle_beacon_setup_store_notice">Platziere den BEACON auf dem Armaturenbrett</string>
     <string name="dk_vehicle_beacon_setup_successlink_message">Herzlichen Glückwunsch! \n\n Der BEACON %1$s ist jetzt mit dem Fahrzeug %2$s verbunden.</string>
@@ -78,7 +78,7 @@
     <string name="dk_vehicle_bluetooth_congrats_desc">Das Bluetooth-Gerät %1$s ist nun mit dem Fahrzeug %2$s verknüpft</string>
     <string name="dk_vehicle_bluetooth_congrats_notice">Von nun an startet die Aufzeichnung Ihrer Fahrten automatisch, sobald sich Ihr Handy mit dem Bluetooth-Gerät verbindet %s</string>
     <string name="dk_vehicle_bluetooth_congrats_title">Herzlichen Glückwunsch!</string>
-    <string name="dk_vehicle_bluetooth_deactivate_alert">Das %1$s-Gerät wird vom %2$s-Fahrzeug abgekoppelt. \n Bist du sicher, dass du das durchziehen willst?</string>
+    <string name="dk_vehicle_bluetooth_deactivate_alert">Das %1$s-Gerät wird vom %2$s-Fahrzeug abgekoppelt.\nBist du sicher, dass du das durchziehen willst?</string>
     <string name="dk_vehicle_bluetooth_devices_list_title">Bluetooth-Geräte :</string>
     <string name="dk_vehicle_bluetooth_guide_desc1_android">Vergewissern Sie sich vor dem Start, dass das Bluetooth-System Ihres Fahrzeugs bereits mit Ihrem Handy gekoppelt ist.</string>
     <string name="dk_vehicle_bluetooth_guide_desc1_ios">Überprüfen Sie, ob das Bluetooth-Gerät bereits mit Ihrem iPhone verbunden ist. Diese Informationen sind im Bluetooth-Menü der Telefoneinstellungen verfügbar.</string>

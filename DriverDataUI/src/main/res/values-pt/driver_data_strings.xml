@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_empty_data">Dirija com o aplicativo e grave suas viagens para visualizar e obtenha um resumo das suas condições de condução.</string>
    <string name="dk_driverdata_drivingconditions_fog">Enevoado</string>
    <string name="dk_driverdata_drivingconditions_ice">Gelado</string>
-   <string name="dk_driverdata_drivingconditions_interval_distance">%d - %d km</string>
+   <string name="dk_driverdata_drivingconditions_interval_distance">%1$d - %2$d km</string>
    <string name="dk_driverdata_drivingconditions_long_trips">&gt; 100 km</string>
    <string name="dk_driverdata_drivingconditions_main_city">Você dirige principalmente na cidade</string>
    <string name="dk_driverdata_drivingconditions_main_cloud">Você dirige principalmente em dias nublados</string>
@@ -53,7 +53,7 @@
    <string name="dk_driverdata_drivingconditions_main_expressways">Você dirige principalmente em rodovias</string>
    <string name="dk_driverdata_drivingconditions_main_fog">Você dirige principalmente em dias de neblina</string>
    <string name="dk_driverdata_drivingconditions_main_ice">Você dirige principalmente em estradas geladas</string>
-   <string name="dk_driverdata_drivingconditions_main_interval_distance">A maioria de suas viagens está entre %D e %D quilômetros</string>
+   <string name="dk_driverdata_drivingconditions_main_interval_distance">A maioria de suas viagens está entre %1$d e %2$d quilômetros</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">Você faz principalmente viagens longas</string>
    <string name="dk_driverdata_drivingconditions_main_night">Você costuma dirigir à noite</string>
    <string name="dk_driverdata_drivingconditions_main_rain">Você dirige principalmente em condições de chuva</string>

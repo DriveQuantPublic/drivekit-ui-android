@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_empty_data">Conduisez avec l\'application et enregistrez vos trajets pour visualiser et obtenir une synthèse de vos conditions de conduite.</string>
    <string name="dk_driverdata_drivingconditions_fog">Temps brumeux</string>
    <string name="dk_driverdata_drivingconditions_ice">Temps de gel</string>
-   <string name="dk_driverdata_drivingconditions_interval_distance">%d - %d km</string>
+   <string name="dk_driverdata_drivingconditions_interval_distance">%1$d - %2$d km</string>
    <string name="dk_driverdata_drivingconditions_long_trips">&gt; 100 km</string>
    <string name="dk_driverdata_drivingconditions_main_city">Vous roulez principalement en ville</string>
    <string name="dk_driverdata_drivingconditions_main_cloud">Vous conduisez majoritairement par temps nuageux</string>
@@ -53,7 +53,7 @@
    <string name="dk_driverdata_drivingconditions_main_expressways">Vous conduisez surtout sur des voies rapides</string>
    <string name="dk_driverdata_drivingconditions_main_fog">Vous conduisez majoritairement par temps brumeux</string>
    <string name="dk_driverdata_drivingconditions_main_ice">Vous conduisez majoritairement sur routes verglacées</string>
-   <string name="dk_driverdata_drivingconditions_main_interval_distance">Vous faites majoritairement des trajets de %d à %d kilomètres</string>
+   <string name="dk_driverdata_drivingconditions_main_interval_distance">Vous faites majoritairement des trajets de %1$d à %2$d kilomètres</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">Vous réalisez essentiellement des trajets longs</string>
    <string name="dk_driverdata_drivingconditions_main_night">Vous conduisez souvent de nuit</string>
    <string name="dk_driverdata_drivingconditions_main_rain">Vous conduisez majoritairement par temps pluvieux</string>
