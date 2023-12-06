@@ -9,9 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/dk_layout_toolbar" />
+        <include layout="@layout/dk_layout_toolbar" />
 
         <FrameLayout
             android:id="@+id/container"
@@ -19,7 +17,5 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/dk_progress_circular"
-        layout="@layout/dk_layout_progress_bar" />
+    <include layout="@layout/dk_layout_progress_bar" />
 </FrameLayout>

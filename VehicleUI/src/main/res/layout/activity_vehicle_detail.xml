@@ -71,7 +71,6 @@
         </androidx.core.widget.NestedScrollView>
 
         <include
-            android:id="@+id/dk_progress_circular"
             layout="@layout/dk_layout_progress_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -29,7 +29,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVehiclesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         title = getString(R.string.vehicle_intro_header)
 
         binding.textViewTitle.apply {

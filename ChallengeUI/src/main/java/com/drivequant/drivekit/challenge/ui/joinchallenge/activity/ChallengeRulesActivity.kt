@@ -59,7 +59,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ), javaClass.simpleName
         )
 
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

@@ -124,26 +124,21 @@ class VehicleDetailFragment : Fragment() {
             setDisplayShowHomeEnabled(true)
         }
 
-        val collapsingToolbar = view.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
-        val appBarLayout = view.findViewById<AppBarLayout>(R.id.app_bar_layout)
+        val collapsingToolbar = activity?.findViewById<CollapsingToolbarLayout>(R.id.collapsing_toolbar)
+        val appBarLayout = activity?.findViewById<AppBarLayout>(R.id.app_bar_layout)
         collapsingToolbar?.let { collapsingToolbarLayout ->
             appBarLayout?.let {
                 viewModel.vehicleName?.let { vehicleName ->
                     it.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                         if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
                             collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.secondaryFont(
-                                    requireContext()
-                                )
+                                DriveKitUI.secondaryFont(requireContext())
                             )
                             collapsingToolbarLayout.title = vehicleName
                         } else {
                             collapsingToolbarLayout.setCollapsedTitleTypeface(
-                                DriveKitUI.primaryFont(
-                                    requireContext()
-                                )
+                                DriveKitUI.primaryFont(requireContext())
                             )
-
                             context?.let { context ->
                                 collapsingToolbarLayout.title =
                                     DKSpannable().append(vehicleName, context.resSpans {
@@ -158,9 +153,9 @@ class VehicleDetailFragment : Fragment() {
             collapsingToolbarLayout.setExpandedTitleColor(DriveKitUI.colors.fontColorOnPrimaryColor())
         }
 
-        val fab = view.findViewById<FloatingActionButton>(R.id.fab)
+        val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
-            DKResource.convertToDrawable(requireContext(), "dk_gallery_image")?.let {drawable ->
+            DKResource.convertToDrawable(requireContext(), "dk_gallery_image")?.let { drawable ->
                 val wrapped = DrawableCompat.wrap(drawable)
                 DrawableCompat.setTint(wrapped, DriveKitUI.colors.fontColorOnSecondaryColor())
                 it.setImageDrawable(wrapped)
@@ -173,13 +168,13 @@ class VehicleDetailFragment : Fragment() {
             }
         }
 
-        val vehicleFields = view.findViewById<RecyclerView>(R.id.vehicle_fields)
+        val vehicleFields = activity?.findViewById<RecyclerView>(R.id.vehicle_fields)
         fieldsAdapter?.apply {
             setGroupFields(viewModel.groupFields)
             notifyDataSetChanged()
         } ?: run {
             fieldsAdapter = VehicleFieldsListAdapter(requireContext(), viewModel)
-            vehicleFields.adapter = fieldsAdapter
+            vehicleFields?.adapter = fieldsAdapter
         }
 
         onCameraCallback = object : OnCameraPictureTakenCallback {
@@ -191,7 +186,7 @@ class VehicleDetailFragment : Fragment() {
         if (vehicleUriSharedPrefs != null) {
             imageUri = Uri.parse(vehicleUriSharedPrefs)
         }
-        imageView = view.findViewById(R.id.image_view_vehicle)
+        imageView = activity?.findViewById(R.id.image_view_vehicle)
 
         viewModel.vehicle?.let {
             defaultVehicleImage = it.getDefaultImage()
@@ -204,7 +199,7 @@ class VehicleDetailFragment : Fragment() {
                 .into(it)
         }
 
-        vehicleFields.layoutManager = LinearLayoutManager(view.context)
+        vehicleFields?.layoutManager = LinearLayoutManager(view.context)
         viewModel.newEditableFieldObserver.observe(viewLifecycleOwner) {
             it?.let { newEditableField ->
                 if (!editableFields.contains(newEditableField)) {

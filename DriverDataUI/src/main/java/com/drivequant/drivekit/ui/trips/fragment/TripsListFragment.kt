@@ -33,6 +33,7 @@ import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.FragmentTripsListBinding
+import com.drivequant.drivekit.ui.databinding.ViewContentNoTripsBinding
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
@@ -75,10 +76,11 @@ class TripsListFragment : Fragment() {
 
         viewModel.tripsData.observe(viewLifecycleOwner) {
             viewModel.getFilterItems(requireContext())
+            val noTripsContainerBinding = ViewContentNoTripsBinding.bind(binding.root.findViewById(R.id.no_trips_container))
             if (viewModel.filteredTrips.isEmpty()) {
-                displayNoTrips()
+                displayNoTrips(noTripsContainerBinding)
             } else {
-                displayTripsList()
+                displayTripsList(noTripsContainerBinding)
             }
             if (!this::tripsList.isInitialized) {
                 tripsList = object : DKTripList {
@@ -200,14 +202,14 @@ class TripsListFragment : Fragment() {
         viewModel.fetchTrips(synchronizationType)
     }
 
-    private fun displayNoTrips() {
+    private fun displayNoTrips(noTripsContainerBinding: ViewContentNoTripsBinding) {
         configureFilter()
-        binding.noTripsContainer.noTripsRecordedText.text = getString(viewModel.getNoTripsTextResId())
-        binding.noTripsContainer.root.visibility = View.VISIBLE
-        binding.dkTripsListView.setTripsListEmptyView(binding.noTripsContainer.root)
-        binding.noTripsContainer.noTripsRecordedText.normalText()
+        noTripsContainerBinding.noTripsRecordedText.text = getString(viewModel.getNoTripsTextResId())
+        noTripsContainerBinding.root.visibility = View.VISIBLE
+        binding.dkTripsListView.setTripsListEmptyView(noTripsContainerBinding.root)
+        noTripsContainerBinding.noTripsRecordedText.normalText()
 
-        binding.noTripsContainer.noTrips.apply {
+        noTripsContainerBinding.noTrips.apply {
             view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
                 roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
@@ -216,9 +218,9 @@ class TripsListFragment : Fragment() {
         binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
-    private fun displayTripsList() {
+    private fun displayTripsList(noTripsContainerBinding: ViewContentNoTripsBinding) {
         configureFilter()
-        binding.noTripsContainer.root.visibility = View.GONE
+        noTripsContainerBinding.root.visibility = View.GONE
         binding.dkTripsListView.visibility = View.VISIBLE
         binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }

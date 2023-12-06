@@ -19,6 +19,7 @@ import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeLis
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStatusList
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.toStringArray
+import com.drivequant.drivekit.challenge.ui.databinding.DkChallengeEmptyViewBinding
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeListBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -145,7 +146,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     }
 
     private fun displayChallenges() {
-        binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
+        getEmptyViewBinding().viewGroupEmptyScreen.visibility = View.GONE
         binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
     }
 
@@ -163,12 +164,12 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 )
             }
         }
-        binding.noChallenges.dkTextViewNoChallenge.text = DKResource.convertToString(requireContext(), pair.first)
+        getEmptyViewBinding().dkTextViewNoChallenge.text = DKResource.convertToString(requireContext(), pair.first)
         DKResource.convertToDrawable(requireContext(), pair.second)?.let {
-            binding.noChallenges.dkImageViewNoChallenge.setImageDrawable(it)
+            getEmptyViewBinding().dkImageViewNoChallenge.setImageDrawable(it)
         }
-        binding.noChallenges.dkTextViewNoChallenge.headLine2(DriveKitUI.colors.mainFontColor())
-        binding.noChallenges.viewGroupEmptyScreen.visibility = View.VISIBLE
+        getEmptyViewBinding().dkTextViewNoChallenge.headLine2(DriveKitUI.colors.mainFontColor())
+        getEmptyViewBinding().viewGroupEmptyScreen.visibility = View.VISIBLE
         binding.dkRecyclerViewChallenge.visibility = View.GONE
     }
 
@@ -200,5 +201,11 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 challengeData.challengeId
             )
         }
+    }
+
+    @SuppressWarnings("kotlin:S6531")
+    private fun getEmptyViewBinding(): DkChallengeEmptyViewBinding {
+        @Suppress("USELESS_CAST")
+        return binding.noChallenges as DkChallengeEmptyViewBinding // DO NOT REMOVE THIS "USELESS CAST". It's actually necessary for compilation.
     }
 }

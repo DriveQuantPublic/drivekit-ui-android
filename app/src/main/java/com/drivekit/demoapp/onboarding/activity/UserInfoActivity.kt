@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
@@ -31,7 +32,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (!this::viewModel.isInitialized) {
@@ -61,7 +62,7 @@ internal class UserInfoActivity : AppCompatActivity() {
             goToNext()
         }
 
-        binding.buttonValidate.buttonAction.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorViewModel
@@ -32,7 +33,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTripSimulatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
@@ -43,7 +44,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         initFilter()
         checkSimulationError()
 
-        binding.buttonSimulateTrip.buttonAction.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.trip_simulator_start_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
