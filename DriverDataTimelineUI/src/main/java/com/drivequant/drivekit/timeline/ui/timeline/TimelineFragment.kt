@@ -2,27 +2,28 @@ package com.drivequant.drivekit.timeline.ui.timeline
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
+import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorItemListener
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
+import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchFrameLayout
 import com.drivequant.drivekit.timeline.ui.R
-import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
-import com.drivequant.drivekit.common.ui.component.scoreselector.DKScoreSelectorView
-import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.component.graph.view.TimelineGraphView
-import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCardView
 import com.drivequant.drivekit.timeline.ui.timelinedetail.TimelineDetailActivity
-import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.util.*
 
 internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
@@ -44,6 +45,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private lateinit var graphContainer: LinearLayout
     private lateinit var graphView: TimelineGraphView
+    private lateinit var displayTimelineDetailButton: Button
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     companion object {
         fun newInstance() = TimelineFragment()
@@ -64,6 +67,8 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
         dateSelectorContainer = view.findViewById(R.id.date_selector_container)
         roadContextContainer = view.findViewById(R.id.road_context_container)
         graphContainer = view.findViewById(R.id.graph_container)
+        displayTimelineDetailButton = view.findViewById(R.id.button_display_timeline_detail)
+        swipeRefreshLayout = view.findViewById(R.id.dk_swipe_refresh_timeline)
 
         checkViewModelInitialization()
 
@@ -81,7 +86,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
                 viewModel.updateTimelineDate(date)
             }
 
-            button_display_timeline_detail.visibility = if (viewModel.roadContextViewModel.displayData()) {
+            displayTimelineDetailButton.visibility = if (viewModel.roadContextViewModel.displayData()) {
                 View.VISIBLE
             } else {
                 View.GONE
@@ -110,7 +115,7 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
     }
 
     private fun configureTimelineDetailButton() {
-        button_display_timeline_detail.apply {
+        displayTimelineDetailButton.apply {
             setOnClickListener {
                 TimelineDetailActivity.launchActivity(
                     requireActivity(),
@@ -229,12 +234,12 @@ internal class TimelineFragment : Fragment(), DKPeriodSelectorItemListener {
 
     private fun setupSwipeToRefresh() {
         updateSwipeRefreshTripsVisibility(false)
-        dk_swipe_refresh_timeline.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             updateTimeline()
         }
     }
 
     private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
-        dk_swipe_refresh_timeline.isRefreshing = display
+        swipeRefreshLayout.isRefreshing = display
     }
 }

@@ -21,7 +21,9 @@
             android:orientation="vertical"
             android:padding="@dimen/dk_margin">
 
-            <include layout="@layout/dk_custom_filter_spinner_item" />
+            <include
+                android:id="@+id/spinnerItem"
+                layout="@layout/dk_custom_filter_spinner_item" />
         </androidx.cardview.widget.CardView>
 
 

@@ -9,16 +9,18 @@ import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.lasttripscards.adapter.DKLastTripsFragmentPagerAdapter
+import com.drivequant.drivekit.common.ui.databinding.DkFragmentLastTripsCardViewpagerBinding
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.dk_fragment_last_trips_card_viewpager.*
 
 
 internal class DKLastTripsViewPagerFragment : Fragment() {
 
     private var lastTripsCards = listOf<Fragment>()
     private lateinit var tabLayout: TabLayout
+    private var _binding: DkFragmentLastTripsCardViewpagerBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(lastTripsCards: List<Fragment>): DKLastTripsViewPagerFragment {
@@ -32,12 +34,15 @@ internal class DKLastTripsViewPagerFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.dk_fragment_last_trips_card_viewpager, container, false)
+    ): View {
+        _binding = DkFragmentLastTripsCardViewpagerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view_pager.adapter = DKLastTripsFragmentPagerAdapter(
+        binding.viewPager.adapter = DKLastTripsFragmentPagerAdapter(
             childFragmentManager,
             lastTripsCards
         )
@@ -54,9 +59,14 @@ internal class DKLastTripsViewPagerFragment : Fragment() {
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
 
-            tabLayout.setupWithViewPager(view_pager)
+            tabLayout.setupWithViewPager(binding.viewPager)
             updateTabLayout(0)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun updateTabLayout(position: Int) {

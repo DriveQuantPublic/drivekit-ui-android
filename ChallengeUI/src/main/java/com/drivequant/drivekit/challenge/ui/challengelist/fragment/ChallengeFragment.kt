@@ -8,21 +8,28 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengesFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
-import kotlinx.android.synthetic.main.dk_fragment_challenge.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_challenge.tab_layout_challenge
-import kotlinx.android.synthetic.main.dk_fragment_challenge.view_pager_challenge
 
 
 class ChallengeFragment : Fragment() {
 
     private lateinit var viewModel: ChallengeListViewModel
+    private var _binding: DkFragmentChallengeBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DkFragmentChallengeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +55,11 @@ class ChallengeFragment : Fragment() {
         setViewPager()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     fun updateChallenge() {
         if (this::viewModel.isInitialized) {
             viewModel.fetchChallengeList(SynchronizationType.CACHE)
@@ -55,13 +67,13 @@ class ChallengeFragment : Fragment() {
     }
 
     private fun setViewPager() {
-        view_pager_challenge.adapter =
+        binding.viewPagerChallenge.adapter =
             ChallengesFragmentPagerAdapter(
                 childFragmentManager,
                 viewModel, requireContext()
             )
-        tab_layout_challenge.apply {
-            setupWithViewPager(view_pager_challenge)
+        binding.tabLayoutChallenge.apply {
+            setupWithViewPager(binding.viewPagerChallenge)
             setBackgroundColor(Color.WHITE)
             setTabTextColors(
                 DriveKitUI.colors.complementaryFontColor(),
@@ -71,20 +83,11 @@ class ChallengeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dk_fragment_challenge, container, false)
-    }
-
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 }

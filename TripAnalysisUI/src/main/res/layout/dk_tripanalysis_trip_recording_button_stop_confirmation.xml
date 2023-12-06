@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.drivequant.drivekit.tripanalysis.triprecordingwidget.stopconfirmation.TripStopConfirmationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tripStopConfirmationView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingHorizontal="@dimen/dk_margin"
-    android:paddingVertical="@dimen/dk_margin_double">
+    android:paddingVertical="@dimen/dk_margin_double"
+    tools:viewBindingIgnore="true">
 
     <include
         android:id="@+id/endTrip"

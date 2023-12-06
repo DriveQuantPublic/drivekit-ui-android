@@ -20,29 +20,28 @@ import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_connect.button_begin
-import kotlinx.android.synthetic.main.fragment_beacon_connect.text_view_connect_desc_1
-import kotlinx.android.synthetic.main.fragment_beacon_connect.text_view_connect_desc_2
-import kotlinx.android.synthetic.main.fragment_beacon_connect.text_view_connect_desc_3
-import kotlinx.android.synthetic.main.fragment_beacon_connect.text_view_connect_title
-
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconConnectBinding
 
 class ConnectBeaconFragment : Fragment() {
 
     companion object {
         private const val REQUEST_ENABLE_BT = 1
 
-        fun newInstance(viewModel: BeaconViewModel) : ConnectBeaconFragment {
+        fun newInstance(viewModel: BeaconViewModel): ConnectBeaconFragment {
             val fragment = ConnectBeaconFragment()
             fragment.viewModel = viewModel
             return fragment
         }
     }
 
-    private lateinit var viewModel : BeaconViewModel
+    private lateinit var viewModel: BeaconViewModel
+    private var _binding: FragmentBeaconConnectBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_connect, container, false).setDKStyle()
+        _binding = FragmentBeaconConnectBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -66,27 +65,27 @@ class ConnectBeaconFragment : Fragment() {
             }
         }
 
-        text_view_connect_title.apply {
+        binding.textViewConnectTitle.apply {
             headLine1()
             text =
                 DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_title")
         }
-        text_view_connect_desc_1.apply {
+        binding.textViewConnectDesc1.apply {
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc1")
             normalText()
         }
-        text_view_connect_desc_2.apply {
+        binding.textViewConnectDesc2.apply {
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc2")
             normalText()
         }
-        text_view_connect_desc_3.apply {
+        binding.textViewConnectDesc3.apply {
             normalText()
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_guide_desc3")
         }
 
-        button_begin.button()
-        button_begin.text =  DKResource.convertToString(requireContext(), "dk_vehicle_begin")
-        button_begin.setOnClickListener {
+        binding.buttonBegin.button()
+        binding.buttonBegin.text =  DKResource.convertToString(requireContext(), "dk_vehicle_begin")
+        binding.buttonBegin.setOnClickListener {
             if (!viewModel.isBluetoothSensorEnabled()) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
@@ -115,6 +114,11 @@ class ConnectBeaconFragment : Fragment() {
                 viewModel.onConnectButtonClicked()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

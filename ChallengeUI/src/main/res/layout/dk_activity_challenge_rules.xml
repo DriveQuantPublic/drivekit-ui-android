@@ -5,10 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar" />
+    <include layout="@layout/dk_layout_toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,11 +31,10 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom"
             android:gravity="center"
-            tools:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="gone" />
-
+            android:visibility="gone"
+            tools:textColor="@android:color/white" />
 
         <ProgressBar
             android:id="@+id/progress_circular"

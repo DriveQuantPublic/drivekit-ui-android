@@ -12,14 +12,12 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_beacon_unavailable.button_abort
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_beacon_unavailable.button_retry
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_beacon_unavailable.text_view_description
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerBeaconUnavailableBinding
 
 class BeaconScannerBeaconUnavailableFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerBeaconUnavailableFragment {
             val fragment = BeaconScannerBeaconUnavailableFragment()
@@ -29,9 +27,13 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
     }
 
     private lateinit var viewModel: BeaconViewModel
+    private var _binding: FragmentBeaconChildScannerBeaconUnavailableBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_child_scanner_beacon_unavailable, container, false).setDKStyle()
+        _binding = FragmentBeaconChildScannerBeaconUnavailableBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -55,21 +57,26 @@ class BeaconScannerBeaconUnavailableFragment : Fragment() {
             }
         }
 
-        text_view_description.normalText()
-        text_view_description.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_retry_title")
+        binding.textViewDescription.normalText()
+        binding.textViewDescription.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_retry_title")
 
-        button_retry.button()
-        button_retry.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
-        button_retry.setOnClickListener {
+        binding.buttonRetry.button()
+        binding.buttonRetry.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonRetry.setOnClickListener {
             activity?.onBackPressed()
         }
 
-        button_abort.apply {
+        binding.buttonAbort.apply {
             normalText(DriveKitUI.colors.secondaryColor())
             text = DKResource.convertToString(requireContext(), "dk_common_finish")
             setOnClickListener {
                 viewModel.scanValidationFinished()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

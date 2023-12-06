@@ -91,6 +91,14 @@
    <string name="dk_perm_utils_energy_saver_iOS_link_text">este enlace</string>
    <string name="dk_perm_utils_energy_saver_iOS_main">Si la aplicación no registra tus viajes, te invitamos a desactivar el ahorro de energía de tu iPhone utilizando la guía disponible a través de %s.</string>
    <string name="dk_perm_utils_energy_saver_title">¿Cómo desactivo el ahorro de energía?</string>
+   <string name="dk_perm_utils_notification_activity_recognition_permission">La aplicación no está autorizada a acceder a la actividad del teléfono. Esto puede limitar la grabación del viaje.</string>
+   <string name="dk_perm_utils_notification_app_battery_optimization">La aplicación no puede ejecutarse en segundo plano. Esto puede limitar la grabación del viaje.</string>
+   <string name="dk_perm_utils_notification_bluetooth_permission">La grabación del viaje no es posible porque la aplicación no está autorizada a acceder al sensor Bluetooth.</string>
+   <string name="dk_perm_utils_notification_bluetooth_sensor">La grabación del viaje no es posible porque el sensor Bluetooth está apagado.</string>
+   <string name="dk_perm_utils_notification_location_permission">La grabación del viaje no es posible porque la aplicación no puede acceder a la ubicación exacta del teléfono mientras se ejecuta en segundo plano.</string>
+   <string name="dk_perm_utils_notification_location_sensor">La grabación del viaje no es posible porque el sensor de localización está apagado.</string>
+   <string name="dk_perm_utils_notification_multiple_issues">Hay una serie de problemas que impiden registrar los desplazamientos.</string>
+   <string name="dk_perm_utils_notification_nearby_devices_permission">La grabación del viaje no es posible porque la aplicación no está autorizada a acceder al sensor Bluetooth.</string>
    <string name="dk_perm_utils_permissions_activity_button_ios">Abrir los ajustes</string>
    <string name="dk_perm_utils_permissions_activity_popup_title">Permisos</string>
    <string name="dk_perm_utils_permissions_location_button_android">Autorizar la ubicación</string>

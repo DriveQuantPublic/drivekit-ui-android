@@ -16,7 +16,6 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.notification.settings.activity.NotificationSettingsActivity
@@ -24,6 +23,7 @@ import com.drivekit.demoapp.settings.enum.UserInfoType
 import com.drivekit.demoapp.settings.viewmodel.SettingsViewModel
 import com.drivekit.demoapp.utils.restartApplication
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
@@ -33,11 +33,11 @@ import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
 import com.drivequant.drivekit.core.driver.UserInfo
 import com.drivequant.drivekit.core.driver.UserInfoGetStatus
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.activity_settings.*
 
-internal class SettingsActivity: AppCompatActivity() {
+internal class SettingsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: SettingsViewModel
+    private lateinit var binding: ActivitySettingsBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -49,9 +49,9 @@ internal class SettingsActivity: AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.parameters_header)
@@ -78,13 +78,13 @@ internal class SettingsActivity: AppCompatActivity() {
         initLogoutSection()
         initDeleteAccountSection()
         listOf(
-            view_separator_1,
-            view_separator_2,
-            view_separator_3,
-            view_separator_4,
-            view_separator_5,
-            view_separator_6,
-            view_separator_7
+            binding.viewSeparator1,
+            binding.viewSeparator2,
+            binding.viewSeparator3,
+            binding.viewSeparator4,
+            binding.viewSeparator5,
+            binding.viewSeparator6,
+            binding.viewSeparator7
         ).forEach {
             it.setBackgroundColor(DriveKitUI.colors.neutralColor())
         }
@@ -101,30 +101,30 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun initUserInfoSection() {
-        initTitle(title_account, R.string.parameters_account_title, R.drawable.ic_account)
-        description_account.normalText(DriveKitUI.colors.complementaryFontColor())
+        initTitle(binding.titleAccount, R.string.parameters_account_title, R.drawable.ic_account)
+        binding.descriptionAccount.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        label_user_id.headLine2()
-        label_firstname.headLine2()
-        label_lastname.headLine2()
-        label_pseudo.headLine2()
+        binding.labelUserId.headLine2()
+        binding.labelFirstname.headLine2()
+        binding.labelLastname.headLine2()
+        binding.labelPseudo.headLine2()
 
-        text_user_id.text = viewModel.getUserId()
-        text_user_id.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textUserId.text = viewModel.getUserId()
+        binding.textUserId.normalText(DriveKitUI.colors.complementaryFontColor())
 
         viewModel.getUserInfo(object : GetUserInfoQueryListener {
             override fun onResponse(status: UserInfoGetStatus, userInfo: UserInfo?) {
-                initUserInfoData(UserInfoType.FIRST_NAME, text_firstname, userInfo?.firstname)
-                initUserInfoData(UserInfoType.LAST_NAME, text_lastname, userInfo?.lastname)
-                initUserInfoData(UserInfoType.PSEUDO, text_pseudo, userInfo?.pseudo)
+                initUserInfoData(UserInfoType.FIRST_NAME, binding.textFirstname, userInfo?.firstname)
+                initUserInfoData(UserInfoType.LAST_NAME, binding.textLastname, userInfo?.lastname)
+                initUserInfoData(UserInfoType.PSEUDO, binding.textPseudo, userInfo?.pseudo)
             }
         })
     }
 
     private fun initAutostartSection() {
-        initTitle(title_autostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
+        initTitle(binding.titleAutostart, R.string.parameters_auto_start_title, R.drawable.ic_autostart)
         manageAutoStartDescription(viewModel.isAutoStartEnabled(this))
-        switch_autostart.apply {
+        binding.switchAutostart.apply {
             isChecked = viewModel.isAutoStartEnabled(this@SettingsActivity)
             setOnClickListener {
                 viewModel.activateAutoStart(this@SettingsActivity, isChecked)
@@ -134,7 +134,7 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun manageAutoStartDescription(isEnabled: Boolean) {
-        description_autostart.apply {
+        binding.descriptionAutostart.apply {
             if (isEnabled) {
                 text = getString(R.string.parameters_auto_start_enabled)
                 normalText(DriveKitUI.colors.complementaryFontColor())
@@ -146,16 +146,16 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun initNotificationSection() {
-        initTitle(title_notifications, R.string.parameters_notification_title, R.drawable.ic_notifications)
-        description_notifications.normalText(DriveKitUI.colors.complementaryFontColor())
-        button_notifications.headLine2(DriveKitUI.colors.secondaryColor())
-        button_notifications.setOnClickListener {
+        initTitle(binding.titleNotifications, R.string.parameters_notification_title, R.drawable.ic_notifications)
+        binding.descriptionNotifications.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.buttonNotifications.headLine2(DriveKitUI.colors.secondaryColor())
+        binding.buttonNotifications.setOnClickListener {
             NotificationSettingsActivity.launchActivity(this)
         }
     }
 
     private fun initLogoutSection() {
-        button_logout_account.apply {
+        binding.buttonLogoutAccount.apply {
             normalText(DriveKitUI.colors.criticalColor())
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
@@ -165,15 +165,15 @@ internal class SettingsActivity: AppCompatActivity() {
     }
 
     private fun initDeleteAccountSection() {
-        initTitle(title_account_deletion, R.string.parameters_delete_account_title, R.drawable.dk_trash)
-        button_delete_account.apply {
+        initTitle(binding.titleAccountDeletion, R.string.parameters_delete_account_title, R.drawable.dk_trash)
+        binding.buttonDeleteAccount.apply {
             normalText(DriveKitUI.colors.criticalColor())
             setTypeface(DriveKitUI.primaryFont(context), Typeface.BOLD)
             setOnClickListener {
                 manageDeleteAccount()
             }
         }
-        api_info_account_deletion.normalText(DriveKitUI.colors.warningColor())
+        binding.apiInfoAccountDeletion.normalText(DriveKitUI.colors.warningColor())
     }
 
     private fun manageDeleteAccount() {

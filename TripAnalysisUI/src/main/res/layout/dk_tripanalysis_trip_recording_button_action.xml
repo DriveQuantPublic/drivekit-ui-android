@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.drivequant.drivekit.tripanalysis.triprecordingwidget.stopconfirmation.TripStopButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dk_tripanalysis_trip_recording_button_action_border"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:padding="@dimen/dk_margin_medium">
+    android:padding="@dimen/dk_margin_medium"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/buttonTitle"

@@ -1,90 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView style="@style/MM"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MM">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/dk_margin">
+
             <TextView
                 android:id="@+id/text_view_connect_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dk_margin"
-                android:textStyle="bold"
                 android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textSize="@dimen/dk_text_big"
                 android:layout_margin="@dimen/dk_margin"
-                android:textAllCaps="true"/>
+                android:padding="@dimen/dk_margin"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="@dimen/dk_text_big"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:text="1"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dk_text_xbig"
-                android:textAlignment="center"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dk_margin_half"
+                android:background="@drawable/circle_outline_black"
                 android:gravity="center"
-                android:background="@drawable/circle_outline_black"/>
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dk_text_xbig" />
+
             <TextView
                 android:id="@+id/text_view_connect_desc_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dk_margin" />
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:gravity="center" />
+
             <TextView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:text="2"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dk_text_xbig"
-                android:textAlignment="center"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dk_margin_half"
+                android:background="@drawable/circle_outline_black"
                 android:gravity="center"
-                android:background="@drawable/circle_outline_black"/>
+                android:text="2"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dk_text_xbig" />
+
             <TextView
                 android:id="@+id/text_view_connect_desc_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dk_margin" />
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:gravity="center" />
+
             <TextView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:text="3"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/dk_text_xbig"
-                android:textAlignment="center"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dk_margin_half"
+                android:background="@drawable/circle_outline_black"
                 android:gravity="center"
-                android:background="@drawable/circle_outline_black"/>
+                android:text="3"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/dk_text_xbig" />
+
             <TextView
                 android:id="@+id/text_view_connect_desc_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dk_margin"/>
+                android:layout_marginBottom="@dimen/dk_margin"
+                android:gravity="center" />
         </LinearLayout>
+
         <Button
             android:id="@+id/button_begin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dk_margin"
             android:layout_marginEnd="@dimen/dk_margin"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:focusable="true"
-            android:longClickable="true"
-            android:clickable="true"/>
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:longClickable="true" />
     </LinearLayout>
 </ScrollView>

@@ -5,7 +5,8 @@
     android:id="@+id/dk_swipe_refresh_mysynthesis"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mysynthesis.MySynthesisFragment">
+    tools:context=".mysynthesis.MySynthesisFragment"
+    tools:viewBindingIgnore="true">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -4,26 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksListViewModel
-import kotlinx.android.synthetic.main.dk_fragment_streaks_list.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_streaks_list.recycler_view_streaks
-import kotlinx.android.synthetic.main.dk_fragment_streaks_list.refresh_streaks
-
 
 class StreaksListFragment : Fragment() {
 
     private lateinit var listViewModel: StreaksListViewModel
     private lateinit var listAdapter: StreaksListAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var progressView: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,13 +42,17 @@ class StreaksListFragment : Fragment() {
             listViewModel = ViewModelProvider(this)[StreaksListViewModel::class.java]
         }
 
+        this.recyclerView = view.findViewById(R.id.recycler_view_streaks)
+        this.swipeRefreshLayout = view.findViewById(R.id.refresh_streaks)
+        this.progressView = view.findViewById(R.id.progress_circular)
+
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_streaks"), javaClass.simpleName)
 
         val layoutManager =
             LinearLayoutManager(view.context)
-        recycler_view_streaks.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
 
-        refresh_streaks.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
             updateStreaks()
         }
     }
@@ -66,7 +72,7 @@ class StreaksListFragment : Fragment() {
                 listAdapter.notifyDataSetChanged()
             } else {
                 listAdapter = StreaksListAdapter(view?.context, listViewModel)
-                recycler_view_streaks.adapter = listAdapter
+                recyclerView.adapter = listAdapter
             }
             updateProgressVisibility(false)
         })
@@ -76,12 +82,12 @@ class StreaksListFragment : Fragment() {
 
     private fun updateProgressVisibility(displayProgress: Boolean) {
         if (displayProgress) {
-            progress_circular?.visibility = View.VISIBLE
-            refresh_streaks?.isRefreshing = true
+            progressView.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = true
         } else {
-            progress_circular?.visibility = View.GONE
-            refresh_streaks?.visibility = View.VISIBLE
-            refresh_streaks?.isRefreshing = false
+            progressView.visibility = View.GONE
+            swipeRefreshLayout.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 }

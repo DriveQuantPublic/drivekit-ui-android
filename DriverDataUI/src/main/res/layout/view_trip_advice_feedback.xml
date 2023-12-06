@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/alert_dialog_hint_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/alert_dialog_trip_feedback_header"
@@ -72,11 +74,11 @@
                     android:gravity="top|start"
                     android:inputType="textMultiLine"
                     android:lines="5"
-                    android:textSize="@dimen/dk_text_normal"
                     android:longClickable="false"
                     android:maxLines="10"
                     android:padding="5dp"
-                    android:scrollbars="vertical" />
+                    android:scrollbars="vertical"
+                    android:textSize="@dimen/dk_text_normal" />
             </RadioGroup>
         </LinearLayout>
     </ScrollView>

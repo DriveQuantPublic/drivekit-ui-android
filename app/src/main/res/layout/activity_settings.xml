@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/dk_layout_toolbar" />
+    <include layout="@layout/dk_layout_toolbar" />
 
     <ScrollView
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dk_margin"
-            android:paddingVertical="@dimen/dk_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/dk_margin">
+
             <TextView
                 android:id="@+id/title_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical" />
+
             <TextView
                 android:id="@+id/description_account"
                 android:layout_width="match_parent"
@@ -36,39 +37,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin">
+
                 <TextView
                     android:id="@+id/label_user_id"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/userId" />
+
                 <TextView
                     android:id="@+id/text_user_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="0RE8gf09gH"/>
+                    tools:text="0RE8gf09gH" />
             </LinearLayout>
 
             <View
                 android:id="@+id/view_separator_1"
                 style="@style/Separator.Horizontal" />
+
             <LinearLayout
                 android:id="@+id/container_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginVertical="@dimen/dk_margin">
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/label_firstname"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/firstname" />
+
                 <TextView
                     android:id="@+id/text_firstname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Firstname"/>
+                    tools:text="Firstname" />
             </LinearLayout>
 
             <View
@@ -80,17 +86,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin">
+
                 <TextView
                     android:id="@+id/label_lastname"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/lastname" />
+
                 <TextView
                     android:id="@+id/text_lastname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Lastname"/>
+                    tools:text="Lastname" />
             </LinearLayout>
 
             <View
@@ -102,17 +110,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/dk_margin">
+
                 <TextView
                     android:id="@+id/label_pseudo"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/pseudo" />
+
                 <TextView
                     android:id="@+id/text_pseudo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Pseudo"/>
+                    tools:text="Pseudo" />
             </LinearLayout>
 
             <View
@@ -124,23 +134,27 @@
                 android:id="@+id/title_autostart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/dk_margin" />
+                android:layout_marginTop="@dimen/dk_margin"
+                android:gravity="center_vertical" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginVertical="@dimen/dk_margin">
+                android:layout_marginVertical="@dimen/dk_margin"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/description_autostart"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_autostart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <View
                 android:id="@+id/view_separator_5"
                 style="@style/Separator.Horizontal" />
@@ -149,8 +163,8 @@
                 android:id="@+id/title_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/dk_margin" />
+                android:layout_marginTop="@dimen/dk_margin"
+                android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/description_notifications"
@@ -163,19 +177,21 @@
                 android:id="@+id/button_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="viewStart"
-                android:text="@string/see_settings"
                 android:layout_marginVertical="@dimen/dk_margin"
+                android:text="@string/see_settings"
+                android:textAlignment="viewStart"
                 android:textAllCaps="true" />
+
             <View
                 android:id="@+id/view_separator_6"
                 style="@style/Separator.Horizontal" />
+
             <TextView
                 android:id="@+id/title_account_deletion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/dk_margin" />
+                android:layout_marginTop="@dimen/dk_margin"
+                android:gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/description_account_deletion"
@@ -197,8 +213,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dk_margin"
                 android:layout_marginBottom="@dimen/dk_margin"
-                android:textAllCaps="true"
-                android:text="@string/button_delete_account" />
+                android:text="@string/button_delete_account"
+                android:textAllCaps="true" />
         </LinearLayout>
 
     </ScrollView>
@@ -211,8 +227,8 @@
         android:id="@+id/button_logout_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dk_margin"
         android:layout_marginBottom="@dimen/dk_margin"
+        android:gravity="center"
         android:text="@string/button_logout" />
 </LinearLayout>

@@ -17,12 +17,8 @@ import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
-import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.UnscoredTripFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.UnscoredTripViewModel
-import kotlinx.android.synthetic.main.unscored_trip_fragment.image_view_unscored_trip_info
-import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_duration
-import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_message
-import kotlinx.android.synthetic.main.unscored_trip_fragment.trip_start_end
 
 class UnscoredTripFragment : Fragment() {
     companion object {
@@ -36,16 +32,18 @@ class UnscoredTripFragment : Fragment() {
     }
 
     private lateinit var viewModel: UnscoredTripViewModel
+    private var _binding: UnscoredTripFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.unscored_trip_fragment, container, false)
-        FontUtils.overrideFonts(context, view)
-        view.setDKStyle(Color.WHITE)
-        return view
+    ): View {
+        _binding = UnscoredTripFragmentBinding.inflate(inflater, container, false)
+        FontUtils.overrideFonts(context, binding.root)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -60,16 +58,21 @@ class UnscoredTripFragment : Fragment() {
             viewModel = it
         }
 
-        trip_duration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
-        trip_start_end.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
+        binding.tripDuration.text = DKDataFormatter.formatDuration(requireContext(), viewModel.getDuration()!!).convertToString()
+        binding.tripStartEnd.text = viewModel.getStartDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER)
             .plus(" - ")
             .plus(viewModel.getEndDate()?.formatDate(DKDatePattern.HOUR_MINUTE_LETTER))
-        trip_message.text = context?.getString(viewModel.getNoScoreTripMessage())
+        binding.tripMessage.text = context?.getString(viewModel.getNoScoreTripMessage())
 
-        trip_message.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
-        trip_message.setBackgroundColor(DriveKitUI.colors.warningColor())
-        trip_start_end.setTextColor(DriveKitUI.colors.primaryColor())
-        trip_duration.highlightMedium(DriveKitUI.colors.primaryColor())
-        image_view_unscored_trip_info.background.tintDrawable(DriveKitUI.colors.warningColor())
+        binding.tripMessage.setTextColor(DriveKitUI.colors.fontColorOnSecondaryColor())
+        binding.tripMessage.setBackgroundColor(DriveKitUI.colors.warningColor())
+        binding.tripStartEnd.setTextColor(DriveKitUI.colors.primaryColor())
+        binding.tripDuration.highlightMedium(DriveKitUI.colors.primaryColor())
+        binding.imageViewUnscoredTripInfo.background.tintDrawable(DriveKitUI.colors.warningColor())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

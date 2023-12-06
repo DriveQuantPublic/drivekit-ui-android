@@ -1,28 +1,14 @@
 package com.drivekit.demoapp.dashboard.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.enum.FeatureType
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.tripanalysis.service.recorder.State
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.SynthesisCardsViewListener
 import com.drivequant.drivekit.ui.synthesiscards.LastTripsSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.fragment.DKSynthesisCardViewPagerFragment
 
 internal class DashboardViewModel: ViewModel() {
-    var sdkStateObserver: MutableLiveData<Any> = MutableLiveData()
-    var sdkStateChangeListener: TripListenerController.SdkStateChangeListener = object : TripListenerController.SdkStateChangeListener {
-        override fun sdkStateChanged(state: State) {
-            sdkStateObserver.postValue(Any())
-        }
-    }
-
-    init {
-        TripListenerController.addSdkStateChangeListener(sdkStateChangeListener)
-    }
-
     fun getSynthesisCardsView(listener: SynthesisCardsViewListener) {
         DriverDataUI.getLastTripsSynthesisCardsView(
             listOf(

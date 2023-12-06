@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:id="@+id/text_view_item_title"
@@ -12,11 +13,11 @@
         tools:text="Duration" />
 
     <TextView
-        tools:textSize="@dimen/dk_text_xbig"
-        tools:textStyle="bold"
         android:id="@+id/text_view_item_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="08:52" />
+        tools:text="08:52"
+        tools:textSize="@dimen/dk_text_xbig"
+        tools:textStyle="bold" />
 
 </LinearLayout>

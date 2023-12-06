@@ -23,23 +23,16 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.driverdata.trip.TransportationModeUpdateStatus
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.DkFragmentTransportationModeBinding
 import com.drivequant.drivekit.ui.transportationmode.viewmodel.TransportationModeViewModel
 import com.drivequant.drivekit.ui.transportationmode.viewmodel.TransportationProfile
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.button_validate
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.comment_title
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.container_transportation_profile
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.description_title
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.edit_text_comment
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.text_comment_error
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.transportation_mode_title
-import kotlinx.android.synthetic.main.dk_fragment_transportation_mode.transportation_profile_title
 
+internal class TransportationModeFragment : Fragment() {
 
-internal class TransportationModeFragment : Fragment(){
-
-    private lateinit var viewModel : TransportationModeViewModel
+    private lateinit var viewModel: TransportationModeViewModel
     private lateinit var itinId: String
+    private var _binding: DkFragmentTransportationModeBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     private val transportationModesViews = mutableListOf<CircularButtonItemView>()
     private val transportationProfilesViews = mutableListOf<CircularButtonItemView>()
@@ -57,7 +50,9 @@ internal class TransportationModeFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.dk_fragment_transportation_mode, container, false).setDKStyle()
+        _binding = DkFragmentTransportationModeBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,41 +67,41 @@ internal class TransportationModeFragment : Fragment(){
             )[TransportationModeViewModel::class.java]
         }
 
-        (description_title.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
-        description_title.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        description_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
+        (binding.descriptionTitle.background as GradientDrawable).setColor(DriveKitUI.colors.warningColor())
+        binding.descriptionTitle.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        binding.descriptionTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_text")
 
-        transportation_profile_title.normalText()
-        transportation_profile_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_passenger_driver")
+        binding.transportationProfileTitle.normalText()
+        binding.transportationProfileTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_passenger_driver")
 
-        comment_title.normalText()
-        comment_title.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
+        binding.commentTitle.normalText()
+        binding.commentTitle.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment")
 
-        val editTextBackground = edit_text_comment.background as GradientDrawable
+        val editTextBackground = binding.editTextComment.background as GradientDrawable
         editTextBackground.setStroke(4, DriveKitUI.colors.neutralColor())
-        edit_text_comment.addTextChangedListener(object : TextWatcher {
+        binding.editTextComment.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                text_comment_error.visibility = if (viewModel.isCommentValid(s.toString())){
+                binding.textCommentError.visibility = if (viewModel.isCommentValid(s.toString())){
                     View.GONE
                 } else {
                     View.VISIBLE
                 }
             }
         })
-        text_comment_error.smallText(DriveKitUI.colors.criticalColor())
-        text_comment_error.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error")
+        binding.textCommentError.smallText(DriveKitUI.colors.criticalColor())
+        binding.textCommentError.text = DKResource.convertToString(requireContext(), "dk_driverdata_transportation_mode_declaration_comment_error")
 
-        button_validate.button()
-        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
+        binding.buttonValidate.button()
+        binding.buttonValidate.text = DKResource.convertToString(requireContext(), "dk_common_validate")
 
         updateTransportationProfileVisibility()
         bindTransportationModeItems()
         bindTransportationProfileItems()
-        viewModel.updateObserver.observe(viewLifecycleOwner, { status ->
+        viewModel.updateObserver.observe(viewLifecycleOwner) { status ->
             hideProgressCircular()
             if (status != null){
                 when (status){
@@ -132,30 +127,35 @@ internal class TransportationModeFragment : Fragment(){
                     }
                 }
             }
-        })
+        }
         initDefaultValues()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun updateTransportationProfileVisibility() {
         if (viewModel.displayPassengerOption()) {
-            container_transportation_profile.alpha = 0f
-            container_transportation_profile.visibility = View.VISIBLE
-            container_transportation_profile.animate().alpha(1f)
+            binding.containerTransportationProfile.alpha = 0f
+            binding.containerTransportationProfile.visibility = View.VISIBLE
+            binding.containerTransportationProfile.animate().alpha(1f)
                 .setDuration(resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         super.onAnimationEnd(animation)
-                        container_transportation_profile.visibility = View.VISIBLE
+                        binding.containerTransportationProfile.visibility = View.VISIBLE
                     }
                 })
         } else {
-            container_transportation_profile.alpha = 1f
-            container_transportation_profile.animate().alpha(0f)
+            binding.containerTransportationProfile.alpha = 1f
+            binding.containerTransportationProfile.animate().alpha(0f)
                 .setDuration(resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         super.onAnimationEnd(animation)
-                        container_transportation_profile.visibility = View.GONE
+                        binding.containerTransportationProfile.visibility = View.GONE
                     }
                 })
         }
@@ -189,7 +189,7 @@ internal class TransportationModeFragment : Fragment(){
                     }
                     viewModel.selectedTransportationMode  = transportationMode
                     transportationModeItemView.setItemSelectedState(true)
-                    transportation_mode_title.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
+                    binding.transportationModeTitle.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
                 }
             } else {
                 transportationModeItemView.setItemSelectedState(false)
@@ -213,7 +213,7 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     fun onValidate(){
-        viewModel.comment = edit_text_comment.text.toString()
+        viewModel.comment = binding.editTextComment.text.toString()
         if (viewModel.checkFieldsValidity()) {
             showProgressCircular()
             viewModel.updateInformations()
@@ -254,10 +254,10 @@ internal class TransportationModeFragment : Fragment(){
                 }
 
                 trip.declaredTransportationMode?.comment?.let {
-                    edit_text_comment.setText(it)
+                    binding.editTextComment.setText(it)
                 }
             }
-            transportation_mode_title.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
+            binding.transportationModeTitle.text = viewModel.buildSelectedTransportationModeTitle(requireContext())
         }
     }
 
@@ -313,7 +313,7 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     private fun showProgressCircular() {
-        progress_circular?.apply {
+        binding.progressCircular.apply {
             animate()
             .alpha(1f)
             .setDuration(200L)
@@ -326,7 +326,7 @@ internal class TransportationModeFragment : Fragment(){
     }
 
     private fun hideProgressCircular() {
-        progress_circular?.apply {
+        binding.progressCircular.apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)

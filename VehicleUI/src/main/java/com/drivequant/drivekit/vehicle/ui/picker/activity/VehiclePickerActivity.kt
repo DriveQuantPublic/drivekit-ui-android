@@ -9,9 +9,9 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
@@ -24,6 +24,7 @@ import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
 import com.drivequant.drivekit.vehicle.picker.VehicleVersion
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.ActivityVehiclePickerBinding
 import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -33,11 +34,11 @@ import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragme
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.*
-import kotlinx.android.synthetic.main.activity_vehicle_picker.*
 
 class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnListFragmentInteractionListener {
 
-    private lateinit var viewModel : VehiclePickerViewModel
+    private lateinit var viewModel: VehiclePickerViewModel
+    private lateinit var binding: ActivityVehiclePickerBinding
 
     companion object {
         private var vehicleToDelete: Vehicle? = null
@@ -45,7 +46,8 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         fun launchActivity(
             activityContext: Context,
             vehicleToDelete: Vehicle? = null,
-            listener: VehiclePickerCompleteListener? = null) {
+            listener: VehiclePickerCompleteListener? = null
+        ) {
             this.vehicleToDelete = vehicleToDelete
             DriveKitVehicleUI.vehiclePickerComplete = listener
             val intent = Intent(activityContext, VehiclePickerActivity::class.java)
@@ -59,11 +61,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_add"), javaClass.simpleName)
 
-        setContentView(R.layout.activity_vehicle_picker)
+        binding = ActivityVehiclePickerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -180,7 +182,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
@@ -193,7 +195,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -210,7 +212,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         return true
     }
 
-    private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep){
+    private fun dispatchToScreen(vehiclePickerStep: VehiclePickerStep) {
         val fragment = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel)
@@ -238,7 +240,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1){
+        if (supportFragmentManager.backStackEntryCount == 1) {
             finish()
         } else {
             supportFragmentManager.popBackStack()

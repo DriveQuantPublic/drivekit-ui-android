@@ -10,14 +10,16 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.core.utils.PermissionStatus
-import com.drivequant.drivekit.permissionsutils.R
-import kotlinx.android.synthetic.main.activity_background_task_permission.*
+import com.drivequant.drivekit.permissionsutils.databinding.ActivityBackgroundTaskPermissionBinding
 
 class BackgroundTaskPermissionActivity : BasePermissionActivity() {
 
+    private lateinit var binding: ActivityBackgroundTaskPermissionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_background_task_permission)
+        binding = ActivityBackgroundTaskPermissionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setToolbar("dk_perm_utils_permissions_phone_settings_background_title")
         setStyle()
     }
@@ -34,10 +36,10 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
     }
 
     private fun setStyle() {
-        text_view_background_task_permission_title.highlightMedium()
-        text_view_background_task_permission_text1.normalText()
-        text_view_background_task_permission_text2.normalText()
-        button_request_background_permission.button()
+        binding.textViewBackgroundTaskPermissionTitle.highlightMedium()
+        binding.textViewBackgroundTaskPermissionText1.normalText()
+        binding.textViewBackgroundTaskPermissionText2.normalText()
+        binding.buttonRequestBackgroundPermission.button()
         window.decorView.setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
     }
 }

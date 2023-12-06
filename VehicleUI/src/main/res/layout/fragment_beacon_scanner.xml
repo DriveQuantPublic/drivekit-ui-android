@@ -4,18 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/text_view_title"
-            android:padding="@dimen/dk_margin_half"
-            android:layout_margin="@dimen/dk_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:layout_margin="@dimen/dk_margin"
+            android:gravity="center"
+            android:padding="@dimen/dk_margin_half" />
+
         <ImageView
             android:id="@id/image_view"
             android:layout_width="120dp"
@@ -23,6 +26,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/dk_margin" />
     </LinearLayout>
+
     <FrameLayout
         android:id="@+id/container_child"
         android:layout_width="match_parent"

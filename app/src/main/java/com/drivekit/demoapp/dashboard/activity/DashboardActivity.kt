@@ -14,10 +14,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.drivekit.demoapp.component.FeatureCard
+import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.enum.InfoBannerType
 import com.drivekit.demoapp.dashboard.view.InfoBannerView
 import com.drivekit.demoapp.dashboard.viewmodel.DashboardViewModel
-import com.drivekit.demoapp.drivekit.TripListenerController
 import com.drivekit.demoapp.features.activity.FeatureListActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.settings.activity.SettingsActivity
@@ -25,6 +25,7 @@ import com.drivekit.demoapp.simulator.activity.TripSimulatorActivity
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
+import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.tripanalysis.DriveKitTripAnalysisUI
@@ -57,6 +58,9 @@ internal class DashboardActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        DriveKitConfig.setUserOnboarded(this)
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setContentView(R.layout.activity_dashboard)
@@ -68,12 +72,14 @@ internal class DashboardActivity : AppCompatActivity() {
         initFeatureCard()
         configureStartStopTripButton()
 
-        if (!manageTripDetailRedirection()) {
-            if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
-                lifecycleScope.launch {
-                    delay(300)
-                    startStopTripButton?.showConfirmationDialog()
-                }
+        if (DKNotificationManager.isTripDetailNotificationIntent(intent)) {
+            manageTripDetailRedirection()
+        } else if (DKNotificationManager.isAppDiagnosisNotificationIntent(intent)) {
+            DriveKitNavigationController.permissionsUtilsUIEntryPoint?.startAppDiagnosisActivity(this)
+        } else if (DKNotificationManager.isTripAnalysisNotificationIntent(intent)) {
+            lifecycleScope.launch {
+                delay(300)
+                startStopTripButton?.showConfirmationDialog()
             }
         }
     }
@@ -81,7 +87,6 @@ internal class DashboardActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkViewModelInitialization()
-        TripListenerController.addSdkStateChangeListener(viewModel.sdkStateChangeListener)
         showContent()
     }
 
@@ -170,8 +175,7 @@ internal class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageTripDetailRedirection(): Boolean {
-        var managed = false
+    private fun manageTripDetailRedirection() {
         intent?.let {
             val itinId = intent.getStringExtra(TripDetailActivity.ITINID_EXTRA)
             val openAdvice = intent.getBooleanExtra(TripDetailActivity.OPEN_ADVICE_EXTRA, false)
@@ -180,21 +184,9 @@ internal class DashboardActivity : AppCompatActivity() {
                 TripListConfigurationType::class.java
             )
             if (!itinId.isNullOrBlank() && tripListConfigurationType != null) {
-                TripDetailActivity.launchActivity(
-                    this,
-                    itinId,
-                    openAdvice,
-                    tripListConfigurationType
-                )
-                managed = true
+                TripDetailActivity.launchActivity(this, itinId, openAdvice, tripListConfigurationType)
             }
         }
-        return managed
-    }
-
-    override fun onPause() {
-        super.onPause()
-        TripListenerController.removeSdkStateChangeListener(viewModel.sdkStateChangeListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

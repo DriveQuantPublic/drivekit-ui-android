@@ -10,12 +10,12 @@ import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_beacon_not_configured.button_cancel
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerBeaconNotConfiguredBinding
 
 class BeaconScannerBeaconNotConfiguredFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerBeaconNotConfiguredFragment {
             val fragment = BeaconScannerBeaconNotConfiguredFragment()
@@ -25,9 +25,13 @@ class BeaconScannerBeaconNotConfiguredFragment : Fragment() {
     }
 
     private lateinit var viewModel: BeaconViewModel
+    private var _binding: FragmentBeaconChildScannerBeaconNotConfiguredBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_child_scanner_beacon_not_configured, container, false).setDKStyle()
+        _binding = FragmentBeaconChildScannerBeaconNotConfiguredBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -51,10 +55,15 @@ class BeaconScannerBeaconNotConfiguredFragment : Fragment() {
             }
         }
 
-        button_cancel.button()
-        button_cancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
-        button_cancel.setOnClickListener {
+        binding.buttonCancel.button()
+        binding.buttonCancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonCancel.setOnClickListener {
             viewModel.scanValidationFinished()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

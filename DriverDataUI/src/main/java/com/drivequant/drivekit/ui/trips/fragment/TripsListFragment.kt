@@ -1,6 +1,5 @@
 package com.drivequant.drivekit.ui.trips.fragment
 
-
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
@@ -25,36 +23,40 @@ import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.DKHeader
 import com.drivequant.drivekit.common.ui.component.triplist.viewModel.HeaderDay
-import com.drivequant.drivekit.common.ui.component.triplist.views.DKTripListView
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.extension.updateSubMenuItemFont
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
+import com.drivequant.drivekit.ui.databinding.FragmentTripsListBinding
+import com.drivequant.drivekit.ui.databinding.ViewContentNoTripsBinding
 import com.drivequant.drivekit.ui.extension.toDKTripList
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
 import com.drivequant.drivekit.ui.trips.viewmodel.TripsListViewModel
-import kotlinx.android.synthetic.main.fragment_trips_list.dk_trips_list_view
-import kotlinx.android.synthetic.main.fragment_trips_list.filter_view
-import kotlinx.android.synthetic.main.fragment_trips_list.no_trips_container
-import kotlinx.android.synthetic.main.view_content_no_trips.no_trips_recorded_text
-
 
 class TripsListFragment : Fragment() {
     private lateinit var viewModel: TripsListViewModel
-    private lateinit var tripsListView : DKTripListView
     private lateinit var tripsList: DKTripList
-    private lateinit var textViewTripsSynthesis: TextView
-    private lateinit var noTripsView: DKRoundedCornerFrameLayout
     private var shouldSyncTrips = true
     private lateinit var synchronizationType: SynchronizationType
+    private var _binding: FragmentTripsListBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTripsListBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,10 +76,11 @@ class TripsListFragment : Fragment() {
 
         viewModel.tripsData.observe(viewLifecycleOwner) {
             viewModel.getFilterItems(requireContext())
+            val noTripsContainerBinding = ViewContentNoTripsBinding.bind(binding.root.findViewById(R.id.no_trips_container))
             if (viewModel.filteredTrips.isEmpty()) {
-                displayNoTrips()
+                displayNoTrips(noTripsContainerBinding)
             } else {
-                displayTripsList()
+                displayTripsList(noTripsContainerBinding)
             }
             if (!this::tripsList.isInitialized) {
                 tripsList = object : DKTripList {
@@ -99,13 +102,13 @@ class TripsListFragment : Fragment() {
 
                     override fun canSwipeToRefresh(): Boolean = true
                     override fun onSwipeToRefresh() {
-                        filter_view.spinner.setSelection(0)
+                        binding.filterView.spinner.setSelection(0)
                         updateTrips()
                     }
                 }
             }
-            this.textViewTripsSynthesis.text = viewModel.getTripSynthesisText(requireContext())
-            this.tripsListView.configure(tripsList)
+            binding.textViewTripsSynthesis.text = viewModel.getTripSynthesisText(requireContext())
+            binding.dkTripsListView.configure(tripsList)
             if (synchronizationType == SynchronizationType.CACHE && shouldSyncTrips) {
                 shouldSyncTrips = false
                 updateTrips()
@@ -120,7 +123,7 @@ class TripsListFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            tripsListView.updateSwipeRefreshTripsVisibility(false)
+            binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
         }
 
         synchronizationType = if (viewModel.hasLocalTrips()) {
@@ -130,6 +133,11 @@ class TripsListFragment : Fragment() {
         }
         updateTrips(synchronizationType)
         initFilter()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -147,12 +155,12 @@ class TripsListFragment : Fragment() {
         return when (item.itemId) {
             R.id.trips_vehicle -> {
                 viewModel.filterTrips(TripListConfiguration.MOTORIZED())
-                filter_view.spinner.setSelection(0, false)
+                binding.filterView.spinner.setSelection(0, false)
                 true
             }
             R.id.trips_alternative -> {
                 viewModel.filterTrips(TripListConfiguration.ALTERNATIVE())
-                filter_view.spinner.setSelection(0, false)
+                binding.filterView.spinner.setSelection(0, false)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -160,7 +168,7 @@ class TripsListFragment : Fragment() {
     }
 
     private fun initFilter() {
-        filter_view.spinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.filterView.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
                 view: View,
@@ -182,58 +190,46 @@ class TripsListFragment : Fragment() {
 
     private fun configureFilter() {
         if (viewModel.getFilterVisibility()) {
-            filter_view.setItems(viewModel.filterItems)
-            filter_view.visibility = View.VISIBLE
+            binding.filterView.setItems(viewModel.filterItems)
+            binding.filterView.visibility = View.VISIBLE
         } else {
-            filter_view.visibility = View.GONE
+            binding.filterView.visibility = View.GONE
         }
     }
 
     private fun updateTrips(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
-        tripsListView.updateSwipeRefreshTripsVisibility(true)
+        binding.dkTripsListView.updateSwipeRefreshTripsVisibility(true)
         viewModel.fetchTrips(synchronizationType)
     }
 
-    private fun displayNoTrips() {
+    private fun displayNoTrips(noTripsContainerBinding: ViewContentNoTripsBinding) {
         configureFilter()
-        this.no_trips_recorded_text.text = getString(viewModel.getNoTripsTextResId())
-        no_trips_container.visibility = View.VISIBLE
-        tripsListView.setTripsListEmptyView(no_trips_container)
-        no_trips_recorded_text.normalText()
+        noTripsContainerBinding.noTripsRecordedText.text = getString(viewModel.getNoTripsTextResId())
+        noTripsContainerBinding.root.visibility = View.VISIBLE
+        binding.dkTripsListView.setTripsListEmptyView(noTripsContainerBinding.root)
+        noTripsContainerBinding.noTripsRecordedText.normalText()
 
-        this.noTripsView.apply {
+        noTripsContainerBinding.noTrips.apply {
             view?.resources?.getDimension(R.dimen.dk_margin_half)?.let { cornerRadius ->
                 roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
             DrawableCompat.setTint(this.background, DriveKitUI.colors.neutralColor())
         }
-        tripsListView.updateSwipeRefreshTripsVisibility(false)
+        binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
-    private fun displayTripsList() {
+    private fun displayTripsList(noTripsContainerBinding: ViewContentNoTripsBinding) {
         configureFilter()
-        no_trips_container.visibility = View.GONE
-        dk_trips_list_view.visibility = View.VISIBLE
-        tripsListView.updateSwipeRefreshTripsVisibility(false)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_trips_list, container, false)
-        this.tripsListView = view.findViewById(R.id.dk_trips_list_view)
-        this.textViewTripsSynthesis = view.findViewById(R.id.text_view_trips_synthesis)
-        this.noTripsView = view.findViewById(R.id.no_trips)
-        view.setDKStyle(Color.WHITE)
-        return view
+        noTripsContainerBinding.root.visibility = View.GONE
+        binding.dkTripsListView.visibility = View.VISIBLE
+        binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {
             updateTrips(SynchronizationType.CACHE)
-            filter_view.spinner.setSelection(0, false)
+            binding.filterView.spinner.setSelection(0, false)
         }
     }
 }

@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.common.ui.component.WrapContentViewPager
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.adapter.DKSynthesisCardFragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.dk_fragment_synthesis_card_viewpager.*
-
 
 class DKSynthesisCardViewPagerFragment : Fragment() {
 
@@ -37,7 +36,8 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view_pager.apply {
+        val viewPager = view.findViewById<WrapContentViewPager>(R.id.view_pager)
+        viewPager.apply {
             offscreenPageLimit = cards.size
             adapter = DKSynthesisCardFragmentPagerAdapter(
                 childFragmentManager,
@@ -55,7 +55,7 @@ class DKSynthesisCardViewPagerFragment : Fragment() {
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
 
-            tabLayout.setupWithViewPager(view_pager)
+            tabLayout.setupWithViewPager(viewPager)
             updateTabLayout(0)
         }
     }

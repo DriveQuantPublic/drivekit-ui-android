@@ -13,6 +13,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -21,11 +22,11 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.adapter.BeaconDetailAdapter
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
-import kotlinx.android.synthetic.main.fragment_beacon_detail.recycler_view_container
 
 class BeaconDetailFragment : Fragment() {
+
     companion object {
-        fun newInstance(viewModel: BeaconDetailViewModel) : BeaconDetailFragment {
+        fun newInstance(viewModel: BeaconDetailViewModel): BeaconDetailFragment {
             val fragment = BeaconDetailFragment()
             fragment.viewModel = viewModel
             return fragment
@@ -80,10 +81,10 @@ class BeaconDetailFragment : Fragment() {
         }
 
         viewModel.buildListData(requireContext())
-        val layoutManager =
-            LinearLayoutManager(requireContext())
-        recycler_view_container.layoutManager = layoutManager
-        recycler_view_container.adapter = BeaconDetailAdapter(requireContext(), viewModel)
+        val layoutManager = LinearLayoutManager(requireContext())
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_container)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = BeaconDetailAdapter(requireContext(), viewModel)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

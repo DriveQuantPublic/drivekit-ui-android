@@ -24,16 +24,15 @@ import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.ScanState
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconScannerBinding
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
-import kotlinx.android.synthetic.main.fragment_beacon_scanner.image_view
-import kotlinx.android.synthetic.main.fragment_beacon_scanner.text_view_title
 
 class BeaconScannerFragment : Fragment(), ScanState {
 
     companion object {
         private const val REQUEST_ENABLE_BT = 1
 
-        fun newInstance(viewModel: BeaconViewModel, step: BeaconStep) : BeaconScannerFragment {
+        fun newInstance(viewModel: BeaconViewModel, step: BeaconStep): BeaconScannerFragment {
             val fragment = BeaconScannerFragment()
             fragment.viewModel = viewModel
             fragment.beaconStep = step
@@ -43,9 +42,13 @@ class BeaconScannerFragment : Fragment(), ScanState {
 
     private lateinit var viewModel: BeaconViewModel
     private lateinit var beaconStep: BeaconStep
+    private var _binding: FragmentBeaconScannerBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_scanner, container, false).setDKStyle()
+        _binding = FragmentBeaconScannerBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -77,12 +80,17 @@ class BeaconScannerFragment : Fragment(), ScanState {
         updateChildFragment()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateStep(beaconStep: BeaconStep){
         this.beaconStep = beaconStep
-        text_view_title.text = beaconStep.getTitle(requireContext(), viewModel)
-        text_view_title.normalText(DriveKitUI.colors.mainFontColor())
-        image_view.setImageDrawable(beaconStep.getImage(requireContext()))
-        image_view.setOnClickListener {
+        binding.textViewTitle.text = beaconStep.getTitle(requireContext(), viewModel)
+        binding.textViewTitle.normalText(DriveKitUI.colors.mainFontColor())
+        binding.imageView.setImageDrawable(beaconStep.getImage(requireContext()))
+        binding.imageView.setOnClickListener {
             if (!viewModel.isBluetoothSensorEnabled()) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())

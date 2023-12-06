@@ -10,9 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/dk_layout_toolbar" />
+        <include layout="@layout/dk_layout_toolbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,7 +85,6 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/button_validate"
             layout="@layout/layout_button_action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

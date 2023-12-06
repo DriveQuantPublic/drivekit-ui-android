@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
     <TextView
         android:id="@+id/text_view_alert_title"
         android:layout_width="match_parent"
@@ -13,19 +15,22 @@
         android:paddingLeft="@dimen/dk_margin"
         android:paddingRight="@dimen/dk_margin"
         tools:text="Header title" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dk_margin_half"
+        android:orientation="vertical"
         android:paddingStart="@dimen/dk_margin_medium"
-        android:paddingEnd="@dimen/dk_margin_medium"
-        android:orientation="vertical">
+        android:paddingEnd="@dimen/dk_margin_medium">
+
         <TextView
             android:id="@+id/text_view_alert_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dk_margin_half"
             tools:text="Description text" />
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text_field"
             android:layout_width="match_parent"

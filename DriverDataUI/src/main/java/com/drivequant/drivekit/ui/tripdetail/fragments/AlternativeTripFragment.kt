@@ -14,23 +14,16 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
-import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.commons.views.TripSynthesisItem
+import com.drivequant.drivekit.ui.databinding.DkAlternativeTripFragmentBinding
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.AlternativeTripViewModel
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.button_change
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_analyzed_text
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_declared_text
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_description
-import kotlinx.android.synthetic.main.dk_alternative_trip_fragment.transportation_mode_icon
 
 internal class AlternativeTripFragment : Fragment() {
 
     private lateinit var trip: Trip
     private lateinit var viewModel: AlternativeTripViewModel
-    private lateinit var conditionItem: TripSynthesisItem
-    private lateinit var weatherItem: TripSynthesisItem
-    private lateinit var meanSpeedItem: TripSynthesisItem
+    private var _binding: DkAlternativeTripFragmentBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(trip: Trip): AlternativeTripFragment {
@@ -45,12 +38,9 @@ internal class AlternativeTripFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.dk_alternative_trip_fragment, container, false)
-        view.setDKStyle(Color.WHITE)
-        conditionItem = view.findViewById(R.id.item_condition)
-        weatherItem = view.findViewById(R.id.item_weather)
-        meanSpeedItem = view.findViewById(R.id.item_mean_speed)
-        return view
+        _binding = DkAlternativeTripFragmentBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -75,16 +65,16 @@ internal class AlternativeTripFragment : Fragment() {
                 AlternativeTripViewModel.AlternativeTripViewModelFactory(trip)
             )[AlternativeTripViewModel::class.java]
         }
-        button_change.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-        button_change.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        button_change.text = DKResource.convertToString(requireContext(), "dk_driverdata_change_transportation_mode")
-        button_change.setOnClickListener { launchTransportationMode() }
-        conditionItem.setValueItem(viewModel.getConditionValue(requireContext()))
-        weatherItem.setValueItem(viewModel.getWeatherValue(requireContext()))
-        meanSpeedItem.setValueItem(viewModel.getMeanSpeed(requireContext()))
-        conditionItem.setValueTypeFace()
-        meanSpeedItem.setValueTypeFace()
-        weatherItem.setValueTypeFace()
+        binding.buttonChange.setBackgroundColor(DriveKitUI.colors.secondaryColor())
+        binding.buttonChange.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
+        binding.buttonChange.text = DKResource.convertToString(requireContext(), "dk_driverdata_change_transportation_mode")
+        binding.buttonChange.setOnClickListener { launchTransportationMode() }
+        binding.itemCondition.setValueItem(viewModel.getConditionValue(requireContext()))
+        binding.itemWeather.setValueItem(viewModel.getWeatherValue(requireContext()))
+        binding.itemMeanSpeed.setValueItem(viewModel.getMeanSpeed(requireContext()))
+        binding.itemCondition.setValueTypeFace()
+        binding.itemMeanSpeed.setValueTypeFace()
+        binding.itemWeather.setValueTypeFace()
     }
 
     override fun onResume() {
@@ -93,17 +83,22 @@ internal class AlternativeTripFragment : Fragment() {
         updateContent()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun updateContent() {
-        transportation_mode_icon.setImageDrawable(viewModel.getIcon(requireContext()))
-        transportation_mode_analyzed_text.text =
+        binding.transportationModeIcon.setImageDrawable(viewModel.getIcon(requireContext()))
+        binding.transportationModeAnalyzedText.text =
             viewModel.getAnalyzedTransportationModeTitle(requireContext())
         viewModel.getDeclaredTransportationModeTitle(requireContext())?.let {
-            transportation_mode_declared_text.text = it
-            transportation_mode_declared_text.visibility = View.VISIBLE
+            binding.transportationModeDeclaredText.text = it
+            binding.transportationModeDeclaredText.visibility = View.VISIBLE
         }
 
-        transportation_mode_description.text = viewModel.getDescription(requireContext())
-        transportation_mode_description.setTextColor(DriveKitUI.colors.mainFontColor())
+        binding.transportationModeDescription.text = viewModel.getDescription(requireContext())
+        binding.transportationModeDescription.setTextColor(DriveKitUI.colors.mainFontColor())
     }
 
     private fun launchTransportationMode() {

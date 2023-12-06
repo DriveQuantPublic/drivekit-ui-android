@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -23,10 +24,9 @@ import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_progress.text_view_description
-import kotlinx.android.synthetic.main.fragment_beacon_child_scanner_success.button_validate
 
 class BeaconScannerSuccessFragment : Fragment() {
+
     companion object {
         fun newInstance(viewModel: BeaconViewModel): BeaconScannerSuccessFragment {
             val fragment = BeaconScannerSuccessFragment()
@@ -67,20 +67,24 @@ class BeaconScannerSuccessFragment : Fragment() {
         val vehicleName = viewModel.vehicleName ?: ""
         val beaconCode = viewModel.beacon?.code ?: ""
 
-        text_view_description.normalText()
-        text_view_description.text = DKResource.buildString(
-            requireContext(),
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
-            "dk_vehicle_beacon_setup_code_success_recap",
-            beaconCode,
-            vehicleName
-        )
+        view.findViewById<TextView>(R.id.text_view_description).apply {
+            normalText()
+            text = DKResource.buildString(
+                requireContext(),
+                DriveKitUI.colors.mainFontColor(),
+                DriveKitUI.colors.mainFontColor(),
+                "dk_vehicle_beacon_setup_code_success_recap",
+                beaconCode,
+                vehicleName
+            )
+        }
 
-        button_validate.button()
-        button_validate.text = DKResource.convertToString(requireContext(), "dk_common_confirm")
-        button_validate.setOnClickListener {
-            viewModel.addBeaconToVehicle()
+        view.findViewById<Button>(R.id.button_validate).apply {
+            button()
+            text = DKResource.convertToString(requireContext(), "dk_common_confirm")
+            setOnClickListener {
+                viewModel.addBeaconToVehicle()
+            }
         }
 
         viewModel.beaconAddObserver.observe(viewLifecycleOwner) {

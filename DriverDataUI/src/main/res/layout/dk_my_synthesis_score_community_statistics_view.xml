@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:viewBindingIgnore="true">
 
     <View
         android:id="@+id/icon"
@@ -18,10 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dk_margin_half"
         android:layout_marginBottom="@dimen/dk_margin_quarter"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="@id/icon"
-        app:layout_constraintBottom_toBottomOf="@id/icon" />
+        app:layout_constraintTop_toTopOf="@id/icon" />
 
     <TextView
         android:id="@+id/trips_count_title"

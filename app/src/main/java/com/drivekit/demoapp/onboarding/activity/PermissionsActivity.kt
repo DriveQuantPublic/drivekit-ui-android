@@ -3,24 +3,24 @@ package com.drivekit.demoapp.onboarding.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.onboarding.viewmodel.PermissionsViewModel
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivityPermissionsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
-import kotlinx.android.synthetic.main.activity_permissions.*
 
 internal class PermissionsActivity : AppCompatActivity() {
 
     private val viewModel = PermissionsViewModel()
+    private lateinit var binding: ActivityPermissionsBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -30,13 +30,13 @@ internal class PermissionsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_permissions)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityPermissionsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         title = getString(R.string.permissions_intro_header)
 
-        text_view_title.apply {
+        binding.textViewTitle.apply {
             text = getString(R.string.permissions_intro_title)
             headLine1()
             addInfoIconAtTheEnd(this@PermissionsActivity)
@@ -44,11 +44,11 @@ internal class PermissionsActivity : AppCompatActivity() {
                 openDriveKitPermissionsDoc()
             }
         }
-        text_view_description.apply {
+        binding.textViewDescription.apply {
             text = getString(R.string.permissions_intro_description)
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
-        button_request_permissions.findViewById<Button>(R.id.button_action).apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.permissions_intro_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

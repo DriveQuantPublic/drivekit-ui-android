@@ -3,29 +3,27 @@ package com.drivekit.demoapp.onboarding.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.drivekit.demoapp.manager.*
+import com.drivekit.demoapp.manager.SyncStatus
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdDriveKitListener
 import com.drivekit.demoapp.onboarding.viewmodel.UserIdViewModel
 import com.drivekit.demoapp.onboarding.viewmodel.getErrorMessage
 import com.drivekit.demoapp.utils.addInfoIconAtTheEnd
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivitySetUserIdBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.networking.RequestError
-import kotlinx.android.synthetic.main.activity_set_user_id.*
 
 class UserIdActivity : AppCompatActivity() {
 
     private lateinit var viewModel: UserIdViewModel
+    private lateinit var binding: ActivitySetUserIdBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -35,20 +33,20 @@ class UserIdActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_user_id)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivitySetUserIdBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         title = getString( R.string.authentication_header)
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[UserIdViewModel::class.java]
         }
 
-        text_view_user_id_description.apply {
+        binding.textViewUserIdDescription.apply {
             text = getString(R.string.authentication_description)
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
-        text_view_user_id_title.apply {
+        binding.textViewUserIdTitle.apply {
             text = getString(R.string.authentication_title)
             this.addInfoIconAtTheEnd(this@UserIdActivity)
             headLine1()
@@ -56,7 +54,7 @@ class UserIdActivity : AppCompatActivity() {
                 openDriveKitUserIdDoc()
             }
         }
-        button_validate.findViewById<Button>(R.id.button_action).apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
@@ -65,11 +63,11 @@ class UserIdActivity : AppCompatActivity() {
         }
 
         viewModel.messageIdentifier.observe(this) {
-            progress_bar_message.show(getString(it))
+            binding.progressBarMessage.show(getString(it))
         }
         viewModel.syncStatus.observe(this) {
             syncUserInfo(it)
-            progress_bar_message.hide()
+            binding.progressBarMessage.hide()
         }
 
         viewModel.syncUserInfo.observe(this) {
@@ -89,23 +87,23 @@ class UserIdActivity : AppCompatActivity() {
     }
 
     private fun validateUserId() {
-        val userId = text_view_user_id_field.editableText.toString()
+        val userId = binding.textViewUserIdField.editableText.toString()
         val isEditTextUserIdBlank = userId.isBlank()
         if (isEditTextUserIdBlank) {
-            text_input_layout_user_id.apply {
+            binding.textInputLayoutUserId.apply {
                 isErrorEnabled = true
                 error = getString(R.string.user_id_error)
             }
         } else {
-            text_input_layout_user_id.isErrorEnabled = false
-            progress_bar_message.show(null)
+            binding.textInputLayoutUserId.isErrorEnabled = false
+            binding.progressBarMessage.show(null)
             viewModel.sendUserId(userId, object : UserIdDriveKitListener {
                 override fun onSetUserId(status: Boolean, requestError: RequestError?) {
                     if (status) {
-                        progress_bar_message.show(getString(R.string.sync_user_info_loading_message))
+                        binding.progressBarMessage.show(getString(R.string.sync_user_info_loading_message))
                         viewModel.syncDriveKitModules()
                     } else {
-                        progress_bar_message.hide()
+                        binding.progressBarMessage.hide()
                         val message = requestError?.getErrorMessage(this@UserIdActivity)
                         Toast.makeText(this@UserIdActivity, message, Toast.LENGTH_LONG).show()
                     }

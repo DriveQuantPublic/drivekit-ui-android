@@ -13,7 +13,7 @@ import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentItemListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -30,8 +30,6 @@ import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.VERSI
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.YEARS
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
-import kotlinx.android.synthetic.main.fragment_item_list.items_recycler_view
-import kotlinx.android.synthetic.main.fragment_item_list.text_view_description
 
 class VehicleItemListFragment : Fragment() {
 
@@ -43,7 +41,7 @@ class VehicleItemListFragment : Fragment() {
         TRUCK_TYPE_ITEM(4);
 
         companion object {
-            fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep) : AdapterType {
+            fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep): AdapterType {
                 return when (vehiclePickerStep) {
                     TYPE -> TEXT_ITEM_PADDING
                     TRUCK_TYPE -> TRUCK_TYPE_ITEM
@@ -55,9 +53,7 @@ class VehicleItemListFragment : Fragment() {
                     VERSIONS,
                     BRANDS_FULL,
                     CATEGORY_DESCRIPTION,
-                    NAME -> {
-                        TEXT_ITEM
-                    }
+                    NAME -> TEXT_ITEM
                 }
             }
         }
@@ -71,12 +67,15 @@ class VehicleItemListFragment : Fragment() {
     private lateinit var adapterType: AdapterType
     private var adapter: ItemRecyclerViewAdapter? = null
 
+    private var _binding: FragmentItemListBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
+
     companion object {
         fun newInstance(
             viewModel: VehiclePickerViewModel,
             vehiclePickerStep: VehiclePickerStep,
-            items: List<VehiclePickerItem>)
-                : VehicleItemListFragment {
+            items: List<VehiclePickerItem>
+        ): VehicleItemListFragment {
             val fragment = VehicleItemListFragment()
             fragment.viewModel = viewModel
             fragment.vehiclePickerStep = vehiclePickerStep
@@ -92,6 +91,16 @@ class VehicleItemListFragment : Fragment() {
         super.onSaveInstanceState(outState)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentItemListBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
@@ -99,12 +108,12 @@ class VehicleItemListFragment : Fragment() {
         }
 
         if (vehiclePickerStep == TYPE) {
-            text_view_description.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+            binding.textViewDescription.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
         }
 
         adapterType = AdapterType.getAdapterTypeByPickerStep(vehiclePickerStep)
 
-        items_recycler_view.layoutManager = when (adapterType) {
+        binding.itemsRecyclerView.layoutManager = when (adapterType) {
             AdapterType.TEXT_ITEM,
             AdapterType.TEXT_ITEM_PADDING -> LinearLayoutManager(context)
             AdapterType.TRUCK_TYPE_ITEM -> GridLayoutManager(context, 1)
@@ -116,19 +125,18 @@ class VehicleItemListFragment : Fragment() {
         }
         val descriptionText = viewModel.getDescription(requireContext(), vehiclePickerStep)
         descriptionText?.let {
-            text_view_description.text = it
-            text_view_description.visibility = View.VISIBLE
-        }?:run {
-            text_view_description.visibility = View.GONE
+            binding.textViewDescription.text = it
+            binding.textViewDescription.visibility = View.VISIBLE
+        } ?: run {
+            binding.textViewDescription.visibility = View.GONE
         }
-        text_view_description.bigText()
+        binding.textViewDescription.bigText()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_item_list, container,false).setDKStyle()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onResume() {
         super.onResume()
@@ -146,8 +154,8 @@ class VehicleItemListFragment : Fragment() {
                 items = viewModel.getItemsByStep(vehiclePickerStep)
             }
             adapter = ItemRecyclerViewAdapter(vehiclePickerStep, items, listener)
-            items_recycler_view.adapter = adapter
-            items_recycler_view.adapter?.notifyDataSetChanged()
+            binding.itemsRecyclerView.adapter = adapter
+            binding.itemsRecyclerView.adapter?.notifyDataSetChanged()
         }
     }
 

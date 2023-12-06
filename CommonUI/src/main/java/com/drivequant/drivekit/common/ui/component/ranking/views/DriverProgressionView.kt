@@ -4,19 +4,28 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DKRankingViewModel
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import kotlinx.android.synthetic.main.dk_driver_progression_view.view.*
 
 
-class DriverProgressionView  : LinearLayout {
+class DriverProgressionView : LinearLayout {
+
+    private lateinit var globalRankTextView: TextView
+    private lateinit var driverProgressionImageView: ImageView
+    private lateinit var driverProgressionContainer: View
+    private lateinit var infoPopupConditionImageView: ImageView
 
     constructor(context: Context) : super(context) {
         init()
@@ -32,6 +41,11 @@ class DriverProgressionView  : LinearLayout {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT))
 
+        this.globalRankTextView = view.findViewById(R.id.text_view_global_rank)
+        this.driverProgressionImageView = view.findViewById(R.id.image_view_driver_progression)
+        this.driverProgressionContainer = view.findViewById(R.id.driver_progression_container)
+        this.infoPopupConditionImageView = view.findViewById(R.id.image_view_info_popup_condition)
+
         setStyle()
     }
 
@@ -42,25 +56,25 @@ class DriverProgressionView  : LinearLayout {
                 DriverProgression.GOING_UP -> "dk_common_arrow_up"
                 else -> null
             }
-        text_view_global_rank.text = rankingViewModel.getDriverGlobalRank(context)
+        this.globalRankTextView.text = rankingViewModel.getDriverGlobalRank(context)
         progressionIconId?.let {
-            image_view_driver_progression.setImageDrawable(
+            this.driverProgressionImageView.setImageDrawable(
                 DKResource.convertToDrawable(
                     context,
                     it
                 )
             )
         }?:run {
-            image_view_driver_progression.visibility = View.GONE
+            this.driverProgressionImageView.visibility = View.GONE
         }
-        driver_progression_container.setBackgroundColor(rankingViewModel.getBackgroundColor())
+        this.driverProgressionContainer.setBackgroundColor(rankingViewModel.getBackgroundColor())
         setConditionInfoButton(rankingViewModel)
     }
 
     private fun setConditionInfoButton(rankingViewModel: DKRankingViewModel) {
         DKResource.convertToDrawable(context, "dk_common_info")?.let {
             it.tintDrawable(DriveKitUI.colors.secondaryColor())
-            image_view_info_popup_condition.apply {
+            this.infoPopupConditionImageView.apply {
                 visibility = if (rankingViewModel.getConditionVisibility()) {
                     View.VISIBLE
                 } else {
@@ -90,6 +104,6 @@ class DriverProgressionView  : LinearLayout {
     }
 
     private fun setStyle() {
-        text_view_global_rank.headLine2()
+        this.globalRankTextView.headLine2()
     }
 }

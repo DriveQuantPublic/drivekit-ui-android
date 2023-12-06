@@ -22,7 +22,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerVehicleListBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.common.OdometerDrawableListener
@@ -31,13 +31,6 @@ import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerActionItem
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemType
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerItemViewModel
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerVehicleListViewModel
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.dk_swipe_refresh_odometer
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.mileage_vehicle_item
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.progress_circular
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.root
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.text_view_no_vehicle
-import kotlinx.android.synthetic.main.dk_fragment_odometer_vehicle_list.vehicle_filter
-
 
 class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
@@ -45,6 +38,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     private lateinit var synchronizationType: SynchronizationType
     private var shouldSyncOdometer = true
     private var vehicleId: String? = null
+    private var _binding: DkFragmentOdometerVehicleListBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     companion object {
         fun newInstance(vehicleId: String?) : OdometerVehicleListFragment {
@@ -57,6 +52,15 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("vehicleIdTag", vehicleId)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = DkFragmentOdometerVehicleListBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle(Color.WHITE)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +78,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
             viewModel = ViewModelProvider(this,
                 OdometerVehicleListViewModel.OdometerVehicleListViewModelFactory(vehicleId))[OdometerVehicleListViewModel::class.java]
         }
-        dk_swipe_refresh_odometer.setOnRefreshListener {
+        binding.dkSwipeRefreshOdometer.setOnRefreshListener {
             updateSwipeRefreshOdometerVisibility(true)
             viewModel.selection.value?.let {
                 updateOdometer(it, SynchronizationType.DEFAULT)
@@ -87,7 +91,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 if (it) {
                     viewModel.selection.value?.let { vehicleId ->
                         val viewModel = OdometerItemViewModel(vehicleId)
-                        mileage_vehicle_item.configureOdometerItem(
+                        binding.mileageVehicleItem.configureOdometerItem(
                             viewModel,
                             OdometerItemType.ODOMETER,
                             this@OdometerVehicleListFragment
@@ -122,8 +126,8 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                         if (vehicleOdometer != null) SynchronizationType.CACHE else SynchronizationType.DEFAULT
                     updateOdometer(it, synchronizationType)
                 } ?: run {
-                    root.visibility = View.GONE
-                    text_view_no_vehicle.apply {
+                    binding.container.visibility = View.GONE
+                    binding.textViewNoVehicle.apply {
                         text = DKResource.convertToString(context, "dk_vehicle_list_empty")
                         normalText()
                         visibility = View.VISIBLE
@@ -133,9 +137,14 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         }
 
         viewModel.filterData.observe(viewLifecycleOwner) { position ->
-            vehicle_filter.setItems(viewModel.filterItems, position)
+            binding.vehicleFilter.setItems(viewModel.filterItems, position)
             initVehicleFilter()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun updateOdometer(vehicleId: String, synchronizationType: SynchronizationType) {
@@ -144,7 +153,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
     }
 
     private fun initVehicleFilter() {
-        vehicle_filter.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.vehicleFilter.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>?,
                 view: View,
@@ -159,25 +168,18 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.dk_fragment_odometer_vehicle_list, container, false).setDKStyle(Color.WHITE)
-
     private fun updateProgressVisibility(displayProgress: Boolean) {
-        progress_circular?.apply {
-            visibility = if (displayProgress) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressCircular.visibility = if (displayProgress) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
     }
 
     private fun updateSwipeRefreshOdometerVisibility(display: Boolean) {
-        dk_swipe_refresh_odometer.isRefreshing = display
+        binding.dkSwipeRefreshOdometer.isRefreshing = display
         if (!display) {
-            dk_swipe_refresh_odometer.visibility = View.VISIBLE
+            binding.dkSwipeRefreshOdometer.visibility = View.VISIBLE
         }
     }
 

@@ -4,29 +4,30 @@ import android.Manifest
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.View
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
+import com.drivequant.drivekit.vehicle.ui.databinding.ActivityBluetoothBinding
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
-import kotlinx.android.synthetic.main.activity_bluetooth.*
 
 class BluetoothActivity : AppCompatActivity() {
-    private lateinit var viewModel : BluetoothViewModel
+    private lateinit var viewModel: BluetoothViewModel
     private lateinit var vehicleId: String
     private lateinit var vehicleName: String
+    private lateinit var binding: ActivityBluetoothBinding
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
@@ -45,11 +46,11 @@ class BluetoothActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_bluetooth_add"), javaClass.simpleName)
 
-        setContentView(R.layout.activity_bluetooth)
+        binding = ActivityBluetoothBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -95,7 +96,7 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
             .alpha(0f)
             .setDuration(200L)
@@ -108,7 +109,7 @@ class BluetoothActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
             .alpha(1f)
             .setDuration(200L)

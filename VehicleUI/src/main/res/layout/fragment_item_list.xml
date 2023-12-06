@@ -2,26 +2,32 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:focusable="true"
     android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
     android:padding="@dimen/dk_margin_medium">
-    <include layout="@layout/dk_layout_progress_bar" />
+
+    <include
+        android:id="@+id/progressBar"
+        layout="@layout/dk_layout_progress_bar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/text_view_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
             android:layout_margin="@dimen/dk_margin"
-            android:visibility="gone"/>
+            android:textAlignment="center"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </LinearLayout>
 </FrameLayout>

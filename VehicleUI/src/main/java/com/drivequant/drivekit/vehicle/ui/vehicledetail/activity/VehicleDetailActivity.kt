@@ -3,22 +3,22 @@ package com.drivequant.drivekit.vehicle.ui.vehicledetail.activity
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.vehicle.ui.R
+import com.drivequant.drivekit.vehicle.ui.databinding.ActivityVehicleDetailBinding
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.fragment.VehicleDetailFragment
 import com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel.VehicleDetailViewModel
-import kotlinx.android.synthetic.main.activity_vehicle_picker.*
 
 class VehicleDetailActivity : AppCompatActivity() {
 
-    private lateinit var viewModel : VehicleDetailViewModel
+    private lateinit var viewModel: VehicleDetailViewModel
+    private lateinit var binding: ActivityVehicleDetailBinding
 
     companion object {
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
@@ -27,11 +27,11 @@ class VehicleDetailActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vehicle_detail)
+        binding = ActivityVehicleDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.dkToolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -58,7 +58,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -71,7 +71,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

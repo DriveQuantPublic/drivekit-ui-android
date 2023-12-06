@@ -4,7 +4,8 @@
     android:id="@+id/dk_swipe_refresh_drivingconditions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".drivingconditions.DrivingConditionsFragment">
+    tools:context=".drivingconditions.DrivingConditionsFragment"
+    tools:viewBindingIgnore="true">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -9,18 +9,19 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.settings.viewmodel.NotificationSettingsViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivitySettingsNotificationsBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.normalText
-import kotlinx.android.synthetic.main.activity_settings_notifications.*
 
 internal class NotificationSettingsActivity : AppCompatActivity() {
+
     private lateinit var viewModel: NotificationSettingsViewModel
+    private lateinit var binding: ActivitySettingsNotificationsBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -32,9 +33,9 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings_notifications)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivitySettingsNotificationsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.notifications_header)
@@ -51,9 +52,9 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
             viewModel = ViewModelProvider(this)[NotificationSettingsViewModel::class.java]
         }
 
-        text_view_notifications_description.normalText(DriveKitUI.colors.complementaryFontColor())
+        binding.textViewNotificationsDescription.normalText(DriveKitUI.colors.complementaryFontColor())
 
-        notification_start_trip.apply {
+        binding.notificationStartTrip.apply {
             if (viewModel.isChannelEnabled(context, DKNotificationChannel.TRIP_STARTED)) {
                 hideWarning()
             } else {
@@ -64,11 +65,11 @@ internal class NotificationSettingsActivity : AppCompatActivity() {
                 redirectTripStartedSettings(context)
             }
         }
-        configureSwitchSettings(notification_trip_cancelled, DKNotificationChannel.TRIP_CANCELLED)
-        configureSwitchSettings(notification_trip_finished, DKNotificationChannel.TRIP_ENDED)
+        configureSwitchSettings(binding.notificationTripCancelled, DKNotificationChannel.TRIP_CANCELLED)
+        configureSwitchSettings(binding.notificationTripFinished, DKNotificationChannel.TRIP_ENDED)
 
-        separator_first.setBackgroundColor(DriveKitUI.colors.neutralColor())
-        separator_second.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.separatorFirst.setBackgroundColor(DriveKitUI.colors.neutralColor())
+        binding.separatorSecond.setBackgroundColor(DriveKitUI.colors.neutralColor())
     }
 
     private fun configureSwitchSettings(

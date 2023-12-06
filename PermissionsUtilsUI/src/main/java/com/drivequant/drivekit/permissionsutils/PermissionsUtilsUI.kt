@@ -8,8 +8,11 @@ import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.PermissionsUtilsUIEntryPoint
 import com.drivequant.drivekit.common.ui.utils.ContactType
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.module.BluetoothUsage
 import com.drivequant.drivekit.core.utils.*
 import com.drivequant.drivekit.permissionsutils.diagnosis.activity.AppDiagnosisActivity
+import com.drivequant.drivekit.permissionsutils.diagnosisnotification.DKDeviceConfigurationEventNotificationManager
+import com.drivequant.drivekit.permissionsutils.diagnosisnotification.model.DKDiagnosisNotificationInfo
 import com.drivequant.drivekit.permissionsutils.permissions.listener.PermissionViewListener
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 import java.util.*
@@ -22,7 +25,10 @@ import java.util.*
 object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     internal const val TAG = "DriveKit PermissionsUtils UI"
     internal var permissionViewListener: PermissionViewListener? = null
-    internal var isBluetoothNeeded: Boolean = false
+    internal val isBluetoothNeeded: Boolean
+        get() {
+            return DriveKit.modules.tripAnalysis?.getBluetoothUsage() != BluetoothUsage.NONE
+        }
     internal var contactType: ContactType = ContactType.NONE
     internal var tutorialUrl: String? = null
 
@@ -64,9 +70,8 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     override fun startAppDiagnosisActivity(context: Context) =
         context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 
-    fun configureBluetooth(isBluetoothNeeded: Boolean) {
-        this.isBluetoothNeeded = isBluetoothNeeded
-    }
+    @Deprecated("`isBluetoothNeeded` is now dynamically computed")
+    fun configureBluetooth(isBluetoothNeeded: Boolean) {}
 
     @Deprecated("Logs are now enabled by default. To disable logging, just call DriveKit.disableLogging()")
     fun configureDiagnosisLogs(@Suppress("UNUSED_PARAMETER")shouldDisplayDiagnosisLogs: Boolean) { }
@@ -104,6 +109,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
 
         return !DiagnosisHelper.isNetworkReachable(context)
     }
+
+    fun getDeviceConfigurationEventNotification(): DKDiagnosisNotificationInfo? =
+        DKDeviceConfigurationEventNotificationManager.getNotificationInfo()
 
     fun getDiagnosisDescription(context: Context): String {
         val locationMail =

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.drivekit.demoapp.component.ChartEntry
 import com.drivekit.demoapp.component.TripSimulatorGraphView
@@ -15,6 +14,7 @@ import com.drivekit.demoapp.simulator.viewmodel.PresetTripType
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModel
 import com.drivekit.demoapp.simulator.viewmodel.TripSimulatorDetailViewModelListener
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivityTripSimulatorDetailBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine1
@@ -22,21 +22,13 @@ import com.drivequant.drivekit.common.ui.extension.highlightSmall
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.button_stop_start_trip_simulator
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.graph_container
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_automatic_stop_in
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_duration
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_sdk_state
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_time
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.simulation_run_velocity
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.text_view_description
-import kotlinx.android.synthetic.main.activity_trip_simulator_detail.text_view_title
 
 internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorDetailViewModelListener {
 
     private lateinit var viewModel: TripSimulatorDetailViewModel
     private lateinit var graphView: TripSimulatorGraphView
     private lateinit var presetTripType: PresetTripType
+    private lateinit var binding: ActivityTripSimulatorDetailBinding
 
     companion object {
         const val PRESET_TYPE_EXTRA = "preset-extra"
@@ -57,10 +49,10 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trip_simulator_detail)
+        binding = ActivityTripSimulatorDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
@@ -80,7 +72,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
 
         if (!this::graphView.isInitialized) {
             graphView = TripSimulatorGraphView(this)
-            graph_container.addView(graphView)
+            binding.graphContainer.addView(graphView)
         }
 
         viewModel.registerListener(this@TripSimulatorDetailActivity)
@@ -91,22 +83,22 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     private fun initContent() {
-        text_view_title.apply {
+        binding.textViewTitle.apply {
             text = getString(presetTripType.getTitleResId())
             highlightSmall()
         }
-        text_view_description.apply {
+        binding.textViewDescription.apply {
             text = getString(presetTripType.getDescriptionResId())
             normalText(DriveKitUI.colors.complementaryFontColor())
         }
-        simulation_run_duration.setItemTitle(getString(R.string.trip_simulator_run_duration))
-        simulation_run_time.setItemTitle(getString(R.string.trip_simulator_run_time))
-        simulation_run_velocity.setItemTitle(getString(R.string.trip_simulator_run_velocity))
-        simulation_run_sdk_state.setItemTitle(getString(R.string.trip_simulator_run_sdk_state))
+        binding.simulationRunDuration.setItemTitle(getString(R.string.trip_simulator_run_duration))
+        binding.simulationRunTime.setItemTitle(getString(R.string.trip_simulator_run_time))
+        binding.simulationRunVelocity.setItemTitle(getString(R.string.trip_simulator_run_velocity))
+        binding.simulationRunSdkState.setItemTitle(getString(R.string.trip_simulator_run_sdk_state))
     }
 
     private fun startStopSimulation() {
-        button_stop_start_trip_simulator.findViewById<Button>(R.id.button_action).apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isSimulating) {
@@ -141,11 +133,11 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     private fun updateContent() {
-        simulation_run_duration.setItemValue(viewModel.getTotalDuration())
-        simulation_run_time.setItemValue(viewModel.getSpentDuration())
-        simulation_run_velocity.setItemValue(viewModel.getVelocity(this@TripSimulatorDetailActivity))
-        simulation_run_sdk_state.setItemValue(viewModel.getState())
-        simulation_automatic_stop_in.apply {
+        binding.simulationRunDuration.setItemValue(viewModel.getTotalDuration())
+        binding.simulationRunTime.setItemValue(viewModel.getSpentDuration())
+        binding.simulationRunVelocity.setItemValue(viewModel.getVelocity(this@TripSimulatorDetailActivity))
+        binding.simulationRunSdkState.setItemValue(viewModel.getState())
+        binding.simulationAutomaticStopIn.apply {
             visibility = if (viewModel.shouldDisplayStoppingMessage()) {
                 setItemTitle(getString(R.string.trip_simulator_automatic_stop_in))
                 setItemValue(viewModel.getRemainingTimeToStop())
@@ -160,7 +152,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         } else {
             R.string.trip_simulator_restart_button
         }.let {
-            button_stop_start_trip_simulator.findViewById<Button>(R.id.button_action).text = getString(it)
+            binding.root.findViewById<Button>(R.id.button_action).text = getString(it)
         }
     }
 

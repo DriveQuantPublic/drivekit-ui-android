@@ -3,17 +3,18 @@ package com.drivekit.demoapp.onboarding.activity
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import com.drivekit.demoapp.onboarding.viewmodel.ApiKeyViewModel
 import com.drivekit.drivekitdemoapp.R
+import com.drivekit.drivekitdemoapp.databinding.ActivitySetApiKeyBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
-import kotlinx.android.synthetic.main.activity_set_api_key.*
 
 internal class ApiKeyActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySetApiKeyBinding
 
     companion object {
         fun launchActivity(activity: Activity) {
@@ -23,18 +24,18 @@ internal class ApiKeyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_api_key)
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivitySetApiKeyBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.vehicle.ui.R.id.dk_toolbar))
         title = getString(R.string.welcome_header)
 
         val viewModel = ApiKeyViewModel()
-        text_view_description.text = viewModel.getDescription(this@ApiKeyActivity)
-        text_view_title.apply {
+        binding.textViewDescription.text = viewModel.getDescription(this@ApiKeyActivity)
+        binding.textViewTitle.apply {
             text = getString(viewModel.getTitle())
             headLine1()
         }
-        button_next.findViewById<Button>(R.id.button_action).apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(viewModel.getButtonText())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

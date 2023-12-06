@@ -8,17 +8,16 @@
     tools:context="com.drivekit.demoapp.simulator.activity.TripSimulatorActivity">
 
     <include
-        android:id="@+id/toolbar"
         layout="@layout/dk_layout_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:paddingBottom="@dimen/dk_margin_half"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/dk_margin_half">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,7 +82,6 @@
     </ScrollView>
 
     <include
-        android:id="@+id/button_simulate_trip"
         layout="@layout/layout_button_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

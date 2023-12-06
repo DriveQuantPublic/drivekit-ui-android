@@ -11,8 +11,8 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -25,28 +25,29 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.databinding.ActivityBeaconBinding
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
-import kotlinx.android.synthetic.main.activity_beacon.*
 
 class BeaconActivity : AppCompatActivity() {
-    private lateinit var viewModel : BeaconViewModel
-    private lateinit var scanType : BeaconScanType
+    private lateinit var viewModel: BeaconViewModel
+    private lateinit var scanType: BeaconScanType
 
-    private lateinit var toolbar: Toolbar
+    private lateinit var binding: ActivityBeaconBinding
 
-    private var vehicleId : String? = null
-    private var beacon : Beacon? = null
+    private var vehicleId: String? = null
+    private var beacon: Beacon? = null
 
     companion object {
         private const val SCAN_TYPE_EXTRA = "scan-type-extra"
         private const val VEHICLE_ID_EXTRA = "vehicleId-extra"
         private const val BEACON_EXTRA = "beacon-extra"
 
-        fun launchActivity(context: Context,
-                           scanType: BeaconScanType,
-                           vehicleId: String? = null,
-                           beacon: Beacon? = null
+        fun launchActivity(
+            context: Context,
+            scanType: BeaconScanType,
+            vehicleId: String? = null,
+            beacon: Beacon? = null
         ) {
             DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner launched in ${scanType.name} mode, vehicleId=$vehicleId, major=${beacon?.major}, minor=${beacon?.minor}")
 
@@ -61,11 +62,11 @@ class BeaconActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_beacon)
+        binding = ActivityBeaconBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        toolbar = findViewById(R.id.dk_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(DriveKitUI.colors.primaryColor()))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -155,7 +156,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -168,7 +169,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        dk_progress_circular?.apply {
+        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

@@ -22,26 +22,31 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleBeaconInfoStatus
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
+import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconInputIdBinding
 import com.drivequant.drivekit.vehicle.ui.utils.NearbyDevicesUtils
-import kotlinx.android.synthetic.main.fragment_beacon_input_id.button_validate
-import kotlinx.android.synthetic.main.fragment_beacon_input_id.code_field
-import kotlinx.android.synthetic.main.fragment_beacon_input_id.code_wrapper
-import kotlinx.android.synthetic.main.fragment_beacon_input_id.text_view_beacon_code_text
 
 class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListener {
 
     companion object {
-        fun newInstance(viewModel: BeaconViewModel) : BeaconInputIdFragment {
+        fun newInstance(viewModel: BeaconViewModel): BeaconInputIdFragment {
             val fragment = BeaconInputIdFragment()
             fragment.viewModel = viewModel
             return fragment
         }
     }
 
-    private lateinit var viewModel : BeaconViewModel
+    private lateinit var viewModel: BeaconViewModel
+    private var _binding: FragmentBeaconInputIdBinding? = null
+    private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_beacon_input_id, container, false).setDKStyle()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBeaconInputIdBinding.inflate(inflater, container, false)
+        binding.root.setDKStyle()
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -72,21 +77,26 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
             }
         }
 
-        text_view_beacon_code_text.apply {
+        binding.textViewBeaconCodeText.apply {
             bigText(DriveKitUI.colors.mainFontColor())
             text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
         }
-        code_wrapper.apply {
+        binding.codeWrapper.apply {
             hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
             typeface = DriveKitUI.primaryFont(context)
         }
-        button_validate.apply {
+        binding.buttonValidate.apply {
             button()
             text = DKResource.convertToString(requireContext(), "dk_common_validate")
             setOnClickListener {
                 manageValidateClick(it)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun displayError(vararg args: String) {
@@ -121,12 +131,12 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
     private fun manageValidateClick(view: View){
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-        val codeValue: String = code_field.text.toString().trim()
+        val codeValue: String = binding.codeField.text.toString().trim()
         if (codeValue.isEmpty()){
-            code_wrapper.isErrorEnabled = true
-            code_wrapper.error = DKResource.convertToString(requireContext(), "dk_common_error_empty_field")
+            binding.codeWrapper.isErrorEnabled = true
+            binding.codeWrapper.error = DKResource.convertToString(requireContext(), "dk_common_error_empty_field")
         } else {
-            code_wrapper.isErrorEnabled = false
+            binding.codeWrapper.isErrorEnabled = false
             viewModel.checkCode(codeValue)
         }
     }
