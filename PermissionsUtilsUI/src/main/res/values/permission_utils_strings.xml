@@ -46,7 +46,7 @@
    <string name="dk_perm_utils_app_diag_help_request_title">The app does not record your trips?</string>
    <string name="dk_perm_utils_app_diag_learn_more">Learn more</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ko">The geolocation of your phone is disabled. The application can not work if it cannot access this information.</string>
-   <string name="dk_perm_utils_app_diag_loc_sensor_link">Activate localization</string>
+   <string name="dk_perm_utils_app_diag_loc_sensor_link">Activate location</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_ok">You have enabled geolocation. The location sensor (GPS) measures the vehicle\'s speed and heading. If it is disabled the application can not work.</string>
    <string name="dk_perm_utils_app_diag_loc_sensor_title">Location sensor</string>
    <string name="dk_perm_utils_app_diag_location_full_ko_ios14">You must allow the application to access the precise location of the phone so that it can analyze your routes. In the \"Location\" settings, activate \"Precise Location\".</string>

@@ -60,7 +60,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ), javaClass.simpleName
         )
 
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

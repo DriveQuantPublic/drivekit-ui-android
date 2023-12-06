@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,7 @@ class UserIdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetUserIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         title = getString( R.string.authentication_header)
 
         if (!this::viewModel.isInitialized) {
@@ -53,7 +54,7 @@ class UserIdActivity : AppCompatActivity() {
                 openDriveKitUserIdDoc()
             }
         }
-        binding.buttonValidate.buttonAction.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             text = getString(R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

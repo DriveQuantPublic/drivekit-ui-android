@@ -10,7 +10,7 @@ internal enum class DKNotificationChannel {
     TRIP_ENDED,
     DEMO_APP;
 
-    fun create() = when (this) {
+    fun canCreate() = when (this) {
         TRIP_STARTED -> false
         else -> true
     }

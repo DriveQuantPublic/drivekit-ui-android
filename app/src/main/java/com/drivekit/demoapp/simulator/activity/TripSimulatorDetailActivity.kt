@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +52,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         binding = ActivityTripSimulatorDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
@@ -97,7 +98,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     }
 
     private fun startStopSimulation() {
-        binding.buttonStopStartTripSimulator.buttonAction.apply {
+        binding.root.findViewById<Button>(R.id.button_action).apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 if (viewModel.isSimulating) {
@@ -151,7 +152,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         } else {
             R.string.trip_simulator_restart_button
         }.let {
-            binding.buttonStopStartTripSimulator.buttonAction.text = getString(it)
+            binding.root.findViewById<Button>(R.id.button_action).text = getString(it)
         }
     }
 
