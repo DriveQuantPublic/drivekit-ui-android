@@ -79,6 +79,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         )
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

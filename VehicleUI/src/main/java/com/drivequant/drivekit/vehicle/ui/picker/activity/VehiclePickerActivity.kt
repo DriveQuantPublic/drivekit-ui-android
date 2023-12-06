@@ -238,6 +238,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             finish()

@@ -208,7 +208,7 @@ class TripsListFragment : Fragment() {
         binding.noTripsContainer.noTripsRecordedText.normalText()
 
         binding.noTripsContainer.noTrips.apply {
-            view?.resources?.getDimension(R.dimen.dk_margin_half)?.let { cornerRadius ->
+            view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
                 roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
             DrawableCompat.setTint(this.background, DriveKitUI.colors.neutralColor())
@@ -223,6 +223,7 @@ class TripsListFragment : Fragment() {
         binding.dkTripsListView.updateSwipeRefreshTripsVisibility(false)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && requestCode == TripDetailActivity.UPDATE_TRIPS_REQUEST_CODE) {

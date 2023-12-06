@@ -89,7 +89,7 @@ class ConnectBeaconFragment : Fragment() {
             if (!viewModel.isBluetoothSensorEnabled()) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(
                         DKResource.convertToString(
                             requireContext(), "dk_common_activate")
@@ -121,6 +121,7 @@ class ConnectBeaconFragment : Fragment() {
         _binding = null
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_ENABLE_BT) {

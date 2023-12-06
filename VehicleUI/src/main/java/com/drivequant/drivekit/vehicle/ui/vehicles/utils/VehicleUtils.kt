@@ -14,11 +14,9 @@ import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
 import java.io.FileNotFoundException
-import java.util.*
 
 
 open class VehicleUtils {
@@ -87,7 +85,7 @@ open class VehicleUtils {
                 null
             )
         }?:run {
-            ContextCompat.getDrawable(context, R.drawable.dk_my_trips)
+            ContextCompat.getDrawable(context, com.drivequant.drivekit.common.ui.R.drawable.dk_my_trips)
         }
 
        val imageUri = DriveKitSharedPreferencesUtils.getString(String.format("drivekit-vehicle-picture_%s",

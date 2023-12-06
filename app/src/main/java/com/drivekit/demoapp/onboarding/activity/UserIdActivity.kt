@@ -54,7 +54,7 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
         binding.buttonValidate.buttonAction.apply {
-            text = getString(R.string.dk_common_validate)
+            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 validateUserId()
@@ -115,6 +115,7 @@ class UserIdActivity : AppCompatActivity() {
         viewModel.getUserInfo(syncStatus)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

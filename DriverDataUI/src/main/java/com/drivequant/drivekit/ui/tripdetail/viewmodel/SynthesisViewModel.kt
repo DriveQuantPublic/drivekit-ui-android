@@ -1,8 +1,8 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import android.content.Context
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
 import com.drivequant.drivekit.common.ui.navigation.GetVehicleInfoByVehicleIdListener
 import com.drivequant.drivekit.common.ui.utils.DKConsumptionType
@@ -35,10 +35,10 @@ class SynthesisViewModel(private val trip: Trip) : ViewModel() {
 
     fun getRoadContextValue(context: Context): String {
         return when (trip.computeRoadContext()) {
-            1 -> context.getString(R.string.dk_common_driving_context_city_dense)
-            2 -> context.getString(R.string.dk_common_driving_context_city)
-            3 -> context.getString(R.string.dk_common_driving_context_external)
-            4 -> context.getString(R.string.dk_common_driving_context_fastlane)
+            1 -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_city_dense)
+            2 -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_city)
+            3 -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_external)
+            4 -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_driving_context_fastlane)
             else -> context.getString(R.string.dk_driverdata_unknown)
         }
     }

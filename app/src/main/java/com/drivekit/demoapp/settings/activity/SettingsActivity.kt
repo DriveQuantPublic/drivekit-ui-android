@@ -187,7 +187,7 @@ internal class SettingsActivity : AppCompatActivity() {
             headLine1()
             compoundDrawablePadding = 18
             val bitmap = (accountIcon as BitmapDrawable).bitmap
-            val size = context.resources.getDimension(R.dimen.dk_ic_big).toInt()
+            val size = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_ic_big).toInt()
             val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))
             setCompoundDrawablesWithIntrinsicBounds(resizedDrawable, null, null, null)
         }
@@ -216,12 +216,12 @@ internal class SettingsActivity : AppCompatActivity() {
 
     private fun manageEditUserInfo(type: UserInfoType, data: String?) {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.dk_alert_dialog_edit_value, null)
+        val view = inflater.inflate(com.drivequant.drivekit.common.ui.R.layout.dk_alert_dialog_edit_value, null)
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setView(view)
         val alertDialog = builder.create()
         val titleTextView = view.findViewById<TextView>(R.id.text_view_title)
-        val editText = view.findViewById<TextInputEditText>(R.id.edit_text_field)
+        val editText = view.findViewById<TextInputEditText>(com.drivequant.drivekit.common.ui.R.id.edit_text_field)
         titleTextView.apply {
             text = when (type) {
                 UserInfoType.FIRST_NAME -> R.string.parameters_enter_firstname
@@ -241,12 +241,12 @@ internal class SettingsActivity : AppCompatActivity() {
         alertDialog.apply {
             setCancelable(true)
             setButton(
-                DialogInterface.BUTTON_POSITIVE, getString(R.string.dk_common_validate)) { dialog, _ ->
+                DialogInterface.BUTTON_POSITIVE, getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)) { dialog, _ ->
                 viewModel.updateUserInfo(type, editText.text.toString())
                 dialog.dismiss()
             }
             setButton(
-                DialogInterface.BUTTON_NEGATIVE, getString(R.string.dk_common_cancel)) { dialog, _ ->
+                DialogInterface.BUTTON_NEGATIVE, getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
@@ -257,15 +257,15 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun manageLogoutClick() {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(this)
-            .layout(R.layout.template_alert_dialog_layout)
-            .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
+            .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) { _, _ ->
                 viewModel.logout(this@SettingsActivity)
             }
-            .negativeButton(getString(R.string.dk_common_cancel))
+            .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel))
             .show()
 
-        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-        val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(R.string.logout_confirmation)

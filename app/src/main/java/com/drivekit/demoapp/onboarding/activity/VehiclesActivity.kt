@@ -64,6 +64,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.drivekit_doc_android_vehicle))))
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

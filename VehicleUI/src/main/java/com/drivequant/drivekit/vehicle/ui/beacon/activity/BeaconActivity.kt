@@ -146,6 +146,7 @@ class BeaconActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             finish()

@@ -244,9 +244,9 @@ class VehicleDetailFragment : Fragment() {
         context?.let { context ->
             if (hasChangesToUpdate) {
                 val alert = DKAlertDialog.LayoutBuilder().init(context)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .cancelable(false)
-                    .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+                    .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) { _, _ ->
                         updateContent(true)
                     }
                     .negativeButton(negativeListener = { dialogInterface, _ ->
@@ -382,7 +382,7 @@ class VehicleDetailFragment : Fragment() {
     private fun displayRationaleAlert(descriptionIdentifier: String) {
         context?.let { context ->
             val cameraDialog = DKAlertDialog.LayoutBuilder().init(context)
-                .layout(R.layout.template_alert_dialog_layout)
+                .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .cancelable(false)
                 .positiveButton(
                     DKResource.convertToString(context, "dk_common_settings")
@@ -442,6 +442,7 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -470,6 +471,7 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {

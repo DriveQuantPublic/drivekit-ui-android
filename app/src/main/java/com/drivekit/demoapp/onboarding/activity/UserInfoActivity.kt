@@ -62,7 +62,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
 
         binding.buttonValidate.buttonAction.apply {
-            text = getString(R.string.dk_common_validate)
+            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 val firstName = binding.textViewFirstnameField.editableText.toString()
@@ -109,6 +109,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         viewModel.logout(this)
         super.onBackPressed()

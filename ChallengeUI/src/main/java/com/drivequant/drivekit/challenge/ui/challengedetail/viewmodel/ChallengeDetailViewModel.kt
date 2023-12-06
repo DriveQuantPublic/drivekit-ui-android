@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
@@ -133,7 +132,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 in 306..309 ->formatChallengeDuration(it.challengeStats.maxScore, context).convertToString()
                 in 302..305 -> formatChallengeDistance(it.challengeStats.maxScore, context).convertToString()
                 301 -> "${it.challengeStats.maxScore.removeZeroDecimal()} ${context.resources.getQuantityString(
-                    R.plurals.trip_plural,
+                    com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                     it.challengeStats.numberTrip
                 )}"
                 else -> "-"
@@ -149,7 +148,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 in 306..309,
                 in 302..305,
                 301 -> "${it.challengeStats.minScore.removeZeroDecimal()} ${context.resources.getQuantityString(
-                    R.plurals.trip_plural,
+                    com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                     it.challengeStats.numberTrip
                 )}"
                 else -> "-"
@@ -169,12 +168,12 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     }
                     DKSpannable().append(score, context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
-                        size(R.dimen.dk_text_xxxbig)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
 
                     }).append(" /10", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
-                        size(R.dimen.dk_text_big)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                         typeface(BOLD)
                     }).toSpannable()
                 }
@@ -188,14 +187,14 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                                 context.resSpans {
                                     color(DriveKitUI.colors.primaryColor())
                                     typeface(BOLD)
-                                    size(R.dimen.dk_text_xxxbig)
+                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                                 })
                             is FormatType.UNIT -> spannable.append(
                                 formatType.value,
                                 context.resSpans {
                                     color(DriveKitUI.colors.primaryColor())
                                     typeface(BOLD)
-                                    size(R.dimen.dk_text_xxxbig)
+                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                                 })
                             is FormatType.SEPARATOR -> spannable.append(formatType.value)
                         }
@@ -211,14 +210,14 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                                 context.resSpans {
                                     color(DriveKitUI.colors.primaryColor())
                                     typeface(BOLD)
-                                    size(R.dimen.dk_text_xxxbig)
+                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                                 })
                             is FormatType.UNIT -> spannable.append(
                                 formatType.value,
                                 context.resSpans {
                                     color(DriveKitUI.colors.mainFontColor())
                                     typeface(BOLD)
-                                    size(R.dimen.dk_text_big)
+                                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                                 })
                             is FormatType.SEPARATOR -> spannable.append(formatType.value)
                         }
@@ -227,16 +226,16 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                 }
                 301 -> DKSpannable().append("${it.driverStats.numberTrip} ", context.resSpans {
                         color(DriveKitUI.colors.primaryColor())
-                        size(R.dimen.dk_text_xxxbig)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                         typeface(BOLD)
 
                     }).append(
                         context.resources.getQuantityString(
-                            R.plurals.trip_plural,
+                            com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                             it.driverStats.numberTrip
                         ), context.resSpans {
                             color(DriveKitUI.colors.mainFontColor())
-                            size(R.dimen.dk_text_big)
+                            size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                             typeface(BOLD)
                         }).toSpannable()
 
@@ -263,21 +262,21 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
             } ?: "-"
             DKSpannable().append(pseudo, context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
-                size(R.dimen.dk_text_normal)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                 typeface(BOLD)
             }).append("  ")
                 .append(it, context.resSpans {
                     color(DriveKitUI.colors.secondaryColor())
-                    size(R.dimen.dk_text_xxbig)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxbig)
                     typeface(BOLD)
                 }).append(" / ", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_medium)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     typeface(BOLD)
                 }).append(
                     "${challengeDetailData?.nbDriverRanked}", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
-                        size(R.dimen.dk_text_normal)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                         typeface(BOLD)
                     }).toSpannable()
         }
@@ -377,7 +376,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getDriverTripsNumber(context: Context): String {
         return challengeDetailData?.let {
             "${it.driverStats.numberTrip} ${context.resources.getQuantityString(
-                R.plurals.trip_plural,
+                com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                 it.driverStats.numberTrip
             )}"
         } ?: "-"
@@ -386,7 +385,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     fun getCompetitorTripsNumber(context: Context): String {
         return challengeDetailData?.let {
             "${it.challengeStats.numberTrip} ${context.resources.getQuantityString(
-                R.plurals.trip_plural,
+                com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                 it.challengeStats.numberTrip
             )}"
         } ?: "-"
@@ -451,16 +450,16 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }.let {
             DKSpannable().append(it, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_xbig)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(" / ", context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
-                size(R.dimen.dk_text_xbig)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(
                 "${challengeDetailData?.nbDriverRanked}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_xbig)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                     typeface(BOLD)
                 }).toSpannable()
         }

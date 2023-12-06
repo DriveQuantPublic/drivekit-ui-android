@@ -82,12 +82,12 @@ internal class DrivingConditionsContextsView(context: Context, attrs: AttributeS
             this.tabLayout.getTabAt(i)?.let {
                 if (i == position) {
                     val drawable = ContextCompat.getDrawable(context,
-                        R.drawable.dk_tab_indicator_selected)?.mutate()
+                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_selected)?.mutate()
                     drawable?.tintDrawable(DriveKitUI.colors.secondaryColor())
                     tabLayout.getTabAt(i)?.icon = drawable
                 } else {
                     val drawable = ContextCompat.getDrawable(context,
-                        R.drawable.dk_tab_indicator_default)?.mutate()
+                        com.drivequant.drivekit.common.ui.R.drawable.dk_tab_indicator_default)?.mutate()
                     drawable?.tintDrawable(DriveKitUI.colors.complementaryFontColor())
                     tabLayout.getTabAt(i)?.icon = drawable
                 }

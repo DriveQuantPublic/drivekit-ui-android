@@ -71,13 +71,13 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         context.startActivity(Intent(context, AppDiagnosisActivity::class.java))
 
     @Deprecated("`isBluetoothNeeded` is now dynamically computed")
-    fun configureBluetooth(isBluetoothNeeded: Boolean) {}
+    fun configureBluetooth(@Suppress("UNUSED_PARAMETER") isBluetoothNeeded: Boolean) {}
 
     @Deprecated("Logs are now enabled by default. To disable logging, just call DriveKit.disableLogging()")
-    fun configureDiagnosisLogs(@Suppress("UNUSED_PARAMETER")shouldDisplayDiagnosisLogs: Boolean) { }
+    fun configureDiagnosisLogs(@Suppress("UNUSED_PARAMETER") shouldDisplayDiagnosisLogs: Boolean) { }
 
-    fun configureContactType(ContactType: ContactType) {
-        this.contactType = ContactType
+    fun configureContactType(contactType: ContactType) {
+        this.contactType = contactType
     }
 
     @Deprecated("Logs are now only driven by DriveKit Core module.")
@@ -116,29 +116,29 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
     fun getDiagnosisDescription(context: Context): String {
         val locationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.LOCATION)) {
-                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_yes)
                 PermissionStatus.WARNING,
-                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+                PermissionStatus.NOT_VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no)
             }
 
         val activityMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.ACTIVITY)) {
-                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_yes)
                 PermissionStatus.WARNING,
-                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+                PermissionStatus.NOT_VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no)
             }
 
         val autoResetMail = when (DiagnosisHelper.getAutoResetStatus(context)) {
-            PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_yes)
             PermissionStatus.WARNING,
-            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+            PermissionStatus.NOT_VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no)
         }
 
         val notificationMail =
             when (DiagnosisHelper.getPermissionStatus(context, PermissionType.NOTIFICATION)) {
-                PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+                PermissionStatus.VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_yes)
                 PermissionStatus.WARNING,
-                PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+                PermissionStatus.NOT_VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no)
             }
 
         val batteryOptimization = when (DiagnosisHelper.getBatteryOptimizationsStatus(context)) {
@@ -148,9 +148,9 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         val nearbyDevices = when (DiagnosisHelper.getNearbyDevicesStatus(context)) {
-            PermissionStatus.VALID -> context.getString(R.string.dk_common_yes)
+            PermissionStatus.VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_yes)
             PermissionStatus.WARNING,
-            PermissionStatus.NOT_VALID -> context.getString(R.string.dk_common_no)
+            PermissionStatus.NOT_VALID -> context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no)
         }
 
         val versionName = try {
@@ -161,18 +161,19 @@ object PermissionsUtilsUI : PermissionsUtilsUIEntryPoint {
         }
 
         val gpsMail = if (DiagnosisHelper.isActivated(context, ConnectivityType.GPS)) context.getString(
-                R.string.dk_common_yes
+                com.drivequant.drivekit.common.ui.R.string.dk_common_yes
             ) else context.getString(
-                R.string.dk_common_no
+                com.drivequant.drivekit.common.ui.R.string.dk_common_no
             )
 
         val bluetoothMail = if (DiagnosisHelper.isActivated(context, ConnectivityType.BLUETOOTH)) context.getString(
-                R.string.dk_common_yes
+                com.drivequant.drivekit.common.ui.R.string.dk_common_yes
             ) else context.getString(
-                R.string.dk_common_no
+                com.drivequant.drivekit.common.ui.R.string.dk_common_no
             )
-        val connectivityMail = if (DiagnosisHelper.isNetworkReachable(context)) context.getString(R.string.dk_common_yes) else context.getString(
-                R.string.dk_common_no
+        val connectivityMail = if (DiagnosisHelper.isNetworkReachable(context)) context.getString(
+            com.drivequant.drivekit.common.ui.R.string.dk_common_yes) else context.getString(
+                com.drivequant.drivekit.common.ui.R.string.dk_common_no
             )
 
         var mailBody = "${context.getString(R.string.dk_perm_utils_app_diag_email_location)} $locationMail \n"

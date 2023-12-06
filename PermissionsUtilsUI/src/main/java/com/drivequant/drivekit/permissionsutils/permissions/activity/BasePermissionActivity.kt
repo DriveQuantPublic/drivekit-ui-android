@@ -7,7 +7,6 @@ import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.permissionsutils.PermissionsUtilsUI
-import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.permissions.model.PermissionView
 
 open class BasePermissionActivity : RequestPermissionActivity() {
@@ -21,7 +20,7 @@ open class BasePermissionActivity : RequestPermissionActivity() {
     private var nextPermissionViews = ArrayList<PermissionView>()
 
     protected fun setToolbar(titleResId: String) {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         this.titleResId = titleResId
     }

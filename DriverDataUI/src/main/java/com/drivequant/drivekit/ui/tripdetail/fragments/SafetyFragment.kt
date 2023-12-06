@@ -58,7 +58,7 @@ class SafetyFragment : Fragment() {
             SafetyViewModelFactory(safety)
         )[SafetyViewModel::class.java]
 
-        binding.gaugeTypeTitle.text = context?.getString(R.string.dk_common_safety)
+        binding.gaugeTypeTitle.text = context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_safety)
         binding.accelDescription.text = context?.getString(R.string.dk_driverdata_safety_accel)
         binding.brakeDescription.text = context?.getString(R.string.dk_driverdata_safety_decel)
         binding.adherenceDescription.text = context?.getString(R.string.dk_driverdata_safety_adherence)

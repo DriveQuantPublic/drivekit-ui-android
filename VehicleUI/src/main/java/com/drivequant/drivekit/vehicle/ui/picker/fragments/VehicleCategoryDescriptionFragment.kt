@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.picker.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +8,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.button
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.smallText
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
@@ -56,7 +61,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
         if (DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY) {
             val buttonValidate = validateButton as Button
             buttonValidate.button()
-            buttonValidate.setText(R.string.dk_common_validate)
+            buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             textViewBrands.visibility = View.GONE
         } else {
             customizeButton(textViewBrands, R.string.dk_vehicle_detail_category_button_title, R.string.dk_vehicle_detail_category_button_description)

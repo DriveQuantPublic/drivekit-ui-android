@@ -50,7 +50,7 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
     }
 
     private fun setupUi() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -75,6 +75,7 @@ internal class DrivingConditionsActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         finishActivity()
         super.onBackPressed()

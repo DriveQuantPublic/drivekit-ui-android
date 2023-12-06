@@ -25,7 +25,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoryDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
@@ -131,7 +130,7 @@ class OdometerHistoryDetailFragment : Fragment() {
 
     private fun initVehicle(context: Context, vehicleId: String) {
         binding.spinnerItem.textViewItemDisplayName.apply {
-            smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
+            smallText(ContextCompat.getColor(context, com.drivequant.drivekit.common.ui.R.color.dkGrayColor))
             text = viewModel.getVehicleFormattedName(context)
         }
         VehicleUtils().getVehicleDrawable(context, vehicleId)?.let { drawable ->

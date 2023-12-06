@@ -9,7 +9,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.FormatType
-import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 
 internal class DKSynthesisCardViewModel(
@@ -55,11 +54,11 @@ internal class DKSynthesisCardViewModel(
                 is FormatType.VALUE -> spannable.append(it.value, context.resSpans {
                     color(DriveKitUI.colors.primaryColor())
                     typeface(Typeface.BOLD)
-                    size(R.dimen.dk_text_medium)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 })
                 is FormatType.UNIT -> spannable.append(it.value, context.resSpans {
                     color(DriveKitUI.colors.complementaryFontColor())
-                    size(R.dimen.dk_text_medium)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 })
                 is FormatType.SEPARATOR -> spannable.append(it.value)
             }

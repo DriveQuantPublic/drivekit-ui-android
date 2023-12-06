@@ -16,7 +16,7 @@ import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.timeline.DKScoreEvolutionTrend
 import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
 import com.drivequant.drivekit.ui.R
-import java.util.*
+import java.util.Date
 
 internal class MySynthesisScoreCardViewModel : ViewModel() {
 
@@ -88,7 +88,7 @@ internal class MySynthesisScoreCardViewModel : ViewModel() {
     fun computeScoreOutOfTen(context: Context, score: Double?): String =
         (score?.format(1) ?: "-")
             .plus(" ")
-            .plus(context.getString(R.string.dk_common_unit_score))
+            .plus(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_score))
 
     private fun getEvolutionPrefixText(context: Context): String? {
         val previousPeriod: TripKind = if (hasPreviousScore) TripKind.SCORED_TRIPS else {

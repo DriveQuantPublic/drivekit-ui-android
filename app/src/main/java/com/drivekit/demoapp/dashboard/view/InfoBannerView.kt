@@ -52,7 +52,7 @@ internal class InfoBannerView : LinearLayout {
         }
 
         if (infoBannerType.displayArrow()) {
-            ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_forward)?.let {
+            ContextCompat.getDrawable(context, com.drivequant.drivekit.common.ui.R.drawable.dk_common_arrow_forward)?.let {
                 arrow.apply {
                     it.mutate()
                     DrawableCompat.setTint(it, infoBannerType.getColor())

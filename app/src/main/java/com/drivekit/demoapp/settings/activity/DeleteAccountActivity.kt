@@ -89,14 +89,14 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
     private fun displayAccountDeletionConfirmation() {
         val alert = DKAlertDialog.LayoutBuilder().init(this)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(getString(R.string.dk_common_delete)) { _, _ -> deleteAccount() }
-            .negativeButton(getString(R.string.dk_common_cancel)) { _, _ -> finish() }
+            .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)) { _, _ -> deleteAccount() }
+            .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) { _, _ -> finish() }
             .show()
 
-        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+        val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         title?.text = getString(R.string.app_name)
         description?.text = getString(R.string.account_deletion_confirmation)
         alert.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(DriveKitUI.colors.criticalColor())
@@ -104,13 +104,13 @@ internal class DeleteAccountActivity : AppCompatActivity() {
 
     private fun displayAccountDeletionError(errorMessageResId: Int) {
         val alert = DKAlertDialog.LayoutBuilder().init(this)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(getString(R.string.dk_common_ok)) { _, _ -> finish() }
+            .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { _, _ -> finish() }
             .show()
 
-        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+        val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         title?.text = getString(R.string.app_name)
         description?.text = getString(errorMessageResId)
     }

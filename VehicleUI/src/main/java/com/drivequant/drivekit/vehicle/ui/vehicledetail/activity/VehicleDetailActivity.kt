@@ -87,6 +87,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         if (fragment is VehicleDetailFragment){
@@ -100,6 +101,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")

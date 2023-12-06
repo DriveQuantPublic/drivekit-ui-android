@@ -2,49 +2,34 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '1.39-beta2'
-        
-        kotlin_version = '1.7.21'
+        drivekit_version = '1.39.0'
+
+        kotlin_version = '1.8.22'
+        android_gradle_plugin = '8.1.4'
 
         appcompat = '1.6.1'
         constraint_layout = '2.1.4'
-        core_ktx = '1.9.0'
+        core_ktx = '1.12.0'
         grid_layout = '1.0.0'
         legacy_preference = '1.0.0'
-        lifecycle_version = '2.5.1'
-        work_version = '2.8.1'
-        material = '1.9.0'
-        play_services_maps = '18.1.0'
+        lifecycle_version = '2.6.2'
+        work_version = '2.9.0'
+        material = '1.10.0'
+        play_services_maps = '18.2.0'
         swipe_refresh_layout = '1.1.0'
 
         glide = '4.14.2'
         mp_chart = 'v3.1.0'
     }
+}
 
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    id 'com.android.application' version "$android_gradle_plugin" apply false
+    id 'com.android.library' version "$android_gradle_plugin" apply false
+    id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url "https://jitpack.io"
-        }
-        maven {
-            url "https://maven.drivequant.com/repository/android-sdk/"
-        }
-    }
     project.ext {
         min_sdk_version = 23
         compile_sdk_version = 34
