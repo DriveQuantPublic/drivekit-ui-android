@@ -34,6 +34,5 @@ allprojects {
         min_sdk_version = 23
         compile_sdk_version = 34
         target_sdk_version = 34
-        build_tools_version = '34.0.0'
     }
 }
