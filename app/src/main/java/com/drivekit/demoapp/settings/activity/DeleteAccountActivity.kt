@@ -32,7 +32,7 @@ internal class DeleteAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDeleteAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar.dkToolbar)
+        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title =  getString(R.string.delete_account_header)
