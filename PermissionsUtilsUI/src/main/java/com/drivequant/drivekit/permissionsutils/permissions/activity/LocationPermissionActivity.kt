@@ -90,11 +90,11 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                binding.buttonRequestLocationPermission.text =
-                        getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
-                    handlePermissionTotallyDeclined(
-                        this@LocationPermissionActivity,
-                        R.string.dk_perm_utils_app_diag_location_ko_android)
+                binding.buttonRequestLocationPermission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                handlePermissionTotallyDeclined(
+                    this@LocationPermissionActivity,
+                    R.string.dk_perm_utils_app_diag_location_ko_android
+                )
             }
         }
 
