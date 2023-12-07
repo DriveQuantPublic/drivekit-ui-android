@@ -124,13 +124,18 @@
     <string name="dk_vehicle_detail_category_button_description">Sie kennen die Marke, das Modell und die Eigenschaften Ihres Fahrzeugs</string>
     <string name="dk_vehicle_detail_category_button_title">Mein Fahrzeug finden</string>
     <string name="dk_vehicle_detection_mode_title">Automatischer Start:</string>
+    <string name="dk_vehicle_engine_bi_fuel_bioethanol">Bi-Fuel-Benzin-Bioethanol</string>
+    <string name="dk_vehicle_engine_bi_fuel_lpg">Zweistoffkraftstoff Benzin LPG</string>
+    <string name="dk_vehicle_engine_bi_fuel_ngv">Zweistoffbetrieb Benzin NGV</string>
+    <string name="dk_vehicle_engine_biofuel">Biokraftstoff</string>
     <string name="dk_vehicle_engine_description">Motortyp?</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
     <string name="dk_vehicle_engine_diesel_hybrid">Dieselhybrid</string>
     <string name="dk_vehicle_engine_electric">Elektromotor</string>
     <string name="dk_vehicle_engine_gasoline">Ottomotor</string>
-    <string name="dk_vehicle_engine_gasoline_hybrid">Benzin-Elektro-Hybrid</string>
+    <string name="dk_vehicle_engine_gasoline_hybrid">Hybrid Benzin</string>
     <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Plug-in-Hybrid Benzin</string>
+    <string name="dk_vehicle_engine_hydrogen">Wasserstoff</string>
     <string name="dk_vehicle_error_message">Bei der Anfrage ist ein Fehler aufgetreten. Versuchen Sie es später erneut.</string>
     <string name="dk_vehicle_failed_to_paired_beacon">Die Beacon konnte nicht mit dem Fahrzeug in Verbindung gebracht werden, bitte versuchen Sie es später noch einmal.</string>
     <string name="dk_vehicle_failed_to_paired_bluetooth">Die Bluetooth-Verbindung zum Fahrzeug ist fehlgeschlagen, bitte versuchen Sie es später noch einmal.</string>
@@ -138,6 +143,7 @@
     <string name="dk_vehicle_failed_to_sync">Die Fahrzeugdaten konnten nicht geladen werden. Versuchen Sie es später erneut.</string>
     <string name="dk_vehicle_field_name_error">Der Name Ihres Fahrzeugs darf nicht länger als 50 Zeichen sein.</string>
     <string name="dk_vehicle_gps_already_exists_confirm">Möchten Sie den Erkennungsmodus %1$s für das Fahrzeug %2$s einstellen? \n\nDer Fahrzeugerkennungsmodus %3$s wird auf %4$s umgeschaltet.</string>
+    <string name="dk_vehicle_is_it_electric">Handelt es sich um ein Elektrofahrzeug?</string>
     <string name="dk_vehicle_list_empty">Bitte fügen Sie mindestens ein Fahrzeug hinzu.</string>
     <string name="dk_vehicle_model_description">Fahrzeugmodell</string>
     <string name="dk_vehicle_my_vehicle">Mein Fahrzeug</string>

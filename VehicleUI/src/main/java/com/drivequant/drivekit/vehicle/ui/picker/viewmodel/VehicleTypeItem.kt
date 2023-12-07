@@ -2,6 +2,7 @@ package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
 import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
@@ -65,8 +66,9 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
 
     fun getEngineIndexes(context: Context): List<VehicleEngineItem> {
         val engineIndexes = mutableListOf<VehicleEngineItem>()
+        val selectableEngineIndexes = DriveKitVehiclePicker.getEnginesIndex(this.vehicleType)
         for (item in DriveKitVehicleUI.vehicleEngineIndexes){
-            if (item.getVehicleTypes().contains(this.vehicleType)) {
+            if (selectableEngineIndexes.contains(item)) {
                 engineIndexes.add(item.buildEngineIndexItem(context))
             }
         }

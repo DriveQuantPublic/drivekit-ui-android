@@ -124,6 +124,10 @@
    <string name="dk_vehicle_detail_category_button_description">Você conhece a marca, modelo e características do seu veículo</string>
    <string name="dk_vehicle_detail_category_button_title">Encontre meu veículo</string>
    <string name="dk_vehicle_detection_mode_title">Começo automático:</string>
+   <string name="dk_vehicle_engine_bi_fuel_bioethanol">Biocombustível gasolina bioetanol</string>
+   <string name="dk_vehicle_engine_bi_fuel_lpg">Gasolina bicombustível GPL</string>
+   <string name="dk_vehicle_engine_bi_fuel_ngv">Gasolina bicombustível NGV</string>
+   <string name="dk_vehicle_engine_biofuel">Biocombustível</string>
    <string name="dk_vehicle_engine_description">Tipo de motor ?</string>
    <string name="dk_vehicle_engine_diesel">Diesel</string>
    <string name="dk_vehicle_engine_diesel_hybrid">Híbrido diesel-elétrico</string>
@@ -131,6 +135,7 @@
    <string name="dk_vehicle_engine_gasoline">Gasolina</string>
    <string name="dk_vehicle_engine_gasoline_hybrid">Gasolina híbrida</string>
    <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Gasolina híbrida recarregável</string>
+   <string name="dk_vehicle_engine_hydrogen">Hidrogénio</string>
    <string name="dk_vehicle_error_message">Ocorreu um erro durante a solicitação, tente novamente posteriormente</string>
    <string name="dk_vehicle_failed_to_paired_beacon">O dispositivo não pôde estar associado ao veículo, tente novamente mais tarde.</string>
    <string name="dk_vehicle_failed_to_paired_bluetooth">A conexão Bluetooth com o veículo falhou, tente novamente mais tarde.</string>
@@ -138,6 +143,7 @@
    <string name="dk_vehicle_failed_to_sync">Falha ao recuperar os dados do veículo, tente novamente</string>
    <string name="dk_vehicle_field_name_error">O nome do seu veículo não deve exceder 50 caracteres.</string>
    <string name="dk_vehicle_gps_already_exists_confirm">Deseja definir o modo de detecção %1$s para o veículo %2$s?\n\nO modo de detecção de veículo %3$s será alterado para %4$s.</string>
+   <string name="dk_vehicle_is_it_electric">É um veículo elétrico?</string>
    <string name="dk_vehicle_list_empty">Adicione pelo menos um veículo</string>
    <string name="dk_vehicle_model_description">Modelo do veículo?</string>
    <string name="dk_vehicle_my_vehicle">Meu veículo</string>
