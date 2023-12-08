@@ -99,13 +99,13 @@ enum class DetectionModeType(
             DKSpannable().append(parameteredString, context.resSpans {
                 color(DriveKitUI.colors.complementaryFontColor())
                 typeface(Typeface.NORMAL)
-                size(R.dimen.dk_text_normal)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).toSpannable()
         } else {
             DKSpannable().append(parameteredString, context.resSpans {
                 color(DriveKitUI.colors.criticalColor())
                 typeface(BOLD)
-                size(R.dimen.dk_text_normal)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).toSpannable()
         }
     }
@@ -167,9 +167,9 @@ enum class DetectionModeType(
         )
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(context.getString(R.string.dk_common_confirm),
+            .positiveButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm),
                 DialogInterface.OnClickListener { _, _ ->
                     updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
                 })

@@ -13,7 +13,7 @@ import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinner
 internal class WorkingHoursSpinnerAdapter(
     context: Context,
     list: List<HoursSpinnerItem>
-) : ArrayAdapter<HoursSpinnerItem>(context, R.layout.dk_simple_list_item_spinner, list) {
+) : ArrayAdapter<HoursSpinnerItem>(context, com.drivequant.drivekit.common.ui.R.layout.dk_simple_list_item_spinner, list) {
 
     private var tripSlotStatusList: List<HoursSpinnerItem> = list
 
@@ -25,7 +25,7 @@ internal class WorkingHoursSpinnerAdapter(
 
     private fun getCustomView(position: Int, parent: ViewGroup): View {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.dk_simple_list_item_spinner, parent, false)
+            .inflate(com.drivequant.drivekit.common.ui.R.layout.dk_simple_list_item_spinner, parent, false)
         val timeSlotStatus = tripSlotStatusList[position]
         val textView = view.findViewById<TextView>(R.id.text_view)
         textView.text = timeSlotStatus.toString()

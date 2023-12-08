@@ -115,7 +115,7 @@ class RankingFragment : Fragment(), RankingSelectorListener {
 
         for (i in 0 until this.tabLayoutLeaderBoard.tabCount) {
             val tab = this.tabLayoutLeaderBoard.getTabAt(i)
-            tab?.setCustomView(R.layout.dk_icon_view_tab)
+            tab?.setCustomView(com.drivequant.drivekit.common.ui.R.layout.dk_icon_view_tab)
         }
 
         if (rankingViewModel.rankingTypesData.size < 2) {

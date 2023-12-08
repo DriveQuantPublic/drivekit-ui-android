@@ -32,7 +32,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPermissionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
 
         title = getString(R.string.permissions_intro_header)
 
@@ -80,6 +80,7 @@ internal class PermissionsActivity : AppCompatActivity() {
         )
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

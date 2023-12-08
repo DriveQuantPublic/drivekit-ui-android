@@ -102,7 +102,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
     private fun displayError(vararg args: String) {
         val alert = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton()
             .show()

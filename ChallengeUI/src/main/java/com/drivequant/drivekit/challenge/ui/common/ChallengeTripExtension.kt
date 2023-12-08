@@ -3,15 +3,14 @@ package com.drivequant.drivekit.challenge.ui.common
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.databaseutils.entity.Trip
-import java.util.*
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
-import com.drivequant.drivekit.common.ui.DriveKitUI
+import com.drivequant.drivekit.databaseutils.entity.Trip
+import java.util.Date
 
 internal fun Trip.toDKTripItem() = object: DKTripListItem {
     val trip = this@toDKTripItem
@@ -49,7 +48,7 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
         DKSpannable().append("${trip.tripAdvices.size}", context.resSpans {
             color(DriveKitUI.colors.fontColorOnSecondaryColor())
             typeface(Typeface.BOLD)
-            size(R.dimen.dk_text_very_small)
+            size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_very_small)
         }).toSpannable()
     } else {
         null
@@ -58,13 +57,13 @@ internal fun Trip.toDKTripItem() = object: DKTripListItem {
     override fun infoImageResource(): Int? {
         val count = trip.tripAdvices.size
         if (count > 1) {
-            return R.drawable.dk_common_trip_info_count
+            return com.drivequant.drivekit.common.ui.R.drawable.dk_common_trip_info_count
         } else if (count == 1) {
             val theme = trip.tripAdvices.first().theme
             if (theme == "SAFETY") {
-                return R.drawable.dk_common_safety_advice
+                return com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_advice
             } else if (theme == "ECODRIVING") {
-                return R.drawable.dk_common_eco_advice
+                return com.drivequant.drivekit.common.ui.R.drawable.dk_common_eco_advice
             }
         }
         return null

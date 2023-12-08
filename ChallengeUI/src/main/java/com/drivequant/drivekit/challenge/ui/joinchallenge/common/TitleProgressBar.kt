@@ -59,9 +59,9 @@ internal class TitleProgressBar(context: Context) : LinearLayout(context) {
 
         val params = conditionProgressBar.layoutParams as MarginLayoutParams
         params.setMargins(
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half).toInt(),
             params.topMargin,
-            context.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half).toInt(),
             params.bottomMargin)
 
         layoutParams = params

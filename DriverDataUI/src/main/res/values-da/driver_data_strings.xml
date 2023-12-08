@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_empty_data">Kør med appen, og registrer dine ture for at se og få en oversigt over dine kørselsforhold.</string>
    <string name="dk_driverdata_drivingconditions_fog">Tåge</string>
    <string name="dk_driverdata_drivingconditions_ice">Is</string>
-   <string name="dk_driverdata_drivingconditions_interval_distance">%d - %d km</string>
+   <string name="dk_driverdata_drivingconditions_interval_distance">%1$d - %2$d km</string>
    <string name="dk_driverdata_drivingconditions_long_trips">&gt; 100 km</string>
    <string name="dk_driverdata_drivingconditions_main_city">Du kører primært i byen</string>
    <string name="dk_driverdata_drivingconditions_main_cloud">Du kører mest på overskyede dage</string>
@@ -53,7 +53,7 @@
    <string name="dk_driverdata_drivingconditions_main_expressways">Du kører for det meste på overhalingsbaner</string>
    <string name="dk_driverdata_drivingconditions_main_fog">Du kører mest på dage med tåge</string>
    <string name="dk_driverdata_drivingconditions_main_ice">Du kører for det meste på isglatte veje</string>
-   <string name="dk_driverdata_drivingconditions_main_interval_distance">Du foretager oftest ture på %d til %d kilometer</string>
+   <string name="dk_driverdata_drivingconditions_main_interval_distance">Du foretager oftest ture på %1$d til %2$d kilometer</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">Du foretager hovedsageligt lange ture</string>
    <string name="dk_driverdata_drivingconditions_main_night">Du kører ofte om natten</string>
    <string name="dk_driverdata_drivingconditions_main_rain">Du kører mest i vådt vejr</string>

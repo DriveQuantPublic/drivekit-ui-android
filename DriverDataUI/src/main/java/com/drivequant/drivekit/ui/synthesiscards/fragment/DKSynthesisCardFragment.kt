@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
-import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.DkFragmentSynthesisCardItemBinding
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
@@ -72,7 +71,7 @@ class DKSynthesisCardFragment : Fragment() {
         viewModel.getExplanationContent(requireContext())?.let { explanation ->
             binding.explanationContent.visibility = View.VISIBLE
 
-            ContextCompat.getDrawable(requireContext(), R.drawable.dk_common_info)?.let {
+            ContextCompat.getDrawable(requireContext(), com.drivequant.drivekit.common.ui.R.drawable.dk_common_info)?.let {
                 DrawableCompat.setTint(it, DriveKitUI.colors.secondaryColor())
                 binding.explanationContent.setImageDrawable(it)
             }
@@ -80,13 +79,13 @@ class DKSynthesisCardFragment : Fragment() {
             binding.explanationContent.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(DKResource.convertToString(requireContext(), "dk_common_close"))
                     .show()
 
-                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
                 titleTextView?.text = DKResource.convertToString(requireContext(), "app_name")
                 descriptionTextView?.text = explanation

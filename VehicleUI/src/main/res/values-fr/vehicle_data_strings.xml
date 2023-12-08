@@ -46,7 +46,7 @@
    <string name="dk_vehicle_add">Ajouter un véhicule</string>
    <string name="dk_vehicle_beacon_already_paired">Le beacon n\'est pas disponible, il est déjà appairé à un autre véhicule.</string>
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">Ce beacon est déjà appairé à ce véhicule.</string>
-   <string name="dk_vehicle_beacon_deactivate_alert">Le beacon %1$s sera dissocié du véhicule %2$s. \n Êtes-vous sûr de vouloir continuer ?</string>
+   <string name="dk_vehicle_beacon_deactivate_alert">Le beacon %1$s sera dissocié du véhicule %2$s.\nÊtes-vous sûr de vouloir continuer ?</string>
    <string name="dk_vehicle_beacon_diagnostic_alert">Vous n\'avez pas encore configuré de beacon.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Vous devez activer le capteur Bluetooth de votre téléphone pour vérifier la présence du boîtier.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Capteur Bluetooth</string>
@@ -65,7 +65,7 @@
    <string name="dk_vehicle_beacon_setup_guide_desc2">Assurez-vous que le numéro d\'identification du beacon soit lisible</string>
    <string name="dk_vehicle_beacon_setup_guide_desc3">Retirez la languette qui protège la batterie du beacon</string>
    <string name="dk_vehicle_beacon_setup_guide_title">Avant de commencer</string>
-   <string name="dk_vehicle_beacon_setup_replace_description">Si vous confirmez votre choix, le beacon %1$s sera associé au véhicule %2$s.\n\n Le véhicule %3$s ne sera plus associé à ce beacon.</string>
+   <string name="dk_vehicle_beacon_setup_replace_description">Si vous confirmez votre choix, le beacon %1$s sera associé au véhicule %2$s.\n\nLe véhicule %3$s ne sera plus associé à ce beacon.</string>
    <string name="dk_vehicle_beacon_setup_scan_title">L\'application récupère les informations du beacon et vérifie qu\'il fonctionne normalement</string>
    <string name="dk_vehicle_beacon_setup_store_notice">Nous vous invitons à placer le beacon dans la boite à gants de votre véhicule</string>
    <string name="dk_vehicle_beacon_setup_successlink_message">Félicitations ! \n\n Le beacon %1$s est désormais associé au véhicule %2$s</string>
@@ -78,7 +78,7 @@
    <string name="dk_vehicle_bluetooth_congrats_desc">L\'appareil Bluetooth %1$s est désormais associé au véhicule %2$s</string>
    <string name="dk_vehicle_bluetooth_congrats_notice">Désormais l\'enregistrement de vos trajets démarrera automatiquement dès que votre téléphone se connecte à l\'appareil Bluetooth %s</string>
    <string name="dk_vehicle_bluetooth_congrats_title">Félicitations !</string>
-   <string name="dk_vehicle_bluetooth_deactivate_alert">L\'appareil %1$s sera dissocié du véhicule %2$s. \n Êtes-vous sûr de vouloir continuer ?</string>
+   <string name="dk_vehicle_bluetooth_deactivate_alert">L\'appareil %1$s sera dissocié du véhicule %2$s.\nÊtes-vous sûr de vouloir continuer ?</string>
    <string name="dk_vehicle_bluetooth_devices_list_title">Appareils Bluetooth :</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_android">Assurez-vous que le système Bluetooth de votre véhicule est déjà jumelé avec votre téléphone avant de commencer.</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_ios">Vérifier que l’appareil Bluetooth a déjà été jumelé avec votre iPhone. Cette information est disponible dans le menu Bluetooth des paramètres du téléphone.</string>
@@ -142,7 +142,7 @@
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">Les caractéristiques véhicule n\'ont pas pu être récupérées.</string>
    <string name="dk_vehicle_failed_to_sync">Impossible de récupérer les données du véhicule, réessayez plus tard</string>
    <string name="dk_vehicle_field_name_error">Le nom de votre véhicule ne doit pas dépasser 50 caractères</string>
-   <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %1$s pour le véhicule %2$s ? \n\nLe mode de détection du véhicule %3$s sera basculé à %4$s.</string>
+   <string name="dk_vehicle_gps_already_exists_confirm">Voulez-vous paramétrer le mode de détection %1$s pour le véhicule %2$s ?\n\nLe mode de détection du véhicule %3$s sera basculé à %4$s.</string>
    <string name="dk_vehicle_is_it_electric">S\'agit-il d\'un véhicule électrique ?</string>
    <string name="dk_vehicle_list_empty">Veuillez ajouter au moins un véhicule</string>
    <string name="dk_vehicle_model_description">Modèle du véhicule ?</string>

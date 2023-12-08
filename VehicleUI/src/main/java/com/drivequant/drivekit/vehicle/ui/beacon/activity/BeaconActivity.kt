@@ -147,6 +147,7 @@ class BeaconActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             finish()
@@ -156,7 +157,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -169,7 +170,7 @@ class BeaconActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

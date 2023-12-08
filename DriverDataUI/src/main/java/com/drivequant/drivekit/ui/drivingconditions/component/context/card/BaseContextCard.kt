@@ -8,7 +8,6 @@ import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.RoadContext
 import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
-import com.drivequant.drivekit.ui.R
 
 internal abstract class BaseContextCard : DKContextCard {
 
@@ -30,7 +29,7 @@ internal abstract class BaseContextCard : DKContextCard {
             override fun getColorResId(): Int = color
             override fun getTitle(context: Context): String = title
             override fun getSubtitle(context: Context): String = when (kind) {
-                UnitKind.TRIP -> "${DKDataFormatter.formatNumber(itemValue, 0)} ${context.resources.getQuantityString(R.plurals.trip_plural, itemValue.toInt())}"
+                UnitKind.TRIP -> "${DKDataFormatter.formatNumber(itemValue, 0)} ${context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, itemValue.toInt())}"
                 UnitKind.KILOMETER -> DKDataFormatter.formatMeterDistanceInKm(
                     context,
                     itemValue * 1000,

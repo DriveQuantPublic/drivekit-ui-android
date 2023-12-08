@@ -33,7 +33,7 @@ class ChallengeParticipationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_challenge_join)
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,6 +60,7 @@ class ChallengeParticipationActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == ChallengeRulesActivity.UPDATE_CHALLENGE_REQUEST_CODE) {

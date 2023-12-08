@@ -110,7 +110,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     }
 
     private fun setToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -164,16 +164,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this.itemBluetooth.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(this.itemBluetooth.getDiagnosisLink()) { _, _ ->
                         enableSensor(ConnectivityType.BLUETOOTH)
                     }
                     .show()
 
                 val titleTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = this.itemBluetooth.getDiagnosisTitle()
                 descriptionTextView?.text = this.itemBluetooth.getDiagnosticTextKO()
                 descriptionTextView?.text =
@@ -192,16 +192,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this.itemLocationSensor.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(this.itemLocationSensor.getDiagnosisLink()) { _, _ ->
                         enableSensor(ConnectivityType.GPS)
                     }
                     .show()
 
                 val titleTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = this.itemLocationSensor.getDiagnosisTitle()
                 descriptionTextView?.text =
                     this.itemLocationSensor.getDiagnosticTextKO()
@@ -237,16 +237,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             this.itemConnectivity.setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(this.itemConnectivity.getDiagnosisLink()) { _, _ ->
                         val networkIntent = Intent(Settings.ACTION_SETTINGS)
                         startActivity(networkIntent)
                     }
                     .show()
 
-                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = this.itemConnectivity.getDiagnosisTitle()
                 descriptionTextView?.text = this.itemConnectivity.getDiagnosticTextKO()
                 titleTextView?.headLine1()
@@ -490,7 +490,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
-                    this@AppDiagnosisActivity, R.string.dk_common_app_diag_nearby_ko,
+                    this@AppDiagnosisActivity, com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko,
                     this@AppDiagnosisActivity::requestNearbyPermission
                 )
             }
@@ -498,7 +498,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             override fun onPermissionTotallyDeclined(permissionName: String) {
                 handlePermissionTotallyDeclined(
                     this@AppDiagnosisActivity,
-                    R.string.dk_common_app_diag_nearby_ko
+                    com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko
                 )
             }
         }
@@ -553,16 +553,16 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
             setOnClickListener {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this@AppDiagnosisActivity)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(getDiagnosisLink()) { _, _ ->
                         listener.onSubmit()
                     }
                     .show()
 
                 val titleTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text = getDiagnosisTitle()
                 descriptionTextView?.text = getDiagnosticTextKO()
                 titleTextView?.headLine1()
@@ -597,6 +597,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
         unregisterReceiver(sensorsReceiver)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PERMISSIONS_OPEN_SETTINGS) {

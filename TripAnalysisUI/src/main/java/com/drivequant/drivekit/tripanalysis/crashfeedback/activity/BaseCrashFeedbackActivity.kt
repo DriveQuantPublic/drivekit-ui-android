@@ -51,6 +51,7 @@ open class BaseCrashFeedbackActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         // do nothing
     }

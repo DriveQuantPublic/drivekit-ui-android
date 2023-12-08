@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
@@ -49,10 +48,10 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                 driverScore.format(2)
             }.let {
                 DKSpannable().append(it, context.resSpans {
-                    size(R.dimen.dk_text_medium)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     color(textColor)
                 }).append(" / 10", context.resSpans {
-                    size(R.dimen.dk_text_small)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     color(textColor)
                 }).toSpannable()
             }
@@ -60,18 +59,18 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                     .convertToString(),
                     context.resSpans {
                         color(textColor)
-                        size(R.dimen.dk_text_normal)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                     }).toSpannable()
 
             in 302..305 -> DKSpannable().append(
                     viewModel.formatChallengeDistance(driverScore, context).convertToString(),
                     context.resSpans {
                         color(textColor)
-                        size(R.dimen.dk_text_normal)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                     }).toSpannable()
 
             301 -> DKSpannable().append(driverScore.removeZeroDecimal(), context.resSpans {
-                size(R.dimen.dk_text_medium)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 color(textColor)
             }).toSpannable()
             else -> SpannableString("")

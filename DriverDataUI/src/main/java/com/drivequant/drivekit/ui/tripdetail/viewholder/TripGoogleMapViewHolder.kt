@@ -2,12 +2,11 @@ package com.drivequant.drivekit.ui.tripdetail.viewholder
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -19,10 +18,24 @@ import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.tripdetail.adapter.CustomInfoWindowAdapter
 import com.drivequant.drivekit.ui.tripdetail.fragments.TripDetailFragment
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKMarkerType
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapItem
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.MapTraceType
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEvent
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 internal class TripGoogleMapViewHolder(
     var fragment: TripDetailFragment,
@@ -86,16 +99,16 @@ internal class TripGoogleMapViewHolder(
         googleMap.setOnPolylineClickListener {
                 val alert = DKAlertDialog.LayoutBuilder()
                     .init(itemView.context)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .cancelable(true)
                     .positiveButton(DKResource.convertToString(itemView.context, "dk_common_ok"),
                         DialogInterface.OnClickListener
                         { dialog, _ -> dialog.dismiss() })
                     .show()
 
-                val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-                val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-                val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+                val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+                val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+                val icon = alert.findViewById<ImageView>(com.drivequant.drivekit.common.ui.R.id.image_view_alert_icon)
 
                 title?.text =
                     DKResource.convertToString(itemView.context, "dk_driverdata_speeding_event")
@@ -103,7 +116,7 @@ internal class TripGoogleMapViewHolder(
                     itemView.context,
                     "dk_driverdata_speeding_event_info_content"
                 )
-                icon?.setImageResource(R.drawable.dk_common_speeding)
+                icon?.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_speeding)
                 title?.headLine1()
                 description?.normalText()
         }

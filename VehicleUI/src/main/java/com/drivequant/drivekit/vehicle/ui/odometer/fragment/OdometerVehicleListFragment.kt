@@ -210,6 +210,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && (requestCode == OdometerHistoryDetailActivity.UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE || requestCode == OdometerVehicleDetailActivity.UPDATE_VEHICLE_ODOMETER_LIST_REQUEST_CODE)) {

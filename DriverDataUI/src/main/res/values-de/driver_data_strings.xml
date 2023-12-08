@@ -45,7 +45,7 @@
    <string name="dk_driverdata_drivingconditions_empty_data">Fahren Sie mit der App und zeichnen Sie Ihre Fahrten auf, um Ihre Fahrbedingungen anzuzeigen und eine Übersicht zu erhalten.</string>
    <string name="dk_driverdata_drivingconditions_fog">Nebel</string>
    <string name="dk_driverdata_drivingconditions_ice">Eis</string>
-   <string name="dk_driverdata_drivingconditions_interval_distance">%d - %d km</string>
+   <string name="dk_driverdata_drivingconditions_interval_distance">%1$d - %2$d km</string>
    <string name="dk_driverdata_drivingconditions_long_trips">&gt; 100 km</string>
    <string name="dk_driverdata_drivingconditions_main_city">Sie fahren hauptsächlich in der Stadt</string>
    <string name="dk_driverdata_drivingconditions_main_cloud">Sie fahren überwiegend bei bewölktem Wetter</string>
@@ -53,7 +53,7 @@
    <string name="dk_driverdata_drivingconditions_main_expressways">Sie fahren hauptsächlich auf Schnellstraßen</string>
    <string name="dk_driverdata_drivingconditions_main_fog">Sie fahren überwiegend bei nebligem Wetter</string>
    <string name="dk_driverdata_drivingconditions_main_ice">Sie fahren überwiegend auf vereisten Straßen</string>
-   <string name="dk_driverdata_drivingconditions_main_interval_distance">Sie legen überwiegend Fahrten von %d bis %d Kilometer zurück</string>
+   <string name="dk_driverdata_drivingconditions_main_interval_distance">Sie legen überwiegend Fahrten von %1$d bis %2$d Kilometer zurück</string>
    <string name="dk_driverdata_drivingconditions_main_long_trips">Sie legen vor allem lange Strecken zurück</string>
    <string name="dk_driverdata_drivingconditions_main_night">Sie fahren oft nachts</string>
    <string name="dk_driverdata_drivingconditions_main_rain">Sie fahren vorwiegend bei regnerischem Wetter</string>

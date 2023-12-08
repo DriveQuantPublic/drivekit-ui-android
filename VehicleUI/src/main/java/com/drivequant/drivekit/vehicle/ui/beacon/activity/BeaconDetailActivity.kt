@@ -108,6 +108,7 @@ class BeaconDetailActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         finish()
     }

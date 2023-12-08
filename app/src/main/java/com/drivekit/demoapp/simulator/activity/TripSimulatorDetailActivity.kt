@@ -52,7 +52,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         binding = ActivityTripSimulatorDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
@@ -115,17 +115,17 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
     private fun showStopSimulationPopup(onStopSimulation: () -> Unit) {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(this@TripSimulatorDetailActivity)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .positiveButton(getString(R.string.button_stop)) { _, _ ->
                 viewModel.stopSimulation()
                 onStopSimulation.invoke()
             }
-            .negativeButton(getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+            .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
             .show()
 
-        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+        val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
         val descriptionTextView =
-            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+            alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         titleTextView?.text = getString(R.string.trip_simulator_stop_simulation_alert_title)
         descriptionTextView?.text = getString(R.string.trip_simulator_stop_simulation_alert_content)
         titleTextView?.headLine1()
@@ -156,6 +156,7 @@ internal class TripSimulatorDetailActivity : AppCompatActivity(), TripSimulatorD
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (viewModel.isSimulating) {
            showStopSimulationPopup { finish() }
