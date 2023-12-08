@@ -30,7 +30,7 @@ class ChallengeDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dk_activity_challenge_detail)
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

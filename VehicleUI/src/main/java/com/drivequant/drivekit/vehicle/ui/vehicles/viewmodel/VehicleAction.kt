@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.app.Activity
 import android.content.Context
-import com.google.android.material.textfield.TextInputEditText
 import android.widget.TextView
 import android.widget.Toast
 import com.drivequant.drivekit.common.ui.DriveKitUI
@@ -20,6 +19,7 @@ import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
+import com.google.android.material.textfield.TextInputEditText
 
 enum class VehicleAction(
     private val descriptionIdentifier: String
@@ -121,7 +121,7 @@ enum class VehicleAction(
             DriveKitUI.colors.mainFontColor(), "dk_vehicle_delete_confirm", vehicleName
         )
         val alert = DKAlertDialog.LayoutBuilder().init(context)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton(positiveListener = { _, _ ->
                 DriveKitVehicle.deleteVehicle(vehicle, object : VehicleDeleteQueryListener {

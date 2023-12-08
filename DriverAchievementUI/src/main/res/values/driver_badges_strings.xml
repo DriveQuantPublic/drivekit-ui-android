@@ -95,7 +95,7 @@
    <string name="badge_efficiency_extra_urban_congrats_1">Congratulations, you have achieved the objective!</string>
    <string name="badge_efficiency_extra_urban_congrats_2">Congratulations, you have achieved the objective!</string>
    <string name="badge_efficiency_extra_urban_congrats_3">Congratulations, you have achieved the objective!</string>
-   <string name="badge_efficiency_extra_urban_description_1">To win this badge, you must cover 100 kilometers in a suburban area with an ecodriving score above 8.5 out of 10. By practicing ecodriving and following the advice of the application, you can reduce your fuel consumption by 10% to 15%.</string>
+   <string name="badge_efficiency_extra_urban_description_1">To win this badge, you must cover 100 kilometers in a suburban area with an ecodriving score above 8.5 out of 10. By practicing ecodriving and following the advice of the application, you can reduce your fuel consumption by 10%% to 15%%.</string>
    <string name="badge_efficiency_extra_urban_description_2">To win this badge, you must cover 300 kilometers in a suburban area with an ecodriving score above 8.5 out of 10. It\'s a good habit to slow your vehicle using the engine brake. It is better to downshift than to put the engine into neutral by only using the mechanical brake to slow down the vehicle.</string>
    <string name="badge_efficiency_extra_urban_description_3">To win this badge, you must cover 100 kilometers in a suburban area with an ecodriving score above 8.5 out of 10.</string>
    <string name="badge_efficiency_extra_urban_name_1">Amateur</string>

@@ -21,7 +21,7 @@ class TripsListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trips_list)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

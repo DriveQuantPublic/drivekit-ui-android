@@ -15,7 +15,6 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
-import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingData(
     private val viewModel: RankingViewModel
@@ -66,14 +65,14 @@ class RankingData(
         }.let {
             DKSpannable().append(it, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
-                size(R.dimen.dk_text_xbig)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
             }).append(" / ", context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
-                size(R.dimen.dk_text_xbig)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
             }).append(
                 "${viewModel.fetchedRanking.nbDriverRanked}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_xbig)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 }
             )
                 .toSpannable()

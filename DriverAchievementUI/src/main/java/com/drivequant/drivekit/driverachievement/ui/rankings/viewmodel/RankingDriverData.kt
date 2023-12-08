@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
-import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingDriverData(
     private val driverRank: Int,
@@ -55,10 +54,10 @@ class RankingDriverData(
             driverScore.format(2)
         }.let {
             DKSpannable().append(it, context.resSpans {
-                size(R.dimen.dk_text_medium)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 color(textColor)
             }).append(" / 10", context.resSpans {
-                size(R.dimen.dk_text_small)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                 color(textColor)
             }).toSpannable()
         }

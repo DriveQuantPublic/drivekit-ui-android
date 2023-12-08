@@ -1,3 +1,38 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    // The following block is to be removed when using Android Studio Hedgehog / AGP 8.2.
+    // This is necessary to support sealed classes.
+    // See: https://issuetracker.google.com/issues/227160052#comment37
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url = uri("https://storage.googleapis.com/r8-releases/raw")
+            }
+        }
+        dependencies {
+            classpath("com.android.tools:r8:8.2.26")
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://maven.drivequant.com/repository/android-sdk/"
+        }
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+}
+
 include ':app',
         ':DriverDataUI',
         ':DriverAchievementUI',

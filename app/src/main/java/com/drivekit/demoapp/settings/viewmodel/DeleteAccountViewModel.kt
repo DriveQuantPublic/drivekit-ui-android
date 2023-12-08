@@ -27,7 +27,7 @@ internal class DeleteAccountViewModel : ViewModel(), DriveKitListener {
     override fun onAccountDeleted(status: DeleteAccountStatus) {
         when (status) {
             DeleteAccountStatus.SUCCESS -> { accountDeleted.postValue(Any()) }
-            DeleteAccountStatus.FAILED_TO_DELETE -> accountDeletionError.postValue(R.string.dk_common_error_message)
+            DeleteAccountStatus.FAILED_TO_DELETE -> accountDeletionError.postValue(com.drivequant.drivekit.common.ui.R.string.dk_common_error_message)
             DeleteAccountStatus.FORBIDDEN -> accountDeletionForbidden.postValue(R.string.account_deletion_error_forbidden)
         }
     }

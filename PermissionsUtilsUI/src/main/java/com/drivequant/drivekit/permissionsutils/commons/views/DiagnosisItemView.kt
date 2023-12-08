@@ -1,14 +1,14 @@
 package com.drivequant.drivekit.permissionsutils.commons.views
 
 import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -105,7 +105,7 @@ class DiagnosisItemView : LinearLayout {
 
     fun setDiagnosisDrawable(permissionStatus: PermissionStatus) {
         val color = when (permissionStatus) {
-            PermissionStatus.VALID -> ContextCompat.getColor(context, R.color.dkValid)
+            PermissionStatus.VALID -> ContextCompat.getColor(context, com.drivequant.drivekit.common.ui.R.color.dkValid)
             PermissionStatus.NOT_VALID -> DriveKitUI.colors.criticalColor()
             PermissionStatus.WARNING -> DriveKitUI.colors.warningColor()
         }
@@ -128,14 +128,14 @@ class DiagnosisItemView : LinearLayout {
         this.setOnClickListener {
             val infoDiagnosis = DKAlertDialog.LayoutBuilder()
                 .init(context)
-                .layout(R.layout.template_alert_dialog_layout)
+                .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .cancelable(false)
                 .positiveButton()
                 .show()
 
-            val titleTextView = infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_title)
+            val titleTextView = infoDiagnosis.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
             val descriptionTextView =
-                infoDiagnosis.findViewById<TextView>(R.id.text_view_alert_description)
+                infoDiagnosis.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
             titleTextView?.text = this.getDiagnosisTitle()
             descriptionTextView?.text = this.getDiagnosticTextOK()

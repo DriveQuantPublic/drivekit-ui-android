@@ -120,7 +120,7 @@ class CrashFeedbackStep1Activity : BaseCrashFeedbackActivity() {
                     this.resSpans {
                         color(DriveKitUI.colors.fontColorOnPrimaryColor())
                         typeface(Typeface.BOLD)
-                        size(R.dimen.dk_text_medium)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     })
                 else -> {
                     // do nothing

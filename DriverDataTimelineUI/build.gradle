@@ -1,5 +1,7 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
 
 project.ext {
     artifactId = "drivekit-driver-data-timeline-ui"
@@ -7,8 +9,7 @@ project.ext {
 
 android {
     namespace 'com.drivequant.drivekit.timeline.ui'
-    buildToolsVersion project.ext.build_tools_version
-    compileSdkVersion project.ext.compile_sdk_version
+    compileSdk project.ext.compile_sdk_version
 
     defaultConfig {
         minSdkVersion project.ext.min_sdk_version
@@ -24,6 +25,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     publishing {

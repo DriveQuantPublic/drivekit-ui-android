@@ -19,7 +19,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Beacon
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerInfoBinding
@@ -188,13 +187,13 @@ class BeaconScannerInfoFragment : Fragment() {
             .append(value, requireContext().resSpans {
                 color(primaryColor)
                 typeface(Typeface.BOLD)
-                size(R.dimen.dk_text_medium)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
             })
             .append(" ")
             .append(unit, requireContext().resSpans {
                 color(mainFontColor)
                 typeface(Typeface.NORMAL)
-                size(R.dimen.dk_text_small)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
             })
             .toSpannable()
     }

@@ -2,8 +2,8 @@ package com.drivequant.drivekit.timeline.ui.timelinedetail
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
@@ -41,7 +41,7 @@ internal class TimelineDetailActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -73,6 +73,7 @@ internal class TimelineDetailActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         finishActivity()
         super.onBackPressed()

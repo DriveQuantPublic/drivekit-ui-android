@@ -73,13 +73,13 @@ internal class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemV
                 } else {
                     val alertDialog = DKAlertDialog.LayoutBuilder()
                         .init(context)
-                        .layout(R.layout.template_alert_dialog_layout)
+                        .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                         .positiveButton()
                         .show()
 
-                    val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                    val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                     val descriptionTextView =
-                        alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                        alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                     titleTextView?.text = context.getString(R.string.app_name)
                     descriptionTextView?.text = context.getString(R.string.feature_permission_onboarding_ok)
                     titleTextView?.headLine1()

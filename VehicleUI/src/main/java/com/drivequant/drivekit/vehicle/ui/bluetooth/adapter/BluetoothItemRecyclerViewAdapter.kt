@@ -2,14 +2,14 @@ package com.drivequant.drivekit.vehicle.ui.bluetooth.adapter
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -74,7 +74,7 @@ class BluetoothItemRecyclerViewAdapter(
 
     private fun showDeviceAlreadyPaired(context: Context, bluetoothDevice: BluetoothData){
         val alert = DKAlertDialog.LayoutBuilder().init(context)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton(DKResource.convertToString(context, "dk_common_close"),
                 DialogInterface.OnClickListener { dialog, _ ->

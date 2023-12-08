@@ -34,9 +34,9 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     private fun setStyle() {
         val params = selectorTextView.layoutParams as MarginLayoutParams
         params.setMargins(
-            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
+            context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_quarter).toInt(),
             params.topMargin,
-            context.resources.getDimension(R.dimen.dk_margin_quarter).toInt(),
+            context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_quarter).toInt(),
             params.bottomMargin
         )
         layoutParams = params

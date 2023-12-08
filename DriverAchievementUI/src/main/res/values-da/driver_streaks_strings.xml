@@ -26,7 +26,7 @@
    <string name="dk_achievements_streaks_safety_text">Prøv at køre så mange ture, du kan med en sikkerhedsscore på over 9.8. \n\nHver gang du lykkedes, stiger din score. \n\nKører du en tur på under 9.8, nulstilles tælleren, og du skal starte forfra.</string>
    <string name="dk_achievements_streaks_safety_title">Sikker kørsel</string>
    <string name="dk_achievements_streaks_since">Siden %s</string>
-   <string name="dk_achievements_streaks_since_to">%s til %s</string>
+   <string name="dk_achievements_streaks_since_to">%1$s til %2$s</string>
    <string name="dk_achievements_streaks_speeding_reset">Du overskred hastighedsgrænsen på din sidste tur.</string>
    <string name="dk_achievements_streaks_speeding_text">Kør nogle ture og sørg for at overholde for hastighedsgrænserne. Din score skal være højere end 9,8/10. \n\n Hver gang du gør det, stiger dit streak.\n\n Hvis du overskrider hastighedsgrænsen, nulstilles dit streak, og du skal starte forfra.\n\n Dit bedste streak gemmes, så du kan forsøge at overgå det.</string>
    <string name="dk_achievements_streaks_speeding_title">Overholdt hastighedsgrænserne</string>

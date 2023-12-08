@@ -28,7 +28,7 @@ internal class MySynthesisScoreLegendDialog {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(context)
             .layout(R.layout.dk_my_synthesis_scores_legend_alert_dialog)
-            .positiveButton(context.getString(R.string.dk_common_close)) { dialog, _ ->
+            .positiveButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close)) { dialog, _ ->
                 dialog.dismiss()
             }
             .cancelable(true)
@@ -76,23 +76,23 @@ internal class MySynthesisScoreLegendDialog {
             this.text = DKSpannable().append(scoreValuesText, context.resSpans {
                 color(DriveKitUI.colors.mainFontColor())
                 typeface(Typeface.NORMAL)
-                size(R.dimen.dk_text_normal)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
             }).space()
                 .append(
                     context.getString(scoreLevel.getScoreLevelDescription(scoreType)),
                     context.resSpans {
                         color(DriveKitUI.colors.complementaryFontColor())
                         typeface(Typeface.NORMAL)
-                        size(R.dimen.dk_text_small)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     }).toSpannable()
         }
         container.addView(view)
         val params = view.layoutParams as ViewGroup.MarginLayoutParams
         params.setMargins(
             params.leftMargin,
-            view.resources.getDimension(R.dimen.dk_margin_half).toInt(),
+            view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half).toInt(),
             params.rightMargin,
-            view.resources.getDimension(R.dimen.dk_margin_half).toInt()
+            view.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half).toInt()
         )
         view.layoutParams = params
     }

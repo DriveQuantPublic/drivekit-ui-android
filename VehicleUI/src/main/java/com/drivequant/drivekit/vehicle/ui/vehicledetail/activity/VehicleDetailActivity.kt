@@ -58,7 +58,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun hideProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
                 .alpha(0f)
                 .setDuration(200L)
@@ -71,7 +71,7 @@ class VehicleDetailActivity : AppCompatActivity() {
     }
 
     private fun showProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)
@@ -88,6 +88,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")
         if (fragment is VehicleDetailFragment){
@@ -101,6 +102,7 @@ class VehicleDetailActivity : AppCompatActivity() {
         fragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val fragment = supportFragmentManager.findFragmentByTag("vehicleDetailTag")

@@ -49,6 +49,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         request(this, Manifest.permission.ACTIVITY_RECOGNITION)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PERMISSIONS_OPEN_SETTINGS) {

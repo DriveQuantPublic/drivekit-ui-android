@@ -13,10 +13,15 @@ import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.driverdata.community.statistics.DKCommunityStatistics
 import com.drivequant.drivekit.driverdata.community.statistics.DKScoreStatistics
-import com.drivequant.drivekit.driverdata.timeline.*
+import com.drivequant.drivekit.driverdata.timeline.DKDriverTimeline
+import com.drivequant.drivekit.driverdata.timeline.DKScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.allContextItemAt
+import com.drivequant.drivekit.driverdata.timeline.getDriverScoreSynthesis
+import com.drivequant.drivekit.driverdata.timeline.getValue
+import com.drivequant.drivekit.driverdata.timeline.hasValueForScoreType
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.extension.getMedianScore
-import java.util.*
+import java.util.Date
 
 internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
@@ -141,11 +146,11 @@ internal class MySynthesisCommunityCardViewModel : ViewModel() {
 
     private fun getTripsCountText(context: Context, tripsCount: Int): SpannableString {
         val spannable = DKSpannable()
-        val tripsString = context.resources.getQuantityString(R.plurals.trip_plural, tripsCount)
+        val tripsString = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, tripsCount)
         if (tripsCount == 0) {
             spannable.append(
                 context,
-                context.getString(R.string.dk_common_no_trip),
+                context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_no_trip),
                 DriveKitUI.colors.complementaryFontColor(),
                 DKStyle.SMALL_TEXT
             )

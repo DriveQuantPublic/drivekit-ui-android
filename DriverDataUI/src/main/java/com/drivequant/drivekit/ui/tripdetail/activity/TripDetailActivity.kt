@@ -49,7 +49,7 @@ class TripDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trip_detail)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -68,6 +68,7 @@ class TripDetailActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (shouldRefreshTrips){
             setResult(Activity.RESULT_OK)
@@ -77,6 +78,7 @@ class TripDetailActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == TransportationModeActivity.UPDATE_TRIP_TRANSPORTATION_MODE){

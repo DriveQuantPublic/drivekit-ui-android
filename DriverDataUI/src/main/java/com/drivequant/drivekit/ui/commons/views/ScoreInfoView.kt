@@ -33,7 +33,7 @@ class ScoreInfoView : LinearLayout {
         view.setOnClickListener {
             val alert = DKAlertDialog.LayoutBuilder()
                 .init(context)
-                .layout(R.layout.template_alert_dialog_layout)
+                .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .cancelable(true)
                 .positiveButton(
                     DKResource.convertToString(context, "dk_common_ok"),
@@ -41,9 +41,9 @@ class ScoreInfoView : LinearLayout {
                     { dialog, _ -> dialog.dismiss() })
                 .show()
 
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-            val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+            val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+            val icon = alert.findViewById<ImageView>(com.drivequant.drivekit.common.ui.R.id.image_view_alert_icon)
 
             title?.text =
                 DKResource.convertToString(context, gaugeConfiguration.getScoreInfoTitle(context))

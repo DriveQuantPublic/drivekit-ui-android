@@ -33,7 +33,7 @@ internal class TripSimulatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTripSimulatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = getString(R.string.trip_simulator_header)
@@ -129,16 +129,16 @@ internal class TripSimulatorActivity : AppCompatActivity() {
     private fun showErrorPopup(errorMessageResId: Int) {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(this)
-            .layout(R.layout.template_alert_dialog_layout)
-            .positiveButton(getString(R.string.dk_common_ok)) { dialog, _ ->
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
+            .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
 
         val titleTextView =
-            alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+            alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
         val descriptionTextView =
-            alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+            alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
         titleTextView?.text = getString(R.string.app_name)
         descriptionTextView?.text = getString(errorMessageResId)
         titleTextView?.headLine1()

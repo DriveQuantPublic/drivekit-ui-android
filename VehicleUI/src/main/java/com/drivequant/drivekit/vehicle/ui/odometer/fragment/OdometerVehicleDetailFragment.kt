@@ -177,7 +177,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
         }
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .positiveButton()
             .show()
 
@@ -192,6 +192,7 @@ class OdometerVehicleDetailFragment : Fragment(), OdometerDrawableListener {
     }
 
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK && (

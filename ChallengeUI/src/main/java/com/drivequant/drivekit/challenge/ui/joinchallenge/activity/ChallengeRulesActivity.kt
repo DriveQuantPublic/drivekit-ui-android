@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.databinding.DkActivityChallengeRulesBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -60,7 +59,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             ), javaClass.simpleName
         )
 
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -122,7 +121,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             if (!isRegistered) {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(this)
-                    .layout(R.layout.template_alert_dialog_layout)
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                     .positiveButton(positiveListener = { dialog, _ ->
                         updateProgressVisibility(true)
                         viewModel.joinChallenge(challengeId)
@@ -133,9 +132,9 @@ class ChallengeRulesActivity : AppCompatActivity() {
                     })
                     .show()
 
-                val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
+                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
-                    alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                 titleTextView?.text =
                     DKResource.convertToString(this, "dk_challenge_participate_button")
                 viewModel.challenge?.optinText?.let {
@@ -161,6 +160,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
         return true
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         setResult(Activity.RESULT_CANCELED)
         super.onBackPressed()

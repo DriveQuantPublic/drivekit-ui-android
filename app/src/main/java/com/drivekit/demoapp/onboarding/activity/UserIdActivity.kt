@@ -35,7 +35,7 @@ class UserIdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySetUserIdBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         title = getString( R.string.authentication_header)
 
         if (!this::viewModel.isInitialized) {
@@ -55,7 +55,7 @@ class UserIdActivity : AppCompatActivity() {
             }
         }
         binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(R.string.dk_common_validate)
+            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 validateUserId()
@@ -116,6 +116,7 @@ class UserIdActivity : AppCompatActivity() {
         viewModel.getUserInfo(syncStatus)
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

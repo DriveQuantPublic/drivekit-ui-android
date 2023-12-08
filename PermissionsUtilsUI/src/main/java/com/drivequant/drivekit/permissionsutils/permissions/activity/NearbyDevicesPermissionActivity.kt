@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
-import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNearbyDevicesPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 
@@ -42,7 +41,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
             override fun onPermissionDeclined(permissionName: Array<String>) {
                 handlePermissionDeclined(
                     this@NearbyDevicesPermissionActivity,
-                    R.string.dk_common_app_diag_nearby_ko,
+                    com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko,
                     this@NearbyDevicesPermissionActivity::checkRequiredPermissions
                 )
             }
@@ -52,7 +51,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
                     DKResource.convertToString(applicationContext, "dk_perm_utils_permissions_text_button_nearby_devices_settings")
                 handlePermissionTotallyDeclined(
                     this@NearbyDevicesPermissionActivity,
-                    R.string.dk_common_app_diag_nearby_ko
+                    com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko
                 )
             }
         }
@@ -64,6 +63,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         )
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS) {

@@ -27,7 +27,7 @@ internal class MySynthesisActivity : AppCompatActivity() {
     }
 
     private fun setupUi() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
