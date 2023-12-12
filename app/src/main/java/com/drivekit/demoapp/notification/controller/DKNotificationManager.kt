@@ -52,7 +52,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     fun createChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DKNotificationChannel.values().forEach { channel ->
-                if (channel.canCreate() && channel.isEnabled(context)) {
+                if (channel.isEnabled(context)) {
                     createChannel(context, channel)
                 }
             }
@@ -74,9 +74,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     private fun deleteChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DKNotificationChannel.values().forEach {
-                if (it.canDelete()) {
-                    deleteChannel(context, it)
-                }
+                deleteChannel(context, it)
             }
         }
     }
