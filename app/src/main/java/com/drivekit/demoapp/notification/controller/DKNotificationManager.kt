@@ -60,7 +60,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     fun createChannel(context: Context, channel: DKNotificationChannel) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && channel.canCreate()) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel = NotificationChannel(
                 channel.getChannelId(),
@@ -72,13 +72,17 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     private fun deleteChannels(context: Context) {
-        DKNotificationChannel.values().forEach {
-            deleteChannel(context, it)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DKNotificationChannel.values().forEach {
+                if (it.canDelete()) {
+                    deleteChannel(context, it)
+                }
+            }
         }
     }
 
     fun deleteChannel(context: Context, channel: DKNotificationChannel) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && channel.canDelete()) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.deleteNotificationChannel(channel.getChannelId())
         }
