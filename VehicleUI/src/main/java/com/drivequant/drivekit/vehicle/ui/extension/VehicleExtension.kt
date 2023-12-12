@@ -68,17 +68,8 @@ fun Vehicle.getCategoryName(context: Context): String {
     }
 }
 
-fun Vehicle.getEngineTypeName(context: Context): String? {
-    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
-        val engineIndexes = VehicleTypeItem.getEnumByVehicleType(vehicleType).getEngineIndexes(context)
-        val matchedEngineIndex = engineIndexes.first {
-            VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
-        }
-        return matchedEngineIndex.title
-    }?:run {
-        return null
-    }
-}
+fun Vehicle.getEngineTypeName(context: Context): String
+    = VehicleEngineIndex.getEnumByValue(this.engineIndex).getTitle(context)
 
 fun Vehicle.getGearBoxName(context: Context): String {
     val identifier = when (gearboxIndex){

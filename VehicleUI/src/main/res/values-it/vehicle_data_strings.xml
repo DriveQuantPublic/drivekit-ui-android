@@ -124,13 +124,18 @@
     <string name="dk_vehicle_detail_category_button_description">Conoscete la marca, il modello e le caratteristiche del vostro veicolo</string>
     <string name="dk_vehicle_detail_category_button_title">Trova la mia auto</string>
     <string name="dk_vehicle_detection_mode_title">Inizio auto:</string>
+    <string name="dk_vehicle_engine_bi_fuel_bioethanol">Benzina a doppia alimentazione bioetanolo</string>
+    <string name="dk_vehicle_engine_bi_fuel_lpg">Benzina a doppia alimentazione GPL</string>
+    <string name="dk_vehicle_engine_bi_fuel_ngv">Benzina a doppia alimentazione NGV</string>
+    <string name="dk_vehicle_engine_biofuel">Biocarburante</string>
     <string name="dk_vehicle_engine_description">Tipo de motore</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
     <string name="dk_vehicle_engine_diesel_hybrid">Ibrido diesel-elettrico</string>
     <string name="dk_vehicle_engine_electric">Elettrico</string>
     <string name="dk_vehicle_engine_gasoline">Benzina</string>
-    <string name="dk_vehicle_engine_gasoline_hybrid">Ibrido benzina-elettrico</string>
+    <string name="dk_vehicle_engine_gasoline_hybrid">Benzina ibrida</string>
     <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Benzina ibrida ricaricabile</string>
+    <string name="dk_vehicle_engine_hydrogen">Idrogeno</string>
     <string name="dk_vehicle_error_message">Si è verificato un errore durante la richiesta, riprova più tardi</string>
     <string name="dk_vehicle_failed_to_paired_beacon">Il beacon non può essere associato al veicolo, si prega di riprovare più tardi.</string>
     <string name="dk_vehicle_failed_to_paired_bluetooth">La connessione Bluetooth al veicolo non è riuscita, si prega di riprovare più tardi.</string>
@@ -138,6 +143,7 @@
     <string name="dk_vehicle_failed_to_sync">Impossibile recuperare i dati del veicolo, riprova più tardi</string>
     <string name="dk_vehicle_field_name_error">Il nome del vostro veicolo non deve superare i 50 caratteri.</string>
     <string name="dk_vehicle_gps_already_exists_confirm">Si desidera impostare la modalità di rilevamento %1$s per il veicolo %2$s?\n\nLa modalità di rilevamento del veicolo %3$s sarà commutata a %4$s.</string>
+    <string name="dk_vehicle_is_it_electric">È un veicolo elettrico?</string>
     <string name="dk_vehicle_list_empty">Si prega di aggiungere almeno un veicolo</string>
     <string name="dk_vehicle_model_description">Modello del veicolo?</string>
     <string name="dk_vehicle_my_vehicle">Il mio veicolo</string>
