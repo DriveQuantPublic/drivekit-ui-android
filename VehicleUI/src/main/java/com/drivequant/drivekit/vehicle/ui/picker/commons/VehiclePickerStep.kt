@@ -12,5 +12,6 @@ enum class VehiclePickerStep {
     MODELS,
     YEARS,
     VERSIONS,
-    NAME;
+    NAME,
+    DEFAULT_CAR_ENGINE_TYPE
 }

@@ -7,21 +7,25 @@ import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.extension.*
+import com.drivequant.drivekit.vehicle.ui.extension.buildBrandItem
+import com.drivequant.drivekit.vehicle.ui.extension.buildCategoryItem
+import com.drivequant.drivekit.vehicle.ui.extension.buildEngineIndexItem
+import com.drivequant.drivekit.vehicle.ui.extension.buildTruckTypeItem
+import com.drivequant.drivekit.vehicle.ui.extension.getVehicleType
+import com.drivequant.drivekit.vehicle.ui.extension.hasIcon
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleBrandItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleEngineItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleTruckTypeItem
-import java.lang.IllegalArgumentException
 
 enum class VehicleTypeItem(val vehicleType: VehicleType) {
     CAR(VehicleType.CAR),
     TRUCK(VehicleType.TRUCK);
 
     companion object {
-        fun getEnumByVehicleType(vehicleType: VehicleType): VehicleTypeItem{
-            for (x in values()){
-                if (x.vehicleType == vehicleType){
+        fun getEnumByVehicleType(vehicleType: VehicleType): VehicleTypeItem {
+            for (x in values()) {
+                if (x.vehicleType == vehicleType) {
                     return x
                 }
             }
@@ -38,7 +42,7 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
 
     fun getTruckTypes(context: Context): List<VehicleTruckTypeItem> {
         val truckTypes = mutableListOf<VehicleTruckTypeItem>()
-        for (item in TruckType.values()){
+        for (item in TruckType.values()) {
             truckTypes.add(item.buildTruckTypeItem(context))
         }
         return truckTypes
@@ -46,7 +50,7 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
 
     fun getCategories(context: Context): List<VehicleCategoryItem> {
         val categories = mutableListOf<VehicleCategoryItem>()
-        for (item in VehicleCategory.getCategories(vehicleType)){
+        for (item in VehicleCategory.getCategories(vehicleType)) {
             categories.add(item.buildCategoryItem(context))
         }
         return categories

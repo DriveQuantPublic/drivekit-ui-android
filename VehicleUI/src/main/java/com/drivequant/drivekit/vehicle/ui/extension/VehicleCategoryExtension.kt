@@ -4,12 +4,26 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
-import com.drivequant.drivekit.vehicle.enums.VehicleCategory.*
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.COMMERCIAL
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.COMPACT
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.FOUR_AXLES_STRAIGHT_TRUCK
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.FOUR_AXLES_TRACTOR
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.LUXURY
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.MICRO
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.MINIVAN
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.SEDAN
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.SPORT
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.SUV
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.THREE_AXLES_STRAIGHT_TRUCK
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.THREE_AXLES_TRACTOR
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.TWO_AXLES_STRAIGHT_TRUCK
+import com.drivequant.drivekit.vehicle.enums.VehicleCategory.TWO_AXLES_TRACTOR
+import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 
 fun VehicleCategory.getTitle(context: Context): String {
-    val identifier = when (this){
+    val identifier = when (this) {
         MICRO -> R.string.dk_vehicle_category_car_micro_title
         COMPACT -> R.string.dk_vehicle_category_car_compact_title
         SEDAN -> R.string.dk_vehicle_category_car_sedan_title
@@ -88,33 +102,52 @@ fun VehicleCategory.getDescription(context: Context): String {
     return DKResource.convertToString(context, identifier)
 }
 
-fun VehicleCategory.getLiteConfigDqIndex(): String {
-    return when (this){
-        MICRO -> "ToAy2018FT1P0069N008"
-        COMPACT -> "ReCl2018FT1P0090N018"
-        SEDAN -> "FoMo2018FT2P0150N007"
-        SUV -> "ToRa2018FT1P0151N001"
-        MINIVAN -> "CiGr2018FT2P0120N007"
-        COMMERCIAL -> "ReMa2018FT2P0125N050"
-        LUXURY -> "AuA62018FT2P0190N018"
-        SPORT -> "AlA12018FT1P0252N001"
-        TWO_AXLES_STRAIGHT_TRUCK,
-        THREE_AXLES_STRAIGHT_TRUCK,
-        FOUR_AXLES_STRAIGHT_TRUCK,
-        TWO_AXLES_TRACTOR,
-        THREE_AXLES_TRACTOR,
-        FOUR_AXLES_TRACTOR -> ""
+fun VehicleCategory.getLiteConfigDqIndex(engineIndex: VehicleEngineIndex): String {
+    if (engineIndex == VehicleEngineIndex.ELECTRIC) {
+         return when (this) {
+             MICRO -> "ReTw2022FT3P0081N001"
+             COMPACT -> "Fi502021FT3P0118N013"
+             SEDAN -> "KiE-2020FT3P0204N004"
+             SUV -> "TeMo2022FT3P0278N001"
+             MINIVAN -> "OpZa2022FT3P0136N010"
+             COMMERCIAL -> "PeEx2022FT3P0136N011"
+             LUXURY -> "TeMo2021FT3P0282N002"
+             SPORT -> "PoTa2022FT3P0000N018"
+             TWO_AXLES_STRAIGHT_TRUCK,
+             THREE_AXLES_STRAIGHT_TRUCK,
+             FOUR_AXLES_STRAIGHT_TRUCK,
+             TWO_AXLES_TRACTOR,
+             THREE_AXLES_TRACTOR,
+             FOUR_AXLES_TRACTOR -> ""
+         }
+    } else {
+        return when (this) {
+            MICRO -> "ToAy2018FT1P0069N008"
+            COMPACT -> "ReCl2018FT1P0090N018"
+            SEDAN -> "FoMo2018FT2P0150N007"
+            SUV -> "ToRa2018FT1P0151N001"
+            MINIVAN -> "CiGr2018FT2P0120N007"
+            COMMERCIAL -> "ReMa2018FT2P0125N050"
+            LUXURY -> "AuA62018FT2P0190N018"
+            SPORT -> "AlA12018FT1P0252N001"
+            TWO_AXLES_STRAIGHT_TRUCK,
+            THREE_AXLES_STRAIGHT_TRUCK,
+            FOUR_AXLES_STRAIGHT_TRUCK,
+            TWO_AXLES_TRACTOR,
+            THREE_AXLES_TRACTOR,
+            FOUR_AXLES_TRACTOR -> ""
+        }
     }
 }
 
 fun VehicleCategory.buildCategoryItem(context: Context): VehicleCategoryItem {
     return VehicleCategoryItem(
+        this,
         this.name,
         getTitle(context),
         getIcon(context),
         getImage(context),
         getDescription(context),
-        getLiteConfigDqIndex(),
         isCar,
         isMotorbike,
         isTruck

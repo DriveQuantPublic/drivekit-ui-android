@@ -216,6 +216,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         val fragment = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel)
+            DEFAULT_CAR_ENGINE_TYPE -> DefaultCarEngineSelectionFragment.newInstance(viewModel)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
         }
 
@@ -229,10 +230,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun updateTitle(vehiclePickerStep: VehiclePickerStep) {
-        val screenTitle = when (vehiclePickerStep){
+        val screenTitle = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> viewModel.selectedCategory.title
-            NAME -> DKResource.convertToString(this, "dk_vehicle_name")
-            else -> DKResource.convertToString(this, "dk_vehicle_my_vehicle")
+            NAME -> resources.getString(R.string.dk_vehicle_name)
+            DEFAULT_CAR_ENGINE_TYPE -> resources.getString(R.string.dk_motor)
+            else -> resources.getString(R.string.dk_vehicle_my_vehicle)
         }
         screenTitle?.let {
             setActivityTitle(it)
