@@ -15,6 +15,8 @@ internal enum class DKNotificationChannel {
         else -> true
     }
 
+    fun canDelete() = canCreate()
+
     fun isEnabled(context: Context): Boolean {
         return getSharedPreferencesKey()?.let {
             PreferenceManager.getDefaultSharedPreferences(context).getBoolean(it, true)
