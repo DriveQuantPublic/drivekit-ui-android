@@ -18,7 +18,6 @@ import com.drivequant.drivekit.vehicle.manager.*
 import com.drivequant.drivekit.vehicle.picker.*
 import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
-import com.drivequant.drivekit.vehicle.ui.extension.getLiteConfigDqIndex
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
@@ -41,6 +40,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
     private var itemVersions = listOf<VehiclePickerItem>()
 
     private var isLiteConfig = false
+    var isElectric = false
 
     var vehicleToDelete: Vehicle? = null
     var createdVehicleId: String? = null
@@ -86,7 +86,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             CATEGORY_DESCRIPTION -> {
                 if (!otherAction) {
                     isLiteConfig = true
-                    stepDispatcher.postValue(DEFAULT_CAR_ENGINE_TYPE)
+                    stepDispatcher.postValue(DEFAULT_CAR_ENGINE)
                 } else {
                     isLiteConfig = false
                     manageBrands(context)
@@ -112,8 +112,8 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
                     createVehicle()
                 }
             }
-            DEFAULT_CAR_ENGINE_TYPE -> {
-                val dqIndex = selectedCategory.vehicleCategory.getLiteConfigDqIndex(selectedEngineIndex)
+            DEFAULT_CAR_ENGINE -> {
+                val dqIndex = selectedCategory.vehicleCategory.getLiteConfigDqIndex(isElectric) ?: ""
                 selectedVersion = VehicleVersion("", dqIndex)
                 fetchVehicleCharacteristics()
             }
@@ -437,7 +437,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
             MODELS -> "dk_vehicle_model_description"
             YEARS -> "dk_vehicle_year_description"
             VERSIONS -> "dk_vehicle_version_description"
-            DEFAULT_CAR_ENGINE_TYPE -> "dk_vehicle_is_it_electric"
+            DEFAULT_CAR_ENGINE -> "dk_vehicle_is_it_electric"
             CATEGORY,
             CATEGORY_DESCRIPTION,
             BRANDS_ICONS,

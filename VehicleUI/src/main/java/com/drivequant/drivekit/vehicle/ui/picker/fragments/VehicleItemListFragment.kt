@@ -35,7 +35,7 @@ class VehicleItemListFragment : Fragment() {
                     VehiclePickerStep.TYPE -> TEXT_ITEM_PADDING
                     VehiclePickerStep.TRUCK_TYPE -> TRUCK_TYPE_ITEM
                     VehiclePickerStep.CATEGORY,
-                    VehiclePickerStep.DEFAULT_CAR_ENGINE_TYPE -> TEXT_IMAGE_ITEM
+                    VehiclePickerStep.DEFAULT_CAR_ENGINE -> TEXT_IMAGE_ITEM
                     VehiclePickerStep.BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
                     VehiclePickerStep.ENGINE,
                     VehiclePickerStep.YEARS,

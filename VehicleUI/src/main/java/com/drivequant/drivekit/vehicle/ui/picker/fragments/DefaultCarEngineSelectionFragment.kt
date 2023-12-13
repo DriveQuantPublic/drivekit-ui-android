@@ -13,7 +13,6 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
@@ -51,8 +50,8 @@ internal class DefaultCarEngineSelectionFragment : Fragment() {
             button()
             text = DKResource.convertToString(requireContext(), "dk_common_validate")
             setOnClickListener {
-                viewModel.selectedEngineIndex = if (yesChoice.isChecked) VehicleEngineIndex.ELECTRIC else VehicleEngineIndex.DIESEL
-                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.DEFAULT_CAR_ENGINE_TYPE)
+                viewModel.isElectric = yesChoice.isChecked
+                viewModel.computeNextScreen(requireContext(), VehiclePickerStep.DEFAULT_CAR_ENGINE)
             }
         }
     }
