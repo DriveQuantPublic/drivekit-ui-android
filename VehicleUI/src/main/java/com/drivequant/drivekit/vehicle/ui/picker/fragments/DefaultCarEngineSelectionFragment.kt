@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
@@ -43,7 +42,7 @@ internal class DefaultCarEngineSelectionFragment : Fragment() {
         val noChoice: RadioButton = view.findViewById(R.id.choiceNo)
         val validateButton: Button = view.findViewById(R.id.button_validate)
 
-        descriptionTextView.bigText()
+        descriptionTextView.normalText()
         yesChoice.normalText()
         noChoice.normalText()
         validateButton.apply {
