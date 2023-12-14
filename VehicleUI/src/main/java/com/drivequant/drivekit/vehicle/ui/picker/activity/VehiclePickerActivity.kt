@@ -161,7 +161,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     private fun updateTitle() {
         steps.lastOrNull()?.let {
             updateTitle(it)
-        } ?: updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
+        } ?: updateTitle(getString(R.string.dk_vehicle_my_vehicle))
     }
 
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
@@ -171,7 +171,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             TRUCK_TYPE -> viewModel.selectedTruckType = TruckType.getEnumByName(item.value)
             CATEGORY -> viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!
             BRANDS_ICONS -> {
-                if (item.value != "OTHER_BRANDS"){
+                if (item.value != "OTHER_BRANDS") {
                     viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
                 } else {
                     otherAction = true
