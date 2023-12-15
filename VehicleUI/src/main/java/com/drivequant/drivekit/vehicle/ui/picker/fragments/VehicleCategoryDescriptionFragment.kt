@@ -29,8 +29,7 @@ class VehicleCategoryDescriptionFragment : Fragment() {
     private lateinit var vehiclePickerCategoryItem: VehicleCategoryItem
 
     companion object {
-        fun newInstance(viewModel: VehiclePickerViewModel)
-                : VehicleCategoryDescriptionFragment {
+        fun newInstance(viewModel: VehiclePickerViewModel): VehicleCategoryDescriptionFragment {
             val fragment = VehicleCategoryDescriptionFragment()
             fragment.viewModel = viewModel
             fragment.vehiclePickerCategoryItem = viewModel.selectedCategory
@@ -53,10 +52,10 @@ class VehicleCategoryDescriptionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imageViewCategory = view.findViewById(R.id.image_view_icon2) as ImageView
-        val textViewDescription = view.findViewById(R.id.text_view_description) as TextView
-        val validateButton = view.findViewById(R.id.button_validate) as View
-        val textViewBrands = view.findViewById(R.id.text_view_brands) as View
+        val imageViewCategory: ImageView = view.findViewById(R.id.image_view_icon)
+        val textViewDescription: TextView = view.findViewById(R.id.text_view_description)
+        val validateButton: View = view.findViewById(R.id.button_validate)
+        val textViewBrands: View = view.findViewById(R.id.text_view_brands)
 
         if (DriveKitVehicleUI.categoryConfigType == CategoryConfigType.LITE_CONFIG_ONLY) {
             val buttonValidate = validateButton as Button

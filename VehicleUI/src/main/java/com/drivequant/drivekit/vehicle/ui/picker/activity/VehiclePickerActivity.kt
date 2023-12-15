@@ -29,6 +29,7 @@ import com.drivequant.drivekit.vehicle.ui.listener.VehiclePickerCompleteListener
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerInitActivity
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
+import com.drivequant.drivekit.vehicle.ui.picker.fragments.DefaultCarEngineSelectionFragment
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleCategoryDescriptionFragment
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleItemListFragment
 import com.drivequant.drivekit.vehicle.ui.picker.fragments.VehicleNameChooserFragment
@@ -39,6 +40,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
 
     private lateinit var viewModel: VehiclePickerViewModel
     private lateinit var binding: ActivityVehiclePickerBinding
+    private var steps: MutableList<VehiclePickerStep> = mutableListOf()
 
     companion object {
         private var vehicleToDelete: Vehicle? = null
@@ -156,14 +158,20 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         setActivityTitle(title)
     }
 
+    private fun updateTitle() {
+        steps.lastOrNull()?.let {
+            updateTitle(it)
+        } ?: updateTitle(getString(R.string.dk_vehicle_my_vehicle))
+    }
+
     override fun onSelectedItem(currentPickerStep: VehiclePickerStep, item: VehiclePickerItem) {
         var otherAction = false
-        when (currentPickerStep){
+        when (currentPickerStep) {
             TYPE -> viewModel.selectedVehicleTypeItem = VehicleTypeItem.valueOf(item.value)
             TRUCK_TYPE -> viewModel.selectedTruckType = TruckType.getEnumByName(item.value)
             CATEGORY -> viewModel.selectedCategory = viewModel.selectedVehicleTypeItem.getCategories(this).find { it.category == item.value }!!
             BRANDS_ICONS -> {
-                if (item.value != "OTHER_BRANDS"){
+                if (item.value != "OTHER_BRANDS") {
                     viewModel.selectedBrand = VehicleBrand.valueOf(item.value)
                 } else {
                     otherAction = true
@@ -216,10 +224,12 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         val fragment = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> VehicleCategoryDescriptionFragment.newInstance(viewModel)
             NAME -> VehicleNameChooserFragment.newInstance(viewModel)
+            DEFAULT_CAR_ENGINE -> DefaultCarEngineSelectionFragment.newInstance(viewModel)
             else -> VehicleItemListFragment.newInstance(viewModel, vehiclePickerStep, viewModel.getItemsByStep(vehiclePickerStep))
         }
 
-        updateTitle(vehiclePickerStep)
+        steps.add(vehiclePickerStep)
+        updateTitle()
 
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_left, R.animator.slide_out_right)
@@ -229,10 +239,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     }
 
     private fun updateTitle(vehiclePickerStep: VehiclePickerStep) {
-        val screenTitle = when (vehiclePickerStep){
+        val screenTitle = when (vehiclePickerStep) {
             CATEGORY_DESCRIPTION -> viewModel.selectedCategory.title
-            NAME -> DKResource.convertToString(this, "dk_vehicle_name")
-            else -> DKResource.convertToString(this, "dk_vehicle_my_vehicle")
+            NAME -> resources.getString(R.string.dk_vehicle_name)
+            DEFAULT_CAR_ENGINE -> resources.getString(R.string.dk_motor)
+            else -> resources.getString(R.string.dk_vehicle_my_vehicle)
         }
         screenTitle?.let {
             setActivityTitle(it)
@@ -245,11 +256,13 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
             finish()
         } else {
             supportFragmentManager.popBackStack()
+            steps.removeLast()
+            updateTitle()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updateTitle(DKResource.convertToString(this, "dk_vehicle_my_vehicle"))
+        updateTitle()
     }
 }
