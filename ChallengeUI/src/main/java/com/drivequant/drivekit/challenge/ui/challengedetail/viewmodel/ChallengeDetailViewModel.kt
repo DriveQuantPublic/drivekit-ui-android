@@ -18,8 +18,13 @@ import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.*
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DurationUnit
+import com.drivequant.drivekit.common.ui.utils.FormatType
+import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
@@ -303,7 +308,7 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
 
     fun isUserTheFirst() =
         challengeDetailData?.let {
-            it.driverStats.rank.roundToInt() == 1 || computeRankPercentage() == 100 || it.challengeStats.maxScore == it.driverStats.score
+            it.driverStats.rank == 1 || computeRankPercentage() == 100 || it.challengeStats.maxScore == it.driverStats.score
         } ?: run {
             false
         }
