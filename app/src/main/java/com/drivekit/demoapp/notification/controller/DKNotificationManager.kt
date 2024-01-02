@@ -256,11 +256,6 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
     }
 
-    private fun PostGenericResponse.isTripValid() =
-        this.comments.map { it.errorCode == 0 }.isNotEmpty()
-                && this.itineraryStatistics != null
-                && this.itineraryStatistics!!.distance > 0
-
     fun reset(context: Context) {
         deleteChannels(context) // Cancel all Demo App notifications
         createChannels(context)
