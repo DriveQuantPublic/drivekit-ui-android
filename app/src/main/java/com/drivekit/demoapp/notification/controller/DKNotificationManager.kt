@@ -21,6 +21,7 @@ import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -141,6 +142,9 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     private fun manageTripFinished(context: Context, response: PostGenericResponse) {
         when (val tripStatus = DriveKitTripAnalysis.getTripResponseStatus(response)) {
             is TripResponseStatus.TripValid -> {
+                tripStatus.info.forEach {
+                    DriveKitLog.i("Application", "Trip response info: ${it.comment}")
+                }
                 if (tripStatus.hasSafetyAndEcoDrivingScore) {
                     manageTripFinishedAndValid(context, response)
                 } else {
