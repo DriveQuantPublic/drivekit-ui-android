@@ -16,7 +16,7 @@
    <string name="dk_trip_service_error_beacon_invalid">Turen blev ikke foretaget med dit køretøj.</string>
    <string name="dk_trip_service_error_beacon_missing">Turen blev ikke foretaget med dit køretøj.</string>
    <string name="dk_trip_service_error_invalid_customer_id">Turanalysen er ikke tilladt for din organisation.</string>
-   <string name="dk_trip_service_error_trip_duplicate">Der er ikke nok GPS-data til at analysere din tur. Hvis problemet fortsætter, bedes du kontakte os.</string>
+   <string name="dk_trip_service_error_trip_duplicate">Din rejse er allerede blevet gemt.</string>
    <string name="dk_trip_service_insufficient_gps_data">Der er ikke nok GPS-data til at analysere din tur. Hvis problemet fortsætter, bedes du kontakte os.</string>
    <string name="dk_trip_service_invalid_gps_data">Din rejse kunne ikke analyseres, fordi GPS-dataene er ugyldige.</string>
    <string name="dk_trip_service_invalid_sample_period">Din tur kunne ikke analyseres, fordi GPS-datasamplingshastigheden er ugyldig. Hvis problemet fortsætter, bedes du kontakte os.</string>

@@ -16,7 +16,7 @@
    <string name="dk_trip_service_error_beacon_invalid">The trip was not made with your vehicle.</string>
    <string name="dk_trip_service_error_beacon_missing">The trip was not made with your vehicle.</string>
    <string name="dk_trip_service_error_invalid_customer_id">The trip analysis is not allowed for your organisation.</string>
-   <string name="dk_trip_service_error_trip_duplicate">There is not enough GPS data to analyze your trip. If the problem persists, please contact us.</string>
+   <string name="dk_trip_service_error_trip_duplicate">Your trip has already been saved.</string>
    <string name="dk_trip_service_insufficient_gps_data">There is not enough GPS data to analyze your trip. If the problem persists, please contact us.</string>
    <string name="dk_trip_service_invalid_gps_data">Your trip could not be analyzed because the GPS data are not valid.</string>
    <string name="dk_trip_service_invalid_sample_period">Your trip could not be analyzed because the GPS data sampling rate is invalid. If the problem persists, please contact us.</string>

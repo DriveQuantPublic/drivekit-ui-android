@@ -16,7 +16,7 @@
    <string name="dk_trip_service_error_beacon_invalid">Le trajet n\'a pas été effectué avec votre véhicule.</string>
    <string name="dk_trip_service_error_beacon_missing">Le trajet n\'a pas été effectué avec votre véhicule.</string>
    <string name="dk_trip_service_error_invalid_customer_id">L\'analyse de trajet n\'est pas autorisée pour votre organisation.</string>
-   <string name="dk_trip_service_error_trip_duplicate">Il n\'y a pas assez de données GPS pour analyser votre trajet. Si le problème persiste, veuillez nous contacter.</string>
+   <string name="dk_trip_service_error_trip_duplicate">Votre trajet a déjà été sauvegardé.</string>
    <string name="dk_trip_service_insufficient_gps_data">Il n\'y a pas assez de données GPS pour analyser votre trajet. Si le problème persiste, veuillez nous contacter.</string>
    <string name="dk_trip_service_invalid_gps_data">Votre trajet n\'a pas pu être analysé car les données GPS ne sont pas valides.</string>
    <string name="dk_trip_service_invalid_sample_period">Votre trajet n\'a pas pu être analysé car la fréquence d\'échantillonnage des données GPS est trop faible. Si le problème persiste, veuillez nous contacter.</string>
