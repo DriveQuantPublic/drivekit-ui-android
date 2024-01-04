@@ -250,10 +250,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     }
 
     fun challengeGlobalRank(context: Context) =
-        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
+        if (challengeDetailData?.driverStats?.rank == 0) {
             "-"
         } else {
-            "${challengeDetailData?.driverStats?.rank?.toInt()}"
+            "${challengeDetailData?.driverStats?.rank}"
         }.let {
             val pseudo = challengeDetailData?.let { challengeDetail ->
                 challengeDetail.driversRanked?.let { drivers ->
@@ -448,10 +448,10 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
         }
 
     fun geRankingGlobalRank(context: Context) =
-        if (challengeDetailData?.driverStats?.rank?.toInt() == 0) {
+        if (challengeDetailData?.driverStats?.rank == 0) {
             "-"
         } else {
-            "${challengeDetailData?.driverStats?.rank?.toInt()}"
+            "${challengeDetailData?.driverStats?.rank}"
         }.let {
             DKSpannable().append(it, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
