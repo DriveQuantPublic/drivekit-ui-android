@@ -2,7 +2,7 @@ buildscript {
     def version = System.getenv("BITRISE_GIT_TAG") ?: '0.0.1'
     ext {
         drivekitui_version = version
-        drivekit_version = '1.40-beta2'
+        drivekit_version = '1.40-beta3'
 
         kotlin_version = '1.8.22'
         android_gradle_plugin = '8.1.4'
@@ -14,7 +14,7 @@ buildscript {
         legacy_preference = '1.0.0'
         lifecycle_version = '2.6.2'
         work_version = '2.9.0'
-        material = '1.10.0'
+        material = '1.11.0'
         play_services_maps = '18.2.0'
         swipe_refresh_layout = '1.1.0'
 
