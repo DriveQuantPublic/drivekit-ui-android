@@ -151,7 +151,10 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
                     sendTripTooShortNotification(context, response)
                 }
             }
-            is TripResponseStatus.TripError -> sendTripErrorNotification(context, response, tripStatus)
+            is TripResponseStatus.TripError -> {
+                DriveKitLog.i("Application", "Trip response error: ${tripStatus.tripResponseError.name}")
+                sendTripErrorNotification(context, response, tripStatus)
+            }
         }
     }
 

@@ -75,16 +75,15 @@ internal enum class TripResponseErrorNotification(@StringRes val descriptionKey:
             INVALID_CUSTOMER_ID -> 204
             MAX_DAILY_REQUEST_NUMBER_REACHED -> 210
 
-            DATA_ERROR,
-            INVALID_ROUTE_VECTORS -> 211
-
             DUPLICATE_TRIP -> 203
-            INSUFFICIENT_GPS_DATA -> 212
-            USER_DISABLED -> 213
-            INVALID_USER -> 214
-            INVALID_GPS_DATA -> 215
-            INVALID_TRIP -> 216
-            ACCOUNT_LIMIT_REACHED -> 217
+            DATA_ERROR -> 211
+            INVALID_ROUTE_VECTORS -> 212
+            INSUFFICIENT_GPS_DATA -> 213
+            USER_DISABLED -> 214
+            INVALID_USER -> 215
+            INVALID_GPS_DATA -> 216
+            INVALID_TRIP -> 217
+            ACCOUNT_LIMIT_REACHED -> 218
 
             MISSING_BEACON,
             INVALID_BEACON -> 252
