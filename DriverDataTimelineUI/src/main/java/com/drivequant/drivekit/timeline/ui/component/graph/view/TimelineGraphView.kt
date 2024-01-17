@@ -64,8 +64,8 @@ internal class TimelineGraphView(context: Context, val viewModel: TimelineGraphV
                 DriveKitUI.colors.primaryColor(),
                 viewModel.titleKey,
                 viewModel.description,
-                textSize = R.dimen.dk_text_small,
-                highlightSize = R.dimen.dk_text_normal
+                textSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_small,
+                highlightSize = com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal
             )
         }
     }

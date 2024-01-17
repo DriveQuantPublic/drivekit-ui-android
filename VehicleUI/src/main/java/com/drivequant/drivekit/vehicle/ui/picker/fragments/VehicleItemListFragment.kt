@@ -17,17 +17,6 @@ import com.drivequant.drivekit.vehicle.ui.databinding.FragmentItemListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_FULL
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_ICONS
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY_DESCRIPTION
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.ENGINE
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.MODELS
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.NAME
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TRUCK_TYPE
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TYPE
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.VERSIONS
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.YEARS
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import com.drivequant.drivekit.vehicle.ui.picker.viewmodel.VehiclePickerViewModel
 
@@ -43,17 +32,18 @@ class VehicleItemListFragment : Fragment() {
         companion object {
             fun getAdapterTypeByPickerStep(vehiclePickerStep: VehiclePickerStep): AdapterType {
                 return when (vehiclePickerStep) {
-                    TYPE -> TEXT_ITEM_PADDING
-                    TRUCK_TYPE -> TRUCK_TYPE_ITEM
-                    CATEGORY -> TEXT_IMAGE_ITEM
-                    BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
-                    ENGINE,
-                    YEARS,
-                    MODELS,
-                    VERSIONS,
-                    BRANDS_FULL,
-                    CATEGORY_DESCRIPTION,
-                    NAME -> TEXT_ITEM
+                    VehiclePickerStep.TYPE -> TEXT_ITEM_PADDING
+                    VehiclePickerStep.TRUCK_TYPE -> TRUCK_TYPE_ITEM
+                    VehiclePickerStep.CATEGORY,
+                    VehiclePickerStep.DEFAULT_CAR_ENGINE -> TEXT_IMAGE_ITEM
+                    VehiclePickerStep.BRANDS_ICONS -> TEXT_OR_IMAGE_ITEM
+                    VehiclePickerStep.ENGINE,
+                    VehiclePickerStep.YEARS,
+                    VehiclePickerStep.MODELS,
+                    VehiclePickerStep.VERSIONS,
+                    VehiclePickerStep.BRANDS_FULL,
+                    VehiclePickerStep.CATEGORY_DESCRIPTION,
+                    VehiclePickerStep.NAME -> TEXT_ITEM
                 }
             }
         }
@@ -107,7 +97,7 @@ class VehicleItemListFragment : Fragment() {
             vehiclePickerStep = it.getSerializableCompat("vehiclePickerStep", VehiclePickerStep::class.java)!!
         }
 
-        if (vehiclePickerStep == TYPE) {
+        if (vehiclePickerStep == VehiclePickerStep.TYPE) {
             binding.textViewDescription.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
         }
 

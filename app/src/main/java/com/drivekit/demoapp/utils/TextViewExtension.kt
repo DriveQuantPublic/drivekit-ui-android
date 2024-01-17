@@ -10,15 +10,14 @@ import android.widget.TextView
 import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 
 fun TextView.addInfoIconAtTheEnd(context: Context) {
-    val imageInfo = ContextCompat.getDrawable(context, R.drawable.dk_common_info)
+    val imageInfo = ContextCompat.getDrawable(context, com.drivequant.drivekit.common.ui.R.drawable.dk_common_info)
     if (imageInfo != null) {
         imageInfo.mutate()
         DrawableCompat.setTint(imageInfo, DriveKitUI.colors.secondaryColor())
-        setImageSpanAtTheEnd(context, imageInfo, R.dimen.dk_ic_small)
+        setImageSpanAtTheEnd(context, imageInfo, com.drivequant.drivekit.common.ui.R.dimen.dk_ic_small)
     }
 }
 

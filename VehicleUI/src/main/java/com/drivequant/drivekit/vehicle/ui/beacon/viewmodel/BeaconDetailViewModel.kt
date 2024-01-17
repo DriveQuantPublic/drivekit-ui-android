@@ -1,10 +1,10 @@
 package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 
 class BeaconDetailViewModel(
@@ -94,13 +93,13 @@ class BeaconDetailViewModel(
             .append(value, context.resSpans {
                 color(primaryColor)
                 typeface(Typeface.BOLD)
-                size(R.dimen.dk_text_medium)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
             })
             .append(" ")
             .append(unit, context.resSpans {
                 color(mainFontColor)
                 typeface(Typeface.NORMAL)
-                size(R.dimen.dk_text_small)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
             }).toSpannable()
     }
 

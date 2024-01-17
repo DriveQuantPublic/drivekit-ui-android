@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.ui.driverprofile.component.commontripfeature
 
 import androidx.annotation.StringRes
-import com.drivequant.drivekit.ui.R
 
 internal data class DriverCommonTripFeatureViewModel(
     @StringRes val titleId: Int,
@@ -10,5 +9,5 @@ internal data class DriverCommonTripFeatureViewModel(
     @StringRes val roadContextId: Int,
     val isRealData: Boolean
 ) {
-    @StringRes val distanceUnitId: Int = R.string.dk_common_unit_kilometer
+    @StringRes val distanceUnitId: Int = com.drivequant.drivekit.common.ui.R.string.dk_common_unit_kilometer
 }

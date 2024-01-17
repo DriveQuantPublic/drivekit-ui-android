@@ -1,8 +1,5 @@
 package com.drivequant.drivekit.ui.trips.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -10,6 +7,9 @@ import android.os.Handler
 import android.os.Looper
 import android.text.SpannableString
 import androidx.annotation.StringRes
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
 import com.drivequant.drivekit.common.ui.extension.resSpans
@@ -194,10 +194,10 @@ internal class TripsListViewModel(
         val tripsNumber = filteredTrips.size
         val tripsDistance = filteredTrips.computeTotalDistance()
         val trip =
-            context.resources.getQuantityString(R.plurals.trip_plural, tripsNumber)
+            context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, tripsNumber)
         return DKSpannable().append("$tripsNumber", context.resSpans {
             color(DriveKitUI.colors.primaryColor())
-            size(R.dimen.dk_text_medium)
+            size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
             typeface(Typeface.BOLD)
         }).append(" $trip - ", context.resSpans {
             color(DriveKitUI.colors.complementaryFontColor())
@@ -205,7 +205,7 @@ internal class TripsListViewModel(
             DKDataFormatter.formatMeterDistanceInKm(context, tripsDistance, false).convertToString(),
             context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
-                size(R.dimen.dk_text_medium)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                 typeface(Typeface.BOLD)
             }
         ).append(" ${DistanceUnit.configuredUnit(context)}", context.resSpans {

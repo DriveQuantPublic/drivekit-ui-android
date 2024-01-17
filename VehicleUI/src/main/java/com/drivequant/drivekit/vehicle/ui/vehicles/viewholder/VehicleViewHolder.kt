@@ -46,7 +46,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
     private val buttonSetup: Button = itemView.findViewById(R.id.text_view_setup_button)
     private val viewSeparator = itemView.findViewById<View>(R.id.view_separator)
 
-    fun bind(vehicle: Vehicle){
+    fun bind(vehicle: Vehicle) {
         val context = itemView.context
         val subTitle = viewModel.getSubtitle(context, vehicle)
         textViewTitle.text = viewModel.getTitle(context, vehicle)
@@ -117,7 +117,7 @@ class VehicleViewHolder(itemView: View, var viewModel: VehiclesListViewModel) : 
         } else {
             DKResource.convertToDrawable(context, "dk_common_warning")?.let { infoDrawable ->
                 val bitmap = (infoDrawable as BitmapDrawable).bitmap
-                val size = context.resources.getDimension(R.dimen.dk_ic_medium).toInt()
+                val size = context.resources.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_ic_medium).toInt()
                 val resizedDrawable: Drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, size, size, true))
                 DrawableCompat.setTint(resizedDrawable, DriveKitUI.colors.criticalColor())
                 textViewDetectionModeDescription.setCompoundDrawablesRelativeWithIntrinsicBounds(resizedDrawable, null, null, null)

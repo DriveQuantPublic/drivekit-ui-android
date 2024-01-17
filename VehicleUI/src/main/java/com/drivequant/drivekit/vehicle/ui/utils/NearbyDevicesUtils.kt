@@ -47,7 +47,7 @@ internal object NearbyDevicesUtils {
         }
         val alert = DKAlertDialog.LayoutBuilder()
             .init(activity)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
             .positiveButton(DKResource.convertToString(
                 activity,

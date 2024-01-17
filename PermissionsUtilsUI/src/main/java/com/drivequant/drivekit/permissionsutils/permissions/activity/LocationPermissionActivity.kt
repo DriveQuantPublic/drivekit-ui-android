@@ -90,11 +90,11 @@ class LocationPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                binding.buttonRequestLocationPermission.text =
-                        getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
-                    handlePermissionTotallyDeclined(
-                        this@LocationPermissionActivity,
-                        R.string.dk_perm_utils_app_diag_location_ko_android)
+                binding.buttonRequestLocationPermission.text = getString(R.string.dk_perm_utils_permissions_text_button_location_settings)
+                handlePermissionTotallyDeclined(
+                    this@LocationPermissionActivity,
+                    R.string.dk_perm_utils_app_diag_location_ko_android
+                )
             }
         }
 
@@ -146,6 +146,7 @@ class LocationPermissionActivity : BasePermissionActivity() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS) {

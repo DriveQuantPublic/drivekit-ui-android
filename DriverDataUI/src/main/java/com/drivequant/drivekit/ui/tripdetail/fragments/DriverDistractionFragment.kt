@@ -85,7 +85,7 @@ internal class DriverDistractionFragment : Fragment(), View.OnClickListener {
 
         binding.scoreGauge.configure(viewModel.getDistractionScore(), GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()), Typeface.BOLD)
         binding.scoreInfo.init(GaugeConfiguration.DISTRACTION(viewModel.getDistractionScore()))
-        binding.gaugeTypeTitle.text = requireContext().getString(R.string.dk_common_distraction)
+        binding.gaugeTypeTitle.text = requireContext().getString(com.drivequant.drivekit.common.ui.R.string.dk_common_distraction)
         binding.gaugeTypeTitle.normalText()
 
         binding.phoneCallItem.apply {

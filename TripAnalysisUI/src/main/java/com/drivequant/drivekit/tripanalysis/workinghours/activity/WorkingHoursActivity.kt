@@ -66,7 +66,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     }
 
     private fun setToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.dk_toolbar)
+        val toolbar = findViewById<Toolbar>(com.drivequant.drivekit.common.ui.R.id.dk_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -209,12 +209,13 @@ class WorkingHoursActivity : AppCompatActivity() {
         menu.findItem(R.id.action_save)?.isVisible = changed
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         if (viewModel.dataChanged) {
             val alert = DKAlertDialog.LayoutBuilder().init(this)
-                .layout(R.layout.template_alert_dialog_layout)
+                .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .cancelable(false)
-                .positiveButton(getString(R.string.dk_common_confirm)) { _, _ ->
+                .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) { _, _ ->
                     updateConfig(true)
                 }
                 .negativeButton(negativeListener = { dialogInterface, _ ->
@@ -222,8 +223,8 @@ class WorkingHoursActivity : AppCompatActivity() {
                     super.onBackPressed()
                 })
                 .show()
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+            val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
             title?.apply {
                 text = getString(R.string.app_name)
                 typeface = DriveKitUI.primaryFont(context)

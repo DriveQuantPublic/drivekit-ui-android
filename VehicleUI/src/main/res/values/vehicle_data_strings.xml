@@ -46,7 +46,7 @@
    <string name="dk_vehicle_add">Add a vehicle</string>
    <string name="dk_vehicle_beacon_already_paired">The beacon is not available. It\'s already paired to another vehicle.</string>
    <string name="dk_vehicle_beacon_already_paired_to_vehicle">This beacon is already paired to this vehicle.</string>
-   <string name="dk_vehicle_beacon_deactivate_alert">The %1$s beacon will be dissociated from the %2$s vehicle. \n Would you like to continue?</string>
+   <string name="dk_vehicle_beacon_deactivate_alert">The %1$s beacon will be dissociated from the %2$s vehicle.\nWould you like to continue?</string>
    <string name="dk_vehicle_beacon_diagnostic_alert">You haven\'t configured a beacon yet.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">You have to enable the phone\'s Bluetooth sensor to check the beacon.</string>
    <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Bluetooth sensor</string>
@@ -65,7 +65,7 @@
    <string name="dk_vehicle_beacon_setup_guide_desc2">Make sure that the identification number of the beacon is readable</string>
    <string name="dk_vehicle_beacon_setup_guide_desc3">Remove the tab that protects the beacon\'s battery</string>
    <string name="dk_vehicle_beacon_setup_guide_title">Before you start</string>
-   <string name="dk_vehicle_beacon_setup_replace_description">If you confirm your choice, the %1$s beacon will be associated with the %2$s vehicle. \n\n The %3$s vehicle will no longer be associated with this beacon.</string>
+   <string name="dk_vehicle_beacon_setup_replace_description">If you confirm your choice, the %1$s beacon will be associated with the %2$s vehicle.\n\nThe %3$s vehicle will no longer be associated with this beacon.</string>
    <string name="dk_vehicle_beacon_setup_scan_title">The application retrieves the information from the beacon and checks that it is running properly</string>
    <string name="dk_vehicle_beacon_setup_store_notice">We invite you to put the beacon in the glove box of your vehicle</string>
    <string name="dk_vehicle_beacon_setup_successlink_message">Congratulations! \n\n The beacon %1$s is now associated with the vehicle %2$s</string>
@@ -78,7 +78,7 @@
    <string name="dk_vehicle_bluetooth_congrats_desc">The Bluetooth device %1$s is now linked to the vehicle %2$s</string>
    <string name="dk_vehicle_bluetooth_congrats_notice">From now on, recording your trips will start automatically as soon as your phone connects to the Bluetooth device %s</string>
    <string name="dk_vehicle_bluetooth_congrats_title">Congratulations!</string>
-   <string name="dk_vehicle_bluetooth_deactivate_alert">The %1$s device will be disassociated from the %2$s vehicle. \n Are you sure you want to proceed?</string>
+   <string name="dk_vehicle_bluetooth_deactivate_alert">The %1$s device will be disassociated from the %2$s vehicle.\nAre you sure you want to proceed?</string>
    <string name="dk_vehicle_bluetooth_devices_list_title">Bluetooth devices:</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_android">Make sure that your vehicle\'s Bluetooth system is already paired with your phone before you start.</string>
    <string name="dk_vehicle_bluetooth_guide_desc1_ios">Check that the Bluetooth device has already been paired with your iPhone. This information is available in the Bluetooth menu of the phone\'s settings.</string>
@@ -124,6 +124,10 @@
    <string name="dk_vehicle_detail_category_button_description">You know the brand, model and characteristics of your vehicle</string>
    <string name="dk_vehicle_detail_category_button_title">Find my vehicle</string>
    <string name="dk_vehicle_detection_mode_title">Auto start:</string>
+   <string name="dk_vehicle_engine_bi_fuel_bioethanol">Dual-fuel gasoline bioethanol</string>
+   <string name="dk_vehicle_engine_bi_fuel_lpg">Dual-fuel gasoline LPG</string>
+   <string name="dk_vehicle_engine_bi_fuel_ngv">Dual-fuel gasoline NGV</string>
+   <string name="dk_vehicle_engine_biofuel">Biofuel</string>
    <string name="dk_vehicle_engine_description">Engine type ?</string>
    <string name="dk_vehicle_engine_diesel">Diesel</string>
    <string name="dk_vehicle_engine_diesel_hybrid">Diesel hybrid</string>
@@ -131,13 +135,15 @@
    <string name="dk_vehicle_engine_gasoline">Gasoline</string>
    <string name="dk_vehicle_engine_gasoline_hybrid">Gasoline hybrid</string>
    <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Plug-in gasoline hybrid</string>
+   <string name="dk_vehicle_engine_hydrogen">Hydrogen</string>
    <string name="dk_vehicle_error_message">An error occurred during the request, please retry later</string>
    <string name="dk_vehicle_failed_to_paired_beacon">The beacon could not be associated with the vehicle, please try again later.</string>
    <string name="dk_vehicle_failed_to_paired_bluetooth">The Bluetooth connection to the vehicle failed, please try again later.</string>
    <string name="dk_vehicle_failed_to_retrieve_vehicle_data">Vehicle characteristics could not be recovered.</string>
    <string name="dk_vehicle_failed_to_sync">Failed to retrieve vehicle data, please retry later</string>
    <string name="dk_vehicle_field_name_error">The name of your vehicle must not exceed 50 characters.</string>
-   <string name="dk_vehicle_gps_already_exists_confirm">Do you want to set the detection mode %1$s for the vehicle %2$s? \n\nThe vehicle detection mode %3$s will be switched to %4$s.</string>
+   <string name="dk_vehicle_gps_already_exists_confirm">Do you want to set the detection mode %1$s for the vehicle %2$s?\n\nThe vehicle detection mode %3$s will be switched to %4$s.</string>
+   <string name="dk_vehicle_is_it_electric">Is it an electric vehicle?</string>
    <string name="dk_vehicle_list_empty">Please add at least one vehicle</string>
    <string name="dk_vehicle_model_description">Vehicle model?</string>
    <string name="dk_vehicle_my_vehicle">My vehicle</string>

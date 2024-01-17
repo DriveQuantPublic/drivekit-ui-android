@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
-import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehiclesListBinding
 import com.drivequant.drivekit.vehicle.ui.databinding.HeaderVehicleListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -176,7 +175,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun hideProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
             .alpha(0f)
             .setDuration(200L)
@@ -189,7 +188,7 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun showProgressCircular() {
-        binding.root.findViewById<ProgressBar>(R.id.dk_progress_circular).apply {
+        binding.root.findViewById<ProgressBar>(com.drivequant.drivekit.common.ui.R.id.dk_progress_circular).apply {
             animate()
                 .alpha(1f)
                 .setDuration(200L)

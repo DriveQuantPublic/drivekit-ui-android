@@ -2,21 +2,21 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewholder
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
-import androidx.recyclerview.widget.RecyclerView
+import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
-import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreakStatus
-import android.graphics.drawable.LayerDrawable
-import com.drivequant.drivekit.common.ui.extension.tintDrawable
+import com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel.StreaksData
 
 
 internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -92,14 +92,14 @@ internal class StreakViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private fun showDescription(streaksData: StreaksData) {
        val alert = DKAlertDialog.LayoutBuilder()
            .init(context)
-           .layout(R.layout.template_alert_dialog_layout)
+           .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
            .cancelable(true)
            .positiveButton()
            .show()
 
-        val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-        val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-        val icon = alert.findViewById<ImageView>(R.id.image_view_alert_icon)
+        val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+        val icon = alert.findViewById<ImageView>(com.drivequant.drivekit.common.ui.R.id.image_view_alert_icon)
 
         title?.text = streaksData.getTitle(context)
         description?.text = streaksData.getDescriptionText(context)

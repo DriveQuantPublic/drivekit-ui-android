@@ -13,14 +13,15 @@ import com.drivekit.demoapp.config.DriveKitConfig
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
 import com.drivekit.demoapp.notification.enum.NotificationType
-import com.drivekit.demoapp.notification.enum.TripAnalysisError
 import com.drivekit.demoapp.notification.enum.TripCancellationReason
+import com.drivekit.demoapp.notification.enum.TripResponseErrorNotification
 import com.drivekit.demoapp.utils.WorkerManager
 import com.drivekit.demoapp.utils.isAlternativeNotificationManaged
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.core.DriveKit
+import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationEvent
 import com.drivequant.drivekit.core.deviceconfiguration.DKDeviceConfigurationListener
 import com.drivequant.drivekit.databaseutils.entity.TransportationMode
@@ -33,6 +34,7 @@ import com.drivequant.drivekit.tripanalysis.entity.PostGeneric
 import com.drivequant.drivekit.tripanalysis.entity.PostGenericResponse
 import com.drivequant.drivekit.tripanalysis.service.recorder.CancelTrip
 import com.drivequant.drivekit.tripanalysis.service.recorder.StartMode
+import com.drivequant.drivekit.tripanalysis.utils.TripResponseStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.tripdetail.activity.TripDetailActivity
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
@@ -52,7 +54,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     fun createChannels(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DKNotificationChannel.values().forEach { channel ->
-                if (channel.canCreate() && channel.isEnabled(context)) {
+                if (channel.isEnabled(context)) {
                     createChannel(context, channel)
                 }
             }
@@ -126,7 +128,7 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     override fun tripSavedForRepost() {
-        sendNotification(DriveKit.applicationContext, NotificationType.TripAnalysisError(TripAnalysisError.NO_NETWORK))
+        sendNotification(DriveKit.applicationContext, NotificationType.NoNetwork)
     }
 
     override fun tripStarted(startMode: StartMode) {
@@ -138,42 +140,20 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
     }
 
     private fun manageTripFinished(context: Context, response: PostGenericResponse) {
-        if (response.isTripValid()) {
-            var errorCode = 0
-            if (response.safety != null && response.safety!!.safetyScore > 10
-                || response.ecoDriving != null && response.ecoDriving!!.score > 10
-                || response.driverDistraction != null && response.driverDistraction!!.score > 10
-            ) {
-                errorCode = 1
-            }
-            manageTripFinishedAndValid(context, response, errorCode)
-        } else {
-            var notificationType: NotificationType? = null
-            for (comment in response.comments) {
-                if (comment.errorCode == 21) {
-                    notificationType =
-                        NotificationType.TripAnalysisError(TripAnalysisError.NO_API_KEY)
-                    break
+        when (val tripStatus = DriveKitTripAnalysis.getTripResponseStatus(response)) {
+            is TripResponseStatus.TripValid -> {
+                tripStatus.info.forEach {
+                    DriveKitLog.i("Application", "Trip response info: ${it.comment}")
                 }
-                if (comment.errorCode == 29 || comment.errorCode == 30) {
-                    notificationType =
-                        NotificationType.TripAnalysisError(TripAnalysisError.NO_BEACON)
-                    break
-                }
-                if (comment.errorCode == 31) {
-                    notificationType =
-                        NotificationType.TripAnalysisError(TripAnalysisError.DUPLICATE_TRIP)
-                    break
+                if (tripStatus.hasSafetyAndEcoDrivingScore) {
+                    manageTripFinishedAndValid(context, response)
+                } else {
+                    sendTripTooShortNotification(context, response)
                 }
             }
-            val contentIntent = buildTripFinishedContentIntent(
-                context,
-                null,
-                null,
-                response.itinId
-            )
-            notificationType?.let {
-                sendNotification(context, it, contentIntent)
+            is TripResponseStatus.TripError -> {
+                DriveKitLog.i("Application", "Trip response error: ${tripStatus.tripResponseError.name}")
+                sendTripErrorNotification(context, response, tripStatus)
             }
         }
     }
@@ -203,27 +183,36 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         }
     }
 
-    private fun manageTripFinishedAndValid(context: Context, response: PostGenericResponse, errorCode: Int) {
+    private fun manageTripFinishedAndValid(context: Context, response: PostGenericResponse) {
         val dkTrip = DbTripAccess.findTrip(response.itinId).executeOneTrip()?.toTrip()
         dkTrip?.let {
-            val contentIntent = buildTripFinishedContentIntent(context, dkTrip.transportationMode, dkTrip.tripAdvices, dkTrip.itinId)
-            if (errorCode == 0) {
-                if (dkTrip.transportationMode.isAlternative() && dkTrip.transportationMode.isAlternativeNotificationManaged()) {
-                    sendNotification(context, NotificationType.TripEnded(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent)
-                } else {
-                    val additionalBody = when (DriverDataUI.tripData) {
-                        TripData.SAFETY -> "${context.getString(R.string.notif_trip_finished_safety)} : ${dkTrip.safety!!.safetyScore.removeZeroDecimal()}/10"
-                        TripData.ECO_DRIVING -> "${context.getString(R.string.notif_trip_finished_efficiency)} : ${dkTrip.ecoDriving!!.score.removeZeroDecimal()}/10"
-                        TripData.DISTRACTION -> "${context.getString(R.string.notif_trip_finished_distraction)} : ${dkTrip.driverDistraction!!.score.removeZeroDecimal()}/10"
-                        TripData.SPEEDING -> null
-                        TripData.DURATION -> null
-                        TripData.DISTANCE -> null
-                    }
-                    sendNotification(context, NotificationType.TripEnded(dkTrip.transportationMode, dkTrip.tripAdvices.size), contentIntent, additionalBody)
-                }
+            val contentIntent = buildTripFinishedContentIntent(context, it.transportationMode, it.tripAdvices, it.itinId)
+            if (it.transportationMode.isAlternative() && it.transportationMode.isAlternativeNotificationManaged()) {
+                sendNotification(context, NotificationType.TripEnded(it.transportationMode, it.tripAdvices.size), contentIntent)
             } else {
-                sendNotification(context, NotificationType.TripTooShort, contentIntent)
+                val additionalBody = when (DriverDataUI.tripData) {
+                    TripData.SAFETY -> "${context.getString(R.string.notif_trip_finished_safety)} : ${it.safety!!.safetyScore.removeZeroDecimal()}/10"
+                    TripData.ECO_DRIVING -> "${context.getString(R.string.notif_trip_finished_efficiency)} : ${it.ecoDriving!!.score.removeZeroDecimal()}/10"
+                    TripData.DISTRACTION -> "${context.getString(R.string.notif_trip_finished_distraction)} : ${it.driverDistraction!!.score.removeZeroDecimal()}/10"
+                    TripData.SPEEDING -> null
+                    TripData.DURATION -> null
+                    TripData.DISTANCE -> null
+                }
+                sendNotification(context, NotificationType.TripEnded(it.transportationMode, it.tripAdvices.size), contentIntent, additionalBody)
             }
+        }
+    }
+
+    private fun sendTripTooShortNotification(context: Context, response: PostGenericResponse) {
+        val contentIntent = buildTripFinishedContentIntent(context, null, null, response.itinId)
+        sendNotification(context, NotificationType.TripTooShort, contentIntent)
+    }
+
+    private fun sendTripErrorNotification(context: Context, response: PostGenericResponse, error: TripResponseStatus.TripError) {
+        val errorNotification = TripResponseErrorNotification.fromTripResponseError(error.tripResponseError)
+        if (errorNotification != null) {
+            val contentIntent = buildTripFinishedContentIntent(context, null, null, response.itinId)
+            sendNotification(context, NotificationType.TripAnalysisError(errorNotification), contentIntent)
         }
     }
 
@@ -273,11 +262,6 @@ internal object DKNotificationManager : TripListener, DKDeviceConfigurationListe
         intent.putExtra(APP_DIAGNOSIS_NOTIFICATION_KEY, true)
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE)
     }
-
-    private fun PostGenericResponse.isTripValid() =
-        this.comments.map { it.errorCode == 0 }.isNotEmpty()
-                && this.itineraryStatistics != null
-                && this.itineraryStatistics!!.distance > 0
 
     fun reset(context: Context) {
         deleteChannels(context) // Cancel all Demo App notifications

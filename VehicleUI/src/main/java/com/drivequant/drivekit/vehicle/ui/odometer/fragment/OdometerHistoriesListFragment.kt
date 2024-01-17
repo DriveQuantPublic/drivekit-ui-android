@@ -117,6 +117,7 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     @SuppressLint("NotifyDataSetChanged")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

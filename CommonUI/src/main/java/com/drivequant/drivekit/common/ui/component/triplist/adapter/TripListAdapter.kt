@@ -33,7 +33,7 @@ internal class TripListAdapter(
 
         if (convertView == null) {
             val layoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = layoutInflater.inflate(R.layout.group_item_trip_list, null)
+            view = layoutInflater.inflate(R.layout.group_item_trip_list, parent, false)
             holder = HeaderDayViewHolder(view)
             view.tag = holder
         } else {

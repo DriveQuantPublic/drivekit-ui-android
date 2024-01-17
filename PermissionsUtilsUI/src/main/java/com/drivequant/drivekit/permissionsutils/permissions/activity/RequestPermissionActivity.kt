@@ -124,15 +124,15 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
     protected fun handlePermissionDeclined(context: Context, descriptionId: Int, callback: () -> Unit) {
         val alertDialog = DKAlertDialog.LayoutBuilder()
             .init(context)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
             .positiveButton(positiveListener = { _, _ -> callback() })
             .show()
 
-        val titleTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_title)
-        val descriptionTextView = alertDialog.findViewById<TextView>(R.id.text_view_alert_description)
+        val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
-        titleTextView?.text = getString(R.string.dk_common_permissions)
+        titleTextView?.text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
         descriptionTextView?.text = getString(descriptionId)
 
         titleTextView?.headLine1()
@@ -142,7 +142,7 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
     protected fun handlePermissionTotallyDeclined(context: Context, descriptionId: Int) {
         alertDialog = DKAlertDialog.LayoutBuilder()
             .init(context)
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
             .positiveButton(getString(R.string.dk_perm_utils_permissions_popup_button_settings)) { _, _ ->
                 startActivityForResult(
@@ -150,13 +150,13 @@ open class RequestPermissionActivity : AppCompatActivity(),ActivityCompat.OnRequ
                     DiagnosisHelper.REQUEST_PERMISSIONS_OPEN_SETTINGS
                 )
             }
-            .negativeButton(getString(R.string.dk_common_close))
+            .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close))
             .show()
 
-        val titleTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_title)
-        val descriptionTextView = alertDialog?.findViewById<TextView>(R.id.text_view_alert_description)
+        val titleTextView = alertDialog?.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+        val descriptionTextView = alertDialog?.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
-        titleTextView?.text = getString(R.string.dk_common_permissions)
+        titleTextView?.text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
         descriptionTextView?.text = getString(descriptionId)
 
         titleTextView?.headLine1()

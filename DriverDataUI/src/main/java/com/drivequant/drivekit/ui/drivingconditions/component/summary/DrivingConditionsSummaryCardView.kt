@@ -67,7 +67,7 @@ internal class DrivingConditionsSummaryCardView(context: Context, attrs: Attribu
         }
         this.tripsLabel.apply {
             text = context.resources.getQuantityString(
-                R.plurals.trip_plural,
+                com.drivequant.drivekit.common.ui.R.plurals.trip_plural,
                 this@DrivingConditionsSummaryCardView.viewModel?.tripCount ?: 0
             )
             normalText(DriveKitUI.colors.complementaryFontColor())

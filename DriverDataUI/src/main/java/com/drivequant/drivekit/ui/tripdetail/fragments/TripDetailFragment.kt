@@ -113,7 +113,7 @@ class TripDetailFragment : Fragment() {
             R.id.trip_delete -> {
                 context?.let {
                  val alert = DKAlertDialog.LayoutBuilder().init(it)
-                        .layout(R.layout.template_alert_dialog_layout)
+                        .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                         .cancelable(true)
                         .positiveButton(positiveListener = { _, _ ->
                                 showProgressCircular()
@@ -121,8 +121,8 @@ class TripDetailFragment : Fragment() {
                         .negativeButton()
                         .show()
 
-                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-                    val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                    val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+                    val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
                     title?.text = getString(R.string.app_name)
                     description?.text = getString(R.string.dk_driverdata_confirm_delete_trip)
@@ -174,7 +174,7 @@ class TripDetailFragment : Fragment() {
                 if (it != null) {
                     val alert = DKAlertDialog.LayoutBuilder()
                         .init(context)
-                        .layout(R.layout.template_alert_dialog_layout)
+                        .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                         .positiveButton(positiveListener = { dialog, _ ->
                             dialog.dismiss()
                             val data = Intent()
@@ -186,8 +186,8 @@ class TripDetailFragment : Fragment() {
                         .cancelable(false)
                         .show()
 
-                    val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-                    val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+                    val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+                    val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
                     title?.text = getString(R.string.app_name)
                     description?.text = if (it) {
                         getString(R.string.dk_driverdata_trip_deleted)
@@ -272,7 +272,7 @@ class TripDetailFragment : Fragment() {
             .setTitle(this.getString(R.string.app_name))
             .setMessage(stringResId)
             .setCancelable(false)
-            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
+            .setPositiveButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { dialog, _ ->
                 dialog.dismiss()
                 if (goBack){
                     activity?.onBackPressed()
@@ -339,7 +339,7 @@ class TripDetailFragment : Fragment() {
                 }
                 feedbackButtonsLayout.visibility = View.VISIBLE
             } else {
-                builder.setPositiveButton(context?.getString(R.string.dk_common_ok)) { dialog, _ ->
+                builder.setPositiveButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { dialog, _ ->
                     dialog.dismiss()
                 }
             }
@@ -375,8 +375,8 @@ class TripDetailFragment : Fragment() {
 
         val builder = AlertDialog.Builder(context)
             .setView(feedbackView)
-            .setNegativeButton(context?.getString(R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
-            .setPositiveButton(context?.getString(R.string.dk_common_ok)) { _, _ ->
+            .setNegativeButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(context?.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_ok)) { _, _ ->
                 if (radioGroup.checkedRadioButtonId == R.id.radio_button_choice_05 && feedbackView.findViewById<EditText>(R.id.edit_text_feedback).text.isEmpty()) {
                     context?.let {
                         val emptyFieldText = DKResource.convertToString(it, "dk_common_error_empty_field")

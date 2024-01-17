@@ -10,7 +10,7 @@
     tools:viewBindingIgnore="true">
 
     <ImageView
-        android:id="@+id/image_view_icon2"
+        android:id="@+id/image_view_icon"
         android:layout_width="168dp"
         android:layout_height="168dp"
         android:layout_margin="@dimen/dk_margin_half"
@@ -27,7 +27,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_view_icon2"
+        app:layout_constraintTop_toBottomOf="@id/image_view_icon"
         tools:text="Ceci est une description" />
 
     <Button

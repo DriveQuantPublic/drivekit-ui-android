@@ -95,7 +95,7 @@
     <string name="badge_efficiency_extra_urban_congrats_1">Tillykke, du har nået målet!</string>
     <string name="badge_efficiency_extra_urban_congrats_2">Tillykke, du har nået målet!</string>
     <string name="badge_efficiency_extra_urban_congrats_3">Tillykke, du har nået målet!</string>
-    <string name="badge_efficiency_extra_urban_description_1">For at opnå denne udmærkelse skal du have kørt 100 kilometer i et område udenfor byen med en øko-kørselsscore over 8,5 ud af 10. Ved at øve øko-kørsel kan du mindske dit brændstofforbrug med 10-15%.</string>
+    <string name="badge_efficiency_extra_urban_description_1">For at opnå denne udmærkelse skal du have kørt 100 kilometer i et område udenfor byen med en øko-kørselsscore over 8,5 ud af 10. Ved at øve øko-kørsel kan du mindske dit brændstofforbrug med 10-15%%.</string>
     <string name="badge_efficiency_extra_urban_description_2">For at opnå denne udmærkelse skal du have kørt 300 kilometer udenfor byen med en øko-kørselsscore over 8,5 ud af 10. Husk, at når du bremser med motoren, sparer du på brændstoffet.</string>
     <string name="badge_efficiency_extra_urban_description_3">For at opnå denne udmærkelse skal du have kørt 100 kilometer udenfor byen med en øko-kørselsscore over 8,5 ud af 10.</string>
     <string name="badge_efficiency_extra_urban_name_1">Begynder</string>

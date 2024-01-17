@@ -29,7 +29,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVehiclesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         title = getString(R.string.vehicle_intro_header)
 
         binding.textViewTitle.apply {
@@ -64,6 +64,7 @@ internal class VehiclesActivity : AppCompatActivity() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.drivekit_doc_android_vehicle))))
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         //Do nothing
     }

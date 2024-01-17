@@ -5,7 +5,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
 import com.drivequant.drivekit.common.ui.utils.FontUtils
@@ -59,12 +63,12 @@ internal class CustomInfoWindowAdapter(
         if (event.showInfoIcon()) {
             val alert = DKAlertDialog.LayoutBuilder()
                 .init(context)
-                .layout(R.layout.template_alert_dialog_layout)
+                .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .positiveButton()
                 .show()
 
-            val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
-            val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
+            val title = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+            val description = alert.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
             title?.text = marker.title
             description?.text = event.getExplanation(context)

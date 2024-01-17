@@ -10,7 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.GaugeImage
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.drivequant.drivekit.driverachievement.ui.R
 
@@ -80,7 +82,7 @@ class BadgeItemView : LinearLayout {
             .init(context)
             .layout(R.layout.dk_layout_badge_details)
             .cancelable(true)
-            .negativeButton(context.getString(R.string.dk_common_close))
+            .negativeButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close))
             .show()
 
         val badgeTitle = badgeDetails.findViewById<TextView>(R.id.text_view_badge_title)

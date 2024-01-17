@@ -123,7 +123,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
 
     private fun displayErrorAlert(identifier: String) {
         val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
-            .layout(R.layout.template_alert_dialog_layout)
+            .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
             .positiveButton()
             .show()

@@ -2,15 +2,19 @@ package com.drivequant.drivekit.driverachievement.ui.streaks.viewmodel
 
 import android.content.Context
 import android.graphics.Typeface
-import com.drivequant.drivekit.databaseutils.entity.StreakResult
-import com.drivequant.drivekit.databaseutils.entity.StreakTheme.*
-import com.drivequant.drivekit.databaseutils.entity.StreakTheme
-import com.drivequant.drivekit.driverachievement.ui.R
 import android.text.SpannableString
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.*
+import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
+import com.drivequant.drivekit.common.ui.utils.DKDatePattern
+import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.DurationUnit
+import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.databaseutils.entity.StreakResult
+import com.drivequant.drivekit.databaseutils.entity.StreakTheme
+import com.drivequant.drivekit.driverachievement.ui.R
 
 
 internal class StreaksData(
@@ -23,47 +27,47 @@ internal class StreaksData(
     val bestTripsCount = best.tripNumber
 
     fun getTitle(context: Context) = when (streakTheme) {
-        PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_title"
-        SAFETY -> "dk_achievements_streaks_safety_title"
-        SPEEDING -> "dk_achievements_streaks_speeding_title"
-        ACCELERATION -> "dk_achievements_streaks_acceleration_title"
-        BRAKE -> "dk_achievements_streaks_brake_title"
-        ADHERENCE -> "dk_achievements_streaks_adherence_title"
-        CALL -> "dk_achievements_streaks_phone_call_title"
+        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_title"
+        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_title"
+        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_title"
+        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_title"
+        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_title"
+        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_title"
+        StreakTheme.CALL -> "dk_achievements_streaks_phone_call_title"
     }.let {
         DKResource.convertToString(context, it)
     }
 
     fun getIcon() = when (streakTheme) {
-        PHONE_DISTRACTION -> R.drawable.dk_common_distraction
-        SAFETY -> R.drawable.dk_common_safety
-        SPEEDING -> R.drawable.dk_common_eco_accel
-        ACCELERATION -> R.drawable.dk_common_safety_accel
-        BRAKE -> R.drawable.dk_common_safety_decel
-        ADHERENCE -> R.drawable.dk_common_safety_adherence
-        CALL -> R.drawable.dk_common_call
+        StreakTheme.PHONE_DISTRACTION -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_distraction
+        StreakTheme.SAFETY -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety
+        StreakTheme.SPEEDING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_eco_accel
+        StreakTheme.ACCELERATION -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_accel
+        StreakTheme.BRAKE -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_decel
+        StreakTheme.ADHERENCE -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_adherence
+        StreakTheme.CALL -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_call
     }
 
     private fun getResetText(context: Context) = when (streakTheme) {
-        PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_reset"
-        SAFETY -> "dk_achievements_streaks_safety_reset"
-        SPEEDING -> "dk_achievements_streaks_speeding_reset"
-        ACCELERATION -> "dk_achievements_streaks_acceleration_reset"
-        BRAKE -> "dk_achievements_streaks_brake_reset"
-        ADHERENCE -> "dk_achievements_streaks_adherence_reset"
-        CALL -> "dk_achievements_streaks_call_reset"
+        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_reset"
+        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_reset"
+        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_reset"
+        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_reset"
+        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_reset"
+        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_reset"
+        StreakTheme.CALL -> "dk_achievements_streaks_call_reset"
     }.let {
         DKResource.convertToString(context, it)
     }
 
     fun getDescriptionText(context: Context) = when (streakTheme) {
-        PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_text"
-        SAFETY -> "dk_achievements_streaks_safety_text"
-        SPEEDING -> "dk_achievements_streaks_speeding_text"
-        ACCELERATION -> "dk_achievements_streaks_acceleration_text"
-        BRAKE -> "dk_achievements_streaks_brake_text"
-        ADHERENCE -> "dk_achievements_streaks_adherence_text"
-        CALL -> "dk_achievements_streaks_phone_call_text"
+        StreakTheme.PHONE_DISTRACTION -> "dk_achievements_streaks_phone_distraction_text"
+        StreakTheme.SAFETY -> "dk_achievements_streaks_safety_text"
+        StreakTheme.SPEEDING -> "dk_achievements_streaks_speeding_text"
+        StreakTheme.ACCELERATION -> "dk_achievements_streaks_acceleration_text"
+        StreakTheme.BRAKE -> "dk_achievements_streaks_brake_text"
+        StreakTheme.ADHERENCE -> "dk_achievements_streaks_adherence_text"
+        StreakTheme.CALL -> "dk_achievements_streaks_phone_call_text"
     }.let {
         DKResource.convertToString(context, it)
     }
@@ -91,13 +95,13 @@ internal class StreaksData(
     fun getCurrentStreakData(context: Context) : SpannableString {
         val currentDistance = DKDataFormatter.formatMeterDistanceInKm(context, current.distance).convertToString()
         val currentDuration = DKDataFormatter.formatDuration(context, current.duration, DurationUnit.HOUR).convertToString()
-        val trip = context.resources.getQuantityString(R.plurals.trip_plural, currentTripsCount)
+        val trip = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, currentTripsCount)
 
         return DKSpannable()
             .append("$currentTripsCount ", context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
                 typeface(Typeface.BOLD)
-                size(R.dimen.dk_text_big)
+                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
             }).append(trip, context.resSpans {
                 color(DriveKitUI.colors.secondaryColor())
             }).append(" - $currentDistance - $currentDuration", context.resSpans {
@@ -108,7 +112,7 @@ internal class StreaksData(
     fun getBestStreakData(context: Context): SpannableString {
         val bestDistance = DKDataFormatter.formatMeterDistanceInKm(context, best.distance).convertToString()
         val bestDuration = DKDataFormatter.formatDuration(context, best.duration, DurationUnit.HOUR).convertToString()
-        val trip = context.resources.getQuantityString(R.plurals.trip_plural, bestTripsCount)
+        val trip = context.resources.getQuantityString(com.drivequant.drivekit.common.ui.R.plurals.trip_plural, bestTripsCount)
 
         return when (getStreakStatus()) {
             StreakStatus.INIT,StreakStatus.IN_PROGRESS, StreakStatus.RESET ->
@@ -116,7 +120,7 @@ internal class StreaksData(
                 DKSpannable()
                     .append("$bestTripsCount ", context.resSpans {
                         typeface(Typeface.BOLD)
-                        size(R.dimen.dk_text_big)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                         color(DriveKitUI.colors.mainFontColor())
                     }).append("$trip - $bestDistance - $bestDuration", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())

@@ -22,7 +22,7 @@ internal enum class InfoBannerType {
     }
 
     fun getIconResId() = when (this) {
-        DIAGNOSIS -> R.drawable.dk_perm_utils_diagnosis_system
+        DIAGNOSIS -> com.drivequant.drivekit.permissionsutils.R.drawable.dk_perm_utils_diagnosis_system
     }
 
     fun getTitleResId() = when (this) {

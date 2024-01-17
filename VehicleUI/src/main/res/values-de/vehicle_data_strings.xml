@@ -46,7 +46,7 @@
     <string name="dk_vehicle_add">Eine Fahrt hinzufügen</string>
     <string name="dk_vehicle_beacon_already_paired">Die Beacon ist nicht verfügbar. Sie ist bereits an ein anderes Fahrzeug gekoppelt.</string>
     <string name="dk_vehicle_beacon_already_paired_to_vehicle">Diese beacon ist bereits an dieses Fahrzeug gekoppelt.</string>
-    <string name="dk_vehicle_beacon_deactivate_alert">Das %s Bake wird vom %s Fahrzeug getrennt. \n Bist du sicher, dass du weitermachen willst?</string>
+    <string name="dk_vehicle_beacon_deactivate_alert">Das %1$s Bake wird vom %2$s Fahrzeug getrennt.\nBist du sicher, dass du weitermachen willst?</string>
     <string name="dk_vehicle_beacon_diagnostic_alert">Du hast noch kein Bake konfiguriert.</string>
     <string name="dk_vehicle_beacon_enable_bluetooth_alert_message">Sie müssen den Bluetooth-Sensor auf Ihrem Telefon aktivieren, um das Vorhandensein der Bluetooth-Box zu überprüfen.</string>
     <string name="dk_vehicle_beacon_enable_bluetooth_alert_title">Bluetooth-Sensor</string>
@@ -65,7 +65,7 @@
     <string name="dk_vehicle_beacon_setup_guide_desc2">Achten Sie darauf, dass die Identifikationsnummer vom BEACON lesbar ist</string>
     <string name="dk_vehicle_beacon_setup_guide_desc3">Entfernen Sie die Lasche, die die Batterie der BEACON schützt.</string>
     <string name="dk_vehicle_beacon_setup_guide_title">Bevor Sie beginnen</string>
-    <string name="dk_vehicle_beacon_setup_replace_description">Wenn Sie Ihre Wahl bestätigen, wird der %1$s-BEACON dem %2$s-Fahrzeug zugeordnet.\n\n Das %3$s-Fahrzeug wird nicht mehr mit diesem Sender in Verbindung gebracht.</string>
+    <string name="dk_vehicle_beacon_setup_replace_description">Wenn Sie Ihre Wahl bestätigen, wird der %1$s-BEACON dem %2$s-Fahrzeug zugeordnet.\n\nDas %3$s-Fahrzeug wird nicht mehr mit diesem Sender in Verbindung gebracht.</string>
     <string name="dk_vehicle_beacon_setup_scan_title">Die Anwendung ruft die Informationen vom BEACON ab und überprüft, ob er ordnungsgemäß läuft</string>
     <string name="dk_vehicle_beacon_setup_store_notice">Platziere den BEACON auf dem Armaturenbrett</string>
     <string name="dk_vehicle_beacon_setup_successlink_message">Herzlichen Glückwunsch! \n\n Der BEACON %1$s ist jetzt mit dem Fahrzeug %2$s verbunden.</string>
@@ -78,7 +78,7 @@
     <string name="dk_vehicle_bluetooth_congrats_desc">Das Bluetooth-Gerät %1$s ist nun mit dem Fahrzeug %2$s verknüpft</string>
     <string name="dk_vehicle_bluetooth_congrats_notice">Von nun an startet die Aufzeichnung Ihrer Fahrten automatisch, sobald sich Ihr Handy mit dem Bluetooth-Gerät verbindet %s</string>
     <string name="dk_vehicle_bluetooth_congrats_title">Herzlichen Glückwunsch!</string>
-    <string name="dk_vehicle_bluetooth_deactivate_alert">Das %1$s-Gerät wird vom %2$s-Fahrzeug abgekoppelt. \n Bist du sicher, dass du das durchziehen willst?</string>
+    <string name="dk_vehicle_bluetooth_deactivate_alert">Das %1$s-Gerät wird vom %2$s-Fahrzeug abgekoppelt.\nBist du sicher, dass du das durchziehen willst?</string>
     <string name="dk_vehicle_bluetooth_devices_list_title">Bluetooth-Geräte :</string>
     <string name="dk_vehicle_bluetooth_guide_desc1_android">Vergewissern Sie sich vor dem Start, dass das Bluetooth-System Ihres Fahrzeugs bereits mit Ihrem Handy gekoppelt ist.</string>
     <string name="dk_vehicle_bluetooth_guide_desc1_ios">Überprüfen Sie, ob das Bluetooth-Gerät bereits mit Ihrem iPhone verbunden ist. Diese Informationen sind im Bluetooth-Menü der Telefoneinstellungen verfügbar.</string>
@@ -124,13 +124,18 @@
     <string name="dk_vehicle_detail_category_button_description">Sie kennen die Marke, das Modell und die Eigenschaften Ihres Fahrzeugs</string>
     <string name="dk_vehicle_detail_category_button_title">Mein Fahrzeug finden</string>
     <string name="dk_vehicle_detection_mode_title">Automatischer Start:</string>
+    <string name="dk_vehicle_engine_bi_fuel_bioethanol">Bi-Fuel-Benzin-Bioethanol</string>
+    <string name="dk_vehicle_engine_bi_fuel_lpg">Zweistoffkraftstoff Benzin LPG</string>
+    <string name="dk_vehicle_engine_bi_fuel_ngv">Zweistoffbetrieb Benzin NGV</string>
+    <string name="dk_vehicle_engine_biofuel">Biokraftstoff</string>
     <string name="dk_vehicle_engine_description">Motortyp?</string>
     <string name="dk_vehicle_engine_diesel">Diesel</string>
     <string name="dk_vehicle_engine_diesel_hybrid">Dieselhybrid</string>
     <string name="dk_vehicle_engine_electric">Elektromotor</string>
     <string name="dk_vehicle_engine_gasoline">Ottomotor</string>
-    <string name="dk_vehicle_engine_gasoline_hybrid">Benzin-Elektro-Hybrid</string>
+    <string name="dk_vehicle_engine_gasoline_hybrid">Hybrid Benzin</string>
     <string name="dk_vehicle_engine_gasoline_hybrid_plug_in">Plug-in-Hybrid Benzin</string>
+    <string name="dk_vehicle_engine_hydrogen">Wasserstoff</string>
     <string name="dk_vehicle_error_message">Bei der Anfrage ist ein Fehler aufgetreten. Versuchen Sie es später erneut.</string>
     <string name="dk_vehicle_failed_to_paired_beacon">Die Beacon konnte nicht mit dem Fahrzeug in Verbindung gebracht werden, bitte versuchen Sie es später noch einmal.</string>
     <string name="dk_vehicle_failed_to_paired_bluetooth">Die Bluetooth-Verbindung zum Fahrzeug ist fehlgeschlagen, bitte versuchen Sie es später noch einmal.</string>
@@ -138,6 +143,7 @@
     <string name="dk_vehicle_failed_to_sync">Die Fahrzeugdaten konnten nicht geladen werden. Versuchen Sie es später erneut.</string>
     <string name="dk_vehicle_field_name_error">Der Name Ihres Fahrzeugs darf nicht länger als 50 Zeichen sein.</string>
     <string name="dk_vehicle_gps_already_exists_confirm">Möchten Sie den Erkennungsmodus %1$s für das Fahrzeug %2$s einstellen? \n\nDer Fahrzeugerkennungsmodus %3$s wird auf %4$s umgeschaltet.</string>
+    <string name="dk_vehicle_is_it_electric">Handelt es sich um ein Elektrofahrzeug?</string>
     <string name="dk_vehicle_list_empty">Bitte fügen Sie mindestens ein Fahrzeug hinzu.</string>
     <string name="dk_vehicle_model_description">Fahrzeugmodell</string>
     <string name="dk_vehicle_my_vehicle">Mein Fahrzeug</string>

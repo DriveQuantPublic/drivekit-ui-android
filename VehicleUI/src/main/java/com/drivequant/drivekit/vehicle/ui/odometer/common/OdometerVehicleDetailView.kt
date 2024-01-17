@@ -70,7 +70,7 @@ internal class OdometerVehicleDetailView : LinearLayout {
     fun configureOdometerItem(viewModel: OdometerItemViewModel, odometerItemType: OdometerItemType, listener: OdometerDrawableListener) {
         odometerDistanceDescription.apply {
             text = viewModel.getDescription(context, odometerItemType)
-            smallText(ContextCompat.getColor(context, R.color.dkGrayColor))
+            smallText(ContextCompat.getColor(context, com.drivequant.drivekit.common.ui.R.color.dkGrayColor))
         }
         odometerDistanceValue.apply {
             text = viewModel.getDistance(context, odometerItemType)

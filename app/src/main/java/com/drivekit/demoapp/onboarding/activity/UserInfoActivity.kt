@@ -32,7 +32,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.root.findViewById(R.id.dk_toolbar))
+        setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         if (!this::viewModel.isInitialized) {
@@ -63,7 +63,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
 
         binding.root.findViewById<Button>(R.id.button_action).apply {
-            text = getString(R.string.dk_common_validate)
+            text = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
                 val firstName = binding.textViewFirstnameField.editableText.toString()
@@ -110,6 +110,7 @@ internal class UserInfoActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("OverrideDeprecatedMigration")
     override fun onBackPressed() {
         viewModel.logout(this)
         super.onBackPressed()

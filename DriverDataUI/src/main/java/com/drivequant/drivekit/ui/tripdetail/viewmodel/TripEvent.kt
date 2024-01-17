@@ -11,8 +11,16 @@ import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.*
-import java.util.*
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.FINISH
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.PHONE_DISTRACTION_HANG_UP
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.PHONE_DISTRACTION_LOCK
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.PHONE_DISTRACTION_PICK_UP
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.PHONE_DISTRACTION_UNLOCK
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.SAFETY_ACCEL
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.SAFETY_ADHERENCE
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.SAFETY_BRAKE
+import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripEventType.START
+import java.util.Date
 
 class TripEvent(val type: TripEventType,
                 val time: Date,
@@ -24,14 +32,14 @@ class TripEvent(val type: TripEventType,
 
     fun getEventImageResource() : Int {
         return when(type){
-            SAFETY_BRAKE -> R.drawable.dk_common_safety_decel
+            SAFETY_BRAKE -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_decel
             START -> R.drawable.dk_departure
             FINISH -> R.drawable.dk_arrival
-            SAFETY_ADHERENCE -> R.drawable.dk_common_safety_adherence
-            SAFETY_ACCEL -> R.drawable.dk_common_safety_accel
+            SAFETY_ADHERENCE -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_adherence
+            SAFETY_ACCEL -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_accel
             PHONE_DISTRACTION_LOCK -> R.drawable.dk_lock_event
             PHONE_DISTRACTION_UNLOCK -> R.drawable.dk_unlock_event
-            PHONE_DISTRACTION_PICK_UP -> R.drawable.dk_common_call
+            PHONE_DISTRACTION_PICK_UP -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_call
             PHONE_DISTRACTION_HANG_UP -> R.drawable.dk_end_call
         }
     }
@@ -52,11 +60,11 @@ class TripEvent(val type: TripEventType,
 
     fun getTitle(context: Context) : String {
         return context.getString(when(type){
-            SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else R.string.dk_common_ecodriving_decel_strong
+            SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_list_brake_critical else com.drivequant.drivekit.common.ui.R.string.dk_common_ecodriving_decel_strong
             START -> R.string.dk_driverdata_start_event
             FINISH -> R.string.dk_driverdata_end_event
             SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_list_adherence_critical else R.string.dk_driverdata_safety_list_adherence
-            SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else R.string.dk_common_ecodriving_accel_strong
+            SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_list_acceleration_critical else com.drivequant.drivekit.common.ui.R.string.dk_common_ecodriving_accel_strong
             PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_lock_event
             PHONE_DISTRACTION_UNLOCK -> R.string.dk_driverdata_unlock_event
             PHONE_DISTRACTION_PICK_UP -> if (isForbidden) R.string.dk_driverdata_beginning_unauthorized_call else R.string.dk_driverdata_beginning_authorized_call
@@ -67,8 +75,8 @@ class TripEvent(val type: TripEventType,
     fun getExplanation(context: Context) : String{
         return context.getString(when(type){
             SAFETY_BRAKE -> if (isHigh) R.string.dk_driverdata_safety_explain_brake_critical else R.string.dk_driverdata_safety_explain_brake
-            START -> R.string.dk_common_ok
-            FINISH -> R.string.dk_common_ok
+            START -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
+            FINISH -> com.drivequant.drivekit.common.ui.R.string.dk_common_ok
             SAFETY_ADHERENCE -> if (isHigh) R.string.dk_driverdata_safety_explain_adherence_critical else R.string.dk_driverdata_safety_explain_adherence
             SAFETY_ACCEL -> if (isHigh) R.string.dk_driverdata_safety_explain_acceleration_critical else R.string.dk_driverdata_safety_explain_acceleration
             PHONE_DISTRACTION_LOCK -> R.string.dk_driverdata_screen_lock_text
@@ -111,14 +119,14 @@ class TripEvent(val type: TripEventType,
             SAFETY_BRAKE, SAFETY_ADHERENCE, SAFETY_ACCEL -> {
                 var text = " " + String.format("%.2f", value)
                 if (type == SAFETY_BRAKE || type == SAFETY_ACCEL) {
-                    text += " " + context.getString(R.string.dk_common_unit_accel_meter_per_second_square)
+                    text += " " + context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_accel_meter_per_second_square)
                 }
                 DKSpannable().append(context.getString(R.string.dk_driverdata_value),context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
-                    size(R.dimen.dk_text_small)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                 }).append(text, context.resSpans {
                     color(DriveKitUI.colors.warningColor())
-                    size(R.dimen.dk_text_small)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     typeface(Typeface.BOLD)
                 }).toSpannable()
             }
@@ -145,10 +153,10 @@ class TripEvent(val type: TripEventType,
                     context.getString(R.string.dk_driverdata_calling_time),
                     context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
-                        size(R.dimen.dk_text_small)
+                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     }).append(" $duration", context.resSpans {
                     color(DriveKitUI.colors.warningColor())
-                    size(R.dimen.dk_text_small)
+                    size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_small)
                     typeface(Typeface.BOLD)
                 }).toSpannable()
             }

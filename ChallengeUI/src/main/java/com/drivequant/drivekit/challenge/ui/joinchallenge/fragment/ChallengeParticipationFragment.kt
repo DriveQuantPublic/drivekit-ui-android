@@ -11,7 +11,6 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeJoinBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeRulesActivity
@@ -230,13 +229,13 @@ class ChallengeParticipationFragment : Fragment() {
                             context.resSpans {
                                 color(DriveKitUI.colors.fontColorOnPrimaryColor())
                                 typeface(Typeface.BOLD)
-                                size(R.dimen.dk_text_xbig)
+                                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                             })
                         is FormatType.UNIT -> spannable.append(
                             it.value,
                             context.resSpans {
                                 color(DriveKitUI.colors.fontColorOnPrimaryColor())
-                                size(R.dimen.dk_text_normal)
+                                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                             })
                         is FormatType.SEPARATOR -> spannable.append(it.value)
                     }

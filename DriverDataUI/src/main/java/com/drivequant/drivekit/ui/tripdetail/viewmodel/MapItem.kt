@@ -6,7 +6,12 @@ import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.ui.R
-import com.drivequant.drivekit.ui.tripdetail.fragments.*
+import com.drivequant.drivekit.ui.tripdetail.fragments.DriverDistractionFragment
+import com.drivequant.drivekit.ui.tripdetail.fragments.EcoDrivingFragment
+import com.drivequant.drivekit.ui.tripdetail.fragments.SafetyFragment
+import com.drivequant.drivekit.ui.tripdetail.fragments.SpeedingFragment
+import com.drivequant.drivekit.ui.tripdetail.fragments.SynthesisFragment
+import com.drivequant.drivekit.ui.tripdetail.fragments.TripTimelineFragment
 
 enum class MapItem : DKMapItem {
     ECO_DRIVING,
@@ -60,8 +65,8 @@ enum class MapItem : DKMapItem {
 
     override fun getAdviceImageResource(): Int? =
         when (this) {
-            SAFETY -> R.drawable.dk_common_safety_advice
-            ECO_DRIVING -> R.drawable.dk_common_eco_advice
+            SAFETY -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_advice
+            ECO_DRIVING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_eco_advice
             INTERACTIVE_MAP, SYNTHESIS, DISTRACTION, SPEEDING -> null
         }
 

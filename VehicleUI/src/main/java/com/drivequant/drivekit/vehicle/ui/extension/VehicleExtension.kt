@@ -3,7 +3,10 @@ package com.drivequant.drivekit.vehicle.ui.extension
 import android.content.Context
 import android.text.TextUtils
 import com.drivequant.drivekit.common.ui.utils.DKResource
-import com.drivequant.drivekit.databaseutils.entity.DetectionMode.*
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BEACON
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BLUETOOTH
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.DISABLED
+import com.drivequant.drivekit.databaseutils.entity.DetectionMode.GPS
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
@@ -26,9 +29,9 @@ fun Vehicle.buildFormattedName(context: Context) : String {
 fun Vehicle.computeSubtitle(context: Context): String? {
     val title = this.buildFormattedName(context)
     var subtitle: String? = "$brand $model $version"
-    if (VehicleType.getVehicleType(this.typeIndex) == VehicleType.CAR && liteConfig){
-        VehicleTypeItem.getEnumByVehicleType(VehicleType.CAR).getCategories(context).first { it.liteConfigDqIndex == dqIndex}.title?.let { categoryName ->
-            subtitle = if (categoryName.equals(title, true)){
+    if (VehicleType.getVehicleType(this.typeIndex) == VehicleType.CAR && liteConfig) {
+        VehicleCategory.getEnumByTypeIndex(this.typeIndex)?.getTitle(context)?.let { categoryName ->
+            subtitle = if (categoryName.equals(title, true)) {
                 null
             } else {
                 categoryName
@@ -39,7 +42,7 @@ fun Vehicle.computeSubtitle(context: Context): String? {
 }
 
 fun Vehicle.isConfigured(): Boolean {
-    return when (detectionMode){
+    return when (detectionMode) {
         DISABLED, GPS -> true
         BEACON -> beacon != null
         BLUETOOTH -> bluetooth != null
@@ -47,10 +50,10 @@ fun Vehicle.isConfigured(): Boolean {
 }
 
 fun Vehicle.getDeviceDisplayIdentifier(): String {
-    return when (detectionMode){
+    return when (detectionMode) {
         DISABLED, GPS -> ""
-        BEACON -> beacon?.code ?: run { "" }
-        BLUETOOTH -> bluetooth?.name ?: run { "" }
+        BEACON -> beacon?.code ?: ""
+        BLUETOOTH -> bluetooth?.name ?: ""
     }
 }
 
@@ -68,20 +71,11 @@ fun Vehicle.getCategoryName(context: Context): String {
     }
 }
 
-fun Vehicle.getEngineTypeName(context: Context): String? {
-    VehicleType.getVehicleType(typeIndex)?.let { vehicleType ->
-        val engineIndexes = VehicleTypeItem.getEnumByVehicleType(vehicleType).getEngineIndexes(context)
-        val matchedEngineIndex = engineIndexes.first {
-            VehicleEngineIndex.getEnumByValue(engineIndex) == it.engine
-        }
-        return matchedEngineIndex.title
-    }?:run {
-        return null
-    }
-}
+fun Vehicle.getEngineTypeName(context: Context): String
+    = VehicleEngineIndex.getEnumByValue(this.engineIndex).getTitle(context)
 
 fun Vehicle.getGearBoxName(context: Context): String {
-    val identifier = when (gearboxIndex){
+    val identifier = when (gearboxIndex) {
         1 -> "dk_gearbox_automatic"
         2 -> "dk_gearbox_manual_5"
         3 -> "dk_gearbox_manual_6"
@@ -89,7 +83,7 @@ fun Vehicle.getGearBoxName(context: Context): String {
         5 -> "dk_gearbox_manual_8"
         else -> null
     }
-    return if (identifier == null){
+    return if (identifier == null) {
         "-"
     } else {
         DKResource.convertToString(context, identifier)

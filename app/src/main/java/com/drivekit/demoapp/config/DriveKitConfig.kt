@@ -10,7 +10,6 @@ import androidx.preference.PreferenceManager
 import com.drivekit.demoapp.dashboard.activity.DashboardActivity
 import com.drivekit.demoapp.notification.controller.DKNotificationManager
 import com.drivekit.demoapp.notification.enum.DKNotificationChannel
-import com.drivekit.demoapp.utils.WorkerManager
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
@@ -28,7 +27,8 @@ import com.drivequant.drivekit.core.driver.deletion.DeleteAccountStatus
 import com.drivequant.drivekit.core.networking.DriveKitListener
 import com.drivequant.drivekit.core.networking.RequestError
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
-import com.drivequant.drivekit.databaseutils.entity.*
+import com.drivequant.drivekit.databaseutils.entity.BadgeCategory
+import com.drivequant.drivekit.databaseutils.entity.RankingType
 import com.drivequant.drivekit.driverachievement.DriveKitDriverAchievement
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
@@ -214,8 +214,8 @@ internal object DriveKitConfig {
                     icon = R.drawable.ic_notification,
                     channelName = "${R.string.app_name} - Crash Detection Feedback",
                     notificationId = Random.nextInt(1, Integer.MAX_VALUE),
-                    title = context.getString(R.string.dk_crash_detection_feedback_notif_title),
-                    message = context.getString(R.string.dk_crash_detection_feedback_notif_message),
+                    title = context.getString(com.drivekit.tripanalysis.ui.R.string.dk_crash_detection_feedback_notif_title),
+                    message = context.getString(com.drivekit.tripanalysis.ui.R.string.dk_crash_detection_feedback_notif_message),
                     activity = CrashFeedbackStep1Activity::class.java,
                     crashAlert = DKCrashAlert.SILENCE
                 ),
@@ -291,7 +291,7 @@ internal object DriveKitConfig {
 
         // Reset the Demo App NotificationManager
         DKNotificationManager.reset(context)
-        
+
         // Clear Shared Preferences of the Demo App
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         preferences.edit().clear().apply()
