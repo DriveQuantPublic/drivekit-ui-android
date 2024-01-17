@@ -60,7 +60,7 @@ internal object DriveKitConfig {
     // ===============================
     // ↓↓↓ ENTER YOUR API KEY HERE ↓↓↓
     // ===============================
-    private const val apiKey = ""
+    private const val apiKey = "qDcgo5W2I1p3u5STEhuQ1AJo"
 
     private const val TRIP_ANALYSIS_AUTO_START_PREF_KEY = "tripAnalysisAutoStartPrefKey"
     private const val USER_ALREADY_ONBOARDED_PREF_KEY = "userAlreadyOnboardedPrefKey"
