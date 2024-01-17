@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
@@ -61,7 +60,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_vehicles_add"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_add), javaClass.simpleName)
 
         binding = ActivityVehiclePickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -98,12 +97,11 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
         viewModel.fetchServiceErrorObserver.observe(this) {
             it?.let {
                 if (it == VehiclePickerStatus.NO_RESULT) {
-                    "dk_vehicle_no_data"
+                    R.string.dk_vehicle_no_data
                 } else {
-                    "dk_vehicle_error_message"
-                }.let { text ->
-                    Toast.makeText(this, DKResource.convertToString(this, text), Toast.LENGTH_LONG)
-                        .show()
+                    R.string.dk_vehicle_error_message
+                }.let { textResId ->
+                    Toast.makeText(this, textResId, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -137,10 +135,7 @@ class VehiclePickerActivity : AppCompatActivity(), VehicleItemListFragment.OnLis
                 } else {
                     Toast.makeText(
                         this,
-                        DKResource.convertToString(
-                            this,
-                            "dk_vehicle_failed_to_retrieve_vehicle_data"
-                        ),
+                        R.string.dk_vehicle_failed_to_retrieve_vehicle_data,
                         Toast.LENGTH_LONG
                     ).show()
                 }

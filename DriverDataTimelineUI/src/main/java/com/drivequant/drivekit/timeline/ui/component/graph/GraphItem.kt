@@ -1,11 +1,13 @@
 package com.drivequant.drivekit.timeline.ui.component.graph
 
 import android.content.Context
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.extension.format
+import com.drivequant.drivekit.common.ui.utils.Co2Unit
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.convertToString
-import com.drivequant.drivekit.common.ui.utils.Co2Unit
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
+import com.drivequant.drivekit.timeline.ui.R
 import com.drivequant.drivekit.timeline.ui.ceilToLowestValueWithNiceStep
 import kotlin.math.ceil
 import kotlin.math.min
@@ -22,7 +24,8 @@ internal sealed class GraphItem {
             }
         }
 
-    val graphTitleKey: String
+    @get:StringRes
+    val graphTitleKey: Int
         get() {
             return when (this) {
                 is Score -> getGraphTitleKey(this.scoreType)
@@ -137,31 +140,33 @@ internal sealed class GraphItem {
         }
     }
 
-    private fun getGraphTitleKey(scoreType: DKScoreType): String {
+    @StringRes
+    private fun getGraphTitleKey(scoreType: DKScoreType): Int {
         return when (scoreType) {
-            DKScoreType.SAFETY -> "dk_timeline_safety_score"
-            DKScoreType.ECO_DRIVING -> "dk_timeline_eco_score"
-            DKScoreType.DISTRACTION -> "dk_timeline_distraction_score"
-            DKScoreType.SPEEDING -> "dk_timeline_speeding_score"
+            DKScoreType.SAFETY -> R.string.dk_timeline_safety_score
+            DKScoreType.ECO_DRIVING -> R.string.dk_timeline_eco_score
+            DKScoreType.DISTRACTION -> R.string.dk_timeline_distraction_score
+            DKScoreType.SPEEDING -> R.string.dk_timeline_speeding_score
         }
     }
 
-    private fun getGraphTitleKey(scoreItemType: TimelineScoreItemType): String {
+    @StringRes
+    private fun getGraphTitleKey(scoreItemType: TimelineScoreItemType): Int {
         return when (scoreItemType) {
-            TimelineScoreItemType.SAFETY_ACCELERATION -> "dk_timeline_accelerations"
-            TimelineScoreItemType.SAFETY_BRAKING -> "dk_timeline_brakings"
-            TimelineScoreItemType.SAFETY_ADHERENCE -> "dk_timeline_adherence"
-            TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> "dk_timeline_acceleration_score"
-            TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> "dk_timeline_deceleration_score"
-            TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> "dk_timeline_maintain_score"
-            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> "dk_timeline_consumption"
-            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> "dk_timeline_fuel_savings"
-            TimelineScoreItemType.ECODRIVING_CO2MASS -> "dk_timeline_co2_mass"
-            TimelineScoreItemType.DISTRACTION_UNLOCK -> "dk_timeline_nb_unlocks"
-            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> "dk_timeline_calls_duration"
-            TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> "dk_timeline_trips_forbidden_calls"
-            TimelineScoreItemType.SPEEDING_DURATION -> "dk_timeline_overspeeding_duration"
-            TimelineScoreItemType.SPEEDING_DISTANCE -> "dk_timeline_overspeeding_distance"
+            TimelineScoreItemType.SAFETY_ACCELERATION -> R.string.dk_timeline_accelerations
+            TimelineScoreItemType.SAFETY_BRAKING -> R.string.dk_timeline_brakings
+            TimelineScoreItemType.SAFETY_ADHERENCE -> R.string.dk_timeline_adherence
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_ACCELERATION -> R.string.dk_timeline_acceleration_score
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_BRAKE -> R.string.dk_timeline_deceleration_score
+            TimelineScoreItemType.ECODRIVING_EFFICIENCY_SPEED_MAINTAIN -> R.string.dk_timeline_maintain_score
+            TimelineScoreItemType.ECODRIVING_FUEL_VOLUME -> R.string.dk_timeline_consumption
+            TimelineScoreItemType.ECODRIVING_FUEL_SAVINGS -> R.string.dk_timeline_fuel_savings
+            TimelineScoreItemType.ECODRIVING_CO2MASS -> R.string.dk_timeline_co2_mass
+            TimelineScoreItemType.DISTRACTION_UNLOCK -> R.string.dk_timeline_nb_unlocks
+            TimelineScoreItemType.DISTRACTION_CALL_FORBIDDEN_DURATION -> R.string.dk_timeline_calls_duration
+            TimelineScoreItemType.DISTRACTION_PERCENTAGE_OF_TRIPS_WITH_FORBIDDEN_CALL -> R.string.dk_timeline_trips_forbidden_calls
+            TimelineScoreItemType.SPEEDING_DURATION -> R.string.dk_timeline_overspeeding_duration
+            TimelineScoreItemType.SPEEDING_DISTANCE -> R.string.dk_timeline_overspeeding_distance
         }
     }
 

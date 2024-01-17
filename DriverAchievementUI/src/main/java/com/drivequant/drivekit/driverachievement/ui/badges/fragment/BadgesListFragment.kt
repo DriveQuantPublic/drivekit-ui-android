@@ -41,7 +41,7 @@ class BadgesListFragment : Fragment() {
         this.swipeRefreshLayout = view.findViewById(R.id.refresh_badges)
         this.progressView = view.findViewById(R.id.progress_circular)
 
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_badges"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_badges), javaClass.simpleName)
         badgesRecyclerView.layoutManager = LinearLayoutManager(view.context)
         swipeRefreshLayout.setOnRefreshListener {
             updateBadges()

@@ -5,14 +5,18 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
+import com.drivekit.tripanalysis.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.adapter.WorkingHoursSpinnerAdapter
 import com.drivequant.drivekit.tripanalysis.workinghours.viewholder.HoursSpinnerItem
@@ -37,12 +41,12 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
     }
 
     private fun init() {
-        val view = View.inflate(context, R.layout.dk_layout_spinner_settings, null)
-        textViewTitle = view.findViewById(R.id.spinner_settings_title)
-        textViewDescription = view.findViewById(R.id.spinner_settings_description)
-        spinnerContainer = view.findViewById(R.id.spinner_container)
-        spinner = view.findViewById(R.id.spinner)
-        circleIndicator = view.findViewById(R.id.image_view_circle_indicator)
+        val view = View.inflate(context, com.drivequant.drivekit.common.ui.R.layout.dk_layout_spinner_settings, null)
+        textViewTitle = view.findViewById(com.drivequant.drivekit.common.ui.R.id.spinner_settings_title)
+        textViewDescription = view.findViewById(com.drivequant.drivekit.common.ui.R.id.spinner_settings_description)
+        spinnerContainer = view.findViewById(com.drivequant.drivekit.common.ui.R.id.spinner_container)
+        spinner = view.findViewById(com.drivequant.drivekit.common.ui.R.id.spinner)
+        circleIndicator = view.findViewById(com.drivequant.drivekit.common.ui.R.id.image_view_circle_indicator)
 
         spinner.adapter = WorkingHoursSpinnerAdapter(context, items)
 
@@ -68,7 +72,7 @@ internal class WorkingHoursSpinnerSettings : LinearLayout {
             ) {
                 val selected = items[position].timeSlotStatus
                 if (selected == DKWorkingHoursTimeSlotStatus.DISABLED) {
-                    setDescription(DKResource.convertToString(context, "dk_working_hours_slot_disabled_desc"))
+                    setDescription(context.getString(R.string.dk_working_hours_slot_disabled_desc))
                 } else {
                     setDescription(null)
                 }

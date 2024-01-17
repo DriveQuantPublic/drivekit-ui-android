@@ -12,13 +12,12 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.drivingconditions.component.context.ContextCardScrollState
 import com.drivequant.drivekit.ui.drivingconditions.component.context.DrivingConditionsContextsView
 import com.drivequant.drivekit.ui.drivingconditions.component.summary.DrivingConditionsSummaryCardView
-import java.util.*
+import java.util.Date
 
 internal class DrivingConditionsFragment : Fragment() {
 
@@ -183,12 +182,7 @@ internal class DrivingConditionsFragment : Fragment() {
     }
 
     private fun tagScreen() {
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_driving_conditions"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_driving_conditions), javaClass.simpleName)
     }
 
     private fun checkViewModelInitialization() {

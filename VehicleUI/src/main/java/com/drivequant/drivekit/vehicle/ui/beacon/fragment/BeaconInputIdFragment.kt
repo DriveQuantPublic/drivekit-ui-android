@@ -79,15 +79,15 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
 
         binding.textViewBeaconCodeText.apply {
             bigText(DriveKitUI.colors.mainFontColor())
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_title")
+            setText(R.string.dk_vehicle_beacon_setup_code_title)
         }
         binding.codeWrapper.apply {
-            hint = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_code_hint")
+            setHint(R.string.dk_vehicle_beacon_setup_code_hint)
             typeface = DriveKitUI.primaryFont(context)
         }
         binding.buttonValidate.apply {
             button()
-            text = DKResource.convertToString(requireContext(), "dk_common_validate")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             setOnClickListener {
                 manageValidateClick(it)
             }
@@ -99,7 +99,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
         _binding = null
     }
 
-    private fun displayError(vararg args: String) {
+    private fun displayError(message: String) {
         val alert = DKAlertDialog.LayoutBuilder()
             .init(requireContext())
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
@@ -112,19 +112,18 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
 
         title?.text = DKResource.buildString(
             requireContext(),
-            DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
-            "app_name"
+            textColor = DriveKitUI.colors.mainFontColor(),
+            highlightColor = DriveKitUI.colors.mainFontColor(),
+            identifier = R.string.app_name
         )
         title?.headLine1()
 
-        if (args.isNotEmpty()) {
-            description?.text = DKResource.buildString(requireContext(),
-                DriveKitUI.colors.mainFontColor(),
-                DriveKitUI.colors.mainFontColor(),"dk_vehicle_beacon_setup_code_invalid_id", args[0])
-        } else {
-            description?.text = DKResource.convertToString(requireContext(), "dk_vehicle_failed_to_retrieve_beacon")
-        }
+        description?.text = DKResource.buildString(requireContext(),
+            DriveKitUI.colors.mainFontColor(),
+            DriveKitUI.colors.mainFontColor(),
+            R.string.dk_vehicle_beacon_setup_code_invalid_id,
+            message
+        )
         description?.normalText()
     }
 
@@ -134,7 +133,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
         val codeValue: String = binding.codeField.text.toString().trim()
         if (codeValue.isEmpty()){
             binding.codeWrapper.isErrorEnabled = true
-            binding.codeWrapper.error = DKResource.convertToString(requireContext(), "dk_common_error_empty_field")
+            binding.codeWrapper.error = getString(com.drivequant.drivekit.common.ui.R.string.dk_common_error_empty_field)
         } else {
             binding.codeWrapper.isErrorEnabled = false
             viewModel.checkCode(codeValue)
@@ -144,9 +143,7 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
     override fun onBeaconStatusReceived(beaconCode: String, status: VehicleBeaconInfoStatus) {
         when (status) {
             VehicleBeaconInfoStatus.SUCCESS -> viewModel.onCodeValid()
-            VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(
-                beaconCode
-            )
+            VehicleBeaconInfoStatus.ERROR, VehicleBeaconInfoStatus.UNKNOWN_BEACON -> displayError(beaconCode)
         }
     }
 }

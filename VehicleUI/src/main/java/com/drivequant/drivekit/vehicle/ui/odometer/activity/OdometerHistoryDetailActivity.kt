@@ -2,12 +2,11 @@ package com.drivequant.drivekit.vehicle.ui.odometer.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoriesListFragment
 import com.drivequant.drivekit.vehicle.ui.odometer.fragment.OdometerHistoryDetailFragment
@@ -67,11 +66,11 @@ class OdometerHistoryDetailActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (historyId == -1) {
-            "dk_vehicle_odometer_history_add"
+            R.string.dk_vehicle_odometer_history_add
         } else {
-            "dk_vehicle_odometer_history_update"
+            R.string.dk_vehicle_odometer_history_update
         }.let {
-            setActivityTitle(DKResource.convertToString(this, it))
+            setActivityTitle(getString(it))
         }
     }
 }

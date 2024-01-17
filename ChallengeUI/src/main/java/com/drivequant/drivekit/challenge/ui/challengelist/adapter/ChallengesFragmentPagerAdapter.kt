@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeListFragment
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 internal class ChallengesFragmentPagerAdapter(
@@ -25,14 +25,11 @@ internal class ChallengesFragmentPagerAdapter(
         )
     )
 
-    private val titles = listOf("dk_challenge_active", "dk_challenge_finished")
+    private val titles = listOf(R.string.dk_challenge_active, R.string.dk_challenge_finished)
 
     override fun getItem(position: Int): Fragment = fragments[position]
 
-    override fun getPageTitle(position: Int): CharSequence? = DKResource.convertToString(
-        context,
-        titles[position]
-    )
+    override fun getPageTitle(position: Int): CharSequence = context.getString(titles[position])
 
     override fun getCount(): Int = fragments.size
 }

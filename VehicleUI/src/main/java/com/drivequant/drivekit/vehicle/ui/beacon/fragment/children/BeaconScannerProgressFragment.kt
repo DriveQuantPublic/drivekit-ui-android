@@ -16,7 +16,6 @@ import com.drivequant.beaconutils.BeaconScannerMode
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -76,7 +75,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
 
         view.findViewById<TextView>(R.id.text_view_description).apply {
             normalText()
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_wait_scan")
+            setText(R.string.dk_vehicle_beacon_wait_scan)
         }
 
         view.let {
@@ -127,7 +126,7 @@ class BeaconScannerProgressFragment : Fragment(), BeaconListener {
                             if (isSameVehicle){
                                 DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner: beacon is already paired to this vehicle")
                                 Toast.makeText(requireContext(),
-                                    DKResource.convertToString(requireContext(), "dk_vehicle_beacon_already_paired_to_vehicle"),
+                                    R.string.dk_vehicle_beacon_already_paired_to_vehicle,
                                     Toast.LENGTH_LONG)
                                 .show()
                                 viewModel.scanValidationFinished()

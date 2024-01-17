@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.StreakSyncStatus
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.streaks.adapter.StreaksListAdapter
@@ -46,7 +45,7 @@ class StreaksListFragment : Fragment() {
         this.swipeRefreshLayout = view.findViewById(R.id.refresh_streaks)
         this.progressView = view.findViewById(R.id.progress_circular)
 
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_streaks"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_streaks), javaClass.simpleName)
 
         val layoutManager =
             LinearLayoutManager(view.context)

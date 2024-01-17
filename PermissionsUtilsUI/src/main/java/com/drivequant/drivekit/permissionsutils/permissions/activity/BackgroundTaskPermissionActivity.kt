@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
 import com.drivequant.drivekit.core.utils.DiagnosisHelper.REQUEST_BATTERY_OPTIMIZATION
 import com.drivequant.drivekit.core.utils.PermissionStatus
+import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityBackgroundTaskPermissionBinding
 
 class BackgroundTaskPermissionActivity : BasePermissionActivity() {
@@ -20,7 +21,7 @@ class BackgroundTaskPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBackgroundTaskPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar("dk_perm_utils_permissions_phone_settings_background_title")
+        setToolbar(R.string.dk_perm_utils_permissions_phone_settings_background_title)
         setStyle()
     }
 

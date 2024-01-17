@@ -11,8 +11,8 @@ import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconStep
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
@@ -60,9 +60,9 @@ class BeaconScannerNotFoundFragment : Fragment() {
         }
 
         binding.textViewDescription.normalText()
-        binding.textViewDescription.text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_scan_retry")
+        binding.textViewDescription.setText(R.string.dk_vehicle_beacon_scan_retry)
 
-        binding.buttonRetry.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_beacon_retry"))
+        binding.buttonRetry.setImageResource(R.drawable.dk_beacon_retry)
         binding.buttonRetry.setOnClickListener {
             viewModel.updateScanState(BeaconStep.SCAN)
         }
@@ -72,14 +72,14 @@ class BeaconScannerNotFoundFragment : Fragment() {
             binding.buttonAbort.visibility = View.GONE
         } else {
             binding.buttonCancel.button()
-            binding.buttonCancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+            binding.buttonCancel.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
             binding.buttonCancel.setOnClickListener {
                 activity?.onBackPressed()
             }
 
             binding.buttonAbort.apply {
                 headLine2(DriveKitUI.colors.secondaryColor())
-                text = DKResource.convertToString(requireContext(), "dk_common_finish")
+                setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
                 setOnClickListener {
                     viewModel.scanValidationFinished()
                 }

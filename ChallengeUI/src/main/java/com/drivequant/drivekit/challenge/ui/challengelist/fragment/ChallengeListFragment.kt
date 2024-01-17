@@ -27,7 +27,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 
@@ -68,17 +67,12 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
 
         val tag = if (status.containsActiveChallenge()) {
-            "dk_tag_challenge_list_active"
+            R.string.dk_tag_challenge_list_active
         } else {
-            "dk_tag_challenge_list_finished"
+            R.string.dk_tag_challenge_list_finished
         }
 
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                tag
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(tag), javaClass.simpleName)
 
         if (!this::viewModel.isInitialized) {
             viewModel = ViewModelProvider(this)[ChallengeListViewModel::class.java]
@@ -93,10 +87,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             if (!it) {
                 Toast.makeText(
                     context,
-                    DKResource.convertToString(
-                        requireContext(),
-                        "dk_challenge_failed_to_sync_challenges"
-                    ),
+                    R.string.dk_challenge_failed_to_sync_challenges,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -151,23 +142,21 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     }
 
     private fun displayNoChallenges(challengeStatusList: List<ChallengeStatus>) {
-        var pair = Pair("dk_challenge_no_active_challenge", "dk_challenge_waiting")
+        var pair = Pair(R.string.dk_challenge_no_active_challenge, R.drawable.dk_challenge_waiting)
         challengeStatusList.map {
             pair = when (it) {
                 ChallengeStatus.FINISHED, ChallengeStatus.ARCHIVED -> Pair(
-                    "dk_challenge_no_finished_challenge",
-                    "dk_challenge_finished"
+                    R.string.dk_challenge_no_finished_challenge,
+                    R.drawable.dk_challenge_finished
                 )
                 ChallengeStatus.PENDING, ChallengeStatus.SCHEDULED -> Pair(
-                    "dk_challenge_no_active_challenge",
-                    "dk_challenge_waiting"
+                    R.string.dk_challenge_no_active_challenge,
+                    R.drawable.dk_challenge_waiting
                 )
             }
         }
-        getEmptyViewBinding().dkTextViewNoChallenge.text = DKResource.convertToString(requireContext(), pair.first)
-        DKResource.convertToDrawable(requireContext(), pair.second)?.let {
-            getEmptyViewBinding().dkImageViewNoChallenge.setImageDrawable(it)
-        }
+        getEmptyViewBinding().dkTextViewNoChallenge.setText(pair.first)
+        getEmptyViewBinding().dkImageViewNoChallenge.setImageResource(pair.second)
         getEmptyViewBinding().dkTextViewNoChallenge.headLine2(DriveKitUI.colors.mainFontColor())
         getEmptyViewBinding().viewGroupEmptyScreen.visibility = View.VISIBLE
         binding.dkRecyclerViewChallenge.visibility = View.GONE
@@ -185,9 +174,8 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text = getString(R.string.app_name)
-                descriptionTextView?.text =
-                    DKResource.convertToString(requireContext(), "dk_challenge_not_a_participant")
+                titleTextView?.setText(R.string.app_name)
+                descriptionTextView?.setText(R.string.dk_challenge_not_a_participant)
                 titleTextView?.headLine1()
                 descriptionTextView?.normalText()
             }

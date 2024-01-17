@@ -1,6 +1,7 @@
 package com.drivekit.demoapp.onboarding.viewmodel
 
 import android.content.Context
+import androidx.annotation.StringRes
 import com.drivekit.drivekitdemoapp.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -10,7 +11,8 @@ internal class ApiKeyViewModel {
 
     fun isApiKeyValid() = DriveKit.config.apiKey?.isNotBlank() ?: false
 
-    fun getButtonText() = if (isApiKeyValid()) {
+    @StringRes
+    fun getButtonTextResId() = if (isApiKeyValid()) {
         R.string.welcome_ok_button
     } else {
         R.string.button_see_documentation
@@ -22,7 +24,7 @@ internal class ApiKeyViewModel {
                 context,
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.primaryColor(),
-                "welcome_ok_description",
+                R.string.welcome_ok_description,
                 it!!
             )
         }
@@ -30,7 +32,8 @@ internal class ApiKeyViewModel {
         context.getString(R.string.welcome_ko_description)
     }
 
-    fun getTitle() = if (isApiKeyValid()) {
+    @StringRes
+    fun getTitleResId() = if (isApiKeyValid()) {
         R.string.welcome_ok_title
     } else {
         R.string.welcome_ko_title

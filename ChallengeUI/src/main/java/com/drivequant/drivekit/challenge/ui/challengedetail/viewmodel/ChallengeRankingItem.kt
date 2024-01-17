@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
 
@@ -22,19 +22,16 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
 
     override fun getRankResource(context: Context): Drawable?  =
         when (driverRank) {
-            1 -> "dk_common_rank_1"
-            2 -> "dk_common_rank_2"
-            3 -> "dk_common_rank_3"
+            1 -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_rank_1
+            2 -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_rank_2
+            3 -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_rank_3
             else -> null
         }?.let {
-            DKResource.convertToDrawable(
-                context,
-                it
-            )
+            ContextCompat.getDrawable(context, it)
         }
 
     override fun getPseudo(context: Context): String = if (driverPseudo.isNullOrBlank()) {
-        DKResource.convertToString(context, "dk_common_anonymous_driver")
+        context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_anonymous_driver)
     } else driverPseudo
 
     override fun getDistance(context: Context): String = viewModel.formatChallengeDistance(driverDistance, context).convertToString()

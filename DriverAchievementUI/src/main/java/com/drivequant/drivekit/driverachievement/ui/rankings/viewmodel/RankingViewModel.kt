@@ -11,6 +11,7 @@ import com.drivequant.drivekit.driverachievement.RankingQueryListener
 import com.drivequant.drivekit.driverachievement.RankingSyncStatus
 import com.drivequant.drivekit.driverachievement.ranking.RankingPeriod
 import com.drivequant.drivekit.driverachievement.ui.DriverAchievementUI
+import com.drivequant.drivekit.driverachievement.ui.R
 
 class RankingViewModel : ViewModel() {
     var syncStatus: RankingSyncStatus = RankingSyncStatus.NO_ERROR
@@ -29,10 +30,10 @@ class RankingViewModel : ViewModel() {
     init {
         for (rankingType in DriverAchievementUI.rankingTypes) {
             val iconId = when (rankingType) {
-                RankingType.DISTRACTION -> "dk_common_distraction_flat"
-                RankingType.ECO_DRIVING -> "dk_common_ecodriving_flat"
-                RankingType.SAFETY -> "dk_common_safety_flat"
-                RankingType.SPEEDING -> "dk_common_speeding_flat"
+                RankingType.DISTRACTION -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_distraction_flat
+                RankingType.ECO_DRIVING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_ecodriving_flat
+                RankingType.SAFETY -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_safety_flat
+                RankingType.SPEEDING -> com.drivequant.drivekit.common.ui.R.drawable.dk_common_speeding_flat
             }
             rankingTypesData.add(RankingTypeData(iconId, rankingType))
         }
@@ -40,17 +41,16 @@ class RankingViewModel : ViewModel() {
 
         when (val rankingSelectorType = DriverAchievementUI.rankingSelector) {
             is RankingSelectorType.NONE -> {
-                selectedRankingSelectorData =
-                    RankingSelectorData(0, "dk_achievements_ranking_week", RankingPeriod.WEEKLY)
+                selectedRankingSelectorData = RankingSelectorData(0, R.string.dk_achievements_ranking_week, RankingPeriod.WEEKLY)
             }
             is RankingSelectorType.PERIOD -> {
                 for ((index, rankingPeriod) in rankingSelectorType.rankingPeriods.distinct()
                     .withIndex()) {
                     val titleId = when (rankingPeriod) {
-                        RankingPeriod.WEEKLY -> "dk_achievements_ranking_week"
-                        RankingPeriod.LEGACY -> "dk_achievements_ranking_legacy"
-                        RankingPeriod.MONTHLY -> "dk_achievements_ranking_month"
-                        RankingPeriod.ALL_TIME -> "dk_achievements_ranking_permanent"
+                        RankingPeriod.WEEKLY -> R.string.dk_achievements_ranking_week
+                        RankingPeriod.LEGACY -> R.string.dk_achievements_ranking_legacy
+                        RankingPeriod.MONTHLY -> R.string.dk_achievements_ranking_month
+                        RankingPeriod.ALL_TIME -> R.string.dk_achievements_ranking_permanent
                     }
                     rankingSelectorsData.add(RankingSelectorData(index, titleId, rankingPeriod))
                 }
@@ -60,8 +60,7 @@ class RankingViewModel : ViewModel() {
     }
 
     fun fetchRankingList(groupName: String? = null) {
-        val useCacheKey =
-            "${selectedRankingTypeData.rankingType}-${selectedRankingSelectorData.rankingPeriod}"
+        val useCacheKey = "${selectedRankingTypeData.rankingType}-${selectedRankingSelectorData.rankingPeriod}"
         synchronizationType = if (useCache[useCacheKey] == true) {
             SynchronizationType.CACHE
         } else {

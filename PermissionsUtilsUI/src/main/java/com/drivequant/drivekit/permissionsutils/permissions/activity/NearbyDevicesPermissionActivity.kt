@@ -10,8 +10,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.highlightMedium
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.utils.DiagnosisHelper
+import com.drivequant.drivekit.permissionsutils.R
 import com.drivequant.drivekit.permissionsutils.databinding.ActivityNearbyDevicesPermissionBinding
 import com.drivequant.drivekit.permissionsutils.diagnosis.listener.OnPermissionCallback
 
@@ -24,7 +24,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNearbyDevicesPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar("dk_perm_utils_app_diag_nearby_title")
+        setToolbar(R.string.dk_perm_utils_app_diag_nearby_title)
         setStyle()
     }
 
@@ -47,8 +47,7 @@ class NearbyDevicesPermissionActivity : BasePermissionActivity() {
             }
 
             override fun onPermissionTotallyDeclined(permissionName: String) {
-                binding.buttonRequestNearbyDevicesPermission.text =
-                    DKResource.convertToString(applicationContext, "dk_perm_utils_permissions_text_button_nearby_devices_settings")
+                binding.buttonRequestNearbyDevicesPermission.setText(R.string.dk_perm_utils_permissions_text_button_nearby_devices_settings)
                 handlePermissionTotallyDeclined(
                     this@NearbyDevicesPermissionActivity,
                     com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko

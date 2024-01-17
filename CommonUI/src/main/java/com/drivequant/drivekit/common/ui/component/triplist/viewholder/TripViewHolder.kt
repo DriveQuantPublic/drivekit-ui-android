@@ -1,12 +1,12 @@
 package com.drivequant.drivekit.common.ui.component.triplist.viewholder
 
-import android.graphics.Color
-import androidx.core.graphics.drawable.DrawableCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.component.GaugeIndicator
@@ -14,16 +14,15 @@ import com.drivequant.drivekit.common.ui.component.triplist.DKTripListItem
 import com.drivequant.drivekit.common.ui.component.triplist.DisplayType
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.component.triplist.extension.computeArrivalInfo
-import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.component.triplist.extension.computeCeilDuration
 import com.drivequant.drivekit.common.ui.component.triplist.extension.computeDepartureInfo
 import com.drivequant.drivekit.common.ui.component.triplist.extension.getOrComputeStartDate
+import com.drivequant.drivekit.common.ui.component.triplist.views.TripInfoView
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 
 
@@ -84,12 +83,7 @@ internal class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                     )
                 } else {
                     showImageIndicator()
-                    imageView.setImageDrawable(
-                        DKResource.convertToDrawable(
-                            imageView.context,
-                            "dk_no_score"
-                        )
-                    )
+                    imageView.setImageDrawable(ContextCompat.getDrawable(imageView.context, R.drawable.dk_no_score))
                 }
             }
             DisplayType.TEXT -> {

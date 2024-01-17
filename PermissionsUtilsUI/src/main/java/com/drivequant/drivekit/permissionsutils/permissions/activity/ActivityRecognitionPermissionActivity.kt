@@ -21,7 +21,7 @@ class ActivityRecognitionPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognitionPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar("dk_perm_utils_permissions_phone_settings_activity_title")
+        setToolbar(R.string.dk_perm_utils_permissions_phone_settings_activity_title)
         setStyle()
     }
 

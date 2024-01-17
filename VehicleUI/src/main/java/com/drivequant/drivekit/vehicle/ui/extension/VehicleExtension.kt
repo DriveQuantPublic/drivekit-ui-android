@@ -2,7 +2,6 @@ package com.drivequant.drivekit.vehicle.ui.extension
 
 import android.content.Context
 import android.text.TextUtils
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BEACON
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.BLUETOOTH
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode.DISABLED
@@ -21,7 +20,7 @@ fun Vehicle.buildFormattedName(context: Context) : String {
         name ?: " "
     } else {
         val vehiclePositionInList = sortedVehicles.indexOf(this) + 1
-        val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
+        val myVehicleString = context.getString(R.string.dk_vehicle_my_vehicle)
         "$myVehicleString - $vehiclePositionInList"
     }
 }
@@ -76,18 +75,14 @@ fun Vehicle.getEngineTypeName(context: Context): String
 
 fun Vehicle.getGearBoxName(context: Context): String {
     val identifier = when (gearboxIndex) {
-        1 -> "dk_gearbox_automatic"
-        2 -> "dk_gearbox_manual_5"
-        3 -> "dk_gearbox_manual_6"
-        4 -> "dk_gearbox_manual_7"
-        5 -> "dk_gearbox_manual_8"
-        else -> null
+        1 -> R.string.dk_gearbox_automatic
+        2 -> R.string.dk_gearbox_manual_5
+        3 -> R.string.dk_gearbox_manual_6
+        4 -> R.string.dk_gearbox_manual_7
+        5 -> R.string.dk_gearbox_manual_8
+        else -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_value
     }
-    return if (identifier == null) {
-        "-"
-    } else {
-        DKResource.convertToString(context, identifier)
-    }
+    return context.getString(identifier)
 }
 
 fun Vehicle.getDefaultImage(): Int {

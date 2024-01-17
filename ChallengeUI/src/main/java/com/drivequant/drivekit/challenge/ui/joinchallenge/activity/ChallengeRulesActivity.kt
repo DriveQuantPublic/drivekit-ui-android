@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.databinding.DkActivityChallengeRulesBinding
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
@@ -17,7 +18,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class ChallengeRulesActivity : AppCompatActivity() {
 
@@ -52,12 +52,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DkActivityChallengeRulesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                this,
-                "dk_tag_challenge_rules"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_rules), javaClass.simpleName)
 
         setSupportActionBar(binding.root.findViewById(com.drivequant.drivekit.common.ui.R.id.dk_toolbar))
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -72,14 +67,14 @@ class ChallengeRulesActivity : AppCompatActivity() {
         }
 
         val acceptRulesText = if (isRegistered) {
-            "dk_challenge_participate_button"
+            R.string.dk_challenge_participate_button
         } else {
             binding.textViewAcceptRule.visibility = View.VISIBLE
-            "dk_challenge_optin_title"
+            R.string.dk_challenge_optin_title
         }
 
         binding.textViewAcceptRule.apply {
-            text = DKResource.convertToString(this@ChallengeRulesActivity, acceptRulesText)
+            setText(acceptRulesText)
             headLine1(DriveKitUI.colors.fontColorOnSecondaryColor())
         }
         (savedInstanceState?.getString("challengeId"))?.let {
@@ -100,10 +95,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    DKResource.convertToString(
-                        this,
-                        "dk_challenge_failed_to_join"
-                    ),
+                    R.string.dk_challenge_failed_to_join,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -135,8 +127,7 @@ class ChallengeRulesActivity : AppCompatActivity() {
                 val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
-                titleTextView?.text =
-                    DKResource.convertToString(this, "dk_challenge_participate_button")
+                titleTextView?.setText(R.string.dk_challenge_participate_button)
                 viewModel.challenge?.optinText?.let {
                     descriptionTextView?.text = it
                 }
@@ -168,6 +159,6 @@ class ChallengeRulesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_challenge_rule_title"))
+        setActivityTitle(getString(R.string.dk_challenge_rule_title))
     }
 }

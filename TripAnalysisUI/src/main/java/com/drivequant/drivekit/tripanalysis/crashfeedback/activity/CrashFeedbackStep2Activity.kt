@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.drivekit.tripanalysis.ui.R
 import com.drivekit.tripanalysis.ui.databinding.DkLayoutActivityCrashFeedbackStep2Binding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.*
@@ -26,12 +27,7 @@ class CrashFeedbackStep2Activity : BaseCrashFeedbackActivity() {
 
         binding = DkLayoutActivityCrashFeedbackStep2Binding.inflate(layoutInflater)
 
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                this,
-                "dk_tag_trip_analysis_crash_feedback_step2"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_crash_feedback_step2), javaClass.simpleName)
 
         setContentView(binding.root)
 

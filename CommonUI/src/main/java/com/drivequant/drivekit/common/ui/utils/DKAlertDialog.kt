@@ -2,14 +2,14 @@ package com.drivequant.drivekit.common.ui.utils
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 
@@ -46,21 +46,15 @@ object DKAlertDialog {
         fun message(message: String) = apply { alertDialog?.setMessage(message) }
 
         fun negativeButton(
-            negativeText: String = DKResource.convertToString(
-                context,
-                "dk_common_cancel"
-            ), negativeListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener
-            { dialog, _ -> dialog.dismiss() }
+            negativeText: String = context.getString(R.string.dk_common_cancel),
+            negativeListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() }
         ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeListener)
         }
 
         fun positiveButton(
-            positiveText: String = DKResource.convertToString(
-                context,
-                "dk_common_ok"
-            ), positiveListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener
-            { dialog, _ -> dialog.dismiss() }
+            positiveText: String = context.getString(R.string.dk_common_ok),
+            positiveListener: DialogInterface.OnClickListener = DialogInterface.OnClickListener { dialog, _ -> dialog.dismiss() }
         ) = apply {
             alertDialog?.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener)
         }

@@ -70,7 +70,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, "dk_tag_permissions_diagnosis"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_permissions_diagnosis), javaClass.simpleName)
 
         setContentView(R.layout.activity_app_diagnosis)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -131,19 +131,12 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
 
     private fun setSummaryContent() {
         if (errorsCount == 0) {
-            this.summaryIcon.setImageDrawable(
-                DKResource.convertToDrawable(this, "dk_perm_utils_checked")
-            )
-            this.summaryTitle.text =
-                DKResource.convertToString(this, "dk_perm_utils_diag_app_ok")
-            this.summaryDescription.text =
-                DKResource.convertToString(this, "dk_perm_utils_diag_app_ok_text")
+            this.summaryIcon.setImageResource(R.drawable.dk_perm_utils_checked)
+            this.summaryTitle.setText(R.string.dk_perm_utils_diag_app_ok)
+            this.summaryDescription.setText(R.string.dk_perm_utils_diag_app_ok_text)
         } else {
-            this.summaryDescription.text =
-                DKResource.convertToString(this, "dk_perm_utils_app_diag_app_ko_text")
-            this.summaryIcon.setImageDrawable(
-                DKResource.convertToDrawable(this, "dk_perm_utils_high_priority")
-            )
+            this.summaryDescription.setText(R.string.dk_perm_utils_app_diag_app_ko_text)
+            this.summaryIcon.setImageResource(R.drawable.dk_perm_utils_high_priority)
             this.summaryTitle.text = resources.getQuantityString(
                 R.plurals.diagnosis_error_plural,
                 errorsCount,
@@ -589,7 +582,7 @@ class AppDiagnosisActivity : RequestPermissionActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver()
-        setActivityTitle(DKResource.convertToString(this, "dk_perm_utils_app_diag_title"))
+        setActivityTitle(getString(R.string.dk_perm_utils_app_diag_title))
     }
 
     override fun onPause() {

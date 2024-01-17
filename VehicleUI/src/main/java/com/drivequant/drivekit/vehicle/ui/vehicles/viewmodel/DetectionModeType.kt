@@ -1,13 +1,13 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Typeface
 import android.graphics.Typeface.BOLD
 import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
@@ -35,33 +35,33 @@ import com.drivequant.drivekit.vehicle.ui.extension.getDeviceDisplayIdentifier
 import com.drivequant.drivekit.vehicle.ui.extension.isConfigured
 
 enum class DetectionModeType(
-    private val title: String,
-    private val descriptionConfigured: String,
-    private val descriptionNotConfigured: String,
-    private val configureButtonText: String,
-    private val configureDescText: String
+    @StringRes private val titleResId: Int,
+    @StringRes private val descriptionConfiguredResId: Int,
+    @StringRes private val descriptionNotConfigured: Int?,
+    @StringRes private val configureButtonText: Int?,
+    @StringRes private val configureDescText: Int?
 ) {
     DISABLED(
-        "dk_detection_mode_disabled_title",
-        "dk_detection_mode_disabled_desc",
-        "",
-        "",
-        ""),
-    GPS("dk_detection_mode_gps_title",
-        "dk_detection_mode_gps_desc",
-        "",
-        "",
-        ""),
-    BEACON("dk_detection_mode_beacon_title",
-        "dk_detection_mode_beacon_desc_configured",
-        "dk_detection_mode_beacon_desc_not_configured",
-        "dk_vehicle_configure_beacon_title",
-        "dk_vehicle_configure_beacon_desc"),
-    BLUETOOTH("dk_detection_mode_bluetooth_title",
-        "dk_detection_mode_bluetooth_desc_configured",
-        "dk_detection_mode_bluetooth_desc_not_configured",
-        "dk_vehicle_configure_bluetooth_title",
-        "dk_vehicle_configure_bluetooth_desc");
+        R.string.dk_detection_mode_disabled_title,
+        R.string.dk_detection_mode_disabled_desc,
+        null,
+        null,
+        null),
+    GPS(R.string.dk_detection_mode_gps_title,
+            R.string.dk_detection_mode_gps_desc,
+        null,
+        null,
+        null),
+    BEACON(R.string.dk_detection_mode_beacon_title,
+        R.string.dk_detection_mode_beacon_desc_configured,
+        R.string.dk_detection_mode_beacon_desc_not_configured,
+        R.string.dk_vehicle_configure_beacon_title,
+        R.string.dk_vehicle_configure_beacon_desc),
+    BLUETOOTH(R.string.dk_detection_mode_bluetooth_title,
+        R.string.dk_detection_mode_bluetooth_desc_configured,
+        R.string.dk_detection_mode_bluetooth_desc_not_configured,
+        R.string.dk_vehicle_configure_bluetooth_title,
+        R.string.dk_vehicle_configure_bluetooth_desc);
 
     companion object {
         fun getEnumByDetectionMode(detectionMode: DetectionMode): DetectionModeType {
@@ -73,27 +73,28 @@ enum class DetectionModeType(
     }
 
     fun getTitle(context: Context): String {
-       return DKResource.convertToString(context, this.title)
+       return context.getString(this.titleResId)
     }
 
     fun getDescription(context: Context, vehicle: Vehicle): SpannableString {
         var configured = true
         val parameter = vehicle.getDeviceDisplayIdentifier()
-        val stringIdentifier = when (this){
+        val stringIdentifier = when (this) {
             DISABLED, GPS -> {
-                descriptionConfigured
+                descriptionConfiguredResId
             }
             BEACON, BLUETOOTH -> {
-                if (vehicle.isConfigured()){
-                    descriptionConfigured
+                if (vehicle.isConfigured()) {
+                    descriptionConfiguredResId
                 } else {
                     configured = false
                     descriptionNotConfigured
                 }
             }
         }
-        val parameteredString = DKResource.buildString(context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),stringIdentifier, parameter)
+        val parameteredString = stringIdentifier?.let {
+            DKResource.buildString(context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(), it, parameter)
+        } ?: ""
 
         return if (configured){
             DKSpannable().append(parameteredString, context.resSpans {
@@ -111,8 +112,8 @@ enum class DetectionModeType(
     }
 
     fun getConfigureButtonText(context: Context): String {
-        return when (this){
-            BEACON, BLUETOOTH -> DKResource.convertToString(context, configureButtonText)
+        return when (this) {
+            BEACON, BLUETOOTH -> configureButtonText?.let { context.getString(configureButtonText) } ?: ""
             else -> ""
         }
     }
@@ -149,17 +150,18 @@ enum class DetectionModeType(
         }, forceGPSVehicleUpdate)
     }
 
-    private fun manageError(context: Context, viewModel: VehiclesListViewModel){
-        Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
+    private fun manageError(context: Context, viewModel: VehiclesListViewModel) {
+        Toast.makeText(context, R.string.dk_vehicle_error_message, Toast.LENGTH_SHORT).show()
         viewModel.fetchVehicles(context, SynchronizationType.CACHE)
     }
 
     private fun manageGPSModeAlreadyExists(context: Context, viewModel: VehiclesListViewModel, detectionMode: DetectionMode, vehicle: Vehicle) {
         val gpsVehicle = viewModel.vehiclesList.first { it.detectionMode == DetectionMode.GPS }
-        val title = DKResource.convertToString(context, "app_name")
+        val title = context.getString(R.string.app_name)
         val message = DKResource.buildString(context,
             DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),"dk_vehicle_gps_already_exists_confirm",
+            DriveKitUI.colors.mainFontColor(),
+            R.string.dk_vehicle_gps_already_exists_confirm,
             getEnumByDetectionMode(detectionMode).getTitle(context),
             vehicle.buildFormattedName(context),
             gpsVehicle.buildFormattedName(context),
@@ -169,15 +171,13 @@ enum class DetectionModeType(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
-            .positiveButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm),
-                DialogInterface.OnClickListener { _, _ ->
-                    updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
-                })
-            .negativeButton(negativeListener =
-                DialogInterface.OnClickListener { dialog, _ ->
-                    viewModel.fetchVehicles(context)
-                    dialog.dismiss()
-                })
+            .positiveButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)) { _, _ ->
+                updateDetectionMode(context, detectionMode, viewModel, vehicle, true)
+            }
+            .negativeButton() { dialog, _ ->
+                viewModel.fetchVehicles(context)
+                dialog.dismiss()
+            }
             .show()
 
         val titleTextView = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -207,11 +207,23 @@ enum class DetectionModeType(
 
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
-        title?.text = DKResource.convertToString(context, configureButtonText)
+        title?.run {
+            if (configureButtonText != null) {
+                setText(configureButtonText)
+            } else {
+                text = ""
+            }
+        }
         title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         title?.setBackgroundColor(primaryColor)
 
-        description?.text = DKResource.convertToString(context, configureDescText)
+        description?.run {
+            if (configureDescText != null) {
+                setText(configureDescText)
+            } else {
+                text = ""
+            }
+        }
         description?.normalText()
 
         verify?.headLine2(primaryColor)
@@ -224,16 +236,20 @@ enum class DetectionModeType(
 
         val vehicleName = viewModel.getTitle(context, vehicle)
 
-        when (this){
+        when (this) {
             BEACON -> {
-                description?.text = DKResource.buildString(
-                    context, DriveKitUI.colors.mainFontColor(),
-                    DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
-                )
+                description?.text = if (configureDescText != null) {
+                    DKResource.buildString(
+                        context, DriveKitUI.colors.mainFontColor(),
+                        DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                    )
+                } else {
+                    ""
+                }
 
                 verify?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_beacon_verify")
+                    it.setText(R.string.dk_beacon_verify)
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
                             alert.dismiss()
@@ -243,7 +259,7 @@ enum class DetectionModeType(
                 }
                 replace?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_replace")
+                    it.setText(R.string.dk_vehicle_replace)
                     it.setOnClickListener {
                         vehicle.beacon?.let { beacon ->
                             alert.dismiss()
@@ -254,7 +270,7 @@ enum class DetectionModeType(
                 delete?.let {
                     if (DriveKitVehicleUI.canRemoveBeacon) {
                         it.visibility = View.VISIBLE
-                        it.text = DKResource.convertToString(context, "dk_vehicle_delete")
+                        it.setText(R.string.dk_vehicle_delete)
                         it.setOnClickListener {
                             alert.dismiss()
                             viewModel.removeBeaconToVehicle(vehicle)
@@ -266,14 +282,18 @@ enum class DetectionModeType(
             }
             BLUETOOTH -> {
                 separatorVerify?.visibility = View.GONE
-                description?.text = DKResource.buildString(
-                    context, DriveKitUI.colors.mainFontColor(),
-                    DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
-                )
+                description?.text = if (configureDescText != null) {
+                    DKResource.buildString(
+                        context, DriveKitUI.colors.mainFontColor(),
+                        DriveKitUI.colors.mainFontColor(), configureDescText, vehicleName
+                    )
+                } else {
+                    ""
+                }
 
                 delete?.let {
                     it.visibility = View.VISIBLE
-                    it.text = DKResource.convertToString(context, "dk_vehicle_delete")
+                    it.setText(R.string.dk_vehicle_delete)
                     it.setOnClickListener {
                         alert.dismiss()
                         viewModel.removeBluetoothToVehicle(vehicle)

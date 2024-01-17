@@ -18,10 +18,10 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.CustomTypefaceSpan
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerVehicleListBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerVehicleDetailActivity
@@ -65,12 +65,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_vehicles_odometer_vehicles_list"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_odometer_vehicles_list), javaClass.simpleName)
         savedInstanceState?.getString("vehicleIdTag")?.let {
             vehicleId = it
         }
@@ -100,10 +95,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 } else {
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(
-                            context,
-                            "dk_vehicle_odometer_failed_to_sync"
-                        ),
+                        R.string.dk_vehicle_odometer_failed_to_sync,
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -128,7 +120,7 @@ class OdometerVehicleListFragment : Fragment(), OdometerDrawableListener {
                 } ?: run {
                     binding.container.visibility = View.GONE
                     binding.textViewNoVehicle.apply {
-                        text = DKResource.convertToString(context, "dk_vehicle_list_empty")
+                        setText(R.string.dk_vehicle_list_empty)
                         normalText()
                         visibility = View.VISIBLE
                     }

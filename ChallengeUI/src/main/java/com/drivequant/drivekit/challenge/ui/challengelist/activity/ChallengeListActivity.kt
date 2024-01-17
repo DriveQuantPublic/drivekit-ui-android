@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeFragment
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 internal class ChallengeListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +28,6 @@ internal class ChallengeListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_challenge_menu"))
+        setActivityTitle(getString(R.string.dk_challenge_menu))
     }
 }

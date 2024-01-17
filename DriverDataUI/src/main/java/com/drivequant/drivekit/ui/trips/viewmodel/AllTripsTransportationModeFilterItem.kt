@@ -2,8 +2,9 @@ package com.drivequant.drivekit.ui.trips.viewmodel
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.adapter.FilterItem
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.ui.R
 
 internal class AllTripsTransportationModeFilterItem : FilterItem {
     override fun getItemId(): Any? {
@@ -11,10 +12,10 @@ internal class AllTripsTransportationModeFilterItem : FilterItem {
     }
 
     override fun getImage(context: Context): Drawable? {
-        return DKResource.convertToDrawable(context, "dk_transportation_all")
+        return ContextCompat.getDrawable(context, R.drawable.dk_transportation_all)
     }
 
     override fun getTitle(context: Context): String {
-        return DKResource.convertToString(context, "dk_driverdata_default_filter_item")
+        return context.getString(R.string.dk_driverdata_default_filter_item)
     }
 }

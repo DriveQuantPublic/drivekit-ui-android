@@ -1,18 +1,27 @@
 package com.drivequant.drivekit.timeline.ui.component.graph.viewmodel
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.core.extension.*
+import com.drivequant.drivekit.core.extension.CalendarField
+import com.drivequant.drivekit.core.extension.add
+import com.drivequant.drivekit.core.extension.diffWith
+import com.drivequant.drivekit.core.extension.removeTime
+import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.databaseutils.entity.DKRawTimeline
-import com.drivequant.drivekit.timeline.ui.component.graph.*
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphAxisConfig
+import com.drivequant.drivekit.timeline.ui.component.graph.GraphConstants
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphItem
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphPoint
 import com.drivequant.drivekit.timeline.ui.component.graph.GraphType
+import com.drivequant.drivekit.timeline.ui.component.graph.LabelType
+import com.drivequant.drivekit.timeline.ui.component.graph.PointData
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineGraphListener
+import com.drivequant.drivekit.timeline.ui.component.graph.TimelineScoreItemType
 import com.drivequant.drivekit.timeline.ui.component.graph.view.GraphViewListener
 import com.drivequant.drivekit.timeline.ui.getSafe
 import com.drivequant.drivekit.timeline.ui.toTimelineDate
@@ -28,7 +37,8 @@ internal class TimelineGraphViewModel : ViewModel(), GraphViewModel, GraphViewLi
     override var selectedIndex: Int? = null
     override var xAxisConfig: GraphAxisConfig? = null
     override var yAxisConfig: GraphAxisConfig? = null
-    var titleKey: String = ""
+    @StringRes
+    var titleKey: Int = com.drivequant.drivekit.common.ui.R.string.dk_common_no_value
         private set
     var description: String = ""
         private set

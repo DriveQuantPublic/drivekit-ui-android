@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.extension.bigText
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentItemListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.drivequant.drivekit.vehicle.ui.picker.adapter.ItemRecyclerViewAdapter
@@ -131,8 +131,8 @@ class VehicleItemListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         fetchItems()
-        if (activity is VehiclePickerActivity){
-            (activity as VehiclePickerActivity).updateTitle(DKResource.convertToString(requireContext(), "dk_vehicle_my_vehicle"))
+        if (activity is VehiclePickerActivity) {
+            (activity as VehiclePickerActivity).updateTitle(getString(R.string.dk_vehicle_my_vehicle))
         }
     }
 

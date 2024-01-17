@@ -9,11 +9,11 @@ import android.net.Uri
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.getDefaultImage
 import java.io.FileNotFoundException
@@ -65,7 +65,7 @@ open class VehicleUtils {
             vehicle.name ?: " "
         } else {
             val vehicleNumber: Int = pos + 1
-            val myVehicleString = DKResource.convertToString(context, "dk_vehicle_my_vehicle")
+            val myVehicleString = context.getString(R.string.dk_vehicle_my_vehicle)
             "$myVehicleString - $vehicleNumber"
         }
     }

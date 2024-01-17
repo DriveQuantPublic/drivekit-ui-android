@@ -11,7 +11,7 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothErrorBinding
 
 class ErrorBluetoothFragment : Fragment() {
@@ -42,16 +42,16 @@ class ErrorBluetoothFragment : Fragment() {
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val secondaryColor = DriveKitUI.colors.secondaryColor()
 
-        binding.textViewBluetoothFailed.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_not_found")
+        binding.textViewBluetoothFailed.setText(R.string.dk_vehicle_bluetooth_not_found)
         binding.textViewBluetoothFailed.normalText(mainFontColor)
 
-        binding.buttonCancel.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonCancel.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
         binding.buttonCancel.button()
         binding.buttonCancel.setOnClickListener {
             activity?.finish()
         }
 
-        binding.textViewOpenSettings.text = DKResource.convertToString(requireContext(), "dk_vehicle_open_bluetooth_settings")
+        binding.textViewOpenSettings.setText(R.string.dk_vehicle_open_bluetooth_settings)
         binding.textViewOpenSettings.normalText(secondaryColor)
         binding.textViewOpenSettings.setOnClickListener {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)

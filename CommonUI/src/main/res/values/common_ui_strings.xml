@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+   <string name="dk_common_no_value" translatable="false">-</string>
    <string name="dk_common_activate">Activate</string>
    <string name="dk_common_anonymous_driver">Anonymous</string>
    <string name="dk_common_app_diag_nearby">Nearby devices</string>
