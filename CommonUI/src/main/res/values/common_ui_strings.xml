@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <string name="dk_common_no_value" translatable="false">-</string>
    <string name="dk_common_activate">Activate</string>
    <string name="dk_common_anonymous_driver">Anonymous</string>
    <string name="dk_common_app_diag_nearby">Nearby devices</string>
@@ -52,6 +51,7 @@
    <string name="dk_common_no_pseudo_set">To share your ranking with the other participants, we invite you to choose a pseudo. Without a pseudo you will appear as anonymous.</string>
    <string name="dk_common_no_trip">No trip</string>
    <string name="dk_common_no_trips_yet">The app has not analyzed your driving yet.</string>
+   <string name="dk_common_no_value">-</string>
    <string name="dk_common_ok">OK</string>
    <string name="dk_common_period_selector_month">Month</string>
    <string name="dk_common_period_selector_week">Week</string>
