@@ -23,34 +23,29 @@ class LocationPermissionActivity : BasePermissionActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLocationPermissionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setToolbar("dk_perm_utils_permissions_location_title")
+        setToolbar(R.string.dk_perm_utils_permissions_location_title)
         setStyle()
 
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
                 if (DiagnosisHelper.hasCoarseLocationPermission(this)) {
-                    binding.textViewLocationPermissionText1.text =
-                        DKResource.convertToString(this,"dk_perm_utils_app_diag_location_ko_android12")
+                    binding.textViewLocationPermissionText1.setText(R.string.dk_perm_utils_app_diag_location_ko_android12)
                 } else {
-                    binding.textViewLocationPermissionText1.text =
-                        DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android12")
-                    binding.textViewLocationPermissionText2.text =
-                        DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android12")
+                    binding.textViewLocationPermissionText1.setText(R.string.dk_perm_utils_permissions_location_text1_android12)
+                    binding.textViewLocationPermissionText2.setText(R.string.dk_perm_utils_permissions_location_text2_android12)
                 }
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
-                binding.textViewLocationPermissionText1.text =
-                    DKResource.convertToString(this,"dk_perm_utils_permissions_location_text1_android11")
-                binding.textViewLocationPermissionText2.text =
-                    DKResource.convertToString(this,"dk_perm_utils_permissions_location_text2_android11")
+                binding.textViewLocationPermissionText1.setText(R.string.dk_perm_utils_permissions_location_text1_android11)
+                binding.textViewLocationPermissionText2.setText(R.string.dk_perm_utils_permissions_location_text2_android11)
             }
             else -> {
                 val stringResId = when {
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
-                        "dk_perm_utils_permissions_location_text2_post_android10"
-                    else -> "dk_perm_utils_permissions_location_text2_pre_android10"
+                        R.string.dk_perm_utils_permissions_location_text2_post_android10
+                    else -> R.string.dk_perm_utils_permissions_location_text2_pre_android10
                 }
-                binding.textViewLocationPermissionText2.text = DKResource.convertToString(this, stringResId)
+                binding.textViewLocationPermissionText2.setText(stringResId)
             }
         }
     }
@@ -104,22 +99,16 @@ class LocationPermissionActivity : BasePermissionActivity() {
                     forward()
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        binding.textViewLocationPermissionText1.text = DKResource.convertToString(
-                            this,
-                            "dk_perm_utils_permissions_location_text3_android11"
-                        )
+                        binding.textViewLocationPermissionText1.setText(R.string.dk_perm_utils_permissions_location_text3_android11)
                         val alwaysLabel = packageManager.backgroundPermissionOptionLabel
                         binding.textViewLocationPermissionText2.text = DKResource.buildString(
                             this,
                             DriveKitUI.colors.mainFontColor(),
                             DriveKitUI.colors.mainFontColor(),
-                            "dk_perm_utils_permissions_location_text4_android11",
+                            R.string.dk_perm_utils_permissions_location_text4_android11,
                             "$alwaysLabel"
                         )
-                        binding.buttonRequestLocationPermission.text = DKResource.convertToString(
-                            this,
-                            "dk_perm_utils_permissions_text_button_location_settings"
-                        )
+                        binding.buttonRequestLocationPermission.setText(R.string.dk_perm_utils_permissions_text_button_location_settings)
                     } else {
                         request(this,
                             Manifest.permission.ACCESS_FINE_LOCATION,

@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.ui.tripdetail.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import android.content.Context
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
@@ -16,12 +16,17 @@ import com.drivequant.drivekit.databaseutils.entity.Route
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.databaseutils.entity.TripAdvice
 import com.drivequant.drivekit.driverdata.DriveKitDriverData
-import com.drivequant.drivekit.driverdata.trip.*
+import com.drivequant.drivekit.driverdata.trip.RouteQueryListener
+import com.drivequant.drivekit.driverdata.trip.RouteStatus
+import com.drivequant.drivekit.driverdata.trip.TripAdviceFeedbackQueryListener
+import com.drivequant.drivekit.driverdata.trip.TripDeleteQueryListener
+import com.drivequant.drivekit.driverdata.trip.TripQueryListener
+import com.drivequant.drivekit.driverdata.trip.TripsSyncStatus
 import com.drivequant.drivekit.ui.DriverDataUI
 import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfiguration
 import com.drivequant.drivekit.ui.trips.viewmodel.TripListConfigurationType
-import java.util.*
+import java.util.Date
 import kotlin.math.ceil
 
 internal class TripDetailViewModel(
@@ -402,17 +407,16 @@ internal class TripDetailViewModel(
     override fun getPhoneCallsNumber(context: Context): Pair<String, String> {
         val phoneCallNumber = trip?.calls?.size ?: 0
         return if (phoneCallNumber == 0) {
-            val phoneCallCongrats =
-                DKResource.convertToString(context, "dk_driverdata_no_call_congrats")
-            val phoneCallContentCongrats =
-                DKResource.convertToString(context, "dk_driverdata_no_call_content")
+            val phoneCallCongrats = context.getString(R.string.dk_driverdata_no_call_congrats)
+            val phoneCallContentCongrats = context.getString(R.string.dk_driverdata_no_call_content)
             Pair(phoneCallContentCongrats, phoneCallCongrats)
         } else {
             val phoneCallContent = DKResource.buildString(
                 context,
                 DriveKitUI.colors.secondaryColor(),
                 DriveKitUI.colors.secondaryColor(),
-                "dk_driverdata_distance_travelled", getPhoneCallsDistance(context)
+                R.string.dk_driverdata_distance_travelled,
+                getPhoneCallsDistance(context)
             )
             val phoneCallEvent = context.resources.getQuantityString(
                 R.plurals.phone_call_plural,

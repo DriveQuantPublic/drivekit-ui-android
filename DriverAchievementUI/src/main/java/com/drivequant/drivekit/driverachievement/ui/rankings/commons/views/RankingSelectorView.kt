@@ -8,7 +8,6 @@ import android.widget.TextView
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorData
 import com.drivequant.drivekit.driverachievement.ui.rankings.viewmodel.RankingSelectorListener
@@ -25,7 +24,7 @@ class RankingSelectorView(context: Context) : LinearLayout(context) {
     }
 
     fun configureRankingSelector(rankingSelectorData: RankingSelectorData) {
-        selectorTextView.text = DKResource.convertToString(context, rankingSelectorData.titleId)
+        selectorTextView.setText(rankingSelectorData.titleId)
         selectorTextView.setOnClickListener {
             rankingSelectorListener.onClickSelector(rankingSelectorData, this)
         }

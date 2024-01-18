@@ -1,12 +1,12 @@
 package com.drivequant.drivekit.vehicle.ui.picker.viewmodel
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.DriveKitVehiclePicker
 import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleCategory
 import com.drivequant.drivekit.vehicle.enums.VehicleType
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildBrandItem
 import com.drivequant.drivekit.vehicle.ui.extension.buildCategoryItem
 import com.drivequant.drivekit.vehicle.ui.extension.buildEngineIndexItem
@@ -34,9 +34,11 @@ enum class VehicleTypeItem(val vehicleType: VehicleType) {
     }
 
     fun getTitle(context: Context): String {
-        return when (this){
-            CAR -> DKResource.convertToString(context, "dk_vehicle_type_car_title")
-            TRUCK -> DKResource.convertToString(context, "dk_vehicle_type_truck_title")
+        return when (this) {
+            CAR -> R.string.dk_vehicle_type_car_title
+            TRUCK -> R.string.dk_vehicle_type_truck_title
+        }.let {
+            context.getString(it)
         }
     }
 

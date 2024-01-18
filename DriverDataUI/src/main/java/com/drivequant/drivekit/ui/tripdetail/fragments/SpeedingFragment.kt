@@ -15,6 +15,7 @@ import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.SpeedingFragmentBinding
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.DKTripDetailViewModel
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.TripDetailViewModel
@@ -73,7 +74,7 @@ internal class SpeedingFragment : Fragment() {
             )[TripDetailViewModel::class.java]
         }
 
-        binding.gaugeTypeTitle.text = DKResource.convertToString(requireContext(), "dk_common_speed")
+        binding.gaugeTypeTitle.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_speed)
         binding.scoreGauge.configure(viewModel.getSpeedingScore(), GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()), Typeface.BOLD)
         binding.scoreInfo.init(GaugeConfiguration.SPEEDING(viewModel.getSpeedingScore()))
 
@@ -106,39 +107,37 @@ internal class SpeedingFragment : Fragment() {
 
         val durationContent = if (speedingDuration == 0) {
             binding.speedingDurationValue.visibility = View.GONE
-            DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_content_congratulations")
+            getString(R.string.dk_driverdata_no_speeding_content_congratulations)
         } else {
             DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
-                "dk_driverdata_speeding_events_trip_description", durationValue
+                R.string.dk_driverdata_speeding_events_trip_description,
+                durationValue
             ).toString()
         }
 
         val distanceContent = if (speedingDistance == 0) {
-            DKResource.convertToString(requireContext(), "dk_driverdata_no_speeding_events")
+            getString(R.string.dk_driverdata_no_speeding_events)
         } else {
             DKResource.buildString(
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
-                "dk_driverdata_speeding_events_trip_description", distanceValue).toString()
+                R.string.dk_driverdata_speeding_events_trip_description,
+                distanceValue
+            ).toString()
         }
 
         val durationResId = if (speedingDuration == 0) {
-            "dk_driverdata_no_speeding_title_congratulations"
+            R.string.dk_driverdata_no_speeding_title_congratulations
         } else {
-            "dk_driverdata_speeding_events_duration"
+            R.string.dk_driverdata_speeding_events_duration
         }
 
-        binding.speedingDistanceItem.setDistractionEventContent(
-            DKResource.convertToString(requireContext(), "dk_driverdata_speeding_events_distance"),
-            distanceContent)
-
-        binding.speedingDurationItem.setDistractionEventContent(
-            DKResource.convertToString(requireContext(), durationResId),
-            durationContent)
+        binding.speedingDistanceItem.setDistractionEventContent(getString(R.string.dk_driverdata_speeding_events_distance), distanceContent)
+        binding.speedingDurationItem.setDistractionEventContent(getString(durationResId), durationContent)
     }
 
     override fun onDestroyView() {

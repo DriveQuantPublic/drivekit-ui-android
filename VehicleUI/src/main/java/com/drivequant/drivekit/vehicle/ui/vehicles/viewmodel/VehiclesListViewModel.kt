@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.vehicles.viewmodel
 
+import android.content.Context
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.content.Context
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -15,6 +15,7 @@ import com.drivequant.drivekit.vehicle.manager.beacon.VehicleRemoveBeaconQueryLi
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothQueryListener
 import com.drivequant.drivekit.vehicle.manager.bluetooth.VehicleRemoveBluetoothStatus
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.extension.buildFormattedName
 import com.drivequant.drivekit.vehicle.ui.extension.computeSubtitle
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
@@ -53,13 +54,14 @@ class VehiclesListViewModel : ViewModel(), Serializable {
 
     fun hasLocalVehicles() = DriveKitVehicle.vehiclesQuery().noFilter().query().execute().isNotEmpty()
 
-    fun getScreenTitle(context: Context) = if (vehiclesList.size > 1) {
-        "dk_vehicle_my_vehicles"
-    } else {
-        "dk_vehicle_my_vehicle"
-    }.let {
-        DKResource.convertToString(context, it)
-    }
+    fun getScreenTitle(context: Context) =
+        if (vehiclesList.size > 1) {
+            R.string.dk_vehicle_my_vehicles
+        } else {
+            R.string.dk_vehicle_my_vehicle
+        }.let {
+            context.getString(it)
+        }
 
     fun getTitle(context: Context, vehicle: Vehicle) = vehicle.buildFormattedName(context)
 
@@ -103,8 +105,9 @@ class VehiclesListViewModel : ViewModel(), Serializable {
     fun shouldDisplayAddReplaceButton() =
         DriveKitVehicleUI.canAddVehicle && (!maxVehiclesReached() || shouldReplaceVehicle())
 
-    fun getAddReplaceButtonTextResId() =
-        if (shouldReplaceVehicle()) "dk_vehicle_replace_button" else "dk_vehicle_add"
+    @StringRes
+    fun getAddReplaceButtonTextResId(): Int =
+        if (shouldReplaceVehicle()) R.string.dk_vehicle_replace_button else R.string.dk_vehicle_add
 
     fun shouldReplaceVehicle() =
         DriveKitVehicleUI.vehicleActions.contains(VehicleAction.REPLACE) && DriveKitVehicleUI.maxVehicles == 1 && vehiclesList.size == 1

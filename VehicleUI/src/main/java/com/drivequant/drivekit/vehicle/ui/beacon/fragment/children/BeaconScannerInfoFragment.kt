@@ -6,6 +6,7 @@ import android.text.Spannable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.drivequant.beaconutils.BeaconData
@@ -16,9 +17,9 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.databaseutils.entity.Beacon
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBeaconChildScannerInfoBinding
@@ -94,13 +95,13 @@ class BeaconScannerInfoFragment : Fragment() {
                                     binding.textViewBattery.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
-                                binding.textViewDistance.text = buildBeaconCharacteristics(beaconRetrievedInfo.estimatedDistance.format(1), "dk_common_unit_meter")
-                                DKResource.convertToDrawable(requireContext(), "dk_beacon_distance")?.let { drawable ->
+                                binding.textViewDistance.text = buildBeaconCharacteristics(beaconRetrievedInfo.estimatedDistance.format(1), getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_meter))
+                                ContextCompat.getDrawable(requireContext(), R.drawable.dk_beacon_distance)?.let { drawable ->
                                     binding.textViewDistance.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
 
                                 binding.textViewSignalIntensity.text = buildBeaconCharacteristics("${beaconRetrievedInfo.rssi}", "dBm")
-                                DKResource.convertToDrawable(requireContext(), "dk_beacon_signal_intensity")?.let { drawable ->
+                                ContextCompat.getDrawable(requireContext(), R.drawable.dk_beacon_signal_intensity)?.let { drawable ->
                                     binding.textViewSignalIntensity.setCompoundDrawablesRelativeWithIntrinsicBounds(null, drawable, null, null)
                                 }
                             }
@@ -117,15 +118,17 @@ class BeaconScannerInfoFragment : Fragment() {
 
         if (isValid) {
             binding.viewBorder.setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            binding.textViewConnectedVehicleName.text = viewModel.vehicleName ?:run {
-                DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
+            viewModel.vehicleName?.let {
+                binding.textViewConnectedVehicleName.text = it
+            } ?: run {
+                binding.textViewConnectedVehicleName.setText(R.string.dk_beacon_vehicle_unknown)
             }
         } else {
             binding.viewBorder.setBackgroundColor(DriveKitUI.colors.complementaryFontColor())
             binding.textViewConnectedVehicleName.text = viewModel.fetchVehicleFromSeenBeacon(VehicleUtils().fetchVehiclesOrderedByDisplayName(requireContext()))?.let { vehicle ->
                  vehicle.buildFormattedName(requireContext())
             }?: run {
-                DKResource.convertToString(requireContext(), "dk_beacon_vehicle_unknown")
+                getString(R.string.dk_beacon_vehicle_unknown)
             }
         }
 
@@ -135,7 +138,7 @@ class BeaconScannerInfoFragment : Fragment() {
 
         binding.textViewMajorTitle.apply {
             normalText(DriveKitUI.colors.complementaryFontColor())
-            text = DKResource.convertToString(requireContext(), "dk_beacon_major")
+            setText(R.string.dk_beacon_major)
         }
         binding.textViewMajorValue.apply {
             headLine2()
@@ -143,7 +146,7 @@ class BeaconScannerInfoFragment : Fragment() {
         }
         binding.textViewMinorTitle.apply {
             normalText(DriveKitUI.colors.complementaryFontColor())
-            text = DKResource.convertToString(requireContext(), "dk_beacon_minor")
+            setText(R.string.dk_beacon_minor)
         }
         binding.textViewMinorValue.apply {
             headLine2()
@@ -157,7 +160,7 @@ class BeaconScannerInfoFragment : Fragment() {
     }
 
     private fun configureInfoButton() {
-        binding.buttonBeaconInfo.setImageDrawable(DKResource.convertToDrawable(requireContext(), "dk_common_info"))
+        binding.buttonBeaconInfo.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_info)
         DrawableCompat.setTint(binding.buttonBeaconInfo.drawable, DriveKitUI.colors.secondaryColor())
         binding.buttonBeaconInfo.setOnClickListener {
             viewModel.launchDetailFragment()
@@ -170,18 +173,17 @@ class BeaconScannerInfoFragment : Fragment() {
     }
 
     private fun computeBatteryDrawable(batteryLevel: Int) = when {
-        batteryLevel >= 75 -> "dk_beacon_battery_100"
-        batteryLevel >= 50 -> "dk_beacon_battery_75"
-        batteryLevel >= 25 -> "dk_beacon_battery_50"
-        else -> "dk_beacon_battery_25"
+        batteryLevel >= 75 -> R.drawable.dk_beacon_battery_100
+        batteryLevel >= 50 -> R.drawable.dk_beacon_battery_75
+        batteryLevel >= 25 -> R.drawable.dk_beacon_battery_50
+        else -> R.drawable.dk_beacon_battery_25
     }.let {
-        DKResource.convertToDrawable(requireContext(), it)
+        ContextCompat.getDrawable(requireContext(), it)
     }
 
-    private fun buildBeaconCharacteristics(value: String, unitIdentifier: String) : Spannable {
+    private fun buildBeaconCharacteristics(value: String, unit: String): Spannable {
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val primaryColor = DriveKitUI.colors.primaryColor()
-        val unit = DKResource.convertToString(requireContext(), unitIdentifier)
 
         return DKSpannable()
             .append(value, requireContext().resSpans {

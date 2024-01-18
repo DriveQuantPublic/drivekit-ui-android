@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.component.contextcard.view.DKContextCar
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
 import com.drivequant.drivekit.common.ui.component.periodselector.DKPeriodSelectorView
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.scoreslevels.DKScoreType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import com.drivequant.drivekit.timeline.ui.DispatchTouchLinearLayout
@@ -132,12 +131,7 @@ internal class TimelineDetailFragment : Fragment() {
     }
 
     private fun tagScreen() {
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_timeline_score_detail"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_timeline_score_detail), javaClass.simpleName)
     }
 
     private fun configurePeriodContainer() {

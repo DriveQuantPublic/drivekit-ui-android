@@ -43,6 +43,6 @@ class RankingActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_achievements_ranking_menu_ranking"))
+        setActivityTitle(getString(R.string.dk_achievements_ranking_menu_ranking))
     }
 }

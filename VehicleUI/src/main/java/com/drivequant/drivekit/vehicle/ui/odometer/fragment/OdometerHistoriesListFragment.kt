@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoriesListBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.activity.OdometerHistoryDetailActivity
 import com.drivequant.drivekit.vehicle.ui.odometer.adapter.OdometerHistoriesListAdapter
@@ -65,13 +65,8 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_vehicles_odometer_histories_list"
-            ), javaClass.simpleName
-        )
-        (savedInstanceState?.getString("vehicleIdTag"))?.let {
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_odometer_histories_list), javaClass.simpleName)
+        savedInstanceState?.getString("vehicleIdTag")?.let {
             vehicleId = it
         }
         vehicleId?.let { vehicleId ->
@@ -91,7 +86,7 @@ class OdometerHistoriesListFragment : Fragment(), OdometerHistoriesListener {
 
     private fun addOdometerReading(context: Context, vehicleId: String) {
         binding.dkButtonAddReference.apply {
-            text = DKResource.convertToString(context, "dk_vehicle_odometer_add_history")
+            setText(R.string.dk_vehicle_odometer_add_history)
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {

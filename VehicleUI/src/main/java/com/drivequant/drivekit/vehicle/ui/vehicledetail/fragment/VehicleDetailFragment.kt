@@ -20,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -37,7 +38,6 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.DriveKitSharedPreferencesUtils
 import com.drivequant.drivekit.vehicle.ui.R
@@ -155,7 +155,7 @@ class VehicleDetailFragment : Fragment() {
 
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fab)
         fab?.let {
-            DKResource.convertToDrawable(requireContext(), "dk_gallery_image")?.let { drawable ->
+            ContextCompat.getDrawable(requireContext(), R.drawable.dk_gallery_image)?.let { drawable ->
                 val wrapped = DrawableCompat.wrap(drawable)
                 DrawableCompat.setTint(wrapped, DriveKitUI.colors.fontColorOnSecondaryColor())
                 it.setImageDrawable(wrapped)
@@ -208,7 +208,7 @@ class VehicleDetailFragment : Fragment() {
                 }
             }
         }
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(requireContext(), "dk_tag_vehicles_detail"), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_detail), javaClass.simpleName)
     }
 
     private fun setupTextListener(editableField: EditableField) {
@@ -254,9 +254,8 @@ class VehicleDetailFragment : Fragment() {
                 val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
                 val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
-                title?.text = getString(R.string.app_name)
-                description?.text =
-                    DKResource.convertToString(context, "dk_vehicle_detail_back_edit_alert")
+                title?.setText(R.string.app_name)
+                description?.setText(R.string.dk_vehicle_detail_back_edit_alert)
             } else {
                 activity?.finish()
             }
@@ -295,7 +294,7 @@ class VehicleDetailFragment : Fragment() {
                 } else {
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(context, "dk_fields_not_valid"),
+                        R.string.dk_fields_not_valid,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -330,7 +329,7 @@ class VehicleDetailFragment : Fragment() {
 
         val primaryColor = DriveKitUI.colors.primaryColor()
         val neutralColor = DriveKitUI.colors.neutralColor()
-        title?.text = DKResource.convertToString(context, "dk_common_update_photo_title")
+        title?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_update_photo_title)
         title?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
         title?.setBackgroundColor(primaryColor)
 
@@ -341,7 +340,7 @@ class VehicleDetailFragment : Fragment() {
         separatorCamera?.setBackgroundColor(neutralColor)
         separatorGallery?.setBackgroundColor(neutralColor)
         cameraTextView?.let {
-            it.text = DKResource.convertToString(requireActivity(), "dk_common_take_picture")
+            it.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_take_picture)
             it.setOnClickListener {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(requireActivity(),
@@ -355,7 +354,7 @@ class VehicleDetailFragment : Fragment() {
             }
         }
         galleryTextView?.let {
-            it.text = DKResource.convertToString(context, "dk_common_select_image_gallery")
+            it.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_select_image_gallery)
             it.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
@@ -374,27 +373,23 @@ class VehicleDetailFragment : Fragment() {
         }
     }
 
-    private fun displayRationaleAlert(descriptionIdentifier: String) {
+    private fun displayRationaleAlert(@StringRes descriptionIdentifier: Int) {
         context?.let { context ->
             val cameraDialog = DKAlertDialog.LayoutBuilder().init(context)
                 .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
                 .cancelable(false)
-                .positiveButton(
-                    DKResource.convertToString(context, "dk_common_settings")
-                ) { _, _ ->
+                .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_settings)) { _, _ ->
                     launchSettings()
                 }
-                .negativeButton(DKResource.convertToString(context, "dk_common_close"))
+                .negativeButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close))
                 .show()
 
             val titleTextView = cameraDialog.findViewById<TextView>(R.id.text_view_alert_title)
             val descriptionTextView =
                 cameraDialog.findViewById<TextView>(R.id.text_view_alert_description)
 
-            titleTextView?.text =
-                DKResource.convertToString(context, "dk_common_permissions")
-            descriptionTextView?.text =
-                DKResource.convertToString(context, descriptionIdentifier)
+            titleTextView?.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_permissions)
+            descriptionTextView?.setText(descriptionIdentifier)
             titleTextView?.headLine1()
             descriptionTextView?.normalText()
         }
@@ -445,9 +440,9 @@ class VehicleDetailFragment : Fragment() {
                 if ((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     launchGalleryIntent()
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    displayRationaleAlert( "dk_common_permission_storage_rationale")
+                    displayRationaleAlert(com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale)
                 } else {
-                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(), "dk_common_permission_storage_rationale"), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), com.drivequant.drivekit.common.ui.R.string.dk_common_permission_storage_rationale, Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -458,9 +453,9 @@ class VehicleDetailFragment : Fragment() {
                         alert.dismiss()
                     }
                 } else if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
-                    displayRationaleAlert( "dk_common_permission_camera_rationale")
+                    displayRationaleAlert(com.drivequant.drivekit.common.ui.R.string.dk_common_permission_camera_rationale)
                 } else {
-                    Toast.makeText(requireContext(), DKResource.convertToString(requireContext(),"dk_common_permission_camera_rationale"), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), com.drivequant.drivekit.common.ui.R.string.dk_common_permission_camera_rationale, Toast.LENGTH_SHORT).show()
                 }
             }
         }

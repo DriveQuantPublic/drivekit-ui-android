@@ -1,6 +1,7 @@
 package com.drivequant.drivekit.common.ui.component.ranking.viewmodel
 
 import android.content.Context
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRanking
 
 class DKRankingViewModel {
@@ -11,7 +12,8 @@ class DKRankingViewModel {
         this.driverRanking = driverRanking
     }
 
-    fun getTitle() = driverRanking.getTitle()
+    @StringRes
+    fun getTitleResId() = driverRanking.getTitleResId()
     fun getIcon(context: Context) = driverRanking.getIcon(context)
     fun getHeaderDisplayType() = driverRanking.getHeaderDisplayType()
     fun getProgression() = driverRanking.getProgression()

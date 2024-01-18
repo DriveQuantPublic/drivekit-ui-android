@@ -9,7 +9,8 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import java.util.*
+import com.drivequant.drivekit.vehicle.ui.R
+import java.util.Calendar
 
 internal class OdometerItemViewModel(val vehicleId: String) {
 
@@ -42,7 +43,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
             context,
             DriveKitUI.colors.mainFontColor(),
             DriveKitUI.colors.mainFontColor(),
-            "dk_vehicle_odometer_estimated_distance_subtitle",
+            R.string.dk_vehicle_odometer_estimated_distance_subtitle,
             "${Calendar.getInstance()[Calendar.YEAR]}"
         )
     }"
@@ -54,7 +55,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
 
        return DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(), DriveKitUI.colors.mainFontColor(),
-            "dk_vehicle_odometer_distance_analyzed_subtitle", analyzedDistance
+           R.string.dk_vehicle_odometer_distance_analyzed_subtitle, analyzedDistance
         ).toString()
     }
 
@@ -66,7 +67,7 @@ internal class OdometerItemViewModel(val vehicleId: String) {
                 context,
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
-                "dk_vehicle_odometer_last_update",
+                R.string.dk_vehicle_odometer_last_update,
                 it
             )
         } ?: ""

@@ -10,6 +10,7 @@ import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.access.AccessType
 import com.drivequant.drivekit.core.access.DriveKitAccess
 import com.drivequant.drivekit.databaseutils.entity.Trip
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.commons.enums.DKRoadCondition
 import com.drivequant.drivekit.ui.extension.computeDistractionScoreAverage
 import com.drivequant.drivekit.ui.extension.computeEcoDrivingScoreAverage
@@ -68,22 +69,22 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
 
     override fun getTitle(context: Context): String =
         when (this) {
-            is SAFETY -> "dk_driverdata_my_weekly_score_safety"
-            is ECODRIVING -> "dk_driverdata_my_weekly_score_ecodriving"
-            is DISTRACTION -> "dk_driverdata_my_weekly_score_distraction"
-            is SPEEDING -> "dk_driverdata_my_weekly_score_speeding"
+            is SAFETY -> R.string.dk_driverdata_my_weekly_score_safety
+            is ECODRIVING -> R.string.dk_driverdata_my_weekly_score_ecodriving
+            is DISTRACTION -> R.string.dk_driverdata_my_weekly_score_distraction
+            is SPEEDING -> R.string.dk_driverdata_my_weekly_score_speeding
         }.let {
-            DKResource.convertToString(context, it)
+            context.getString(it)
         }
 
-    override fun getExplanationContent(context: Context): String? =
+    override fun getExplanationContent(context: Context): String =
         when (this) {
-            is DISTRACTION -> "dk_driverdata_synthesis_info_distraction"
-            is ECODRIVING -> "dk_driverdata_synthesis_info_ecodriving"
-            is SAFETY -> "dk_driverdata_synthesis_info_safety"
-            is SPEEDING -> "dk_driverdata_synthesis_info_speeding"
+            is DISTRACTION -> R.string.dk_driverdata_synthesis_info_distraction
+            is ECODRIVING -> R.string.dk_driverdata_synthesis_info_ecodriving
+            is SAFETY -> R.string.dk_driverdata_synthesis_info_safety
+            is SPEEDING -> R.string.dk_driverdata_synthesis_info_speeding
         }.let {
-            DKResource.convertToString(context, it)
+            context.getString(it)
         }
 
     override fun getGaugeConfiguration(): DKGaugeConfiguration =
@@ -103,16 +104,16 @@ sealed class SynthesisCard(open var trips: List<Trip>, open var showBottomText: 
         SynthesisCardInfo.DURATION(trips)
 
     override fun getBottomText(context: Context): Spannable? {
-        return if (trips.isEmpty() || !showBottomText){
+        return if (trips.isEmpty() || !showBottomText) {
             null
         } else {
             val pair = SynthesisCardsUtils.getMainRoadCondition(trips, SynthesisCardsUtils.RoadConditionType.SAFETY)
             val identifier = when (pair.first) {
-                DKRoadCondition.TRAFFIC_JAM -> "" // should not happen
-                DKRoadCondition.HEAVY_URBAN_TRAFFIC -> "dk_driverdata_dense_urban"
-                DKRoadCondition.CITY -> "dk_driverdata_urban"
-                DKRoadCondition.SUBURBAN -> "dk_driverdata_extra_urban"
-                DKRoadCondition.EXPRESSWAYS -> "dk_driverdata_expressway"
+                DKRoadCondition.TRAFFIC_JAM -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_value // should not happen
+                DKRoadCondition.HEAVY_URBAN_TRAFFIC -> R.string.dk_driverdata_dense_urban
+                DKRoadCondition.CITY -> R.string.dk_driverdata_urban
+                DKRoadCondition.SUBURBAN -> R.string.dk_driverdata_extra_urban
+                DKRoadCondition.EXPRESSWAYS -> R.string.dk_driverdata_expressway
             }
 
             val spannable = DKResource.buildString(context,

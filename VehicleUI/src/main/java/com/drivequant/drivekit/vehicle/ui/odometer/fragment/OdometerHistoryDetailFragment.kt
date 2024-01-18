@@ -24,7 +24,7 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.extension.smallText
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerHistoryDetailBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
@@ -80,33 +80,28 @@ class OdometerHistoryDetailFragment : Fragment() {
                     OdometerHistoryDetailViewModel.OdometerHistoryDetailViewModelFactory(vehicleId,
                         historyId))[OdometerHistoryDetailViewModel::class.java]
                 if (!viewModel.canEditOrAddHistory()) {
-                    "dk_tag_vehicles_odometer_histories_detail"
+                    R.string.dk_tag_vehicles_odometer_histories_detail
                 } else {
                     if (historyId == -1) {
-                        "dk_tag_vehicles_odometer_histories_add"
+                        R.string.dk_tag_vehicles_odometer_histories_add
                     } else {
-                        "dk_tag_vehicles_odometer_histories_edit"
+                        R.string.dk_tag_vehicles_odometer_histories_edit
                     }
                 }.let {
-                    DriveKitUI.analyticsListener?.trackScreen(
-                        DKResource.convertToString(
-                            requireContext(),
-                            it
-                        ), javaClass.simpleName
-                    )
+                    DriveKitUI.analyticsListener?.trackScreen(getString(it), javaClass.simpleName)
                 }
                 initVehicle(context, vehicleId)
                 initMileageRecord(context)
                 onValidateButtonClicked(context)
                 onDeleteOdometerHistory(context)
                 onDistanceClicked(context)
-                onCancelButtonClicked(context)
+                onCancelButtonClicked()
                 binding.vehicleItem.setBackgroundColor(DriveKitUI.colors.neutralColor())
                 viewModel.odometerActionObserver.observe(viewLifecycleOwner) {
                     updateProgressVisibility(false)
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(context, it.first),
+                        it.first,
                         Toast.LENGTH_LONG
                     ).show()
                     if (it.second) {
@@ -152,7 +147,7 @@ class OdometerHistoryDetailFragment : Fragment() {
         }
         binding.editTextDate.setEditTextTitle(viewModel.getHistoryUpdateDate())
         binding.textViewHistoryDetailTitle.apply {
-            text = DKResource.convertToString(context, "dk_vehicle_odometer_odometer_history_detail_title")
+            setText(R.string.dk_vehicle_odometer_odometer_history_detail_title)
             normalText(DriveKitUI.colors.secondaryColor())
         }
     }
@@ -160,7 +155,7 @@ class OdometerHistoryDetailFragment : Fragment() {
     private fun onValidateButtonClicked(context: Context) {
         binding.buttonValidateReference.apply {
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
-            text = DKResource.convertToString(context, "dk_common_validate")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             visibility =
                 if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
@@ -168,7 +163,7 @@ class OdometerHistoryDetailFragment : Fragment() {
                 if (viewModel.showMileageDistanceErrorMessage()) {
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(context, "dk_vehicle_odometer_history_error"),
+                        R.string.dk_vehicle_odometer_history_error,
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
@@ -183,10 +178,10 @@ class OdometerHistoryDetailFragment : Fragment() {
         }
     }
 
-    private fun onCancelButtonClicked(context: Context) {
+    private fun onCancelButtonClicked() {
         binding.buttonCancelAction.apply {
             normalText(DriveKitUI.colors.secondaryColor())
-            text = DKResource.convertToString(context, "dk_common_cancel")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
             visibility = if (viewModel.canEditOrAddHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
                 activity?.let {
@@ -210,17 +205,14 @@ class OdometerHistoryDetailFragment : Fragment() {
                     val titleTextView = view.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_title)
                     val editText = view.findViewById<TextInputEditText>(com.drivequant.drivekit.common.ui.R.id.edit_text_field)
                     titleTextView.apply {
-                        text = DKResource.convertToString(context, "dk_vehicle_odometer_mileage_kilometer")
+                        setText(R.string.dk_vehicle_odometer_mileage_kilometer)
                         normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
                         setBackgroundColor(DriveKitUI.colors.primaryColor())
                     }
                     editText.apply {
                         inputType = InputType.TYPE_CLASS_NUMBER
                         if (viewModel.canAddHistory()) {
-                            this.hint = DKResource.convertToString(
-                                context,
-                                "dk_vehicle_odometer_mileage_kilometer"
-                            )
+                            this.hint = getString(R.string.dk_vehicle_odometer_mileage_kilometer)
                             this.typeface = DriveKitUI.primaryFont(context)
                         } else {
                             this.setText(viewModel.getFormattedMileageDistance(context, false))
@@ -230,10 +222,10 @@ class OdometerHistoryDetailFragment : Fragment() {
                         setCancelable(true)
                         setButton(
                             DialogInterface.BUTTON_POSITIVE,
-                            DKResource.convertToString(context, "dk_common_validate")) { dialog, _ ->
+                            getString(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
+                        ) { dialog, _ ->
                             viewModel.mileageDistance = if (editText.editableText.toString().isBlank()) 0.0 else editText.editableText.toString().toDouble()
-                            this@OdometerHistoryDetailFragment.binding.editTextDistance.setEditTextTitle(
-                                viewModel.getFormattedMileageDistance(context))
+                            this@OdometerHistoryDetailFragment.binding.editTextDistance.setEditTextTitle(viewModel.getFormattedMileageDistance(context))
                             dialog.dismiss()
                         }
                         setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
@@ -250,7 +242,7 @@ class OdometerHistoryDetailFragment : Fragment() {
     private fun onDeleteOdometerHistory(context: Context) {
         binding.buttonDeleteReference.apply {
             normalText(DriveKitUI.colors.secondaryColor())
-            text = DKResource.convertToString(context, "dk_common_delete")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_delete)
             visibility = if (viewModel.canDeleteHistory()) View.VISIBLE else View.GONE
             setOnClickListener {
                 updateProgressVisibility(true)

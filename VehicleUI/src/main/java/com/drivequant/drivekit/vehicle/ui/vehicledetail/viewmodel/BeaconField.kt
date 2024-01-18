@@ -1,9 +1,9 @@
 package com.drivequant.drivekit.vehicle.ui.vehicledetail.viewmodel
 
 import android.content.Context
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.ui.R
 
 enum class BeaconField : Field {
     UNIQUE_CODE,
@@ -11,12 +11,11 @@ enum class BeaconField : Field {
     MINOR;
 
     override fun getTitle(context: Context, vehicle: Vehicle): String? {
-        val identifier = when (this) {
-            UNIQUE_CODE -> "dk_beacon_code"
-            MAJOR -> "dk_vehicle_beacon_major"
-            MINOR -> "dk_vehicle_beacon_minor"
-        }
-        return DKResource.convertToString(context, identifier)
+        return when (this) {
+            UNIQUE_CODE -> R.string.dk_beacon_code
+            MAJOR -> R.string.dk_vehicle_beacon_major
+            MINOR -> R.string.dk_vehicle_beacon_minor
+        }.let { context.getString(it) }
     }
 
     override fun getValue(context: Context, vehicle: Vehicle): String? {

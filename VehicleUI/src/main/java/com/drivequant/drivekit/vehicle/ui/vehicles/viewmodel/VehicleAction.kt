@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
@@ -22,17 +23,15 @@ import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
 import com.google.android.material.textfield.TextInputEditText
 
 enum class VehicleAction(
-    private val descriptionIdentifier: String
+    @StringRes private val descriptionIdentifier: Int
 ) : VehicleActionItem {
-    SHOW("dk_vehicle_show"),
-    RENAME("dk_vehicle_rename"),
-    REPLACE("dk_vehicle_replace"),
-    DELETE("dk_vehicle_delete"),
-    ODOMETER("dk_vehicle_odometer");
+    SHOW(R.string.dk_vehicle_show),
+    RENAME(R.string.dk_vehicle_rename),
+    REPLACE(R.string.dk_vehicle_replace),
+    DELETE(R.string.dk_vehicle_delete),
+    ODOMETER(R.string.dk_vehicle_odometer);
 
-    override fun getTitle(context: Context): String {
-        return DKResource.convertToString(context, descriptionIdentifier)
-    }
+    override fun getTitle(context: Context): String = context.getString(descriptionIdentifier)
 
     override fun isDisplayable(vehicle: Vehicle) = when (this) {
         SHOW -> !vehicle.liteConfig && DriveKitVehicleUI.vehicleActions.contains(SHOW)
@@ -70,8 +69,6 @@ enum class VehicleAction(
 
     private fun manageRenameVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
         var vehicleFieldInputEditText: TextInputEditText? = null
-        val title = DKResource.convertToString(context, "dk_vehicle_rename_title")
-        val message = DKResource.convertToString(context, "dk_vehicle_rename_description")
         val vehicleName = viewModel.getTitle(context, vehicle)
 
         val alert = DKAlertDialog.LayoutBuilder().init(context)
@@ -99,11 +96,11 @@ enum class VehicleAction(
         val descriptionTextView = alert.findViewById<TextView>(R.id.text_view_alert_description)
         vehicleFieldInputEditText = alert.findViewById(R.id.edit_text_field)
 
-        titleTextView?.text = title
+        titleTextView?.setText(R.string.dk_vehicle_rename_title)
         titleTextView?.setBackgroundColor(DriveKitUI.colors.primaryColor())
         titleTextView?.normalText(DriveKitUI.colors.fontColorOnPrimaryColor())
 
-        descriptionTextView?.text = message
+        descriptionTextView?.setText(R.string.dk_vehicle_rename_description)
         descriptionTextView?.setTextColor(DriveKitUI.colors.mainFontColor())
         descriptionTextView?.normalText()
 
@@ -114,11 +111,10 @@ enum class VehicleAction(
     }
 
     private fun manageDeleteVehicle(context: Context, viewModel: VehiclesListViewModel, vehicle: Vehicle) {
-        val title = DKResource.convertToString(context, "app_name")
         val vehicleName = vehicle.buildFormattedName(context)
         val message = DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(), "dk_vehicle_delete_confirm", vehicleName
+            DriveKitUI.colors.mainFontColor(), R.string.dk_vehicle_delete_confirm, vehicleName
         )
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
@@ -140,13 +136,13 @@ enum class VehicleAction(
         val titleTextView = alert.findViewById<TextView>(R.id.text_view_alert_title)
         val descriptionTextView = alert.findViewById<TextView>(R.id.text_view_alert_description)
 
-        titleTextView?.text = title
+        titleTextView?.setText(R.string.app_name)
         descriptionTextView?.text = message
         titleTextView?.headLine1()
         descriptionTextView?.normalText()
     }
 
-    private fun displayError(context: Context){
-        Toast.makeText(context, DKResource.convertToString(context, "dk_vehicle_error_message"), Toast.LENGTH_SHORT).show()
+    private fun displayError(context: Context) {
+        Toast.makeText(context, R.string.dk_vehicle_error_message, Toast.LENGTH_SHORT).show()
     }
 }

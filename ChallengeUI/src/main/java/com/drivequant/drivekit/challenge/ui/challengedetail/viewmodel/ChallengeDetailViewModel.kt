@@ -5,12 +5,15 @@ import android.graphics.Typeface.BOLD
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
@@ -20,7 +23,6 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.DurationUnit
 import com.drivequant.drivekit.common.ui.utils.FormatType
@@ -286,18 +288,19 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
                     }).toSpannable()
         }
 
-    fun getChallengeResultScoreTitle() = when (challenge.themeCode) {
-        in 101..104 -> "dk_challenge_eco_driving_score"
-        in 201..204 -> "dk_challenge_safety_score"
-        in 205..208 -> "dk_challenge_braking_score"
-        in 209..212 -> "dk_challenge_acceleration_score"
-        in 213..216 -> "dk_challenge_adherence_score"
-        221 -> "dk_challenge_distraction_score"
-        301 -> "dk_challenge_nb_trip"
-        in 306..309 -> "dk_challenge_driving_time"
-        in 302..305 -> "dk_challenge_traveled_distance"
-        401 -> "dk_challenge_speeding_score"
-        else -> "-"
+    @StringRes
+    fun getChallengeResultScoreTitleResId(): Int = when (challenge.themeCode) {
+        in 101..104 -> R.string.dk_challenge_eco_driving_score
+        in 201..204 -> R.string.dk_challenge_safety_score
+        in 205..208 -> R.string.dk_challenge_braking_score
+        in 209..212 -> R.string.dk_challenge_acceleration_score
+        in 213..216 -> R.string.dk_challenge_adherence_score
+        221 -> R.string.dk_challenge_distraction_score
+        301 -> R.string.dk_challenge_nb_trip
+        in 306..309 -> R.string.dk_challenge_driving_time
+        in 302..305 -> R.string.dk_challenge_traveled_distance
+        401 -> R.string.dk_challenge_speeding_score
+        else -> com.drivequant.drivekit.common.ui.R.string.dk_common_no_value
     }
 
     private fun computeRankPercentage(): Int = challengeDetailData?.let {
@@ -348,14 +351,13 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     }
 
     fun getScoreTitle(context: Context) = when(challenge.themeCode) {
-        in 101..221 -> "dk_common_ranking_score"
-        in 306..309 -> "dk_common_duration"
-        in 302..305 -> "dk_common_distance"
-        301 -> "dk_common_trip_plural"
-
-        else -> "dk_common_ranking_score"
+        in 101..221 -> com.drivequant.drivekit.common.ui.R.string.dk_common_ranking_score
+        in 306..309 -> com.drivequant.drivekit.common.ui.R.string.dk_common_duration
+        in 302..305 -> com.drivequant.drivekit.common.ui.R.string.dk_common_distance
+        301 -> com.drivequant.drivekit.common.ui.R.string.dk_common_trip_plural
+        else -> com.drivequant.drivekit.common.ui.R.string.dk_common_ranking_score
     }.let {
-        DKResource.convertToString(context, it).capitalizeFirstLetter()
+        context.getString(it).capitalizeFirstLetter()
     }
 
     fun getDriverDistance(context: Context) =
@@ -397,16 +399,16 @@ class ChallengeDetailViewModel(private val challengeId: String) : ViewModel() {
     }
 
     fun getRankingHeaderIcon(context: Context) = when (challenge.themeCode) {
-        in 101..104 -> "dk_challenge_leaderboard_ecodriving"
-        in 201..204, in 205..208,  in 209..212, in 213..216  -> "dk_challenge_leaderboard_safety"
-        221 -> "dk_challenge_leaderboard_distraction"
-        301 -> "dk_challenge_leaderboard_trips_number"
-        in 306..309 -> "dk_challenge_leaderboard_duration"
-        in 302..305 -> "dk_challenge_leaderboard_distance"
-        401 -> "dk_challenge_leaderboard_speeding"
-        else -> "-"
-    }.let {
-        DKResource.convertToDrawable(context, it)
+        in 101..104 -> R.drawable.dk_challenge_leaderboard_ecodriving
+        in 201..204, in 205..208,  in 209..212, in 213..216  -> R.drawable.dk_challenge_leaderboard_safety
+        221 -> R.drawable.dk_challenge_leaderboard_distraction
+        301 -> R.drawable.dk_challenge_leaderboard_trips_number
+        in 306..309 -> R.drawable.dk_challenge_leaderboard_duration
+        in 302..305 -> R.drawable.dk_challenge_leaderboard_distance
+        401 -> R.drawable.dk_challenge_leaderboard_speeding
+        else -> null
+    }?.let {
+        ContextCompat.getDrawable(context, it)
     }
 
     fun getRankingList(): List<ChallengeRankingItem> {

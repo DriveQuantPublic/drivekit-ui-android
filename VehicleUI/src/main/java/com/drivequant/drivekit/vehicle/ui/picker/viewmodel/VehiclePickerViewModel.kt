@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.DetectionMode
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
@@ -14,12 +13,38 @@ import com.drivequant.drivekit.vehicle.enums.TruckType
 import com.drivequant.drivekit.vehicle.enums.VehicleBrand
 import com.drivequant.drivekit.vehicle.enums.VehicleEngineIndex
 import com.drivequant.drivekit.vehicle.enums.VehicleType
-import com.drivequant.drivekit.vehicle.manager.*
-import com.drivequant.drivekit.vehicle.picker.*
-import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.*
+import com.drivequant.drivekit.vehicle.manager.VehicleCreateQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleListQueryListener
+import com.drivequant.drivekit.vehicle.manager.VehicleManagerStatus
+import com.drivequant.drivekit.vehicle.manager.VehicleReplaceStatus
+import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.picker.CarCharacteristics
+import com.drivequant.drivekit.vehicle.picker.CarVehicleCharacteristicsQueryListener
+import com.drivequant.drivekit.vehicle.picker.TruckCharacteristics
+import com.drivequant.drivekit.vehicle.picker.TruckVehicleCharacteristicsQueryListener
+import com.drivequant.drivekit.vehicle.picker.VehicleModelsQueryListener
+import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus
+import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.FAILED_TO_RETRIEVED_DATA
+import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.NO_RESULT
+import com.drivequant.drivekit.vehicle.picker.VehiclePickerStatus.SUCCESS
+import com.drivequant.drivekit.vehicle.picker.VehicleVersion
+import com.drivequant.drivekit.vehicle.picker.VehicleVersionsQueryListener
+import com.drivequant.drivekit.vehicle.picker.VehicleYearsQueryListener
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep
-import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.*
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_FULL
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.BRANDS_ICONS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.CATEGORY_DESCRIPTION
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.DEFAULT_CAR_ENGINE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.ENGINE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.MODELS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.NAME
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TRUCK_TYPE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.TYPE
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.VERSIONS
+import com.drivequant.drivekit.vehicle.ui.picker.commons.VehiclePickerStep.YEARS
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehicleCategoryItem
 import com.drivequant.drivekit.vehicle.ui.picker.model.VehiclePickerItem
 import java.io.Serializable
@@ -171,7 +196,7 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
         }
         if (withIcons) {
             if (rawBrands.isNotEmpty() && rawBrands.size < VehicleBrand.getBrands(selectedVehicleTypeItem.vehicleType).size) {
-                items.add(VehiclePickerItem(items.size, DKResource.convertToString(context, "dk_vehicle_other_brands"), "OTHER_BRANDS"))
+                items.add(VehiclePickerItem(items.size, context.getString(R.string.dk_vehicle_other_brands), "OTHER_BRANDS"))
             }
         }
         return items
@@ -430,20 +455,20 @@ class VehiclePickerViewModel: ViewModel(), Serializable {
 
     fun getDescription(context: Context, vehiclePickerStep: VehiclePickerStep) =
         when (vehiclePickerStep) {
-            TYPE -> "dk_vehicle_type_selection_title"
-            TRUCK_TYPE -> "dk_vehicle_category_truck_selection_title"
-            BRANDS_FULL -> "dk_vehicle_brand_description"
-            ENGINE -> "dk_vehicle_engine_description"
-            MODELS -> "dk_vehicle_model_description"
-            YEARS -> "dk_vehicle_year_description"
-            VERSIONS -> "dk_vehicle_version_description"
-            DEFAULT_CAR_ENGINE -> "dk_vehicle_is_it_electric"
+            TYPE -> R.string.dk_vehicle_type_selection_title
+            TRUCK_TYPE -> R.string.dk_vehicle_category_truck_selection_title
+            BRANDS_FULL -> R.string.dk_vehicle_brand_description
+            ENGINE -> R.string.dk_vehicle_engine_description
+            MODELS -> R.string.dk_vehicle_model_description
+            YEARS -> R.string.dk_vehicle_year_description
+            VERSIONS -> R.string.dk_vehicle_version_description
+            DEFAULT_CAR_ENGINE -> R.string.dk_vehicle_is_it_electric
             CATEGORY,
             CATEGORY_DESCRIPTION,
             BRANDS_ICONS,
             NAME -> null
         }?.let {
-            DKResource.convertToString(context, it)
+            context.getString(it)
         }
 
     fun getDefaultVehicleName() = if (isLiteConfig) {

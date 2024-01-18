@@ -9,7 +9,7 @@ import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothGuideBinding
 
@@ -39,20 +39,20 @@ class GuideBluetoothFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.textViewGuideTitle.headLine1()
-        binding.textViewGuideTitle.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_header")
+        binding.textViewGuideTitle.setText(R.string.dk_vehicle_bluetooth_guide_header)
 
         binding.textViewGuideDesc1.normalText()
-        binding.textViewGuideDesc1.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc1_android")
+        binding.textViewGuideDesc1.setText(R.string.dk_vehicle_bluetooth_guide_desc1_android)
 
         binding.textViewGuideDesc2.normalText()
-        binding.textViewGuideDesc2.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc2_android")
+        binding.textViewGuideDesc2.setText(R.string.dk_vehicle_bluetooth_guide_desc2_android)
 
         binding.textViewGuideDesc3.normalText()
-        binding.textViewGuideDesc3.text = DKResource.convertToString(requireContext(), "dk_vehicle_bluetooth_guide_desc3_android")
+        binding.textViewGuideDesc3.setText(R.string.dk_vehicle_bluetooth_guide_desc3_android)
 
         binding.buttonStart.apply {
             button()
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_begin")
+            setText(R.string.dk_vehicle_begin)
             setOnClickListener {
                 viewModel.onStartButtonClicked()
             }

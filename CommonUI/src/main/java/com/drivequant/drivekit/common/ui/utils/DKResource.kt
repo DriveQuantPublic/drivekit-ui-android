@@ -36,7 +36,7 @@ object DKResource {
         context: Context,
         @ColorInt textColor: Int,
         @ColorInt highlightColor: Int,
-        identifier: String,
+        @StringRes identifier: Int,
         vararg args: String,
         @DimenRes textSize: Int = R.dimen.dk_text_normal,
         @DimenRes highlightSize: Int = R.dimen.dk_text_normal
@@ -44,7 +44,7 @@ object DKResource {
         val textArgs = args.map { TextArg(it, highlightColor, highlightSize) }.toTypedArray()
         return buildString(
             context,
-            convertToString(context, identifier),
+            identifier,
             textColor,
             textSize,
             *textArgs,

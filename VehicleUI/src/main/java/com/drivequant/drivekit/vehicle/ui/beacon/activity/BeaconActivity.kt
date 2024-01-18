@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKitLog
 import com.drivequant.drivekit.core.extension.getSerializableExtraCompat
 import com.drivequant.drivekit.databaseutils.entity.Beacon
@@ -127,19 +126,19 @@ class BeaconActivity : AppCompatActivity() {
         }
 
         val screenNameResId = when (viewModel.scanType) {
-            BeaconScanType.PAIRING -> "dk_tag_vehicles_beacon_add"
-            BeaconScanType.DIAGNOSTIC -> "dk_tag_vehicles_beacon_diagnosis"
-            BeaconScanType.VERIFY -> "dk_tag_vehicles_beacon_verify"
+            BeaconScanType.PAIRING -> R.string.dk_tag_vehicles_beacon_add
+            BeaconScanType.DIAGNOSTIC -> R.string.dk_tag_vehicles_beacon_diagnosis
+            BeaconScanType.VERIFY -> R.string.dk_tag_vehicles_beacon_verify
         }
-        DriveKitUI.analyticsListener?.trackScreen(DKResource.convertToString(this, screenNameResId), javaClass.simpleName)
+        DriveKitUI.analyticsListener?.trackScreen(getString(screenNameResId), javaClass.simpleName)
     }
 
     private fun updateTitle() = when (viewModel.scanType) {
-        BeaconScanType.PAIRING -> "dk_beacon_paired_title"
+        BeaconScanType.PAIRING -> R.string.dk_beacon_paired_title
         BeaconScanType.DIAGNOSTIC,
-        BeaconScanType.VERIFY -> "dk_beacon_diagnostic_title"
+        BeaconScanType.VERIFY -> R.string.dk_beacon_diagnostic_title
     }.let {
-        setActivityTitle(DKResource.convertToString(this, it))
+        setActivityTitle(getString(it))
     }
 
     override fun onSupportNavigateUp(): Boolean {

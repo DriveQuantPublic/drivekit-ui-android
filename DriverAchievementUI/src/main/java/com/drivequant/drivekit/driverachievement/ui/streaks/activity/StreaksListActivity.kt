@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.navigation.DriveKitNavigationController
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 
 class StreaksListActivity : AppCompatActivity() {
@@ -38,6 +37,6 @@ class StreaksListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_achievements_menu_streaks"))
+        setActivityTitle(getString(R.string.dk_achievements_menu_streaks))
     }
 }

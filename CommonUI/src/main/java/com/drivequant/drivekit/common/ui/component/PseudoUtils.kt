@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.driver.GetUserInfoQueryListener
@@ -60,13 +59,13 @@ object PseudoUtils {
             setCancelable(false)
             setButton(
                 DialogInterface.BUTTON_POSITIVE,
-                DKResource.convertToString(context, "dk_common_validate")
+                context.getString(R.string.dk_common_validate)
             ) { _, _ ->
                 // Do nothing, onClick() callback is overriden in getButton()
             }
             setButton(
                 DialogInterface.BUTTON_NEGATIVE,
-                DKResource.convertToString(context, "dk_common_later")
+                context.getString(R.string.dk_common_later)
             ) { dialogInterface, _ ->
                 dialogInterface.dismiss()
                 listener.onCancelled()
@@ -96,22 +95,22 @@ object PseudoUtils {
                 } else {
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(context, "dk_fields_not_valid"),
+                        R.string.dk_common_error_empty_field,
                         Toast.LENGTH_LONG
                     ).show()
                 }
             }
         }
         titleTextView.apply {
-            text = DKResource.convertToString(context, "app_name")
+            setText(R.string.app_name)
             headLine1()
         }
         descriptionTextView.apply {
-            text = DKResource.convertToString(context, "dk_common_no_pseudo_set")
+            setText(R.string.dk_common_no_pseudo_set)
             normalText()
         }
         editText.apply {
-            hint = DKResource.convertToString(context, "dk_common_pseudo")
+            setHint(R.string.dk_common_pseudo)
             typeface = DriveKitUI.primaryFont(context)
         }
     }

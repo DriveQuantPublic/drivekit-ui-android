@@ -12,6 +12,7 @@ import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Vehicle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.bluetooth.viewmodel.BluetoothViewModel
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentBluetoothSuccessBinding
 
@@ -43,14 +44,14 @@ class SuccessBluetoothFragment : Fragment() {
         val btDeviceName = vehicle.bluetooth?.name ?: ""
 
         binding.textViewCongratsTitle.headLine1(mainFontColor)
-        binding.textViewCongratsTitle.text = DKResource.convertToString(view.context, "dk_vehicle_bluetooth_congrats_title")
+        binding.textViewCongratsTitle.setText(R.string.dk_vehicle_bluetooth_congrats_title)
 
         binding.textViewCongratsDescription.normalText(mainFontColor)
         binding.textViewCongratsDescription.text = DKResource.buildString(
             view.context,
             DriveKitUI.colors.mainFontColor(),
             DriveKitUI.colors.mainFontColor(),
-            "dk_vehicle_bluetooth_congrats_desc",
+            R.string.dk_vehicle_bluetooth_congrats_desc,
             btDeviceName,
             viewModel.vehicleName
         )
@@ -58,11 +59,11 @@ class SuccessBluetoothFragment : Fragment() {
         binding.textViewCongratsNotice.normalText(mainFontColor)
         binding.textViewCongratsNotice.text = DKResource.buildString(
             view.context, DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(), "dk_vehicle_bluetooth_congrats_notice", btDeviceName
+            DriveKitUI.colors.mainFontColor(), R.string.dk_vehicle_bluetooth_congrats_notice, btDeviceName
         )
 
         binding.buttonFinish.apply {
-            text = DKResource.convertToString(view.context, "dk_common_finish")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
             button()
             setOnClickListener {
                 activity?.finish()

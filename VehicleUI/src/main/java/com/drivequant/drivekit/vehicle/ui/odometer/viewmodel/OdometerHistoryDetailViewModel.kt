@@ -8,21 +8,26 @@ import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.formatDate
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.convertToString
 import com.drivequant.drivekit.databaseutils.Query
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometer
 import com.drivequant.drivekit.databaseutils.entity.VehicleOdometerHistory
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
-import com.drivequant.drivekit.vehicle.odometer.*
+import com.drivequant.drivekit.vehicle.odometer.OdometerAddHistoryQueryListener
+import com.drivequant.drivekit.vehicle.odometer.OdometerAddHistoryStatus
+import com.drivequant.drivekit.vehicle.odometer.OdometerDeleteHistoryQueryListener
+import com.drivequant.drivekit.vehicle.odometer.OdometerDeleteHistoryStatus
+import com.drivequant.drivekit.vehicle.odometer.OdometerUpdateHistoryQueryListener
+import com.drivequant.drivekit.vehicle.odometer.OdometerUpdateHistoryStatus
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.vehicles.utils.VehicleUtils
-import java.util.*
+import java.util.Calendar
 
 internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val historyId: Int) :
     ViewModel() {
 
     private var vehicleOdometerHistory: VehicleOdometerHistory? = null
-    var odometerActionObserver: MutableLiveData<Pair<String, Boolean>> = MutableLiveData()
+    var odometerActionObserver: MutableLiveData<Pair<Int, Boolean>> = MutableLiveData()
     var mileageDistance = 0.0
 
     init {
@@ -54,7 +59,7 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
     fun getHistoryDistance(context: Context) = vehicleOdometerHistory?.let {
         mileageDistance = it.distance
         DKDataFormatter.formatMeterDistanceInKm(context, it.distance * 1000, minDistanceToRemoveFractions = 0.0).convertToString()
-    } ?: DKResource.convertToString(context, "dk_vehicle_odometer_mileage_kilometer")
+    } ?: context.getString(R.string.dk_vehicle_odometer_mileage_kilometer)
 
     fun getFormattedMileageDistance(context: Context, unit: Boolean = true) =
         DKDataFormatter.formatMeterDistanceInKm(context, mileageDistance * 1000, unit, minDistanceToRemoveFractions = 0.0).convertToString()
@@ -86,10 +91,10 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerAddHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_add_success", true)
-                        OdometerAddHistoryStatus.FAILED ->  Pair("dk_common_error_message",false)
-                        OdometerAddHistoryStatus.VEHICLE_NOT_FOUND ->  Pair("dk_vehicle_not_found", false)
-                        OdometerAddHistoryStatus.BAD_DISTANCE ->   Pair("dk_vehicle_odometer_bad_distance",false)
+                        OdometerAddHistoryStatus.SUCCESS -> Pair(R.string.dk_vehicle_odometer_history_add_success, true)
+                        OdometerAddHistoryStatus.FAILED ->  Pair(com.drivequant.drivekit.common.ui.R.string.dk_common_error_message, false)
+                        OdometerAddHistoryStatus.VEHICLE_NOT_FOUND ->  Pair(R.string.dk_vehicle_not_found, false)
+                        OdometerAddHistoryStatus.BAD_DISTANCE ->   Pair(R.string.dk_vehicle_odometer_bad_distance, false)
                     }.let {
                         odometerActionObserver.postValue(it)
                     }
@@ -108,11 +113,11 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerUpdateHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_update_success", true)
-                        OdometerUpdateHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
-                        OdometerUpdateHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found", false)
-                        OdometerUpdateHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found", false)
-                        OdometerUpdateHistoryStatus.BAD_DISTANCE -> Pair("dk_vehicle_odometer_bad_distance", false)
+                        OdometerUpdateHistoryStatus.SUCCESS -> Pair(R.string.dk_vehicle_odometer_history_update_success, true)
+                        OdometerUpdateHistoryStatus.FAILED -> Pair(com.drivequant.drivekit.common.ui.R.string.dk_common_error_message, false)
+                        OdometerUpdateHistoryStatus.HISTORY_NOT_FOUND -> Pair(R.string.dk_vehicle_odometer_history_not_found, false)
+                        OdometerUpdateHistoryStatus.VEHICLE_NOT_FOUND -> Pair(R.string.dk_vehicle_not_found, false)
+                        OdometerUpdateHistoryStatus.BAD_DISTANCE -> Pair(R.string.dk_vehicle_odometer_bad_distance, false)
                     }.let {
                         odometerActionObserver.postValue(it)
                     }
@@ -130,11 +135,11 @@ internal class OdometerHistoryDetailViewModel(val vehicleId: String, private val
                     odometer: VehicleOdometer?,
                     histories: List<VehicleOdometerHistory>) {
                     when (status) {
-                        OdometerDeleteHistoryStatus.SUCCESS -> Pair("dk_vehicle_odometer_history_delete_success", true)
-                        OdometerDeleteHistoryStatus.FAILED -> Pair("dk_common_error_message", false)
-                        OdometerDeleteHistoryStatus.VEHICLE_NOT_FOUND -> Pair("dk_vehicle_not_found",false)
-                        OdometerDeleteHistoryStatus.HISTORY_NOT_FOUND -> Pair("dk_vehicle_odometer_history_not_found",false)
-                        OdometerDeleteHistoryStatus.LAST_ODOMETER_ERROR -> Pair("dk_vehicle_odometer_last_history_error",false)
+                        OdometerDeleteHistoryStatus.SUCCESS -> Pair(R.string.dk_vehicle_odometer_history_delete_success, true)
+                        OdometerDeleteHistoryStatus.FAILED -> Pair(com.drivequant.drivekit.common.ui.R.string.dk_common_error_message, false)
+                        OdometerDeleteHistoryStatus.VEHICLE_NOT_FOUND -> Pair(R.string.dk_vehicle_not_found, false)
+                        OdometerDeleteHistoryStatus.HISTORY_NOT_FOUND -> Pair(R.string.dk_vehicle_odometer_history_not_found, false)
+                        OdometerDeleteHistoryStatus.LAST_ODOMETER_ERROR -> Pair(R.string.dk_vehicle_odometer_last_history_error, false)
                     }.let {
                         odometerActionObserver.postValue(it)
                     }

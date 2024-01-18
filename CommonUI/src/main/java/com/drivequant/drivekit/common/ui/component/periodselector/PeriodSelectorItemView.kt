@@ -12,7 +12,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 
 @SuppressLint("ViewConstructor")
@@ -35,7 +34,7 @@ internal class PeriodSelectorItemView(
         this.textViewSelector = view.findViewById(R.id.text_view_selector)
         setStyle()
         with(this.textViewSelector) {
-            text = DKResource.convertToString(context, period.getTitleResId())
+            setText(period.getTitleResId())
             setOnClickListener {
                 listener.onPeriodSelected(period)
             }

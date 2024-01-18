@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.driverachievement.ui.R
 import com.drivequant.drivekit.driverachievement.ui.badges.fragment.BadgesListFragment
 
@@ -36,6 +35,6 @@ class BadgeListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "menu_mybadges"))
+        setActivityTitle(getString(R.string.menu_mybadges))
     }
 }

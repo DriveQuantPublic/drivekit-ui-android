@@ -1,7 +1,6 @@
 package com.drivequant.drivekit.vehicle.ui.bluetooth.adapter
 
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,10 +75,9 @@ class BluetoothItemRecyclerViewAdapter(
         val alert = DKAlertDialog.LayoutBuilder().init(context)
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(DKResource.convertToString(context, "dk_common_close"),
-                DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                })
+            .positiveButton(context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close)) { dialog, _ ->
+                dialog.dismiss()
+            }
             .show()
 
         val title = alert.findViewById<TextView>(R.id.text_view_alert_title)
@@ -87,11 +85,11 @@ class BluetoothItemRecyclerViewAdapter(
 
         val btDeviceName = bluetoothDevice.name ?: bluetoothDevice.macAddress
 
-        title?.text = DKResource.convertToString(context, "app_name")
+        title?.setText(R.string.app_name)
         val text = DKResource.buildString(
             context, DriveKitUI.colors.mainFontColor(),
             DriveKitUI.colors.mainFontColor(),
-            "dk_vehicle_bluetooth_already_paired",
+            R.string.dk_vehicle_bluetooth_already_paired,
             btDeviceName,
             viewModel.vehicleName
         )

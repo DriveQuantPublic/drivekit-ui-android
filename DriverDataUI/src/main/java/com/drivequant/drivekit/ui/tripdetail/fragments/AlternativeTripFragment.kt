@@ -11,9 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbtripaccess.DbTripAccess
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.DkAlternativeTripFragmentBinding
 import com.drivequant.drivekit.ui.transportationmode.activity.TransportationModeActivity
 import com.drivequant.drivekit.ui.tripdetail.viewmodel.AlternativeTripViewModel
@@ -67,7 +67,7 @@ internal class AlternativeTripFragment : Fragment() {
         }
         binding.buttonChange.setBackgroundColor(DriveKitUI.colors.secondaryColor())
         binding.buttonChange.normalText(DriveKitUI.colors.fontColorOnSecondaryColor())
-        binding.buttonChange.text = DKResource.convertToString(requireContext(), "dk_driverdata_change_transportation_mode")
+        binding.buttonChange.setText(R.string.dk_driverdata_change_transportation_mode)
         binding.buttonChange.setOnClickListener { launchTransportationMode() }
         binding.itemCondition.setValueItem(viewModel.getConditionValue(requireContext()))
         binding.itemWeather.setValueItem(viewModel.getWeatherValue(requireContext()))

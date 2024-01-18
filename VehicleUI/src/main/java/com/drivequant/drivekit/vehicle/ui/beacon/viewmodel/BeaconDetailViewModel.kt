@@ -3,15 +3,16 @@ package com.drivequant.drivekit.vehicle.ui.beacon.viewmodel
 import android.content.Context
 import android.graphics.Typeface
 import android.text.Spannable
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.beaconutils.BeaconInfo
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.resSpans
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.vehicle.DriveKitVehicle
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.utils.DKBeaconRetrievedInfo
 
 class BeaconDetailViewModel(
@@ -31,63 +32,62 @@ class BeaconDetailViewModel(
                 {
                     data.add(
                         BeaconDetailField(
-                            getTitle(context, "dk_beacon_vehicule_linked"),
+                            getTitle(context, R.string.dk_beacon_vehicule_linked),
                             DKSpannable().append(vehicleName).toSpannable()
                         )
                     )
                 }
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_uuid"),
+                        getTitle(context, R.string.dk_beacon_uuid),
                         DKSpannable().append(beacon.proximityUuid.substring(0, 8) + "…").toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_major"),
+                        getTitle(context, R.string.dk_beacon_major),
                         DKSpannable().append(seenBeacon.major.toString()).toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_minor"),
+                        getTitle(context, R.string.dk_beacon_minor),
                         DKSpannable().append(seenBeacon.minor.toString()).toSpannable()
                     )
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_battery"),
+                        getTitle(context, R.string.dk_beacon_battery),
                         buildValue(context, beaconRetrievedInfo.batteryLevel.toString(), "%")
                     )
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_distance"),
-                        buildValue(context, beaconRetrievedInfo.estimatedDistance.format(1), "dk_common_unit_meter")
+                        getTitle(context, R.string.dk_beacon_distance),
+                        buildValue(context, beaconRetrievedInfo.estimatedDistance.format(1), context.getString(com.drivequant.drivekit.common.ui.R.string.dk_common_unit_meter))
                     )
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_rssi"),
+                        getTitle(context, R.string.dk_beacon_rssi),
                         buildValue(context, beaconRetrievedInfo.rssi.toString(), "dBm"))
                 )
                 data.add(
                     BeaconDetailField(
-                        getTitle(context, "dk_beacon_tx"),
+                        getTitle(context, R.string.dk_beacon_tx),
                         buildValue(context, beaconRetrievedInfo.txPower.toString(), "dBm"))
                 )
             }
         }
     }
 
-    private fun getTitle(context: Context, identifier: String): String {
-        return DKResource.convertToString(context, identifier)
+    private fun getTitle(context: Context, @StringRes identifier: Int): String {
+        return context.getString(identifier)
     }
 
-    private fun buildValue(context: Context, value: String, unitIdentifier: String) : Spannable {
+    private fun buildValue(context: Context, value: String, unit: String) : Spannable {
         val mainFontColor = DriveKitUI.colors.mainFontColor()
         val primaryColor = DriveKitUI.colors.primaryColor()
-        val unit = DKResource.convertToString(context, unitIdentifier)
 
         return DKSpannable()
             .append(value, context.resSpans {

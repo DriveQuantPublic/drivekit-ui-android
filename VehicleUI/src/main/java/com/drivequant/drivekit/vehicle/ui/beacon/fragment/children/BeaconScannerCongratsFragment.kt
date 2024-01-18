@@ -11,7 +11,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.getSerializableCompat
 import com.drivequant.drivekit.common.ui.extension.normalText
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.databaseutils.entity.Beacon
 import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.beacon.viewmodel.BeaconScanType
@@ -58,12 +57,12 @@ class BeaconScannerCongratsFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.text_view_description).apply {
             normalText()
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_beacon_setup_store_notice")
+            setText(R.string.dk_vehicle_beacon_setup_store_notice)
         }
 
         view.findViewById<Button>(R.id.button_validate).apply {
             button()
-            text = DKResource.convertToString(requireContext(), "dk_common_finish")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_finish)
             setOnClickListener {
                 viewModel.scanValidationFinished()
             }

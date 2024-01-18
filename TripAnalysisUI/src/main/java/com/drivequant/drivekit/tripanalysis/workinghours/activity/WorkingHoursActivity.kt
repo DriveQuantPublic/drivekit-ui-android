@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.SwitchSettings
 import com.drivequant.drivekit.common.ui.extension.setActivityTitle
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.common.DKDay
 import com.drivequant.drivekit.tripanalysis.service.workinghours.DKWorkingHoursTimeSlotStatus
 import com.drivequant.drivekit.tripanalysis.workinghours.view.WorkingHoursDayCard
@@ -38,8 +37,7 @@ class WorkingHoursActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(this, "dk_tag_trip_analysis_working_hours"), javaClass.simpleName
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_trip_analysis_working_hours), javaClass.simpleName
         )
 
         binding = DkLayoutActivityWorkingHoursBinding.inflate(layoutInflater)
@@ -83,18 +81,13 @@ class WorkingHoursActivity : AppCompatActivity() {
 
         binding.switchEnable.apply {
             isEnabled = false
-            setTitle(DKResource.convertToString(context, "dk_working_hours_enable_title"))
-            setDescription(DKResource.convertToString(context, "dk_working_hours_enable_desc"))
+            this.setTitle(getString(R.string.dk_working_hours_enable_title))
+            this.setDescription(getString(R.string.dk_working_hours_enable_desc))
         }
 
         insideHours.apply {
             setIndicatorColor(DriveKitUI.colors.secondaryColor())
-            setTitle(
-                DKResource.convertToString(
-                    this@WorkingHoursActivity,
-                    "dk_working_hours_slot_inside_title"
-                )
-            )
+            this.setTitle(getString(R.string.dk_working_hours_slot_inside_title))
             setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
                 override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
                     dataUpdated(true)
@@ -104,12 +97,7 @@ class WorkingHoursActivity : AppCompatActivity() {
 
         outsideHours.apply {
             setIndicatorColor(DriveKitUI.colors.neutralColor())
-            setTitle(
-                DKResource.convertToString(
-                    this@WorkingHoursActivity,
-                    "dk_working_hours_slot_outside_title"
-                )
-            )
+            this.setTitle(getString(R.string.dk_working_hours_slot_outside_title))
             setListener(object : WorkingHoursSpinnerSettings.SpinnerListener {
                 override fun onItemSelected(item: DKWorkingHoursTimeSlotStatus) {
                     dataUpdated(true)
@@ -121,7 +109,7 @@ class WorkingHoursActivity : AppCompatActivity() {
             if (!success) {
                 Toast.makeText(
                     this,
-                    DKResource.convertToString(this, "dk_working_hours_sync_failed"),
+                    R.string.dk_working_hours_sync_failed,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -152,12 +140,11 @@ class WorkingHoursActivity : AppCompatActivity() {
             }
             updateProgressVisibility(false)
             val toastMessage = if (response.status) {
-                "dk_working_hours_update_succeed"
+                R.string.dk_working_hours_update_succeed
             } else {
-                "dk_working_hours_update_failed"
+                R.string.dk_working_hours_update_failed
             }
-            Toast.makeText(this, DKResource.convertToString(this, toastMessage), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
             if (response.fromBackButton && response.status) {
                 finish()
             }
@@ -230,7 +217,7 @@ class WorkingHoursActivity : AppCompatActivity() {
                 typeface = DriveKitUI.primaryFont(context)
             }
             description?.apply {
-                text = DKResource.convertToString(this@WorkingHoursActivity, "dk_working_hours_back_save_alert")
+                setText(R.string.dk_working_hours_back_save_alert)
                 typeface = DriveKitUI.primaryFont(context)
             }
 
@@ -257,6 +244,6 @@ class WorkingHoursActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        setActivityTitle(DKResource.convertToString(this, "dk_working_hours_title"))
+        setActivityTitle(getString(R.string.dk_working_hours_title))
     }
 }

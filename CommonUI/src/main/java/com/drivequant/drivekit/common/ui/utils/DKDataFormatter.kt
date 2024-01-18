@@ -330,7 +330,7 @@ object DKDataFormatter {
         }
         return when {
             maxUnit == Co2Unit.GRAM || (co2mass < 1 && minUnit == Co2Unit.GRAM) -> {
-                val unit = DKResource.convertToString(context, "dk_common_unit_g")
+                val unit = context.getString(R.string.dk_common_unit_g)
                 "${(co2mass * 1000).roundToInt()}"
                     .plus(nbsp)
                     .plus(unit)
@@ -339,7 +339,7 @@ object DKDataFormatter {
                 formatMassInTon(context, co2mass)
             }
             else -> {
-                val unit = DKResource.convertToString(context, "dk_common_unit_kg")
+                val unit = context.getString(R.string.dk_common_unit_kg)
                 co2mass.format(2)
                     .plus(nbsp)
                     .plus(unit)

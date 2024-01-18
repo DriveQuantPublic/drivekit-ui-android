@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
@@ -82,7 +83,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
                 requireContext(),
                 DriveKitUI.colors.mainFontColor(),
                 DriveKitUI.colors.mainFontColor(),
-                "dk_vehicle_beacon_setup_replace_description",
+                R.string.dk_vehicle_beacon_setup_replace_description,
                 beaconCode,
                 vehicleName,
                 vehiclePairedName
@@ -91,14 +92,14 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         binding.textViewDescription.normalText()
 
         binding.buttonValidate.button()
-        binding.buttonValidate.text = DKResource.convertToString(requireContext(), "dk_common_confirm")
+        binding.buttonValidate.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_confirm)
         binding.buttonValidate.setOnClickListener {
             viewModel.changeBeaconToVehicle()
         }
 
         binding.buttonAbort.button()
         binding.buttonAbort.typeface = Typeface.DEFAULT_BOLD
-        binding.buttonAbort.text = DKResource.convertToString(requireContext(), "dk_common_cancel")
+        binding.buttonAbort.setText(com.drivequant.drivekit.common.ui.R.string.dk_common_cancel)
         binding.buttonAbort.setOnClickListener {
             viewModel.scanValidationFinished()
         }
@@ -108,8 +109,8 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
                 DriveKitLog.i(DriveKitVehicleUI.TAG, "Beacon scanner - Change beacon status: $vehicleBeaconStatus")
                 when (vehicleBeaconStatus) {
                     SUCCESS -> viewModel.updateScanState(BeaconStep.CONGRATS)
-                    ERROR -> displayErrorAlert("dk_vehicle_failed_to_paired_beacon")
-                    UNKNOWN_VEHICLE -> displayErrorAlert("dk_vehicle_unknown")
+                    ERROR -> displayErrorAlert(R.string.dk_vehicle_failed_to_paired_beacon)
+                    UNKNOWN_VEHICLE -> displayErrorAlert(R.string.dk_vehicle_unknown)
                     UNAVAILABLE_BEACON -> viewModel.updateScanState(BeaconStep.BEACON_UNAVAILABLE)
                 }
             }
@@ -121,7 +122,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
         _binding = null
     }
 
-    private fun displayErrorAlert(identifier: String) {
+    private fun displayErrorAlert(@StringRes identifier: Int) {
         val alert = DKAlertDialog.LayoutBuilder().init(requireContext())
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(false)
@@ -129,7 +130,7 @@ class BeaconScannerAlreadyPairedFragment : Fragment() {
             .show()
 
         val description = alert.findViewById<TextView>(R.id.text_view_alert_description)
-        description?.text = DKResource.convertToString(requireContext(), identifier)
+        description?.setText(identifier)
         description?.normalText()
     }
 }

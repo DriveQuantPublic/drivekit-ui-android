@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.button
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.vehicle.manager.VehicleSyncStatus
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.FragmentVehiclesListBinding
 import com.drivequant.drivekit.vehicle.ui.databinding.HeaderVehicleListBinding
 import com.drivequant.drivekit.vehicle.ui.picker.activity.VehiclePickerActivity
@@ -42,12 +42,7 @@ class VehiclesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_vehicles_list"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_list), javaClass.simpleName)
 
         binding.refreshVehicles.setOnRefreshListener {
             updateVehicles(SynchronizationType.DEFAULT)
@@ -98,7 +93,7 @@ class VehiclesListFragment : Fragment() {
             if (viewModel.syncStatus == VehicleSyncStatus.FAILED_TO_SYNC_VEHICLES_CACHE_ONLY) {
                 Toast.makeText(
                     context,
-                    DKResource.convertToString(requireContext(), "dk_vehicle_error_message"),
+                    R.string.dk_vehicle_error_message,
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -135,7 +130,7 @@ class VehiclesListFragment : Fragment() {
             binding.buttonVehicle.apply {
                 visibility = View.VISIBLE
                 button()
-                text = DKResource.convertToString(requireContext(), viewModel.getAddReplaceButtonTextResId())
+                setText(viewModel.getAddReplaceButtonTextResId())
                 setOnClickListener {
                     if (viewModel.shouldReplaceVehicle()) {
                         VehiclePickerActivity.launchActivity(context, vehicleToDelete = viewModel.vehiclesList.first())
@@ -162,15 +157,10 @@ class VehiclesListFragment : Fragment() {
     }
 
     private fun setupEmptyListLayout() {
-        getVehicleListHeaderBinding().textViewSummaryIcon.setImageDrawable(
-            DKResource.convertToDrawable(
-                requireContext(),
-                "dk_common_warning"
-            )
-        )
+        getVehicleListHeaderBinding().textViewSummaryIcon.setImageResource(com.drivequant.drivekit.common.ui.R.drawable.dk_common_warning)
         getVehicleListHeaderBinding().textViewHeaderTitle.apply {
             typeface = Typeface.DEFAULT_BOLD
-            text = DKResource.convertToString(requireContext(), "dk_vehicle_list_empty")
+            setText(R.string.dk_vehicle_list_empty)
         }
     }
 

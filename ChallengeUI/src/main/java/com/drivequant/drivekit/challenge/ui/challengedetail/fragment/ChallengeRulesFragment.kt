@@ -11,7 +11,6 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.common.ChallengeHeaderView
 import com.drivequant.drivekit.challenge.ui.joinchallenge.viewmodel.ChallengeParticipationViewModel
 import com.drivequant.drivekit.common.ui.DriveKitUI
-import com.drivequant.drivekit.common.ui.utils.DKResource
 
 class ChallengeRulesFragment : Fragment() {
 
@@ -42,12 +41,7 @@ class ChallengeRulesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val container = view as LinearLayout
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_detail_rules"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_detail_rules), javaClass.simpleName)
 
         savedInstanceState?.getString("challengeIdTag")?.let {
             viewModel = ViewModelProvider(

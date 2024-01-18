@@ -16,8 +16,8 @@ import com.drivequant.drivekit.common.ui.extension.headLine1
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.FontUtils
+import com.drivequant.drivekit.ui.R
 import com.drivequant.drivekit.ui.databinding.DkFragmentSynthesisCardItemBinding
 import com.drivequant.drivekit.ui.synthesiscards.DKSynthesisCard
 import com.drivequant.drivekit.ui.synthesiscards.viewmodel.DKSynthesisCardViewModel
@@ -80,14 +80,14 @@ class DKSynthesisCardFragment : Fragment() {
                 val alertDialog = DKAlertDialog.LayoutBuilder()
                     .init(requireContext())
                     .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
-                    .positiveButton(DKResource.convertToString(requireContext(), "dk_common_close"))
+                    .positiveButton(getString(com.drivequant.drivekit.common.ui.R.string.dk_common_close))
                     .show()
 
                 val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
                 val descriptionTextView =
                     alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
 
-                titleTextView?.text = DKResource.convertToString(requireContext(), "app_name")
+                titleTextView?.setText(R.string.app_name)
                 descriptionTextView?.text = explanation
 
                 titleTextView?.headLine1()

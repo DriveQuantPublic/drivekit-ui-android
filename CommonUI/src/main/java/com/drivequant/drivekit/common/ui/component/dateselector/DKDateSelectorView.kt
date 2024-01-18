@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.R
-import com.drivequant.drivekit.common.ui.extension.*
+import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
+import com.drivequant.drivekit.common.ui.extension.formatDate
+import com.drivequant.drivekit.common.ui.extension.setDKStyle
+import com.drivequant.drivekit.common.ui.extension.tintDrawable
 import com.drivequant.drivekit.common.ui.graphical.DKStyle
 import com.drivequant.drivekit.common.ui.utils.DKDatePattern
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.getValue
@@ -54,7 +57,7 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
 
         context?.let { context ->
             viewModel.hasPreviousDate.let { hasPreviousDate ->
-                DKResource.convertToDrawable(context, "dk_common_arrow_back_thick")?.let { drawable ->
+                ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_back_thick)?.let { drawable ->
                     if (!hasPreviousDate) {
                         drawable.tintDrawable(DriveKitUI.colors.neutralColor())
                     } else {
@@ -66,7 +69,7 @@ class DKDateSelectorView(context: Context) : LinearLayout(context) {
             }
 
             viewModel.hasNextDate.let { hasNextDate ->
-                DKResource.convertToDrawable(context, "dk_common_arrow_forward_thick")?.let { drawable ->
+                ContextCompat.getDrawable(context, R.drawable.dk_common_arrow_forward_thick)?.let { drawable ->
                     if (!hasNextDate) {
                         drawable.tintDrawable(DriveKitUI.colors.neutralColor())
                     } else {

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
@@ -36,23 +37,20 @@ internal object NearbyDevicesUtils {
 
     @JvmOverloads
     fun displayPermissionsError(activity: Activity, redirectToSettings: Boolean = false) {
-        lateinit var buttonTextId: String
-        lateinit var descriptionId: String
+        @StringRes val buttonTextId: Int
+        @StringRes val descriptionId: Int
         if (redirectToSettings) {
-            descriptionId = "dk_common_app_diag_nearby_ko"
-            buttonTextId = "dk_common_settings"
+            descriptionId = com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko
+            buttonTextId = com.drivequant.drivekit.common.ui.R.string.dk_common_settings
         } else {
-            descriptionId = "dk_common_app_diag_nearby_ko"
-            buttonTextId = "dk_common_app_diag_nearby_link"
+            descriptionId = com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_ko
+            buttonTextId = com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby_link
         }
         val alert = DKAlertDialog.LayoutBuilder()
             .init(activity)
             .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
             .cancelable(true)
-            .positiveButton(DKResource.convertToString(
-                activity,
-                buttonTextId
-            ), positiveListener = { dialogInterface: DialogInterface?, _: Int ->
+            .positiveButton(activity.getString(buttonTextId), positiveListener = { dialogInterface: DialogInterface?, _: Int ->
                 run {
                     dialogInterface?.dismiss()
                     if (redirectToSettings) {
@@ -79,10 +77,10 @@ internal object NearbyDevicesUtils {
             activity,
             DriveKitUI.colors.mainFontColor(),
             DriveKitUI.colors.mainFontColor(),
-            "dk_common_app_diag_nearby"
+            identifier = com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby
         )
         title?.headLine1()
-        description?.text = DKResource.convertToString(activity, descriptionId)
+        description?.setText(descriptionId)
         description?.normalText()
     }
 

@@ -9,12 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.ChallengeUI
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengedetail.adapter.ChallengeDetailFragmentPagerAdapter
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailViewModel
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeDetailBinding
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.core.SynchronizationType
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -54,12 +54,7 @@ class ChallengeDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_challenge_detail"
-            ), javaClass.simpleName
-        )
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_challenge_detail), javaClass.simpleName)
 
         (savedInstanceState?.getString("challengeIdTag"))?.let {
             challengeId = it
@@ -75,10 +70,7 @@ class ChallengeDetailFragment : Fragment() {
             if (!it) {
                 Toast.makeText(
                     requireContext(),
-                    DKResource.convertToString(
-                        requireContext(),
-                        "dk_challenge_score_alert_message"
-                    ),
+                    R.string.dk_challenge_score_alert_message,
                     Toast.LENGTH_LONG
                 ).show()
             }

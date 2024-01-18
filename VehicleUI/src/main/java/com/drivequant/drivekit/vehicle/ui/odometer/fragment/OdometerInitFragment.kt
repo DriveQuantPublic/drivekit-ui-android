@@ -13,8 +13,8 @@ import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.setDKStyle
-import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.vehicle.ui.DriveKitVehicleUI
+import com.drivequant.drivekit.vehicle.ui.R
 import com.drivequant.drivekit.vehicle.ui.databinding.DkFragmentOdometerInitBinding
 import com.drivequant.drivekit.vehicle.ui.odometer.viewmodel.OdometerHistoryDetailViewModel
 
@@ -60,13 +60,8 @@ class OdometerInitFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DriveKitUI.analyticsListener?.trackScreen(
-            DKResource.convertToString(
-                requireContext(),
-                "dk_tag_vehicles_odometer_init"
-            ), javaClass.simpleName
-        )
-        (savedInstanceState?.getString("vehicleIdTag"))?.let {
+        DriveKitUI.analyticsListener?.trackScreen(getString(R.string.dk_tag_vehicles_odometer_init), javaClass.simpleName)
+        savedInstanceState?.getString("vehicleIdTag")?.let {
             vehicleId = it
         }
         vehicleId?.let { vehicleId ->
@@ -77,12 +72,12 @@ class OdometerInitFragment : Fragment() {
                 addOdometerReading(context)
 
                 binding.textViewOdometerDesc.apply {
-                    text = DKResource.convertToString(context, "dk_vehicle_odometer_car_desc")
+                    setText(R.string.dk_vehicle_odometer_car_desc)
                     normalText()
                 }
 
                 binding.textViewVehicleDistanceField.apply {
-                    hint = DKResource.convertToString(context, "dk_vehicle_odometer_enter_mileage")
+                    setHint(R.string.dk_vehicle_odometer_enter_mileage)
                     setHintTextColor(DriveKitUI.colors.complementaryFontColor())
                     normalText()
                 }
@@ -90,7 +85,7 @@ class OdometerInitFragment : Fragment() {
                     updateProgressVisibility(false)
                     Toast.makeText(
                         context,
-                        DKResource.convertToString(context, it.first),
+                        it.first,
                         Toast.LENGTH_LONG
                     ).show()
                     if (it.second) {
@@ -117,7 +112,7 @@ class OdometerInitFragment : Fragment() {
 
     private fun addOdometerReading(context: Context) {
         binding.buttonValidateReference.apply {
-            text = DKResource.convertToString(context, "dk_common_validate")
+            setText(com.drivequant.drivekit.common.ui.R.string.dk_common_validate)
             headLine2(DriveKitUI.colors.fontColorOnSecondaryColor())
             setBackgroundColor(DriveKitUI.colors.secondaryColor())
             setOnClickListener {
@@ -126,7 +121,7 @@ class OdometerInitFragment : Fragment() {
                 if (viewModel.showMileageDistanceErrorMessage() || isEditTextDistanceBlank) {
                     binding.textInputLayoutDistance.apply {
                         isErrorEnabled = true
-                        error = DKResource.convertToString(context, "dk_vehicle_odometer_history_error")
+                        error = getString(R.string.dk_vehicle_odometer_history_error)
                         typeface = DriveKitUI.primaryFont(context)
                     }
                 } else {

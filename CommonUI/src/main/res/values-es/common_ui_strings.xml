@@ -51,6 +51,7 @@
    <string name="dk_common_no_pseudo_set">Para compartir su clasificación con los demás participantes, le invitamos a elegir un pseudo. Sin un pseudo aparecerá como anónimo.</string>
    <string name="dk_common_no_trip">Sin viaje</string>
    <string name="dk_common_no_trips_yet">La app aún no ha analizado tu conducción.</string>
+   <string name="dk_common_no_value">-</string>
    <string name="dk_common_ok">OK</string>
    <string name="dk_common_period_selector_month">Mes</string>
    <string name="dk_common_period_selector_week">Semana</string>
