@@ -35,6 +35,21 @@ object DKResource {
     fun buildString(
         context: Context,
         @ColorInt textColor: Int,
+        @StringRes identifier: Int,
+        @DimenRes textSize: Int = R.dimen.dk_text_normal,
+    ): Spannable {
+        return buildString(
+            context,
+            identifier,
+            textColor,
+            textSize,
+            *emptyArray<Arg>(),
+        )
+    }
+
+    fun buildString(
+        context: Context,
+        @ColorInt textColor: Int,
         @ColorInt highlightColor: Int,
         @StringRes identifier: Int,
         vararg args: String,
@@ -53,9 +68,28 @@ object DKResource {
 
     fun buildString(
         context: Context,
+        @ColorInt textColor: Int,
+        @ColorInt highlightColor: Int,
+        @StringRes identifier: Int,
+        vararg args: Number,
+        @DimenRes textSize: Int = R.dimen.dk_text_normal,
+        @DimenRes highlightSize: Int = R.dimen.dk_text_normal
+    ): Spannable {
+        val numberArgs = args.map { NumberArg(it, highlightColor, highlightSize) }.toTypedArray()
+        return buildString(
+            context,
+            identifier,
+            textColor,
+            textSize,
+            *numberArgs,
+        )
+    }
+
+    fun buildString(
+        context: Context,
         @StringRes identifier: Int,
         @ColorInt textColor: Int,
-        vararg args: TextArg
+        vararg args: Arg
     ): Spannable = buildString(
         context,
         context.getString(identifier),
@@ -69,7 +103,7 @@ object DKResource {
         @StringRes identifier: Int,
         @ColorInt textColor: Int,
         @DimenRes textSize: Int,
-        vararg args: TextArg
+        vararg args: Arg
     ): Spannable = buildString(
         context,
         context.getString(identifier),
@@ -82,7 +116,7 @@ object DKResource {
         context: Context,
         string: String,
         @ColorInt textColor: Int,
-        vararg args: TextArg
+        vararg args: Arg
     ): Spannable = buildString(
         context,
         string,
@@ -96,16 +130,16 @@ object DKResource {
         string: String,
         @ColorInt textColor: Int,
         @DimenRes textSize: Int,
-        vararg args: TextArg
+        vararg args: Arg
     ): Spannable {
         val dkSpannable = DKSpannable()
         var currentArgPosition = 0
         val delimiters = mutableListOf<String>()
         if (args.size == 1) {
-            delimiters.add("%s")
+            delimiters.add("%${args.first().formatChar}")
         } else {
-            for (i in args.indices) {
-                delimiters.add("%${i + 1}\$s")
+            for ((i, arg) in args.withIndex()) {
+                delimiters.add("%${i + 1}\$${arg.formatChar}")
             }
         }
         val array = string.split(*delimiters.toTypedArray())
@@ -142,15 +176,36 @@ object DKResource {
 
 }
 
+abstract class Arg(
+    open val text: String,
+    open val color: Int?,
+    open val size: Int?,
+    open val style: Int,
+    internal val formatChar: Char
+)
+
 data class TextArg(
-    val text: String,
-    @ColorInt val color: Int? = null,
-    @DimenRes val size: Int? = null,
-    val style: Int = Typeface.BOLD
-) {
+    override val text: String,
+    @ColorInt override val color: Int? = null,
+    @DimenRes override val size: Int? = null,
+    override val style: Int = Typeface.BOLD
+) : Arg(text, color, size, style, 's') {
     constructor(
         text: String,
         @ColorInt color: Int? = null,
         style: DKStyle
     ) : this(text, color, style.dimensionId(), style.typefaceStyle())
+}
+
+data class NumberArg(
+    val number: Number,
+    @ColorInt override val color: Int? = null,
+    @DimenRes override val size: Int? = null,
+    override val style: Int = Typeface.BOLD
+) : Arg(number.toString(), color, size, style, 'd') {
+    constructor(
+        number: Number,
+        @ColorInt color: Int? = null,
+        style: DKStyle
+    ) : this(number, color, style.dimensionId(), style.typefaceStyle())
 }

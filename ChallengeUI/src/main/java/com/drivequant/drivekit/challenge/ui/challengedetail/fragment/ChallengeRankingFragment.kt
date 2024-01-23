@@ -37,7 +37,7 @@ class ChallengeRankingFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putString("challengeIdTag", viewModel.getChallengeId())
+            outState.putString("challengeIdTag", viewModel.challengeId)
         }
         super.onSaveInstanceState(outState)
     }

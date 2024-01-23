@@ -39,7 +39,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dk_margin_medium">
 
-
                 <TextView
                     android:id="@+id/text_view_card_title"
                     android:layout_width="wrap_content"
@@ -142,15 +141,15 @@
             android:orientation="vertical">
 
             <include
+                android:id="@+id/card_view_user_stats"
+                layout="@layout/dk_challenge_result_card_view" />
+
+            <include
                 android:id="@+id/card_view_distance"
                 layout="@layout/dk_challenge_result_card_view" />
 
             <include
-                android:id="@+id/card_view_duration"
-                layout="@layout/dk_challenge_result_card_view" />
-
-            <include
-                android:id="@+id/card_view_trips_number"
+                android:id="@+id/card_view_ranking"
                 layout="@layout/dk_challenge_result_card_view" />
         </LinearLayout>
     </LinearLayout>
