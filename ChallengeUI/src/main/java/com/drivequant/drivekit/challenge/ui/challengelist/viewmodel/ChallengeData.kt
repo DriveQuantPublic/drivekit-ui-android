@@ -13,6 +13,7 @@ class ChallengeData(
     val conditionsDescription: String?,
     val startDate: Date,
     val endDate: Date,
+    val rank: Int,
     val rankKey: String?,
     val themeCode: Int,
     val iconCode: Int,

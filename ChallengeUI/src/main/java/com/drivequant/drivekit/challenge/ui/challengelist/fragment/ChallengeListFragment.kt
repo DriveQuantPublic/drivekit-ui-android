@@ -66,10 +66,10 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
             status = it.toStatusList()
         }
 
-        val tag = if (status.containsActiveChallenge()) {
+        val tag = if (status.containsActiveChallenge()) { //TODO add a tag for ranked tab
             R.string.dk_tag_challenge_list_active
         } else {
-            R.string.dk_tag_challenge_list_finished
+            R.string.dk_tag_challenge_list_all
         }
 
         DriveKitUI.analyticsListener?.trackScreen(getString(tag), javaClass.simpleName)
@@ -80,7 +80,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
 
         binding.dkSwipeRefreshChallenge.setOnRefreshListener {
             updateSwipeRefreshChallengesVisibility(true)
-            viewModel.fetchChallengeList()
+            //viewModel.fetchChallengeList()
         }
 
         viewModel.syncChallengesError.observe(viewLifecycleOwner) {
