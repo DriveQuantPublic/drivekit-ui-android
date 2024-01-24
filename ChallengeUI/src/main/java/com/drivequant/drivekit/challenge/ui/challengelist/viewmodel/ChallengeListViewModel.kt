@@ -29,7 +29,6 @@ class ChallengeListViewModel : ViewModel() {
     var userRankedChallenges = mutableListOf<ChallengeData>()
     var finishedChallenges = mutableListOf<ChallengeData>()
 
-
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
     var syncChallengesError: MutableLiveData<Boolean> = MutableLiveData()
@@ -64,6 +63,8 @@ class ChallengeListViewModel : ViewModel() {
                 this@ChallengeListViewModel.challenges = buildChallengeListData(challenges)
                 update(true)
                 syncStatus.postValue(Any())
+
+                // TODO should send toast error if status is ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY
             }
         })
     }
@@ -95,14 +96,10 @@ class ChallengeListViewModel : ViewModel() {
                 val date = dates[selectedDateIndex]
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(dates, selectedDateIndex, DKPeriod.YEAR)
-
-                // TODO update something
             } else {
                 val date = Date().startingFrom(CalendarField.YEAR)
                 this.selectedDate = date
                 this.dateSelectorViewModel.configure(listOf(date), 0, DKPeriod.YEAR)
-
-                // TODO update something
             }
         }
         this.updateData.postValue(Any())

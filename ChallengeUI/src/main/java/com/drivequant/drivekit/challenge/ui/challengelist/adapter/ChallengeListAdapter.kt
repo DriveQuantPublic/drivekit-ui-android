@@ -6,15 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.viewholder.ChallengeViewHolder
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListener
-import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.containsActiveChallenge
-import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 
 internal class ChallengeListAdapter(
     val context: Context,
-    private val viewModel: ChallengeListViewModel,
-    private val status: List<ChallengeStatus>,
+    private val challenges: List<ChallengeData>,
     private val listener: ChallengeListener
 ) :
     RecyclerView.Adapter<ChallengeViewHolder>() {
@@ -24,21 +21,10 @@ internal class ChallengeListAdapter(
         return ChallengeViewHolder(view)
     }
 
-    override fun getItemCount(): Int =
-        if (status.containsActiveChallenge()) {
-            viewModel.activeChallenges.size
-        } else {
-            viewModel.finishedChallenges.size
-        }
+    override fun getItemCount(): Int = this.challenges.size
 
     override fun onBindViewHolder(parent: ChallengeViewHolder, position: Int) {
-        val challenges =
-            if (status.containsActiveChallenge()) {
-                viewModel.activeChallenges
-            } else {
-                viewModel.finishedChallenges
-            }
-        val challenge = challenges[position]
+        val challenge = this.challenges[position]
         parent.bind(challenge)
         parent.itemView.setOnClickListener {
             listener.onClickChallenge(challenge)

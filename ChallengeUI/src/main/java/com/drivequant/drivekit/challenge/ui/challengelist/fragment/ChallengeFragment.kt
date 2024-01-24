@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeBinding
@@ -28,6 +29,8 @@ class ChallengeFragment : Fragment() {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     private lateinit var dateSelectorView: DKDateSelectorView
+
+    private var adapter: ChallengeListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,25 +51,18 @@ class ChallengeFragment : Fragment() {
 
         this.viewModel.updateData.observe(viewLifecycleOwner) {
             updateDateSelector()
-            //updateChallengeList() //TODO
+            updateChallengeList()
         }
 
         this.viewModel.syncStatus.observe(viewLifecycleOwner) {
             updateSwipeRefreshTripsVisibility(false)
         }
 
-        //viewModel.fetchChallengeList()
         viewModel.syncChallengesError.observe(viewLifecycleOwner) {
             if (!it) {
-                Toast.makeText(
-                    context,
-                    R.string.dk_challenge_failed_to_sync_challenges,
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, R.string.dk_challenge_failed_to_sync_challenges, Toast.LENGTH_SHORT).show()
             }
-            //viewModel.filterChallenges()
         }
-        //setViewPager()
     }
 
     override fun onDestroyView() {
@@ -89,19 +85,11 @@ class ChallengeFragment : Fragment() {
         binding.tabLayoutChallenge.apply {
             setupWithViewPager(binding.viewPagerChallenge)
             setBackgroundColor(Color.WHITE)
-            setTabTextColors(
+            setTabTextColors( TODO keep this
                 DriveKitUI.colors.complementaryFontColor(),
                 DriveKitUI.colors.secondaryColor()
             )
-            updateTabsFont()
-        }
-    }*/
-
-    /*private fun updateProgressVisibility(displayProgress: Boolean) {
-        binding.progressCircular.visibility = if (displayProgress) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            updateTabsFont() TODO keep this
         }
     }*/
 
