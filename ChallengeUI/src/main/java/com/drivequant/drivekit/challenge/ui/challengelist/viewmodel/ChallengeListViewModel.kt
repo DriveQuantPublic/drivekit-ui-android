@@ -14,6 +14,7 @@ import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
+import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.Date
 
@@ -173,8 +174,7 @@ class ChallengeListViewModel : ViewModel() {
 
 
     private fun buildChallengeListData(challengeList: List<Challenge>) {
-        // TODO filter DEPRECATED and UNKNOWN challengeType when internal modules are available
-        this.sourceChallenges = challengeList.map {
+        this.sourceChallenges = filterChallengeTypes(challengeList).map {
             ChallengeData(
                 it.challengeId,
                 it.title,
@@ -203,4 +203,8 @@ class ChallengeListViewModel : ViewModel() {
         this.userHasAlreadyRegistered = this.sourceChallenges.any { it.isRegistered }
         this.userHasAlreadyRanked = this.sourceChallenges.any { it.isRegistered && it.rank > 0}
     }
+
+    // Do not take into account `DEPRECATED` and `UNKNOWN` challenge types
+    private fun filterChallengeTypes(challenges: List<Challenge>): List<Challenge> =
+        challenges.filterNot { it.challengeType == ChallengeType.DEPRECATED || it.challengeType == ChallengeType.UNKNOWN }
 }

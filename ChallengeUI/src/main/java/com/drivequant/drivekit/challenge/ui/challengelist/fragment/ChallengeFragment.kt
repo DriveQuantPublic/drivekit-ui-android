@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +27,6 @@ import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.updateTabsFont
 import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
-import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
@@ -38,7 +38,6 @@ class ChallengeFragment : Fragment(), ChallengeListener {
     private val binding get() = _binding!! // This property is only valid between onCreateView and onDestroyView
 
     private lateinit var dateSelectorView: DKDateSelectorView
-
     private var adapter: ChallengeListAdapter? = null
 
     override fun onCreateView(
@@ -113,6 +112,10 @@ class ChallengeFragment : Fragment(), ChallengeListener {
                 setText(this@ChallengeFragment.viewModel.computeNoChallengeTextResId())
                 headLine2(DriveKitUI.colors.mainFontColor())
             }
+            view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
+                this.noTrips.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+            }
+            DrawableCompat.setTint(this.noTrips.background, DriveKitUI.colors.neutralColor())
             viewGroupEmptyScreen.visibility = View.VISIBLE
         }
         binding.dkRecyclerViewChallenge.visibility = View.GONE
