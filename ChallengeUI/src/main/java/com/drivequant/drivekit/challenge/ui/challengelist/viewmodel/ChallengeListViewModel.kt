@@ -1,10 +1,12 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.drivequant.drivekit.challenge.ChallengesQueryListener
 import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
+import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
@@ -20,14 +22,16 @@ class ChallengeListViewModel : ViewModel() {
     val dateSelectorViewModel = DKDateSelectorViewModel()
     private var selectedDate: Date? = null
 
-    var selectedCategory: ChallengeListCategory = ChallengeListCategory.RANKED //TEST
+    private var selectedCategory: ChallengeListCategory = ChallengeListCategory.ACTIVE
+
+    private var sourceChallenges: List<ChallengeData> = listOf()
+    var currentChallenges: List<ChallengeData> = listOf()
         private set
+    val hasChallengesToDisplay: Boolean
+        get() = this.currentChallenges.isNotEmpty()
 
-    var challenges: List<ChallengeData> = listOf()
-
-    var activeChallenges = mutableListOf<ChallengeData>()
-    var userRankedChallenges = mutableListOf<ChallengeData>()
-    var finishedChallenges = mutableListOf<ChallengeData>()
+    var userHasAlreadyRegistered: Boolean = false
+    var userHasAlreadyRanked: Boolean = false
 
     val syncStatus = MutableLiveData<Any>()
     val updateData = MutableLiveData<Any>()
@@ -36,7 +40,11 @@ class ChallengeListViewModel : ViewModel() {
 
     init {
         configureDateSelector()
+        updateLocalData()
+        synchronizeChallenges()
+    }
 
+    fun updateLocalData() {
         // Get local challenges
         DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
             override fun onResponse(
@@ -44,23 +52,21 @@ class ChallengeListViewModel : ViewModel() {
                 challenges: List<Challenge>
             ) {
                 if (challengesSyncStatus == ChallengesSyncStatus.CACHE_DATA_ONLY) {
-                    this@ChallengeListViewModel.challenges = buildChallengeListData(challenges)
+                    buildChallengeListData(challenges)
                     update()
                 }
             }
         }, SynchronizationType.CACHE)
-
-        updateData()
     }
 
-    fun updateData() {
+    fun synchronizeChallenges() {
         // Synchronize challenge list from DriveQuant servers
         DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
             override fun onResponse(
                 challengesSyncStatus: ChallengesSyncStatus,
                 challenges: List<Challenge>
             ) {
-                this@ChallengeListViewModel.challenges = buildChallengeListData(challenges)
+                buildChallengeListData(challenges)
                 update(true)
                 syncStatus.postValue(Any())
 
@@ -69,38 +75,67 @@ class ChallengeListViewModel : ViewModel() {
         })
     }
 
+    @StringRes
+    fun computeNoChallengeTextResId(): Int {
+        return when (this.selectedCategory) {
+            ChallengeListCategory.ACTIVE -> R.string.dk_challenge_no_active_challenge
+
+            ChallengeListCategory.RANKED -> {
+                if (!this.userHasAlreadyRegistered) {
+                    R.string.dk_challenge_no_ranked_challenge_not_registered_yet
+                } else if (!this.userHasAlreadyRanked) {
+                    R.string.dk_challenge_no_ranked_challenge_not_ranked_yet
+                } else {
+                    R.string.dk_challenge_no_ranked_challenge_empty_list
+                }
+            }
+
+            ChallengeListCategory.ALL -> R.string.dk_challenge_no_finished_challenge
+        }
+    }
+
+    fun updateSelectedCategory(category: ChallengeListCategory) {
+        if (this.selectedCategory != category) {
+            this.selectedCategory = category
+            update(resettingSelectedDate = true)
+        }
+    }
+
+    @StringRes
+    fun getScreenTagResId() = when (this.selectedCategory) {
+        ChallengeListCategory.ACTIVE -> R.string.dk_tag_challenge_list_active
+        ChallengeListCategory.RANKED -> R.string.dk_tag_challenge_list_ranked
+        ChallengeListCategory.ALL -> R.string.dk_tag_challenge_list_all
+    }
+
     private fun update(resettingSelectedDate: Boolean = false) {
         if (resettingSelectedDate) {
             this.selectedDate = null
         }
 
         // Get local challenges for current Tab
-        val currentChallenges = getChallengesByCategory()
+        val challengesByCategory = getChallengesByCategory()
 
-        if (currentChallenges.isEmpty()) {
-            //configureWithNoData()
+        val dates = computeChallengeYearList(challengesByCategory).toList()
+        if (dates.isNotEmpty()) {
+            val selectedDateIndex: Int = this.selectedDate?.let {
+                val index = dates.indexOf(it)
+                if (index < 0) {
+                    null
+                } else {
+                    index
+                }
+            } ?: (dates.size - 1)
+
+            val date = dates[selectedDateIndex]
+            this.selectedDate = date
+            this.currentChallenges = challengesByCategory.filter { it.startAndEndYear.contains(this.selectedDate) }
+            this.dateSelectorViewModel.configure(dates, selectedDateIndex, DKPeriod.YEAR)
         } else {
-            // Get all selectable years for current challenges
-            val dates = computeChallengeYearList(currentChallenges).toList()
-
-            if (dates.isNotEmpty()) {
-                val selectedDateIndex: Int = this.selectedDate?.let {
-                    val index = dates.indexOf(it)
-                    if (index < 0) {
-                        null
-                    } else {
-                        index
-                    }
-                } ?: (dates.size - 1)
-
-                val date = dates[selectedDateIndex]
-                this.selectedDate = date
-                this.dateSelectorViewModel.configure(dates, selectedDateIndex, DKPeriod.YEAR)
-            } else {
-                val date = Date().startingFrom(CalendarField.YEAR)
-                this.selectedDate = date
-                this.dateSelectorViewModel.configure(listOf(date), 0, DKPeriod.YEAR)
-            }
+            val date = Date().startingFrom(CalendarField.YEAR)
+            this.selectedDate = date
+            this.currentChallenges = challengesByCategory.filter { it.startAndEndYear.contains(this.selectedDate) }
+            this.dateSelectorViewModel.configure(listOf(date), 0, DKPeriod.YEAR)
         }
         this.updateData.postValue(Any())
     }
@@ -117,13 +152,6 @@ class ChallengeListViewModel : ViewModel() {
         dateSelectorViewModel.configure(listOf(startDate), 0, DKPeriod.YEAR)
     }
 
-    fun updateSelectedCategory(category: ChallengeListCategory) {
-        if (this.selectedCategory != category) {
-            this.selectedCategory = category
-            update()
-        }
-    }
-
     private fun updateSelectedDate(date: Date) {
         if (this.selectedDate != date) {
             this.selectedDate = date
@@ -132,57 +160,21 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     private fun getChallengesByCategory() = when (this.selectedCategory) {
-        ChallengeListCategory.ACTIVE -> this.challenges.filter { it.status == ChallengeStatus.SCHEDULED || it.status == ChallengeStatus.PENDING }
-        ChallengeListCategory.RANKED -> this.challenges.filter { it.rank > 0 }
-        ChallengeListCategory.ALL -> this.challenges
+        ChallengeListCategory.ACTIVE -> this.sourceChallenges.filter { it.status == ChallengeStatus.SCHEDULED || it.status == ChallengeStatus.PENDING }
+        ChallengeListCategory.RANKED -> this.sourceChallenges.filter { it.rank > 0 }
+        ChallengeListCategory.ALL -> this.sourceChallenges
     }
 
     private fun computeChallengeYearList(challenges: List<ChallengeData>): Set<Date> {
         val dates = mutableSetOf<Date>()
-        challenges.forEach {
-            dates.add(it.startDate.startingFrom(CalendarField.YEAR))
-            dates.add(it.endDate.startingFrom(CalendarField.YEAR))
-        }
+        challenges.forEach { dates.addAll(it.startAndEndYear) }
         return dates.sortedBy { it.time }.toSet()
     }
 
-    /*fun filterChallenges() {
-        activeChallenges.clear()
-        finishedChallenges.clear()
-        for (challengeData in challengeListData) {
-            if (challengeData.status.isActiveChallenge()) {
-                activeChallenges.add(challengeData)
-            } else {
-                finishedChallenges.add(challengeData)
-            }
-        }
-    }*/
 
-    /*fun fetchChallengeList(synchronizationType: SynchronizationType = SynchronizationType.DEFAULT) {
-        if (DriveKit.isConfigured()) {
-            DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
-                override fun onResponse(
-                    challengesSyncStatus: ChallengesSyncStatus,
-                    challenges: List<Challenge>) {
-                    val value = when (challengesSyncStatus) {
-                        ChallengesSyncStatus.CACHE_DATA_ONLY,
-                        ChallengesSyncStatus.SUCCESS,
-                        ChallengesSyncStatus.SYNC_ALREADY_IN_PROGRESS -> true
-                        ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY -> false
-                    }
-                    challengeListData = buildChallengeListData(challenges)
-                    syncChallengesError.postValue(value)
-                }
-            }, synchronizationType)
-        } else {
-            syncChallengesError.postValue(false)
-        }
-    }*/
-
-    private fun buildChallengeListData(challengeList: List<Challenge>): MutableList<ChallengeData> {
-        this.challenges = listOf()
-        //challengeListData.clear()
-        return challengeList.map {
+    private fun buildChallengeListData(challengeList: List<Challenge>) {
+        // TODO filter DEPRECATED and UNKNOWN challengeType when internal modules are available
+        this.sourceChallenges = challengeList.map {
             ChallengeData(
                 it.challengeId,
                 it.title,
@@ -190,6 +182,10 @@ class ChallengeListViewModel : ViewModel() {
                 it.conditionsDescription,
                 it.startDate,
                 it.endDate,
+                setOf(
+                    it.startDate.startingFrom(CalendarField.YEAR),
+                    it.endDate.startingFrom(CalendarField.YEAR)
+                ),
                 it.rank,
                 it.rankKey,
                 it.themeCode,
@@ -202,6 +198,9 @@ class ChallengeListViewModel : ViewModel() {
                 it.rules,
                 it.status
             )
-        }.toMutableList()
+        }
+
+        this.userHasAlreadyRegistered = this.sourceChallenges.any { it.isRegistered }
+        this.userHasAlreadyRanked = this.sourceChallenges.any { it.isRegistered && it.rank > 0}
     }
 }

@@ -13,8 +13,9 @@ class ChallengeData(
     val conditionsDescription: String?,
     val startDate: Date,
     val endDate: Date,
-    val rank: Int,
-    val rankKey: String?,
+    val startAndEndYear: Set<Date>,
+    val rank: Int, // TODO ajouter un booléen isRanked ?
+    val rankKey: String?, // TODO clean
     val themeCode: Int,
     val iconCode: Int,
     val type: Int,
@@ -25,7 +26,6 @@ class ChallengeData(
     val rules: String?,
     val status: ChallengeStatus
 ) {
-
     @DrawableRes
     fun getChallengeResourceId(): Int = when (iconCode) {
             101 -> R.drawable.dk_challenge_general_101_trophy

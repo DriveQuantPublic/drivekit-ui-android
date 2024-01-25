@@ -5,24 +5,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.drivequant.drivekit.challenge.ui.R
+import com.drivequant.drivekit.challenge.ui.challengedetail.activity.ChallengeDetailActivity
 import com.drivequant.drivekit.challenge.ui.challengelist.adapter.ChallengeListAdapter
 import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListViewModel
+import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeListener
 import com.drivequant.drivekit.challenge.ui.databinding.DkFragmentChallengeBinding
+import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorView
-import com.drivequant.drivekit.core.SynchronizationType
+import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
+import com.drivequant.drivekit.common.ui.extension.normalText
+import com.drivequant.drivekit.common.ui.extension.updateTabsFont
+import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
+import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
-
 // TODO rename to ChallengeListFragment ?
-class ChallengeFragment : Fragment() {
+class ChallengeFragment : Fragment(), ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
     private var _binding: DkFragmentChallengeBinding? = null
@@ -72,26 +81,42 @@ class ChallengeFragment : Fragment() {
 
     fun updateChallenge() {
         if (this::viewModel.isInitialized) {
-            //viewModel.fetchChallengeList(SynchronizationType.CACHE)
+            viewModel.updateLocalData()
         }
     }
 
-    /*private fun setViewPager() {
-        binding.viewPagerChallenge.adapter =
-            ChallengesFragmentPagerAdapter(
-                childFragmentManager,
-                viewModel, requireContext()
-            )
-        binding.tabLayoutChallenge.apply {
-            setupWithViewPager(binding.viewPagerChallenge)
-            setBackgroundColor(Color.WHITE)
-            setTabTextColors( TODO keep this
-                DriveKitUI.colors.complementaryFontColor(),
-                DriveKitUI.colors.secondaryColor()
-            )
-            updateTabsFont() TODO keep this
+    private fun updateChallengeList() {
+        // TODO improve that
+        this.adapter = ChallengeListAdapter(
+            requireContext(),
+            this@ChallengeFragment.viewModel.currentChallenges,
+            this
+        )
+        binding.dkRecyclerViewChallenge.adapter = adapter
+
+        if (this.viewModel.hasChallengesToDisplay) {
+            displayChallenges()
+        } else {
+            displayNoChallenges()
         }
-    }*/
+    }
+
+    private fun displayChallenges() {
+        binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext()) // TODO call once
+        binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
+        binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
+    }
+
+    private fun displayNoChallenges() {
+        binding.noChallenges.apply {
+            dkTextViewNoChallenge.apply {
+                setText(this@ChallengeFragment.viewModel.computeNoChallengeTextResId())
+                headLine2(DriveKitUI.colors.mainFontColor())
+            }
+            viewGroupEmptyScreen.visibility = View.VISIBLE
+        }
+        binding.dkRecyclerViewChallenge.visibility = View.GONE
+    }
 
     private fun checkViewModelInitialization() {
         if (!this::viewModel.isInitialized) {
@@ -129,12 +154,21 @@ class ChallengeFragment : Fragment() {
                 addTab(tab)
             }
 
+            setTabTextColors(
+                DriveKitUI.colors.complementaryFontColor(),
+                DriveKitUI.colors.secondaryColor()
+            )
             setSelectedTabIndicatorColor(DriveKitUI.colors.secondaryColor())
             setBackgroundColor(DriveKitUI.colors.backgroundViewColor())
+            updateTabsFont()
 
             addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    //TODO trackscreen here ?
+                    DriveKitUI.analyticsListener?.trackScreen(
+                        getString(this@ChallengeFragment.viewModel.getScreenTagResId()),
+                        javaClass.simpleName
+                    )
+
                     (tab?.tag as ChallengeListCategory?)?.let {
                         this@ChallengeFragment.viewModel.updateSelectedCategory(it)
                     }
@@ -166,6 +200,35 @@ class ChallengeFragment : Fragment() {
 
     private fun updateData() {
         updateSwipeRefreshTripsVisibility(true)
-        this.viewModel.updateData()
+        this.viewModel.synchronizeChallenges()
+    }
+
+    override fun onClickChallenge(challengeData: ChallengeData) {
+        when {
+            challengeData.shouldDisplayExplaining() -> {
+                val alertDialog = DKAlertDialog.LayoutBuilder()
+                    .init(requireContext())
+                    .layout(com.drivequant.drivekit.common.ui.R.layout.template_alert_dialog_layout)
+                    .positiveButton()
+                    .show()
+
+                val titleTextView = alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_title)
+                val descriptionTextView =
+                    alertDialog.findViewById<TextView>(com.drivequant.drivekit.common.ui.R.id.text_view_alert_description)
+                titleTextView?.setText(R.string.app_name)
+                descriptionTextView?.setText(R.string.dk_challenge_not_a_participant)
+                titleTextView?.headLine1()
+                descriptionTextView?.normalText()
+            }
+            challengeData.shouldDisplayChallengeDetail() ->
+                ChallengeDetailActivity.launchActivity(
+                    requireActivity(),
+                    challengeData.challengeId)
+
+            else -> ChallengeParticipationActivity.launchActivity(
+                requireActivity(),
+                challengeData.challengeId
+            )
+        }
     }
 }
