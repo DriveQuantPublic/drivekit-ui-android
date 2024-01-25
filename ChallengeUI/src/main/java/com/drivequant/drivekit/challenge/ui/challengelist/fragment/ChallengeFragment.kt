@@ -71,6 +71,8 @@ class ChallengeFragment : Fragment(), ChallengeListener {
                 Toast.makeText(context, R.string.dk_challenge_failed_to_sync_challenges, Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onDestroyView() {
@@ -101,7 +103,6 @@ class ChallengeFragment : Fragment(), ChallengeListener {
     }
 
     private fun displayChallenges() {
-        binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext()) // TODO call once
         binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
         binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
     }

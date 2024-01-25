@@ -14,12 +14,12 @@
     <string name="dk_challenge_failed_to_sync_challenges">Les données du challenge n\'ont pas pu être récupérées, assurez-vous d\'être connecté à internet ou réessayez utlérieurement.</string>
     <string name="dk_challenge_finished">Terminés</string>
     <string name="dk_challenge_list_join">Rejoins le challenge 🏆</string>
-    <string name="dk_challenge_list_join_among">Rejoins les %d participants 🏆</string>
+    <string name="dk_challenge_list_join_among">Rejoins les %s participants 🏆</string>
     <string name="dk_challenge_list_not_ranked">Tu n\'as pas été classé</string>
     <string name="dk_challenge_list_not_registered">Tu n\'as pas participé 💔</string>
-    <string name="dk_challenge_list_ranked">Ma position : %1$d / %2$d</string>
+    <string name="dk_challenge_list_ranked">Ma position : %1$s / %2$s</string>
     <string name="dk_challenge_list_registered">Tu es inscrit, bonne route 🚗</string>
-    <string name="dk_challenge_list_registered_among">Tu fais partie des %d participants</string>
+    <string name="dk_challenge_list_registered_among">Tu fais partie des %s participants</string>
     <string name="dk_challenge_menu">Challenges</string>
     <string name="dk_challenge_nb_trip">Nombre de trajets</string>
     <string name="dk_challenge_no_active_challenge">Il n\'y a pas de challenge en cours.</string>

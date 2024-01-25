@@ -8,12 +8,13 @@ import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
+import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeState
+import com.drivequant.drivekit.challenge.ui.challengelist.model.getChallengeState
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.Challenge
-import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.Date
@@ -161,8 +162,8 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     private fun getChallengesByCategory() = when (this.selectedCategory) {
-        ChallengeListCategory.ACTIVE -> this.sourceChallenges.filter { it.status == ChallengeStatus.SCHEDULED || it.status == ChallengeStatus.PENDING }
-        ChallengeListCategory.RANKED -> this.sourceChallenges.filter { it.rank > 0 }
+        ChallengeListCategory.ACTIVE -> this.sourceChallenges.filter { it.state == ChallengeState.ACTIVE }
+        ChallengeListCategory.RANKED -> this.sourceChallenges.filter { it.isRanked }
         ChallengeListCategory.ALL -> this.sourceChallenges
     }
 
@@ -178,8 +179,6 @@ class ChallengeListViewModel : ViewModel() {
             ChallengeData(
                 it.challengeId,
                 it.title,
-                it.description,
-                it.conditionsDescription,
                 it.startDate,
                 it.endDate,
                 setOf(
@@ -187,24 +186,22 @@ class ChallengeListViewModel : ViewModel() {
                     it.endDate.startingFrom(CalendarField.YEAR)
                 ),
                 it.rank,
-                it.rankKey,
-                it.themeCode,
-                it.iconCode,
-                it.type,
+                isRanked = it.rank > 0,
+                it.challengeType,
                 it.isRegistered,
                 it.conditionsFilled,
-                it.driverConditions,
-                it.groups,
-                it.rules,
-                it.status
+                it.getChallengeState(),
+                it.status,
+                it.nbDriverRegistered,
+                it.nbDriverRanked
             )
         }
 
         this.userHasAlreadyRegistered = this.sourceChallenges.any { it.isRegistered }
-        this.userHasAlreadyRanked = this.sourceChallenges.any { it.isRegistered && it.rank > 0}
+        this.userHasAlreadyRanked = this.sourceChallenges.any { it.isRegistered && it.isRanked }
     }
 
-    // Do not take into account `DEPRECATED` and `UNKNOWN` challenge types
+    // Do not display `DEPRECATED` and `UNKNOWN` challenge types
     private fun filterChallengeTypes(challenges: List<Challenge>): List<Challenge> =
         challenges.filterNot { it.challengeType == ChallengeType.DEPRECATED || it.challengeType == ChallengeType.UNKNOWN }
 }
