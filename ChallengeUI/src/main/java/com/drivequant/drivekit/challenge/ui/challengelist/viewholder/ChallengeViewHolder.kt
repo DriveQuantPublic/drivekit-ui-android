@@ -8,7 +8,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeData
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.extension.formatDate
-import com.drivequant.drivekit.common.ui.extension.headLine1
+import com.drivequant.drivekit.common.ui.extension.headLine2
 import com.drivequant.drivekit.common.ui.extension.normalText
 import com.drivequant.drivekit.common.ui.extension.smallText
 import com.drivequant.drivekit.common.ui.extension.tintDrawable
@@ -36,7 +36,7 @@ internal class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     }
 
     private fun setStyle() {
-        this.title.headLine1(DriveKitUI.colors.primaryColor())
+        this.title.headLine2(DriveKitUI.colors.primaryColor())
         this.calendarIcon.drawable.tintDrawable(DriveKitUI.colors.complementaryFontColor())
         this.dates.smallText(DriveKitUI.colors.complementaryFontColor())
         this.participationText.normalText(DriveKitUI.colors.secondaryColor())
