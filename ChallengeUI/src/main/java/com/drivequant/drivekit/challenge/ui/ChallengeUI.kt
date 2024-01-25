@@ -6,13 +6,13 @@ import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.DriveKitChallengeListener
 import com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel.ChallengeDetailItem
 import com.drivequant.drivekit.challenge.ui.challengelist.activity.ChallengeListActivity
-import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeFragment
+import com.drivequant.drivekit.challenge.ui.challengelist.fragment.ChallengeListFragment
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity
 import com.drivequant.drivekit.challenge.ui.joinchallenge.activity.ChallengeParticipationActivity.Companion.CHALLENGE_ID_EXTRA
 
 object ChallengeUI : DriveKitChallengeListener {
 
-    private var challengeListFragment: ChallengeFragment? = null
+    private var challengeListFragment: ChallengeListFragment? = null
 
     fun initialize() {
         DriveKitChallenge.addListener(this)
@@ -30,8 +30,8 @@ object ChallengeUI : DriveKitChallengeListener {
         context.startActivity(intent)
     }
 
-    fun createChallengeListFragment(): ChallengeFragment {
-       val challengeListFragment = ChallengeFragment()
+    fun createChallengeListFragment(): ChallengeListFragment {
+       val challengeListFragment = ChallengeListFragment()
        this.challengeListFragment = challengeListFragment
        return this.challengeListFragment!!
     }

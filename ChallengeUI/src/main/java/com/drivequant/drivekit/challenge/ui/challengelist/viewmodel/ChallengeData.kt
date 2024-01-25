@@ -20,15 +20,15 @@ class ChallengeData(
     val startDate: Date,
     val endDate: Date,
     val startAndEndYear: Set<Date>,
-    val rank: Int,
+    private val rank: Int,
     val isRanked: Boolean,
     private val type: ChallengeType,
     val isRegistered: Boolean,
     private val conditionsFilled: Boolean,
     val state: ChallengeState,
     val status: ChallengeStatus,
-    val nbDriverRegistered: Int,
-    val nbDriverRanked: Int
+    private val nbDriverRegistered: Int,
+    private val nbDriverRanked: Int
 ) {
     @DrawableRes
     fun getIconResId(): Int? = when (type) {

@@ -30,8 +30,7 @@ import com.drivequant.drivekit.common.ui.utils.DKAlertDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
-// TODO rename to ChallengeListFragment ?
-class ChallengeFragment : Fragment(), ChallengeListener {
+class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private lateinit var viewModel: ChallengeListViewModel
     private var _binding: DkFragmentChallengeBinding? = null
@@ -62,12 +61,9 @@ class ChallengeFragment : Fragment(), ChallengeListener {
             updateChallengeList()
         }
 
-        this.viewModel.syncStatus.observe(viewLifecycleOwner) {
+        this.viewModel.syncStatus.observe(viewLifecycleOwner) { success ->
             updateSwipeRefreshTripsVisibility(false)
-        }
-
-        viewModel.syncChallengesError.observe(viewLifecycleOwner) {
-            if (!it) {
+            if (!success) {
                 Toast.makeText(context, R.string.dk_challenge_failed_to_sync_challenges, Toast.LENGTH_SHORT).show()
             }
         }
@@ -90,7 +86,7 @@ class ChallengeFragment : Fragment(), ChallengeListener {
         // TODO improve that
         this.adapter = ChallengeListAdapter(
             requireContext(),
-            this@ChallengeFragment.viewModel.currentChallenges,
+            this@ChallengeListFragment.viewModel.currentChallenges,
             this
         )
         binding.dkRecyclerViewChallenge.adapter = adapter
@@ -110,7 +106,7 @@ class ChallengeFragment : Fragment(), ChallengeListener {
     private fun displayNoChallenges() {
         binding.noChallenges.apply {
             dkTextViewNoChallenge.apply {
-                setText(this@ChallengeFragment.viewModel.computeNoChallengeTextResId())
+                setText(this@ChallengeListFragment.viewModel.computeNoChallengeTextResId())
                 headLine2(DriveKitUI.colors.mainFontColor())
             }
             view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
@@ -138,8 +134,6 @@ class ChallengeFragment : Fragment(), ChallengeListener {
         if (this.viewModel.dateSelectorViewModel.hasDates()) {
             binding.dateSelectorContainer.visibility = View.VISIBLE
             this.dateSelectorView.configure(viewModel.dateSelectorViewModel)
-        } else {
-            // TODO should DateSelector remains always visible?
         }
     }
 
@@ -169,12 +163,12 @@ class ChallengeFragment : Fragment(), ChallengeListener {
             addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     DriveKitUI.analyticsListener?.trackScreen(
-                        getString(this@ChallengeFragment.viewModel.getScreenTagResId()),
+                        getString(this@ChallengeListFragment.viewModel.getScreenTagResId()),
                         javaClass.simpleName
                     )
 
                     (tab?.tag as ChallengeListCategory?)?.let {
-                        this@ChallengeFragment.viewModel.updateSelectedCategory(it)
+                        this@ChallengeListFragment.viewModel.updateSelectedCategory(it)
                     }
                 }
 
@@ -193,7 +187,7 @@ class ChallengeFragment : Fragment(), ChallengeListener {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
-                configure(this@ChallengeFragment.viewModel.dateSelectorViewModel)
+                configure(this@ChallengeListFragment.viewModel.dateSelectorViewModel)
             }
             binding.dateSelectorContainer.apply {
                 removeAllViews()

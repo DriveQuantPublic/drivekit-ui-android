@@ -32,13 +32,11 @@ class ChallengeListViewModel : ViewModel() {
     val hasChallengesToDisplay: Boolean
         get() = this.currentChallenges.isNotEmpty()
 
-    var userHasAlreadyRegistered: Boolean = false
-    var userHasAlreadyRanked: Boolean = false
+    private var userHasAlreadyRegistered: Boolean = false
+    private var userHasAlreadyRanked: Boolean = false
 
-    val syncStatus = MutableLiveData<Any>()
+    val syncStatus = MutableLiveData<Boolean>()
     val updateData = MutableLiveData<Any>()
-    var syncChallengesError: MutableLiveData<Boolean> = MutableLiveData()
-        private set
 
     init {
         configureDateSelector()
@@ -70,9 +68,8 @@ class ChallengeListViewModel : ViewModel() {
             ) {
                 buildChallengeListData(challenges)
                 update(true)
-                syncStatus.postValue(Any())
-
-                // TODO should send toast error if status is ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY
+                val success = challengesSyncStatus != ChallengesSyncStatus.FAILED_TO_SYNC_CHALLENGES_CACHE_ONLY
+                syncStatus.postValue(success)
             }
         })
     }
