@@ -131,14 +131,14 @@ class ChallengeParticipationFragment : Fragment() {
             viewModel.manageChallengeDisplayState()?.let {
                 when (it) {
                     ChallengeParticipationDisplayState.PROGRESS -> progress(context)
-                    ChallengeParticipationDisplayState.JOIN -> join(context)
+                    ChallengeParticipationDisplayState.JOIN -> join()
                     ChallengeParticipationDisplayState.COUNT_DOWN -> countDown(context)
                 }
             }
         }
     }
 
-    private fun join(context: Context) {
+    private fun join() {
         binding.textViewJoinChallenge.apply {
             setText(R.string.dk_challenge_participate_button)
             setBackgroundColor(DriveKitUI.colors.secondaryColor())

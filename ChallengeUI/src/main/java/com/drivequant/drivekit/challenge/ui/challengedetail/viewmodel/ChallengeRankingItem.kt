@@ -5,14 +5,13 @@ import android.graphics.drawable.Drawable
 import android.text.Spannable
 import android.text.SpannableString
 import androidx.core.content.ContextCompat
-import com.drivequant.drivekit.challenge.ui.common.ChallengeType
-import com.drivequant.drivekit.challenge.ui.common.challengeType
 import com.drivequant.drivekit.common.ui.component.ranking.DKDriverRankingItem
 import com.drivequant.drivekit.common.ui.extension.format
 import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 
 class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                            private val driverRank: Int,
@@ -39,7 +38,7 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
     override fun getDistance(context: Context): String = viewModel.formatChallengeDistance(driverDistance, context).convertToString()
 
     override fun getScore(context: Context, textColor: Int): Spannable {
-        return if (viewModel.challenge.challengeType() == ChallengeType.UNKNOWN || viewModel.challenge.challengeType() == ChallengeType.DEPRECATED) {
+        return if (viewModel.challenge.challengeType == ChallengeType.UNKNOWN || viewModel.challenge.challengeType == ChallengeType.DEPRECATED) {
             SpannableString("")
         } else {
             if (driverScore == 10.0) {

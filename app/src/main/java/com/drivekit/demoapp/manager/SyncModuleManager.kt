@@ -117,7 +117,8 @@ object SyncModuleManager {
                     TripsSyncStatus.NO_ERROR -> SyncStatus.SUCCESS
                     TripsSyncStatus.CACHE_DATA_ONLY,
                     TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY,
-                    TripsSyncStatus.FAILED_TO_SYNC_SAFETY_EVENTS -> SyncStatus.FAILED
+                    TripsSyncStatus.FAILED_TO_SYNC_SAFETY_EVENTS,
+                    TripsSyncStatus.SYNC_ALREADY_IN_PROGRESS -> SyncStatus.FAILED
                 }.let {
                     listener?.onModuleSyncResult(it)
                 }

@@ -13,8 +13,6 @@ import com.drivequant.drivekit.challenge.ChallengeDetailQueryListener
 import com.drivequant.drivekit.challenge.ChallengeDetailSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.common.ChallengeType
-import com.drivequant.drivekit.challenge.ui.common.challengeType
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgression
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
@@ -30,6 +28,7 @@ import com.drivequant.drivekit.core.DriveKit
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.databaseutils.entity.Challenge
 import com.drivequant.drivekit.databaseutils.entity.ChallengeDetail
+import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 import com.drivequant.drivekit.databaseutils.entity.Trip
 import com.drivequant.drivekit.dbchallengeaccess.DbChallengeAccess
 import kotlin.math.roundToInt
@@ -47,7 +46,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
     }
 
-    private fun isChallengeManaged(): Boolean = (challenge.challengeType() != ChallengeType.DEPRECATED && challenge.challengeType() != ChallengeType.UNKNOWN)
+    private fun isChallengeManaged(): Boolean = (challenge.challengeType != ChallengeType.DEPRECATED && challenge.challengeType != ChallengeType.UNKNOWN)
 
     fun getLocalChallengeDetail(): ChallengeDetail? {
         return if (isChallengeManaged()) {
@@ -86,7 +85,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getTripData() = when (challenge.challengeType()) {
+    fun getTripData() = when (challenge.challengeType) {
         ChallengeType.SAFETY,
         ChallengeType.HARD_BRAKING,
         ChallengeType.HARD_ACCELERATION -> TripData.SAFETY
@@ -189,7 +188,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
 
     @StringRes
-    fun getChallengeResultScoreTitleResId(): Int = when (challenge.challengeType()) {
+    fun getChallengeResultScoreTitleResId(): Int = when (challenge.challengeType) {
         ChallengeType.SAFETY -> R.string.dk_challenge_safety_score
         ChallengeType.ECODRIVING -> R.string.dk_challenge_eco_driving_score
         ChallengeType.DISTRACTION -> R.string.dk_challenge_distraction_score
@@ -271,7 +270,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getRankingHeaderIcon(context: Context) = when (challenge.challengeType()) {
+    fun getRankingHeaderIcon(context: Context) = when (challenge.challengeType) {
         ChallengeType.SAFETY,
         ChallengeType.HARD_BRAKING,
         ChallengeType.HARD_ACCELERATION -> R.drawable.dk_challenge_leaderboard_safety
