@@ -5,7 +5,6 @@ import android.text.Spannable
 import androidx.annotation.DrawableRes
 import androidx.core.text.toSpannable
 import com.drivequant.drivekit.challenge.ui.R
-import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeState
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -20,12 +19,12 @@ class ChallengeData(
     val startDate: Date,
     val endDate: Date,
     val startAndEndYear: Set<Date>,
+    val isFinished: Boolean,
     private val rank: Int,
     val isRanked: Boolean,
     private val type: ChallengeType,
     val isRegistered: Boolean,
     private val conditionsFilled: Boolean,
-    val state: ChallengeState,
     val status: ChallengeStatus,
     private val nbDriverRegistered: Int,
 ) {
@@ -44,70 +43,52 @@ class ChallengeData(
     fun getParticipationText(context: Context): Spannable {
         val textColor = DriveKitUI.colors.secondaryColor()
 
-        return when (this.state) {
-            ChallengeState.ACTIVE, ChallengeState.UNDERWAY -> {
-                if (this.isRegistered) {
-                    if (this.isRanked) {
-                        DKResource.buildString(
-                            context,
-                            R.string.dk_challenge_list_ranked,
-                            textColor,
-                            TextArg(this.rank.toString()),
-                            TextArg(this.nbDriverRegistered.toString())
-                        )
-                    } else {
-                        if (this.displayParticipantsCount()) {
-                            DKResource.buildString(
-                                context,
-                                R.string.dk_challenge_list_registered_among,
-                                textColor,
-                                TextArg(this.nbDriverRegistered.toString())
-                            )
-                        } else {
-                            DKSpannable().append(context.getString(R.string.dk_challenge_list_registered))
-                                .toSpannable().toSpannable()
-                        }
-                    }
+        return if (this.isFinished) {
+            if (this.isRegistered) {
+                if (this.isRanked) {
+                    DKResource.buildString(context, R.string.dk_challenge_list_ranked, textColor, TextArg("${this.rank} / ${this.nbDriverRegistered}"))
+                } else {
+                    DKSpannable().append(context.getString(R.string.dk_challenge_list_not_ranked)).toSpannable().toSpannable()
+                }
+            } else {
+                DKSpannable().append(context.getString(R.string.dk_challenge_list_not_registered)).toSpannable().toSpannable()
+            }
+        } else {
+            if (this.isRegistered) {
+                if (this.isRanked) {
+                    DKResource.buildString(
+                        context,
+                        R.string.dk_challenge_list_ranked,
+                        textColor,
+                        TextArg("${this.rank } / ${this.nbDriverRegistered}")
+                    )
                 } else {
                     if (this.displayParticipantsCount()) {
                         DKResource.buildString(
                             context,
-                            R.string.dk_challenge_list_join_among,
+                            R.string.dk_challenge_list_registered_among,
                             textColor,
                             TextArg(this.nbDriverRegistered.toString())
                         )
                     } else {
-                        DKSpannable().append(context.getString(R.string.dk_challenge_list_join))
+                        DKSpannable().append(context.getString(R.string.dk_challenge_list_registered))
                             .toSpannable().toSpannable()
                     }
                 }
-            }
-
-            ChallengeState.COMPLETE -> {
-                if (this.isRegistered) {
-                    if (this.isRanked) {
-                        DKResource.buildString(
-                            context,
-                            R.string.dk_challenge_list_ranked,
-                            textColor,
-                            TextArg(this.rank.toString()),
-                            TextArg(this.nbDriverRegistered.toString())
-                        )
-                    } else {
-                        DKSpannable().append(context.getString(R.string.dk_challenge_list_not_ranked))
-                            .toSpannable().toSpannable()
-                    }
+            } else {
+                if (this.displayParticipantsCount()) {
+                    DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, TextArg(this.nbDriverRegistered.toString())
+                    )
                 } else {
-                    DKSpannable().append(context.getString(R.string.dk_challenge_list_not_registered))
-                        .toSpannable().toSpannable()
+                    DKSpannable().append(context.getString(R.string.dk_challenge_list_join)).toSpannable().toSpannable()
                 }
             }
         }
     }
 
-    fun shouldDisplayChallengeDetail() = (state == ChallengeState.COMPLETE && isRegistered) || (status == ChallengeStatus.PENDING && isRegistered && conditionsFilled)
+    fun shouldDisplayChallengeDetail() = (isFinished && isRegistered) || (status == ChallengeStatus.PENDING && isRegistered && conditionsFilled)
 
-    fun shouldDisplayExplaining() = state == ChallengeState.COMPLETE && (!isRegistered || !conditionsFilled)
+    fun shouldDisplayExplaining() = isFinished && (!isRegistered || !conditionsFilled)
 
     private fun displayParticipantsCount() = nbDriverRegistered > 100
 }

@@ -8,13 +8,12 @@ import com.drivequant.drivekit.challenge.ChallengesSyncStatus
 import com.drivequant.drivekit.challenge.DriveKitChallenge
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeListCategory
-import com.drivequant.drivekit.challenge.ui.challengelist.model.ChallengeState
-import com.drivequant.drivekit.challenge.ui.challengelist.model.getChallengeState
 import com.drivequant.drivekit.common.ui.component.dateselector.DKDateSelectorViewModel
 import com.drivequant.drivekit.core.SynchronizationType
 import com.drivequant.drivekit.core.extension.CalendarField
 import com.drivequant.drivekit.core.extension.startingFrom
 import com.drivequant.drivekit.databaseutils.entity.Challenge
+import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 import com.drivequant.drivekit.databaseutils.entity.DKPeriod
 import java.util.Date
@@ -24,7 +23,7 @@ class ChallengeListViewModel : ViewModel() {
     val dateSelectorViewModel = DKDateSelectorViewModel()
     private var selectedDate: Date? = null
 
-    private var selectedCategory: ChallengeListCategory = ChallengeListCategory.ACTIVE
+    private var selectedCategory: ChallengeListCategory = ChallengeListCategory.values().first()
 
     private var sourceChallenges: List<ChallengeData> = listOf()
     var currentChallenges: List<ChallengeData> = listOf()
@@ -157,7 +156,7 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     private fun getChallengesByCategory() = when (this.selectedCategory) {
-        ChallengeListCategory.ACTIVE -> this.sourceChallenges.filter { it.state == ChallengeState.ACTIVE }
+        ChallengeListCategory.ACTIVE -> this.sourceChallenges.filter { !it.isFinished }
         ChallengeListCategory.RANKED -> this.sourceChallenges.filter { it.isRanked }
         ChallengeListCategory.ALL -> this.sourceChallenges
     }
@@ -179,12 +178,12 @@ class ChallengeListViewModel : ViewModel() {
                     it.startDate.startingFrom(CalendarField.YEAR),
                     it.endDate.startingFrom(CalendarField.YEAR)
                 ),
+                isFinished = it.status == ChallengeStatus.FINISHED || it.status == ChallengeStatus.ARCHIVED,
                 it.rank,
                 isRanked = it.rank > 0,
                 it.challengeType,
                 it.isRegistered,
                 it.conditionsFilled,
-                it.getChallengeState(),
                 it.status,
                 it.nbDriverRegistered,
             )

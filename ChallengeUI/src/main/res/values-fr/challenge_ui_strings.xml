@@ -17,7 +17,7 @@
     <string name="dk_challenge_list_join_among">Rejoins les %s participants 🏆</string>
     <string name="dk_challenge_list_not_ranked">Tu n\'as pas été classé</string>
     <string name="dk_challenge_list_not_registered">Tu n\'as pas participé 💔</string>
-    <string name="dk_challenge_list_ranked">Ma position : %1$s / %2$s</string>
+    <string name="dk_challenge_list_ranked">Ma position : %s</string>
     <string name="dk_challenge_list_registered">Tu es inscrit, bonne route 🚗</string>
     <string name="dk_challenge_list_registered_among">Tu fais partie des %s participants</string>
     <string name="dk_challenge_menu">Challenges</string>
