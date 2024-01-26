@@ -181,7 +181,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
                     typeface(BOLD)
                 }).append(
-                    "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                    "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
                         color(DriveKitUI.colors.mainFontColor())
                         size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
                         typeface(BOLD)
@@ -322,7 +322,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
             }
         }
 
-    fun geRankingGlobalRank(context: Context) =
+    fun getRankingGlobalRank(context: Context) =
         if (challengeDetailData?.driverStats?.rank == 0) {
             "-"
         } else {
@@ -337,7 +337,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                 typeface(BOLD)
             }).append(
-                "${challengeDetailData?.nbDriverRanked}", context.resSpans {
+                "${challengeDetailData?.nbDriverRegistered}", context.resSpans {
                     color(DriveKitUI.colors.mainFontColor())
                     size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xbig)
                     typeface(BOLD)
