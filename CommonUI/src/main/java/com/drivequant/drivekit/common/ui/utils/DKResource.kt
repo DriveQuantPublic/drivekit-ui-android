@@ -71,17 +71,17 @@ object DKResource {
         @ColorInt textColor: Int,
         @ColorInt highlightColor: Int,
         @StringRes identifier: Int,
-        vararg args: Number,
+        vararg args: Int,
         @DimenRes textSize: Int = R.dimen.dk_text_normal,
         @DimenRes highlightSize: Int = R.dimen.dk_text_normal
     ): Spannable {
-        val numberArgs = args.map { NumberArg(it, highlightColor, highlightSize) }.toTypedArray()
+        val intArgs = args.map { IntArg(it, highlightColor, highlightSize) }.toTypedArray()
         return buildString(
             context,
             identifier,
             textColor,
             textSize,
-            *numberArgs,
+            *intArgs,
         )
     }
 
@@ -197,15 +197,15 @@ data class TextArg(
     ) : this(text, color, style.dimensionId(), style.typefaceStyle())
 }
 
-data class NumberArg(
-    val number: Number,
+data class IntArg(
+    val value: Int,
     @ColorInt override val color: Int? = null,
     @DimenRes override val size: Int? = null,
     override val style: Int = Typeface.BOLD
-) : Arg(number.toString(), color, size, style, 'd') {
+) : Arg(value.toString(), color, size, style, 'd') {
     constructor(
-        number: Number,
+        value: Int,
         @ColorInt color: Int? = null,
         style: DKStyle
-    ) : this(number, color, style.dimensionId(), style.typefaceStyle())
+    ) : this(value, color, style.dimensionId(), style.typefaceStyle())
 }
