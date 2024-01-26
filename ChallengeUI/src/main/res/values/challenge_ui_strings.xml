@@ -29,6 +29,7 @@
     <string name="dk_challenge_menu">Challenges</string>
     <string name="dk_challenge_nb_trip">Number of trips</string>
     <string name="dk_challenge_no_active_challenge">There is no challenge underway.</string>
+    <string name="dk_challenge_no_all_challenge">There has been no challenge yet.</string>
     <string name="dk_challenge_no_finished_challenge">There has been no challenge yet.</string>
     <string name="dk_challenge_no_ranked_challenge_empty_list">There is no challenge yet.</string>
     <string name="dk_challenge_no_ranked_challenge_not_ranked_yet">You haven\'t participated in a challenge yet.</string>

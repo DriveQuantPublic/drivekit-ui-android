@@ -87,7 +87,7 @@ class ChallengeListViewModel : ViewModel() {
                 }
             }
 
-            ChallengeListCategory.ALL -> R.string.dk_challenge_no_finished_challenge
+            ChallengeListCategory.ALL -> R.string.dk_challenge_no_all_challenge
         }
     }
 
