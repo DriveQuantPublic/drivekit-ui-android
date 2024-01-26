@@ -28,7 +28,6 @@ class ChallengeData(
     val state: ChallengeState,
     val status: ChallengeStatus,
     private val nbDriverRegistered: Int,
-    private val nbDriverRanked: Int
 ) {
     @DrawableRes
     fun getIconResId(): Int? = when (type) {
@@ -92,7 +91,7 @@ class ChallengeData(
                             R.string.dk_challenge_list_ranked,
                             textColor,
                             TextArg(this.rank.toString()),
-                            TextArg(this.nbDriverRanked.toString())
+                            TextArg(this.nbDriverRegistered.toString())
                         )
                     } else {
                         DKSpannable().append(context.getString(R.string.dk_challenge_list_not_ranked))

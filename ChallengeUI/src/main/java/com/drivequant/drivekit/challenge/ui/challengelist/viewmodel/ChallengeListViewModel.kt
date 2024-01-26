@@ -190,7 +190,6 @@ class ChallengeListViewModel : ViewModel() {
                 it.getChallengeState(),
                 it.status,
                 it.nbDriverRegistered,
-                it.nbDriverRanked
             )
         }
 
