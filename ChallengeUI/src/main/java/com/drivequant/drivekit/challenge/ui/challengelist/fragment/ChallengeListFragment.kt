@@ -135,10 +135,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     }
 
     private fun updateDateSelector() {
-        if (this.viewModel.dateSelectorViewModel.hasDates()) {
-            binding.dateSelectorContainer.visibility = View.VISIBLE
-            this.dateSelectorView.configure(viewModel.dateSelectorViewModel)
-        }
+        this.dateSelectorView.configure(viewModel.dateSelectorViewModel)
     }
 
     private fun updateSwipeRefreshTripsVisibility(display: Boolean) {
