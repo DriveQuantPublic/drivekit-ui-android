@@ -84,13 +84,16 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
     }
 
     private fun updateChallengeList() {
-        // TODO improve that
-        this.adapter = ChallengeListAdapter(
-            requireContext(),
-            this@ChallengeListFragment.viewModel.currentChallenges,
-            this
-        )
-        binding.dkRecyclerViewChallenge.adapter = adapter
+        this.adapter?.update(this.viewModel.currentChallenges) ?: run {
+            context?.let {
+                this.adapter = ChallengeListAdapter(
+                    it,
+                    this@ChallengeListFragment.viewModel.currentChallenges,
+                    this
+                )
+                binding.dkRecyclerViewChallenge.adapter = adapter
+            }
+        }
 
         if (this.viewModel.hasChallengesToDisplay) {
             displayChallenges()

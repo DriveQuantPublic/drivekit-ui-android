@@ -1,5 +1,6 @@
 package com.drivequant.drivekit.challenge.ui.challengelist.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.drivequant.drivekit.challenge.ui.challengelist.viewmodel.ChallengeLis
 
 internal class ChallengeListAdapter(
     val context: Context,
-    private val challenges: List<ChallengeData>,
+    private var challenges: List<ChallengeData>,
     private val listener: ChallengeListener
 ) :
     RecyclerView.Adapter<ChallengeViewHolder>() {
@@ -28,5 +29,11 @@ internal class ChallengeListAdapter(
         parent.itemView.setOnClickListener {
             listener.onClickChallenge(challenge)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun update(challenges: List<ChallengeData>) {
+        this.challenges = challenges
+        notifyDataSetChanged()
     }
 }

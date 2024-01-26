@@ -6,7 +6,7 @@
     app:cardCornerRadius="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dk_margin_medium"
+    android:layout_marginStart="@dimen/dk_margin"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -16,7 +16,7 @@
         android:id="@+id/view_group_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dk_margin_half">
+        android:padding="@dimen/dk_margin_medium">
 
         <ImageView
             android:id="@+id/dk_image_view_icon"
