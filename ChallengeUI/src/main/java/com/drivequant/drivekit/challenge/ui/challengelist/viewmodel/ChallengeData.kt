@@ -77,8 +77,7 @@ class ChallengeData(
                 }
             } else {
                 if (this.displayParticipantsCount()) {
-                    DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, TextArg(this.nbDriverRegistered.toString())
-                    )
+                    DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, TextArg(this.nbDriverRegistered.toString()))
                 } else {
                     DKSpannable().append(context.getString(R.string.dk_challenge_list_join)).toSpannable().toSpannable()
                 }
