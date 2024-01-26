@@ -114,9 +114,9 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
                 headLine2(DriveKitUI.colors.mainFontColor())
             }
             view?.resources?.getDimension(com.drivequant.drivekit.common.ui.R.dimen.dk_margin_half)?.let { cornerRadius ->
-                this.noTrips.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
+                this.noChallenges.roundCorners(cornerRadius, cornerRadius, cornerRadius, cornerRadius)
             }
-            DrawableCompat.setTint(this.noTrips.background, DriveKitUI.colors.neutralColor())
+            DrawableCompat.setTint(this.noChallenges.background, DriveKitUI.colors.neutralColor())
             viewGroupEmptyScreen.visibility = View.VISIBLE
         }
         binding.dkRecyclerViewChallenge.visibility = View.GONE
