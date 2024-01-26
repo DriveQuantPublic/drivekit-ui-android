@@ -69,6 +69,7 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
         }
 
         binding.dkRecyclerViewChallenge.layoutManager = LinearLayoutManager(requireContext())
+        updateSwipeRefreshTripsVisibility(true)
     }
 
     override fun onDestroyView() {

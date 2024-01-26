@@ -45,7 +45,6 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     fun updateLocalData() {
-        // Get local challenges
         DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
             override fun onResponse(
                 challengesSyncStatus: ChallengesSyncStatus,
@@ -60,7 +59,6 @@ class ChallengeListViewModel : ViewModel() {
     }
 
     fun synchronizeChallenges() {
-        // Synchronize challenge list from DriveQuant servers
         DriveKitChallenge.getChallenges(object : ChallengesQueryListener {
             override fun onResponse(
                 challengesSyncStatus: ChallengesSyncStatus,
@@ -169,7 +167,6 @@ class ChallengeListViewModel : ViewModel() {
         challenges.forEach { dates.addAll(it.startAndEndYear) }
         return dates.sortedBy { it.time }.toSet()
     }
-
 
     private fun buildChallengeListData(challengeList: List<Challenge>) {
         this.sourceChallenges = filterChallengeTypes(challengeList).map {
