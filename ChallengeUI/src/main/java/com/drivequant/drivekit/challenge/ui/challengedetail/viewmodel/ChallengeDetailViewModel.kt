@@ -18,7 +18,6 @@ import com.drivequant.drivekit.common.ui.component.ranking.viewmodel.DriverProgr
 import com.drivequant.drivekit.common.ui.component.triplist.TripData
 import com.drivequant.drivekit.common.ui.extension.capitalizeFirstLetter
 import com.drivequant.drivekit.common.ui.extension.format
-import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKDataFormatter.formatMeterDistanceInKm
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
@@ -115,12 +114,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
 
     fun getBestPerformance(): String {
         return challengeDetailData?.let {
-            val score = if (it.challengeStats.maxScore == 10.0) {
-                it.challengeStats.maxScore.removeZeroDecimal()
-            } else {
-                it.challengeStats.maxScore.format(2)
-            }
-            "$score/10"
+            "${it.challengeStats.maxScore.format(2)}/10"
         } ?: ""
     }
 
@@ -132,12 +126,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
 
     fun getMainScore(context: Context): Spannable {
         return challengeDetailData?.let {
-            val score = if (it.driverStats.score == 10.0) {
-                it.driverStats.score.removeZeroDecimal()
-            } else {
-                it.driverStats.score.format(2)
-            }
-            DKSpannable().append(score, context.resSpans {
+            DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_xxxbig)
                 typeface(BOLD)
@@ -262,7 +251,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
     fun getNbDriverRankedPercentage(): String {
         val nbDriverRanked = challengeDetailData?.nbDriverRanked ?: 0
         val nbDriverRegistered = challengeDetailData?.nbDriverRegistered
-        return if (nbDriverRegistered != null && nbDriverRegistered > 0 && nbDriverRanked <= nbDriverRegistered) {
+        return if (nbDriverRegistered != null && nbDriverRegistered > 0) {
             val percentage = (nbDriverRanked.toDouble() / nbDriverRegistered.toDouble() * 100.0).roundToInt()
             "$percentage %"
         } else {
