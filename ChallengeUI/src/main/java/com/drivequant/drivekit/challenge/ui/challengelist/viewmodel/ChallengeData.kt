@@ -84,7 +84,7 @@ class ChallengeData(
         }
     }
 
-    fun shouldDisplayChallengeDetail() = (isFinished && isRegistered) || (status == ChallengeStatus.PENDING && isRegistered && conditionsFilled)
+    fun shouldDisplayChallengeDetail() = conditionsFilled && (isFinished || status == ChallengeStatus.PENDING)
 
     fun shouldDisplayExplaining() = isFinished && (!isRegistered || !conditionsFilled)
 
