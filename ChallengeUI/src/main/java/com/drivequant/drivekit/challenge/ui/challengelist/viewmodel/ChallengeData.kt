@@ -48,10 +48,10 @@ class ChallengeData(
                 if (this.isRanked) {
                     DKResource.buildString(context, R.string.dk_challenge_list_ranked, textColor, TextArg("${this.rank} / ${this.nbDriverRegistered}"))
                 } else {
-                    DKSpannable().append(context.getString(R.string.dk_challenge_list_not_ranked)).toSpannable().toSpannable()
+                    DKSpannable().append(context.getString(R.string.dk_challenge_list_not_ranked)).toSpannable()
                 }
             } else {
-                DKSpannable().append(context.getString(R.string.dk_challenge_list_not_registered)).toSpannable().toSpannable()
+                DKSpannable().append(context.getString(R.string.dk_challenge_list_not_registered)).toSpannable()
             }
         } else {
             if (this.isRegistered) {
@@ -71,15 +71,14 @@ class ChallengeData(
                             TextArg(this.nbDriverRegistered.toString())
                         )
                     } else {
-                        DKSpannable().append(context.getString(R.string.dk_challenge_list_registered))
-                            .toSpannable().toSpannable()
+                        DKSpannable().append(context.getString(R.string.dk_challenge_list_registered)).toSpannable()
                     }
                 }
             } else {
                 if (this.displayParticipantsCount()) {
                     DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, TextArg(this.nbDriverRegistered.toString()))
                 } else {
-                    DKSpannable().append(context.getString(R.string.dk_challenge_list_join)).toSpannable().toSpannable()
+                    DKSpannable().append(context.getString(R.string.dk_challenge_list_join)).toSpannable()
                 }
             }
         }
