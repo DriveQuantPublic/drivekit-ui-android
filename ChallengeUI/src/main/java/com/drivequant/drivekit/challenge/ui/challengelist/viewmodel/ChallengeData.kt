@@ -3,7 +3,6 @@ package com.drivequant.drivekit.challenge.ui.challengelist.viewmodel
 import android.content.Context
 import android.text.Spannable
 import androidx.annotation.DrawableRes
-import androidx.core.text.toSpannable
 import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
@@ -24,7 +23,6 @@ class ChallengeData(
     val isRanked: Boolean,
     private val type: ChallengeType,
     val isRegistered: Boolean,
-    private val conditionsFilled: Boolean,
     val status: ChallengeStatus,
     private val nbDriverRegistered: Int,
 ) {
@@ -84,9 +82,9 @@ class ChallengeData(
         }
     }
 
-    fun shouldDisplayChallengeDetail() = conditionsFilled && (isFinished || status == ChallengeStatus.PENDING)
+    fun shouldDisplayChallengeDetail() = isRanked
 
-    fun shouldDisplayExplaining() = isFinished && (!isRegistered || !conditionsFilled)
+    fun shouldDisplayExplaining() = isFinished && (!isRegistered || !isRanked)
 
     private fun displayParticipantsCount() = nbDriverRegistered > 100
 }

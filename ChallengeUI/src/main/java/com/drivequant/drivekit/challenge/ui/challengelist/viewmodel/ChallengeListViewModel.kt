@@ -112,7 +112,7 @@ class ChallengeListViewModel : ViewModel() {
         // Get local challenges for current Tab
         val challengesByCategory = getChallengesByCategory()
 
-        val dates = computeChallengeYearList(challengesByCategory).toList()
+        val dates = computeChallengeYearList(challengesByCategory)
         if (dates.isNotEmpty()) {
             val selectedDateIndex: Int = this.selectedDate?.let {
                 val index = dates.indexOf(it)
@@ -130,7 +130,7 @@ class ChallengeListViewModel : ViewModel() {
         } else {
             val date = Date().startingFrom(CalendarField.YEAR)
             this.selectedDate = date
-            this.currentChallenges = challengesByCategory.filter { it.startAndEndYear.contains(this.selectedDate) }
+            this.currentChallenges = listOf()
             this.dateSelectorViewModel.configure(listOf(date), 0, DKPeriod.YEAR)
         }
         this.updateData.postValue(Any())
@@ -161,10 +161,10 @@ class ChallengeListViewModel : ViewModel() {
         ChallengeListCategory.ALL -> this.sourceChallenges
     }
 
-    private fun computeChallengeYearList(challenges: List<ChallengeData>): Set<Date> {
+    private fun computeChallengeYearList(challenges: List<ChallengeData>): List<Date> {
         val dates = mutableSetOf<Date>()
         challenges.forEach { dates.addAll(it.startAndEndYear) }
-        return dates.sortedBy { it.time }.toSet()
+        return dates.sortedBy { it.time }
     }
 
     private fun buildChallengeListData(challengeList: List<Challenge>) {
@@ -183,7 +183,6 @@ class ChallengeListViewModel : ViewModel() {
                 isRanked = it.rank > 0,
                 it.challengeType,
                 it.isRegistered,
-                it.conditionsFilled,
                 it.status,
                 it.nbDriverRegistered,
             )
