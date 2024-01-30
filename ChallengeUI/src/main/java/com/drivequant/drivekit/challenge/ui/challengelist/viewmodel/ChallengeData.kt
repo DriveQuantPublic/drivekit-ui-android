@@ -7,6 +7,7 @@ import com.drivequant.drivekit.challenge.ui.R
 import com.drivequant.drivekit.common.ui.DriveKitUI
 import com.drivequant.drivekit.common.ui.utils.DKResource
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
+import com.drivequant.drivekit.common.ui.utils.IntArg
 import com.drivequant.drivekit.common.ui.utils.TextArg
 import com.drivequant.drivekit.databaseutils.entity.ChallengeStatus
 import com.drivequant.drivekit.databaseutils.entity.ChallengeType
@@ -66,7 +67,7 @@ class ChallengeData(
                             context,
                             R.string.dk_challenge_list_registered_among,
                             textColor,
-                            TextArg(this.nbDriverRegistered.toString())
+                            IntArg(this.nbDriverRegistered)
                         )
                     } else {
                         DKSpannable().append(context.getString(R.string.dk_challenge_list_registered)).toSpannable()
@@ -74,7 +75,7 @@ class ChallengeData(
                 }
             } else {
                 if (this.displayParticipantsCount()) {
-                    DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, TextArg(this.nbDriverRegistered.toString()))
+                    DKResource.buildString(context, R.string.dk_challenge_list_join_among, textColor, IntArg(this.nbDriverRegistered))
                 } else {
                     DKSpannable().append(context.getString(R.string.dk_challenge_list_join)).toSpannable()
                 }
