@@ -41,7 +41,7 @@ class ChallengeTripListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         if (this::viewModel.isInitialized) {
-            outState.putString("challengeIdTag", viewModel.getChallengeId())
+            outState.putString("challengeIdTag", viewModel.challengeId)
         }
         super.onSaveInstanceState(outState)
     }
@@ -80,7 +80,7 @@ class ChallengeTripListFragment : Fragment() {
 
         val viewModelParticipation = ViewModelProvider(
             this,
-            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.getChallengeId())
+            ChallengeParticipationViewModel.ChallengeParticipationViewModelFactory(viewModel.challengeId)
         )[ChallengeParticipationViewModel::class.java]
 
         val challengeHeaderView =

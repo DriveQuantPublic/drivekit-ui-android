@@ -18,7 +18,7 @@ internal class ChallengeDriverRanking(val viewModel: ChallengeDetailViewModel) :
     override fun getIcon(context: Context): Drawable? = viewModel.getRankingHeaderIcon(context)
     override fun getProgression(): DriverProgression? = viewModel.getRankingProgression()
     override fun getDriverGlobalRank(context: Context): Spannable =
-        viewModel.geRankingGlobalRank(context)
+        viewModel.getRankingGlobalRank(context)
 
     override fun getScoreTitle(context: Context): String = viewModel.getScoreTitle(context)
     override fun getDriverRankingList(): List<DKDriverRankingItem> = viewModel.getRankingList()

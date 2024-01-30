@@ -37,15 +37,12 @@ enum class BeaconStep {
         return when (this) {
             INITIAL -> DKResource.buildString(context,
                 textColor = mainFontColor,
-                highlightColor = mainFontColor,
                 identifier = R.string.dk_vehicle_beacon_start_scan)
             SCAN -> DKResource.buildString(context,
                 textColor = mainFontColor,
-                highlightColor = mainFontColor,
                 identifier = R.string.dk_vehicle_beacon_setup_scan_title)
             SUCCESS -> DKResource.buildString(context,
                 textColor = mainFontColor,
-                highlightColor = mainFontColor,
                 identifier = R.string.dk_vehicle_beacon_setup_code_success_message)
             BEACON_NOT_FOUND -> {
                 if (viewModel.scanType == BeaconScanType.DIAGNOSTIC) {
@@ -64,7 +61,6 @@ enum class BeaconStep {
             }
             BEACON_ALREADY_PAIRED -> DKResource.buildString(context,
                 textColor = DriveKitUI.colors.mainFontColor(),
-                highlightColor = DriveKitUI.colors.mainFontColor(),
                 identifier = R.string.dk_vehicle_beacon_already_paired)
             CONGRATS -> DKResource.buildString(
                 context,
@@ -75,9 +71,9 @@ enum class BeaconStep {
                 vehicleName
             )
             BEACON_UNAVAILABLE -> DKResource.buildString(context, mainFontColor, mainFontColor, R.string.dk_vehicle_beacon_setup_code_unavailable_id, beaconCode)
-            VERIFIED -> DKResource.buildString(context, mainFontColor, mainFontColor, identifier = R.string.dk_vehicle_beacon_setup_code_success_message)
-            WRONG_BEACON -> DKResource.buildString(context, mainFontColor, mainFontColor, identifier = R.string.dk_vehicle_beacon_verify_wrong_vehicle)
-            BEACON_NOT_CONFIGURED -> DKResource.buildString(context, mainFontColor, mainFontColor, identifier = R.string.dk_vehicle_beacon_diagnostic_alert)
+            VERIFIED -> DKResource.buildString(context, mainFontColor, R.string.dk_vehicle_beacon_setup_code_success_message)
+            WRONG_BEACON -> DKResource.buildString(context, mainFontColor, R.string.dk_vehicle_beacon_verify_wrong_vehicle)
+            BEACON_NOT_CONFIGURED -> DKResource.buildString(context, mainFontColor, R.string.dk_vehicle_beacon_diagnostic_alert)
         }
     }
 

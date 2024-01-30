@@ -11,6 +11,7 @@ import com.drivequant.drivekit.common.ui.extension.removeZeroDecimal
 import com.drivequant.drivekit.common.ui.extension.resSpans
 import com.drivequant.drivekit.common.ui.utils.DKSpannable
 import com.drivequant.drivekit.common.ui.utils.convertToString
+import com.drivequant.drivekit.databaseutils.entity.ChallengeType
 
 class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                            private val driverRank: Int,
@@ -37,9 +38,10 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
     override fun getDistance(context: Context): String = viewModel.formatChallengeDistance(driverDistance, context).convertToString()
 
     override fun getScore(context: Context, textColor: Int): Spannable {
-        return when (viewModel.challenge.themeCode) {
-            in 101..221,
-            401 -> return if (driverScore == 10.0) {
+        return if (viewModel.challenge.challengeType == ChallengeType.UNKNOWN || viewModel.challenge.challengeType == ChallengeType.DEPRECATED) {
+            SpannableString("")
+        } else {
+            if (driverScore == 10.0) {
                 driverScore.removeZeroDecimal()
             } else {
                 driverScore.format(2)
@@ -52,25 +54,6 @@ class ChallengeRankingItem(private val viewModel: ChallengeDetailViewModel,
                     color(textColor)
                 }).toSpannable()
             }
-            in 306..309 -> DKSpannable().append(viewModel.formatChallengeDuration(driverScore, context)
-                    .convertToString(),
-                    context.resSpans {
-                        color(textColor)
-                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
-                    }).toSpannable()
-
-            in 302..305 -> DKSpannable().append(
-                    viewModel.formatChallengeDistance(driverScore, context).convertToString(),
-                    context.resSpans {
-                        color(textColor)
-                        size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_normal)
-                    }).toSpannable()
-
-            301 -> DKSpannable().append(driverScore.removeZeroDecimal(), context.resSpans {
-                size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_medium)
-                color(textColor)
-            }).toSpannable()
-            else -> SpannableString("")
         }
     }
 

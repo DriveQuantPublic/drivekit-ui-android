@@ -76,8 +76,7 @@ internal object NearbyDevicesUtils {
         title?.text = DKResource.buildString(
             activity,
             DriveKitUI.colors.mainFontColor(),
-            DriveKitUI.colors.mainFontColor(),
-            identifier = com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby
+            com.drivequant.drivekit.common.ui.R.string.dk_common_app_diag_nearby
         )
         title?.headLine1()
         description?.setText(descriptionId)
