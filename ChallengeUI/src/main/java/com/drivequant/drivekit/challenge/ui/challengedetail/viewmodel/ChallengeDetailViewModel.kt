@@ -3,7 +3,6 @@ package com.drivequant.drivekit.challenge.ui.challengedetail.viewmodel
 import android.content.Context
 import android.graphics.Typeface.BOLD
 import android.text.Spannable
-import android.text.SpannableString
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -112,19 +111,19 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
         }
     }
 
-    fun getBestPerformance(): String {
+    fun getBestPerformance(): String? {
         return challengeDetailData?.let {
             "${it.challengeStats.maxScore.format(2)}/10"
-        } ?: ""
+        }
     }
 
-    fun getWorstPerformance(): String {
+    fun getWorstPerformance(): String? {
         return challengeDetailData?.let {
             "${it.challengeStats.minScore.format(2)}/10"
-        } ?: ""
+        }
     }
 
-    fun getMainScore(context: Context): Spannable {
+    fun getMainScore(context: Context): Spannable? {
         return challengeDetailData?.let {
             DKSpannable().append(it.driverStats.score.format(2), context.resSpans {
                 color(DriveKitUI.colors.primaryColor())
@@ -136,7 +135,7 @@ class ChallengeDetailViewModel(val challengeId: String) : ViewModel() {
                 size(com.drivequant.drivekit.common.ui.R.dimen.dk_text_big)
                 typeface(BOLD)
             }).toSpannable()
-        } ?: SpannableString("")
+        }
     }
 
     fun challengeGlobalRank(context: Context) =
