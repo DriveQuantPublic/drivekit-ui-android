@@ -42,4 +42,5 @@
     <string name="dk_challenge_synthesis_registered_singular">registreret</string>
     <string name="dk_challenge_synthesis_total_distance">Samlet distance tilbagelagt af alle deltagere.</string>
     <string name="dk_challenge_unranked_conditions_info">For at komme på ranglisten skal du opfylde betingelserne nedenfor:</string>
+
 </resources>

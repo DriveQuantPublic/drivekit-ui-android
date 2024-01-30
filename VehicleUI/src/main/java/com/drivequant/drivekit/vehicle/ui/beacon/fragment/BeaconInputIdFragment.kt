@@ -113,7 +113,6 @@ class BeaconInputIdFragment : Fragment(), BeaconViewModel.BeaconInfoStatusListen
         title?.text = DKResource.buildString(
             requireContext(),
             textColor = DriveKitUI.colors.mainFontColor(),
-            highlightColor = DriveKitUI.colors.mainFontColor(),
             identifier = R.string.app_name
         )
         title?.headLine1()
