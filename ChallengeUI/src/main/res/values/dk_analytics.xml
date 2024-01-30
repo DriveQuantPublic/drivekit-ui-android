@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dk_tag_challenge_list_active" translatable="false">drivekit-challenge-list-active</string>
-    <string name="dk_tag_challenge_list_finished" translatable="false">drivekit-challenge-list-finished</string>
+    <string name="dk_tag_challenge_list_ranked" translatable="false">drivekit-challenge-list-ranked</string>
+    <string name="dk_tag_challenge_list_all" translatable="false">drivekit-challenge-list-all</string>
     <string name="dk_tag_challenge_join" translatable="false">drivekit-challenge-join</string>
     <string name="dk_tag_challenge_rules" translatable="false">drivekit-challenge-rules</string>
     <string name="dk_tag_challenge_detail" translatable="false">drivekit-challenge-detail</string>
