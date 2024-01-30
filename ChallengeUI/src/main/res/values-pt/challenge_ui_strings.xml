@@ -2,30 +2,27 @@
 <resources>
    <string name="dk_challenge_acceleration_score">Pontuação de aceleração</string>
    <string name="dk_challenge_active">Ativo</string>
-   <string name="dk_challenge_adherence_score">Pontuação de aderência</string>
    <string name="dk_challenge_all">Todos</string>
    <string name="dk_challenge_braking_score">Pontuação de frenagem</string>
    <string name="dk_challenge_consult_rule_button">Consulte as regras</string>
    <string name="dk_challenge_distance_kilometer">Distância (km)</string>
    <string name="dk_challenge_distraction_score">Pontuação de distração</string>
-   <string name="dk_challenge_driving_time">Tempo de direção</string>
    <string name="dk_challenge_eco_driving_score">Pontuação de direção ecológica</string>
    <string name="dk_challenge_failed_to_join">Incapaz de participar do desafio, verifique se você está conectado à Internet ou tente novamente mais tarde.</string>
    <string name="dk_challenge_failed_to_sync_challenges">Falha ao sincronizar os dados do desafio, tente novamente.</string>
-   <string name="dk_challenge_finished">Completo</string>
    <string name="dk_challenge_list_join">Participar no desafio 🏆</string>
    <string name="dk_challenge_list_join_among">Junte-se aos %d participantes 🏆</string>
    <string name="dk_challenge_list_not_ranked">Não foi classificado</string>
    <string name="dk_challenge_list_not_registered">Não participaste 💔</string>
-   <string name="dk_challenge_list_ranked">Minha classificação : %1$d / %2$d</string>
+   <string name="dk_challenge_list_ranked">Minha classificação : %s</string>
    <string name="dk_challenge_list_registered">Já está registado, aproveite a sua viagem 🚗</string>
    <string name="dk_challenge_list_registered_among">É um dos %d participantes</string>
    <string name="dk_challenge_menu">Desafios</string>
    <string name="dk_challenge_nb_trip">Número de viagens</string>
    <string name="dk_challenge_no_active_challenge">Não existem desafios actuais.</string>
-   <string name="dk_challenge_no_finished_challenge">Ainda não houve qualquer contestação.</string>
+   <string name="dk_challenge_no_all_challenge">Ainda não houve qualquer contestação.</string>
    <string name="dk_challenge_no_ranked_challenge_empty_list">Ainda não houve contestação.</string>
-   <string name="dk_challenge_no_ranked_challenge_not_ranked_yet">Ainda não participou num desafio.</string>
+   <string name="dk_challenge_no_ranked_challenge_not_ranked_yet">Ainda não foi classificado num desafio.</string>
    <string name="dk_challenge_no_ranked_challenge_not_registered_yet">Ainda não participou num desafio.</string>
    <string name="dk_challenge_not_a_participant">Você não participou desse desafio ou não preencheu as condições para ingressar no ranking.</string>
    <string name="dk_challenge_optin_title">Aceitar as regras</string>
@@ -35,8 +32,6 @@
    <string name="dk_challenge_rule_title">Regras de desafio</string>
    <string name="dk_challenge_safety_score">Pontuação de segurança</string>
    <string name="dk_challenge_score_alert_message">Os resultados desse desafio estão sendo analisados, tente novamente mais tarde.</string>
-   <string name="dk_challenge_score_alert_title">Desafio em análise</string>
-   <string name="dk_challenge_signin_in_progress">Inscrever-se…</string>
    <string name="dk_challenge_speeding_score">Pontuação de velocidade</string>
    <string name="dk_challenge_start">Início do desafio em</string>
    <string name="dk_challenge_synthesis_my_stats">As suas estatísticas durante o desafio.</string>
@@ -46,6 +41,5 @@
    <string name="dk_challenge_synthesis_registered_plural">registado</string>
    <string name="dk_challenge_synthesis_registered_singular">registado</string>
    <string name="dk_challenge_synthesis_total_distance">Distância total percorrida por todos os participantes.</string>
-   <string name="dk_challenge_traveled_distance">Distância viajada</string>
    <string name="dk_challenge_unranked_conditions_info">Para entrar na tabela de classificação, você deve cumprir as condições abaixo:</string>
 </resources>

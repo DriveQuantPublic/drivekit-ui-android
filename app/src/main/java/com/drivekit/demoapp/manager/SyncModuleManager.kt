@@ -114,11 +114,11 @@ object SyncModuleManager {
         DriveKitDriverData.getTripsOrderByDateDesc(object : TripsQueryListener {
             override fun onResponse(status: TripsSyncStatus, trips: List<Trip>) {
                 when (status) {
-                    TripsSyncStatus.NO_ERROR -> SyncStatus.SUCCESS
+                    TripsSyncStatus.NO_ERROR,
+                    TripsSyncStatus.SYNC_ALREADY_IN_PROGRESS -> SyncStatus.SUCCESS
                     TripsSyncStatus.CACHE_DATA_ONLY,
                     TripsSyncStatus.FAILED_TO_SYNC_TRIPS_CACHE_ONLY,
-                    TripsSyncStatus.FAILED_TO_SYNC_SAFETY_EVENTS,
-                    TripsSyncStatus.SYNC_ALREADY_IN_PROGRESS -> SyncStatus.FAILED
+                    TripsSyncStatus.FAILED_TO_SYNC_SAFETY_EVENTS -> SyncStatus.FAILED
                 }.let {
                     listener?.onModuleSyncResult(it)
                 }
