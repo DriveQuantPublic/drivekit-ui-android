@@ -43,7 +43,6 @@
             android:id="@+id/dk_text_view_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginStart="@dimen/dk_margin_quarter"
             app:layout_constraintStart_toEndOf="@id/calendar_icon"
             app:layout_constraintBottom_toBottomOf="@id/calendar_icon"

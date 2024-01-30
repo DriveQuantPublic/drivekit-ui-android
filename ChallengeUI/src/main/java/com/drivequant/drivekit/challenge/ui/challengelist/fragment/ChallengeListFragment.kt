@@ -104,7 +104,10 @@ class ChallengeListFragment : Fragment(), ChallengeListener {
 
     private fun displayChallenges() {
         binding.noChallenges.viewGroupEmptyScreen.visibility = View.GONE
-        binding.dkRecyclerViewChallenge.visibility = View.VISIBLE
+        binding.dkRecyclerViewChallenge.apply {
+            visibility = View.VISIBLE
+            scrollToPosition(0)
+        }
     }
 
     private fun displayNoChallenges() {

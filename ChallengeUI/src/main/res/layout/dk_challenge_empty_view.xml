@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/view_group_empty_screen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.drivequant.drivekit.common.ui.utils.DKRoundedCornerFrameLayout
         android:id="@+id/no_challenges"
