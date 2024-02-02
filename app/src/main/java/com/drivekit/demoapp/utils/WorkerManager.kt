@@ -13,8 +13,8 @@ internal object WorkerManager {
     }
 
     fun startAppDiagnosisWorker(context: Context) {
-        val worker = PeriodicWorkRequestBuilder<DiagnosisNotificationWorker>(2, TimeUnit.HOURS).build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(WorkName.DIAGNOSIS_NOTIFICATION.name, ExistingPeriodicWorkPolicy.KEEP, worker)
+        val worker = PeriodicWorkRequestBuilder<DiagnosisNotificationWorker>(24, TimeUnit.HOURS).build()
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(WorkName.DIAGNOSIS_NOTIFICATION.name, ExistingPeriodicWorkPolicy.UPDATE, worker)
     }
 
     fun stopAppDiagnosisWorker(context: Context) {
